@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<meta name="robots" content="noindex">
+<meta name="description" content="Starter template for a ZornScience practice activity.">
+<title>Starter Activity | ZornScience</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="../../shared/zsa-activity.css?v=1.0.0">
+<link rel="stylesheet" href="activity.css?v=1.0.0">
+<script src="../../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="../../shared/zsa-engine.js?v=1.0.0" defer></script>
+<script src="data.js?v=1.0.0" defer></script>
+<script src="activity.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="zsa zsa-activity zsa-sta" data-zsa-activity="starter">
+<header class="zsa-header" data-zsa-chrome>
+<div class="zsa-topline">
+<a class="zsa-back" href="https://zornscience.org/science/">← Back to the lesson</a>
+<p class="zsa-eyebrow">Chemistry · Starter</p>
+</div>
+<h1>Starter Activity</h1>
+</header>
+<noscript><p class="zsa-panel">This activity needs JavaScript. Enable it to practice.</p></noscript>
+<div class="zsa-layout">
+<section class="zsa-ref" aria-label="Element and periodic table">
+<div class="zsa-sta-strip" id="zsa-sta-strip"></div>
+<div class="zsa-table-wrap">
+<div id="zsa-sta-table"></div>
+<p class="zsa-table-note" id="zsa-sta-table-note">Main groups only. Transition metals are not shown.</p>
+</div>
+</section>
+<section class="zsa-work" id="zsa-sta-work" aria-label="Practice"></section>
+</div>
+<p class="zsa-sr-only" id="zsa-sta-live" aria-live="polite" aria-atomic="true"></p>
+<details class="zsa-card zsa-modes" id="zsa-sta-options">
+<summary>Practice options</summary>
+<div class="zsa-modes-body">
+<p>Start a fresh mixed round or work on one element. Starting again clears this round.</p>
+<button class="zsa-btn" id="zsa-sta-new" type="button">Start a new round</button>
+<div class="zsa-picker">
+<label for="zsa-sta-select">Choose an element</label>
+<select id="zsa-sta-select"></select>
+<button class="zsa-btn" id="zsa-sta-pick" type="button">Practice this element</button>
+</div>
+</div>
+</details>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+</main>
+</body>
+</html>

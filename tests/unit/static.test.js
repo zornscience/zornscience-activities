@@ -21,7 +21,8 @@ var files = walk(ROOT).map(function (f) { return path.relative(ROOT, f); });
 // Files the pages load (tools/ scripts run in Node only).
 var siteJs = files.filter(function (f) { return f.endsWith(".js") && f.indexOf("tools" + path.sep) < 0 && !/^(playwright\.config)/.test(f); });
 var pages = files.filter(function (f) { return f.endsWith(".html"); });
-var activities = fs.readdirSync(ROOT).filter(function (d) { return fs.existsSync(path.join(ROOT, d, "index.html")) && d !== "shared"; });
+// Every page with a version (the activities and the starter template), by folder.
+var activities = pages.filter(function (f) { return /<meta name="zsa-version"/.test(fs.readFileSync(path.join(ROOT, f), "utf8")); }).map(path.dirname);
 function read(f) { return fs.readFileSync(path.join(ROOT, f), "utf8"); }
 
 test("site JavaScript parses and follows the house rules", function () {
@@ -63,7 +64,7 @@ test("no en or em dashes in published text", function () {
 });
 
 test("each activity's version agrees across its page, assets and docs", function () {
-  assert.ok(activities.length >= 2, activities.join());
+  assert.ok(activities.length >= 3, activities.join());
   activities.forEach(function (a) {
     var html = read(path.join(a, "index.html"));
     var version = html.match(/<meta name="zsa-version" content="([\d.]+)">/)[1];

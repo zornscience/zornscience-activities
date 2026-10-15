@@ -1,0 +1,56 @@
+name: Tests
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Unit and browser tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:unit
+      - run: npx playwright test
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-results
+          path: test-results/
+          retention-days: 7
+
+  parity:
+    name: Behavior parity with the base branch
+    # Compares the pull request with its base branch in the browser. Add the label "behavior-change" to a pull
+    # request that changes behavior on purpose to skip it.
+    if: github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'behavior-change')
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run parity -- --base origin/${{ github.base_ref }} --out parity-report
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: parity-report
+          path: parity-report/
+          retention-days: 7

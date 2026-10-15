@@ -1,0 +1,8 @@
+/* Starter activity: only the strip and the answer grid sizes. Everything else is in ../../shared/zsa-activity.css. */
+.zsa-sta-strip {display:flex;flex-wrap:wrap;align-items:baseline;column-gap:12px;min-height:52px;}
+.zsa-sta .zsa-sta-title {font-size:1.6rem;line-height:1.2;margin:0;}
+.zsa-sta-caption {font-size:15px;margin:0;}
+.zsa-sta-strip .zsa-progress {flex-basis:100%;}
+.zsa-choices--two {grid-template-columns:repeat(2,minmax(0,1fr));}
+.zsa-choices--three {grid-template-columns:repeat(3,minmax(0,1fr));}
+@media(max-width:599px) {.zsa-sta-strip {min-height:0;}.zsa-sta .zsa-sta-title {font-size:1.25rem;}}
