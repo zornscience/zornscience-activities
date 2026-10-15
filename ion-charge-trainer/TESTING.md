@@ -1,7 +1,22 @@
 # Verification record
-Version: 1.0.1
-Date: 2026-10-14
-Reviewer: Claude (integration review of ChatGPT's 1.0.0 package)
+Version: 1.1.0
+Date: 2026-10-15
+Reviewer: Claude (integration review of ChatGPT's 1.0.0 package, then the 1.1.0 step 4 update)
+
+## 1.1.0 results (step 4 and setting)
+| Check | Status | Evidence |
+|---|---|---|
+| Existing content unchanged | PASS | Every 1.0.1 string and value compared field by field; 1.1.0 only adds step 4 fields. |
+| Step 4 science | PASS | Correct noble gas comes from the electron count already checked against the `mendeleev` reference. Trap gas is the metal's own-period gas or the nonmetal's previous-period gas. |
+| Step 4 routing | PASS | All 190 name and noble-gas combinations match an independent expectation (95 naming-rule, 34 trap-gas, 118 count messages). |
+| Steps 1 to 3 routing | PASS | All 541 combinations still match. |
+| Keyboard round with step 4 | PASS | 10 elements plus 1 review, including a wrong step 4 answer corrected by keyboard. Focus moves to the first name choice, then Tab reaches the noble-gas group. |
+| Setting off | PASS | With step 4 cleared, a new round shows "Step 1 of 3" and the summary lists three steps. |
+| Layout, targets, axe, console, CSP, network | PASS | Same suite as below, rerun on 1.1.0: no overflow at 320 to 1920 px or 200% zoom, no target under 44 px, zero axe violations in six states including a step 4 wrong answer, no console errors, no CSP violations, local files only. |
+| HTML and CSS validation | PASS | Nu checker, no errors. |
+| Real screen readers, Firefox, Safari, school devices | NOT TESTED | Same as 1.0.1. |
+
+The sections below record the 1.0.1 review and still apply.
 
 PASS means the check was run on version 1.0.1 and passed. NOT TESTED means it could not be run in Claude's workspace. Browser checks used Chromium 141 (Playwright) over a local web server. Version 1.0.0 was run through the same suite first; what it found is listed under "Fixed in 1.0.1".
 

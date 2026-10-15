@@ -11,8 +11,9 @@
   var select = root.querySelector("#zsa-ict-select");
   var panel = root.querySelector("#zsa-ict-table-panel");
   var toggle = root.querySelector("#zsa-ict-table-toggle");
+  var namingBox = root.querySelector("#zsa-ict-naming");
   var queue = [], position = 0, originalCount = 10, extra = 0, roundType = "mixed";
-  var current, step, mistakes, hints, attempts, results, misses, scheduled;
+  var current, step, stepCount = 3, namingCount = 0, mistakes, hints, attempts, results, misses, scheduled;
   function node(tag, cls, text) {
     var el = document.createElement(tag);
     if (cls) el.className = cls;
@@ -42,7 +43,7 @@
   function start(items, type, quiet) {
     queue = items.map(function (e) {return {element:e, review:false};});
     originalCount = items.length; position = 0; extra = 0; roundType = type;
-    results = [0,0,0]; misses = new Set(); scheduled = new Set();
+    results = [0,0,0,0]; namingCount = 0; misses = new Set(); scheduled = new Set();
     load(quiet);
   }
   function remember() {misses.add(current.symbol);}
@@ -79,7 +80,10 @@
   }
   function load(quiet) {
     if (position >= queue.length) {finish();return;}
-    current=queue[position].element;step=0;mistakes=[0,0,0];hints=[0,0,0];attempts=[0,0,0];
+    current=queue[position].element;step=0;mistakes=[0,0,0,0];hints=[0,0,0,0];attempts=[0,0,0,0];
+    // Step 4 (name the ion and match its noble gas) is on unless the setting is cleared; read once per element.
+    stepCount=namingBox&&!namingBox.checked?3:4;
+    if(stepCount===4&&!queue[position].review)namingCount++;
     work.replaceChildren();announce("");
     var progress=node("p","zsa-ict-progress");progress.id="zsa-ict-progress";work.appendChild(progress);
     var intro=node("div","zsa-ict-intro"), tile=node("div","zsa-ict-element-tile");
@@ -96,10 +100,11 @@
   }
   function updateProgress() {
     var prefix=roundType==="single"?ui.singleLabel:(queue[position].review?ui.reviewLabel:ui.elementLabel);
-    root.querySelector("#zsa-ict-progress").textContent=prefix+" "+(position+1)+" "+ui.of+" "+queue.length+" · "+ui.stepLabel+" "+Math.min(step+1,3)+" "+ui.of+" 3";
+    root.querySelector("#zsa-ict-progress").textContent=prefix+" "+(position+1)+" "+ui.of+" "+queue.length+" · "+ui.stepLabel+" "+Math.min(step+1,stepCount)+" "+ui.of+" "+stepCount;
   }
   function choices(field, values, name, direction) {
-    var grid=node("div","zsa-ict-choices"+(direction?" zsa-ict-choices--direction":""));
+    // direction: true for the two-column layout, or a modifier name such as "gas".
+    var grid=node("div","zsa-ict-choices"+(direction?" zsa-ict-choices--"+(direction===true?"direction":direction):""));
     values.forEach(function (pair,i) {
       var wrap=node("div","zsa-ict-choice"), radio=node("input"),label=node("label","",pair[1]);
       radio.type="radio";radio.name="zsa-ict-"+name;radio.value=pair[0];radio.id="zsa-ict-"+name+"-"+i;
@@ -131,6 +136,13 @@
     if(Math.abs(a)===e.valence)return "valence";
     return "size";
   }
+  // Step 4: returns the feedback keys for each wrong part (empty when both parts are right).
+  function classifyNaming(e,name,gas) {
+    var keys=[];
+    if(name!==e.ion)keys.push("nameRule");
+    if(gas!==e.gas)keys.push(gas===e.trapGas?"trapGas":"gasCount");
+    return keys;
+  }
   function renderStep() {
     updateProgress();var s=step;
     var field=node("fieldset","zsa-ict-step");field.id="zsa-ict-step-"+s;
@@ -147,6 +159,12 @@
       if(charges.indexOf(distractor)<0)charges.push(distractor);
       choices(field,charges.map(function(n){return [n,Math.abs(n)+(n>0?"+":"−")];}),"charge");
     }
+    if(s===3) {
+      var nameField=node("fieldset","zsa-ict-step");nameField.appendChild(node("legend","",ui.nameLegend));
+      choices(nameField,shuffle([current.ion,current.nameWrong]).map(function(n){return [n,n];}),"name",true);field.appendChild(nameField);
+      var gasField=node("fieldset","zsa-ict-step");gasField.appendChild(node("legend","",ui.gasLegend));
+      choices(gasField,data.gases.map(function(g){return [g,g.charAt(0).toUpperCase()+g.slice(1)];}),"gas","gas");field.appendChild(gasField);
+    }
     var feedback=node("p","zsa-ict-feedback");feedback.hidden=true;field.appendChild(feedback);
     var hintBox=node("p","zsa-panel zsa-ict-hint");hintBox.hidden=true;field.appendChild(hintBox);
     var actions=node("div","zsa-ict-actions");
@@ -154,9 +172,16 @@
       var a,b;
       if(s===0)a=value(field,"valence");
       else if(s===1){a=value(field,"direction");b=value(field,"count");}
-      else a=value(field,"charge");
-      if(a===null || (s===1 && b===null)){showFeedback(s===1?ui.missing2:ui.missing,false);return;}
+      else if(s===2)a=value(field,"charge");
+      else{a=value(field,"name");b=value(field,"gas");}
+      if(a===null || (s%2===1 && b===null)){showFeedback(s===1?ui.missing2:(s===3?ui.missing4:ui.missing),false);return;}
       attempts[s]++;
+      if(s===3){
+        var keys=classifyNaming(current,a,b);
+        if(!keys.length){complete(false);return;}
+        remember();mistakes[s]++;if(mistakes[s]>=2){show.hidden=false;schedule();}
+        showFeedback(keys.map(function(k){return current.feedback[k];}).join(" "),false);return;
+      }
       var key=classify(current,s,s===1?a:Number(a),Number(b));
       if(key===null){complete(false);return;}
       remember();mistakes[s]++;if(mistakes[s]>=2){show.hidden=false;schedule();}
@@ -179,7 +204,7 @@
     function complete(reveal) {
       if(reveal) {
         schedule();
-        var answers=s===0?{valence:current.valence}:s===1?{direction:current.direction,count:current.moved}:{charge:current.charge};
+        var answers=s===0?{valence:current.valence}:s===1?{direction:current.direction,count:current.moved}:s===2?{charge:current.charge}:{name:current.ion,gas:current.gas};
         Object.keys(answers).forEach(function(name){field.querySelector('input[name="zsa-ict-'+name+'"][value="'+answers[name]+'"]').checked=true;});
       }
       if(!reveal && attempts[s]===1 && !queue[position].review)results[s]++;
@@ -187,7 +212,7 @@
       actions.hidden=true; // finished steps keep their answer and feedback but no live-looking buttons
       showFeedback(current.correct[s],true,reveal);
       step++;
-      if(step<3){renderStep();var next=root.querySelector("#zsa-ict-step-"+step+" input");next.focus();}
+      if(step<stepCount){renderStep();var next=root.querySelector("#zsa-ict-step-"+step+" input");next.focus();}
       else{summary();}
     }
   }
@@ -206,7 +231,9 @@
   function finish() {
     work.replaceChildren();var heading=node("h2","",roundType==="single"?ui.singleDone:ui.roundComplete);heading.tabIndex=-1;work.appendChild(heading);
     work.appendChild(node("p","",ui.firstTry));
-    ui.stepNames.forEach(function(label,i){var line=node("div","zsa-ict-stat");line.appendChild(node("span","",label));line.appendChild(node("strong","",results[i]+" / "+originalCount));work.appendChild(line);});
+    ui.stepNames.forEach(function(label,i){
+      var total=i===3?namingCount:originalCount;if(!total)return; // step 4 only counts elements that included it
+      var line=node("div","zsa-ict-stat");line.appendChild(node("span","",label));line.appendChild(node("strong","",results[i]+" / "+total));work.appendChild(line);});
     work.appendChild(node("p","zsa-ict-note",ui.repeatNote));
     var missed=data.elements.filter(function(e){return misses.has(e.symbol);});
     if(missed.length){work.appendChild(node("h3","",ui.review));var list=node("ul");missed.forEach(function(e){list.appendChild(node("li","",e.reminder));});work.appendChild(list);}

@@ -1,5 +1,5 @@
 # Predicting Ion Charge Trainer
-Version: 1.0.1
+Version: 1.1.0
 
 ## Assumptions and departures
 - Claude will host these static files and add the WordPress link. This package makes no hosting or WordPress changes.
@@ -10,10 +10,12 @@ Version: 1.0.1
 - Mixed practice uses exactly 10 distinct original elements with at least 3 metals and 3 nonmetals. Review can add up to 3 items. Near the end, fresh filler elements provide two intervening items before a repeat. When the extra-item budget cannot accommodate that spacing, the missed element remains in the end-of-round review list instead. Every missed element is retained there, including a single wrong attempt.
 - Practice my misses includes every missed element, plus available same-group peers, up to a target of 10. It may be shorter for a narrow group or longer when more than 10 distinct elements were missed. It does not enforce the mixed-round metal/nonmetal quota, since that would add unrelated groups. Single-element practice has one item and no automatic repeat.
 - First-try counts measure the first submitted answer on original items. Hints do not reduce the count. Review and filler items do not affect it. A Show me reveal never counts as first-try correct.
-- Version 1.0.1 was browser-tested in Chromium by Claude. Real screen readers, Firefox, Safari, and school devices remain untested. See TESTING.md.
+- Step 4 (name the ion and match its noble gas) is on by default and can be turned off under "Your practice". The setting is read when each element loads and is not saved between visits. Its first-try count covers only original elements that included step 4.
+- Step 4 offers two names: the correct one and the common wrong rule (an -ide ending on a metal, or "element ion" for a nonmetal). The metal distractors, such as "sodide", are deliberately made-up words that show the rule being misapplied.
+- Version 1.1.0 was browser-tested in Chromium by Claude. Real screen readers, Firefox, Safari, and school devices remain untested. See TESTING.md.
 
 ## Purpose and learning goal
-Students identify valence electrons, predict the direction and number of electrons transferred, and calculate common ion charges. Each step provides targeted feedback, two hints, and an optional worked answer after two incorrect submissions.
+Students identify valence electrons, predict the direction and number of electrons transferred, calculate common ion charges, and (step 4) name the ion and the noble gas it is isoelectronic with. Each step provides targeted feedback, two hints, and an optional worked answer after two incorrect submissions.
 
 Lesson: https://zornscience.org/science/chemistry/unit-3-ionic-bonding/valence-electrons-and-predicting-charge/
 
@@ -89,6 +91,10 @@ The complete element-specific wording and hints live in data.js. The following r
 | 3 | Correct magnitude with sign reversed | Explain the balance of protons and electrons. |
 | 3 | Incorrect charge magnitude equals valence count | Valence count is not ion charge. |
 | 3 | Other wrong magnitude | Check with protons minus electrons. |
+| 4 | Wrong naming rule | Only negative ions take -ide; metal ions keep the element name. Shown together with any noble-gas message. |
+| 4 | Metal picks its own period's noble gas | It lost its whole outer level, so it matches the noble gas from the period before (Al matches neon, not argon). |
+| 4 | Nonmetal picks the previous period's noble gas | It filled its own outer level, so it matches the noble gas at the end of its own period. |
+| 4 | Any other noble gas | Count the ion's electrons, then find the noble gas with that many. |
 
 A blank submission prompts the student to choose all needed inputs and does not count as an attempt. Two incorrect submissions in a step expose Show me and mark the element for delayed review. Show me selects the correct controls, supplies the explanation, locks the step, and advances. Previous steps remain visible and locked. A completed element waits for Next element rather than advancing automatically.
 
@@ -113,6 +119,8 @@ Button label: Open the Ion Charge Trainer
 - Initial shared components are included. Future activities should reuse them and propose any changes before modifying them.
 
 ## Changelog
+1.1.0: Added optional step 4, name the ion and match its noble gas, with hints, Show me, misconception feedback, and its own first-try count. "Include step 4" setting under Your practice (on by default). Progress shows "Step x of 3" or "of 4" to match.
+
 1.0.1 (Claude review): Added the Inter font and enabled its rule. No automatic focus on first load (it skipped the intro and scrolled an embedding page to the activity). Hint button keeps focus after the last hint. Finished steps hide their buttons. "Answer shown" feedback uses a neutral panel instead of the success style. Grammar fixes ("1 valence electron", "an anion"). Lithium long-path feedback no longer gives away the answer. Reference table labels rows "Period" and marks the element only after a hint. Footer alignment, body margin, and embed height buffer adjusted.
 
 1.0.0: Initial 19-element trainer, hints, misconception feedback, constrained mixed rounds, delayed review, missed-group practice, element picker, reference table, and optional embed mode.

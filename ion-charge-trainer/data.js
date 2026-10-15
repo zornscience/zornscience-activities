@@ -34,12 +34,17 @@
         [
           "Charge = protons − electrons.",
           "Lithium has 3 protons. After losing 1, it has 2 electrons. What is 3 − 2?"
+        ],
+        [
+          "Metal ions keep the element's name and add the word ion. Nonmetal ions change the ending to ‑ide. For the noble gas, count the ion's electrons.",
+          "Lithium is a metal. It has 3 protons and loses 1 electron, so the ion has 2 electrons. Which noble gas also has 2?"
         ]
       ],
       "correct": [
         "Lithium has 1 valence electron. For groups 1 and 2, the group number is the number of valence electrons.",
         "Lithium loses 1 electron. Its remaining first energy level is full with 2 electrons, like helium.",
-        "3 protons − 2 electrons = 1+."
+        "3 protons − 2 electrons = 1+.",
+        "Lithium ion has 2 electrons, the same as helium. Losing its one valence electron leaves only its full first energy level."
       ],
       "feedback": {
         "period": "That is lithium's period, or row. Valence electrons come from the group, or column.",
@@ -52,8 +57,13 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Losing electrons leaves more protons than electrons, so the charge is positive.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again."
-      }
+        "general": "Not yet. Use a hint and try again.",
+        "nameRule": "Only negative ions get the ‑ide ending. A metal ion keeps the element's name and adds the word ion.",
+        "trapGas": "Lithium lost its whole outer level, so it does not match the noble gas in its own period. Count the ion's electrons.",
+        "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
+      },
+      "nameWrong": "lithide",
+      "trapGas": "neon"
     },
     {
       "name": "sodium",
@@ -85,12 +95,17 @@
         [
           "Charge = protons − electrons.",
           "Sodium has 11 protons. After losing 1, it has 10 electrons. What is 11 − 10?"
+        ],
+        [
+          "Metal ions keep the element's name and add the word ion. Nonmetal ions change the ending to ‑ide. For the noble gas, count the ion's electrons.",
+          "Sodium is a metal. It has 11 protons and loses 1 electron, so the ion has 10 electrons. Which noble gas also has 10?"
         ]
       ],
       "correct": [
         "Sodium has 1 valence electron. For groups 1 and 2, the group number is the number of valence electrons.",
         "Sodium loses 1 electron to reach a full outer level.",
-        "11 protons − 10 electrons = 1+."
+        "11 protons − 10 electrons = 1+.",
+        "Sodium ion has 10 electrons, the same as neon. It lost its whole outer level, so it matches neon, the noble gas from the period before."
       ],
       "feedback": {
         "period": "That is sodium's period, or row. Valence electrons come from the group, or column.",
@@ -103,8 +118,13 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Losing electrons leaves more protons than electrons, so the charge is positive.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again."
-      }
+        "general": "Not yet. Use a hint and try again.",
+        "nameRule": "Only negative ions get the ‑ide ending. A metal ion keeps the element's name and adds the word ion.",
+        "trapGas": "Sodium lost its whole outer level, so it does not match the noble gas in its own period. Count the ion's electrons.",
+        "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
+      },
+      "nameWrong": "sodide",
+      "trapGas": "argon"
     },
     {
       "name": "potassium",
@@ -136,12 +156,17 @@
         [
           "Charge = protons − electrons.",
           "Potassium has 19 protons. After losing 1, it has 18 electrons. What is 19 − 18?"
+        ],
+        [
+          "Metal ions keep the element's name and add the word ion. Nonmetal ions change the ending to ‑ide. For the noble gas, count the ion's electrons.",
+          "Potassium is a metal. It has 19 protons and loses 1 electron, so the ion has 18 electrons. Which noble gas also has 18?"
         ]
       ],
       "correct": [
         "Potassium has 1 valence electron. For groups 1 and 2, the group number is the number of valence electrons.",
         "Potassium loses 1 electron to reach a full outer level.",
-        "19 protons − 18 electrons = 1+."
+        "19 protons − 18 electrons = 1+.",
+        "Potassium ion has 18 electrons, the same as argon. It lost its whole outer level, so it matches argon, the noble gas from the period before."
       ],
       "feedback": {
         "period": "That is potassium's period, or row. Valence electrons come from the group, or column.",
@@ -154,8 +179,13 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Losing electrons leaves more protons than electrons, so the charge is positive.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again."
-      }
+        "general": "Not yet. Use a hint and try again.",
+        "nameRule": "Only negative ions get the ‑ide ending. A metal ion keeps the element's name and adds the word ion.",
+        "trapGas": "Potassium lost its whole outer level, so it does not match the noble gas in its own period. Count the ion's electrons.",
+        "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
+      },
+      "nameWrong": "potasside",
+      "trapGas": "krypton"
     },
     {
       "name": "rubidium",
@@ -187,12 +217,17 @@
         [
           "Charge = protons − electrons.",
           "Rubidium has 37 protons. After losing 1, it has 36 electrons. What is 37 − 36?"
+        ],
+        [
+          "Metal ions keep the element's name and add the word ion. Nonmetal ions change the ending to ‑ide. For the noble gas, count the ion's electrons.",
+          "Rubidium is a metal. It has 37 protons and loses 1 electron, so the ion has 36 electrons. Which noble gas also has 36?"
         ]
       ],
       "correct": [
         "Rubidium has 1 valence electron. For groups 1 and 2, the group number is the number of valence electrons.",
         "Rubidium loses 1 electron to reach a full outer level.",
-        "37 protons − 36 electrons = 1+."
+        "37 protons − 36 electrons = 1+.",
+        "Rubidium ion has 36 electrons, the same as krypton. It lost its whole outer level, so it matches krypton, the noble gas from the period before."
       ],
       "feedback": {
         "period": "That is rubidium's period, or row. Valence electrons come from the group, or column.",
@@ -205,8 +240,13 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Losing electrons leaves more protons than electrons, so the charge is positive.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again."
-      }
+        "general": "Not yet. Use a hint and try again.",
+        "nameRule": "Only negative ions get the ‑ide ending. A metal ion keeps the element's name and adds the word ion.",
+        "trapGas": "Rubidium lost its whole outer level, so it does not match the noble gas in its own period. Count the ion's electrons.",
+        "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
+      },
+      "nameWrong": "rubidide",
+      "trapGas": "xenon"
     },
     {
       "name": "cesium",
@@ -238,12 +278,17 @@
         [
           "Charge = protons − electrons.",
           "Cesium has 55 protons. After losing 1, it has 54 electrons. What is 55 − 54?"
+        ],
+        [
+          "Metal ions keep the element's name and add the word ion. Nonmetal ions change the ending to ‑ide. For the noble gas, count the ion's electrons.",
+          "Cesium is a metal. It has 55 protons and loses 1 electron, so the ion has 54 electrons. Which noble gas also has 54?"
         ]
       ],
       "correct": [
         "Cesium has 1 valence electron. For groups 1 and 2, the group number is the number of valence electrons.",
         "Cesium loses 1 electron to reach a full outer level.",
-        "55 protons − 54 electrons = 1+."
+        "55 protons − 54 electrons = 1+.",
+        "Cesium ion has 54 electrons, the same as xenon. It lost its whole outer level, so it matches xenon, the noble gas from the period before."
       ],
       "feedback": {
         "period": "That is cesium's period, or row. Valence electrons come from the group, or column.",
@@ -256,8 +301,13 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Losing electrons leaves more protons than electrons, so the charge is positive.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again."
-      }
+        "general": "Not yet. Use a hint and try again.",
+        "nameRule": "Only negative ions get the ‑ide ending. A metal ion keeps the element's name and adds the word ion.",
+        "trapGas": "Cesium lost its whole outer level, so it does not match the noble gas in its own period. Count the ion's electrons.",
+        "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
+      },
+      "nameWrong": "ceside",
+      "trapGas": "radon"
     },
     {
       "name": "magnesium",
@@ -289,12 +339,17 @@
         [
           "Charge = protons − electrons.",
           "Magnesium has 12 protons. After losing 2, it has 10 electrons. What is 12 − 10?"
+        ],
+        [
+          "Metal ions keep the element's name and add the word ion. Nonmetal ions change the ending to ‑ide. For the noble gas, count the ion's electrons.",
+          "Magnesium is a metal. It has 12 protons and loses 2 electrons, so the ion has 10 electrons. Which noble gas also has 10?"
         ]
       ],
       "correct": [
         "Magnesium has 2 valence electrons. For groups 1 and 2, the group number is the number of valence electrons.",
         "Magnesium loses 2 electrons to reach a full outer level.",
-        "12 protons − 10 electrons = 2+."
+        "12 protons − 10 electrons = 2+.",
+        "Magnesium ion has 10 electrons, the same as neon. It lost its whole outer level, so it matches neon, the noble gas from the period before."
       ],
       "feedback": {
         "period": "That is magnesium's period, or row. Valence electrons come from the group, or column.",
@@ -307,8 +362,13 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Losing electrons leaves more protons than electrons, so the charge is positive.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again."
-      }
+        "general": "Not yet. Use a hint and try again.",
+        "nameRule": "Only negative ions get the ‑ide ending. A metal ion keeps the element's name and adds the word ion.",
+        "trapGas": "Magnesium lost its whole outer level, so it does not match the noble gas in its own period. Count the ion's electrons.",
+        "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
+      },
+      "nameWrong": "magneside",
+      "trapGas": "argon"
     },
     {
       "name": "calcium",
@@ -340,12 +400,17 @@
         [
           "Charge = protons − electrons.",
           "Calcium has 20 protons. After losing 2, it has 18 electrons. What is 20 − 18?"
+        ],
+        [
+          "Metal ions keep the element's name and add the word ion. Nonmetal ions change the ending to ‑ide. For the noble gas, count the ion's electrons.",
+          "Calcium is a metal. It has 20 protons and loses 2 electrons, so the ion has 18 electrons. Which noble gas also has 18?"
         ]
       ],
       "correct": [
         "Calcium has 2 valence electrons. For groups 1 and 2, the group number is the number of valence electrons.",
         "Calcium loses 2 electrons to reach a full outer level.",
-        "20 protons − 18 electrons = 2+."
+        "20 protons − 18 electrons = 2+.",
+        "Calcium ion has 18 electrons, the same as argon. It lost its whole outer level, so it matches argon, the noble gas from the period before."
       ],
       "feedback": {
         "period": "That is calcium's period, or row. Valence electrons come from the group, or column.",
@@ -358,8 +423,13 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Losing electrons leaves more protons than electrons, so the charge is positive.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again."
-      }
+        "general": "Not yet. Use a hint and try again.",
+        "nameRule": "Only negative ions get the ‑ide ending. A metal ion keeps the element's name and adds the word ion.",
+        "trapGas": "Calcium lost its whole outer level, so it does not match the noble gas in its own period. Count the ion's electrons.",
+        "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
+      },
+      "nameWrong": "calcide",
+      "trapGas": "krypton"
     },
     {
       "name": "strontium",
@@ -391,12 +461,17 @@
         [
           "Charge = protons − electrons.",
           "Strontium has 38 protons. After losing 2, it has 36 electrons. What is 38 − 36?"
+        ],
+        [
+          "Metal ions keep the element's name and add the word ion. Nonmetal ions change the ending to ‑ide. For the noble gas, count the ion's electrons.",
+          "Strontium is a metal. It has 38 protons and loses 2 electrons, so the ion has 36 electrons. Which noble gas also has 36?"
         ]
       ],
       "correct": [
         "Strontium has 2 valence electrons. For groups 1 and 2, the group number is the number of valence electrons.",
         "Strontium loses 2 electrons to reach a full outer level.",
-        "38 protons − 36 electrons = 2+."
+        "38 protons − 36 electrons = 2+.",
+        "Strontium ion has 36 electrons, the same as krypton. It lost its whole outer level, so it matches krypton, the noble gas from the period before."
       ],
       "feedback": {
         "period": "That is strontium's period, or row. Valence electrons come from the group, or column.",
@@ -409,8 +484,13 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Losing electrons leaves more protons than electrons, so the charge is positive.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again."
-      }
+        "general": "Not yet. Use a hint and try again.",
+        "nameRule": "Only negative ions get the ‑ide ending. A metal ion keeps the element's name and adds the word ion.",
+        "trapGas": "Strontium lost its whole outer level, so it does not match the noble gas in its own period. Count the ion's electrons.",
+        "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
+      },
+      "nameWrong": "strontide",
+      "trapGas": "xenon"
     },
     {
       "name": "barium",
@@ -442,12 +522,17 @@
         [
           "Charge = protons − electrons.",
           "Barium has 56 protons. After losing 2, it has 54 electrons. What is 56 − 54?"
+        ],
+        [
+          "Metal ions keep the element's name and add the word ion. Nonmetal ions change the ending to ‑ide. For the noble gas, count the ion's electrons.",
+          "Barium is a metal. It has 56 protons and loses 2 electrons, so the ion has 54 electrons. Which noble gas also has 54?"
         ]
       ],
       "correct": [
         "Barium has 2 valence electrons. For groups 1 and 2, the group number is the number of valence electrons.",
         "Barium loses 2 electrons to reach a full outer level.",
-        "56 protons − 54 electrons = 2+."
+        "56 protons − 54 electrons = 2+.",
+        "Barium ion has 54 electrons, the same as xenon. It lost its whole outer level, so it matches xenon, the noble gas from the period before."
       ],
       "feedback": {
         "period": "That is barium's period, or row. Valence electrons come from the group, or column.",
@@ -460,8 +545,13 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Losing electrons leaves more protons than electrons, so the charge is positive.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again."
-      }
+        "general": "Not yet. Use a hint and try again.",
+        "nameRule": "Only negative ions get the ‑ide ending. A metal ion keeps the element's name and adds the word ion.",
+        "trapGas": "Barium lost its whole outer level, so it does not match the noble gas in its own period. Count the ion's electrons.",
+        "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
+      },
+      "nameWrong": "baride",
+      "trapGas": "radon"
     },
     {
       "name": "aluminum",
@@ -493,12 +583,17 @@
         [
           "Charge = protons − electrons.",
           "Aluminum has 13 protons. After losing 3, it has 10 electrons. What is 13 − 10?"
+        ],
+        [
+          "Metal ions keep the element's name and add the word ion. Nonmetal ions change the ending to ‑ide. For the noble gas, count the ion's electrons.",
+          "Aluminum is a metal. It has 13 protons and loses 3 electrons, so the ion has 10 electrons. Which noble gas also has 10?"
         ]
       ],
       "correct": [
         "Aluminum has 3 valence electrons. For groups 13 to 18, use the last digit.",
         "Aluminum loses 3 electrons to reach a full outer level.",
-        "13 protons − 10 electrons = 3+."
+        "13 protons − 10 electrons = 3+.",
+        "Aluminum ion has 10 electrons, the same as neon. It lost its whole outer level, so it matches neon, the noble gas from the period before."
       ],
       "feedback": {
         "period": "That is aluminum's period, or row. Valence electrons come from the group, or column.",
@@ -511,8 +606,13 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Losing electrons leaves more protons than electrons, so the charge is positive.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again."
-      }
+        "general": "Not yet. Use a hint and try again.",
+        "nameRule": "Only negative ions get the ‑ide ending. A metal ion keeps the element's name and adds the word ion.",
+        "trapGas": "Aluminum lost its whole outer level, so it does not match the noble gas in its own period. Count the ion's electrons.",
+        "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
+      },
+      "nameWrong": "aluminide",
+      "trapGas": "argon"
     },
     {
       "name": "nitrogen",
@@ -544,12 +644,17 @@
         [
           "Charge = protons − electrons.",
           "Nitrogen has 7 protons. After gaining 3, it has 10 electrons. What is 7 − 10?"
+        ],
+        [
+          "Metal ions keep the element's name and add the word ion. Nonmetal ions change the ending to ‑ide. For the noble gas, count the ion's electrons.",
+          "Nitrogen is a nonmetal. It has 7 protons and gains 3 electrons, so the ion has 10 electrons. Which noble gas also has 10?"
         ]
       ],
       "correct": [
         "Nitrogen has 5 valence electrons. For groups 13 to 18, use the last digit.",
         "Nitrogen gains 3 electrons to reach a full outer level.",
-        "7 protons − 10 electrons = 3−."
+        "7 protons − 10 electrons = 3−.",
+        "Nitride has 10 electrons, the same as neon. It filled its own outer level, so it matches neon, the noble gas at the end of its period."
       ],
       "feedback": {
         "period": "That is nitrogen's period, or row. Valence electrons come from the group, or column.",
@@ -562,8 +667,13 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Gaining electrons leaves more electrons than protons, so the charge is negative.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again."
-      }
+        "general": "Not yet. Use a hint and try again.",
+        "nameRule": "A negative ion made from one nonmetal changes its ending to ‑ide.",
+        "trapGas": "Nitrogen gained electrons to fill its own outer level, so it matches the noble gas at the end of its own period, not the one before.",
+        "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
+      },
+      "nameWrong": "nitrogen ion",
+      "trapGas": "helium"
     },
     {
       "name": "phosphorus",
@@ -595,12 +705,17 @@
         [
           "Charge = protons − electrons.",
           "Phosphorus has 15 protons. After gaining 3, it has 18 electrons. What is 15 − 18?"
+        ],
+        [
+          "Metal ions keep the element's name and add the word ion. Nonmetal ions change the ending to ‑ide. For the noble gas, count the ion's electrons.",
+          "Phosphorus is a nonmetal. It has 15 protons and gains 3 electrons, so the ion has 18 electrons. Which noble gas also has 18?"
         ]
       ],
       "correct": [
         "Phosphorus has 5 valence electrons. For groups 13 to 18, use the last digit.",
         "Phosphorus gains 3 electrons to reach a full outer level.",
-        "15 protons − 18 electrons = 3−."
+        "15 protons − 18 electrons = 3−.",
+        "Phosphide has 18 electrons, the same as argon. It filled its own outer level, so it matches argon, the noble gas at the end of its period."
       ],
       "feedback": {
         "period": "That is phosphorus's period, or row. Valence electrons come from the group, or column.",
@@ -613,8 +728,13 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Gaining electrons leaves more electrons than protons, so the charge is negative.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again."
-      }
+        "general": "Not yet. Use a hint and try again.",
+        "nameRule": "A negative ion made from one nonmetal changes its ending to ‑ide.",
+        "trapGas": "Phosphorus gained electrons to fill its own outer level, so it matches the noble gas at the end of its own period, not the one before.",
+        "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
+      },
+      "nameWrong": "phosphorus ion",
+      "trapGas": "neon"
     },
     {
       "name": "oxygen",
@@ -646,12 +766,17 @@
         [
           "Charge = protons − electrons.",
           "Oxygen has 8 protons. After gaining 2, it has 10 electrons. What is 8 − 10?"
+        ],
+        [
+          "Metal ions keep the element's name and add the word ion. Nonmetal ions change the ending to ‑ide. For the noble gas, count the ion's electrons.",
+          "Oxygen is a nonmetal. It has 8 protons and gains 2 electrons, so the ion has 10 electrons. Which noble gas also has 10?"
         ]
       ],
       "correct": [
         "Oxygen has 6 valence electrons. For groups 13 to 18, use the last digit.",
         "Oxygen gains 2 electrons to reach a full outer level.",
-        "8 protons − 10 electrons = 2−."
+        "8 protons − 10 electrons = 2−.",
+        "Oxide has 10 electrons, the same as neon. It filled its own outer level, so it matches neon, the noble gas at the end of its period."
       ],
       "feedback": {
         "period": "That is oxygen's period, or row. Valence electrons come from the group, or column.",
@@ -664,8 +789,13 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Gaining electrons leaves more electrons than protons, so the charge is negative.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again."
-      }
+        "general": "Not yet. Use a hint and try again.",
+        "nameRule": "A negative ion made from one nonmetal changes its ending to ‑ide.",
+        "trapGas": "Oxygen gained electrons to fill its own outer level, so it matches the noble gas at the end of its own period, not the one before.",
+        "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
+      },
+      "nameWrong": "oxygen ion",
+      "trapGas": "helium"
     },
     {
       "name": "sulfur",
@@ -697,12 +827,17 @@
         [
           "Charge = protons − electrons.",
           "Sulfur has 16 protons. After gaining 2, it has 18 electrons. What is 16 − 18?"
+        ],
+        [
+          "Metal ions keep the element's name and add the word ion. Nonmetal ions change the ending to ‑ide. For the noble gas, count the ion's electrons.",
+          "Sulfur is a nonmetal. It has 16 protons and gains 2 electrons, so the ion has 18 electrons. Which noble gas also has 18?"
         ]
       ],
       "correct": [
         "Sulfur has 6 valence electrons. For groups 13 to 18, use the last digit.",
         "Sulfur gains 2 electrons to reach a full outer level.",
-        "16 protons − 18 electrons = 2−."
+        "16 protons − 18 electrons = 2−.",
+        "Sulfide has 18 electrons, the same as argon. It filled its own outer level, so it matches argon, the noble gas at the end of its period."
       ],
       "feedback": {
         "period": "That is sulfur's period, or row. Valence electrons come from the group, or column.",
@@ -715,8 +850,13 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Gaining electrons leaves more electrons than protons, so the charge is negative.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again."
-      }
+        "general": "Not yet. Use a hint and try again.",
+        "nameRule": "A negative ion made from one nonmetal changes its ending to ‑ide.",
+        "trapGas": "Sulfur gained electrons to fill its own outer level, so it matches the noble gas at the end of its own period, not the one before.",
+        "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
+      },
+      "nameWrong": "sulfur ion",
+      "trapGas": "neon"
     },
     {
       "name": "selenium",
@@ -748,12 +888,17 @@
         [
           "Charge = protons − electrons.",
           "Selenium has 34 protons. After gaining 2, it has 36 electrons. What is 34 − 36?"
+        ],
+        [
+          "Metal ions keep the element's name and add the word ion. Nonmetal ions change the ending to ‑ide. For the noble gas, count the ion's electrons.",
+          "Selenium is a nonmetal. It has 34 protons and gains 2 electrons, so the ion has 36 electrons. Which noble gas also has 36?"
         ]
       ],
       "correct": [
         "Selenium has 6 valence electrons. For groups 13 to 18, use the last digit.",
         "Selenium gains 2 electrons to reach a full outer level.",
-        "34 protons − 36 electrons = 2−."
+        "34 protons − 36 electrons = 2−.",
+        "Selenide has 36 electrons, the same as krypton. It filled its own outer level, so it matches krypton, the noble gas at the end of its period."
       ],
       "feedback": {
         "period": "That is selenium's period, or row. Valence electrons come from the group, or column.",
@@ -766,8 +911,13 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Gaining electrons leaves more electrons than protons, so the charge is negative.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again."
-      }
+        "general": "Not yet. Use a hint and try again.",
+        "nameRule": "A negative ion made from one nonmetal changes its ending to ‑ide.",
+        "trapGas": "Selenium gained electrons to fill its own outer level, so it matches the noble gas at the end of its own period, not the one before.",
+        "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
+      },
+      "nameWrong": "selenium ion",
+      "trapGas": "argon"
     },
     {
       "name": "fluorine",
@@ -799,12 +949,17 @@
         [
           "Charge = protons − electrons.",
           "Fluorine has 9 protons. After gaining 1, it has 10 electrons. What is 9 − 10?"
+        ],
+        [
+          "Metal ions keep the element's name and add the word ion. Nonmetal ions change the ending to ‑ide. For the noble gas, count the ion's electrons.",
+          "Fluorine is a nonmetal. It has 9 protons and gains 1 electron, so the ion has 10 electrons. Which noble gas also has 10?"
         ]
       ],
       "correct": [
         "Fluorine has 7 valence electrons. For groups 13 to 18, use the last digit.",
         "Fluorine gains 1 electron to reach a full outer level.",
-        "9 protons − 10 electrons = 1−."
+        "9 protons − 10 electrons = 1−.",
+        "Fluoride has 10 electrons, the same as neon. It filled its own outer level, so it matches neon, the noble gas at the end of its period."
       ],
       "feedback": {
         "period": "That is fluorine's period, or row. Valence electrons come from the group, or column.",
@@ -817,8 +972,13 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Gaining electrons leaves more electrons than protons, so the charge is negative.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again."
-      }
+        "general": "Not yet. Use a hint and try again.",
+        "nameRule": "A negative ion made from one nonmetal changes its ending to ‑ide.",
+        "trapGas": "Fluorine gained electrons to fill its own outer level, so it matches the noble gas at the end of its own period, not the one before.",
+        "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
+      },
+      "nameWrong": "fluorine ion",
+      "trapGas": "helium"
     },
     {
       "name": "chlorine",
@@ -850,12 +1010,17 @@
         [
           "Charge = protons − electrons.",
           "Chlorine has 17 protons. After gaining 1, it has 18 electrons. What is 17 − 18?"
+        ],
+        [
+          "Metal ions keep the element's name and add the word ion. Nonmetal ions change the ending to ‑ide. For the noble gas, count the ion's electrons.",
+          "Chlorine is a nonmetal. It has 17 protons and gains 1 electron, so the ion has 18 electrons. Which noble gas also has 18?"
         ]
       ],
       "correct": [
         "Chlorine has 7 valence electrons. For groups 13 to 18, use the last digit.",
         "Chlorine gains 1 electron to reach a full outer level.",
-        "17 protons − 18 electrons = 1−."
+        "17 protons − 18 electrons = 1−.",
+        "Chloride has 18 electrons, the same as argon. It filled its own outer level, so it matches argon, the noble gas at the end of its period."
       ],
       "feedback": {
         "period": "That is chlorine's period, or row. Valence electrons come from the group, or column.",
@@ -868,8 +1033,13 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Gaining electrons leaves more electrons than protons, so the charge is negative.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again."
-      }
+        "general": "Not yet. Use a hint and try again.",
+        "nameRule": "A negative ion made from one nonmetal changes its ending to ‑ide.",
+        "trapGas": "Chlorine gained electrons to fill its own outer level, so it matches the noble gas at the end of its own period, not the one before.",
+        "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
+      },
+      "nameWrong": "chlorine ion",
+      "trapGas": "neon"
     },
     {
       "name": "bromine",
@@ -901,12 +1071,17 @@
         [
           "Charge = protons − electrons.",
           "Bromine has 35 protons. After gaining 1, it has 36 electrons. What is 35 − 36?"
+        ],
+        [
+          "Metal ions keep the element's name and add the word ion. Nonmetal ions change the ending to ‑ide. For the noble gas, count the ion's electrons.",
+          "Bromine is a nonmetal. It has 35 protons and gains 1 electron, so the ion has 36 electrons. Which noble gas also has 36?"
         ]
       ],
       "correct": [
         "Bromine has 7 valence electrons. For groups 13 to 18, use the last digit.",
         "Bromine gains 1 electron to reach a full outer level.",
-        "35 protons − 36 electrons = 1−."
+        "35 protons − 36 electrons = 1−.",
+        "Bromide has 36 electrons, the same as krypton. It filled its own outer level, so it matches krypton, the noble gas at the end of its period."
       ],
       "feedback": {
         "period": "That is bromine's period, or row. Valence electrons come from the group, or column.",
@@ -919,8 +1094,13 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Gaining electrons leaves more electrons than protons, so the charge is negative.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again."
-      }
+        "general": "Not yet. Use a hint and try again.",
+        "nameRule": "A negative ion made from one nonmetal changes its ending to ‑ide.",
+        "trapGas": "Bromine gained electrons to fill its own outer level, so it matches the noble gas at the end of its own period, not the one before.",
+        "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
+      },
+      "nameWrong": "bromine ion",
+      "trapGas": "argon"
     },
     {
       "name": "iodine",
@@ -952,12 +1132,17 @@
         [
           "Charge = protons − electrons.",
           "Iodine has 53 protons. After gaining 1, it has 54 electrons. What is 53 − 54?"
+        ],
+        [
+          "Metal ions keep the element's name and add the word ion. Nonmetal ions change the ending to ‑ide. For the noble gas, count the ion's electrons.",
+          "Iodine is a nonmetal. It has 53 protons and gains 1 electron, so the ion has 54 electrons. Which noble gas also has 54?"
         ]
       ],
       "correct": [
         "Iodine has 7 valence electrons. For groups 13 to 18, use the last digit.",
         "Iodine gains 1 electron to reach a full outer level.",
-        "53 protons − 54 electrons = 1−."
+        "53 protons − 54 electrons = 1−.",
+        "Iodide has 54 electrons, the same as xenon. It filled its own outer level, so it matches xenon, the noble gas at the end of its period."
       ],
       "feedback": {
         "period": "That is iodine's period, or row. Valence electrons come from the group, or column.",
@@ -970,20 +1155,27 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Gaining electrons leaves more electrons than protons, so the charge is negative.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again."
-      }
+        "general": "Not yet. Use a hint and try again.",
+        "nameRule": "A negative ion made from one nonmetal changes its ending to ‑ide.",
+        "trapGas": "Iodine gained electrons to fill its own outer level, so it matches the noble gas at the end of its own period, not the one before.",
+        "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
+      },
+      "nameWrong": "iodine ion",
+      "trapGas": "krypton"
     }
   ],
   "ui": {
     "stepNames": [
       "Valence electrons",
       "Gain or lose",
-      "Ion charge"
+      "Ion charge",
+      "Name the ion"
     ],
     "questions": [
       "How many valence electrons does this atom have?",
       "Does this atom lose or gain electrons, and how many?",
-      "What charge does the ion form?"
+      "What charge does the ion form?",
+      "What is the ion called, and which noble gas has the same number of electrons?"
     ],
     "check": "Check answer",
     "hint": "Hint",
@@ -1022,7 +1214,12 @@
     "singleDone": "Chosen element complete",
     "hintPrefix": "Hint: ",
     "repeatNote": "Review items do not change the first-try counts.",
-    "previewNote": "Finish the current round or choose a new practice mode below."
+    "previewNote": "Finish the current round or choose a new practice mode below.",
+    "nameLegend": "Ion name",
+    "gasLegend": "Same number of electrons as",
+    "missing4": "Choose an ion name and a noble gas.",
+    "namingOption": "Include step 4: name the ion and match its noble gas",
+    "namingNote": "Changes apply from the next element."
   },
   "atomicLabel": "Atomic number",
   "tableCaption": "Main-group elements by group (column) and period (row)",
@@ -1099,6 +1296,13 @@
       "At",
       "Rn"
     ]
+  ],
+  "gases": [
+    "helium",
+    "neon",
+    "argon",
+    "krypton",
+    "xenon"
   ]
 };
   root.addEventListener("zsa:request-data", function (event) { event.detail.receive(data); }, {once: true});

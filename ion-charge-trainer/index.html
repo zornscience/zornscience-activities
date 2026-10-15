@@ -4,15 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.0.1">
+<meta name="zsa-version" content="1.1.0">
 <meta name="description" content="Practice predicting common ion charges with step-by-step hints and feedback.">
 <title>Predicting Ion Charge Trainer | ZornScience</title>
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.1">
-<link rel="stylesheet" href="trainer.css?v=1.0.1">
-<script src="../shared/zsa-embed.js?v=1.0.1" defer></script>
-<script src="data.js?v=1.0.1" defer></script>
-<script src="trainer.js?v=1.0.1" defer></script>
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.1.0">
+<link rel="stylesheet" href="trainer.css?v=1.1.0">
+<script src="../shared/zsa-embed.js?v=1.1.0" defer></script>
+<script src="data.js?v=1.1.0" defer></script>
+<script src="trainer.js?v=1.1.0" defer></script>
 </head>
 <body>
 <main class="zsa" data-zsa-activity="ion-charge-trainer">
@@ -35,6 +35,11 @@
 <section class="zsa-card zsa-ict-modes" aria-label="Practice options">
 <h2 class="zsa-ict-options-title">Your practice</h2>
 <p>Start a fresh mixed round or work on one element. Starting again clears this round.</p>
+<div class="zsa-ict-option">
+<input type="checkbox" id="zsa-ict-naming" checked aria-describedby="zsa-ict-naming-note">
+<label for="zsa-ict-naming">Include step 4: name the ion and match its noble gas</label>
+</div>
+<p class="zsa-ict-option-note" id="zsa-ict-naming-note">Changes apply from the next element.</p>
 <button class="zsa-btn" id="zsa-ict-new" type="button">Start a new round</button>
 <div class="zsa-ict-picker">
 <label for="zsa-ict-select">Choose an element</label>

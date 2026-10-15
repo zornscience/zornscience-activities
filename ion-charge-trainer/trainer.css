@@ -20,6 +20,8 @@
 .zsa-ict-question {margin:0 0 12px;}
 .zsa-ict-choices {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:12px 0;}
 .zsa-ict-choices--direction {grid-template-columns:repeat(2,minmax(0,1fr));}
+.zsa-ict-choices--gas {grid-template-columns:repeat(3,minmax(0,1fr));}
+@media(min-width:600px) {.zsa-ict-choices--gas {grid-template-columns:repeat(5,minmax(0,1fr));}}
 .zsa-ict-choice {position:relative;min-width:0;}
 .zsa-ict-choice input {position:absolute;opacity:0;width:1px;height:1px;}
 .zsa-ict-choice label {display:flex;align-items:center;justify-content:center;gap:4px;min-height:48px;border:1px solid var(--zsa-border-strong);border-radius:8px;color:var(--zsa-navy);font-weight:600;cursor:pointer;padding:4px;}
@@ -43,5 +45,10 @@
 .zsa-ict-modes p {font-size:16px;}
 .zsa-ict-stat {display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--zsa-border);padding:12px 0;}
 .zsa-ict-note {font-size:16px;}
+.zsa-ict-option {display:flex;align-items:center;gap:12px;min-height:44px;margin-top:16px;}
+.zsa-ict-option input {width:24px;height:24px;margin:0;flex-shrink:0;accent-color:var(--zsa-blue);}
+.zsa-ict-option input:focus-visible {outline:var(--zsa-focus-ring);outline-offset:var(--zsa-focus-offset);}
+.zsa-ict-option label {font-size:16px;color:var(--zsa-navy);font-weight:600;cursor:pointer;}
+.zsa-ict-modes .zsa-ict-option-note {margin:0 0 16px 36px;font-size:14px;}
 @media(max-width:359px) {.zsa-ict-intro {gap:12px;}.zsa-ict-element-tile {width:106px;}.zsa-ict-step {padding:12px;}.zsa-ict-element-title {font-size:24px;}}
 @media(min-width:600px) {.zsa-ict-picker {display:grid;grid-template-columns:1fr auto;}.zsa-ict-picker label {grid-column:1/-1;}}
