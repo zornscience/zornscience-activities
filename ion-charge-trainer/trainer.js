@@ -116,7 +116,7 @@
   var narrow=window.matchMedia("(max-width: 899px)");
   function anchor() {
     if(!narrow.matches||root.classList.contains("zsa--embedded"))return;
-    var main=work.querySelector(".zsa-ict-actions .zsa-btn, .zsa-ict-summary .zsa-btn");
+    var main=work.querySelector(".zsa-ict-step .zsa-ict-actions, .zsa-ict-summary .zsa-btn");
     var stripTop=elementBox.getBoundingClientRect().top;
     if(stripTop<0||(main&&main.getBoundingClientRect().bottom>window.innerHeight))elementBox.scrollIntoView({block:"start"});
   }
@@ -149,20 +149,32 @@
       work.appendChild(node("p","zsa-ict-feedback zsa-ict-last "+(lastFeedback.reveal?"zsa-ict-feedback--shown":"zsa-ict-feedback--correct"),lastFeedback.text));
     }
   }
-  function choices(field, values, name, direction) {
+  // Answer choices are buttons: a click, tap, Enter or Space picks one and the step checks itself as soon as
+  // every part is picked. Arrow keys, Home and End only move focus within the group (one Tab stop per group),
+  // so moving through the choices never submits an answer by accident.
+  function choices(field, values, name, direction, onPick) {
     // direction: true for the two-column layout, or a modifier name such as "gas".
     var grid=node("div","zsa-ict-choices"+(direction?" zsa-ict-choices--"+(direction===true?"direction":direction):""));
+    grid.setAttribute("data-zsa-part",name);
     values.forEach(function (pair,i) {
-      var wrap=node("div","zsa-ict-choice"), radio=node("input"),label=node("label","",pair[1]);
-      radio.type="radio";radio.name="zsa-ict-"+name;radio.value=pair[0];radio.id="zsa-ict-"+name+"-"+i;
-      label.htmlFor=radio.id;wrap.appendChild(radio);wrap.appendChild(label);grid.appendChild(wrap);
-    });field.appendChild(grid);
+      var b=node("button","zsa-ict-choice",String(pair[1]));
+      b.type="button";b.id="zsa-ict-"+name+"-"+i;b.value=String(pair[0]);b.tabIndex=i===0?0:-1;
+      b.setAttribute("aria-pressed","false");
+      b.addEventListener("click",function(){if(b.getAttribute("aria-disabled")!=="true")onPick(name,b);});
+      grid.appendChild(b);
+    });
+    grid.addEventListener("keydown",function(ev){
+      var list=[].slice.call(grid.querySelectorAll(".zsa-ict-choice")),i=list.indexOf(document.activeElement);
+      if(i<0)return;
+      var n={ArrowRight:i+1,ArrowDown:i+1,ArrowLeft:i-1,ArrowUp:i-1,Home:0,End:list.length-1}[ev.key];
+      if(n===undefined)return;
+      ev.preventDefault();n=(n+list.length)%list.length;
+      list.forEach(function(x,k){x.tabIndex=k===n?0:-1;});list[n].focus();
+    });
+    field.appendChild(grid);
   }
   function sub(field, legend) {
     var f=node("fieldset","zsa-ict-sub");f.appendChild(node("legend","",legend));field.appendChild(f);return f;
-  }
-  function value(field,name) {
-    var chosen=field.querySelector('input[name="zsa-ict-'+name+'"]:checked');return chosen?chosen.value:null;
   }
   function classify(e,s,a,b) {
     if(s===0) {
@@ -199,45 +211,54 @@
     var field=node("fieldset","zsa-ict-step");field.id="zsa-ict-step-"+s;
     // The question itself is the group's label, which saves a line over a separate step title.
     field.appendChild(node("legend","",(s+1)+". "+ui.questions[s]));
-    if(s===0) choices(field,[1,2,3,4,5,6,7,8].map(function(n){return [n,n];}),"valence","n8");
+    // Parts that must be picked before the step checks itself.
+    var parts=[["valence"],["direction","count"],["charge"],["name","gas"]][s], picked={};
+    function onPick(name,btn) {
+      [].forEach.call(btn.parentNode.querySelectorAll(".zsa-ict-choice"),function(x){x.setAttribute("aria-pressed",String(x===btn));});
+      picked[name]=btn;
+      if(parts.every(function(p){return picked[p];}))evaluate();
+    }
+    if(s===0) choices(field,[1,2,3,4,5,6,7,8].map(function(n){return [n,n];}),"valence","n8",onPick);
     if(s===1) {
-      choices(field,[["loses",ui.lose],["gains",ui.gain]],"direction",true);
-      choices(sub(field,ui.count),[1,2,3,4,5,6,7].map(function(n){return [n,n];}),"count","n7");
+      choices(field,[["loses",ui.lose],["gains",ui.gain]],"direction",true,onPick);
+      choices(sub(field,ui.count),[1,2,3,4,5,6,7].map(function(n){return [n,n];}),"count","n7",onPick);
     }
     if(s===2) {
       var charges=[3,2,1,-1,-2,-3], distractor=current.charge<0?-current.valence:current.valence;
       if(charges.indexOf(distractor)<0)charges.push(distractor);
-      choices(field,charges.map(function(n){return [n,Math.abs(n)+(n>0?"+":"−")];}),"charge","n"+charges.length);
+      choices(field,charges.map(function(n){return [n,Math.abs(n)+(n>0?"+":"−")];}),"charge","n"+charges.length,onPick);
     }
     if(s===3) {
-      choices(sub(field,ui.nameLegend),shuffle([current.ion,current.nameWrong]).map(function(n){return [n,n];}),"name",true);
-      choices(sub(field,ui.gasLegend),data.gases.map(function(g){return [g,cap(g)];}),"gas","gas");
+      choices(sub(field,ui.nameLegend),shuffle([current.ion,current.nameWrong]).map(function(n){return [n,n];}),"name",true,onPick);
+      choices(sub(field,ui.gasLegend),data.gases.map(function(g){return [g,cap(g)];}),"gas","gas",onPick);
     }
-    // Buttons sit right under the choices; feedback and hints appear below them so the buttons do not move.
+    // Hint and Show me sit right under the choices; feedback and hints appear below them.
     var actions=node("div","zsa-ict-actions");
     var feedback=node("p","zsa-ict-feedback");feedback.hidden=true;
     var hintBox=node("p","zsa-panel zsa-ict-hint");hintBox.hidden=true;
-    var check=button(ui.check,function(){
-      var a,b;
-      if(s===0)a=value(field,"valence");
-      else if(s===1){a=value(field,"direction");b=value(field,"count");}
-      else if(s===2)a=value(field,"charge");
-      else{a=value(field,"name");b=value(field,"gas");}
-      if(a===null || (s%2===1 && b===null)){showFeedback(s===1?ui.missing2:(s===3?ui.missing4:ui.missing));return;}
+    function evaluate() {
+      var a=picked[parts[0]].value,b=parts[1]?picked[parts[1]].value:null;
       attempts[s]++;
-      var message;
+      var message,wrongParts;
       if(s===3){
         var keys=classifyNaming(current,a,b);
         if(!keys.length){complete(false);return;}
         message=keys.map(function(k){return current.feedback[k];}).join(" ");
+        wrongParts=(keys.indexOf("nameRule")>=0?["name"]:[]).concat(keys.some(function(k){return k!=="nameRule";})?["gas"]:[]);
       } else {
         var key=classify(current,s,s===1?a:Number(a),Number(b));
         if(key===null){complete(false);return;}
         message=current.feedback[key];
+        wrongParts=s!==1?parts:key==="direction"?["direction"]:key==="number"?["count"]:parts;
       }
+      // Mark each wrong pick as tried (it can't be picked again) and clear it; a right part stays picked.
+      wrongParts.forEach(function(p){
+        var x=picked[p];x.classList.add("zsa-ict-tried");x.setAttribute("aria-pressed","false");x.setAttribute("aria-disabled","true");
+        x.appendChild(node("span","zsa-sr-only",ui.triedMark));delete picked[p];
+      });
       remember();mistakes[s]++;if(mistakes[s]>=2){show.hidden=false;schedule();}
       showFeedback(message);
-    },true);
+    }
     var hint=button(ui.hint,function(){
       if(hint.getAttribute("aria-disabled")==="true")return;
       hintBox.hidden=false;hintBox.textContent=current.hints[s][hints[s]];
@@ -248,7 +269,7 @@
       bringIntoView(hintBox); // last, after every change that can shift the layout
     });
     var show=button(ui.show,function(){complete(true);});show.hidden=true;
-    actions.appendChild(check);actions.appendChild(hint);actions.appendChild(show);
+    actions.appendChild(hint);actions.appendChild(show);
     field.appendChild(actions);field.appendChild(feedback);field.appendChild(hintBox);work.appendChild(field);
     function showFeedback(message) {
       var text=ui.wrong+message;
@@ -262,7 +283,7 @@
       announce(lastFeedback.text);
       if(s===0)table(); // clear the hint column once the step is done
       step++;
-      if(step<stepCount){renderStep();anchor();work.querySelector("#zsa-ict-step-"+step+" input").focus({preventScroll:true});}
+      if(step<stepCount){renderStep();anchor();work.querySelector("#zsa-ict-step-"+step+" .zsa-ict-choice").focus({preventScroll:true});}
       else{summary();}
     }
   }

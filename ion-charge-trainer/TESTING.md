@@ -1,7 +1,20 @@
 # Verification record
-Version: 1.2.0
+Version: 1.3.0
 Date: 2026-10-15
-Reviewer: Claude (integration review of ChatGPT's 1.0.0 package, then the 1.1.0 and 1.2.0 updates)
+Reviewer: Claude (integration review of ChatGPT's 1.0.0 package, then the 1.1.0 to 1.3.0 updates)
+
+## 1.3.0 results (tap to check)
+| Check | Status | Evidence |
+|---|---|---|
+| No Check button; tapping an answer checks it | PASS | Chlorine answered through all four steps by clicks only at eight screen sizes. |
+| Arrow keys never submit | PASS | Five ArrowRight presses in step 1 moved focus only; no feedback, same step. |
+| Wrong pick marked and locked | PASS | Marked with ✗, aria-disabled, named "(tried, not correct)"; pressing it again adds no attempt. |
+| Two-part partial answer | PASS | Right direction with wrong count: direction stays picked, the wrong count is marked, the next count pick checks again. |
+| Step 4 both parts wrong | PASS | Both messages shown together; both parts cleared and marked. |
+| Keyboard-only round | PASS | 10 elements plus 1 review with Show me, hints, partial and full wrong answers; focus visible at every choice. |
+| Fit, overflow, targets, axe, console, CSP, network | PASS | Same results as 1.2.0 (laptops largest bottom edge 450 px; 360x640 and 390x664 phones fit; zero axe violations in six states). |
+| Answer routing and science | PASS | 541 plus 190 combinations unchanged; 19 elements match the reference. General wrong-answer text no longer repeats "Not yet". |
+| Real screen readers, Firefox, Safari, school devices | NOT TESTED | Same as before. |
 
 ## 1.2.0 results (compact layout)
 | Check | Status | Evidence |

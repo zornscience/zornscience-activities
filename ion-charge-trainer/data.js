@@ -57,7 +57,7 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Losing electrons leaves more protons than electrons, so the charge is positive.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again.",
+        "general": "Use a hint and try again.",
         "nameRule": "Only negative ions get the ‑ide ending. A metal ion keeps the element's name and adds the word ion.",
         "trapGas": "Lithium lost its whole outer level, so it does not match the noble gas in its own period. Count the ion's electrons.",
         "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
@@ -118,7 +118,7 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Losing electrons leaves more protons than electrons, so the charge is positive.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again.",
+        "general": "Use a hint and try again.",
         "nameRule": "Only negative ions get the ‑ide ending. A metal ion keeps the element's name and adds the word ion.",
         "trapGas": "Sodium lost its whole outer level, so it does not match the noble gas in its own period. Count the ion's electrons.",
         "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
@@ -179,7 +179,7 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Losing electrons leaves more protons than electrons, so the charge is positive.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again.",
+        "general": "Use a hint and try again.",
         "nameRule": "Only negative ions get the ‑ide ending. A metal ion keeps the element's name and adds the word ion.",
         "trapGas": "Potassium lost its whole outer level, so it does not match the noble gas in its own period. Count the ion's electrons.",
         "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
@@ -240,7 +240,7 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Losing electrons leaves more protons than electrons, so the charge is positive.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again.",
+        "general": "Use a hint and try again.",
         "nameRule": "Only negative ions get the ‑ide ending. A metal ion keeps the element's name and adds the word ion.",
         "trapGas": "Rubidium lost its whole outer level, so it does not match the noble gas in its own period. Count the ion's electrons.",
         "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
@@ -301,7 +301,7 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Losing electrons leaves more protons than electrons, so the charge is positive.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again.",
+        "general": "Use a hint and try again.",
         "nameRule": "Only negative ions get the ‑ide ending. A metal ion keeps the element's name and adds the word ion.",
         "trapGas": "Cesium lost its whole outer level, so it does not match the noble gas in its own period. Count the ion's electrons.",
         "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
@@ -362,7 +362,7 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Losing electrons leaves more protons than electrons, so the charge is positive.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again.",
+        "general": "Use a hint and try again.",
         "nameRule": "Only negative ions get the ‑ide ending. A metal ion keeps the element's name and adds the word ion.",
         "trapGas": "Magnesium lost its whole outer level, so it does not match the noble gas in its own period. Count the ion's electrons.",
         "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
@@ -423,7 +423,7 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Losing electrons leaves more protons than electrons, so the charge is positive.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again.",
+        "general": "Use a hint and try again.",
         "nameRule": "Only negative ions get the ‑ide ending. A metal ion keeps the element's name and adds the word ion.",
         "trapGas": "Calcium lost its whole outer level, so it does not match the noble gas in its own period. Count the ion's electrons.",
         "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
@@ -484,7 +484,7 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Losing electrons leaves more protons than electrons, so the charge is positive.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again.",
+        "general": "Use a hint and try again.",
         "nameRule": "Only negative ions get the ‑ide ending. A metal ion keeps the element's name and adds the word ion.",
         "trapGas": "Strontium lost its whole outer level, so it does not match the noble gas in its own period. Count the ion's electrons.",
         "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
@@ -545,7 +545,7 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Losing electrons leaves more protons than electrons, so the charge is positive.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again.",
+        "general": "Use a hint and try again.",
         "nameRule": "Only negative ions get the ‑ide ending. A metal ion keeps the element's name and adds the word ion.",
         "trapGas": "Barium lost its whole outer level, so it does not match the noble gas in its own period. Count the ion's electrons.",
         "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
@@ -606,7 +606,7 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Losing electrons leaves more protons than electrons, so the charge is positive.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again.",
+        "general": "Use a hint and try again.",
         "nameRule": "Only negative ions get the ‑ide ending. A metal ion keeps the element's name and adds the word ion.",
         "trapGas": "Aluminum lost its whole outer level, so it does not match the noble gas in its own period. Count the ion's electrons.",
         "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
@@ -667,7 +667,7 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Gaining electrons leaves more electrons than protons, so the charge is negative.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again.",
+        "general": "Use a hint and try again.",
         "nameRule": "A negative ion made from one nonmetal changes its ending to ‑ide.",
         "trapGas": "Nitrogen gained electrons to fill its own outer level, so it matches the noble gas at the end of its own period, not the one before.",
         "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
@@ -728,7 +728,7 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Gaining electrons leaves more electrons than protons, so the charge is negative.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again.",
+        "general": "Use a hint and try again.",
         "nameRule": "A negative ion made from one nonmetal changes its ending to ‑ide.",
         "trapGas": "Phosphorus gained electrons to fill its own outer level, so it matches the noble gas at the end of its own period, not the one before.",
         "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
@@ -789,7 +789,7 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Gaining electrons leaves more electrons than protons, so the charge is negative.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again.",
+        "general": "Use a hint and try again.",
         "nameRule": "A negative ion made from one nonmetal changes its ending to ‑ide.",
         "trapGas": "Oxygen gained electrons to fill its own outer level, so it matches the noble gas at the end of its own period, not the one before.",
         "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
@@ -850,7 +850,7 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Gaining electrons leaves more electrons than protons, so the charge is negative.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again.",
+        "general": "Use a hint and try again.",
         "nameRule": "A negative ion made from one nonmetal changes its ending to ‑ide.",
         "trapGas": "Sulfur gained electrons to fill its own outer level, so it matches the noble gas at the end of its own period, not the one before.",
         "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
@@ -911,7 +911,7 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Gaining electrons leaves more electrons than protons, so the charge is negative.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again.",
+        "general": "Use a hint and try again.",
         "nameRule": "A negative ion made from one nonmetal changes its ending to ‑ide.",
         "trapGas": "Selenium gained electrons to fill its own outer level, so it matches the noble gas at the end of its own period, not the one before.",
         "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
@@ -972,7 +972,7 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Gaining electrons leaves more electrons than protons, so the charge is negative.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again.",
+        "general": "Use a hint and try again.",
         "nameRule": "A negative ion made from one nonmetal changes its ending to ‑ide.",
         "trapGas": "Fluorine gained electrons to fill its own outer level, so it matches the noble gas at the end of its own period, not the one before.",
         "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
@@ -1033,7 +1033,7 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Gaining electrons leaves more electrons than protons, so the charge is negative.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again.",
+        "general": "Use a hint and try again.",
         "nameRule": "A negative ion made from one nonmetal changes its ending to ‑ide.",
         "trapGas": "Chlorine gained electrons to fill its own outer level, so it matches the noble gas at the end of its own period, not the one before.",
         "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
@@ -1094,7 +1094,7 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Gaining electrons leaves more electrons than protons, so the charge is negative.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again.",
+        "general": "Use a hint and try again.",
         "nameRule": "A negative ion made from one nonmetal changes its ending to ‑ide.",
         "trapGas": "Bromine gained electrons to fill its own outer level, so it matches the noble gas at the end of its own period, not the one before.",
         "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
@@ -1155,7 +1155,7 @@
         "valence": "That is the number of valence electrons, not the charge. Charge comes from how many electrons the atom gains or loses.",
         "sign": "Gaining electrons leaves more electrons than protons, so the charge is negative.",
         "size": "Check it with protons − electrons.",
-        "general": "Not yet. Use a hint and try again.",
+        "general": "Use a hint and try again.",
         "nameRule": "A negative ion made from one nonmetal changes its ending to ‑ide.",
         "trapGas": "Iodine gained electrons to fill its own outer level, so it matches the noble gas at the end of its own period, not the one before.",
         "gasCount": "Count the ion's electrons, protons minus the charge, then find the noble gas with that many."
@@ -1230,7 +1230,8 @@
     "correctMark": "Correct: ",
     "shownMark": "Shown: ",
     "currentMark": " (this element)",
-    "hintMark": " (hint)"
+    "hintMark": " (hint)",
+    "triedMark": " (tried, not correct)"
   },
   "atomicLabel": "Atomic number",
   "tableCaption": "Main-group elements by group (column) and period (row)",
