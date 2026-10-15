@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.1">
+<meta name="description" content="Practice predicting common ion charges with step-by-step hints and feedback.">
+<title>Predicting Ion Charge Trainer | ZornScience</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.1">
+<link rel="stylesheet" href="trainer.css?v=1.0.1">
+<script src="../shared/zsa-embed.js?v=1.0.1" defer></script>
+<script src="data.js?v=1.0.1" defer></script>
+<script src="trainer.js?v=1.0.1" defer></script>
+</head>
+<body>
+<main class="zsa" data-zsa-activity="ion-charge-trainer">
+<header class="zsa-ict-header" data-zsa-chrome>
+<a class="zsa-back" href="https://zornscience.org/science/chemistry/unit-3-ionic-bonding/valence-electrons-and-predicting-charge/">← Back to the lesson</a>
+<p class="zsa-eyebrow">Chemistry · Ionic Bonding</p>
+<h1>Predicting Ion Charge Trainer</h1>
+<p>Count the outer electrons. Find the change. Explain the charge.</p>
+</header>
+<noscript><p class="zsa-panel">This activity needs JavaScript. Enable it to practice.</p></noscript>
+<section class="zsa-ict-tools" aria-label="Reference tools">
+<button class="zsa-btn" id="zsa-ict-table-toggle" aria-expanded="false" aria-controls="zsa-ict-table-panel" type="button">Show periodic table</button>
+<div class="zsa-panel zsa-ict-table-panel" id="zsa-ict-table-panel" hidden>
+<p id="zsa-ict-table-note">Main groups only. Transition metals are not shown. Some reference elements are not used in this activity.</p>
+<div id="zsa-ict-table"></div>
+</div>
+</section>
+<section id="zsa-ict-work" aria-label="Ion practice"></section>
+<p class="zsa-sr-only" id="zsa-ict-live" aria-live="polite" aria-atomic="true"></p>
+<section class="zsa-card zsa-ict-modes" aria-label="Practice options">
+<h2 class="zsa-ict-options-title">Your practice</h2>
+<p>Start a fresh mixed round or work on one element. Starting again clears this round.</p>
+<button class="zsa-btn" id="zsa-ict-new" type="button">Start a new round</button>
+<div class="zsa-ict-picker">
+<label for="zsa-ict-select">Choose an element</label>
+<select id="zsa-ict-select"></select>
+<button class="zsa-btn" id="zsa-ict-pick" type="button">Practice this element</button>
+</div>
+</section>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+</main>
+</body>
+</html>

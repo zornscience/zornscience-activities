@@ -1,0 +1,30 @@
+/* Inter 4.1 variable (SIL OFL 1.1, see fonts/Inter-OFL.txt), Latin subset plus the arrows, check mark and minus sign the activities use. */
+@font-face {font-family: Inter; src: url("fonts/InterVariable.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap;}
+body {margin:0; background:#ffffff;}
+.zsa {color-scheme:light; --zsa-navy:#0b2a5b; --zsa-blue:#1d4ed8; --zsa-sky:#eef4ff; --zsa-slate:#334155; --zsa-white:#ffffff; --zsa-border:#d6e2f5; --zsa-border-strong:#c7d6ee; --zsa-accent-light:#93c5fd; --zsa-success:#15803d; --zsa-success-bg:#f0fdf4; --zsa-error:#b91c1c; --zsa-error-bg:#fef2f2; --zsa-shadow-card:0 10px 24px rgba(11,42,91,.12); --zsa-shadow-pop:0 12px 28px rgba(11,42,91,.22); --zsa-radius-sm:6px; --zsa-radius:8px; --zsa-radius-lg:12px; --zsa-radius-pill:999px; --zsa-font:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif; --zsa-text:18px; --zsa-text-sm:16px; --zsa-text-label:13px; --zsa-leading:1.65; --zsa-max-width:760px; --zsa-tap:44px; --zsa-focus-ring:3px solid #1d4ed8; --zsa-focus-offset:2px; font:400 var(--zsa-text)/var(--zsa-leading) var(--zsa-font); color:var(--zsa-slate); background:var(--zsa-white); max-width:var(--zsa-max-width); margin:0 auto; padding:24px 16px;}
+.zsa *, .zsa *::before, .zsa *::after {box-sizing:border-box;}
+.zsa [hidden] {display:none;}
+.zsa h1,.zsa h2,.zsa h3 {color:var(--zsa-navy); font-weight:500;}
+.zsa h1 {font-size:clamp(2.25rem,1.8rem + 1.5vw,3rem);line-height:1.15;margin:12px 0 20px;}
+.zsa h2 {font-size:clamp(1.75rem,1.5rem + .8vw,2.25rem);line-height:1.2;}
+.zsa h3 {font-size:clamp(1.3rem,1.2rem + .4vw,1.5rem);line-height:1.3;}
+.zsa a {color:var(--zsa-blue);text-underline-offset:4px;}
+.zsa a:focus-visible,.zsa button:focus-visible,.zsa input:focus-visible,.zsa select:focus-visible,.zsa [tabindex]:focus-visible {outline:var(--zsa-focus-ring);outline-offset:var(--zsa-focus-offset);}
+.zsa button,.zsa select,.zsa input {font:inherit;}
+.zsa button,.zsa select {min-height:var(--zsa-tap);}
+.zsa button {cursor:pointer;}
+.zsa button:disabled {cursor:default;}
+.zsa-btn {border:1px solid var(--zsa-navy);border-radius:var(--zsa-radius);padding:12px 20px;background:white;color:var(--zsa-navy);font-size:16px;}
+.zsa-btn--primary {background:var(--zsa-blue);border-color:var(--zsa-blue);color:white;}
+.zsa-btn:hover:not(:disabled) {background:var(--zsa-sky);}
+.zsa-btn--primary:hover:not(:disabled) {background:var(--zsa-navy);color:white;}
+.zsa-btn[aria-disabled="true"],.zsa-btn[aria-disabled="true"]:hover {background:#f8fafc;border-color:var(--zsa-border-strong);color:var(--zsa-slate);cursor:default;}
+.zsa-card {border:1px solid var(--zsa-border);border-radius:var(--zsa-radius-lg);padding:16px;margin:16px 0;}
+.zsa-eyebrow {font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--zsa-blue);}
+.zsa-panel {background:var(--zsa-sky);border:1px solid var(--zsa-border);border-radius:8px;padding:12px 16px;}
+.zsa-sr-only {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+.zsa-footer {border-top:1px solid var(--zsa-border);margin-top:32px;padding-top:20px;font-size:16px;display:flex;flex-wrap:wrap;align-items:center;gap:16px;}
+.zsa-footer a,.zsa-back {display:inline-flex;align-items:center;min-height:44px;}
+.zsa--embedded {padding-top:8px;padding-bottom:8px;}
+@media(min-width:600px) {.zsa {padding-left:24px;padding-right:24px;}}
+@media(prefers-reduced-motion:reduce) {.zsa * {animation:none!important;transition:none!important;scroll-behavior:auto!important;}}

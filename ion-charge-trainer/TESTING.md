@@ -1,0 +1,66 @@
+# Verification record
+Version: 1.0.1
+Date: 2026-10-14
+Reviewer: Claude (integration review of ChatGPT's 1.0.0 package)
+
+PASS means the check was run on version 1.0.1 and passed. NOT TESTED means it could not be run in Claude's workspace. Browser checks used Chromium 141 (Playwright) over a local web server. Version 1.0.0 was run through the same suite first; what it found is listed under "Fixed in 1.0.1".
+
+## Files and code
+| Check | Status | Evidence |
+|---|---|---|
+| Folder structure and file names | PASS | Matches the handoff tree, plus `shared/fonts/InterVariable.woff2` and `Inter-OFL.txt`. |
+| Version consistent | PASS | 1.0.1 in README, meta tag, and all five asset query strings. |
+| HTML standards validation | PASS | W3C Nu HTML Checker (vnu 24.10.17): no errors, no warnings. |
+| CSS validation | PASS | Nu checker CSS mode: no errors in either stylesheet. |
+| JavaScript syntax | PASS | `node --check` on all three files. |
+| Browser console | PASS | No errors or warnings across all test runs. |
+| CSP violations | PASS | Zero `securitypolicyviolation` events through a full round. |
+| Network requests | PASS | Only the page, two stylesheets, three scripts, and the local font. No outside requests. |
+| Globals, storage, cookies, forbidden APIs | PASS | Static scan: no `innerHTML`, inline styles, storage, cookies, `fetch`, XHR, or window assignments. |
+| Size | PASS | Activity folder about 90 KB. Shared font about 100 KB. |
+| No em dashes, Unicode minus for charges | PASS | Whole-package scan. |
+
+## Science and logic
+| Check | Status | Evidence |
+|---|---|---|
+| Independent reference comparison | PASS | All 19 elements checked against the `mendeleev` periodic table database: name, Z, group, period, valence, direction, electrons moved, charge, final electron count, noble gas, ion name, spoken label. Each charge is a listed oxidation state. |
+| Text matches data | PASS | Summary arithmetic, step 3 hint, group hint, and shorter-path hint numbers checked for every element. |
+| Reference periodic table | PASS | All 42 cells in the right group and period. |
+| Misconception routing | PASS | All 541 answer choices across 19 elements match an independently written expectation. O:2, P:3, and Ba:6 route to the combined message. |
+| Feedback after real clicks | PASS | Keyboard run showed period, sign, and number feedback and the reveal text on screen and in the live region. |
+| Full round, hints, Show me, review repeat, summary, picker | PASS | Keyboard-only round of 10 plus 1 review item. Missed element came back as "Review 11 of 11". Summary counts and review list correct. Picker starts "Chosen element 1 of 1". |
+
+## Layout and accessibility
+| Check | Status | Evidence |
+|---|---|---|
+| 320, 360, 390, 768, 1366 x 768, 1920 widths | PASS | No horizontal scrolling at any width, periodic table open. Screenshots reviewed. |
+| 200% zoom | PASS | 683 CSS px viewport (1366 at 200%): no horizontal scrolling. |
+| 44 x 44 tap targets | PASS | Every visible button, choice label, select, and link measured at 320 and 1366. |
+| Keyboard-only round | PASS | Tab, arrows, Space, and Enter only, including wrong answers, both hints, and Show me. |
+| Visible focus | PASS | All 36 focus stops checked: outline at least 2px on the control or its visible label. |
+| Focus management | PASS | New element heading, next step's first choice, summary heading, round summary heading. Focus kept on the Hint button after the last hint. |
+| Automated accessibility audit | PASS | axe-core 4.10 (WCAG 2.2 AA plus best practices): zero violations in five states (start, wrong answer, hint with table, element summary, round summary). |
+| Ion spoken text | PASS | Accessibility tree exposes only "nitride ion, 3 minus charge" style text. Visual symbol hidden. |
+| Contrast in rendered states | PASS | axe color-contrast rule in all five states. Selected and focus colors 6.7:1 on white. |
+| Reduced motion | PASS | Rule present. The activity has no transitions or animations to disable. |
+| Real screen readers (NVDA, VoiceOver, ChromeVox) | NOT TESTED | Not available in the workspace. The live region and accessibility tree were checked instead. |
+| Firefox and Safari | NOT TESTED | Only Chromium is available. Uses standard features only. |
+
+## Integration
+| Check | Status | Evidence |
+|---|---|---|
+| Standalone header, back link, footer | PASS | Back link points to the Predicting Charge lesson URL. |
+| Embed mode at top level | PASS | `?embed=1` hides header and footer. Links target `_top`. No message sent. |
+| Embed mode inside a zornscience.org page | PASS | Simulated host page: resize messages arrive only from the activity origin to https://zornscience.org, the frame grows when the table opens, and the host page does not scroll on load. |
+| Inter font | PASS | Loaded from `shared/fonts/` at every width. |
+| Live URL, WordPress callout, school devices | NOT TESTED | After hosting is set up. |
+
+## Fixed in 1.0.1
+- On first load, focus jumped to the element heading. That skipped the title and instructions for screen readers, and in embed mode it scrolled the host page down to the activity (1,036 px in the test).
+- After the second hint, the Hint button became disabled and keyboard focus fell to the page body.
+- Finished steps kept their Check and Hint buttons, which looked active.
+- "Answer shown" used the green success style even though the student had not answered correctly.
+- "has 1 valence electrons" (9 strings) and "a anion" (9 strings).
+- Lithium's long-path feedback stated the answer on the first wrong try.
+- Table rows were labeled "Row" instead of "Period", and the caption was "Group (column)". The current element was marked in the table before any hint.
+- Footer text and link were misaligned. The body had an 8px default margin.
