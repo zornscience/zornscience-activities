@@ -1,13 +1,5 @@
-/* Layout: compact single column on phones, two columns (table left, question right) from 900px. */
-.zsa.zsa-ict {--zsa-max-width:1080px; padding-top:12px;}
-@media(max-width:899px) {.zsa.zsa-ict {--zsa-max-width:760px;}}
-.zsa-ict-header {margin-bottom:12px;}
-.zsa-ict-topline {display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;column-gap:16px;}
-.zsa-ict-topline .zsa-eyebrow {margin:0;}
-.zsa-ict .zsa-ict-header h1 {font-size:clamp(1.5rem,1.2rem + 1.2vw,2rem);line-height:1.2;margin:0;}
-.zsa-ict-layout {display:grid;gap:12px;}
-@media(min-width:900px) {.zsa-ict-layout {grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:24px;align-items:start;}}
-.zsa-ict-ref {display:grid;gap:10px;align-content:start;}
+/* Ion Charge Trainer: the element strip, its answer grids and the step 4 setting. Shared layout and components
+   are in ../shared/zsa-activity.css. */
 
 /* Element strip */
 .zsa-ict-element {display:flex;align-items:center;gap:12px;min-height:60px;}
@@ -19,95 +11,28 @@
 .zsa-ict .zsa-ict-element-title {font-size:1.4rem;line-height:1.2;margin:0;overflow-wrap:anywhere;}
 .zsa-ict-caption {font-size:15px;margin:0;}
 
-/* Periodic table, always visible */
-.zsa-ict-table-wrap {background:var(--zsa-sky);border:1px solid var(--zsa-border);border-radius:12px;padding:6px 8px 4px;}
-.zsa-ict-table {width:100%;border-collapse:separate;border-spacing:3px;table-layout:fixed;font-size:14px;text-align:center;}
-.zsa-ict-table caption {text-align:left;font-size:13px;font-weight:600;color:var(--zsa-navy);padding:0 3px 2px;}
-.zsa-ict-table th {font-size:12px;font-weight:600;color:var(--zsa-navy);padding:1px 0;border-radius:6px;}
-.zsa-ict-table thead th:first-child {font-size:11px;}
-.zsa-ict-table td {height:28px;padding:0;background:var(--zsa-white);border:1px solid var(--zsa-border-strong);border-radius:6px;color:var(--zsa-navy);}
-.zsa-ict-table td:empty {background:transparent;border-color:transparent;}
-.zsa-ict-table .zsa-ict-highlight {background:#dbeafe;border-color:var(--zsa-blue);}
-.zsa-ict-table th.zsa-ict-highlight {background:var(--zsa-blue);color:var(--zsa-white);}
-.zsa-ict-table td.zsa-ict-current {background:var(--zsa-navy);border-color:var(--zsa-navy);color:var(--zsa-white);font-weight:700;box-shadow:0 0 0 2px var(--zsa-white),0 0 0 4px var(--zsa-blue);}
-.zsa-ict-table-note {font-size:12px;margin:2px 3px 0;}
-
-/* Question area */
-.zsa-ict-progress {font-size:14px;color:var(--zsa-blue);font-weight:600;margin:2px 0 0;}
-.zsa-ict-trail {list-style:none;margin:0 0 8px;padding:0;display:flex;flex-wrap:wrap;gap:6px;}
-.zsa-ict-trail li {font-size:14px;font-weight:600;line-height:1.3;padding:4px 10px;border-radius:var(--zsa-radius-pill);color:var(--zsa-success);background:var(--zsa-success-bg);border:1px solid #bbf7d0;}
-.zsa-ict-trail li.zsa-ict-trail--shown {color:var(--zsa-navy);background:var(--zsa-sky);border-color:var(--zsa-border);}
-.zsa-ict-step {min-width:0;border:1px solid var(--zsa-border);border-radius:12px;margin:0;padding:8px 14px 14px;}
-.zsa-ict-step > legend {font-size:17px;line-height:1.35;font-weight:600;color:var(--zsa-navy);padding:0 6px;max-width:100%;}
-.zsa-ict-sub {min-width:0;border:0;margin:8px 0 0;padding:0;}
-.zsa-ict-step .zsa-ict-sub legend {font-size:15px;font-weight:600;color:var(--zsa-navy);padding:0;}
-.zsa-ict-choices {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:6px 0 0;}
-.zsa-ict-choices--direction {grid-template-columns:repeat(2,minmax(0,1fr));}
-.zsa-ict-choices--gas {grid-template-columns:repeat(3,minmax(0,1fr));}
+/* Answer grids */
+.zsa-choices--direction {grid-template-columns:repeat(2,minmax(0,1fr));}
+.zsa-choices--gas {grid-template-columns:repeat(3,minmax(0,1fr));}
 /* One row of number choices wherever each button can still be at least 44px wide. */
-@media(min-width:360px) {.zsa-ict-choices--n6 {grid-template-columns:repeat(6,minmax(0,1fr));}.zsa-ict-choices--n7 {grid-template-columns:repeat(7,minmax(0,1fr));}.zsa-ict-choices--gas {grid-template-columns:repeat(5,minmax(0,1fr));}.zsa-ict-choices--gas .zsa-ict-choice {font-size:14px;padding:2px;}}
-@media(min-width:440px) {.zsa-ict-choices--n8 {grid-template-columns:repeat(8,minmax(0,1fr));}}
-/* Answer buttons: picking one checks it (two-part steps check once both parts are picked). */
-.zsa-ict-choice {display:flex;align-items:center;justify-content:center;gap:4px;width:100%;min-width:0;min-height:44px;margin:0;padding:4px;border:1px solid var(--zsa-border-strong);border-radius:8px;background:var(--zsa-white);color:var(--zsa-navy);font:inherit;font-weight:600;line-height:1.2;text-align:center;cursor:pointer;touch-action:manipulation;}
-.zsa-ict-choice:hover:not([aria-disabled="true"]):not([aria-pressed="true"]) {background:var(--zsa-sky);border-color:var(--zsa-blue);}
-.zsa-ict-choice[aria-pressed="true"] {color:var(--zsa-white);background:var(--zsa-blue);border-color:var(--zsa-blue);}
-.zsa-ict-choice.zsa-ict-tried {color:var(--zsa-error);background:var(--zsa-error-bg);border-color:#fca5a5;cursor:default;}
-.zsa-ict-choice.zsa-ict-tried::before {content:"✗";font-size:13px;}
-.zsa-ict-actions {display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
-.zsa-ict-actions .zsa-btn {padding:10px 18px;}
-.zsa-ict-feedback {padding:8px 12px;border-radius:8px;margin:10px 0 0;font-size:15px;line-height:1.45;}
-.zsa-ict-feedback--correct {color:var(--zsa-success);background:var(--zsa-success-bg);}
-.zsa-ict-feedback--wrong {color:var(--zsa-error);background:var(--zsa-error-bg);}
-.zsa-ict-feedback--shown {color:var(--zsa-navy);background:var(--zsa-sky);border:1px solid var(--zsa-border);}
-.zsa-ict-last {margin:0 0 10px;}
-.zsa-ict-hint {margin:10px 0 0;font-size:15px;line-height:1.45;padding:8px 12px;}
+@media(min-width:360px) {.zsa-choices--n6 {grid-template-columns:repeat(6,minmax(0,1fr));}.zsa-choices--n7 {grid-template-columns:repeat(7,minmax(0,1fr));}.zsa-choices--gas {grid-template-columns:repeat(5,minmax(0,1fr));}.zsa-choices--gas .zsa-choice {font-size:14px;padding:2px;}}
+@media(min-width:440px) {.zsa-choices--n8 {grid-template-columns:repeat(8,minmax(0,1fr));}}
 
-/* Element summary and round summary */
-.zsa-ict-summary {background:var(--zsa-sky);margin:0;padding:12px 16px 16px;}
-.zsa-ict-summary h3 {margin:0 0 4px;}
-.zsa-ict-summary-row {display:flex;align-items:center;gap:16px;}
-.zsa-ict-summary-row p {margin:0;font-size:16px;}
+/* Element summary */
 .zsa-ict-ion {font-size:34px;color:var(--zsa-navy);margin:0;flex-shrink:0;}
-.zsa .zsa-ict-finish-title {font-size:1.5rem;margin:0 0 4px;}
-.zsa-ict-stat {display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--zsa-border);padding:6px 0;font-size:16px;}
-.zsa-ict-note {font-size:15px;margin:6px 0;}
-.zsa-ict-review {font-size:15px;margin:4px 0;padding-left:20px;}
 
-/* Practice options (collapsed by default) */
-.zsa-ict-modes {margin:20px 0 0;padding:0;}
-.zsa-ict-modes > summary {display:flex;align-items:center;min-height:44px;padding:0 16px;font-weight:600;color:var(--zsa-navy);cursor:pointer;}
-.zsa-ict-modes > summary:focus-visible {outline:var(--zsa-focus-ring);outline-offset:var(--zsa-focus-offset);border-radius:var(--zsa-radius-lg);}
-.zsa-ict-modes-body {padding:0 16px 16px;}
-.zsa-ict-modes p {font-size:16px;margin:0 0 8px;}
+/* Practice options: the step 4 setting and the element picker */
 .zsa-ict-option {display:flex;align-items:center;gap:12px;min-height:44px;}
 .zsa-ict-option input {width:24px;height:24px;margin:0;flex-shrink:0;accent-color:var(--zsa-blue);}
 .zsa-ict-option input:focus-visible {outline:var(--zsa-focus-ring);outline-offset:var(--zsa-focus-offset);}
 .zsa-ict-option label {font-size:16px;color:var(--zsa-navy);font-weight:600;cursor:pointer;}
-.zsa-ict-modes .zsa-ict-option-note {margin:0 0 12px 36px;font-size:14px;}
-.zsa-ict-picker {display:flex;flex-direction:column;gap:8px;margin-top:16px;}
-.zsa-ict-picker select {border:1px solid var(--zsa-navy);border-radius:8px;padding:8px;max-width:100%;background:white;color:var(--zsa-navy);}
-@media(min-width:600px) {.zsa-ict-picker {display:grid;grid-template-columns:1fr auto;}.zsa-ict-picker label {grid-column:1/-1;}}
-.zsa-ict .zsa-footer {margin-top:20px;padding-top:12px;}
-/* Phones: shorter header, no duplicate tile (the table marks the element), denser table. */
+.zsa-modes .zsa-ict-option-note {margin:0 0 12px 36px;font-size:14px;}
+@media(min-width:600px) {.zsa-picker {display:grid;grid-template-columns:1fr auto;}.zsa-picker label {grid-column:1/-1;}}
+
+/* Phones: no duplicate tile (the table marks the element). */
 @media(max-width:599px) {
-  .zsa-ict-topline .zsa-eyebrow {display:none;}
-  .zsa-ict .zsa-ict-header {margin-bottom:6px;}
-  .zsa-ict .zsa-ict-header h1 {font-size:1.25rem;}
-  .zsa-ict-layout, .zsa-ict-ref {gap:8px;}
   .zsa-ict-element {min-height:0;}
   .zsa-ict-element-tile {display:none;}
   .zsa-ict .zsa-ict-element-title {font-size:1.25rem;}
   .zsa-ict-caption {font-size:14px;}
-  .zsa-ict-table-wrap {padding:4px 6px 2px;}
-  .zsa-ict-table {border-spacing:2px;font-size:13px;}
-  .zsa-ict-table td {height:24px;}
-  .zsa-ict-table caption, .zsa-ict-table-note {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
-  .zsa-ict-step {padding:4px 12px 12px;}
-  .zsa-ict-step > legend {font-size:16px;}
-  .zsa-ict-trail li {font-size:13px;padding:3px 8px;}
-  .zsa-ict-feedback, .zsa-ict-hint {font-size:14px;line-height:1.4;}
-  .zsa-ict-last {margin-bottom:8px;}
-  .zsa-ict-actions {margin-top:10px;}
-  .zsa-ict-actions .zsa-btn {padding:10px 14px;}
 }
-@media(max-width:359px) {.zsa-ict-step {padding:4px 8px 10px;}}

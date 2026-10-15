@@ -4,40 +4,42 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.3.0">
+<meta name="zsa-version" content="1.3.1">
 <meta name="description" content="Practice predicting common ion charges with step-by-step hints and feedback.">
 <title>Predicting Ion Charge Trainer | ZornScience</title>
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.3.0">
-<link rel="stylesheet" href="trainer.css?v=1.3.0">
-<script src="../shared/zsa-embed.js?v=1.3.0" defer></script>
-<script src="data.js?v=1.3.0" defer></script>
-<script src="trainer.js?v=1.3.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.3.1">
+<link rel="stylesheet" href="../shared/zsa-activity.css?v=1.3.1">
+<link rel="stylesheet" href="trainer.css?v=1.3.1">
+<script src="../shared/zsa-embed.js?v=1.3.1" defer></script>
+<script src="../shared/zsa-engine.js?v=1.3.1" defer></script>
+<script src="data.js?v=1.3.1" defer></script>
+<script src="trainer.js?v=1.3.1" defer></script>
 </head>
 <body>
-<main class="zsa zsa-ict" data-zsa-activity="ion-charge-trainer">
-<header class="zsa-ict-header" data-zsa-chrome>
-<div class="zsa-ict-topline">
+<main class="zsa zsa-activity zsa-ict" data-zsa-activity="ion-charge-trainer">
+<header class="zsa-header" data-zsa-chrome>
+<div class="zsa-topline">
 <a class="zsa-back" href="https://zornscience.org/science/chemistry/unit-3-ionic-bonding/valence-electrons-and-predicting-charge/">← Back to the lesson</a>
 <p class="zsa-eyebrow">Chemistry · Ionic Bonding</p>
 </div>
 <h1>Predicting Ion Charge Trainer</h1>
 </header>
 <noscript><p class="zsa-panel">This activity needs JavaScript. Enable it to practice.</p></noscript>
-<div class="zsa-ict-layout">
-<section class="zsa-ict-ref" aria-label="Element and periodic table">
+<div class="zsa-layout">
+<section class="zsa-ref" aria-label="Element and periodic table">
 <div class="zsa-ict-element" id="zsa-ict-element"></div>
-<div class="zsa-ict-table-wrap">
+<div class="zsa-table-wrap">
 <div id="zsa-ict-table"></div>
-<p class="zsa-ict-table-note" id="zsa-ict-table-note">Main groups only. Transition metals are not shown.</p>
+<p class="zsa-table-note" id="zsa-ict-table-note">Main groups only. Transition metals are not shown.</p>
 </div>
 </section>
-<section class="zsa-ict-work" id="zsa-ict-work" aria-label="Ion practice"></section>
+<section class="zsa-work" id="zsa-ict-work" aria-label="Ion practice"></section>
 </div>
 <p class="zsa-sr-only" id="zsa-ict-live" aria-live="polite" aria-atomic="true"></p>
-<details class="zsa-card zsa-ict-modes" id="zsa-ict-options">
+<details class="zsa-card zsa-modes" id="zsa-ict-options">
 <summary>Practice options</summary>
-<div class="zsa-ict-modes-body">
+<div class="zsa-modes-body">
 <p>Start a fresh mixed round or work on one element. Starting again clears this round.</p>
 <div class="zsa-ict-option">
 <input type="checkbox" id="zsa-ict-naming" checked aria-describedby="zsa-ict-naming-note">
@@ -45,7 +47,7 @@
 </div>
 <p class="zsa-ict-option-note" id="zsa-ict-naming-note">Changes apply from the next element.</p>
 <button class="zsa-btn" id="zsa-ict-new" type="button">Start a new round</button>
-<div class="zsa-ict-picker">
+<div class="zsa-picker">
 <label for="zsa-ict-select">Choose an element</label>
 <select id="zsa-ict-select"></select>
 <button class="zsa-btn" id="zsa-ict-pick" type="button">Practice this element</button>

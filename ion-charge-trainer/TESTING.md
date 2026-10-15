@@ -1,7 +1,15 @@
 # Verification record
-Version: 1.3.0
+Version: 1.3.1
 Date: 2026-10-15
-Reviewer: Claude (integration review of ChatGPT's 1.0.0 package, then the 1.1.0 to 1.3.0 updates)
+Reviewer: Claude (integration review of ChatGPT's 1.0.0 package, then the 1.1.0 to 1.3.1 updates)
+
+## 1.3.1 results (shared engine)
+| Check | Status | Evidence |
+|---|---|---|
+| Behavior unchanged | PASS | `npm run parity` against 1.3.0 (origin/main): 21 scenarios, 6,687 compared states and 4,744 full-page screenshot pairs across both activities. The scenarios cover full seeded rounds with five answering styles at 1366x657, 390x664, 768x1024 and 320x568, Practice my misses, Practice options, embed mode, every item from the picker (19 elements) and step 4 turned off. The DOM, form state, focus, live region, scroll position, every element's box and computed style, and the screenshots matched in every state. Rounds, review fillers and answer order are also identical under the same random sequence. |
+| Automated suite | PASS | `npm test`: 16 unit tests and 51 browser tests, the same suite that passed on 1.3.0 before the change (root TESTING.md). It covers science against an independent reference, every answer combination (541 plus 190), round rules (200 seeded rounds), the review queue against a model, keyboard and focus, axe-core 4.14 in 9 states at two sizes, layout fit, tap targets, embed mode, network and CSP. |
+| axe-core | PASS (one known finding) | Zero violations in every audited state at 1366x657 and 390x664. The one exception is the known best-practice finding `page-has-heading-one` in embed mode (the header, h1 included, is hidden as chrome). It predates 1.3.1 and is recorded in README Known limitations. |
+| Real screen readers, Firefox, Safari, school devices | NOT TESTED | Same as before. |
 
 ## 1.3.0 results (tap to check)
 | Check | Status | Evidence |
