@@ -1175,7 +1175,7 @@
       "How many valence electrons does this atom have?",
       "Does this atom lose or gain electrons, and how many?",
       "What charge does the ion form?",
-      "What is the ion called, and which noble gas has the same number of electrons?"
+      "Name the ion and the noble gas with the same number of electrons."
     ],
     "check": "Check answer",
     "hint": "Hint",
@@ -1219,7 +1219,18 @@
     "gasLegend": "Same number of electrons as",
     "missing4": "Choose an ion name and a noble gas.",
     "namingOption": "Include step 4: name the ion and match its noble gas",
-    "namingNote": "Changes apply from the next element."
+    "namingNote": "Changes apply from the next element.",
+    "valenceOne": "valence electron",
+    "valenceMany": "valence electrons",
+    "loses": "Loses",
+    "gains": "Gains",
+    "chargeWord": "Charge",
+    "likeWord": "like",
+    "trailLabel": "Your answers so far",
+    "correctMark": "Correct: ",
+    "shownMark": "Shown: ",
+    "currentMark": " (this element)",
+    "hintMark": " (hint)"
   },
   "atomicLabel": "Atomic number",
   "tableCaption": "Main-group elements by group (column) and period (row)",

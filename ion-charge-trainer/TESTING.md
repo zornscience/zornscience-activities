@@ -1,7 +1,21 @@
 # Verification record
-Version: 1.1.0
+Version: 1.2.0
 Date: 2026-10-15
-Reviewer: Claude (integration review of ChatGPT's 1.0.0 package, then the 1.1.0 step 4 update)
+Reviewer: Claude (integration review of ChatGPT's 1.0.0 package, then the 1.1.0 and 1.2.0 updates)
+
+## 1.2.0 results (compact layout)
+| Check | Status | Evidence |
+|---|---|---|
+| Fits without scrolling | PASS | All four steps and the summary keep the Check or Next button on screen with the table in view at 360x640, 390x664, 768x1024, 1280x617, 1366x657 and 1920x960 (largest bottom edge 450 px on laptops, 640 px on a 360x640 phone). |
+| Very small phone | PARTIAL | At 320x568, steps 2 and 4 need about 100 to 160 px of scrolling. Nothing is cut off and there is no sideways scrolling. |
+| 200% zoom | PASS for reflow | 683x384: no sideways scrolling; vertical scrolling is expected at this zoom. |
+| Current element always highlighted | PASS | One cell marked in every state, read as "(this element)". Step 1 hint highlights the group column, read as "(hint)", and clears when the step ends. |
+| Keyboard round | PASS | 10 elements plus 1 review with wrong answers, both hints, Show me and a step 4 mistake. Focus moves to each new step's first choice, to the summary heading, then to Next. Practice options opens with Enter. |
+| Hint and feedback stay visible | PASS | On a 390x664 phone, the second hint's bottom edge lands at the screen edge after the automatic scroll. |
+| Answer routing and science | PASS | 541 step 1 to 3 and 190 step 4 combinations unchanged; all 19 elements still match the reference. |
+| axe, console, CSP, network, targets, validation | PASS | Zero axe violations in seven states, no console errors or CSP violations, local files only, no target under 44 px at 320 or 1366 px, Nu checker clean. |
+| Embed mode | PASS | Host page does not scroll on load; resize messages arrive. Automatic scrolling is turned off in embed mode. |
+| Real screen readers, Firefox, Safari, school devices | NOT TESTED | Same as before. |
 
 ## 1.1.0 results (step 4 and setting)
 | Check | Status | Evidence |

@@ -1,5 +1,5 @@
 # Predicting Ion Charge Trainer
-Version: 1.1.0
+Version: 1.2.0
 
 ## Assumptions and departures
 - Claude will host these static files and add the WordPress link. This package makes no hosting or WordPress changes.
@@ -96,7 +96,15 @@ The complete element-specific wording and hints live in data.js. The following r
 | 4 | Nonmetal picks the previous period's noble gas | It filled its own outer level, so it matches the noble gas at the end of its own period. |
 | 4 | Any other noble gas | Count the ion's electrons, then find the noble gas with that many. |
 
-A blank submission prompts the student to choose all needed inputs and does not count as an attempt. Two incorrect submissions in a step expose Show me and mark the element for delayed review. Show me selects the correct controls, supplies the explanation, locks the step, and advances. Previous steps remain visible and locked. A completed element waits for Next element rather than advancing automatically.
+A blank submission prompts the student to choose all needed inputs and does not count as an attempt. Two incorrect submissions in a step expose Show me and mark the element for delayed review. Show me supplies the answer and explanation and moves on. A completed element waits for Next element rather than advancing automatically.
+
+## Layout (1.2)
+- One step at a time. When a step is finished it collapses into a chip in the answer trail (green check for correct, blue arrow for shown), and its explanation stays on screen above the next step.
+- The main-group periodic table is always visible. The current element is filled navy with a ring; a step 1 hint also highlights its group column. Screen readers hear "(this element)" and "(hint)".
+- 900 px and wider: table and element on the left, question on the right. Narrower: element, table, then question, with a shorter header and denser table on phones.
+- On screens narrower than 900 px, each new step scrolls so the element name is at the top when the step would otherwise run off the bottom. New feedback or a hint is scrolled into view if it lands below the screen. Neither happens in embed mode.
+- Practice options (new round, choose an element, step 4 setting) are in a collapsed panel under the activity.
+- Measured fit (Check or Next button on screen without the student scrolling, table in view): 360x640 and 390x664 phones, 768x1024 tablets, 1280x617 Chromebooks, 1366x657 laptops and larger. Very small phones (320x568) need a short scroll on steps 2 and 4.
 
 ## Keyboard controls
 - Tab and Shift+Tab move through buttons, the select control, and radio groups.
@@ -105,6 +113,7 @@ A blank submission prompts the student to choose all needed inputs and does not 
 - On first page load, focus stays at the top of the page so the title and instructions come first (and an embedded copy never scrolls the host page). Each element after that focuses its heading. A completed step focuses the next step's first choice. The final step focuses the summary heading.
 - After both hints are shown, the Hint button stays focusable but inactive (aria-disabled), so keyboard focus is never lost.
 - Focus remains visible. Feedback uses a persistent polite live region. The main-group table uses row and column headers.
+- Practice options is a native disclosure: Tab to it and press Enter or Space to open it.
 - The visually displayed ion symbol and superscript are hidden from assistive technology. One shared formatting helper supplies the full ion name and spoken charge.
 
 ## Lesson page callout
@@ -119,6 +128,8 @@ Button label: Open the Ion Charge Trainer
 - Initial shared components are included. Future activities should reuse them and propose any changes before modifying them.
 
 ## Changelog
+1.2.0: Compact layout. One step at a time with an answer trail, periodic table always visible with the current element highlighted (group column added on a step 1 hint), two columns on laptops, denser phone layout, question text used as the step heading, number choices in one row where they stay 44 px wide, buttons above feedback, automatic alignment on narrow screens, and practice options in a collapsed panel. Step 4 question shortened.
+
 1.1.0: Added optional step 4, name the ion and match its noble gas, with hints, Show me, misconception feedback, and its own first-try count. "Include step 4" setting under Your practice (on by default). Progress shows "Step x of 3" or "of 4" to match.
 
 1.0.1 (Claude review): Added the Inter font and enabled its rule. No automatic focus on first load (it skipped the intro and scrolled an embedding page to the activity). Hint button keeps focus after the last hint. Finished steps hide their buttons. "Answer shown" feedback uses a neutral panel instead of the success style. Grammar fixes ("1 valence electron", "an anion"). Lithium long-path feedback no longer gives away the answer. Reference table labels rows "Period" and marks the element only after a hint. Footer alignment, body margin, and embed height buffer adjusted.
