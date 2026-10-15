@@ -12,6 +12,7 @@ shared/
   zsa-embed.js             ?embed=1 mode and zsa:resize messages
   fonts/InterVariable.woff2, Inter-OFL.txt
 ion-charge-trainer/        Predicting Ion Charge Trainer, v1.0.1
+ionic-formula-builder/     Ionic Formula Builder, v1.0.0
 ```
 
 ## Publishing (GitHub Pages)
