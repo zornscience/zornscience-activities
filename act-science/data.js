@@ -1,0 +1,278 @@
+// ACT Science Practice: the question bank, the skill tips, and every word a student sees.
+// To add a passage, add an object to `passages` with status "draft". Only "reviewed" passages appear to students.
+// Text fields may use <sub>, <sup>, <em> and <strong> and nothing else. Write symbols as characters (°, ≈), not
+// entities. Body blocks: text, heading, viewpoint, table, lineChart, diagram (see README.md for each one's fields).
+// Explanations must not name a choice letter: letters depend on where the passage lands in a set.
+(function () {
+  "use strict";
+  var root = document.querySelector('[data-zsa-activity="act-science"]');
+  if (!root) return;
+  var data = {
+  ui: {
+    eyebrow: "Practice set",
+    title: "ACT Science Practice",
+    lede: "Read each passage, answer its questions, and get a score report that shows how you compare nationally and which skills to work on next. Nothing is saved or sent anywhere.",
+    modeOne: "One passage",
+    modeOneText: "A random passage with 5 to 7 questions. About 6 minutes.",
+    modeMixed: "Mixed practice",
+    modeMixedText: "{passages} passages, one of each type, with an estimated ACT Science score. About {minutes} minutes.",
+    factsTitle: "The ACT Science test",
+    facts: [
+      ["40", "questions in 40 minutes, so plan on about 1 minute per question."],
+      ["3", "passage types: Data Representation, Research Summaries, and Conflicting Viewpoints."],
+      ["{avg}", "national average Science score for the {avgClass}."],
+      ["{benchmark}", "ACT's college readiness benchmark for Science."]
+    ],
+    factsNote: "Science is optional on the national ACT, but Illinois students take it as part of the state ACT at school.",
+    time: "Time",
+    pace: "ACT pace",
+    passageLabel: "Passage {roman} · {type}",
+    passageOf: "Passage {n} of {total}",
+    passageRegion: "Passage text and figures",
+    figureData: "Data in {caption}",
+    quit: "Quit",
+    previous: "Previous passage",
+    next: "Next passage",
+    score: "Score my answers",
+    blank: "You left {count} {questions} blank.",
+    blankAdvice: "The ACT has no penalty for guessing, so on test day, answer every question.",
+    keepWorking: "Keep working",
+    scoreAnyway: "Score it anyway",
+    reportTitle: "Score report",
+    correct: "{pct}% correct",
+    timeUsed: "Time {time}, {pace} ({paceTime} for {count} questions).",
+    onPace: "on ACT pace",
+    slowPace: "slower than ACT pace",
+    estimateTitle: "Estimated ACT Science score: {lo} to {hi}",
+    estimateText: "That range is {cmp} the national average of {avg}. A {est}, the middle of your range, is about the <strong>{pr} percentile</strong>, meaning you would score as well as or better than about {prNum}% of students who take the test.",
+    above: "above", below: "below", about: "about at",
+    meetsBenchmark: "It also meets ACT's college readiness benchmark of {benchmark}.",
+    benchmarkIs: "ACT's college readiness benchmark is {benchmark}.",
+    scaleYou: "You ≈ {est}",
+    scaleAvg: "Avg {avg}",
+    scaleBenchmark: "Benchmark {benchmark}",
+    disclaimer: "This is a rough estimate. It scales your percent correct to a 40-question test using a typical past ACT conversion, and uses ACT's {rankYear} national ranks. Real test forms are scaled differently, and {count} questions is a small sample.",
+    compareTitle: "How this compares",
+    compareText: "One passage is too few questions to estimate an ACT score. As a rough guide, students near the national average of {avg} get about half of the Science questions right, and students at the college readiness benchmark of {benchmark} get about two thirds right.",
+    compareMore: "Try mixed practice for an estimated score and percentile.",
+    bySkill: "By skill",
+    workOn: "What to work on",
+    keepSharp: "Keep it sharp",
+    allRight: "You got every question right",
+    allRightTips: [
+      "Work on speed next. Try finishing each passage in under 5 minutes.",
+      "Practice skimming: read the questions first, then go to the figure they name.",
+      "Try the other passage types to make sure your skills hold up across all three."
+    ],
+    habits: "Test-day habits",
+    habitsTips: [
+      "ACT Science tests reading data more than memorized facts. Most answers are in the figures.",
+      "Skim the passage for what was changed and measured, then go to the questions.",
+      "Never leave a question blank. There is no penalty for guessing."
+    ],
+    reviewTitle: "Review your answers",
+    tagCorrect: "Correct", tagMissed: "Missed", tagBlank: "Blank",
+    noAnswer: "No answer.",
+    youChose: "You chose {letter}.",
+    answerIs: "Answer:",
+    home: "Back to start",
+    again: "Try another set"
+  },
+  skills: {
+    data: {name: "Reading tables and graphs", tips: [
+      "Read the axis labels, units, and table headings before you look at the question.",
+      "Put your finger (or cursor) on the exact row, column, or point the question names.",
+      "Check which figure or table the question points to. ACT questions usually name it."]},
+    trends: {name: "Spotting trends", tips: [
+      "Say the trend in words: increases, decreases, or increases then decreases.",
+      "Look across the whole range of data, not just the first two values.",
+      "When comparing factors, compare how much the result changes, not just the direction."]},
+    inter: {name: "Interpolating and predicting", tips: [
+      "For a value between two data points, the answer is usually between their results.",
+      "For a value past the data, continue the pattern and notice whether the changes are getting bigger or smaller.",
+      "Cross out choices that fall outside the possible range first."]},
+    design: {name: "Experimental design", tips: [
+      "The independent variable is what the scientists changed on purpose. The dependent variable is what they measured.",
+      "Constants are the conditions that stay the same across every trial in one experiment.",
+      "Look for a trial that repeats across experiments. It often works as a control."]},
+    claims: {name: "Evaluating claims and evidence", tips: [
+      "Find the data the claim depends on, then check every value, not just one.",
+      "In \"Yes, because\" choices, the reason must also be true and match the data.",
+      "New evidence supports a viewpoint when it matches what that viewpoint predicts."]},
+    views: {name: "Comparing viewpoints", tips: [
+      "Before the questions, write a one-line summary of each viewpoint in the margin.",
+      "Mark what each viewpoint says causes the result and what it predicts will happen.",
+      "For agreement questions, find the idea both share, even if they disagree on details."]}
+  },
+  types: ["Data Representation", "Research Summaries", "Conflicting Viewpoints"],
+  passages: [
+    {
+      id: "catalase",
+      type: "Data Representation",
+      title: "Catalase and Temperature",
+      topic: "Biology",
+      status: "reviewed",
+      body: [
+        {kind: "text", html: "Catalase is an enzyme found in many living cells. It speeds up the breakdown of hydrogen peroxide (H<sub>2</sub>O<sub>2</sub>) into water and oxygen gas (O<sub>2</sub>)."},
+        {kind: "text", html: "Students added 5 mL of potato extract (a source of catalase) to 10 mL of 3% H<sub>2</sub>O<sub>2</sub> solution buffered to pH 5, 7, or 9. They ran trials at several temperatures and collected the O<sub>2</sub> produced in the first 60 seconds (Figure 1)."},
+        {kind: "lineChart", caption: "Figure 1", xLabel: "Temperature (°C)", yLabel: "O<sub>2</sub> collected (mL)", x: [10, 20, 30, 40, 50, 60], yMax: 35, yStep: 5,
+          series: [
+            {name: "pH 7", values: [8, 15, 24, 30, 18, 5]},
+            {name: "pH 9", values: [6, 12, 19, 23, 14, 4]},
+            {name: "pH 5", values: [5, 10, 16, 20, 12, 3]}
+          ]},
+        {kind: "text", html: "The students then repeated the procedure at 40°C and pH 7 using different concentrations of H<sub>2</sub>O<sub>2</sub> (Table 1)."},
+        {kind: "table", caption: "Table 1", headers: ["H<sub>2</sub>O<sub>2</sub> concentration (%)", "O<sub>2</sub> collected (mL)"],
+          rows: [[1, 12], [2, 21], [3, 30], [4, 35], [5, 37]]}
+      ],
+      questions: [
+        {skill: "data", difficulty: 1,
+          stem: "According to Figure 1, at pH 7 the greatest volume of O<sub>2</sub> was collected at which temperature?",
+          choices: ["20°C", "30°C", "40°C", "50°C"], answer: 2,
+          explanation: "The pH 7 curve peaks at 30 mL, which is at 40°C."},
+        {skill: "trends", difficulty: 1,
+          stem: "According to Figure 1, as temperature increased from 10°C to 60°C at pH 5, the volume of O<sub>2</sub> collected:",
+          choices: ["increased only.", "decreased only.", "increased, then decreased.", "decreased, then increased."], answer: 2,
+          explanation: "At pH 5 the volume rises from 5 mL to 20 mL at 40°C, then falls to 3 mL at 60°C."},
+        {skill: "inter", difficulty: 2,
+          stem: "Based on Figure 1, if a trial had been run at pH 7 and 35°C, the volume of O<sub>2</sub> collected would most likely have been closest to:",
+          choices: ["15 mL", "20 mL", "27 mL", "33 mL"], answer: 2,
+          explanation: "35°C is halfway between 30°C (24 mL) and 40°C (30 mL), so about 27 mL."},
+        {skill: "inter", difficulty: 2,
+          stem: "Based on Table 1, if the students had used 6% H<sub>2</sub>O<sub>2</sub>, the volume of O<sub>2</sub> collected would most likely have been:",
+          choices: ["less than 30 mL.", "between 30 mL and 35 mL.", "between 37 mL and 40 mL.", "greater than 50 mL."], answer: 2,
+          explanation: "Each increase adds less than the one before (+9, +9, +5, +2), so the next value should be only slightly above 37 mL."},
+        {skill: "design", difficulty: 2,
+          stem: "Which variable was held constant in the trials shown in Table 1 but changed in the trials shown in Figure 1?",
+          choices: ["H<sub>2</sub>O<sub>2</sub> concentration", "Temperature", "Collection time", "Volume of O<sub>2</sub> collected"], answer: 1,
+          explanation: "Table 1 trials were all at 40°C, while Figure 1 trials ran from 10°C to 60°C. Collection time was 60 s in both."},
+        {skill: "claims", difficulty: 3,
+          stem: "A student claims that catalase produced the most O<sub>2</sub> at pH 7 at every temperature tested. Do the data in Figure 1 support this claim?",
+          choices: [
+            "Yes; at each temperature, the pH 7 trial produced more O<sub>2</sub> than the pH 5 and pH 9 trials.",
+            "Yes; the pH 9 trials always produced the least O<sub>2</sub>.",
+            "No; at 40°C, the pH 9 trial produced the most O<sub>2</sub>.",
+            "No; at 10°C, the pH 5 trial produced the most O<sub>2</sub>."], answer: 0,
+          explanation: "At all six temperatures the pH 7 point is highest. The other \"Yes\" choice has a false reason: pH 5, not pH 9, was always lowest."}
+      ]
+    },
+    {
+      id: "antacid",
+      type: "Research Summaries",
+      title: "Antacid Tablet Reactions",
+      topic: "Chemistry",
+      status: "reviewed",
+      body: [
+        {kind: "text", html: "Effervescent antacid tablets contain sodium bicarbonate and citric acid. When a tablet is placed in water, these compounds react and release carbon dioxide gas, which forms bubbles. Students measured the <em>reaction time</em>, the time from when a tablet entered the water until bubbling stopped. Every tablet had the same mass."},
+        {kind: "heading", text: "Experiment 1"},
+        {kind: "text", html: "A whole tablet was dropped into 200 mL of water. This was repeated at different water temperatures (Table 1)."},
+        {kind: "table", caption: "Table 1", headers: ["Water temperature (°C)", "Reaction time (s)"],
+          rows: [[5, 92], [20, 61], [35, 40], [50, 27], [65, 19]]},
+        {kind: "heading", text: "Experiment 2"},
+        {kind: "text", html: "Tablets were added to 200 mL of water at 20°C. Each tablet was whole, broken into 4 pieces, or ground into powder (Table 2)."},
+        {kind: "table", caption: "Table 2", headers: ["Tablet form", "Reaction time (s)"],
+          rows: [["Whole", 61], ["4 pieces", 44], ["Powder", 23]]},
+        {kind: "heading", text: "Experiment 3"},
+        {kind: "text", html: "Whole tablets were added to different volumes of water at 20°C (Table 3)."},
+        {kind: "table", caption: "Table 3", headers: ["Volume of water (mL)", "Reaction time (s)"],
+          rows: [[100, 63], [200, 61], [400, 60]]}
+      ],
+      questions: [
+        {skill: "design", difficulty: 1,
+          stem: "In Experiment 1, the independent variable was:",
+          choices: ["water temperature.", "reaction time.", "volume of water.", "tablet form."], answer: 0,
+          explanation: "Temperature is what the students changed on purpose in Experiment 1. Reaction time is what they measured."},
+        {skill: "inter", difficulty: 1,
+          stem: "Based on Experiment 1, a whole tablet in 200 mL of water at 42°C would most likely have a reaction time closest to:",
+          choices: ["20 s", "33 s", "45 s", "58 s"], answer: 1,
+          explanation: "42°C falls between 35°C (40 s) and 50°C (27 s), so the time should be between 27 s and 40 s."},
+        {skill: "trends", difficulty: 2,
+          stem: "Based on Experiments 1 through 3, which factor had the smallest effect on reaction time?",
+          choices: ["Water temperature", "Tablet form", "Volume of water", "The factors had equal effects."], answer: 2,
+          explanation: "Quadrupling the water volume changed the time by only 3 s, much less than the changes in Experiments 1 and 2."},
+        {skill: "design", difficulty: 2,
+          stem: "The whole-tablet trial in Experiment 2 used the same conditions as which trial in Experiment 1?",
+          choices: ["5°C", "20°C", "35°C", "50°C"], answer: 1,
+          explanation: "Both used a whole tablet in 200 mL of 20°C water, and both took 61 s."},
+        {skill: "claims", difficulty: 2,
+          stem: "A student hypothesized that increasing a tablet's exposed surface area shortens its reaction time. Which results best support this hypothesis?",
+          choices: [
+            "Experiment 2, because the powdered tablet had the shortest reaction time.",
+            "Experiment 2, because the whole tablet had the shortest reaction time.",
+            "Experiment 3, because more water produced a shorter reaction time.",
+            "Experiment 1, because warmer water produced a shorter reaction time."], answer: 0,
+          explanation: "Grinding a tablet into powder increases its surface area, and the powder reacted fastest (23 s). Experiment 1 tests temperature, not surface area."},
+        {skill: "inter", difficulty: 3,
+          stem: "If a powdered tablet were added to 200 mL of water at 50°C, its reaction time would most likely be:",
+          choices: ["more than 61 s.", "between 27 s and 61 s.", "between 23 s and 27 s.", "less than 23 s."], answer: 3,
+          explanation: "Powder at 20°C took 23 s, and warmer water speeds the reaction. Combining both factors should give less than 23 s."}
+      ]
+    },
+    {
+      id: "candle",
+      type: "Conflicting Viewpoints",
+      title: "The Candle in the Jar",
+      topic: "Chemistry",
+      status: "reviewed",
+      body: [
+        {kind: "text", html: "In a class demonstration, a candle was secured upright in a shallow dish of water and lit. A glass jar was lowered upside down over the candle so its rim sat under the water. After several seconds, the flame went out and water rose into the jar. Dry air is about 78% nitrogen (N<sub>2</sub>) and 21% oxygen (O<sub>2</sub>) by volume."},
+        {kind: "diagram", caption: "Figure 1", label: "A candle stands in a dish of water under an upside-down glass jar. The water level inside the jar is higher than the water in the dish.",
+          viewBox: [320, 190],
+          shapes: [
+            {shape: "path", d: "M30 150 L290 150 L276 176 L44 176 Z", fill: "surface", stroke: "muted", width: 2},
+            {shape: "rect", x: 34, y: 152, w: 252, h: 20, fill: "water"},
+            {shape: "rect", x: 112, y: 128, w: 96, h: 24, fill: "water"},
+            {shape: "path", d: "M110 160 L110 34 Q110 22 122 22 L198 22 Q210 22 210 34 L210 160", stroke: "blue", width: 3},
+            {shape: "rect", x: 152, y: 92, w: 16, h: 52, fill: "line", stroke: "muted", width: 1.5},
+            {shape: "line", x1: 160, y1: 92, x2: 160, y2: 84, stroke: "ink", width: 2},
+            {shape: "line", x1: 220, y1: 108, x2: 172, y2: 108, stroke: "muted", width: 1},
+            {shape: "line", x1: 220, y1: 130, x2: 196, y2: 134, stroke: "muted", width: 1},
+            {shape: "text", x: 222, y: 40, text: "glass jar"},
+            {shape: "text", x: 222, y: 112, text: "candle"},
+            {shape: "text", x: 222, y: 128, text: "water level"},
+            {shape: "text", x: 222, y: 142, text: "inside jar"}
+          ]},
+        {kind: "text", html: "Three students explained the results."},
+        {kind: "viewpoint", label: "Student 1", html: "The flame uses up the O<sub>2</sub> in the jar. Removing a gas lowers the pressure inside the jar, so water is pushed in to take the space the O<sub>2</sub> filled. The flame goes out when all of the O<sub>2</sub> is gone. Because O<sub>2</sub> is 21% of air, water should rise to fill about 21% of the jar."},
+        {kind: "viewpoint", label: "Student 2", html: "Burning wax produces carbon dioxide (CO<sub>2</sub>) and water vapor, which replace much of the O<sub>2</sub> used, so burning alone changes the amount of gas very little. The flame heats the gas in the jar, and some escapes as bubbles while the jar is lowered. After the flame goes out, the remaining gas cools and contracts, the pressure drops, and water rises. Most of the rise should happen after the flame goes out."},
+        {kind: "viewpoint", label: "Student 3", html: "Student 2 is correct that water rises because the gas cools. However, a candle flame needs O<sub>2</sub> to make up at least about 16% of the gas to keep burning. The flame goes out before the O<sub>2</sub> is used up, so O<sub>2</sub> is still in the jar afterward."}
+      ],
+      questions: [
+        {skill: "views", difficulty: 1,
+          stem: "Students 1 and 2 would most likely agree that water rises into the jar because:",
+          choices: [
+            "the pressure inside the jar becomes lower than the pressure outside.",
+            "most of the rise happens after the flame goes out.",
+            "burning wax produces no gases.",
+            "all of the O<sub>2</sub> in the jar is used up."], answer: 0,
+          explanation: "Student 1 says pressure drops when O<sub>2</sub> is removed. Student 2 says it drops when gas cools. Both rely on lower pressure inside the jar."},
+        {skill: "views", difficulty: 1,
+          stem: "Which student's explanation predicts that water will fill about 21% of the jar?",
+          choices: ["Student 1 only", "Student 2 only", "Student 3 only", "None of the students"], answer: 0,
+          explanation: "Only Student 1 links the rise to the 21% of air that is O<sub>2</sub>."},
+        {skill: "claims", difficulty: 2,
+          stem: "Suppose a sensor in the jar showed that the gas was 15% O<sub>2</sub> just after the flame went out. This result would most directly support:",
+          choices: [
+            "Student 1's claim that the flame goes out when all of the O<sub>2</sub> is used.",
+            "Student 3's claim that O<sub>2</sub> remains in the jar after the flame goes out.",
+            "Student 2's claim that heated gas escapes as bubbles.",
+            "none of the students' claims."], answer: 1,
+          explanation: "Finding 15% O<sub>2</sub> means O<sub>2</sub> was left over, as Student 3 predicts, and contradicts Student 1."},
+        {skill: "claims", difficulty: 2,
+          stem: "A video shows almost no water entering the jar while the flame burned, and most of the rise happening in the 10 s after it went out. This observation is consistent with the explanations of:",
+          choices: ["Student 1 only.", "Student 2 only.", "Students 2 and 3 only.", "Students 1, 2, and 3."], answer: 2,
+          explanation: "Students 2 and 3 both say water rises as the gas cools after the flame is out. Student 1 expects water to rise while O<sub>2</sub> is being used."},
+        {skill: "views", difficulty: 3,
+          stem: "Student 1's explanation assumes that:",
+          choices: [
+            "burning the candle produces little or no gas that stays in the jar.",
+            "air contains no O<sub>2</sub>.",
+            "gases expand when heated.",
+            "the flame keeps burning after all of the O<sub>2</sub> is used."], answer: 0,
+          explanation: "If burning made gases that stayed in the jar, removing O<sub>2</sub> would not lower the pressure much. Student 1 ignores those products."}
+      ]
+    }
+  ]
+  };
+  root.addEventListener("zsa:request-data", function (event) { event.detail.receive(data); }, {once: true});
+}());
