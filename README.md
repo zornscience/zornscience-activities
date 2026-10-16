@@ -2,6 +2,8 @@
 
 Static, self-contained practice activities for zornscience.org lessons. Plain HTML, CSS, and JavaScript. No build step, no accounts, no tracking, no outside requests.
 
+A full round ends with a completion code that students paste into Google Classroom; teachers check codes at `/check/`. See [TEACHERS.md](TEACHERS.md) for teachers and [shared/README.md](shared/README.md#completion-codes) for the code format.
+
 ## Layout
 
 ```
@@ -13,9 +15,12 @@ shared/
   zsa-activity.css         activity layout and engine components
   zsa-engine.js            the activity engine
   zsa-embed.js             ?embed=1 mode and zsa:resize messages
+  zsa-codes.js             completion codes: activity registry, writing and reading codes
   fonts/InterVariable.woff2, Inter-OFL.txt
-ion-charge-trainer/        Predicting Ion Charge Trainer, v1.3.1
-ionic-formula-builder/     Ionic Formula Builder, v1.0.1
+ion-charge-trainer/        Predicting Ion Charge Trainer, v1.4.0
+ionic-formula-builder/     Ionic Formula Builder, v1.1.0
+check/                     completion code checker for teachers, v1.0.0 (linked under "For teachers")
+TEACHERS.md                assigning activities in Google Classroom and checking completion codes
 templates/starter/         starter template for a new activity (not linked from the site)
 tests/                     automated tests (development only; see TESTING.md)
 package.json               test tooling only; the site has no dependencies

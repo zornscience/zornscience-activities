@@ -51,7 +51,7 @@ test("pages have one CSP, no inline scripts or styles, and only the expected out
     assert.doesNotMatch(html, /\son[a-z]+=/, f + " inline event handler");
   });
   assert.equal(csp, "default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'");
-  var allowed = /^https:\/\/(zornscience\.org(\/[\w\-\/]*)?|creativecommons\.org\/licenses\/by-nc-sa\/4\.0\/)$/;
+  var allowed = /^https:\/\/((activities\.)?zornscience\.org(\/[\w\-\/]*)?|creativecommons\.org\/licenses\/by-nc-sa\/4\.0\/)$/;
   pages.concat(siteJs).forEach(function (f) {
     (read(f).match(/https?:\/\/[^\s"'<>)]+/g) || []).forEach(function (url) { assert.match(url, allowed, f + " links to " + url); });
   });

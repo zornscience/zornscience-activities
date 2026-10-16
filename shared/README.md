@@ -6,6 +6,7 @@ shared/
   zsa-activity.css    activity layout and every engine component (load after zsa-base.css)
   zsa-embed.js        ?embed=1 mode and zsa:resize messages
   zsa-engine.js       the activity engine
+  zsa-codes.js        completion codes: the activity registry, writing and reading codes
   fonts/              Inter (SIL OFL 1.1)
 ```
 
@@ -20,6 +21,7 @@ The engine runs everything the activities have in common. A new activity is most
 - **Keyboard.** Each answer group is one Tab stop (roving tabindex). Arrow keys, Home and End move focus without choosing, and Enter or Space chooses. Focus does not move on first load. Each new item focuses its heading, a finished step focuses the next step's first choice, then the item summary heading, then "Round complete".
 - **Feedback.** The activity's classifier returns feedback keys and the wrong parts, and the engine shows the messages after "↻ Not yet.". A key with no message gets the general fallback ("Use a hint and try again."). Hint gives two levels and then stays focusable but `aria-disabled`. Show me appears after two wrong attempts in a step. Each finished step becomes a chip in the answer trail (✓ correct, → shown), and its explanation stays above the next step. Everything is announced through the polite live region.
 - **Periodic table.** The main-group table is always visible. It marks the current element or elements, highlights hint group columns, and can show ion charges above the columns on a reserved line, so its height never changes.
+- **Completion code.** The summary of a full mixed round shows a completion code with a Copy code button (see [Completion codes](#completion-codes)). Single practice, Practice my misses and an unfinished round give no code.
 - **Layout.** On screens narrower than 900 px, a new step scrolls so the strip is at the top when the step would not fit, and new feedback or a hint scrolls into view. Neither happens in embed mode.
 
 ## Making a new activity
@@ -30,10 +32,11 @@ The engine runs everything the activities have in common. A new activity is most
 4. Add only the strip and any answer-grid sizes to `activity.css`. Shared classes are `zsa-…`. Use them rather than copying styles.
 5. Write `README.md` (purpose, content table, misconception map, keyboard notes, changelog) and `TESTING.md` (what was checked). Set the version in the meta tag and on every `?v=` query string.
 6. Add the activity to the landing page `index.html`, and to `tests/support/activities.js` and `tests/support/reference.js` so the browser tests cover it (see `TESTING.md` at the root).
+7. Register the activity for completion codes in `shared/zsa-codes.js` (see [Completion codes](#completion-codes)) and add its link to the list on `check/index.html` and in `TEACHERS.md`.
 
 ### Page skeleton
 
-The page needs these ids, with `<prefix>` such as `zsa-beq`: `<prefix>-work` (the question area), `<prefix>-live` (the polite live region), `<prefix>-table` and `<prefix>-table-note` (the periodic table), `<prefix>-options` (the Practice options `<details>`), and an element for the strip. Load, in order: `zsa-base.css`, `zsa-activity.css`, the activity CSS, then `zsa-embed.js`, `zsa-engine.js`, `data.js`, the activity script, all with `defer`.
+The page needs these ids, with `<prefix>` such as `zsa-beq`: `<prefix>-work` (the question area), `<prefix>-live` (the polite live region), `<prefix>-table` and `<prefix>-table-note` (the periodic table), `<prefix>-options` (the Practice options `<details>`), and an element for the strip. Load, in order: `zsa-base.css`, `zsa-activity.css`, the activity CSS, then `zsa-embed.js`, `zsa-engine.js`, `zsa-codes.js`, `data.js`, the activity script, all with `defer`. The page also needs `<meta name="zsa-version">`: the completion code records its major and minor version.
 
 ### The script
 
@@ -84,11 +87,72 @@ Helpers on `zsa`: `node`, `button`, `cap`, `shuffle`, `chargeLabel` (2+, 3− wi
 
 ### Labels
 
-The engine's words have English defaults (`zsa.LABELS`). Pass every word your activity says differently in `labels`: `next`, `complete`, `singleDone`, `firstTry`, `itemLabel`, `singleLabel` and `currentMark` are usually activity-specific. Keep them in `data.js` so all student-facing text is in one file.
+The engine's words have English defaults (`zsa.LABELS`). Pass every word your activity says differently in `labels`: `next`, `complete`, `singleDone`, `firstTry`, `itemLabel`, `singleLabel` and `currentMark` are usually activity-specific. Keep them in `data.js` so all student-facing text is in one file. The completion code words (`codeLabel`, `copyCode`, `codeCopied`, `codeSelected`, `codeReady`, `codeNote`) are the same in every activity and use the defaults.
+
+## Completion codes
+
+A full mixed round ends with a completion code that students paste into a Google Classroom assignment. There are no logins, names, storage, servers or network requests, so the code itself carries the result. Teachers read codes on the checker page, `check/` ([TEACHERS.md](../TEACHERS.md)).
+
+### What students see
+
+The round summary of a full mixed round, right under "Round complete", shows "Completion code", the code in a large monospace box, a Copy code button and the line "Paste this code into your Google Classroom assignment." The live region says "Round complete. Completion code ready." Screen readers get the code from a visually hidden copy with a space between characters and a pause between groups ("I C T, K 6 Q Y, ..."), so it is read one character at a time. Copy code uses the Clipboard API. If that is not available or fails, it selects the code and tries the browser's copy command, then says either "Code copied." or "The code is selected. Press Ctrl+C, or Command+C on a Mac, to copy it."
+
+There is no code for single practice, Practice my misses or an unfinished round, for an activity that is not registered, or when the result does not fit the activity's registered layout (then the summary is exactly as before).
+
+### Format
+
+```
+ICT-K6QY-0C22-7S11-86
+^^^ prefix (2 to 4 letters, one per activity)
+    ^^^^ ^^^^ ^^^^ payload, 12 characters for both current activities
+                   ^^ 2 check characters
+```
+
+The characters after the prefix are Crockford base 32: `0123456789ABCDEFGHJKMNPQRSTVWXYZ`, with no I, L, O or U. Reading is forgiving: lowercase is fine, hyphens are optional, and I or L read as 1 and O reads as 0. The code is shown in groups of 4.
+
+### Field layout
+
+The payload is one whole number in mixed radix, written in base 32 with the most significant digit first. Fields from least significant (the last payload character) to most significant:
+
+| Field | Range | Notes |
+|---|---|---|
+| Activity id | 0 to 31 | From the registry. Exactly the last payload character. |
+| Major version | 0 to 7 | From `<meta name="zsa-version">`. |
+| Minor version | 0 to 31 | Patch versions are not recorded. |
+| Day | 0 to 8191 | Days since 2026-01-01, the calendar day in America/Chicago from the device clock (through 2048-06-05). |
+| Show me uses | 0 to 63 | In the whole round, review items included. 63 means 63 or more. |
+| Hints used | 0 to 127 | Every Hint press that showed a hint, review items included. 127 means 127 or more. |
+| One total per totals group | 0 to maxItems | How many original items had those steps. |
+| One first-try count per stat | 0 to its total | As on the round summary. |
+
+The number of original items is the sum of the totals of the activity's `items` groups. A code is as long as the largest possible payload for that activity needs; for the Ion Charge Trainer and the Ionic Formula Builder (4 stats, 2 totals groups, 10 items) that is 12 characters, about 60 bits.
+
+### Check characters
+
+The first check character is a sum over the prefix letters (A = 0 to Z = 25) and the payload characters, each multiplied by a weight in GF(32). The weights come from a key written in `zsa-codes.js`. Every weight is at least 2 and differs from its neighbors, so one wrong character and any swap of two different neighbors always change the sum. With the prefix check (a swap across the first hyphen gives a prefix that does not match the activity), every one-character change and every swap of two neighbors is caught; the unit tests try every such edit on 500 codes. The second check character is a hash of the key and the characters, which catches most other edits: in the tests, 11 of about 37,000 random two-character edits (about 1 in 3,400) passed. The checker also rejects fields out of range.
+
+**Honesty note.** The key is in the published JavaScript. The check stops typos and casual editing, such as changing one character to raise a score. It does not stop a determined student who reads the source and makes a code by hand, and it is not secure in any cryptographic sense. A code also does not say who earned it: there are no names, a code can be shared, and two students with the same results on the same day get the same code. The date comes from the device clock. Treat a code as a record of practice, not proof.
+
+### Registering an activity
+
+Add an entry to `ACTIVITIES` in `zsa-codes.js` and load `zsa-codes.js` on the activity page:
+
+```js
+{id:3, prefix:"BEQ", slug:"balancing-equations", name:"Balancing Equations", maxItems:10,
+  stats:[["0", "Count atoms"], ["1", "Pick coefficients"]],   // the keys and labels of the round summary's stats
+  totals:[["0", "1"]],                                        // stat keys that always share a total
+  items:[0]}                                                  // the totals groups that add up to the original items
+```
+
+- `id` is 1 to 31 and `prefix` is 2 to 4 capital letters. Both must be new and are never reused, even after an activity is retired.
+- `stats` lists the activity's `stats` keys in the same order, with the labels from its `data.js` (the unit tests compare them).
+- `maxItems` is the round size. A round with more original items gets no code.
+- Once codes are in use, never change an entry: the checker reads every code with the current entry. If the stats, totals or round size change, register a new id and prefix.
+- Add the activity to the list on `check/index.html` and in `TEACHERS.md`, and to `tests/unit/codes.test.js` (the label check).
 
 ## House rules
 
-- No build step, no dependencies, no network calls, storage, cookies, analytics or globals. Each script is a strict IIFE, and data and the engine reach the activity through one-use events on its root.
+- No build step, no dependencies, no network calls, storage, cookies, analytics or globals. Completion codes keep to this: the code is computed in the page and copied by the student. Each script is a strict IIFE, and data and the engine reach the activity through one-use events on its root.
 - No `innerHTML`, inline scripts or inline styles. Every page uses the same Content-Security-Policy.
 - Charges are written number first with the Unicode minus sign (2−). No en or em dashes.
 - 44 by 44 px targets, visible focus, and nothing that moves focus on first load.

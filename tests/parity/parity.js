@@ -10,6 +10,11 @@
 // Class names: activity classes are written zsa-<code>-<name> (zsa-ict-choice). Shared classes are zsa-<name>.
 // Both are compared as zsa-<name>, so moving a class from an activity into shared/ is not a difference, but any
 // change in what is shown, said, focused or laid out is.
+//
+// One intended difference is set aside: the completion code box on the summary of a full mixed round
+// ([data-zsa-code], added in Ion Charge Trainer 1.4.0 and Ionic Formula Builder 1.1.0) and its announcement
+// ("Completion code ready."). Before each comparison the box is hidden in both pages and left out of the DOM and
+// layout, and the announcement is removed from the live region text. Everything else on that summary is compared.
 "use strict";
 var {execSync} = require("child_process");
 var fs = require("fs");
@@ -46,7 +51,11 @@ function snapshot(ignore) {
       .filter(function (c) { return !ignore.has(c); }).sort().join(" ");
   }
   var main = document.querySelector("main");
+  // The completion code box: hidden (so it takes no space) and left out of what is compared.
+  main.querySelectorAll("[data-zsa-code]").forEach(function (el) { el.hidden = true; });
   var clone = main.cloneNode(true);
+  clone.querySelectorAll("[data-zsa-code]").forEach(function (el) { el.remove(); });
+  clone.querySelectorAll("[aria-live]").forEach(function (el) { el.textContent = el.textContent.replace(/\. Completion code ready\.$/, ""); });
   [clone].concat([].slice.call(clone.querySelectorAll("[class]"))).forEach(function (el) {
     var c = norm(el.getAttribute("class") || "");
     if (c) el.setAttribute("class", c); else el.removeAttribute("class");
@@ -61,12 +70,13 @@ function snapshot(ignore) {
     "line-height", "text-align", "border-top", "border-right", "border-bottom", "border-left", "border-radius", "padding", "margin",
     "box-shadow", "outline", "text-decoration", "white-space", "cursor", "opacity", "vertical-align", "gap"];
   var layout = [];
-  [main].concat([].slice.call(main.querySelectorAll("*"))).forEach(function (el, i) {
+  [main].concat([].slice.call(main.querySelectorAll("*"))).filter(function (el) { return !el.closest("[data-zsa-code]"); }).forEach(function (el, i) {
     var r = el.getBoundingClientRect(), s = getComputedStyle(el), b = getComputedStyle(el, "::before");
     layout.push(i + " " + el.tagName + " " + [r.x, r.y, r.width, r.height].map(function (n) { return Math.round(n * 10) / 10; }).join(",") + " | " +
       STYLE.map(function (p) { return s.getPropertyValue(p); }).join(";") + (b.content !== "none" ? " | before " + b.content + " " + b.color + " " + b.fontSize : ""));
   });
-  return {dom: clone.outerHTML, props: props.join(" "), focus: focus, live: (document.querySelector("[aria-live]") || {}).textContent,
+  var live = ((document.querySelector("[aria-live]") || {}).textContent || "").replace(/\. Completion code ready\.$/, "");
+  return {dom: clone.outerHTML, props: props.join(" "), focus: focus, live: live,
     scroll: Math.round(window.scrollY), title: document.title, layout: layout};
 }
 
