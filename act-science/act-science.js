@@ -115,8 +115,10 @@
     return legend;
   }
   // A screen reader table with the values behind a graph, which itself is hidden from screen readers.
+  // The table sits in a visually hidden div: tables ignore the 1 px width, so the div does the clipping.
   function dataTable(caption, xLabel, names, rows) {
-    var t = node("table", "zsa-sr-only");
+    var wrap = node("div", "zsa-sr-only");
+    var t = wrap.appendChild(node("table"));
     t.appendChild(node("caption", null, fill(ui.figureData, {caption: caption})));
     var head = t.appendChild(node("thead")).appendChild(node("tr"));
     rich(head.appendChild(node("th")), xLabel).setAttribute("scope", "col");
@@ -127,7 +129,7 @@
       tr.appendChild(node("th", null, String(r[0]))).setAttribute("scope", "row");
       r.slice(1).forEach(function (v) { tr.appendChild(node("td", null, v === null || v === undefined ? "" : String(v))); });
     });
-    return t;
+    return wrap;
   }
   // The shared frame of every graph: y grid and labels, x ticks, both axes and their titles.
   var GW = 480, GH = 300, GL = 58, GR = 14, GT = 14, GB = 54, FS = 14;
@@ -199,8 +201,18 @@
     var rows = b.categories.map(function (c, i) { return [c].concat(b.series.map(function (s) { return s.values[i]; })); });
     return figureOf([b.series.length > 1 ? legendFor(b.series, false, true) : null, f.chart], b, dataTable(b.caption, b.xLabel, b.series.map(function (s) { return s.name; }), rows));
   }
+  // A table that has to scroll sideways (narrow phones) becomes a labeled region in the Tab order so the keyboard can scroll it.
+  var tableWatch = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(function (entries) {
+    entries.forEach(function (en) {
+      var w = en.target, scrolls = w.scrollWidth > w.clientWidth + 1;
+      if (scrolls) { w.tabIndex = 0; w.setAttribute("role", "region"); w.setAttribute("aria-label", w.getAttribute("data-caption")); }
+      else { w.removeAttribute("tabindex"); w.removeAttribute("role"); w.removeAttribute("aria-label"); }
+    });
+  });
   function table(b) {
     var wrap = node("div", "zsa-act-tbl");
+    wrap.setAttribute("data-caption", b.caption);
+    if (tableWatch) tableWatch.observe(wrap);
     var t = wrap.appendChild(node("table"));
     t.appendChild(node("caption", null, b.caption));
     var head = t.appendChild(node("thead")).appendChild(node("tr"));

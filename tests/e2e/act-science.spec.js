@@ -640,58 +640,132 @@ for (var [aw, ah] of [[1366, 657], [390, 664]]) {
   })(aw, ah);
 }
 
-test("full section: hidden with today's bank, offered with 7 reviewed passages of the right mix, scored as one estimate", async ({page, problems}) => {
-  void problems;
-  await go(page, 33);
-  await expect(page.getByRole("button", {name: /^Full section/})).toHaveCount(0);
-  // A bank of 3 Data Representation (6, 6, 6), 3 Research Summaries (6, 6, 5) and 1 Conflicting Viewpoints (5): 40 questions.
+// Serves a changed copy of the question bank in place of data.js. change(bank) edits the parsed copy.
+async function serveBank(page, change) {
   var bank = JSON.parse(JSON.stringify(data));
-  var base = {};
-  bank.passages.filter((p) => p.status === "reviewed").forEach((p) => { base[p.type] = p; });
-  bank.passages = bank.passages.filter((p) => p.status === "reviewed"); // today's reviewed three, without the drafts
-  function clone(type, k, keep) {
-    var p = JSON.parse(JSON.stringify(base[type]));
-    p.id += "-" + k; p.title += " (" + k + ")";
-    if (keep) p.questions = p.questions.slice(0, keep);
-    return p;
-  }
-  bank.passages = bank.passages.concat([clone("Data Representation", 2), clone("Data Representation", 3), clone("Research Summaries", 2), clone("Research Summaries", 3, 5),
-    Object.assign(clone("Conflicting Viewpoints", 9), {status: "draft"})]);
-  bank.passages.forEach((p) => { byTitle[p.title] = p; });
+  change(bank);
   var js = "(function () {\n  \"use strict\";\n  var root = document.querySelector('[data-zsa-activity=\"act-science\"]');\n  if (!root) return;\n  var data = " + JSON.stringify(bank) +
     ";\n  root.addEventListener(\"zsa:request-data\", function (event) { event.detail.receive(data); }, {once: true});\n}());\n";
   await page.route("**/act-science/data.js*", (route) => route.fulfill({status: 200, contentType: "text/javascript", body: js}));
-  await page.clock.install();
+  return bank;
+}
+
+// ---------- Full section, enabled by the reviewed bank (milestone 6) ----------
+test("full section is hidden when the reviewed bank cannot make one", async ({page, problems}) => {
+  void problems;
+  // One passage back in draft: only 6 reviewed.
+  await serveBank(page, (b) => { b.passages[0].status = "draft"; });
+  await go(page, 51);
+  await expect(page.getByRole("button", {name: /^Mixed practice/})).toBeVisible();
+  await expect(page.getByRole("button", {name: /^Full section/})).toHaveCount(0);
+  // All reviewed, but one question removed: 39 questions, never exactly 40.
+  await page.unroute("**/act-science/data.js*");
+  await serveBank(page, (b) => { b.passages.find((p) => p.type === "Conflicting Viewpoints").questions.pop(); });
   await page.reload();
-  await expect(page.getByRole("button", {name: /^Full section/})).toBeVisible();
-  await begin(page, "Full section");
-  var c = await current(page);
-  expect(c.total).toBe(40);
+  await expect(page.getByRole("button", {name: /^Mixed practice/})).toBeVisible();
+  await expect(page.getByRole("button", {name: /^Full section/})).toHaveCount(0);
+});
+
+test("full section, real bank: 40 questions in 40 minutes, every passage once, all correct scores 36", async ({page, problems}) => {
+  void problems;
+  await go(page, 52, {clock: true});
+  await expect(page.getByRole("button", {name: /^Full section/})).toContainText("40 questions in 40 minutes");
+  await page.getByRole("button", {name: /^Full section/}).click();
+  await expect(page.getByText("This section has 7 passages and 40 questions.")).toBeVisible();
+  await expect(page.getByText(/You have 40 minutes\./)).toBeVisible();
+  await page.getByRole("button", {name: "Start the section"}).click();
   await expect(page.getByRole("timer")).toHaveText("Time left 40:00");
+  await expect(nav(page).getByRole("button")).toHaveCount(40);
   var seen = await playAll(page, (q) => q.answer);
-  expect(seen.map((p) => p.type).sort()).toEqual(["Conflicting Viewpoints", "Data Representation", "Data Representation", "Data Representation", "Research Summaries", "Research Summaries", "Research Summaries"]);
-  expect(seen.some((p) => p.status === "draft")).toBe(false);
+  expect(seen.map((p) => p.title).sort()).toEqual(data.passages.map((p) => p.title).sort());
   await endSection(page);
   await expect(page.getByText("40 / 40", {exact: true})).toBeVisible();
   await expect(page.getByRole("heading", {name: "Estimated ACT Science score: 36"})).toBeVisible();
   await expect(page.getByText(/A 36 is about the 100th percentile/)).toBeVisible();
-  await expect(page.getByText(/converts your raw score with a typical past ACT conversion/)).toBeVisible();
-  await audit(page, "full section report");
+  await expect(page.getByRole("listitem").filter({hasText: /^Correct ·/})).toHaveCount(40);
+  // Every skill appears in the breakdown.
+  for (var k of Object.keys(data.skills)) await expect(page.getByText(data.skills[k].name, {exact: true}).first()).toBeVisible();
 });
 
-// ---------- Draft passages and the review list (milestone 5) ----------
-test("students never see draft passages; ?drafts=1 lists every passage with its status", async ({page, problems}) => {
+test("full section, half right: 20 of 40 is an estimated 19, the 52nd percentile", async ({page, problems}) => {
   void problems;
-  var drafts = data.passages.filter((p) => p.status === "draft");
-  expect(drafts.length).toBeGreaterThan(0);
+  await go(page, 53);
+  await begin(page, "Full section");
+  var count = 0;
+  await playAll(page, (q) => { count += 1; return count <= 20 ? q.answer : (q.answer + 1) % 4; });
+  await endSection(page);
+  await expect(page.getByText("20 / 40", {exact: true})).toBeVisible();
+  await expect(page.getByText("50% correct")).toBeVisible();
+  await expect(page.getByRole("heading", {name: "Estimated ACT Science score: 19"})).toBeVisible();
+  await expect(page.getByText(/That is below the national average of 19\.6\. A 19 is about the 52nd percentile/)).toBeVisible();
+  await expect(page.getByText(/ACT's college readiness benchmark is 23\./)).toBeVisible();
+});
+
+test("full section: warns at 5 minutes and ends cleanly at 40:00 with blanks counted", async ({page, problems}) => {
+  void problems;
+  await go(page, 54, {clock: true});
+  await begin(page, "Full section");
+  for (var i = 0; i < 10; i++) {
+    await page.locator("fieldset label").first().click();
+    await next(page).click();
+  }
+  await page.clock.fastForward(35 * 60 * 1000 + 1000);
+  await expect(page.getByRole("alert", {includeHidden: true})).toContainText("5 minutes left.");
+  await page.clock.fastForward(5 * 60 * 1000);
+  await expect(page.getByRole("heading", {level: 1, name: "Score report"})).toBeVisible();
+  await expect(page.getByText(/Time is up\./)).toBeVisible();
+  await expect(page.getByText("Time 40:00, on ACT pace (40:00 for 40 questions).")).toBeVisible();
+  await expect(page.getByRole("listitem").filter({hasText: /^Blank ·/})).toHaveCount(30);
+  await expect(page.getByRole("heading", {name: /^Estimated ACT Science score: \d+$/})).toBeVisible();
+});
+
+for (var [fw, fh] of [[1366, 657], [390, 664], [320, 568]]) {
+  (function (w, h) {
+    test("full section layout and axe-core at " + w + "x" + h + ": 40-number navigator, review, report", async ({page, problems}) => {
+      void problems;
+      await page.setViewportSize({width: w, height: h});
+      await go(page, 55);
+      await begin(page, "Full section");
+      async function noSideways(label) { expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), label).toBeLessThanOrEqual(0); }
+      await noSideways("question 1");
+      // The navigator scrolls inside the bar to keep the current number in view.
+      await navButton(page, 40).click();
+      await expect(navButton(page, 40)).toBeInViewport();
+      await expect(page.getByRole("heading", {level: 2, name: "Question 40 of 40"})).toBeFocused();
+      await noSideways("question 40");
+      for (var scheme of ["light", "dark"]) {
+        await page.emulateMedia({colorScheme: scheme});
+        await audit(page, "full question 40 " + scheme);
+      }
+      await reviewBtn(page).click();
+      await expect(page.getByText("0 answered, 40 not answered, 0 flagged, out of 40 questions.")).toBeVisible();
+      await expect(page.getByRole("region", {name: "All questions"}).getByRole("button")).toHaveCount(40);
+      await noSideways("review");
+      await audit(page, "full review");
+      await page.getByRole("button", {name: "End section"}).click();
+      await page.getByRole("button", {name: "Yes, end the section"}).click();
+      await noSideways("report");
+      for (var s2 of ["light", "dark"]) {
+        await page.emulateMedia({colorScheme: s2});
+        await audit(page, "full report " + s2);
+      }
+    });
+  })(fw, fh);
+}
+
+// ---------- Draft passages and the review list ----------
+test("students never see a draft passage; ?drafts=1 lists every passage with its status", async ({page, problems}) => {
+  void problems;
+  var bank = await serveBank(page, (b) => { b.passages[1].status = "draft"; });
+  var draft = bank.passages[1];
   await go(page, 41);
   await expect(page.getByRole("heading", {name: "Review passages"})).toHaveCount(0);
-  // Many one-passage sets: never a draft.
+  await expect(page.getByRole("button", {name: /^Full section/})).toHaveCount(0);
   for (var i = 0; i < 8; i++) {
     await page.getByRole("button", {name: /^One passage/}).click();
     await page.getByRole("button", {name: "Start the section"}).click();
     var title = await page.getByRole("article").getByRole("heading", {level: 1}).textContent();
-    expect(drafts.map((p) => p.title)).not.toContain(title);
+    expect(title).not.toBe(draft.title);
     await navButton(page, (await current(page)).total).click();
     await reviewBtn(page).click();
     await page.getByRole("button", {name: "End section"}).click();
@@ -700,17 +774,20 @@ test("students never see draft passages; ?drafts=1 lists every passage with its 
   }
   await go(page, 42, {query: "?drafts=1"});
   var list = page.getByRole("region", {name: "Review passages"});
-  for (var p of data.passages) {
+  for (var p of bank.passages) {
     await expect(list.getByRole("button", {name: new RegExp("^" + p.title.replace(/[()]/g, "\\$&") + " " + p.type + " · " + p.questions.length + " questions · " + (p.status === "draft" ? "Draft" : "Reviewed") + "$")})).toBeVisible();
   }
   await audit(page, "review list");
+  // A draft can be played from the list.
+  await list.getByRole("button", {name: new RegExp("^" + draft.title)}).click();
+  await page.getByRole("button", {name: "Start the section"}).click();
+  await expect(page.getByRole("article").getByRole("heading", {level: 1})).toHaveText(draft.title);
 });
 
-for (var dp of data.passages.filter((p) => p.status === "draft")) {
+for (var dp of data.passages) {
   (function (p) {
-    test("draft passage plays through all correct, with readable figures: " + p.title, async ({page, problems}) => {
+    test("every passage plays through all correct, with readable figures: " + p.title, async ({page, problems}) => {
       void problems;
-      byTitle[p.title] = p;
       await go(page, 43, {query: "?drafts=1"});
       await page.getByRole("region", {name: "Review passages"}).getByRole("button", {name: new RegExp("^" + p.title)}).click();
       await page.getByRole("button", {name: "Start the section"}).click();
