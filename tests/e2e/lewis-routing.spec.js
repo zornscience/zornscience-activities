@@ -59,7 +59,7 @@ for (var mode of ["octet", "ap"]) {
                 } else if (kind === "domains") exp = ref.domainKeys(r, ans.build, Number(p.domains), p.eg);
                 else if (kind === "shape") exp = ref.shapeKeys(r, p.mg, data_angle(p.angle));
                 else exp = ref.polarityKeys(r, p.claim, p.reason);
-                combos++;
+                combos++; tally("choiceCombinations");
                 if (!exp) {
                   tally("correct");
                   expect(res.kind, where + " moves on").not.toBe(kind);
@@ -87,7 +87,7 @@ for (var mode of ["octet", "ap"]) {
             var bres = await page.evaluate((plans) => window.__lv.run(plans), bplans);
             bres.forEach(function (res, i) {
               var st = bplans[i].build, k = ref.buildKey(r, st, ap), where = it.id + (ap ? " AP" : "") + " build " + JSON.stringify(st);
-              builds++;
+              builds++; tally("buildStructures");
               if (k === null) {
                 tally("buildAccepted");
                 expect(res.kind, where + " accepted").not.toBe("build");

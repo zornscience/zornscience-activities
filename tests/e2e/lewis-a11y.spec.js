@@ -140,3 +140,23 @@ test("Lewis builder: a full round by keyboard only, structure editor included", 
   expect((await state(page)).progress).toMatch(/^Structure 1 of 6/);
   expect(await focus()).toBe("#zsa-lv-heading");
 });
+
+test("Lewis builder: in the structure editor, arrow keys only move focus", async ({page, open}) => {
+  await lv.openLv(page, open);
+  await page.evaluate((a) => { window.__lv.single("NO3-", false); window.__lv.answer(a); window.__lv.answer(a); }, lv.answers(lv.item("NO3-"), false));
+  var snap = () => page.evaluate(() => ({build: window.__lv.buildState().atoms.map((x) => x.name), status: window.__lv.buildState().status,
+    live: document.getElementById("zsa-lv-live").textContent, kind: window.__lv.kind(),
+    stops: [].map.call(document.querySelectorAll('[data-zsa-part="lv-build"] [role="group"]'), (g) => g.querySelectorAll('button[tabindex="0"]').length)}));
+  var before = await snap();
+  expect(before.stops).toEqual([1, 1, 1]);
+  var focusIn = [];
+  for (var group of ["Atoms in the structure", "Bond between", "Lone pairs on"]) {
+    await page.locator('[role="group"][aria-label^="' + group + '"] button[tabindex="0"]').focus();
+    for (var k of ["ArrowRight", "ArrowDown", "ArrowLeft", "ArrowUp", "End", "Home", "ArrowRight"]) {
+      await page.keyboard.press(k);
+      focusIn.push(await page.evaluate((g) => !!document.activeElement.closest('[role="group"][aria-label^="' + g + '"]'), group));
+    }
+  }
+  expect(focusIn.every(Boolean)).toBe(true);
+  expect(await snap()).toEqual(before);
+});
