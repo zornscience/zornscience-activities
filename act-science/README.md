@@ -1,12 +1,12 @@
 # ACT Science Practice
-Version: 0.3.0
+Version: 0.4.0
 
 Free ACT Science practice with original passages. Students read a passage, answer its questions, and get a score report that compares them with national results and gives tips for the skills they missed. Not linked from zornscience.org yet. The live URL after approval will be https://activities.zornscience.org/act-science/.
 
-Built in milestones from the build brief. Milestone 1 ported the prototype with the question bank in a data file. Milestone 2 added the test interface: directions, one question at a time, a numbered navigator, flags, a review screen, and a countdown timer. Milestone 3 (this version) adds the tools: highlighter, line reader, answer eliminator, answer masking, and passage zoom.
+Built in milestones from the build brief. Milestone 1 ported the prototype with the question bank in a data file. Milestone 2 added the test interface: directions, one question at a time, a numbered navigator, flags, a review screen, and a countdown timer. Milestone 3 added the tools: highlighter, line reader, answer eliminator, answer masking, and passage zoom. Milestone 4 (this version) connects the score report to the modes and adds the answer view.
 
 ## How a section works
-- **Start screen:** One passage (untimed, the clock counts up) or Mixed practice (one passage of each type, timed at 1 minute per question).
+- **Start screen:** One passage (untimed, the clock counts up) or Mixed practice (one passage of each type, timed at 1 minute per question). A third mode, Full section (40 questions in 40 minutes), appears on its own once the reviewed bank can make one: 3 Data Representation, 3 Research Summaries and 1 Conflicting Viewpoints passage adding up to exactly 40 questions (`fullMix` and `fullQuestions` in `config.js`). Draft passages never count.
 - **Directions:** shown before the section starts, and again any time from the Directions button in the top bar (a modal dialog; Escape or Close returns focus to the button).
 - **Top bar:** logo, "Science · Passage 2 of 3", the timer with Hide timer and Show timer, and Directions.
 - **Question view:** the passage on the left scrolls on its own; the current question and its four choices are on the right, with Flag for review. On screens narrower than 900 px the passage sits above the question and the page scrolls.
@@ -76,7 +76,18 @@ Scatter plots and bar graphs are not built yet; they come with the new passages 
 Skill tags: `data`, `trends`, `inter`, `design`, `claims`, `views`. Explanations must not name a choice letter.
 
 ## Scoring
-Kept from the prototype. Percent correct is scaled to a 40-question raw score and converted with `config.conv`. Mixed practice shows the conversion of raw plus and minus 4 as a range, and the percentile (`config.rank`, 2024-2025 national ranks) of the middle. One passage shows no estimate, only a plain-language comparison. The score report always carries the estimate disclaimer, a bar per skill seen, tips for the two weakest skills plus test-day habits, and every question with the student's answer, the correct answer and the explanation.
+Percent correct is scaled to a 40-question raw score and converted with `config.conv`; percentiles come from `config.rank` (2024-2025 national ranks).
+
+| Mode | Estimate |
+|---|---|
+| One passage | None. Percent correct and a plain-language comparison (students near the national average get about half right; at the benchmark, about two thirds). |
+| Mixed practice, 15 or more questions | A range: the conversion of the raw score minus and plus 4 raw points, the percentile of the middle, and the disclaimer about small samples. |
+| Full section | One estimated score and its percentile, with a disclaimer that real forms are scaled differently. |
+
+Every report shows number and percent correct, time used against ACT pace (1 minute per question), a note if time ran out, a bar per skill seen, tips for the two weakest skills plus test-day habits, and every question with the student's answer, the correct answer and the explanation.
+
+## Answer view
+Each question in the answer review has a Show with passage button. It opens the question read-only in the test layout, with its passage beside it (including the student's own highlights and the zoom they used). The question shows Correct, Missed or Blank, the four choices with "Your answer" and "Correct answer" marked (by border style and words, not only color), the explanation and the skill. Previous, Next and the navigator move through every question; in this view each number is read as "Question 5, correct", "missed" or "not answered" and shows a check or cross mark. Back to score report (top bar), or Next on the last question, returns to the report with focus on that question's button. Nothing can be changed.
 
 ## Keyboard and screen readers
 - Each question is a fieldset whose legend is the stem. Its choices are native radio buttons: Tab reaches the group, arrow keys choose. Each choice is read with its letter ("A. 20°C").
@@ -88,6 +99,8 @@ Kept from the prototype. Percent correct is scaled to a 40-question raw score an
 - Ending the section asks on the page, never with a `confirm()` dialog.
 
 ## Changelog
+0.4.0: Score report connected to the modes (milestone 4). Answer view: any question opens read-only beside its passage, with Previous, Next and a results navigator, and returns to its place in the report. Full section mode (one estimated score and percentile) built and hidden until the reviewed bank has the right 7 passages. Darker green in light mode for contrast on the Correct tags.
+
 0.3.0: Tools (milestone 3). Highlighter with three colors, erase and clear; line reader with drag, resize and keyboard control; answer eliminator; answer masking; passage zoom from 100 to 200 percent. Passages and questions are now built once per attempt so all marks stay.
 
 0.2.0: Test interface (milestone 2). Directions screen and Directions dialog; one question at a time with the passage beside it; top bar with section and passage label, timer, Hide timer and Directions; fixed bottom bar with Previous, a numbered navigator and Next across passages; Flag for review; review screen with links back and an on-page End section confirmation; countdown with a 5-minute notice and a clean end at 0 in mixed practice, count-up in one passage. Replaces the passage pages and the blank-question warning.

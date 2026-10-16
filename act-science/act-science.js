@@ -216,6 +216,30 @@
     });
     return shuffle(picked.concat(rest.slice(0, Math.max(0, 3 - picked.length))));
   }
+  // A full section: the configured mix of passage types (3, 3 and 1) adding up to exactly 40 questions.
+  // Returns null until the reviewed bank can make one, which keeps the mode hidden.
+  function choose(arr, k) {
+    if (!k) return [[]];
+    var out = [];
+    arr.forEach(function (x, i) { choose(arr.slice(i + 1), k - 1).forEach(function (c) { out.push([x].concat(c)); }); });
+    return out;
+  }
+  function fullSet() {
+    var groups = Object.keys(cfg.fullMix).map(function (t) { return choose(shuffle(bank.filter(function (p) { return p.type === t; })), cfg.fullMix[t]); });
+    var found = null;
+    (function walk(gi, picked) {
+      if (found) return;
+      if (gi === groups.length) { if (minutesFor(picked) === cfg.fullQuestions) found = picked; return; }
+      groups[gi].forEach(function (c) { walk(gi + 1, picked.concat(c)); });
+    }(0, []));
+    return found && shuffle(found);
+  }
+  function startMode(mode) {
+    if (mode === "full") start(fullSet(), "full");
+    else if (mode === "mixed") start(mixedSet(), "mixed");
+    else start([shuffle(bank)[0]], "one");
+  }
+  function modeName(mode) { return {one: ui.modeOne, mixed: ui.modeMixed, full: ui.modeFull}[mode]; }
   function minutesFor(passages) { return passages.reduce(function (n, p) { return n + p.questions.length; }, 0); }
 
   function intro(focusIt) {
@@ -228,9 +252,10 @@
     left.appendChild(node("p", "zsa-act-lede", ui.lede));
     var modes = left.appendChild(node("div", "zsa-act-modes"));
     var sample = mixedSet();
-    [[ui.modeOne, ui.modeOneText, function () { start([shuffle(bank)[0]], "one"); }],
-      [ui.modeMixed, fill(ui.modeMixedText, {passages: sample.length, minutes: minutesFor(sample)}), function () { start(mixedSet(), "mixed"); }]
-    ].forEach(function (m) {
+    var modeList = [[ui.modeOne, ui.modeOneText, function () { startMode("one"); }],
+      [ui.modeMixed, fill(ui.modeMixedText, {passages: sample.length, minutes: minutesFor(sample)}), function () { startMode("mixed"); }]];
+    if (fullSet()) modeList.push([ui.modeFull, fill(ui.modeFullText, {count: cfg.fullQuestions}), function () { startMode("full"); }]);
+    modeList.forEach(function (m) {
       var b = button("", "zsa-act-mode", m[2]);
       b.appendChild(node("strong", null, m[0]));
       b.appendChild(node("span", null, m[1]));
@@ -261,7 +286,7 @@
         return item;
       })};
     });
-    S = {items: items, qs: qs, mode: mode, total: n, cur: 0, answers: {}, flags: {}, limit: mode === "mixed" ? n * 60 : null,
+    S = {items: items, qs: qs, mode: mode, total: n, cur: 0, answers: {}, flags: {}, limit: mode === "one" ? null : n * 60,
       t0: null, elapsed: 0, hidden: false, warned: false, ended: false, timeUp: false, panes: {}};
     directionsScreen();
   }
@@ -278,7 +303,7 @@
   function directionsScreen() {
     stopClock();
     var box = node("section", "zsa-act-dir-screen");
-    box.appendChild(node("p", "zsa-eyebrow", S.mode === "mixed" ? ui.modeMixed : ui.modeOne));
+    box.appendChild(node("p", "zsa-eyebrow", modeName(S.mode)));
     var h1 = directionsContent(box, "h1");
     var row = box.appendChild(node("div", "zsa-act-row"));
     row.appendChild(button(ui.back, "", function () { intro(true); }));
@@ -335,7 +360,7 @@
     bottom.hidden = true;
     tools.hidden = true;
     alertBox.replaceChildren();
-    root.classList.remove("zsa-act--testing", "zsa-act--review", "zsa-act--hl", "zsa-act--erase", "zsa-act--elim", "zsa-act--mask");
+    root.classList.remove("zsa-act--testing", "zsa-act--review", "zsa-act--answers", "zsa-act--hl", "zsa-act--erase", "zsa-act--elim", "zsa-act--mask");
     if (dialog.open) dialog.close();
   }
   function beginSection() {
@@ -492,7 +517,7 @@
     if (S && T && T.hl && S.screen === "test") justHighlighted = applySelection();
   });
   app.addEventListener("click", function (e) {
-    if (!S || !T || !T.hl) return;
+    if (!S || !T || !T.hl || S.screen !== "test") return;
     var mark = e.target.closest && e.target.closest("mark.zsa-act-hl");
     if (justHighlighted || (T.erase && mark)) {
       e.preventDefault();
@@ -661,16 +686,8 @@
     bottom.hidden = false;
     tools.hidden = false;
     var q = S.qs[i];
-    var split = app.querySelector(".zsa-act-split");
-    if (!split) {
-      split = node("div", "zsa-act-split");
-      split.appendChild(S.pwrap);
-      app.replaceChildren(split);
-    }
-    var art = passagePane(q.pi);
-    if (S.pwrap.firstChild !== art) S.pwrap.replaceChild(art, S.pwrap.firstChild);
     var built = S.qpanes[i] || (S.qpanes[i] = questionPane(q));
-    if (split.children[1]) split.replaceChild(built.pane, split.children[1]); else split.appendChild(built.pane);
+    placePanes(q, built.pane);
     S.label.textContent = fill(ui.barLabel, {n: q.pi + 1, total: S.items.length});
     updateNav();
     if (narrow) {
@@ -694,6 +711,16 @@
     return parts.join(", ");
   }
   function styleNavButton(b, q, current) {
+    if (S.ended) {
+      // Answer view: correct, missed or not answered instead of answered and flagged.
+      var mine = S.answers[q.n], state = mine === q.answer ? ui.stateCorrect : mine === undefined ? ui.unanswered : ui.stateMissed;
+      b.classList.remove("zsa-act-is-answered", "zsa-act-is-flagged");
+      b.classList.toggle("zsa-act-is-correct", mine === q.answer);
+      b.classList.toggle("zsa-act-is-missed", mine !== undefined && mine !== q.answer);
+      if (current) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
+      b.setAttribute("aria-label", fill(ui.navItem, {n: q.n}) + ", " + state);
+      return;
+    }
     b.classList.toggle("zsa-act-is-answered", S.answers[q.n] !== undefined);
     b.classList.toggle("zsa-act-is-flagged", !!S.flags[q.n]);
     if (current) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
@@ -703,14 +730,14 @@
     bottom.replaceChildren();
     bottom.setAttribute("aria-label", ui.navLabel);
     var row = bottom.appendChild(node("div", "zsa-act-wrap zsa-act-bottom-row"));
-    prevBtn = row.appendChild(button("", "zsa-act-step", function () { if (S.cur > 0) renderTest(S.cur - 1, "keep"); }));
+    prevBtn = row.appendChild(button("", "zsa-act-step", function () { if (S.cur > 0) openQuestion(S.cur - 1, "keep"); }));
     prevBtn.appendChild(chevron(-1));
     prevBtn.appendChild(node("span", "zsa-act-step-text", ui.previous));
     var strip = row.appendChild(node("div", "zsa-act-strip"));
     strip.setAttribute("role", "toolbar");
     strip.setAttribute("aria-label", ui.navLabel);
     navButtons = S.qs.map(function (q, i) {
-      var b = strip.appendChild(button(String(q.n), "zsa-act-num" + (i && q.pi !== S.qs[i - 1].pi ? " zsa-act-num--first" : ""), function () { renderTest(i, "heading"); }));
+      var b = strip.appendChild(button(String(q.n), "zsa-act-num" + (i && q.pi !== S.qs[i - 1].pi ? " zsa-act-num--first" : ""), function () { openQuestion(i, "heading"); }));
       b.addEventListener("keydown", function (e) {
         var to = {ArrowRight: i + 1, ArrowDown: i + 1, ArrowLeft: i - 1, ArrowUp: i - 1, Home: 0, End: navButtons.length - 1}[e.key];
         if (to === undefined) return;
@@ -722,25 +749,26 @@
       return b;
     });
     nextBtn = row.appendChild(button("", "zsa-act-step zsa-act-step--next", function () {
-      if (S.cur < S.total - 1) renderTest(S.cur + 1, "keep"); else reviewScreen();
+      if (S.cur < S.total - 1) openQuestion(S.cur + 1, "keep"); else if (S.ended) closeAnswers(); else reviewScreen();
     }));
     nextBtn.appendChild(node("span", "zsa-act-step-text"));
     nextBtn.appendChild(chevron(1));
   }
   function updateNav() {
     navButtons.forEach(function (b, i) {
-      var cur = S.screen === "test" && i === S.cur;
+      var onQ = S.screen === "test" || S.screen === "answers", cur = onQ && i === S.cur;
       styleNavButton(b, S.qs[i], cur);
       // The roving Tab stop follows the current question unless focus is inside the strip.
-      if (!b.parentNode.contains(document.activeElement)) b.tabIndex = cur || (S.screen !== "test" && !i) ? 0 : -1;
+      if (!b.parentNode.contains(document.activeElement)) b.tabIndex = cur || (!onQ && !i) ? 0 : -1;
     });
-    if (S.screen === "test") navButtons[S.cur].scrollIntoView({block: "nearest", inline: "nearest"});
+    if (S.screen === "test" || S.screen === "answers") navButtons[S.cur].scrollIntoView({block: "nearest", inline: "nearest"});
     var first = S.cur === 0, last = S.cur === S.total - 1;
     if (first && document.activeElement === prevBtn) nextBtn.focus();
     prevBtn.disabled = first;
     prevBtn.setAttribute("aria-label", ui.previous);
-    nextBtn.querySelector(".zsa-act-step-text").textContent = last ? ui.toReview : ui.next;
-    nextBtn.setAttribute("aria-label", last ? ui.toReview : ui.next);
+    var lastLabel = S.ended ? ui.toReport : ui.toReview;
+    nextBtn.querySelector(".zsa-act-step-text").textContent = last ? lastLabel : ui.next;
+    nextBtn.setAttribute("aria-label", last ? lastLabel : ui.next);
   }
 
   // ----- Review screen and ending the section
@@ -812,6 +840,83 @@
     out.push(confirmBox);
     show(out, h1);
   }
+  // ----- Answer view: after the section, any question opens read-only with its passage (and the student's highlights).
+  function openQuestion(i, focus) { if (S.ended) renderAnswer(i, focus); else renderTest(i, focus); }
+  function placePanes(q, pane) {
+    var split = app.querySelector(".zsa-act-split");
+    if (!split) {
+      split = node("div", "zsa-act-split");
+      split.appendChild(S.pwrap);
+      app.replaceChildren(split);
+    }
+    var art = passagePane(q.pi);
+    if (S.pwrap.firstChild !== art) S.pwrap.replaceChild(art, S.pwrap.firstChild);
+    if (split.children[1]) split.replaceChild(pane, split.children[1]); else split.appendChild(pane);
+  }
+  function answerPane(q) {
+    var L = letters(q.n), mine = S.answers[q.n], ok = mine === q.answer;
+    var pane = node("section", "zsa-act-qpane zsa-act-apane");
+    pane.setAttribute("aria-labelledby", "zsa-act-qtitle");
+    var head = pane.appendChild(node("div", "zsa-act-qhead"));
+    var h = head.appendChild(heading("h2", fill(ui.question, {n: q.n})));
+    h.id = "zsa-act-qtitle";
+    h.appendChild(node("span", "zsa-sr-only", fill(ui.ofTotal, {total: S.total})));
+    var tag = head.appendChild(node("span", "zsa-act-tag " + (ok ? "zsa-act-ok" : "zsa-act-no"), ok ? ui.tagCorrect : mine === undefined ? ui.tagBlank : ui.tagMissed));
+    void tag;
+    pane.appendChild(rich(node("p", "zsa-act-q-stem"), q.stem));
+    var list = pane.appendChild(node("ul", "zsa-act-alist"));
+    list.setAttribute("aria-label", ui.choicesLabel);
+    q.choices.forEach(function (c, i) {
+      var li = list.appendChild(node("li", "zsa-act-achoice" + (i === q.answer ? " zsa-act-is-key" : "") + (i === mine && !ok ? " zsa-act-is-wrong" : "")));
+      li.appendChild(node("span", "zsa-act-letter", L[i])).setAttribute("aria-hidden", "true");
+      var body = li.appendChild(node("span"));
+      body.appendChild(node("span", "zsa-sr-only", L[i] + ". "));
+      rich(body, c);
+      var marks = [];
+      if (i === mine) marks.push(ui.yourAnswer);
+      if (i === q.answer) marks.push(ui.correctAnswer);
+      if (marks.length) li.appendChild(node("span", "zsa-act-badges", marks.join(" · ")));
+    });
+    if (mine === undefined) pane.appendChild(node("p", "zsa-act-small", ui.noAnswer));
+    var ex = pane.appendChild(node("div", "zsa-act-explain"));
+    ex.appendChild(node("h3", null, ui.explanation));
+    ex.appendChild(rich(node("p"), q.explanation));
+    ex.appendChild(node("p", "zsa-act-small", fill(ui.skillLine, {skill: SKILLS[q.skill].name})));
+    return {pane: pane, heading: h};
+  }
+  function renderAnswer(i, focus) {
+    var prevPi = S.screen === "answers" ? S.qs[S.cur].pi : -1;
+    S.cur = i;
+    S.screen = "answers";
+    var q = S.qs[i];
+    var built = answerPane(q);
+    placePanes(q, built.pane);
+    S.label.textContent = fill(ui.answersLabel, {n: q.pi + 1, total: S.items.length});
+    updateNav();
+    if (window.matchMedia("(max-width: 900px)").matches) {
+      if (q.pi !== prevPi) window.scrollTo(0, 0); else built.pane.scrollIntoView({block: "start"});
+    } else window.scrollTo(0, 0);
+    if (focus === "heading") built.heading.focus();
+    else live.textContent = fill(ui.announce, {n: q.n, total: S.total});
+  }
+  function openAnswers(i) {
+    testbar.replaceChildren();
+    S.label = testbar.appendChild(node("p", "zsa-act-bar-label"));
+    testbar.appendChild(button(ui.backToReport, "zsa-act-bar-btn", closeAnswers));
+    testbar.hidden = false;
+    S.reader.setAttribute("hidden", "");
+    root.classList.add("zsa-act--testing", "zsa-act--answers");
+    root.classList.remove("zsa-act--review");
+    bottom.hidden = false;
+    app.replaceChildren();
+    renderAnswer(i, "heading");
+  }
+  function closeAnswers() {
+    var n = S.qs[S.cur].n;
+    leaveTest();
+    S.screen = "report";
+    results(n);
+  }
   function endSection(timeUp) {
     if (S.ended) return;
     S.elapsed = S.limit && timeUp ? S.limit : elapsed();
@@ -828,7 +933,8 @@
     function anchor(v) { return v < 5 ? "start" : v > 32 ? "end" : "middle"; }
     var s = svg("svg", {width: "100%", height: 96, "class": "zsa-act-scale", "aria-hidden": "true", focusable: "false"});
     svg("rect", {x: 0, y: 42, width: "100%", height: 12, rx: 6, "class": "zsa-act-scale-bar"}, s);
-    svg("rect", {x: pos(lo), y: 38, width: ((hi - lo) / 35 * 100).toFixed(2) + "%", height: 20, rx: 10, "class": "zsa-act-scale-range"}, s);
+    if (hi > lo) svg("rect", {x: pos(lo), y: 38, width: ((hi - lo) / 35 * 100).toFixed(2) + "%", height: 20, rx: 10, "class": "zsa-act-scale-range"}, s);
+    else svg("circle", {cx: pos(est), cy: 48, r: 10, "class": "zsa-act-scale-range"}, s);
     svg("text", {x: pos(est), y: 26, "text-anchor": anchor(est), "font-size": 14, "font-weight": 700}, s).textContent = fill(ui.scaleYou, {est: est});
     [[cfg.natAvg, ui.scaleAvg, "end"], [cfg.benchmark, ui.scaleBenchmark, "start"]].forEach(function (m) {
       svg("line", {x1: pos(m[0]), x2: pos(m[0]), y1: 32, y2: 64, "class": "zsa-act-scale-mark"}, s);
@@ -858,7 +964,8 @@
     return sec;
   }
 
-  function results() {
+  // focusN: after the answer view, focus that question's button in the review list instead of the heading.
+  function results(focusN) {
     var secs = S.elapsed;
     var all = [];
     S.items.forEach(function (it) { it.qs.forEach(function (q) { all.push(q); }); });
@@ -889,17 +996,19 @@
 
     var box = top.appendChild(node("div", "zsa-act-scale-box"));
     var ctx = {avg: cfg.natAvg, benchmark: cfg.benchmark};
-    if (S.mode === "mixed" && all.length >= cfg.minForEstimate) {
+    // One passage: no estimate. Mixed practice (15 or more questions): a range. Full section: one score.
+    var single = S.mode === "full", ranged = S.mode === "mixed" && all.length >= cfg.minForEstimate;
+    if (single || ranged) {
       var raw = Math.round(pct * 40);
-      var est = cfg.conv[raw], lo = cfg.conv[Math.max(0, raw - cfg.rangeRaw)], hi = cfg.conv[Math.min(40, raw + cfg.rangeRaw)];
+      var est = cfg.conv[raw], lo = single ? est : cfg.conv[Math.max(0, raw - cfg.rangeRaw)], hi = single ? est : cfg.conv[Math.min(40, raw + cfg.rangeRaw)];
       var pr = cfg.rank[est] || 1;
       var cmp = est > cfg.natAvg + 0.5 ? ui.above : est < cfg.natAvg - 0.5 ? ui.below : ui.about;
-      box.appendChild(node("h2", null, fill(ui.estimateTitle, {lo: lo, hi: hi})));
-      var txt = rich(node("p"), fill(ui.estimateText, {cmp: cmp, avg: cfg.natAvg, est: est, pr: pr + ordinal(pr), prNum: pr}));
+      box.appendChild(node("h2", null, single ? fill(ui.estimateSingleTitle, {est: est}) : fill(ui.estimateTitle, {lo: lo, hi: hi})));
+      var txt = rich(node("p"), fill(single ? ui.estimateSingleText : ui.estimateText, {cmp: cmp, avg: cfg.natAvg, est: est, pr: pr + ordinal(pr), prNum: pr}));
       txt.appendChild(document.createTextNode(" " + fill(est >= cfg.benchmark ? ui.meetsBenchmark : ui.benchmarkIs, ctx)));
       box.appendChild(txt);
       box.appendChild(scaleSvg(lo, hi, est));
-      box.appendChild(node("p", "zsa-act-small", fill(ui.disclaimer, {rankYear: cfg.rankYear, count: all.length})));
+      box.appendChild(node("p", "zsa-act-small", fill(single ? ui.disclaimerFull : ui.disclaimer, {rankYear: cfg.rankYear, count: all.length})));
     } else {
       box.appendChild(node("h2", null, ui.compareTitle));
       box.appendChild(node("p", null, fill(ui.compareText, ctx)));
@@ -939,16 +1048,22 @@
       ans.appendChild(document.createTextNode(", "));
       rich(ans, q.choices[q.answer]);
       li.appendChild(rich(node("p", "zsa-act-small"), q.explanation));
+      var open = li.appendChild(button("", "zsa-act-open", function () { openAnswers(S.qs.indexOf(q)); }));
+      open.appendChild(node("span", null, ui.openInTest));
+      open.appendChild(node("span", "zsa-sr-only", fill(ui.openInTestSr, {n: q.n})));
+      open.setAttribute("data-n", q.n);
     });
     out.push(rv);
 
     var nav = node("div", "zsa-act-nav");
     nav.appendChild(button(ui.home, "", function () { intro(true); }));
     nav.appendChild(button(ui.again, "zsa-btn--primary", function () {
-      if (S.mode === "mixed") start(mixedSet(), "mixed"); else start([shuffle(bank)[0]], "one");
+      startMode(S.mode);
     }));
     out.push(nav);
     show(out, h1);
+    var back = focusN && app.querySelector('[data-n="' + focusN + '"]');
+    if (back) { back.scrollIntoView({block: "center"}); back.focus(); }
   }
 
   intro(false);

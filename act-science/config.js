@@ -18,7 +18,11 @@
     // Mixed practice shows an estimated range only with at least this many questions.
     minForEstimate: 15,
     // The range is the raw score equivalent plus or minus this many raw points.
-    rangeRaw: 4
+    rangeRaw: 4,
+    // A full section: this many reviewed passages of each type, adding up to exactly fullQuestions questions.
+    // The Full section mode stays hidden until the reviewed bank can make one.
+    fullMix: {"Data Representation": 3, "Research Summaries": 3, "Conflicting Viewpoints": 1},
+    fullQuestions: 40
   };
   root.addEventListener("zsa:request-config", function (event) { event.detail.receive(config); }, {once: true});
 }());
