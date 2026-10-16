@@ -353,3 +353,215 @@ test("only local files, no storage, footer notice, embed mode", async ({page, pr
   await page.locator("fieldset label").first().click();
   expect(await page.evaluate(() => [localStorage.length, sessionStorage.length, document.cookie])).toEqual([0, 0, ""]);
 });
+
+// ---------- Tools (milestone 3) ----------
+function tool(page, name) { return page.getByRole("group", {name: "Tools"}).getByRole("button", {name: name, exact: true}); }
+async function selectText(page, locator, from, to) {
+  // Select characters [from, to) of the element's first text node, as a keyboard or caret-browsing user would.
+  await locator.evaluate((el, r) => {
+    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    var t = walker.nextNode();
+    var range = document.createRange();
+    range.setStart(t, r[0]);
+    range.setEnd(t, Math.min(r[1], t.nodeValue.length));
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }, [from, to]);
+}
+function marks(page) { return page.locator("main mark"); }
+async function bg(loc) { return loc.evaluate((m) => getComputedStyle(m).backgroundColor); }
+
+test("highlighter: colors, keyboard and mouse, erase, clear, never on figures, kept across questions", async ({page, problems}) => {
+  void problems;
+  await go(page, 21);
+  await begin(page, "Mixed practice");
+  await expect(page.getByRole("button", {name: "Highlight selection"})).toBeHidden();
+  await tool(page, "Highlighter").click();
+  await expect(tool(page, "Highlighter")).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("button", {name: "Yellow"})).toHaveAttribute("aria-pressed", "true");
+  // Keyboard path: a selection, then Highlight selection.
+  var firstP = page.getByRole("article").locator("p").nth(1);
+  await selectText(page, firstP, 0, 12);
+  await page.getByRole("button", {name: "Highlight selection"}).click();
+  await expect(marks(page)).toHaveCount(1);
+  var first = (await firstP.textContent()).slice(0, 12);
+  await expect(marks(page).first()).toHaveText(first);
+  await expect(page.locator("#zsa-act-live")).toHaveText("Highlighted.");
+  var yellow = await bg(marks(page).first());
+  // Mouse path on a choice: the highlight is made and the answer under it is not picked.
+  await page.getByRole("button", {name: "Green"}).click();
+  var choice = page.locator("fieldset label").nth(2);
+  var box = await choice.boundingBox();
+  await page.mouse.move(box.x + 60, box.y + box.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(box.x + 120, box.y + box.height / 2, {steps: 4});
+  await page.mouse.up();
+  await expect(marks(page)).toHaveCount(2);
+  await expect(page.getByRole("radio", {checked: true})).toHaveCount(0);
+  expect(await bg(marks(page).nth(1))).not.toBe(yellow);
+  // Whole passage selected: text is marked, figures and tables are not.
+  await page.getByRole("article").evaluate((a) => { var r = document.createRange(); r.selectNodeContents(a); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); });
+  await page.getByRole("button", {name: "Highlight selection"}).click();
+  expect(await page.getByRole("article").locator("figure mark, table mark, svg mark").count()).toBe(0);
+  expect(await page.getByRole("article").locator("mark").count()).toBeGreaterThan(2);
+  // Kept across Next, Previous and the review screen.
+  var before = await marks(page).count();
+  await next(page).click();
+  await prev(page).click();
+  await expect(marks(page)).toHaveCount(before);
+  var total = (await current(page)).total;
+  await navButton(page, total).click();
+  await reviewBtn(page).click();
+  await page.getByRole("button", {name: "Return to questions"}).click();
+  await navButton(page, 1).click();
+  await expect(marks(page)).toHaveCount(before);
+  // Erase: clicking a highlight removes it (and does not pick an answer).
+  await page.getByRole("button", {name: "Erase"}).click();
+  await expect(page.getByRole("button", {name: "Erase"})).toHaveAttribute("aria-pressed", "true");
+  await page.locator("fieldset mark").first().click();
+  await expect(page.locator("fieldset mark")).toHaveCount(0);
+  await expect(page.getByRole("radio", {checked: true})).toHaveCount(0);
+  // Clear removes the rest on this question and its passage.
+  await page.getByRole("button", {name: "Clear"}).click();
+  await expect(marks(page)).toHaveCount(0);
+  // Turning the highlighter off: dragging over a choice no longer highlights.
+  await tool(page, "Highlighter").click();
+  await selectText(page, page.getByRole("article").locator("p").nth(1), 0, 8);
+  await page.mouse.click(5, 300);
+  await expect(marks(page)).toHaveCount(0);
+});
+
+test("answer eliminator and masking: toggles, still selectable, kept across questions", async ({page, problems}) => {
+  void problems;
+  await go(page, 22);
+  await begin(page, "Mixed practice");
+  await expect(page.getByRole("button", {name: "Eliminate choice B"})).toBeHidden();
+  await expect(page.getByRole("button", {name: "Hide choice D"})).toBeHidden();
+  await tool(page, "Eliminator").click();
+  var x = page.getByRole("button", {name: "Eliminate choice B"});
+  await x.click();
+  await expect(x).toHaveAttribute("aria-pressed", "true");
+  var radioB = page.getByRole("radio").nth(1);
+  await expect(radioB).toHaveAccessibleName(/^B\. .* \(eliminated\)$/);
+  await page.locator("fieldset label").nth(1).click();
+  await expect(radioB).toBeChecked();
+  await tool(page, "Eliminator").click();
+  await expect(x).toBeHidden();
+  await expect(radioB).toHaveAccessibleName(/\(eliminated\)$/);
+  await tool(page, "Masking").click();
+  var hide = page.getByRole("button", {name: "Hide choice D"});
+  await hide.click();
+  await expect(hide).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("radio").nth(3)).toHaveAccessibleName("D. Choice hidden");
+  await tool(page, "Masking").click();
+  await expect(hide).toBeVisible(); // a hidden choice can always be shown again
+  await next(page).click();
+  await expect(page.getByRole("button", {name: "Hide choice J"})).toBeHidden();
+  await prev(page).click();
+  await expect(page.getByRole("radio").nth(3)).toHaveAccessibleName("D. Choice hidden");
+  await expect(radioB).toHaveAccessibleName(/\(eliminated\)$/);
+  await expect(radioB).toBeChecked();
+  await hide.click();
+  await expect(page.getByRole("radio").nth(3)).not.toHaveAccessibleName("D. Choice hidden");
+  // Eliminating again from the keyboard restores the choice.
+  await tool(page, "Eliminator").click();
+  await x.focus();
+  await page.keyboard.press("Enter");
+  await expect(x).toHaveAttribute("aria-pressed", "false");
+  await expect(radioB).not.toHaveAccessibleName(/\(eliminated\)$/);
+});
+
+test("line reader: toggles, keyboard moves and resizes, drags with the mouse, stays on across questions", async ({page, problems}) => {
+  void problems;
+  await page.setViewportSize({width: 1366, height: 657});
+  await go(page, 23);
+  await begin(page, "Mixed practice");
+  var reader = page.getByRole("slider", {name: /^Line reader/});
+  await expect(reader).toHaveCount(0);
+  await tool(page, "Line reader").click();
+  await expect(reader).toBeFocused();
+  var now = async () => Number(await reader.getAttribute("aria-valuenow"));
+  var max = async () => Number(await reader.getAttribute("aria-valuemax"));
+  var y0 = await now();
+  await page.keyboard.press("ArrowDown");
+  expect(await now()).toBe(y0 + 26);
+  var max0 = await max();
+  await page.keyboard.press("Shift+ArrowDown");
+  expect(await max()).toBe(max0 - 26); // taller band, less room to move
+  await expect(reader).toHaveAttribute("aria-valuetext", /^Showing \d+% to \d+% of the passage area$/);
+  await page.keyboard.press("End");
+  expect(await now()).toBe(await max());
+  await page.keyboard.press("Home");
+  expect(await now()).toBe(0);
+  // Drag the grip down with the mouse.
+  var grip = await reader.locator("rect").nth(1).boundingBox();
+  await page.mouse.move(grip.x + grip.width / 2, grip.y + grip.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(grip.x + grip.width / 2, grip.y + grip.height / 2 + 100, {steps: 5});
+  await page.mouse.up();
+  expect(await now()).toBeGreaterThan(90);
+  var kept = await now();
+  await next(page).click();
+  await expect(reader).toBeVisible();
+  expect(await now()).toBe(kept);
+  // The passage still scrolls under the band.
+  await page.getByRole("article").hover();
+  await page.mouse.wheel(0, 200);
+  await expect.poll(() => page.getByRole("article").evaluate((a) => a.scrollTop)).toBeGreaterThan(0);
+  await tool(page, "Line reader").click();
+  await expect(reader).toHaveCount(0);
+});
+
+test("zoom: 100 to 200 percent on the passage and its figures, announced, kept across passages", async ({page, problems}) => {
+  void problems;
+  await page.setViewportSize({width: 1366, height: 657});
+  await go(page, 24);
+  await begin(page, "Mixed practice");
+  var zin = page.getByRole("button", {name: "Zoom in"}), zout = page.getByRole("button", {name: "Zoom out"});
+  await expect(zout).toBeDisabled();
+  var size = () => page.getByRole("article").evaluate((a) => parseFloat(getComputedStyle(a).fontSize));
+  var figWidth = () => page.getByRole("article").evaluate((a) => { var f = a.querySelector("figure"); return f ? f.getBoundingClientRect().width : 0; });
+  var s0 = await size(), f0 = await figWidth();
+  await zin.click();
+  await expect(page.locator("#zsa-act-live")).toHaveText("Passage zoom 125%");
+  expect(await size()).toBeCloseTo(s0 * 1.25, 0);
+  if (f0) expect(await figWidth()).toBeGreaterThan(f0 * 1.2);
+  await zin.click();
+  await zin.click();
+  await expect(page.locator("#zsa-act-live")).toHaveText("Passage zoom 200%");
+  await expect(zin).toBeDisabled();
+  expect(await size()).toBeCloseTo(s0 * 2, 0);
+  var total = (await current(page)).total;
+  await navButton(page, total).click();
+  expect(await size()).toBeCloseTo(s0 * 2, 0);
+  await zout.click();
+  expect(await size()).toBeCloseTo(s0 * 1.5, 0);
+});
+
+for (var [tw, th] of [[1366, 657], [390, 664]]) {
+  (function (w, h) {
+    test("tools: axe-core with every tool on, light and dark, and no sideways scroll at " + w + "x" + h, async ({page, problems}) => {
+      void problems;
+      await page.setViewportSize({width: w, height: h});
+      await go(page, 25);
+      await begin(page, "Mixed practice");
+      await tool(page, "Highlighter").click();
+      await selectText(page, page.getByRole("article").locator("p").nth(1), 0, 15);
+      await page.getByRole("button", {name: "Highlight selection"}).click();
+      await tool(page, "Line reader").click();
+      await tool(page, "Eliminator").click();
+      await tool(page, "Masking").click();
+      await page.getByRole("button", {name: "Eliminate choice A"}).click();
+      await page.getByRole("button", {name: "Hide choice C"}).click();
+      for (var k = 0; k < 3; k++) await page.getByRole("button", {name: "Zoom in"}).click();
+      for (var scheme of ["light", "dark"]) {
+        await page.emulateMedia({colorScheme: scheme});
+        await audit(page, "all tools " + scheme);
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
+      var small = await page.getByRole("group", {name: "Tools"}).locator("button").evaluateAll((bs) => bs.filter((b) => b.getClientRects().length && (b.getBoundingClientRect().width < 44 || b.getBoundingClientRect().height < 44)).map((b) => b.textContent));
+      expect(small).toEqual([]);
+    });
+  })(tw, th);
+}

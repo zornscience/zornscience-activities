@@ -13,7 +13,7 @@
   var ui = data.ui, SKILLS = data.skills;
   var bank = data.passages.filter(function (p) { return p.status === "reviewed"; });
   var app = root.querySelector("#zsa-act-app"), testbar = root.querySelector("#zsa-act-testbar"), bottom = root.querySelector("#zsa-act-bottom");
-  var dialog = root.querySelector("#zsa-act-dialog"), live = root.querySelector("#zsa-act-live"), alertBox = root.querySelector("#zsa-act-alert");
+  var tools = root.querySelector("#zsa-act-tools"), dialog = root.querySelector("#zsa-act-dialog"), live = root.querySelector("#zsa-act-live"), alertBox = root.querySelector("#zsa-act-alert");
   var SVG = "http://www.w3.org/2000/svg";
   var ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
   var S = null, timer = null;
@@ -333,17 +333,242 @@
     stopClock();
     testbar.hidden = true;
     bottom.hidden = true;
+    tools.hidden = true;
     alertBox.replaceChildren();
-    root.classList.remove("zsa-act--testing", "zsa-act--review");
+    root.classList.remove("zsa-act--testing", "zsa-act--review", "zsa-act--hl", "zsa-act--erase", "zsa-act--elim", "zsa-act--mask");
     if (dialog.open) dialog.close();
   }
   function beginSection() {
     S.t0 = Date.now();
+    S.qpanes = {};
+    S.pwrap = node("div", "zsa-act-pwrap");
+    S.pwrap.appendChild(node("div"));
+    buildReader(S.pwrap);
     buildTestbar();
+    buildTools();
     buildBottom();
     tick();
     timer = setInterval(tick, 250);
     renderTest(0, "heading");
+  }
+
+  // ---------- Tools: highlighter, line reader, answer eliminator, answer masking, zoom ----------
+  // Tool state lasts for one section. Panes are built once per section, so highlights, eliminations and masks stay.
+  var T = null, ZOOMS = [100, 125, 150, 200], toolBtns = {}, hlOpts = null, justHighlighted = false;
+  function icon(paths) {
+    var s = svg("svg", {viewBox: "0 0 20 20", width: 18, height: 18, "aria-hidden": "true", focusable: "false", "class": "zsa-act-icon"});
+    paths.forEach(function (d) { svg("path", {d: d}, s); });
+    return s;
+  }
+  var ICONS = {
+    highlight: ["M4 16 L7 13 L13 7 L15 9 L9 15 L6 16 Z", "M13 7 L15 5 L17 7 L15 9", "M3 18 H17"],
+    reader: ["M2 5 H18", "M2 15 H18", "M4 9 H16", "M4 11 H13"],
+    elim: ["M4 4 L16 16", "M16 4 L4 16"],
+    mask: ["M2 10 C5 5 15 5 18 10 C15 15 5 15 2 10 Z", "M3 17 L17 3"],
+    zoomIn: ["M8.5 3 A5.5 5.5 0 1 1 8.5 14 A5.5 5.5 0 1 1 8.5 3 Z", "M12.5 12.5 L17.5 17.5", "M6 8.5 H11", "M8.5 6 V11"],
+    zoomOut: ["M8.5 3 A5.5 5.5 0 1 1 8.5 14 A5.5 5.5 0 1 1 8.5 3 Z", "M12.5 12.5 L17.5 17.5", "M6 8.5 H11"],
+    eye: ["M2 10 C5 5 15 5 18 10 C15 15 5 15 2 10 Z", "M10 7.5 A2.5 2.5 0 1 1 10 12.5 A2.5 2.5 0 1 1 10 7.5 Z"]
+  };
+  function toolButton(key, label, onClick, cls) {
+    var b = button("", "zsa-act-tool" + (cls ? " " + cls : ""), onClick);
+    if (ICONS[key]) b.appendChild(icon(ICONS[key]));
+    b.appendChild(node("span", null, label));
+    return b;
+  }
+  function pressed(b, on) { b.setAttribute("aria-pressed", String(!!on)); }
+  function buildTools() {
+    T = {hl: false, color: "yellow", erase: false, reader: false, elim: false, mask: false, zoom: 0, y: 40, h: 78, count: 0};
+    tools.replaceChildren();
+    tools.setAttribute("aria-label", ui.tools);
+    var row = tools.appendChild(node("div", "zsa-act-wrap zsa-act-toolrow-inner"));
+    toolBtns.hl = row.appendChild(toolButton("highlight", ui.toolHighlight, function () { T.hl = !T.hl; T.erase = false; syncTools(); }));
+    hlOpts = row.appendChild(node("span", "zsa-act-hl-opts"));
+    hlOpts.setAttribute("role", "group");
+    hlOpts.setAttribute("aria-label", ui.hlColors);
+    toolBtns.colors = [["yellow", ui.yellow], ["green", ui.green], ["blue", ui.blue]].map(function (c) {
+      var b = hlOpts.appendChild(button("", "zsa-act-swatch", function () { T.color = c[0]; T.erase = false; syncTools(); }));
+      b.classList.add("zsa-act-swatch--color");
+      b.appendChild(node("span", "zsa-act-swatch-dot zsa-act-hl--" + c[0])).setAttribute("aria-hidden", "true");
+      b.appendChild(node("span", "zsa-act-vh", c[1]));
+      b.value = c[0];
+      return b;
+    });
+    toolBtns.erase = hlOpts.appendChild(button(ui.erase, "zsa-act-swatch", function () { T.erase = !T.erase; syncTools(); }));
+    var apply = hlOpts.appendChild(button(ui.hlApply, "zsa-act-swatch", function () { applySelection(); }));
+    // Keep the text selection when this button is pressed with a mouse.
+    apply.addEventListener("mousedown", function (e) { e.preventDefault(); });
+    hlOpts.appendChild(button(ui.hlClear, "zsa-act-swatch", clearHighlights));
+    toolBtns.reader = row.appendChild(toolButton("reader", ui.toolReader, function () { T.reader = !T.reader; syncTools(); if (T.reader) S.readerHandle.focus(); }));
+    toolBtns.elim = row.appendChild(toolButton("elim", ui.toolElim, function () { T.elim = !T.elim; syncTools(); }));
+    toolBtns.mask = row.appendChild(toolButton("mask", ui.toolMask, function () { T.mask = !T.mask; syncTools(); }));
+    var zoom = row.appendChild(node("span", "zsa-act-zoom"));
+    zoom.setAttribute("role", "group");
+    zoom.setAttribute("aria-label", ui.zoomLabel);
+    toolBtns.zoomOut = zoom.appendChild(toolButton("zoomOut", ui.zoomOut, function () { setZoom(T.zoom - 1); }, "zsa-act-tool--icon"));
+    toolBtns.zoomVal = zoom.appendChild(node("span", "zsa-act-zoom-val"));
+    toolBtns.zoomIn = zoom.appendChild(toolButton("zoomIn", ui.zoomIn, function () { setZoom(T.zoom + 1); }, "zsa-act-tool--icon"));
+    tools.hidden = false;
+    syncTools();
+  }
+  function setZoom(z) {
+    T.zoom = Math.max(0, Math.min(ZOOMS.length - 1, z));
+    syncTools();
+    live.textContent = fill(ui.zoomAnnounce, {pct: ZOOMS[T.zoom]});
+  }
+  function syncTools() {
+    pressed(toolBtns.hl, T.hl);
+    hlOpts.hidden = !T.hl;
+    toolBtns.colors.forEach(function (b) { pressed(b, !T.erase && T.color === b.value); });
+    pressed(toolBtns.erase, T.erase);
+    pressed(toolBtns.reader, T.reader);
+    pressed(toolBtns.elim, T.elim);
+    pressed(toolBtns.mask, T.mask);
+    root.classList.toggle("zsa-act--hl", T.hl);
+    root.classList.toggle("zsa-act--erase", T.hl && T.erase);
+    root.classList.toggle("zsa-act--elim", T.elim);
+    root.classList.toggle("zsa-act--mask", T.mask);
+    toolBtns.zoomOut.disabled = T.zoom === 0;
+    toolBtns.zoomIn.disabled = T.zoom === ZOOMS.length - 1;
+    toolBtns.zoomVal.textContent = ZOOMS[T.zoom] + "%";
+    ZOOMS.forEach(function (z, k) { S.pwrap.classList.toggle("zsa-act-z" + k, k === T.zoom && k > 0); });
+    S.reader.toggleAttribute("hidden", !T.reader);
+    drawReader();
+  }
+
+  // ----- Highlighter: wraps selected text (passage text, question stems and choices, never figures) in <mark>.
+  function highlightable(t) {
+    var el = t.parentNode;
+    if (!el || !el.closest) return false;
+    if (!el.closest(".zsa-act-passage, .zsa-act-q-stem, .zsa-act-choice-text")) return false;
+    return !el.closest("svg, figure, .zsa-act-tbl, .zsa-sr-only, .zsa-act-kind") && /\S/.test(t.nodeValue);
+  }
+  function unwrap(mark) {
+    var parent = mark.parentNode;
+    while (mark.firstChild) parent.insertBefore(mark.firstChild, mark);
+    parent.removeChild(mark);
+    parent.normalize();
+  }
+  function unwrapGroup(id) { [].slice.call(root.querySelectorAll('mark[data-hl="' + id + '"]')).forEach(unwrap); }
+  function applySelection() {
+    var sel = window.getSelection();
+    if (!sel || sel.isCollapsed || !sel.rangeCount) return false;
+    var range = sel.getRangeAt(0), parts = [];
+    var walker = document.createTreeWalker(app, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) {
+      var t = walker.currentNode;
+      if (!range.intersectsNode(t) || !highlightable(t)) continue;
+      var s = t === range.startContainer ? range.startOffset : 0;
+      var e = t === range.endContainer ? range.endOffset : t.nodeValue.length;
+      if (e > s) parts.push([t, s, e]);
+    }
+    if (!parts.length) return false;
+    T.count += 1;
+    var id = "h" + T.count, changed = false;
+    parts.forEach(function (p) {
+      var t = p[0], old = t.parentNode.closest("mark.zsa-act-hl");
+      if (T.erase) { if (old) { unwrapGroup(old.getAttribute("data-hl")); changed = true; } return; }
+      if (old) { old.className = "zsa-act-hl zsa-act-hl--" + T.color; changed = true; return; }
+      if (p[2] < t.nodeValue.length) t.splitText(p[2]);
+      var mid = p[1] > 0 ? t.splitText(p[1]) : t;
+      var m = document.createElement("mark");
+      m.className = "zsa-act-hl zsa-act-hl--" + T.color;
+      m.setAttribute("data-hl", id);
+      mid.parentNode.replaceChild(m, mid);
+      m.appendChild(mid);
+      changed = true;
+    });
+    sel.removeAllRanges();
+    if (changed) live.textContent = T.erase ? ui.hlRemoved : ui.hlAdded;
+    return changed;
+  }
+  function clearHighlights() {
+    var q = S.qpanes[S.cur], art = S.panes[S.qs[S.cur].pi];
+    [art, q && q.pane].forEach(function (el) { if (el) [].slice.call(el.querySelectorAll("mark.zsa-act-hl")).forEach(unwrap); });
+    live.textContent = ui.hlCleared;
+  }
+  // With the highlighter on, a mouse selection is highlighted when the button is released, and the click that
+  // follows does not pick the answer under it. Erase mode removes a highlight with a click.
+  app.addEventListener("mouseup", function () {
+    if (S && T && T.hl && S.screen === "test") justHighlighted = applySelection();
+  });
+  app.addEventListener("click", function (e) {
+    if (!S || !T || !T.hl) return;
+    var mark = e.target.closest && e.target.closest("mark.zsa-act-hl");
+    if (justHighlighted || (T.erase && mark)) {
+      e.preventDefault();
+      if (!justHighlighted && mark) { unwrapGroup(mark.getAttribute("data-hl")); live.textContent = ui.hlRemoved; }
+    }
+    justHighlighted = false;
+  }, true);
+
+  // ----- Line reader: an SVG band over the passage pane. The text outside the band is covered; the pane still scrolls.
+  var LINE = 26;
+  function buildReader(wrap) {
+    var r = svg("svg", {"class": "zsa-act-reader", width: "100%", height: "100%"}, wrap);
+    r.setAttribute("hidden", "");
+    var shadeTop = svg("rect", {x: 0, width: "100%", y: 0, "class": "zsa-act-reader-shade"}, r);
+    var shadeBottom = svg("rect", {x: 0, width: "100%", height: 4000, "class": "zsa-act-reader-shade"}, r);
+    var handle = svg("g", {tabindex: 0, role: "slider", "aria-label": ui.readerLabel, "aria-orientation": "vertical", "class": "zsa-act-reader-handle"}, r);
+    var frame = svg("rect", {x: 1, width: "100%", rx: 4, "class": "zsa-act-reader-frame"}, handle);
+    var grip = svg("rect", {width: 34, rx: 6, "class": "zsa-act-reader-grip"}, handle);
+    var topEdge = svg("rect", {x: 0, width: "100%", height: 12, "class": "zsa-act-reader-edge"}, handle);
+    var bottomEdge = svg("rect", {x: 0, width: "100%", height: 12, "class": "zsa-act-reader-edge"}, handle);
+    S.reader = r;
+    S.readerHandle = handle;
+    S.readerParts = {shadeTop: shadeTop, shadeBottom: shadeBottom, frame: frame, grip: grip, topEdge: topEdge, bottomEdge: bottomEdge};
+    function drag(el, mode) {
+      el.addEventListener("pointerdown", function (e) {
+        e.preventDefault();
+        el.setPointerCapture(e.pointerId);
+        var y0 = e.clientY, start = {y: T.y, h: T.h};
+        function move(ev) {
+          var d = ev.clientY - y0;
+          if (mode === "move") T.y = start.y + d;
+          if (mode === "top") { T.y = start.y + d; T.h = start.h - d; }
+          if (mode === "bottom") T.h = start.h + d;
+          drawReader();
+        }
+        function up() { el.removeEventListener("pointermove", move); el.removeEventListener("pointerup", up); el.removeEventListener("pointercancel", up); }
+        el.addEventListener("pointermove", move);
+        el.addEventListener("pointerup", up);
+        el.addEventListener("pointercancel", up);
+      });
+    }
+    drag(grip, "move");
+    drag(topEdge, "top");
+    drag(bottomEdge, "bottom");
+    handle.addEventListener("keydown", function (e) {
+      var step = {ArrowUp: -LINE, ArrowDown: LINE, PageUp: -4 * LINE, PageDown: 4 * LINE}[e.key];
+      if (e.key === "Home") T.y = 0;
+      else if (e.key === "End") T.y = 1e6;
+      else if (step === undefined) return;
+      else if (e.shiftKey && Math.abs(step) === LINE) T.h += step;
+      else T.y += step;
+      e.preventDefault();
+      drawReader();
+    });
+    if (typeof ResizeObserver !== "undefined") new ResizeObserver(drawReader).observe(wrap);
+  }
+  function drawReader() {
+    if (!S || !S.reader || S.reader.hasAttribute("hidden") || !T) return;
+    var H = S.pwrap.clientHeight, W = S.pwrap.clientWidth, p = S.readerParts;
+    T.h = Math.max(LINE, Math.min(H, Math.round(T.h)));
+    T.y = Math.max(0, Math.min(H - T.h, Math.round(T.y)));
+    p.shadeTop.setAttribute("height", T.y);
+    p.shadeBottom.setAttribute("y", T.y + T.h);
+    p.frame.setAttribute("y", T.y);
+    p.frame.setAttribute("height", T.h);
+    p.frame.setAttribute("width", Math.max(0, W - 2));
+    p.grip.setAttribute("x", Math.max(0, W - 40));
+    p.grip.setAttribute("y", T.y + T.h / 2 - Math.min(22, T.h / 2 - 2));
+    p.grip.setAttribute("height", Math.min(44, T.h - 4));
+    p.topEdge.setAttribute("y", T.y - 6);
+    p.bottomEdge.setAttribute("y", T.y + T.h - 6);
+    var h = S.readerHandle, pct = function (v) { return Math.round(v / Math.max(1, H) * 100); };
+    h.setAttribute("aria-valuemin", 0);
+    h.setAttribute("aria-valuemax", Math.max(0, H - T.h));
+    h.setAttribute("aria-valuenow", T.y);
+    h.setAttribute("aria-valuetext", fill(ui.readerValue, {from: pct(T.y), to: pct(T.y + T.h)}));
   }
 
   // ----- Question view
@@ -378,17 +603,44 @@
     rich(fs.appendChild(node("legend", "zsa-act-q-stem")), q.stem);
     var list = fs.appendChild(node("div", "zsa-act-choices"));
     q.choices.forEach(function (c, i) {
-      var id = "zsa-act-q" + q.n + "-" + i;
-      var lab = list.appendChild(node("label", "zsa-act-choice"));
+      var id = "zsa-act-q" + q.n + "-" + i, letter = letters(q.n)[i];
+      var row = list.appendChild(node("div", "zsa-act-choice-row"));
+      var lab = row.appendChild(node("label", "zsa-act-choice"));
       lab.htmlFor = id;
       var input = lab.appendChild(node("input"));
       input.type = "radio"; input.name = "zsa-act-q" + q.n; input.id = id; input.value = String(i);
       input.checked = S.answers[q.n] === i;
       input.addEventListener("change", function () { S.answers[q.n] = i; updateNav(); });
-      lab.appendChild(node("span", "zsa-act-letter", letters(q.n)[i])).setAttribute("aria-hidden", "true");
-      var txt = lab.appendChild(node("span"));
-      txt.appendChild(node("span", "zsa-sr-only", letters(q.n)[i] + ". "));
-      rich(txt, c);
+      lab.appendChild(node("span", "zsa-act-letter", letter)).setAttribute("aria-hidden", "true");
+      var body = lab.appendChild(node("span"));
+      body.appendChild(node("span", "zsa-sr-only", letter + ". "));
+      var txt = rich(body.appendChild(node("span", "zsa-act-choice-text")), c);
+      var maskText = body.appendChild(node("span", "zsa-act-masked", ui.choiceHidden));
+      maskText.hidden = true;
+      var struck = body.appendChild(node("span", "zsa-sr-only", ui.eliminated));
+      struck.hidden = true;
+      var tools = row.appendChild(node("span", "zsa-act-choice-tools"));
+      // A struck choice can still be picked. A hidden choice keeps its letter and its radio button.
+      var x = tools.appendChild(button("", "zsa-act-elim-btn", function () {
+        var on = x.getAttribute("aria-pressed") !== "true";
+        pressed(x, on);
+        lab.classList.toggle("zsa-act-struck", on);
+        struck.hidden = !on;
+      }));
+      x.appendChild(icon(ICONS.elim));
+      x.setAttribute("aria-label", fill(ui.eliminate, {letter: letter}));
+      pressed(x, false);
+      var m = tools.appendChild(button("", "zsa-act-mask-btn", function () {
+        var on = m.getAttribute("aria-pressed") !== "true";
+        pressed(m, on);
+        lab.classList.toggle("zsa-act-is-masked", on);
+        txt.hidden = on;
+        maskText.hidden = !on;
+        m.replaceChildren(icon(on ? ICONS.eye : ICONS.mask));
+      }));
+      m.appendChild(icon(ICONS.mask));
+      m.setAttribute("aria-label", fill(ui.hideChoice, {letter: letter}));
+      pressed(m, false);
     });
     return {pane: pane, heading: h};
   }
@@ -407,24 +659,24 @@
     S.screen = "test";
     root.classList.remove("zsa-act--review");
     bottom.hidden = false;
+    tools.hidden = false;
     var q = S.qs[i];
     var split = app.querySelector(".zsa-act-split");
     if (!split) {
       split = node("div", "zsa-act-split");
+      split.appendChild(S.pwrap);
       app.replaceChildren(split);
     }
     var art = passagePane(q.pi);
-    if (split.firstChild !== art) {
-      split.replaceChildren(art);
-      art.scrollTop = 0;
-    }
-    var built = questionPane(q);
+    if (S.pwrap.firstChild !== art) S.pwrap.replaceChild(art, S.pwrap.firstChild);
+    var built = S.qpanes[i] || (S.qpanes[i] = questionPane(q));
     if (split.children[1]) split.replaceChild(built.pane, split.children[1]); else split.appendChild(built.pane);
     S.label.textContent = fill(ui.barLabel, {n: q.pi + 1, total: S.items.length});
     updateNav();
     if (narrow) {
       if (q.pi !== prevPi) window.scrollTo(0, 0); else built.pane.scrollIntoView({block: "start"});
     } else window.scrollTo(0, 0);
+    drawReader();
     if (focus === "heading") built.heading.focus();
     else live.textContent = fill(ui.announce, {n: q.n, total: S.total});
   }
@@ -502,6 +754,7 @@
     S.screen = "review";
     root.classList.add("zsa-act--review");
     bottom.hidden = true;
+    tools.hidden = true;
     S.label.textContent = ui.section + " · " + ui.reviewHeading;
     var answered = S.qs.filter(function (q) { return S.answers[q.n] !== undefined; });
     var blank = S.qs.filter(function (q) { return S.answers[q.n] === undefined; });

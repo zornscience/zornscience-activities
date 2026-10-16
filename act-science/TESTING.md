@@ -1,9 +1,9 @@
 # Verification record
-Version: 0.2.0
+Version: 0.3.0
 Date: 2026-10-16
-Reviewer: Claude (built and tested 0.2.0)
+Reviewer: Claude (built and tested 0.3.0)
 
-PASS means the check was run on version 0.2.0 as committed and passed. Browser checks use Playwright 1.56 with Chromium.
+PASS means the check was run on version 0.3.0 as committed and passed. Browser checks use Playwright 1.56 with Chromium.
 
 | Check | Status | Evidence |
 |---|---|---|
@@ -14,6 +14,11 @@ PASS means the check was run on version 0.2.0 as committed and passed. Browser c
 | Timer | PASS | With `page.clock`: mixed practice starts at 17:00; Hide timer shows "Timer hidden" and Show timer brings it back; no notice 2 seconds before 5:00 left, the alert one second after, OK dismisses it, and it never repeats; with the Directions dialog open, the section ends at 0:00, the dialog closes, the report says time is up and shows "Time 17:00". One passage counts up to 30:05 without ending or warning. |
 | Directions dialog | PASS | Opens from the top bar with focus on Close; Escape and Close both return focus to Directions. |
 | Keyboard | PASS | Nothing focused on load; Tab and Enter choose a mode; Back, then Start the section; focus lands on "Question 1 of 17"; arrow keys choose an answer; Next keeps focus; Shift+Tab from Next reaches the current number (one Tab stop, `aria-current`); arrow keys, End and Home move within the navigator; Enter opens the question with focus on its heading; exactly one number is in the Tab order. |
+| Highlighter | PASS | Off by default; on shows the options with Yellow pressed. A selection plus Highlight selection makes one mark with exactly the selected text and announces it. A mouse drag over a choice in green makes a second mark with a different background and leaves the answer unpicked. Selecting the whole passage marks text but nothing inside a figure, table or SVG. Marks survive Next, Previous, the review screen and the navigator. Erase removes a highlight with a click without picking an answer; Clear removes the rest. With the highlighter off, selecting and clicking makes no mark. |
+| Eliminator and masking | PASS | Their buttons are hidden until the tool is on. Eliminating B presses its X and makes the radio read "B. ... (eliminated)"; B can still be picked; turning the eliminator off hides the X but keeps the strike. Hiding D makes it read "D. Choice hidden", and its show button stays visible with masking off. Both survive Next and Previous, along with the answer. Showing D and pressing the X again from the keyboard restore both. |
+| Line reader | PASS | Not present until turned on; turning it on focuses the slider. Down moves it 26 px (one line); Shift+Down makes it a line taller (the maximum position drops by 26); End and Home reach the limits; the value text reads "Showing n% to m% of the passage area". Dragging the grip 100 px moves it; its position is kept on the next question; the passage still scrolls with the mouse wheel under it; turning it off removes it. |
+| Zoom | PASS | Zoom out is disabled at 100%. Each step is announced ("Passage zoom 125%"); the passage font grows 1.25, 1.5 and 2 times and the first figure grows with it; Zoom in is disabled at 200%; the zoom is kept on a question in another passage. |
+| Tools, all on | PASS | With a highlight, the line reader, a strike, a hidden choice and 200% zoom: axe-core finds nothing in light or dark mode at 1366x657 and 390x664, the page does not scroll sideways, and every tools row button is at least 44 by 44 px. The tools row fits one line from 1280 px with the highlighter options open; narrower, it scrolls sideways inside itself. |
 | axe-core 4.14 | PASS | Zero violations (WCAG 2.0 to 2.2 A and AA plus best practices) on the start screen, the directions, a flagged and answered question, the 5-minute notice, the Directions dialog, the review screen with the end confirmation, and the score report, in light and dark mode, at 1366x657 and 390x664. |
 | Layout | PASS | No sideways scrolling on the start screen, directions, first and last question, review and score report at 320, 360, 400, 768, 1280, 1366 and 1920 px wide, and 683x329 (1366x657 at 200% zoom). Every bottom bar button is at least 44 by 44 px and the bar sits at the bottom of the viewport. From 1280 px the passage pane scrolls on its own. |
 | Network, storage, embed | PASS | Only local files load, including the bundled font; no storage or cookies after starting a set; `?embed=1` hides the home link, keeps the trademark footer, and links target `_top`. |
@@ -21,4 +26,4 @@ PASS means the check was run on version 0.2.0 as committed and passed. Browser c
 | House rules | PASS | `tests/unit/static.test.js` with the rest of the site (strict IIFE, no innerHTML or inline styles, one CSP, no en or em dashes, versions agree). |
 
 ## Not tested
-Real screen readers, Firefox, Safari, Edge, Chromebooks and phones. Charts are small at phone width (the magnifier comes in milestone 3).
+Real screen readers, Firefox, Safari, Edge, Chromebooks and phones. Charts are small at phone width without zoom. Touch-screen dragging of the line reader was tested only with a mouse.
