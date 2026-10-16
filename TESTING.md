@@ -35,6 +35,8 @@ Expected answers come from `tests/support/reference.js`, written from the chemis
 | `tests/e2e/periodic-table.spec.js` | The Periodic Table: layout at 8 sizes, the keyboard grid, details, all five color modes and spoken names, search, deep links and the `from` back link, embed mode, network and storage, axe-core in 8 states, and the landing page links. |
 | `tests/e2e/periodic-trends.spec.js` | Periodic Trends Practice: every wrong pick in all 426 questions, 40 seeded rounds, the flow, keyboard, layout fit, axe-core in 9 states at two sizes, embed mode and network. |
 | `tests/e2e/starter.spec.js` | The starter template plays through. |
+| `tests/unit/lewis-science.test.js` | Lewis Structure and VSEPR Builder: all 37 items against `tests/support/lewis-reference.js` (a second written table and an enumeration of every possible structure): totals, accepted structures and resonance counts, octets, formal charges, domains, both geometries, angles, polarity, the AP formal charge step, the table, and the text rules. |
+| `tests/e2e/lewis-*.spec.js` | The same activity in the browser: every choice and a wide sample of structures routed to their feedback (`lewis-routing`), one item step by step, the build step, deep links, rounds and review (`lewis-flow`), layout at eight sizes and the fit at four (`lewis-layout`), axe in 14 states at two sizes and a keyboard-only round (`lewis-a11y`). `tests/science/lewis_rdkit.py` is an extra local check with RDKit and mendeleev (Python, not run in CI). |
 
 Every browser test also fails on any console error or warning, page error or CSP violation.
 

@@ -49,6 +49,15 @@ var activities = {
       return id.dir === "n2f" ? {msub: cp.subscripts[0], xsub: cp.subscripts[1]} : {name: cp.name};
     },
     marked: function (id) { return [id.item.metal.symbol, id.item.nonmetal.symbol]; }
+  },
+  // Its steps differ per item (a structure editor, an AP formal charge step), so its own tests drive it:
+  // tests/e2e/lewis-*.spec.js with the answers from tests/support/lewis-reference.js.
+  "lewis-vsepr": {
+    slug: "lewis-vsepr", code: "lv", path: "/lewis-vsepr/",
+    ids: {work: "zsa-lv-work", strip: "zsa-lv-strip", heading: "zsa-lv-heading", progress: "zsa-lv-progress",
+      live: "zsa-lv-live", options: "zsa-lv-options", newRound: "zsa-lv-new", pick: "zsa-lv-pick", select: "zsa-lv-select",
+      table: "zsa-lv-table", note: "zsa-lv-table-note"},
+    itemCount: 37, roundSize: 6, currentMark: "(in this structure)"
   }
 };
 

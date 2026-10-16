@@ -220,6 +220,8 @@ async function main() {
 
   var viewports = QUICK ? [{width: 1366, height: 657}, {width: 390, height: 664}] : [{width: 1366, height: 657}, {width: 390, height: 664}, {width: 768, height: 1024}, {width: 320, height: 568}];
   for (var slug of Object.keys(activities)) {
+    // An activity that is new in this change has nothing to compare with.
+    if (!fs.existsSync(path.join(baseDir, activities[slug].path))) { console.log("Skipping " + slug + ": not in " + BASE); continue; }
     for (var vp of viewports) {
       for (var seed of QUICK ? [1] : [1, 2]) {
         await scenario(slug + " round " + vp.width + "x" + vp.height + " seed " + seed, slug, {viewport: vp, seed: seed}, async function (api) {
