@@ -84,64 +84,120 @@
     else if (shape === "triangle") svg("path", {d: "M" + x + " " + (y - 6) + " L" + (x + 6) + " " + (y + 5) + " L" + (x - 6) + " " + (y + 5) + " Z", "class": cls}, g);
     else svg("path", {d: "M" + x + " " + (y - 6) + " L" + (x + 6) + " " + y + " L" + x + " " + (y + 6) + " L" + (x - 6) + " " + y + " Z", "class": cls}, g);
   }
-  function legendKey(shape, i) {
+  function legendKey(shape, i, bar) {
     var s = svg("svg", {viewBox: "0 0 28 16", width: 28, height: 16, "aria-hidden": "true", focusable: "false"});
-    svg("line", {x1: 1, x2: 27, y1: 8, y2: 8, "class": "zsa-act-series zsa-act-s" + (i + 1)}, s);
-    marker(s, shape, 14, 8, "zsa-act-dot zsa-act-s" + (i + 1));
+    if (bar) {
+      svg("rect", {x: 6, y: 1, width: 16, height: 14, "class": "zsa-act-bar zsa-act-s" + (i + 1) + (i ? " zsa-act-bar--hatch" : "")}, s);
+      if (i) hatch(s, 6, 1, 16, 14);
+    } else {
+      svg("line", {x1: 1, x2: 27, y1: 8, y2: 8, "class": "zsa-act-series zsa-act-s" + (i + 1)}, s);
+      marker(s, shape, 14, 8, "zsa-act-dot zsa-act-s" + (i + 1));
+    }
     return s;
   }
+  // Diagonal stripes over a bar, drawn as clipped lines so they need no pattern ids or styles.
+  function hatch(parent, x, y, w, h) {
+    var g = svg("g", {"class": "zsa-act-hatch"}, parent);
+    for (var k = -h; k < w; k += 6) {
+      var x1 = x + Math.max(k, 0), y1 = y + h - Math.max(-k, 0);
+      var len = Math.min(w - Math.max(k, 0), h - Math.max(-k, 0));
+      svg("line", {x1: x1, y1: y1, x2: x1 + len, y2: y1 - len}, g);
+    }
+  }
+  function legendFor(series, shapes, bar) {
+    var legend = node("ul", "zsa-act-legend");
+    legend.setAttribute("aria-hidden", "true");
+    series.forEach(function (s, i) {
+      var li = legend.appendChild(node("li"));
+      li.appendChild(legendKey(shapes ? SHAPES[i % SHAPES.length] : null, i, bar));
+      li.appendChild(node("span", null, s.name));
+    });
+    return legend;
+  }
   // A screen reader table with the values behind a graph, which itself is hidden from screen readers.
-  function dataTable(b) {
+  function dataTable(caption, xLabel, names, rows) {
     var t = node("table", "zsa-sr-only");
-    var cap = node("caption");
-    cap.textContent = fill(ui.figureData, {caption: b.caption});
-    t.appendChild(cap);
+    t.appendChild(node("caption", null, fill(ui.figureData, {caption: caption})));
     var head = t.appendChild(node("thead")).appendChild(node("tr"));
-    rich(head.appendChild(node("th")), b.xLabel).setAttribute("scope", "col");
-    b.series.forEach(function (s) { var th = head.appendChild(node("th", null, s.name)); th.setAttribute("scope", "col"); });
+    rich(head.appendChild(node("th")), xLabel).setAttribute("scope", "col");
+    names.forEach(function (n) { rich(head.appendChild(node("th")), n).setAttribute("scope", "col"); });
     var body = t.appendChild(node("tbody"));
-    b.x.forEach(function (x, i) {
+    rows.forEach(function (r) {
       var tr = body.appendChild(node("tr"));
-      var th = tr.appendChild(node("th", null, String(x)));
-      th.setAttribute("scope", "row");
-      b.series.forEach(function (s) { tr.appendChild(node("td", null, String(s.values[i]))); });
+      tr.appendChild(node("th", null, String(r[0]))).setAttribute("scope", "row");
+      r.slice(1).forEach(function (v) { tr.appendChild(node("td", null, v === null || v === undefined ? "" : String(v))); });
     });
     return t;
   }
-  function lineChart(b) {
-    var fig = node("figure", "zsa-act-figure");
-    var legend = node("ul", "zsa-act-legend");
-    legend.setAttribute("aria-hidden", "true");
-    b.series.forEach(function (s, i) {
-      var li = legend.appendChild(node("li"));
-      li.appendChild(legendKey(SHAPES[i % SHAPES.length], i));
-      li.appendChild(node("span", null, s.name));
-    });
-    fig.appendChild(legend);
-    var W = 480, H = 300, L = 58, R = 14, T = 14, B = 54, FS = 14;
-    var chart = svg("svg", {viewBox: "0 0 " + W + " " + H, "class": "zsa-act-chart", "aria-hidden": "true", focusable: "false"});
-    var x0 = b.x[0], x1 = b.x[b.x.length - 1];
-    function sx(v) { return L + (v - x0) / (x1 - x0) * (W - L - R); }
-    function sy(v) { return H - B - v / b.yMax * (H - T - B); }
-    for (var v = 0; v <= b.yMax; v += b.yStep) {
-      svg("line", {x1: L, x2: W - R, y1: sy(v), y2: sy(v), "class": "zsa-act-grid"}, chart);
-      svg("text", {x: L - 8, y: sy(v) + 5, "text-anchor": "end", "font-size": FS}, chart).textContent = v;
+  // The shared frame of every graph: y grid and labels, x ticks, both axes and their titles.
+  var GW = 480, GH = 300, GL = 58, GR = 14, GT = 14, GB = 54, FS = 14;
+  function frame(b, xTicks, sx) {
+    var chart = svg("svg", {viewBox: "0 0 " + GW + " " + GH, "class": "zsa-act-chart", "aria-hidden": "true", focusable: "false"});
+    var y0 = b.yMin || 0;
+    function sy(v) { return GH - GB - (v - y0) / (b.yMax - y0) * (GH - GT - GB); }
+    for (var k = 0, v = y0; v <= b.yMax + 1e-9; k += 1, v = y0 + k * b.yStep) {
+      svg("line", {x1: GL, x2: GW - GR, y1: sy(v), y2: sy(v), "class": "zsa-act-grid"}, chart);
+      svg("text", {x: GL - 8, y: sy(v) + 5, "text-anchor": "end", "font-size": FS}, chart).textContent = Number(v.toFixed(6));
     }
-    b.x.forEach(function (xv) { svg("text", {x: sx(xv), y: H - B + 20, "text-anchor": "middle", "font-size": FS}, chart).textContent = xv; });
-    svg("line", {x1: L, x2: W - R, y1: H - B, y2: H - B, "class": "zsa-act-axis"}, chart);
-    svg("line", {x1: L, x2: L, y1: T, y2: H - B, "class": "zsa-act-axis"}, chart);
-    svgRich(svg("text", {x: (L + W - R) / 2, y: H - 10, "text-anchor": "middle", "font-size": FS + 1, "font-weight": 700}, chart), b.xLabel, FS + 1);
-    var my = (T + H - B) / 2;
+    xTicks.forEach(function (t) { svg("text", {x: sx(t[0]), y: GH - GB + 20, "text-anchor": "middle", "font-size": FS}, chart).textContent = t[1]; });
+    svg("line", {x1: GL, x2: GW - GR, y1: GH - GB, y2: GH - GB, "class": "zsa-act-axis"}, chart);
+    svg("line", {x1: GL, x2: GL, y1: GT, y2: GH - GB, "class": "zsa-act-axis"}, chart);
+    svgRich(svg("text", {x: (GL + GW - GR) / 2, y: GH - 10, "text-anchor": "middle", "font-size": FS + 1, "font-weight": 700}, chart), b.xLabel, FS + 1);
+    var my = (GT + GH - GB) / 2;
     svgRich(svg("text", {x: 0, y: 0, "text-anchor": "middle", "font-size": FS + 1, "font-weight": 700, transform: "translate(18 " + my + ") rotate(-90)"}, chart), b.yLabel, FS + 1);
-    b.series.forEach(function (s, i) {
-      var g = svg("g", {}, chart), cls = "zsa-act-s" + (i + 1);
-      svg("polyline", {points: b.x.map(function (xv, j) { return sx(xv) + "," + sy(s.values[j]); }).join(" "), "class": "zsa-act-series " + cls}, g);
-      b.x.forEach(function (xv, j) { marker(g, SHAPES[i % SHAPES.length], sx(xv), sy(s.values[j]), "zsa-act-dot " + cls); });
-    });
-    fig.appendChild(chart);
-    fig.appendChild(dataTable(b));
+    return {chart: chart, sy: sy};
+  }
+  function figureOf(parts, b, table) {
+    var fig = node("figure", "zsa-act-figure");
+    parts.forEach(function (p) { if (p) fig.appendChild(p); });
+    fig.appendChild(table);
     fig.appendChild(node("figcaption", null, b.caption));
     return fig;
+  }
+  function lineChart(b) {
+    var x0 = b.x[0], x1 = b.x[b.x.length - 1];
+    function sx(v) { return GL + (v - x0) / (x1 - x0) * (GW - GL - GR); }
+    var f = frame(b, b.x.map(function (v) { return [v, v]; }), sx);
+    b.series.forEach(function (s, i) {
+      var g = svg("g", {}, f.chart), cls = "zsa-act-s" + (i + 1);
+      svg("polyline", {points: b.x.map(function (xv, j) { return sx(xv) + "," + f.sy(s.values[j]); }).join(" "), "class": "zsa-act-series " + cls}, g);
+      b.x.forEach(function (xv, j) { marker(g, SHAPES[i % SHAPES.length], sx(xv), f.sy(s.values[j]), "zsa-act-dot " + cls); });
+    });
+    var rows = b.x.map(function (x, j) { return [x].concat(b.series.map(function (s) { return s.values[j]; })); });
+    return figureOf([legendFor(b.series, true), f.chart], b, dataTable(b.caption, b.xLabel, b.series.map(function (s) { return s.name; }), rows));
+  }
+  // Points only, no connecting line. Axes run from xMin to xMax and yMin to yMax.
+  function scatter(b) {
+    function sx(v) { return GL + (v - b.xMin) / (b.xMax - b.xMin) * (GW - GL - GR); }
+    var ticks = [];
+    for (var k = 0, v = b.xMin; v <= b.xMax + 1e-9; k += 1, v = b.xMin + k * b.xStep) ticks.push([v, Number(v.toFixed(6))]);
+    var f = frame(b, ticks, sx), rows = [];
+    b.series.forEach(function (s, i) {
+      var g = svg("g", {}, f.chart);
+      s.points.forEach(function (p) {
+        marker(g, SHAPES[i % SHAPES.length], sx(p[0]), f.sy(p[1]), "zsa-act-dot zsa-act-s" + (i + 1));
+        var row = [p[0]];
+        b.series.forEach(function (x, k) { row.push(k === i ? p[1] : null); });
+        rows.push(row);
+      });
+    });
+    return figureOf([b.series.length > 1 ? legendFor(b.series, true) : null, f.chart], b, dataTable(b.caption, b.xLabel, b.series.map(function (s) { return s.name; }), rows));
+  }
+  // Grouped bars over named categories. Bars after the first series are striped, so series differ without color.
+  function barChart(b) {
+    var n = b.categories.length, band = (GW - GL - GR) / n, groupW = band * 0.7, barW = groupW / b.series.length;
+    function sx(i) { return GL + band * (i + 0.5); }
+    var f = frame(b, b.categories.map(function (c, i) { return [i, c]; }), sx);
+    b.series.forEach(function (s, si) {
+      var g = svg("g", {}, f.chart);
+      s.values.forEach(function (v, i) {
+        var x = sx(i) - groupW / 2 + si * barW, y = f.sy(v), h = f.sy(b.yMin || 0) - y;
+        svg("rect", {x: x + 1, y: y, width: barW - 2, height: h, "class": "zsa-act-bar zsa-act-s" + (si + 1) + (si ? " zsa-act-bar--hatch" : "")}, g);
+        if (si) hatch(g, x + 1, y, barW - 2, h);
+      });
+    });
+    var rows = b.categories.map(function (c, i) { return [c].concat(b.series.map(function (s) { return s.values[i]; })); });
+    return figureOf([b.series.length > 1 ? legendFor(b.series, false, true) : null, f.chart], b, dataTable(b.caption, b.xLabel, b.series.map(function (s) { return s.name; }), rows));
   }
   function table(b) {
     var wrap = node("div", "zsa-act-tbl");
@@ -189,6 +245,8 @@
         out.push(v);
       } else if (b.kind === "table") out.push(table(b));
       else if (b.kind === "lineChart") out.push(lineChart(b));
+      else if (b.kind === "scatter") out.push(scatter(b));
+      else if (b.kind === "barChart") out.push(barChart(b));
       else if (b.kind === "diagram") out.push(diagram(b));
     });
     return out;
@@ -272,6 +330,19 @@
       row.appendChild(node("dd", null, fill(f[1], ctx)));
     });
     aside.appendChild(node("p", "zsa-act-note", ui.factsNote));
+    // ?drafts=1 lists every passage, drafts included, so a teacher can try a draft before marking it reviewed.
+    if (new URLSearchParams(window.location.search).get("drafts") === "1") {
+      var rev = left.appendChild(node("section", "zsa-act-drafts"));
+      rev.setAttribute("aria-labelledby", "zsa-act-drafts-title");
+      rev.appendChild(node("h2", null, ui.draftsTitle)).id = "zsa-act-drafts-title";
+      rev.appendChild(node("p", "zsa-act-small", ui.draftsNote));
+      var ul = rev.appendChild(node("ul", "zsa-act-draft-list"));
+      data.passages.forEach(function (p) {
+        var b = ul.appendChild(node("li")).appendChild(button("", "zsa-act-mode", function () { start([p], "one"); }));
+        b.appendChild(node("strong", null, p.title));
+        b.appendChild(node("span", null, fill(ui.draftLine, {type: p.type, count: p.questions.length, status: p.status === "reviewed" ? ui.statusReviewed : ui.statusDraft})));
+      });
+    }
     show([grid], focusIt ? h1 : null);
   }
 

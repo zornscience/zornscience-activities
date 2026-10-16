@@ -17,7 +17,7 @@ function loadConfig() {
 }
 var cfg = loadConfig();
 var TYPES = ["Data Representation", "Research Summaries", "Conflicting Viewpoints"];
-var KINDS = ["text", "heading", "viewpoint", "table", "lineChart", "diagram"];
+var KINDS = ["text", "heading", "viewpoint", "table", "lineChart", "scatter", "barChart", "diagram"];
 // Only these tags are allowed in text; anything else would show as literal text.
 function checkMarkup(s, where) {
   s = String(s);
@@ -60,6 +60,24 @@ test("every passage is well formed", function () {
         });
         assert.equal(b.yMax % b.yStep, 0, w + " yMax is a multiple of yStep");
       }
+      if (b.kind === "barChart") {
+        checkMarkup(b.xLabel, w); checkMarkup(b.yLabel, w);
+        assert.ok(b.series.length >= 1 && b.series.length <= 4, w + " series count");
+        assert.equal((b.yMax - (b.yMin || 0)) % b.yStep, 0, w + " axis is a whole number of steps");
+        b.series.forEach(function (s) {
+          assert.equal(s.values.length, b.categories.length, w + " " + s.name + " values");
+          s.values.forEach(function (v) { assert.ok(v >= (b.yMin || 0) && v <= b.yMax, w + " value in range"); });
+        });
+      }
+      if (b.kind === "scatter") {
+        checkMarkup(b.xLabel, w); checkMarkup(b.yLabel, w);
+        assert.ok(b.xMax > b.xMin && b.yMax > b.yMin, w + " axes");
+        assert.equal((b.xMax - b.xMin) % b.xStep, 0, w + " x axis is a whole number of steps");
+        assert.equal((b.yMax - b.yMin) % b.yStep, 0, w + " y axis is a whole number of steps");
+        b.series.forEach(function (s) {
+          s.points.forEach(function (pt) { assert.ok(pt[0] >= b.xMin && pt[0] <= b.xMax && pt[1] >= b.yMin && pt[1] <= b.yMax, w + " point " + pt + " inside the axes"); });
+        });
+      }
       if (b.kind === "diagram") assert.ok(b.label && b.viewBox.length === 2, w + " label and viewBox");
     });
     assert.ok(p.questions.length >= 5 && p.questions.length <= 7, at + " has 5 to 7 questions");
@@ -81,6 +99,32 @@ test("every passage is well formed", function () {
 test("the reviewed bank has at least one passage of each type", function () {
   var reviewed = data.passages.filter(function (p) { return p.status === "reviewed"; });
   TYPES.forEach(function (t) { assert.ok(reviewed.some(function (p) { return p.type === t; }), t); });
+});
+
+test("the whole bank, drafts included, can make a full section once every passage is reviewed", function () {
+  // Milestone 5 target: 3 Data Representation, 3 Research Summaries and 1 Conflicting Viewpoints, 40 questions.
+  var counts = {};
+  data.passages.forEach(function (p) { (counts[p.type] = counts[p.type] || []).push(p.questions.length); });
+  Object.keys(cfg.fullMix).forEach(function (t) { assert.ok((counts[t] || []).length >= cfg.fullMix[t], t + " passages"); });
+  function choose(arr, k) { if (!k) return [[]]; var out = []; arr.forEach(function (x, i) { choose(arr.slice(i + 1), k - 1).forEach(function (c) { out.push([x].concat(c)); }); }); return out; }
+  var sums = [0];
+  Object.keys(cfg.fullMix).forEach(function (t) {
+    var next = [];
+    choose(counts[t], cfg.fullMix[t]).forEach(function (c) { var add = c.reduce(function (a, b) { return a + b; }, 0); sums.forEach(function (s0) { next.push(s0 + add); }); });
+    sums = next;
+  });
+  assert.ok(sums.indexOf(cfg.fullQuestions) >= 0, "some mix adds up to " + cfg.fullQuestions + " questions: " + sums.join(", "));
+});
+
+test("topics spread across the sciences, and difficulty rises within each passage", function () {
+  var topics = {};
+  data.passages.forEach(function (p) {
+    topics[p.topic] = true;
+    var d = p.questions.map(function (q) { return q.difficulty; });
+    d.forEach(function (v, i) { if (i) assert.ok(v >= d[i - 1], p.id + " question " + (i + 1) + " is not easier than the one before"); });
+    assert.equal(d[0], 1, p.id + " starts with an easy question");
+  });
+  ["Biology", "Chemistry", "Physics", "Earth and space science"].forEach(function (t) { assert.ok(topics[t], t); });
 });
 
 test("scoring config: conversion, ranks and reference values", function () {

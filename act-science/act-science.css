@@ -74,6 +74,10 @@ body {background: var(--act-bg);}
 .zsa-act .zsa-act-mode:hover {border-color: var(--act-blue); background: var(--act-bg);}
 .zsa-act-mode strong {font-family: var(--act-display); font-size: 18px; color: var(--act-blue);}
 .zsa-act-mode span {color: var(--act-muted); font-size: 15px;}
+.zsa-act-drafts {margin-top: 28px; display: grid; gap: 10px;}
+.zsa-act .zsa-act-drafts h2 {font-size: 20px;}
+.zsa-act-draft-list {list-style: none; margin: 0; padding: 0; display: grid; gap: 10px;}
+.zsa-act-draft-list .zsa-act-mode {width: 100%;}
 .zsa-act-facts {background: var(--act-surface); border-radius: 12px; padding: 20px; display: grid; gap: 14px;}
 .zsa-act .zsa-act-facts h2 {font-size: 15px; text-transform: uppercase; letter-spacing: .06em; color: var(--act-muted);}
 .zsa-act-facts dl {margin: 0; display: grid; gap: 14px;}
@@ -134,6 +138,9 @@ body {background: var(--act-bg);}
 .zsa-act-s2 {stroke: var(--act-s2);} .zsa-act-dot.zsa-act-s2 {fill: var(--act-s2); stroke: none;}
 .zsa-act-s3 {stroke: var(--act-s3);} .zsa-act-dot.zsa-act-s3 {fill: var(--act-s3); stroke: none;}
 .zsa-act-s4 {stroke: var(--act-ink);} .zsa-act-dot.zsa-act-s4 {fill: var(--act-ink); stroke: none;}
+.zsa-act-bar {stroke: none;}
+.zsa-act-bar.zsa-act-s1 {fill: var(--act-s1);} .zsa-act-bar.zsa-act-s2 {fill: var(--act-s2);} .zsa-act-bar.zsa-act-s3 {fill: var(--act-s3);} .zsa-act-bar.zsa-act-s4 {fill: var(--act-ink);}
+.zsa-act-hatch line {stroke: var(--act-bg); stroke-width: 2;}
 .zsa-act-legend {list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 18px; font-size: 14px;}
 .zsa-act-legend li {display: flex; align-items: center; gap: 6px;}
 .zsa-act-f-none {fill: none;} .zsa-act-f-surface {fill: var(--act-surface);} .zsa-act-f-water {fill: var(--act-water);}
