@@ -1,5 +1,5 @@
 # Predicting Ion Charge Trainer
-Version: 1.3.1
+Version: 1.4.0
 
 ## Assumptions and departures
 - Claude will host these static files and add the WordPress link. This package makes no hosting or WordPress changes.
@@ -13,6 +13,7 @@ Version: 1.3.1
 - First-try counts measure the first submitted answer on original items. Hints do not reduce the count. Review and filler items do not affect it. A Show me reveal never counts as first-try correct.
 - Step 4 (name the ion and match its noble gas) is on by default and can be turned off under "Your practice". The setting is read when each element loads and is not saved between visits. Its first-try count covers only original elements that included step 4.
 - Step 4 offers two names: the correct one and the common wrong rule (an -ide ending on a metal, or "element ion" for a nonmetal). The metal distractors, such as "sodide", are deliberately made-up words that show the rule being misapplied.
+- Since 1.4.0 the summary of a full mixed round shows a completion code for Google Classroom (`shared/zsa-codes.js`, see `shared/README.md` and `TEACHERS.md`). The code holds the activity, version, date, first-try counts per step, and Show me and Hint uses. Single-element practice and Practice my misses give no code. Teachers check codes at `check/`.
 - Version 1.1.0 was browser-tested in Chromium by Claude. Real screen readers, Firefox, Safari, and school devices remain untested. See TESTING.md.
 
 ## Purpose and learning goal
@@ -113,7 +114,7 @@ There is no Check button (1.3). Tapping or clicking an answer checks it right aw
 - Tab and Shift+Tab move between answer groups and buttons. Each answer group is one Tab stop.
 - Arrow keys, Home and End move between the answers in a group without choosing one, so browsing never submits an answer.
 - Enter or Space chooses the focused answer, which checks it (or, in a two-part step, checks once both parts are chosen). Enter or Space also activates other buttons. Select an element using the native select keyboard controls.
-- On first page load, focus stays at the top of the page so the title and instructions come first (and an embedded copy never scrolls the host page). Each element after that focuses its heading. A completed step focuses the next step's first choice. The final step focuses the summary heading.
+- On first page load, focus stays at the top of the page so the title and instructions come first (and an embedded copy never scrolls the host page). Each element after that focuses its heading. A completed step focuses the next step's first choice. The final step focuses the summary heading. The end of a round focuses "Round complete"; after a full mixed round the next Tab stop is Copy code.
 - After both hints are shown, the Hint button stays focusable but inactive (aria-disabled), so keyboard focus is never lost.
 - Focus remains visible. Feedback uses a persistent polite live region. The main-group table uses row and column headers.
 - Practice options is a native disclosure: Tab to it and press Enter or Space to open it.
@@ -125,7 +126,7 @@ Sentence: Find valence electrons, decide what changes, and check your reasoning 
 Button label: Open the Ion Charge Trainer
 
 ## Known limitations
-- No saving or grade reporting. This is formative practice.
+- No saving or grade reporting. This is formative practice. A completion code records a finished round but not who finished it, and its check stops typos and casual editing, not a student who reads the source (see `TEACHERS.md`).
 - The octet model is deliberately limited to the specified common ions. It does not teach transition-metal charges, exceptions, covalent bonding, or full ion-formation energetics.
 - Current Chrome, Edge, Firefox, and Safari iOS 16+ are intended targets, but cross-browser behavior still needs verification.
 - Shared components are in `shared/`. Changes there affect every activity and need the full test suite and parity check (root TESTING.md).
@@ -133,6 +134,8 @@ Button label: Open the Ion Charge Trainer
 - Embed mode hides the whole header, so a framed page has no heading 1 (an axe best-practice finding). The Ionic Formula Builder keeps its h1 visually hidden instead. Not changed in 1.3.1 to keep behavior identical.
 
 ## Changelog
+1.4.0: Completion codes. The summary of a full mixed round shows a code such as `ICT-K6QY-0C22-7S11-86` in a large monospace box, with Copy code (Clipboard API, falling back to selecting the code) and "Paste this code into your Google Classroom assignment." The live region says "Round complete. Completion code ready." and screen readers read the code one character at a time. No code for single-element practice, Practice my misses or an unfinished round. Nothing else changes for students (`npm run parity`, with the code box set aside). Loads `shared/zsa-codes.js`.
+
 1.3.1: Rebuilt on the shared activity engine (`shared/zsa-engine.js`, `shared/zsa-activity.css`). No change for students. With the same random sequence, 1.3.0 and 1.3.1 give the same page, focus, announcements, layout and pixels in every compared state (see TESTING.md). Class names for shared parts are now `zsa-…` instead of `zsa-ict-…`. Element ids are unchanged.
 
 1.3.0: Tap to check. Answer choices are buttons that check themselves when picked (two-part steps check once both parts are picked), with no Check button. Wrong picks are marked and locked; in two-part steps only the wrong part clears. Arrow keys move between choices without submitting. Fixed the doubled "Not yet. Not yet." in the general wrong-answer message (present since 1.0.0).

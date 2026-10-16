@@ -1,7 +1,19 @@
 # Verification record
-Version: 1.3.1
-Date: 2026-10-15
+Version: 1.4.0
+Date: 2026-10-16
 Reviewer: Claude (integration review of ChatGPT's 1.0.0 package, then the 1.1.0 to 1.3.1 updates)
+
+## 1.4.0 results (completion codes)
+| Check | Status | Evidence |
+|---|---|---|
+| Code on a full round | PASS | `tests/e2e/codes.spec.js`: a full mixed round played by keyboard only (both hints, two wrong answers then Show me, one more wrong answer, review items) ends with the code under "Round complete", announced as "Round complete. Completion code ready.", read one character at a time, and copied by Copy code from the keyboard. Pasted into `/check/`, every field matched: activity, version, today's date, 10 items, each first-try line of the summary (also with step 4 turned off, where Name the ion is left out), Show me 1 and hints 2. |
+| No code elsewhere | PASS | No code for Practice my misses, single practice or an unfinished round; Practice again gives one. |
+| Codes | PASS | `tests/unit/codes.test.js`: 10,000 random results round-trip; every one-character change and every adjacent swap is rejected on 250 codes; future dates and unknown activities flagged; America/Chicago day. |
+| Behavior otherwise unchanged | PASS | `npm run parity` against 1.3.1 (origin/main) with the code box and its announcement set aside (root TESTING.md): 21 scenarios, 6,687 compared states and 4,744 full-page screenshot pairs across both activities, no differences. Everything else on the round summary, focus, scroll, layout and pixels matched. |
+| Automated suite | PASS | `npm test`: 24 unit tests and 61 browser tests (root TESTING.md), including every earlier test. Two expectations changed on purpose: the end-of-round announcement and the extra Copy code button on a full round summary. |
+| axe-core | PASS | Zero violations on the round summary with a code (plus the earlier states, unchanged). |
+| Layout | PASS | Fit at 360x640, 390x664, 768x1024, 1280x617, 1366x657 and 1920x960, no sideways scrolling from 320 px, 44 px targets: all still pass, the round summary with its code included. |
+| Real screen readers, Firefox, Safari, school devices, Google Classroom itself | NOT TESTED | The clipboard and the spoken code were checked in Chromium only. |
 
 ## 1.3.1 results (shared engine)
 | Check | Status | Evidence |

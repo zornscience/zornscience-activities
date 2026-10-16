@@ -52,7 +52,7 @@ test("pages have one CSP, no inline scripts or styles, and only the expected out
   });
   assert.equal(csp, "default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'");
   // The SVG namespace is an identifier for createElementNS, not a link; nothing is fetched from it.
-  var allowed = /^(https:\/\/(zornscience\.org(\/[\w\-\/]*)?|creativecommons\.org\/licenses\/by-nc-sa\/4\.0\/)|http:\/\/www\.w3\.org\/2000\/svg)$/;
+  var allowed = /^(https:\/\/((activities\.)?zornscience\.org(\/[\w\-\/]*)?|creativecommons\.org\/licenses\/by-nc-sa\/4\.0\/)|http:\/\/www\.w3\.org\/2000\/svg)$/;
   pages.concat(siteJs).forEach(function (f) {
     (read(f).match(/https?:\/\/[^\s"'<>)]+/g) || []).forEach(function (url) { assert.match(url, allowed, f + " links to " + url); });
   });

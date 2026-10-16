@@ -1,6 +1,7 @@
 // ZornScience activity engine. Shared by every activity: rounds and the review queue, one step at a time with
 // tap-to-check answer buttons, feedback, hints, Show me, the answer trail, the item and round summaries, and the
-// main-group periodic table. An activity supplies its data and a small spec of hooks; see shared/README.md.
+// main-group periodic table, and the completion code at the end of a full mixed round (shared/zsa-codes.js). An
+// activity supplies its data and a small spec of hooks; see shared/README.md.
 //
 // No globals: an activity script asks for the engine with a one-use "zsa:request-engine" event on its root, the
 // same way it asks for its data. (In Node, for the unit tests, the engine is module.exports.)
@@ -194,7 +195,10 @@
     repeatNote:"Review items do not change the first-try counts.", itemLabel:"Item", reviewLabel:"Review",
     singleLabel:"Chosen item", of:"of", stepLabel:"Step", trailLabel:"Your answers so far", correctMark:"Correct: ",
     shownMark:"Shown: ", triedMark:" (tried, not correct)", currentMark:" (current)", hintMark:" (hint)",
-    chargeMark:"ion charge", tableCaption:"Main-group elements by group (column) and period (row)", periodLabel:"Period"
+    chargeMark:"ion charge", tableCaption:"Main-group elements by group (column) and period (row)", periodLabel:"Period",
+    codeLabel:"Completion code", copyCode:"Copy code", codeCopied:"Code copied.", codeReady:"Completion code ready.",
+    codeSelected:"The code is selected. Press Ctrl+C, or Command+C on a Mac, to copy it.",
+    codeNote:"Paste this code into your Google Classroom assignment."
   };
 
   // ---------- The activity ----------
@@ -232,7 +236,10 @@
       chargeMark:labels.chargeMark
     };
     var rules = {pool:spec.pool, key:spec.key, fillerVariant:spec.fillerVariant, maxExtra:spec.maxExtra, gap:spec.gap};
-    var queue, position = 0, results, totals;
+    // Completion codes (shared/zsa-codes.js), when the page loads them; the code records the page's version.
+    var codes = null, meta = document.querySelector('meta[name="zsa-version"]');
+    root.dispatchEvent(new CustomEvent("zsa:request-codes", {detail:{receive:function (value) {codes = value;}}}));
+    var queue, position = 0, results, totals, used;
     var entry, step, stepCount, stepsDone, mistakes, hints, attempts, progressEl;
     // trail: one entry per finished step of the current item; lastFeedback: the explanation for the step just finished.
     var trail = [], lastFeedback = null;
@@ -243,7 +250,7 @@
 
     function start(entries, type, quiet) {
       queue = createQueue(entries, type, rules);
-      position = 0; results = {}; totals = {};
+      position = 0; results = {}; totals = {}; used = {show:0, hints:0};
       if (options) options.open = false;
       load(quiet);
     }
@@ -379,13 +386,13 @@
         if (hint.getAttribute("aria-disabled") === "true") return;
         var text = segments(spec.hint(e, s, hints[s]));
         hintBox.hidden = false; hintBox.replaceChildren(); render(hintBox, text);
-        announce(labels.hintPrefix + speak(text)); hints[s]++;
+        announce(labels.hintPrefix + speak(text)); hints[s]++; used.hints++;
         if (def.hintGroups) drawTable(def.hintGroups);
         // aria-disabled keeps keyboard focus on the button; a disabled button would drop focus to the page.
         hint.textContent = hints[s] === 1 ? labels.hint2 : labels.hintsDone; if (hints[s] >= 2) hint.setAttribute("aria-disabled", "true");
         bringIntoView(hintBox); // last, after every change that can shift the layout
       });
-      var show = button(labels.show, function () {complete(true);}); show.hidden = true;
+      var show = button(labels.show, function () {used.show++; complete(true);}); show.hidden = true;
       actions.appendChild(hint); actions.appendChild(show);
       field.appendChild(actions); field.appendChild(feedback); field.appendChild(hintBox); work.appendChild(field);
       function showFeedback(text) {
@@ -415,6 +422,12 @@
       entry = null; strip.replaceChildren(); drawTable();
       work.replaceChildren();
       var heading = node("h2", "zsa-finish-title", queue.type === "single" ? labels.singleDone : labels.roundComplete); heading.tabIndex = -1; work.appendChild(heading);
+      // Only a full mixed round gives a completion code: not single practice, Practice my misses or an unfinished round.
+      var code = queue.type === "mixed" && codes && meta ? codes.encode({
+        activity:root.getAttribute("data-zsa-activity"), version:meta.content, day:codes.dayNumber(new Date()),
+        items:queue.originals, totals:totals, results:results, show:used.show, hints:used.hints
+      }) : null;
+      if (code) work.appendChild(codeBox(code));
       work.appendChild(node("p", "zsa-note", labels.firstTry));
       spec.stats.forEach(function (stat) {
         var total = totals[stat[0]] || 0; if (!total) return; // only steps that were in the round
@@ -431,7 +444,33 @@
       if (missed.length) actions.appendChild(button(labels.misses, function () {
         start(spec.missesRound(missed, function (item) {return variants.get(spec.key(item));}), "misses");
       }));
-      work.appendChild(actions); heading.focus(); announce(labels.roundComplete);
+      work.appendChild(actions); heading.focus(); announce(code ? labels.roundComplete + ". " + labels.codeReady : labels.roundComplete);
+    }
+    // The completion code: large, read one character at a time by screen readers, with a Copy code button that uses
+    // the Clipboard API and falls back to selecting the code (and the browser's own copy command).
+    function codeBox(code) {
+      var box = node("div", "zsa-code"); box.setAttribute("role", "group"); box.setAttribute("aria-labelledby", prefix + "-code-label");
+      box.setAttribute("data-zsa-code", "");
+      var label = node("p", "zsa-code-label", labels.codeLabel); label.id = prefix + "-code-label"; box.appendChild(label);
+      var value = node("p", "zsa-code-value"), text = node("span", "zsa-code-text", code); value.id = prefix + "-code";
+      text.setAttribute("aria-hidden", "true"); value.appendChild(text); value.appendChild(node("span", "zsa-sr-only", codes.spoken(code)));
+      box.appendChild(value);
+      var row = node("div", "zsa-code-row"), status = node("p", "zsa-code-status");
+      function done(message) {status.textContent = message; announce(message);}
+      function fallback() {
+        var range = document.createRange(), selection = window.getSelection();
+        range.selectNodeContents(text); selection.removeAllRanges(); selection.addRange(range);
+        var copied = false;
+        try {copied = document.execCommand("copy");} catch (e) {copied = false;}
+        done(copied ? labels.codeCopied : labels.codeSelected);
+      }
+      row.appendChild(button(labels.copyCode, function () {
+        if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code).then(function () {done(labels.codeCopied);}, fallback);
+        else fallback();
+      }));
+      row.appendChild(status); box.appendChild(row);
+      box.appendChild(node("p", "zsa-code-note", labels.codeNote));
+      return box;
     }
     return {start:start, mixed:mixed, labels:labels};
   }

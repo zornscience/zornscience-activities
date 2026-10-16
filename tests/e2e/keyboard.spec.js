@@ -88,5 +88,6 @@ test("round complete takes focus at the end of a round", async ({page, open}) =>
   var {play} = require("./play");
   var run = await play(page, "ion-charge-trainer");
   expect(run.finish.focus).toBe("h2:Round complete");
-  expect(run.finish.live).toBe("Round complete");
+  // A full mixed round also has a completion code (1.4.0 and 1.1.0), announced with the end of the round.
+  expect(run.finish.live).toBe("Round complete. Completion code ready.");
 });

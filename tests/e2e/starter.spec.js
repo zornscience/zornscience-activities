@@ -38,6 +38,9 @@ test("starter template: a full round, Practice my misses and single practice", a
   expect(run.items.length).toBeGreaterThanOrEqual(6);
   expect(run.finish.finish.title).toBe("Round complete");
   expect(run.finish.finish.text).toContain("Metal or nonmetal");
+  // The starter is not registered in shared/zsa-codes.js, so even a full mixed round has no completion code.
+  expect(run.finish.finishButtons).not.toContain("Copy code");
+  expect(run.finish.live).toBe("Round complete");
   await page.evaluate(AXE);
   var axe = await page.evaluate(() => window.axe.run(document, {runOnly: {type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"]}}));
   expect(axe.violations.map((v) => v.id)).toEqual([]);

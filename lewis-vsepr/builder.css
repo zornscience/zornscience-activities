@@ -142,11 +142,15 @@
   .zsa-lv-cands {gap:6px;grid-template-columns:repeat(3,minmax(0,1fr));}
   .zsa-lv-cand {padding:2px 2px 4px;}
   .zsa-lv-display--summary {--s:.6;}
-  .zsa-lv-build {gap:6px;margin-top:4px;}
+  .zsa-lv-build {gap:4px;margin-top:2px;}
+  .zsa-lv-grid {padding-bottom:6px;}
+  .zsa-lv-grid .zsa-lv-svg {height:calc(100% - 6px);}
+  .zsa-lv-rows {gap:4px;}
+  .zsa .zsa-lv-edtitle {margin-bottom:2px;}
   .zsa-lv-rowlabel {flex-basis:52px;font-size:13px;}
   .zsa-lv-opts {gap:4px;}
   .zsa-lv-opt {font-size:15px;padding:2px 4px;}
-  .zsa .zsa-lv-status {margin-top:6px;font-size:14px;}
+  .zsa .zsa-lv-status {margin-top:4px;font-size:14px;line-height:1.35;}
   .zsa-lv .zsa-lv-edtitle {font-size:15px;}
   .zsa-choices--six {grid-template-columns:repeat(3,minmax(0,1fr));}
   .zsa-choices--names {grid-template-columns:repeat(3,minmax(0,1fr));}
