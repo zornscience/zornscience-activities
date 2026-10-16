@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<meta name="description" content="Check the completion codes students paste into Google Classroom. Runs in your browser; nothing is sent anywhere.">
+<title>Completion Code Checker | ZornScience</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="check.css?v=1.0.0">
+<script src="../shared/zsa-codes.js?v=1.0.0" defer></script>
+<script src="check.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="zsa zsa-chk" data-zsa-checker>
+<a class="zsa-back" href="../">← Practice activities</a>
+<p class="zsa-eyebrow">ZornScience · For teachers</p>
+<h1>Completion Code Checker</h1>
+<p>Paste the codes your students turned in. The check runs in this browser tab: nothing is sent anywhere or saved.</p>
+<noscript><p class="zsa-panel">The checker needs JavaScript. Enable it to check codes.</p></noscript>
+<div class="zsa-chk-form">
+<label class="zsa-chk-label" for="zsa-chk-input">Codes, one per line</label>
+<p class="zsa-chk-hint" id="zsa-chk-input-note">You can paste a column from a Google Classroom grades export or a spreadsheet. Other text on a line, such as a name, is ignored.</p>
+<textarea id="zsa-chk-input" rows="8" aria-describedby="zsa-chk-input-note" spellcheck="false" autocomplete="off" autocapitalize="characters"></textarea>
+<div class="zsa-chk-actions">
+<button class="zsa-btn zsa-btn--primary" id="zsa-chk-check" type="button">Check codes</button>
+<button class="zsa-btn" id="zsa-chk-clear" type="button">Clear</button>
+</div>
+<p class="zsa-chk-message" id="zsa-chk-message"></p>
+</div>
+<p class="zsa-sr-only" id="zsa-chk-live" aria-live="polite" aria-atomic="true"></p>
+<section class="zsa-chk-results" id="zsa-chk-results" aria-labelledby="zsa-chk-results-title" hidden>
+<h2 id="zsa-chk-results-title" tabindex="-1">Results</h2>
+<p class="zsa-chk-count" id="zsa-chk-count"></p>
+<div class="zsa-chk-scroll" id="zsa-chk-scroll" role="region" aria-labelledby="zsa-chk-caption" tabindex="0">
+<table class="zsa-chk-table" id="zsa-chk-table">
+<caption id="zsa-chk-caption">Checked codes, one row for each pasted line</caption>
+<thead><tr id="zsa-chk-head"></tr></thead>
+<tbody id="zsa-chk-body"></tbody>
+</table>
+</div>
+<div class="zsa-chk-actions">
+<button class="zsa-btn" id="zsa-chk-copy" type="button">Copy results</button>
+<p class="zsa-chk-status" id="zsa-chk-copy-status"></p>
+</div>
+<p class="zsa-chk-hint">Copy results gives one row per line, with a header row, ready to paste into Google Sheets.</p>
+</section>
+<section class="zsa-card zsa-chk-help" aria-labelledby="zsa-chk-help-title">
+<h2 id="zsa-chk-help-title">How completion codes work</h2>
+<h3>Assign an activity</h3>
+<p>In Google Classroom, make an assignment and add the activity's link:</p>
+<ul>
+<li>Predicting Ion Charge Trainer: <a href="../ion-charge-trainer/">https://activities.zornscience.org/ion-charge-trainer/</a></li>
+<li>Ionic Formula Builder: <a href="../ionic-formula-builder/">https://activities.zornscience.org/ionic-formula-builder/</a></li>
+</ul>
+<p>Ask students to finish one full round and paste their code into the assignment as a private comment or a short answer.</p>
+<h3>What students do</h3>
+<p>Students open the link and play a full round. No login is needed. At the end of the round, the summary shows a completion code and a Copy code button. Practicing one element or compound, and Practice my misses, do not give a code.</p>
+<h3>Check the codes</h3>
+<p>Paste one code or many into the box above and choose Check codes. Each row shows the activity, the day the round was finished (Central time, from the student's device clock), the number of items, the first-try correct count for each step, and how many times the student used Show me and Hint. Show me uses of 63 or more, or hints of 127 or more, show as "63 or more" and "127 or more".</p>
+<ul>
+<li><strong>Valid</strong>: the code reads correctly.</li>
+<li><strong>Typo or edited</strong>: a character is wrong, missing or swapped, or the code was changed by hand. Ask the student to copy it again.</li>
+<li><strong>Unknown activity</strong>: the code is well formed but comes from an activity this checker does not know. Reload this page to get the newest version.</li>
+<li><strong>Future date</strong>: the code is dated after today, usually because the device's clock is wrong.</li>
+<li><strong>No code found</strong>: the line has no code on it.</li>
+</ul>
+<h3>What a code can and cannot prove</h3>
+<p>A code shows that a full round with these results was finished on that day. It does not show who finished it: codes have no names, so a student could pass a code to a friend, and two students with the same results on the same day get the same code. The date comes from the device clock, which a student can change. The check characters catch typos and casual editing, but someone who reads the activity's source code could make a code by hand. Use codes as a record of practice, not as a test score.</p>
+</section>
+<footer class="zsa-footer"><span>ZornScience</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+</main>
+</body>
+</html>

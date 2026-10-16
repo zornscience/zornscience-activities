@@ -1,5 +1,5 @@
 # Ionic Formula Builder
-Version: 1.0.1
+Version: 1.1.0
 
 ## Assumptions and departures
 - Claude will host these static files and the lesson link will be added on WordPress separately. This package makes no hosting or WordPress changes.
@@ -13,6 +13,7 @@ Version: 1.0.1
 - "Choose a compound" (under Practice options) has a second select for the direction. The compound list shows names, so a chosen formula-to-name item is for practice, not a test.
 - Inter's alternate letters are turned on for this activity (`cv05`, a lowercase l with a tail, and `cv08`, a capital I with serifs). Without them, Al reads as AI and LiI as Lil.
 - Embed mode hides the back link and eyebrow. Unlike the Ion Charge Trainer, the page title stays as a visually hidden h1 so the framed page still has a heading 1 (axe best practice).
+- Since 1.1.0 the summary of a full mixed round shows a completion code for Google Classroom (`shared/zsa-codes.js`, see `shared/README.md` and `TEACHERS.md`). The code holds the activity, version, date, first-try counts per step and direction, and Show me and Hint uses. Single-compound practice and Practice my misses give no code. Teachers check codes at `check/`.
 - Version 1.0.0 was browser-tested in Chromium by Claude. Real screen readers, Firefox, Safari and school devices remain untested. See TESTING.md.
 
 ## Purpose and learning goal
@@ -133,7 +134,7 @@ Hints: the first is general (the method), the second is specific to the compound
 - Tab and Shift+Tab move between answer groups and buttons. Each answer group is one Tab stop.
 - Arrow keys, Home and End move between the answers in a group without choosing one, so browsing never submits an answer.
 - Enter or Space chooses the focused answer, which checks it (or, in a two-part step, checks once both parts are chosen). Enter or Space also activates other buttons.
-- On first page load, focus stays at the top of the page. Each compound after that focuses its heading. A completed step focuses the next step's first choice. The last step focuses the "Compound complete" heading; the end of a round focuses "Round complete".
+- On first page load, focus stays at the top of the page. Each compound after that focuses its heading. A completed step focuses the next step's first choice. The last step focuses the "Compound complete" heading; the end of a round focuses "Round complete". After a full mixed round the next Tab stop is Copy code.
 - After both hints are shown, the Hint button stays focusable but inactive (aria-disabled).
 - Feedback uses a persistent polite live region. The table uses row and column headers.
 - Practice options is a native disclosure: Tab to it and press Enter or Space to open it.
@@ -150,12 +151,14 @@ Done in 1.0.1: the choice groups (tap to check, tried marking, roving Tab stop, 
 - The `font-feature-settings: "cv05" 1, "cv08" 1` rule could move to `zsa-base.css`; the Ion Charge Trainer's table also shows Al and Cl.
 
 ## Known limitations
-- No saving or grade reporting. This is formative practice.
+- No saving or grade reporting. This is formative practice. A completion code records a finished round but not who finished it, and its check stops typos and casual editing, not a student who reads the source (see `TEACHERS.md`).
 - Binary compounds of the listed main-group ions only. No transition metals, Roman numerals, polyatomic ions or hydrates.
 - The prefix-name wrong choices are deliberately covalent-style names that do not apply to ionic compounds.
 - Current Chrome, Edge, Firefox and Safari iOS 16+ are intended targets, but only Chromium was tested.
 
 ## Changelog
+1.1.0: Completion codes. The summary of a full mixed round shows a code such as `IFB-0E0V-G002-8092-B2` in a large monospace box, with Copy code (Clipboard API, falling back to selecting the code) and "Paste this code into your Google Classroom assignment." The live region says "Round complete. Completion code ready." and screen readers read the code one character at a time. No code for single-compound practice, Practice my misses or an unfinished round. Nothing else changes for students (`npm run parity`, with the code box set aside). Loads `shared/zsa-codes.js`.
+
 1.0.1: Rebuilt on the shared activity engine (`shared/zsa-engine.js`, `shared/zsa-activity.css`). No change for students. With the same random sequence, 1.0.0 and 1.0.1 give the same page, focus, announcements, layout and pixels in every compared state (see TESTING.md). Class names for shared parts are now `zsa-…` instead of `zsa-ifb-…`. Element ids are unchanged.
 
 1.0.0: Initial 80-compound builder with name-to-formula and formula-to-name steps, live formula and charge check, targeted misconception feedback, two hint levels, Show me, review repeats, first-try summary, Practice my misses, compound picker, both elements marked in the table with charges shown above their groups, and optional embed mode.

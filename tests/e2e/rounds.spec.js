@@ -96,7 +96,8 @@ for (var slug of ["ion-charge-trainer", "ionic-formula-builder"]) {
         missed.add(slug === "ion-charge-trainer" ? keys[5] : keys[5].split("|")[1]);
         var listed = run.finish.finish.text.split("Keep practicing")[1];
         expect(listed, "Keep practicing section").toBeTruthy();
-        expect(run.finish.finishButtons).toEqual(["Practice again", "Practice my misses"]);
+        // Copy code belongs to the completion code, shown on the summary of a full mixed round.
+        expect(run.finish.finishButtons).toEqual(["Copy code", "Practice again", "Practice my misses"]);
         // First-try counts: original items only; Show me and wrong answers lose the step, review items never count.
         var text = run.finish.finish.text;
         if (slug === "ion-charge-trainer") {
