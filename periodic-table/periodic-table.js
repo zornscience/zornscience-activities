@@ -340,6 +340,8 @@
   $("trends").checked = state.trends;
   $("trends").addEventListener("change", function () { state.trends = $("trends").checked; paint(); syncUrl(); });
 
+  // The arrows repeat the trend sentences below the legend, so screen readers skip them.
+  $("across").setAttribute("aria-hidden", "true"); $("down").setAttribute("aria-hidden", "true");
   buildGrid();
   activate(start ? start.z : 1, false);
   paint();

@@ -324,3 +324,15 @@ test("periodic table: no axe violations in eight states", async ({page, problems
   await go(page, "?embed=1&mode=block");
   await audit(page, "embed mode");
 });
+
+test("landing page links to the Periodic Table and Periodic Trends Practice", async ({page, problems}) => {
+  void problems;
+  await page.goto("/");
+  await expect(page.locator('a[href="periodic-table/"]')).toHaveText("Periodic Table");
+  await expect(page.locator('a[href="periodic-trends/"]')).toHaveText("Periodic Trends Practice");
+  await page.locator('a[href="periodic-trends/"]').click();
+  await expect(page).toHaveTitle("Periodic Trends Practice | ZornScience");
+  await page.goto("/");
+  await page.locator('a[href="periodic-table/"]').click();
+  await expect(page).toHaveTitle("Periodic Table | ZornScience");
+});
