@@ -1,9 +1,9 @@
 # Verification record
-Version: 0.3.0
+Version: 0.4.0
 Date: 2026-10-16
-Reviewer: Claude (built and tested 0.3.0)
+Reviewer: Claude (built and tested 0.4.0)
 
-PASS means the check was run on version 0.3.0 as committed and passed. Browser checks use Playwright 1.56 with Chromium.
+PASS means the check was run on version 0.4.0 as committed and passed. Browser checks use Playwright 1.56 with Chromium.
 
 | Check | Status | Evidence |
 |---|---|---|
@@ -19,6 +19,8 @@ PASS means the check was run on version 0.3.0 as committed and passed. Browser c
 | Line reader | PASS | Not present until turned on; turning it on focuses the slider. Down moves it 26 px (one line); Shift+Down makes it a line taller (the maximum position drops by 26); End and Home reach the limits; the value text reads "Showing n% to m% of the passage area". Dragging the grip 100 px moves it; its position is kept on the next question; the passage still scrolls with the mouse wheel under it; turning it off removes it. |
 | Zoom | PASS | Zoom out is disabled at 100%. Each step is announced ("Passage zoom 125%"); the passage font grows 1.25, 1.5 and 2 times and the first figure grows with it; Zoom in is disabled at 200%; the zoom is kept on a question in another passage. |
 | Tools, all on | PASS | With a highlight, the line reader, a strike, a hidden choice and 200% zoom: axe-core finds nothing in light or dark mode at 1366x657 and 390x664, the page does not scroll sideways, and every tools row button is at least 44 by 44 px. The tools row fits one line from 1280 px with the highlighter options open; narrower, it scrolls sideways inside itself. |
+| Answer view | PASS | After one passage with question 1 wrong, question 2 right and the rest blank: every review item has "Show with passage (question n)". Question 1 opens with focus on its heading, beside its passage with the highlight made during the section; there are no radio buttons, tools or timer; it shows Missed, "Your answer" on the wrong choice and "Correct answer" on the key, and the explanation. The navigator reads "Question 1, missed", "Question 2, correct", "Question 3, not answered". Question 2 shows "Your answer · Correct answer"; question 3 shows "No answer." Back to score report and Next on the last question (labeled Score report) both return focus to that question's button. axe-core finds nothing in light or dark mode at 1366x657 and 390x664, with no sideways scrolling. |
+| Full section | PASS | Hidden with today's 3-passage bank. With a test bank of 7 reviewed passages (3, 3 and 1 by type, 40 questions) plus a draft one, Full section appears, gives exactly 40 questions with the right type mix and no draft passage, starts at 40:00, and all correct gives 40 / 40, "Estimated ACT Science score: 36", the 100th percentile and the full-section disclaimer, with no axe violations. |
 | axe-core 4.14 | PASS | Zero violations (WCAG 2.0 to 2.2 A and AA plus best practices) on the start screen, the directions, a flagged and answered question, the 5-minute notice, the Directions dialog, the review screen with the end confirmation, and the score report, in light and dark mode, at 1366x657 and 390x664. |
 | Layout | PASS | No sideways scrolling on the start screen, directions, first and last question, review and score report at 320, 360, 400, 768, 1280, 1366 and 1920 px wide, and 683x329 (1366x657 at 200% zoom). Every bottom bar button is at least 44 by 44 px and the bar sits at the bottom of the viewport. From 1280 px the passage pane scrolls on its own. |
 | Network, storage, embed | PASS | Only local files load, including the bundled font; no storage or cookies after starting a set; `?embed=1` hides the home link, keeps the trademark footer, and links target `_top`. |

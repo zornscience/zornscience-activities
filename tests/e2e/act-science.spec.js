@@ -141,6 +141,7 @@ test("mixed practice: crosses passages both ways, keeps answers and flags, revie
   await endSection(page);
   await expect(page.getByText("0 / " + total, {exact: true})).toBeVisible();
   await expect(page.getByRole("heading", {name: "Estimated ACT Science score: 1 to 6"})).toBeVisible();
+  await expect(page.getByText(/A 1, the middle of your range,/)).toBeVisible();
   await expect(page.getByRole("listitem").filter({hasText: /^Missed ·/})).toHaveCount(total);
 });
 
@@ -565,3 +566,114 @@ for (var [tw, th] of [[1366, 657], [390, 664]]) {
     });
   })(tw, th);
 }
+
+// ---------- Score report and answer view (milestone 4) ----------
+test("answer view: each question opens read-only beside its passage, with highlights kept, and returns to the report", async ({page, problems}) => {
+  void problems;
+  await go(page, 31);
+  await begin(page, "One passage");
+  var c = await current(page);
+  var p = c.p, n = p.questions.length;
+  // Highlight something in the passage, answer question 1 wrong and question 2 right, leave the rest blank.
+  await tool(page, "Highlighter").click();
+  await selectText(page, page.getByRole("article").locator("p").nth(1), 0, 10);
+  await page.getByRole("button", {name: "Highlight selection"}).click();
+  await page.locator("fieldset label").nth((p.questions[0].answer + 1) % 4).click();
+  await next(page).click();
+  await page.locator("fieldset label").nth(p.questions[1].answer).click();
+  await navButton(page, n).click();
+  await endSection(page);
+  await expect(page.getByRole("button", {name: /^Show with passage \(question \d+\)$/})).toHaveCount(n);
+  await page.getByRole("button", {name: "Show with passage (question 1)"}).click();
+  await expect(page.getByRole("heading", {level: 2, name: "Question 1 of " + n})).toBeFocused();
+  await expect(page.getByRole("article").getByRole("heading", {level: 1})).toHaveText(p.title);
+  await expect(page.getByRole("article").locator("mark")).toHaveCount(1);
+  // Read-only: no radio buttons, no tools, no timer; the student's answer and the key are marked.
+  await expect(page.getByRole("radio")).toHaveCount(0);
+  await expect(page.getByRole("group", {name: "Tools"})).toBeHidden();
+  await expect(page.getByRole("timer")).toHaveCount(0);
+  await expect(page.getByText("Missed", {exact: true})).toBeVisible();
+  var items = page.getByRole("list", {name: "Answer choices"}).getByRole("listitem");
+  await expect(items).toHaveCount(4);
+  await expect(items.nth((p.questions[0].answer + 1) % 4)).toContainText("Your answer");
+  await expect(items.nth(p.questions[0].answer)).toContainText("Correct answer");
+  await expect(page.getByRole("heading", {name: "Explanation"})).toBeVisible();
+  await expect(page.getByText(plain(p.questions[0].explanation))).toBeVisible();
+  // The navigator shows results instead of answered and flagged.
+  await expect(navButton(page, 1)).toHaveAccessibleName("Question 1, missed");
+  await expect(navButton(page, 2)).toHaveAccessibleName("Question 2, correct");
+  await expect(navButton(page, 3)).toHaveAccessibleName("Question 3, not answered");
+  await next(page).click();
+  await expect(page.getByRole("heading", {level: 2, name: "Question 2 of " + n})).toBeVisible();
+  await expect(items.nth(p.questions[1].answer)).toContainText("Your answer · Correct answer");
+  await navButton(page, 3).click();
+  await expect(page.getByText("No answer.")).toBeVisible();
+  // Back to the report: focus returns to that question's button.
+  await page.getByRole("button", {name: "Back to score report"}).click();
+  await expect(page.getByRole("button", {name: "Show with passage (question 3)"})).toBeFocused();
+  await expect(nav(page)).toBeHidden();
+  // Next on the last question also returns to the report.
+  await page.getByRole("button", {name: "Show with passage (question " + n + ")"}).click();
+  await page.getByRole("button", {name: "Score report", exact: true}).click();
+  await expect(page.getByRole("button", {name: "Show with passage (question " + n + ")"})).toBeFocused();
+  await expect(page.getByRole("heading", {level: 1, name: "Score report"})).toBeVisible();
+});
+
+for (var [aw, ah] of [[1366, 657], [390, 664]]) {
+  (function (w, h) {
+    test("answer view: axe-core in light and dark mode at " + w + "x" + h, async ({page, problems}) => {
+      void problems;
+      await page.setViewportSize({width: w, height: h});
+      await go(page, 32);
+      await begin(page, "Mixed practice");
+      await page.locator("fieldset label").first().click();
+      var total = (await current(page)).total;
+      await navButton(page, total).click();
+      await endSection(page);
+      await page.getByRole("button", {name: "Show with passage (question 1)"}).click();
+      for (var scheme of ["light", "dark"]) {
+        await page.emulateMedia({colorScheme: scheme});
+        await audit(page, "answer view " + scheme);
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
+    });
+  })(aw, ah);
+}
+
+test("full section: hidden with today's bank, offered with 7 reviewed passages of the right mix, scored as one estimate", async ({page, problems}) => {
+  void problems;
+  await go(page, 33);
+  await expect(page.getByRole("button", {name: /^Full section/})).toHaveCount(0);
+  // A bank of 3 Data Representation (6, 6, 6), 3 Research Summaries (6, 6, 5) and 1 Conflicting Viewpoints (5): 40 questions.
+  var bank = JSON.parse(JSON.stringify(data));
+  var base = {};
+  bank.passages.forEach((p) => { base[p.type] = p; });
+  function clone(type, k, keep) {
+    var p = JSON.parse(JSON.stringify(base[type]));
+    p.id += "-" + k; p.title += " (" + k + ")";
+    if (keep) p.questions = p.questions.slice(0, keep);
+    return p;
+  }
+  bank.passages = bank.passages.concat([clone("Data Representation", 2), clone("Data Representation", 3), clone("Research Summaries", 2), clone("Research Summaries", 3, 5),
+    Object.assign(clone("Conflicting Viewpoints", 9), {status: "draft"})]);
+  bank.passages.forEach((p) => { byTitle[p.title] = p; });
+  var js = "(function () {\n  \"use strict\";\n  var root = document.querySelector('[data-zsa-activity=\"act-science\"]');\n  if (!root) return;\n  var data = " + JSON.stringify(bank) +
+    ";\n  root.addEventListener(\"zsa:request-data\", function (event) { event.detail.receive(data); }, {once: true});\n}());\n";
+  await page.route("**/act-science/data.js*", (route) => route.fulfill({status: 200, contentType: "text/javascript", body: js}));
+  await page.clock.install();
+  await page.reload();
+  await expect(page.getByRole("button", {name: /^Full section/})).toBeVisible();
+  await begin(page, "Full section");
+  var c = await current(page);
+  expect(c.total).toBe(40);
+  await expect(page.getByRole("timer")).toHaveText("Time left 40:00");
+  var seen = await playAll(page, (q) => q.answer);
+  expect(seen.map((p) => p.type).sort()).toEqual(["Conflicting Viewpoints", "Data Representation", "Data Representation", "Data Representation", "Research Summaries", "Research Summaries", "Research Summaries"]);
+  expect(seen.some((p) => p.status === "draft")).toBe(false);
+  await endSection(page);
+  await expect(page.getByText("40 / 40", {exact: true})).toBeVisible();
+  await expect(page.getByRole("heading", {name: "Estimated ACT Science score: 36"})).toBeVisible();
+  await expect(page.getByText(/A 36 is about the 100th percentile/)).toBeVisible();
+  await expect(page.getByText(/converts your raw score with a typical past ACT conversion/)).toBeVisible();
+  await audit(page, "full section report");
+});

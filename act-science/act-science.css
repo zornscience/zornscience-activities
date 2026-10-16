@@ -7,7 +7,7 @@
 :root {
   --act-bg: #ffffff; --act-surface: #f2f5fb; --act-ink: #14213d; --act-muted: #4f5d75; --act-line: #d6e2f5;
   --act-navy: #0b2a5b; --act-on-navy: #ffffff; --act-blue: #1d4ed8; --act-on-blue: #ffffff; --act-blue-soft: #e4ecfb;
-  --act-good: #15803d; --act-good-soft: #e3f4e9; --act-bad: #b91c1c; --act-bad-soft: #fbe7e5; --act-warn-soft: #fff4dc;
+  --act-good: #166534; --act-good-soft: #e3f4e9; --act-bad: #b91c1c; --act-bad-soft: #fbe7e5; --act-warn-soft: #fff4dc;
   --act-flag: #c2410c; --act-flag-soft: #fff1e8; --act-hl-yellow: #fde68a; --act-hl-green: #bbf7d0; --act-hl-blue: #bfdbfe; --act-s1: #1d4ed8; --act-s2: #b45309; --act-s3: #15803d; --act-water: #b9d4f5; --act-tile: #1d4ed8;
   --act-font: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --act-display: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
@@ -242,6 +242,31 @@ body {background: var(--act-bg);}
 .zsa-act .zsa-act-num[aria-current] {background: var(--act-blue); border: 2px solid var(--act-blue); color: var(--act-on-blue); font-weight: 700; box-shadow: 0 0 0 2px var(--act-bg), 0 0 0 4px var(--act-blue);}
 .zsa-act .zsa-act-num.zsa-act-is-flagged::after {content: ""; position: absolute; top: -2px; right: -2px; width: 0; height: 0; border-top: 14px solid var(--act-flag); border-left: 14px solid transparent; border-top-right-radius: 6px;}
 .zsa-act .zsa-act-num:hover {border-color: var(--act-blue);}
+
+/* Answer view (read-only, after the section) */
+.zsa-act-alist {list-style: none; margin: 0; padding: 0; display: grid; gap: 8px;}
+.zsa-act-achoice {display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 4px 10px; align-items: start; border: 1px solid var(--act-line); border-radius: 8px; padding: 9px 10px;}
+.zsa-act-achoice.zsa-act-is-key {border: 2px solid var(--act-good); background: var(--act-good-soft);}
+.zsa-act-achoice.zsa-act-is-wrong {border: 2px dashed var(--act-bad); background: var(--act-bad-soft);}
+.zsa-act-badges {grid-column: 2; font-family: var(--act-data); font-size: 13px; font-weight: 700;}
+.zsa-act-is-key .zsa-act-badges {color: var(--act-good);}
+.zsa-act-is-wrong .zsa-act-badges {color: var(--act-bad);}
+.zsa-act-explain {background: var(--act-surface); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px;}
+.zsa-act .zsa-act-explain h3 {font-size: 17px;}
+.zsa-act-apane .zsa-act-tag {font-family: var(--act-data); font-size: 13px; padding: 4px 10px; border-radius: 999px;}
+.zsa-act-apane .zsa-act-ok {background: var(--act-good-soft); color: var(--act-good);}
+.zsa-act-apane .zsa-act-no {background: var(--act-bad-soft); color: var(--act-bad);}
+/* Navigator in the answer view: a mark as well as a color. */
+.zsa-act .zsa-act-num.zsa-act-is-correct {border-style: solid; border-color: var(--act-good); background: var(--act-good-soft);}
+.zsa-act .zsa-act-num.zsa-act-is-missed {border-style: solid; border-color: var(--act-bad); background: var(--act-bad-soft);}
+.zsa-act .zsa-act-num.zsa-act-is-correct::after, .zsa-act .zsa-act-num.zsa-act-is-missed::after {position: absolute; right: 1px; bottom: -1px; font: 700 11px/1 var(--zsa-font);}
+.zsa-act .zsa-act-num.zsa-act-is-correct::after {content: "\2713"; color: var(--act-good);}
+.zsa-act .zsa-act-num.zsa-act-is-missed::after {content: "\2717"; color: var(--act-bad);}
+.zsa-act .zsa-act-num.zsa-act-is-correct[aria-current], .zsa-act .zsa-act-num.zsa-act-is-missed[aria-current] {background: var(--act-blue); border-color: var(--act-blue); color: var(--act-on-blue);}
+.zsa-act .zsa-act-num[aria-current]::after {color: var(--act-on-blue);}
+.zsa-act .zsa-act-open {justify-self: start; border: 1px solid var(--act-blue); background: var(--act-bg); color: var(--act-blue); border-radius: 8px; padding: 6px 12px; font-size: 15px; font-weight: 700;}
+.zsa-act--answers .zsa-act-split {height: max(340px, calc(100vh - 172px)); height: max(340px, calc(100dvh - 172px));}
+.zsa-act--answers:not(.zsa-act--review) {padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));}
 
 /* Section review */
 .zsa-act-main > h1 {font-size: clamp(28px, 4vw, 36px); margin-bottom: 12px;}
