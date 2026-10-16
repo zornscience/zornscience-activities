@@ -1,0 +1,154 @@
+/* Periodic Table reference. Shared tokens and components come from ../shared/zsa-base.css. Classes are zsa-pt-.
+   Layout: phones scroll the table sideways inside its region; from 900px the whole table fits the width; from
+   1280px the details panel sits to the right; from 1340px the legend sits in the gap above the transition metals. */
+.zsa.zsa-pt {--zsa-max-width:1440px; --pt-arrow-h:0px; --pt-arrow-w:0px; --pt-row:46px; --pt-head:22px; padding-top:8px; font-feature-settings:"cv05" 1, "cv08" 1;}
+.zsa-pt.zsa-pt--arrows {--pt-arrow-h:26px; --pt-arrow-w:26px;}
+
+/* Header and toolbar */
+.zsa-pt-header {display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;column-gap:16px;}
+.zsa-pt-topline {display:flex;flex-wrap:wrap;align-items:center;column-gap:16px;}
+.zsa-pt-topline .zsa-eyebrow {margin:0;}
+.zsa-pt .zsa-pt-header h1 {font-size:1.5rem;line-height:1.2;margin:0;order:-1;}
+.zsa-pt-toolbar {display:flex;flex-wrap:wrap;align-items:flex-end;column-gap:20px;row-gap:6px;margin:6px 0 4px;}
+.zsa-pt-modes {border:0;margin:0;padding:0;min-width:0;}
+.zsa-pt-modes legend {font-size:14px;font-weight:600;color:var(--zsa-navy);padding:0;margin-bottom:2px;}
+.zsa-pt-mode-list {display:flex;flex-wrap:wrap;gap:6px;}
+.zsa-pt-mode {display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 12px;border:1px solid var(--zsa-border-strong);border-radius:var(--zsa-radius-pill);font-size:15px;font-weight:600;color:var(--zsa-navy);background:var(--zsa-white);cursor:pointer;}
+.zsa-pt-mode:hover {background:var(--zsa-sky);border-color:var(--zsa-blue);}
+.zsa-pt-mode:has(input:checked) {background:var(--zsa-sky);border-color:var(--zsa-blue);box-shadow:inset 0 0 0 1px var(--zsa-blue);}
+.zsa-pt-mode input, .zsa-pt-check input {width:18px;height:18px;margin:0;accent-color:var(--zsa-blue);}
+.zsa-pt-mode:has(input:focus-visible), .zsa-pt-check:has(input:focus-visible) {outline:var(--zsa-focus-ring);outline-offset:var(--zsa-focus-offset);}
+.zsa-pt-mode input:focus-visible, .zsa-pt-check input:focus-visible {outline:none;}
+.zsa-pt-tools {display:flex;flex-wrap:wrap;align-items:flex-end;column-gap:20px;row-gap:6px;}
+.zsa-pt-check {display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 4px;font-size:15px;font-weight:600;color:var(--zsa-navy);cursor:pointer;}
+.zsa-pt-search label {display:block;font-size:14px;font-weight:600;color:var(--zsa-navy);margin-bottom:2px;}
+.zsa-pt-search-row {display:flex;gap:6px;}
+.zsa-pt-search input {min-height:44px;width:200px;max-width:100%;border:1px solid var(--zsa-navy);border-radius:var(--zsa-radius);padding:6px 10px;color:var(--zsa-navy);background:var(--zsa-white);font-size:16px;}
+.zsa-pt-search .zsa-btn {padding:8px 16px;}
+.zsa-pt-status {flex-basis:100%;min-height:22px;margin:0;font-size:14px;line-height:22px;color:var(--zsa-navy);}
+
+/* Table */
+.zsa-pt-main {position:relative;min-width:0;}
+.zsa-pt-cue {display:none;}
+.zsa-pt-frame {position:relative;padding:var(--pt-arrow-h) 0 0 var(--pt-arrow-w);}
+.zsa-pt-grid {width:100%;table-layout:fixed;border-collapse:separate;border-spacing:2px;font-variant-numeric:tabular-nums;}
+.zsa-pt-corner, .zsa-pt-rowhead {width:22px;}
+.zsa-pt-grid th {font-size:12px;font-weight:600;color:var(--zsa-navy);padding:0;height:var(--pt-head);}
+.zsa-pt-rowhead {text-align:center;}
+.zsa-pt-grid th.zsa-pt-flabel {font-size:12px;text-align:right;padding-right:6px;}
+.zsa-pt-gaprow td {height:6px;padding:0;}
+.zsa-pt-grid td {padding:0;}
+.zsa-pt-el, .zsa-pt-placeholder {height:var(--pt-row);border:1px solid var(--zsa-border-strong);border-radius:6px;text-align:center;vertical-align:middle;color:var(--zsa-navy);background:var(--zsa-white);}
+.zsa-pt-el {cursor:pointer;}
+.zsa-pt-el:hover {box-shadow:inset 0 0 0 2px var(--zsa-blue);}
+.zsa-pt-el:focus-visible {outline:3px solid var(--zsa-blue);outline-offset:1px;position:relative;z-index:1;}
+.zsa-pt-placeholder {font-size:10px;white-space:nowrap;font-weight:600;background:transparent;border-style:dashed;}
+.zsa-pt-cell {display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;gap:2px;}
+.zsa-pt-num {font-size:10px;}
+.zsa-pt-sym {font-size:17px;font-weight:700;}
+.zsa-pt-val {font-size:11px;min-height:11px;font-weight:600;}
+.zsa-pt-el.zsa-pt-selected {box-shadow:0 0 0 2px var(--zsa-white),0 0 0 5px #b45309;}
+
+/* Color modes. Category and block: light fills, each with a different border. Heatmaps: a sequential scale of the
+   site's blues, navy text on the light steps and white on the dark ones (at least 4.5:1). No data: gray, dashed. */
+.zsa-pt-cat-metal {background:#dbeafe;border-color:#3b82f6;}
+.zsa-pt-cat-nonmetal {background:#fef9c3;border-color:#a16207;}
+.zsa-pt-cat-metalloid {background:#ede9fe;border:2px dashed #6d28d9;}
+.zsa-pt-blk-s {background:#fde68a;border-color:#b45309;}
+.zsa-pt-blk-p {background:#bbf7d0;border-color:#15803d;}
+.zsa-pt-blk-d {background:#bfdbfe;border-color:#1d4ed8;}
+.zsa-pt-blk-f {background:#f5d0fe;border-color:#a21caf;}
+.zsa-pt-h0 {background:#eaf2ff;border-color:#c7d6ee;}
+.zsa-pt-h1 {background:#cde0fd;border-color:#a5c8fa;}
+.zsa-pt-h2 {background:#a5c8fa;border-color:#6ea8f5;}
+.zsa-pt-h3 {background:#6ea8f5;border-color:#3b82f6;}
+.zsa-pt-h4 {background:#2563eb;border-color:#1d4ed8;color:var(--zsa-white);}
+.zsa-pt-h5 {background:#1e40af;border-color:#1e3a8a;color:var(--zsa-white);}
+.zsa-pt-h6 {background:var(--zsa-navy);border-color:#020617;color:var(--zsa-white);}
+.zsa-pt-none {background:#f1f5f9;border:1px dashed #94a3b8;color:#475569;}
+
+/* Trend arrows: across the top (left to right) and down the left side. Drawn in CSS. */
+.zsa-pt-across {position:absolute;top:0;left:calc(var(--pt-arrow-w) + 26px);right:4px;height:22px;display:flex;align-items:center;justify-content:center;}
+.zsa-pt-across::before {content:"";position:absolute;left:0;right:8px;top:50%;border-top:3px solid var(--zsa-navy);}
+.zsa-pt-across::after {content:"";position:absolute;right:0;top:50%;margin-top:-7px;border:7px solid transparent;border-left:10px solid var(--zsa-navy);border-right:0;}
+.zsa-pt-down {position:absolute;left:0;top:calc(var(--pt-arrow-h) + var(--pt-head) + 4px);width:22px;height:calc(7 * (var(--pt-row) + 2px));display:flex;align-items:center;justify-content:center;}
+.zsa-pt-down::before {content:"";position:absolute;top:0;bottom:8px;left:50%;margin-left:-1.5px;border-left:3px solid var(--zsa-navy);}
+.zsa-pt-down::after {content:"";position:absolute;bottom:0;left:50%;margin-left:-7px;border:7px solid transparent;border-top:10px solid var(--zsa-navy);border-bottom:0;}
+.zsa-pt-across span, .zsa-pt-down span {position:relative;z-index:1;background:var(--zsa-white);color:var(--zsa-navy);font-size:13px;font-weight:700;padding:0 8px;line-height:18px;white-space:nowrap;}
+.zsa-pt-down span {writing-mode:vertical-rl;padding:8px 0;}
+
+/* Legend and trend sentences */
+.zsa-pt-key {margin-top:8px;}
+.zsa-pt-key-title {margin:0 0 4px;font-size:14px;font-weight:700;color:var(--zsa-navy);line-height:1.3;}
+.zsa-pt-legend {list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:4px;}
+.zsa-pt-legend li {display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--zsa-navy);}
+.zsa-pt-swatch {display:inline-block;width:18px;height:18px;border-radius:4px;border-width:1px;border-style:solid;}
+.zsa-pt-trends p {margin:4px 0 0;font-size:13px;line-height:1.35;}
+
+/* Details panel */
+.zsa-pt-details {border:1px solid var(--zsa-border);border-radius:var(--zsa-radius-lg);padding:10px 14px 14px;margin-top:12px;background:var(--zsa-white);}
+.zsa-pt .zsa-pt-details h2 {font-size:1.35rem;line-height:1.2;margin:0 0 6px;}
+.zsa-pt-hint {font-size:15px;margin:0;}
+.zsa-pt-tile {display:inline-flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05;width:76px;height:76px;margin:0 0 8px;border-radius:8px;border-width:1px;border-style:solid;color:var(--zsa-navy);}
+.zsa-pt-tile .zsa-pt-num {font-size:13px;}
+.zsa-pt-tile .zsa-pt-sym {font-size:28px;}
+.zsa-pt-tile .zsa-pt-val {font-size:12px;}
+.zsa-pt-facts {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);column-gap:12px;row-gap:3px;margin:0;font-size:14px;line-height:1.35;}
+.zsa-pt-facts dt {font-weight:600;color:var(--zsa-navy);}
+.zsa-pt-facts dd {margin:0;overflow-wrap:break-word;}
+.zsa-pt-config sup {font-size:.72em;line-height:0;}
+.zsa-pt-notes {margin:8px 0 0;padding-left:18px;font-size:14px;line-height:1.4;}
+.zsa-pt-details .zsa-btn {margin-top:10px;padding:8px 16px;}
+
+/* Data sources */
+.zsa-pt-sources {margin:16px 0 0;padding:0;}
+.zsa-pt-sources > summary {display:flex;align-items:center;min-height:44px;padding:0 16px;font-weight:600;color:var(--zsa-navy);cursor:pointer;}
+.zsa-pt-sources > summary:focus-visible {outline:var(--zsa-focus-ring);outline-offset:var(--zsa-focus-offset);border-radius:var(--zsa-radius-lg);}
+.zsa-pt-sources-body {padding:0 16px 12px;font-size:15px;}
+.zsa-pt-sources-body ul {padding-left:20px;}
+.zsa-pt .zsa-footer {margin-top:16px;padding-top:12px;}
+
+/* Phones and small tablets: the table scrolls sideways inside its region, never the page. */
+@media (max-width:899px) {
+  .zsa-pt-cue {display:block;margin:0 0 4px;font-size:14px;font-weight:600;color:var(--zsa-blue);}
+  .zsa-pt-scroll {overflow-x:auto;overscroll-behavior-x:contain;border:1px solid var(--zsa-border);border-radius:var(--zsa-radius);background:linear-gradient(to left, rgba(11,42,91,.12), rgba(11,42,91,0) 16px) right / 16px 100% no-repeat local, var(--zsa-white);}
+  .zsa-pt-frame {width:900px;}
+  .zsa-pt-grid th.zsa-pt-flabel {text-align:left;padding-left:4px;}
+}
+@media (max-width:599px) {
+  .zsa-pt-topline .zsa-eyebrow {display:none;}
+  .zsa-pt .zsa-pt-header h1 {font-size:1.25rem;}
+  .zsa-pt-toolbar {column-gap:12px;}
+  .zsa-pt-mode {padding:0 10px;font-size:14px;}
+  .zsa-pt-tools {width:100%;}
+  .zsa-pt-search {flex:1 1 200px;min-width:0;}
+  .zsa-pt-search input {flex:1;width:auto;min-width:0;}
+}
+
+/* From 1280px: details on the right. */
+@media (min-width:1280px) {
+  .zsa-pt-layout {display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:16px;align-items:start;}
+  .zsa-pt-details {margin-top:0;}
+}
+/* From 1340px (laptops at 1366): the legend runs along the empty part of period 1 (groups 3 to 17) and the trend
+   sentences fill periods 2 and 3 above the transition metals (groups 3 to 12), so the whole table fits on screen. */
+@media (min-width:1340px) {
+  .zsa-pt-key {position:absolute;margin:0;
+    --pt-col:calc((100% - var(--pt-arrow-w) - 22px - 38px) / 18);
+    left:calc(var(--pt-arrow-w) + 26px + 2 * (var(--pt-col) + 2px) + 6px);
+    width:calc(15 * var(--pt-col) + 28px - 12px);
+    top:calc(var(--pt-arrow-h) + var(--pt-head) + 4px);}
+  .zsa-pt-key-title {margin:0 0 3px;font-size:13px;line-height:17px;}
+  .zsa-pt-legend {flex-wrap:nowrap;gap:10px;}
+  .zsa-pt-legend li {font-size:12px;gap:4px;white-space:nowrap;}
+  .zsa-pt-swatch {width:16px;height:16px;}
+  .zsa-pt-trends {position:absolute;top:calc(var(--pt-row) + 6px);width:calc(10 / 15 * 100% - 4px);}
+  .zsa-pt-trends p {font-size:12px;line-height:1.3;margin:0 0 3px;}
+}
+@media (min-width:1340px) and (min-height:900px) {.zsa.zsa-pt {--pt-row:60px;} .zsa-pt-sym {font-size:22px;} .zsa-pt-num, .zsa-pt-val {font-size:12px;}}
+/* 900 to 1199px: the table fits the width with 44px cells. */
+@media (min-width:900px) and (max-width:1199px) {
+  .zsa.zsa-pt {padding-left:12px;padding-right:12px;}
+  .zsa-pt.zsa-pt--arrows {--pt-arrow-w:22px;}
+  .zsa-pt-corner, .zsa-pt-rowhead {width:18px;}
+}

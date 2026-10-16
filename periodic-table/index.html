@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<meta name="description" content="An interactive periodic table of all 118 elements with heatmaps for atomic radius, electronegativity and ionization energy, from ZornScience.">
+<title>Periodic Table | ZornScience</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="periodic-table.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="data.js?v=1.0.0" defer></script>
+<script src="periodic-table.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="zsa zsa-pt" data-zsa-activity="periodic-table">
+<header class="zsa-pt-header">
+<div class="zsa-pt-topline" data-zsa-chrome>
+<a class="zsa-back" id="zsa-pt-back" href="https://zornscience.org/science/">← ZornScience lessons</a>
+<p class="zsa-eyebrow">Chemistry · Reference</p>
+</div>
+<h1>Periodic Table</h1>
+</header>
+<noscript><p class="zsa-panel">This periodic table needs JavaScript. Enable it to explore the elements.</p></noscript>
+<div class="zsa-pt-toolbar">
+<fieldset class="zsa-pt-modes" id="zsa-pt-modes">
+<legend>Color by</legend>
+<div class="zsa-pt-mode-list" id="zsa-pt-mode-list"></div>
+</fieldset>
+<div class="zsa-pt-tools">
+<label class="zsa-pt-check" id="zsa-pt-trends-label"><input type="checkbox" id="zsa-pt-trends" checked> Show trend arrows</label>
+<div class="zsa-pt-search">
+<label for="zsa-pt-query">Find an element</label>
+<div class="zsa-pt-search-row">
+<input type="search" id="zsa-pt-query" list="zsa-pt-names" autocomplete="off" spellcheck="false" placeholder="Name, symbol or number" aria-describedby="zsa-pt-status">
+<datalist id="zsa-pt-names"></datalist>
+<button class="zsa-btn" id="zsa-pt-find" type="button">Find</button>
+</div>
+</div>
+</div>
+<p class="zsa-pt-status" id="zsa-pt-status" role="status"></p>
+</div>
+<div class="zsa-pt-layout">
+<div class="zsa-pt-main" id="zsa-pt-main">
+<p class="zsa-pt-cue" aria-hidden="true">Scroll sideways for more →</p>
+<div class="zsa-pt-scroll" id="zsa-pt-scroll" role="region" aria-label="Periodic table (scrolls sideways on small screens)">
+<div class="zsa-pt-frame" id="zsa-pt-frame">
+<div class="zsa-pt-across" id="zsa-pt-across" aria-hidden="true" hidden><span id="zsa-pt-across-text"></span></div>
+<div class="zsa-pt-down" id="zsa-pt-down" aria-hidden="true" hidden><span id="zsa-pt-down-text"></span></div>
+<table class="zsa-pt-grid" id="zsa-pt-grid" role="grid" aria-describedby="zsa-pt-help"></table>
+</div>
+</div>
+<div class="zsa-pt-key" id="zsa-pt-key">
+<p class="zsa-pt-key-title" id="zsa-pt-key-title"></p>
+<ul class="zsa-pt-legend" id="zsa-pt-legend"></ul>
+<div class="zsa-pt-trends" id="zsa-pt-trend-text"></div>
+</div>
+<p class="zsa-sr-only" id="zsa-pt-help">Use the arrow keys to move between elements, Home and End to move within a row, and Enter to open an element's details. Escape closes them.</p>
+</div>
+<section class="zsa-pt-details" id="zsa-pt-details" aria-labelledby="zsa-pt-details-title">
+<h2 id="zsa-pt-details-title" tabindex="-1">Element details</h2>
+<div id="zsa-pt-details-body"><p class="zsa-pt-hint">Select an element to see its atomic mass, electron configuration, common ions and trend values.</p></div>
+</section>
+</div>
+<details class="zsa-card zsa-pt-sources" id="zsa-pt-sources">
+<summary>Data sources</summary>
+<div class="zsa-pt-sources-body">
+<p>Values come from the mendeleev Python package, version 1.3.0 (MIT license), which compiles them from published sources:</p>
+<ul>
+<li>Atomic masses: IUPAC standard atomic weights (CIAAW), rounded to 2 decimal places. Brackets show the mass number of the longest-lived isotope of an element with no stable isotope.</li>
+<li>Atomic radius: single-bond covalent radius, Pyykkö and Atsumi (2009), in picometers (pm). Every element on the page uses this one radius type.</li>
+<li>Electronegativity: Pauling scale (CRC Handbook of Chemistry and Physics, as compiled by mendeleev).</li>
+<li>First ionization energy: NIST Atomic Spectra Database, converted from electron volts to kJ/mol.</li>
+<li>Electron configurations: measured ground states (NIST). Elements 104 to 118 are predicted.</li>
+<li>States use melting and boiling points at 25 °C. Common ions follow the main-group rules from the lessons; transition metal charges are the common ones taught in high school.</li>
+</ul>
+<p>Every value was checked against a second source (the public-domain periodictable package and pymatgen). Differences are listed in this activity's README.</p>
+</div>
+</details>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+</main>
+</body>
+</html>
