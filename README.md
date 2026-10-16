@@ -8,11 +8,17 @@ Static, self-contained practice activities for zornscience.org lessons. Plain HT
 index.html                 landing page listing the activities
 .nojekyll                  tells GitHub Pages to serve files as they are
 shared/
+  README.md                the activity engine and how to make a new activity
   zsa-base.css             design tokens and shared components (scoped to .zsa)
+  zsa-activity.css         activity layout and engine components
+  zsa-engine.js            the activity engine
   zsa-embed.js             ?embed=1 mode and zsa:resize messages
   fonts/InterVariable.woff2, Inter-OFL.txt
-ion-charge-trainer/        Predicting Ion Charge Trainer, v1.0.1
-ionic-formula-builder/     Ionic Formula Builder, v1.0.0
+ion-charge-trainer/        Predicting Ion Charge Trainer, v1.3.1
+ionic-formula-builder/     Ionic Formula Builder, v1.0.1
+templates/starter/         starter template for a new activity (not linked from the site)
+tests/                     automated tests (development only; see TESTING.md)
+package.json               test tooling only; the site has no dependencies
 ```
 
 ## Publishing (GitHub Pages)
@@ -23,7 +29,11 @@ ionic-formula-builder/     Ionic Formula Builder, v1.0.0
 
 ## Adding an activity
 
-Follow the ZornScience ChatGPT handoff: a new folder named with the activity slug, classes prefixed `zsa-<code>-`, no changes to `shared/` without review, README.md and TESTING.md in the folder. Bump the version in the activity's meta tag and asset query strings on every change.
+Every activity runs on the shared engine in `shared/zsa-engine.js`. A new activity is a folder named with the activity slug, holding a data file, a small script with its steps and misconception rules, a stylesheet for its strip, and README.md and TESTING.md. Start from `templates/starter/` and follow [shared/README.md](shared/README.md). Classes specific to an activity are prefixed `zsa-<code>-`; shared classes are `zsa-`. Changes to `shared/` affect every activity and need the full test suite and the parity check. Bump the version in the activity's meta tag and asset query strings on every change.
+
+## Tests
+
+`npm ci && npm test` runs the unit and browser tests; `npm run parity` compares behavior with `origin/main`. GitHub Actions runs both on every pull request. See [TESTING.md](TESTING.md).
 
 ## Embedding later (advanced WordPress hosting only)
 

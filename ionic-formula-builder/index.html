@@ -4,43 +4,45 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.0.0">
+<meta name="zsa-version" content="1.0.1">
 <meta name="description" content="Practice writing formulas and names for binary ionic compounds with step-by-step hints and feedback.">
 <title>Ionic Formula Builder | ZornScience</title>
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
-<link rel="stylesheet" href="builder.css?v=1.0.0">
-<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
-<script src="data.js?v=1.0.0" defer></script>
-<script src="builder.js?v=1.0.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.1">
+<link rel="stylesheet" href="../shared/zsa-activity.css?v=1.0.1">
+<link rel="stylesheet" href="builder.css?v=1.0.1">
+<script src="../shared/zsa-embed.js?v=1.0.1" defer></script>
+<script src="../shared/zsa-engine.js?v=1.0.1" defer></script>
+<script src="data.js?v=1.0.1" defer></script>
+<script src="builder.js?v=1.0.1" defer></script>
 </head>
 <body>
-<main class="zsa zsa-ifb" data-zsa-activity="ionic-formula-builder">
-<header class="zsa-ifb-header">
-<div class="zsa-ifb-topline" data-zsa-chrome>
+<main class="zsa zsa-activity zsa-ifb" data-zsa-activity="ionic-formula-builder">
+<header class="zsa-header">
+<div class="zsa-topline" data-zsa-chrome>
 <a class="zsa-back" href="https://zornscience.org/science/chemistry/unit-3-ionic-bonding/binary-compounds/">← Back to the lesson</a>
 <p class="zsa-eyebrow">Chemistry · Ionic Bonding</p>
 </div>
 <h1>Ionic Formula Builder</h1>
 </header>
 <noscript><p class="zsa-panel">This activity needs JavaScript. Enable it to practice.</p></noscript>
-<div class="zsa-ifb-layout">
-<section class="zsa-ifb-ref" aria-label="Compound and periodic table">
+<div class="zsa-layout">
+<section class="zsa-ref" aria-label="Compound and periodic table">
 <div class="zsa-ifb-compound" id="zsa-ifb-compound"></div>
-<div class="zsa-ifb-table-wrap">
+<div class="zsa-table-wrap">
 <div id="zsa-ifb-table"></div>
-<p class="zsa-ifb-table-note" id="zsa-ifb-table-note">Main groups only. Transition metals are not shown.</p>
+<p class="zsa-table-note" id="zsa-ifb-table-note">Main groups only. Transition metals are not shown.</p>
 </div>
 </section>
-<section class="zsa-ifb-work" id="zsa-ifb-work" aria-label="Formula practice"></section>
+<section class="zsa-work" id="zsa-ifb-work" aria-label="Formula practice"></section>
 </div>
 <p class="zsa-sr-only" id="zsa-ifb-live" aria-live="polite" aria-atomic="true"></p>
-<details class="zsa-card zsa-ifb-modes" id="zsa-ifb-options">
+<details class="zsa-card zsa-modes" id="zsa-ifb-options">
 <summary>Practice options</summary>
-<div class="zsa-ifb-modes-body">
+<div class="zsa-modes-body">
 <p>Start a fresh mixed round or work on one compound. Starting again clears this round.</p>
 <button class="zsa-btn" id="zsa-ifb-new" type="button">Start a new round</button>
-<div class="zsa-ifb-picker">
+<div class="zsa-picker">
 <label for="zsa-ifb-select">Choose a compound</label>
 <select id="zsa-ifb-select"></select>
 <label for="zsa-ifb-direction">Direction</label>

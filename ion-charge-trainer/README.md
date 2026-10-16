@@ -1,10 +1,11 @@
 # Predicting Ion Charge Trainer
-Version: 1.3.0
+Version: 1.3.1
 
 ## Assumptions and departures
 - Claude will host these static files and add the WordPress link. This package makes no hosting or WordPress changes.
 - Inter is installed at `shared/fonts/InterVariable.woff2` (Inter 4.1 variable, Latin subset plus the arrows, check mark and minus sign used here, about 100 KB) with its SIL Open Font License in `shared/fonts/Inter-OFL.txt`. The @font-face rule in `shared/zsa-base.css` is enabled.
-- Each JS file uses its own strict IIFE. A one-use event on the activity root passes the plain data object to the trainer without window globals. This resolves the requirement for separate deferred data and logic files alongside isolated scope.
+- Each JS file uses its own strict IIFE. One-use events on the activity root pass the plain data object and the shared engine to the trainer without window globals (`zsa:request-data`, `zsa:request-engine`). This resolves the requirement for separate deferred data and logic files alongside isolated scope.
+- Since 1.3.1 the trainer runs on the shared activity engine (`shared/zsa-engine.js` and `shared/zsa-activity.css`, see `shared/README.md`). The engine handles rounds, the review queue, tap to check, hints, Show me, the answer trail, summaries, the periodic table, keyboard and focus. `trainer.js` keeps the steps, the misconception rules, the element strip and Practice my misses. Students see no change.
 - The shorter-path explanation is qualified as a prediction pattern for these common monatomic ions. It is not a universal account of energetic stability or isolated atom behavior. Lithium uses its full first level of 2 electrons.
 - The sign-reversal rule takes precedence over the valence-count rule when those overlap for metal ions. Correct answers always take precedence over misconception matches.
 - Mixed practice uses exactly 10 distinct original elements with at least 3 metals and 3 nonmetals. Review can add up to 3 items. Near the end, fresh filler elements provide two intervening items before a repeat. When the extra-item budget cannot accommodate that spacing, the missed element remains in the end-of-round review list instead. Every missed element is retained there, including a single wrong attempt.
@@ -25,7 +26,9 @@ Preserve these sibling folders at the repository root:
 ```
 shared/
   zsa-base.css
+  zsa-activity.css
   zsa-embed.js
+  zsa-engine.js
   fonts/
     InterVariable.woff2
     Inter-OFL.txt
@@ -125,9 +128,13 @@ Button label: Open the Ion Charge Trainer
 - No saving or grade reporting. This is formative practice.
 - The octet model is deliberately limited to the specified common ions. It does not teach transition-metal charges, exceptions, covalent bonding, or full ion-formation energetics.
 - Current Chrome, Edge, Firefox, and Safari iOS 16+ are intended targets, but cross-browser behavior still needs verification.
-- Initial shared components are included. Future activities should reuse them and propose any changes before modifying them.
+- Shared components are in `shared/`. Changes there affect every activity and need the full test suite and parity check (root TESTING.md).
+- At 360 px wide, the seven "how many electrons" buttons in step 2 are about 38 px wide. That meets the WCAG 2.2 minimum (24 px) but not the 44 px target. From 440 px they are wider.
+- Embed mode hides the whole header, so a framed page has no heading 1 (an axe best-practice finding). The Ionic Formula Builder keeps its h1 visually hidden instead. Not changed in 1.3.1 to keep behavior identical.
 
 ## Changelog
+1.3.1: Rebuilt on the shared activity engine (`shared/zsa-engine.js`, `shared/zsa-activity.css`). No change for students. With the same random sequence, 1.3.0 and 1.3.1 give the same page, focus, announcements, layout and pixels in every compared state (see TESTING.md). Class names for shared parts are now `zsa-…` instead of `zsa-ict-…`. Element ids are unchanged.
+
 1.3.0: Tap to check. Answer choices are buttons that check themselves when picked (two-part steps check once both parts are picked), with no Check button. Wrong picks are marked and locked; in two-part steps only the wrong part clears. Arrow keys move between choices without submitting. Fixed the doubled "Not yet. Not yet." in the general wrong-answer message (present since 1.0.0).
 
 1.2.0: Compact layout. One step at a time with an answer trail, periodic table always visible with the current element highlighted (group column added on a step 1 hint), two columns on laptops, denser phone layout, question text used as the step heading, number choices in one row where they stay 44 px wide, buttons above feedback, automatic alignment on narrow screens, and practice options in a collapsed panel. Step 4 question shortened.

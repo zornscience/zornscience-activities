@@ -1,8 +1,17 @@
 # Verification record
-Version: 1.0.0
+Version: 1.0.1
 Date: 2026-10-15
-Reviewer: Claude (built and tested 1.0.0)
+Reviewer: Claude (built and tested 1.0.0; 1.0.1 engine rebuild)
 
+## 1.0.1 results (shared engine)
+| Check | Status | Evidence |
+|---|---|---|
+| Behavior unchanged | PASS | `npm run parity` against 1.0.0 (origin/main): 21 scenarios, 6,687 compared states and 4,744 full-page screenshot pairs across both activities. The scenarios cover full seeded rounds with five answering styles at 1366x657, 390x664, 768x1024 and 320x568, Practice my misses, Practice options, embed mode, every item from the picker (80 compounds in both directions). The DOM, form state, focus, live region, scroll position, every element's box and computed style, and the screenshots matched in every state. Rounds, review fillers and answer order are also identical under the same random sequence. |
+| Automated suite | PASS | `npm test`: 16 unit tests and 51 browser tests, the same suite that passed on 1.0.0 before the change (root TESTING.md). It covers science against an independent reference, every answer combination (2,480), round rules (300 seeded rounds), the review queue against a model, keyboard and focus, axe-core 4.14 in 9 states at two sizes, layout fit, tap targets, embed mode, network and CSP. |
+| axe-core | PASS | Zero violations in every audited state at 1366x657 and 390x664, including embed mode. |
+| Real screen readers, Firefox, Safari, school devices | NOT TESTED | Same as before. |
+
+## 1.0.0 results
 PASS means the check was run on version 1.0.0 as committed and passed. PARTIAL and NOT TESTED are explained in the row. Browser checks used Playwright 1.56 with the preinstalled Chromium over a local web server (`python3 -m http.server`). The test scripts were written for this review and are not part of the package, matching the Ion Charge Trainer.
 
 ## Science and logic

@@ -1,0 +1,101 @@
+/* Shared activity layout and engine components (shared/zsa-engine.js). Load after zsa-base.css and before the
+   activity's own stylesheet, which adds its strip and any differences. Activity root: <main class="zsa zsa-activity">. */
+
+/* Layout: compact single column on phones, two columns (table left, question right) from 900px. */
+.zsa.zsa-activity {--zsa-max-width:1080px; padding-top:12px;}
+@media(max-width:899px) {.zsa.zsa-activity {--zsa-max-width:760px;}}
+.zsa-header {margin-bottom:12px;}
+.zsa-topline {display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;column-gap:16px;}
+.zsa-topline .zsa-eyebrow {margin:0;}
+.zsa-activity .zsa-header h1 {font-size:clamp(1.5rem,1.2rem + 1.2vw,2rem);line-height:1.2;margin:0;}
+.zsa-layout {display:grid;gap:12px;}
+@media(min-width:900px) {.zsa-layout {grid-template-columns:minmax(0,400px) minmax(0,1fr);gap:24px;align-items:start;}}
+.zsa-ref {display:grid;gap:10px;align-content:start;}
+
+/* Periodic table, always visible */
+.zsa-table-wrap {background:var(--zsa-sky);border:1px solid var(--zsa-border);border-radius:12px;padding:6px 8px 4px;}
+.zsa-table {width:100%;border-collapse:separate;border-spacing:3px;table-layout:fixed;font-size:14px;text-align:center;}
+.zsa-table caption {text-align:left;font-size:13px;font-weight:600;color:var(--zsa-navy);padding:0 3px 2px;}
+.zsa-table th {font-size:12px;font-weight:600;color:var(--zsa-navy);padding:1px 0;border-radius:6px;}
+.zsa-table--charges th {line-height:1.25;}
+.zsa-table--charges thead th {vertical-align:bottom;}
+.zsa-table thead th:first-child {font-size:11px;}
+/* Ion charge above its group column (zsa-table--charges). The line is always reserved, so the table never changes height. */
+.zsa-colcharge {display:block;min-height:15px;font-size:12px;line-height:15px;font-weight:700;color:var(--zsa-blue);}
+.zsa-table td {height:28px;padding:0;background:var(--zsa-white);border:1px solid var(--zsa-border-strong);border-radius:6px;color:var(--zsa-navy);}
+.zsa-table td:empty {background:transparent;border-color:transparent;}
+.zsa-table .zsa-highlight {background:#dbeafe;border-color:var(--zsa-blue);}
+.zsa-table th.zsa-highlight {background:var(--zsa-blue);color:var(--zsa-white);}
+.zsa-table th.zsa-highlight .zsa-colcharge {color:var(--zsa-white);}
+.zsa-table td.zsa-current {background:var(--zsa-navy);border-color:var(--zsa-navy);color:var(--zsa-white);font-weight:700;box-shadow:0 0 0 2px var(--zsa-white),0 0 0 4px var(--zsa-blue);}
+.zsa-table-note {font-size:12px;margin:2px 3px 0;}
+
+/* Question area */
+.zsa-progress {font-size:14px;color:var(--zsa-blue);font-weight:600;margin:2px 0 0;}
+.zsa-trail {list-style:none;margin:0 0 8px;padding:0;display:flex;flex-wrap:wrap;gap:6px;}
+.zsa-trail li {font-size:14px;font-weight:600;line-height:1.3;padding:4px 10px;border-radius:var(--zsa-radius-pill);color:var(--zsa-success);background:var(--zsa-success-bg);border:1px solid #bbf7d0;}
+.zsa-trail li.zsa-trail--shown {color:var(--zsa-navy);background:var(--zsa-sky);border-color:var(--zsa-border);}
+.zsa-step {min-width:0;border:1px solid var(--zsa-border);border-radius:12px;margin:0;padding:8px 14px 14px;}
+.zsa-step > legend {font-size:17px;line-height:1.35;font-weight:600;color:var(--zsa-navy);padding:0 6px;max-width:100%;}
+.zsa-sub {min-width:0;border:0;margin:8px 0 0;padding:0;}
+.zsa-step .zsa-sub legend {font-size:15px;font-weight:600;color:var(--zsa-navy);padding:0;}
+/* The two parts of a step (step.pair) sit side by side wherever three 44px buttons still fit in each half (from 360px). */
+.zsa-pair {display:grid;column-gap:10px;}
+@media(min-width:360px) {.zsa-pair {grid-template-columns:repeat(2,minmax(0,1fr));}}
+/* Answer grids. Four columns by default; an activity sets other counts with zsa-choices--<modifier>. */
+.zsa-choices {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:6px 0 0;}
+/* Answer buttons: picking one checks it (two-part steps check once both parts are picked). */
+.zsa-choice {display:flex;align-items:center;justify-content:center;gap:4px;width:100%;min-width:0;min-height:44px;margin:0;padding:4px;border:1px solid var(--zsa-border-strong);border-radius:8px;background:var(--zsa-white);color:var(--zsa-navy);font:inherit;font-weight:600;line-height:1.2;text-align:center;cursor:pointer;touch-action:manipulation;}
+.zsa-choice:hover:not([aria-disabled="true"]):not([aria-pressed="true"]) {background:var(--zsa-sky);border-color:var(--zsa-blue);}
+.zsa-choice[aria-pressed="true"] {color:var(--zsa-white);background:var(--zsa-blue);border-color:var(--zsa-blue);}
+.zsa-choice.zsa-tried {color:var(--zsa-error);background:var(--zsa-error-bg);border-color:#fca5a5;cursor:default;}
+.zsa-choice.zsa-tried::before {content:"✗";font-size:13px;}
+.zsa-actions {display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+.zsa-actions .zsa-btn {padding:10px 18px;}
+.zsa-feedback {padding:8px 12px;border-radius:8px;margin:10px 0 0;font-size:15px;line-height:1.45;}
+.zsa-feedback--correct {color:var(--zsa-success);background:var(--zsa-success-bg);}
+.zsa-feedback--wrong {color:var(--zsa-error);background:var(--zsa-error-bg);}
+.zsa-feedback--shown {color:var(--zsa-navy);background:var(--zsa-sky);border:1px solid var(--zsa-border);}
+.zsa-last {margin:0 0 10px;}
+.zsa-hint {margin:10px 0 0;font-size:15px;line-height:1.45;padding:8px 12px;}
+
+/* Item summary and round summary */
+.zsa-summary {background:var(--zsa-sky);margin:0;padding:12px 16px 16px;}
+.zsa-summary h3 {margin:0 0 4px;}
+.zsa-summary-row {display:flex;align-items:center;gap:16px;}
+.zsa-summary-row p {margin:0;font-size:16px;}
+.zsa .zsa-finish-title {font-size:1.5rem;margin:0 0 4px;}
+.zsa-stat {display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--zsa-border);padding:6px 0;font-size:16px;}
+.zsa-note {font-size:15px;margin:6px 0;}
+.zsa-review {font-size:15px;margin:4px 0;padding-left:20px;}
+
+/* Practice options (collapsed by default) */
+.zsa-modes {margin:20px 0 0;padding:0;}
+.zsa-modes > summary {display:flex;align-items:center;min-height:44px;padding:0 16px;font-weight:600;color:var(--zsa-navy);cursor:pointer;}
+.zsa-modes > summary:focus-visible {outline:var(--zsa-focus-ring);outline-offset:var(--zsa-focus-offset);border-radius:var(--zsa-radius-lg);}
+.zsa-modes-body {padding:0 16px 16px;}
+.zsa-modes p {font-size:16px;margin:0 0 8px;}
+.zsa-picker {display:flex;flex-direction:column;gap:8px;margin-top:16px;}
+.zsa-picker select {border:1px solid var(--zsa-navy);border-radius:8px;padding:8px;max-width:100%;background:white;color:var(--zsa-navy);}
+.zsa-activity .zsa-footer {margin-top:20px;padding-top:12px;}
+
+/* Phones: shorter header, denser table. */
+@media(max-width:599px) {
+  .zsa-topline .zsa-eyebrow {display:none;}
+  .zsa-activity .zsa-header {margin-bottom:6px;}
+  .zsa-activity .zsa-header h1 {font-size:1.25rem;}
+  .zsa-layout, .zsa-ref {gap:8px;}
+  .zsa-table-wrap {padding:4px 6px 2px;}
+  .zsa-table {border-spacing:2px;font-size:13px;}
+  .zsa-table td {height:24px;}
+  .zsa-colcharge {min-height:14px;line-height:14px;}
+  .zsa-table caption, .zsa-table-note {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+  .zsa-step {padding:4px 12px 12px;}
+  .zsa-step > legend {font-size:16px;}
+  .zsa-trail li {font-size:13px;padding:3px 8px;}
+  .zsa-feedback, .zsa-hint {font-size:14px;line-height:1.4;}
+  .zsa-last {margin-bottom:8px;}
+  .zsa-actions {margin-top:10px;}
+  .zsa-actions .zsa-btn {padding:10px 14px;}
+}
+@media(max-width:359px) {.zsa-step {padding:4px 8px 10px;}}
