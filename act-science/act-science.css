@@ -1,0 +1,348 @@
+/* ACT Science Practice. Atkinson Hyperlegible (SIL OFL 1.1, see fonts/AtkinsonHyperlegible-OFL.txt), Latin subset. */
+@font-face {font-family: "Atkinson Hyperlegible"; src: url("fonts/AtkinsonHyperlegible-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap;}
+@font-face {font-family: "Atkinson Hyperlegible"; src: url("fonts/AtkinsonHyperlegible-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap;}
+@font-face {font-family: "Atkinson Hyperlegible"; src: url("fonts/AtkinsonHyperlegible-Italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap;}
+
+/* Colors: the site's white, blue and navy in light mode, and a matching dark mode. */
+:root {
+  --act-bg: #ffffff; --act-surface: #f2f5fb; --act-ink: #14213d; --act-muted: #4f5d75; --act-line: #d6e2f5;
+  --act-navy: #0b2a5b; --act-on-navy: #ffffff; --act-blue: #1d4ed8; --act-on-blue: #ffffff; --act-blue-soft: #e4ecfb;
+  --act-good: #166534; --act-good-soft: #e3f4e9; --act-bad: #b91c1c; --act-bad-soft: #fbe7e5; --act-warn-soft: #fff4dc;
+  --act-flag: #c2410c; --act-flag-soft: #fff1e8; --act-hl-yellow: #fde68a; --act-hl-green: #bbf7d0; --act-hl-blue: #bfdbfe; --act-s1: #1d4ed8; --act-s2: #b45309; --act-s3: #15803d; --act-water: #b9d4f5; --act-tile: #1d4ed8;
+  --act-font: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --act-display: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --act-data: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --act-bg: #0d1526; --act-surface: #142039; --act-ink: #e6ecf7; --act-muted: #a6b5cf; --act-line: #2c3c5c;
+    --act-navy: #081a3a; --act-blue: #8db4ff; --act-on-blue: #0d1526; --act-blue-soft: #1b2d52;
+    --act-good: #6ad69a; --act-good-soft: #13321f; --act-bad: #ff958c; --act-bad-soft: #3b1d1c; --act-warn-soft: #3a2f14;
+    --act-flag: #fb923c; --act-flag-soft: #3a2414; --act-hl-yellow: #6b5410; --act-hl-green: #1e5135; --act-hl-blue: #24406e; --act-s1: #8db4ff; --act-s2: #f2a15a; --act-s3: #6ad69a; --act-water: #23426e; --act-tile: #1d4ed8;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --act-bg: #0d1526; --act-surface: #142039; --act-ink: #e6ecf7; --act-muted: #a6b5cf; --act-line: #2c3c5c;
+  --act-navy: #081a3a; --act-blue: #8db4ff; --act-on-blue: #0d1526; --act-blue-soft: #1b2d52;
+  --act-good: #6ad69a; --act-good-soft: #13321f; --act-bad: #ff958c; --act-bad-soft: #3b1d1c; --act-warn-soft: #3a2f14;
+  --act-flag: #fb923c; --act-flag-soft: #3a2414; --act-hl-yellow: #6b5410; --act-hl-green: #1e5135; --act-hl-blue: #24406e; --act-s1: #8db4ff; --act-s2: #f2a15a; --act-s3: #6ad69a; --act-water: #23426e; --act-tile: #1d4ed8;
+  color-scheme: dark;
+}
+
+body {background: var(--act-bg);}
+/* The shared .zsa root is a 760 px column; this tool needs the full width for the passage and questions. */
+.zsa.zsa-act {max-width: none; margin: 0; padding: 0; color: var(--act-ink); background: var(--act-bg); color-scheme: inherit;
+  font: 400 17px/1.55 var(--act-font); --zsa-focus-ring: 3px solid var(--act-blue);}
+.zsa-act h1, .zsa-act h2, .zsa-act h3 {font-family: var(--act-display); color: var(--act-ink); font-weight: 600; line-height: 1.2; margin: 0; text-wrap: balance;}
+.zsa-act p {margin: 0;}
+.zsa-act a {color: var(--act-blue);}
+.zsa-act .zsa-eyebrow {color: var(--act-blue); margin: 0;}
+.zsa-act .zsa-btn {border: 2px solid var(--act-blue); background: var(--act-bg); color: var(--act-blue); font-weight: 700; padding: 10px 18px;}
+.zsa-act .zsa-btn:hover {background: var(--act-blue-soft);}
+.zsa-act .zsa-btn--primary {background: var(--act-blue); color: var(--act-on-blue);}
+.zsa-act .zsa-btn--primary:hover {background: var(--act-navy); border-color: var(--act-navy); color: #ffffff;}
+.zsa-act .zsa-panel {background: var(--act-surface); border-color: var(--act-line); margin: 16px 0;}
+.zsa-act :focus {outline: none;}
+.zsa-act :focus-visible {outline: 3px solid var(--act-blue); outline-offset: 2px;}
+.zsa-act [tabindex="-1"]:focus-visible {outline: none;}
+
+.zsa-act-wrap {max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));}
+
+/* Brand band */
+.zsa-act-band {background: var(--act-navy); color: var(--act-on-navy);}
+.zsa-act-band-row {display: flex; align-items: center; justify-content: space-between; gap: 8px 16px; padding-top: 10px; padding-bottom: 10px; flex-wrap: wrap;}
+.zsa-act-brand {display: flex; align-items: center; gap: 10px; font-family: var(--act-display); font-weight: 700; font-size: 18px;}
+.zsa-act-tile {flex: none;}
+.zsa-act-tile rect {fill: var(--act-tile); stroke: #93c5fd; stroke-width: 2;}
+.zsa-act-tile text {fill: #ffffff; font-family: var(--act-display); font-size: 22px; font-weight: 700;}
+.zsa-act-brand-section {font-weight: 500; opacity: .8; padding-left: 10px; border-left: 1px solid rgba(255,255,255,.4);}
+.zsa-act-clock {display: flex; gap: 16px; font-family: var(--act-data); font-size: 15px; font-variant-numeric: tabular-nums; margin: 0;}
+.zsa-act-clock b {font-weight: 700;}
+.zsa-act-band a {color: var(--act-on-navy); display: inline-flex; align-items: center; min-height: 44px; font-size: 15px;}
+
+.zsa-act-main {padding-top: 28px; padding-bottom: 48px; display: block;}
+.zsa-act-main:focus {outline: none;}
+
+/* Start screen */
+.zsa-act-intro {display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 32px; align-items: start;}
+.zsa-act-intro h1 {font-size: clamp(30px, 5vw, 44px); margin: 8px 0 12px;}
+.zsa-act .zsa-act-lede {color: var(--act-muted); max-width: 60ch; margin-bottom: 22px;}
+.zsa-act-modes {display: grid; gap: 14px;}
+.zsa-act .zsa-act-mode {text-align: left; border: 2px solid var(--act-line); background: var(--act-bg); color: var(--act-ink); border-radius: 12px; padding: 16px 18px; display: grid; gap: 4px; font-weight: 400;}
+.zsa-act .zsa-act-mode:hover {border-color: var(--act-blue); background: var(--act-bg);}
+.zsa-act-mode strong {font-family: var(--act-display); font-size: 18px; color: var(--act-blue);}
+.zsa-act-mode span {color: var(--act-muted); font-size: 15px;}
+.zsa-act-drafts {margin-top: 28px; display: grid; gap: 10px;}
+.zsa-act .zsa-act-drafts h2 {font-size: 20px;}
+.zsa-act-draft-list {list-style: none; margin: 0; padding: 0; display: grid; gap: 10px;}
+.zsa-act-draft-list .zsa-act-mode {width: 100%;}
+.zsa-act-facts {background: var(--act-surface); border-radius: 12px; padding: 20px; display: grid; gap: 14px;}
+.zsa-act .zsa-act-facts h2 {font-size: 15px; text-transform: uppercase; letter-spacing: .06em; color: var(--act-muted);}
+.zsa-act-facts dl {margin: 0; display: grid; gap: 14px;}
+.zsa-act-fact {display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 12px; align-items: baseline;}
+.zsa-act-fact dt {font-family: var(--act-data); font-weight: 700; font-size: 22px; color: var(--act-blue); font-variant-numeric: tabular-nums;}
+.zsa-act-fact dd {margin: 0; font-size: 15px;}
+.zsa-act-note {font-size: 14px; color: var(--act-muted);}
+
+/* The section: passage pane on the left (its own scroll), one question on the right, fixed bottom bar. */
+.zsa-act-kind {font-family: var(--act-data); font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--act-muted);}
+.zsa-act-split {display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 24px; align-items: stretch;
+  height: max(340px, calc(100vh - 224px)); height: max(340px, calc(100dvh - 224px));}
+.zsa-act-pwrap {position: relative; display: grid; min-height: 0; min-width: 0;}
+.zsa-act-passage {position: relative; border: 1px solid var(--act-line); border-radius: 12px; padding: 22px; display: grid; gap: 14px; align-content: start; overflow: auto; min-height: 0; font-size: 17px;}
+.zsa-act .zsa-act-passage h1 {font-size: 1.3em; margin-top: -6px;}
+.zsa-act .zsa-act-passage h2 {font-size: 1em; margin-top: 4px;}
+.zsa-act-passage p {max-width: 68ch;}
+.zsa-act-view {background: var(--act-surface); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px;}
+.zsa-act-qpane {position: relative; overflow-y: auto; min-height: 0; padding: 4px 4px 4px 0; display: grid; gap: 14px; align-content: start;}
+
+/* Top bar during a section */
+.zsa-act-testbar {display: flex; align-items: center; gap: 8px 14px; flex-wrap: wrap;}
+.zsa-act-bar-label {font-family: var(--act-display); font-weight: 600; font-size: 15px;}
+.zsa-act-timer {font-size: 15px; display: flex; align-items: baseline; gap: 6px; min-width: 9.5em;}
+.zsa-act-time {font-family: var(--act-data); font-size: 19px; font-variant-numeric: tabular-nums;}
+.zsa-act .zsa-act-bar-btn {border: 1px solid rgba(255,255,255,.6); background: transparent; color: var(--act-on-navy); border-radius: 8px; padding: 6px 12px; font-size: 15px;}
+.zsa-act .zsa-act-bar-btn:hover {background: rgba(255,255,255,.12);}
+.zsa-act .zsa-act-band-row :focus-visible {outline-color: #ffffff;}
+.zsa-act--testing .zsa-act-back, .zsa-act--testing .zsa-act-brand-section {display: none;}
+.zsa-act--testing .zsa-act-main {padding-top: 16px; padding-bottom: 16px;}
+.zsa-act--testing:not(.zsa-act--review) {padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));}
+.zsa-act-notice {background: var(--act-warn-soft); color: var(--act-ink); border-radius: 10px; padding: 10px 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin: 0 0 10px;}
+.zsa-act-band .zsa-act-notice {margin-top: 2px;}
+#zsa-act-alert:empty {display: none;}
+
+/* Directions */
+.zsa-act-dir-screen {max-width: 720px; display: grid; gap: 14px;}
+.zsa-act .zsa-act-dir-screen h1 {font-size: clamp(28px, 4vw, 36px);}
+.zsa-act-directions {margin: 0; padding-left: 22px; display: grid; gap: 8px;}
+.zsa-act-dialog {max-width: min(640px, calc(100vw - 32px)); border: 1px solid var(--act-line); border-radius: 14px; padding: 22px; background: var(--act-bg); color: var(--act-ink); font: 400 17px/1.55 var(--act-font);}
+.zsa-act-dialog[open] {display: grid; gap: 12px;}
+.zsa-act-dialog::backdrop {background: rgba(8, 20, 45, .55);}
+.zsa-act-dialog h2 {font-family: var(--act-display); font-size: 22px; margin: 0; color: var(--act-ink);}
+.zsa-act-dialog p {margin: 0;}
+
+/* Figures */
+.zsa-act-figure {margin: 0; display: grid; gap: 6px; min-width: 0;}
+.zsa-act-figure figcaption, .zsa-act-tbl caption {font-size: 14px; font-weight: 700; text-align: center; padding-bottom: 4px;}
+.zsa-act-figure figcaption {order: 3;}
+.zsa-act-chart {width: 100%; height: auto; display: block;}
+.zsa-act-diagram {width: 100%; max-width: 340px; height: auto; display: block; margin: 0 auto;}
+.zsa-act svg text {fill: var(--act-ink); font-family: var(--act-font);}
+.zsa-act .zsa-act-muted {fill: var(--act-muted);}
+.zsa-act-axis {stroke: var(--act-muted); stroke-width: 1.2;}
+.zsa-act-grid {stroke: var(--act-line); stroke-width: 1;}
+.zsa-act-series {fill: none; stroke-width: 2.5;}
+.zsa-act-s1 {stroke: var(--act-s1);} .zsa-act-dot.zsa-act-s1 {fill: var(--act-s1); stroke: none;}
+.zsa-act-s2 {stroke: var(--act-s2);} .zsa-act-dot.zsa-act-s2 {fill: var(--act-s2); stroke: none;}
+.zsa-act-s3 {stroke: var(--act-s3);} .zsa-act-dot.zsa-act-s3 {fill: var(--act-s3); stroke: none;}
+.zsa-act-s4 {stroke: var(--act-ink);} .zsa-act-dot.zsa-act-s4 {fill: var(--act-ink); stroke: none;}
+.zsa-act-bar {stroke: none;}
+.zsa-act-bar.zsa-act-s1 {fill: var(--act-s1);} .zsa-act-bar.zsa-act-s2 {fill: var(--act-s2);} .zsa-act-bar.zsa-act-s3 {fill: var(--act-s3);} .zsa-act-bar.zsa-act-s4 {fill: var(--act-ink);}
+.zsa-act-hatch line {stroke: var(--act-bg); stroke-width: 2;}
+.zsa-act-legend {list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 18px; font-size: 14px;}
+.zsa-act-legend li {display: flex; align-items: center; gap: 6px;}
+.zsa-act-f-none {fill: none;} .zsa-act-f-surface {fill: var(--act-surface);} .zsa-act-f-water {fill: var(--act-water);}
+.zsa-act-f-line {fill: var(--act-line);} .zsa-act-f-ink {fill: var(--act-ink);} .zsa-act-f-blue {fill: var(--act-blue);} .zsa-act-f-muted {fill: var(--act-muted);}
+.zsa-act-k-muted {stroke: var(--act-muted);} .zsa-act-k-blue {stroke: var(--act-blue);} .zsa-act-k-ink {stroke: var(--act-ink);} .zsa-act-k-line {stroke: var(--act-line);}
+.zsa-act-tbl {overflow-x: auto; overflow-y: hidden;}
+.zsa-act-tbl table {max-width: 100%;}
+.zsa-act-tbl table {border-collapse: collapse; margin: 0 auto; font-size: 15px;}
+.zsa-act-tbl th, .zsa-act-tbl td {border: 1px solid var(--act-line); padding: 6px 12px; text-align: center;}
+.zsa-act-tbl th {background: var(--act-surface); font-weight: 700;}
+.zsa-act-tbl td {font-variant-numeric: tabular-nums;}
+
+/* Tools row (under the top bar during a section) */
+.zsa-act-toolrow {color: var(--act-ink); background: var(--act-surface); border-bottom: 1px solid var(--act-line);}
+.zsa-act-toolrow-inner {position: relative; display: flex; align-items: center; gap: 6px 8px; padding-top: 6px; padding-bottom: 6px; overflow-x: auto; scrollbar-width: thin;}
+.zsa-act .zsa-act-tool {position: relative; flex: none; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--act-line); background: var(--act-bg); color: var(--act-ink); border-radius: 8px; padding: 4px 10px; font-size: 15px; min-height: 44px; min-width: 44px; justify-content: center;}
+.zsa-act .zsa-act-tool:hover:not(:disabled) {border-color: var(--act-blue);}
+.zsa-act .zsa-act-tool[aria-pressed="true"] {background: var(--act-blue); border-color: var(--act-blue); color: var(--act-on-blue); font-weight: 700;}
+.zsa-act .zsa-act-tool:disabled {opacity: .45; cursor: default;}
+.zsa-act .zsa-act-tool--icon span {position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap;}
+.zsa-act-icon {fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: none;}
+.zsa-act-hl-opts {flex: none; display: inline-flex; align-items: center; gap: 6px; padding: 0 8px 0 2px; margin-right: 4px; border-right: 1px solid var(--act-line);}
+.zsa-act-hl-opts[hidden] {display: none;}
+.zsa-act .zsa-act-swatch {flex: none; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--act-line); background: var(--act-bg); color: var(--act-ink); border-radius: 8px; padding: 4px 10px; font-size: 14px; min-height: 44px;}
+.zsa-act .zsa-act-swatch[aria-pressed="true"] {border: 2px solid var(--act-ink); font-weight: 700;}
+.zsa-act .zsa-act-swatch--color {position: relative; width: 44px; padding: 0; justify-content: center;}
+.zsa-act-swatch-dot {width: 20px; height: 20px; border-radius: 5px; border: 1px solid var(--act-muted);}
+.zsa-act-vh {position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap;}
+.zsa-act-zoom {flex: none; display: inline-flex; align-items: center; gap: 4px; margin-left: auto;}
+.zsa-act-zoom-val {font-family: var(--act-data); font-size: 14px; min-width: 3.4em; text-align: center; font-variant-numeric: tabular-nums;}
+
+/* Highlights: each color also has its own underline style, so they differ without color. */
+.zsa-act-hl {color: inherit; border-radius: 2px; padding: 0 1px; -webkit-box-decoration-break: clone; box-decoration-break: clone;}
+.zsa-act-hl--yellow {background: var(--act-hl-yellow);}
+.zsa-act-hl--green {background: var(--act-hl-green); text-decoration: underline dotted 2px; text-underline-offset: 3px;}
+.zsa-act-hl--blue {background: var(--act-hl-blue); text-decoration: underline dashed 2px; text-underline-offset: 3px;}
+.zsa-act--hl .zsa-act-passage, .zsa-act--hl .zsa-act-q {cursor: text;}
+.zsa-act--erase mark.zsa-act-hl {cursor: pointer; outline: 2px dashed var(--act-ink); outline-offset: 1px;}
+
+/* Line reader: an SVG over the passage pane. Shades let scrolling and clicks through; only the band's grips take the pointer. */
+.zsa-act-reader {position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; border-radius: 12px;}
+.zsa-act-reader[hidden] {display: none;}
+.zsa-act-reader-shade {fill: var(--act-bg); opacity: .9;}
+.zsa-act-reader-frame {fill: none; stroke: var(--act-blue); stroke-width: 2;}
+.zsa-act-reader-grip {fill: var(--act-blue); pointer-events: all; cursor: grab; touch-action: none;}
+.zsa-act-reader-edge {fill: transparent; pointer-events: all; cursor: ns-resize; touch-action: none;}
+.zsa-act-reader-handle {outline: none;}
+.zsa-act-reader-handle:focus-visible .zsa-act-reader-frame {stroke-width: 4; stroke-dasharray: 8 4;}
+
+/* Passage zoom: text, tables and figures grow; the pane scrolls both ways. */
+.zsa-act-pwrap.zsa-act-z1 .zsa-act-passage {font-size: 21px;}
+.zsa-act-pwrap.zsa-act-z2 .zsa-act-passage {font-size: 25.5px;}
+.zsa-act-pwrap.zsa-act-z3 .zsa-act-passage {font-size: 34px;}
+.zsa-act-pwrap.zsa-act-z1 .zsa-act-figure {width: 125%;}
+.zsa-act-pwrap.zsa-act-z2 .zsa-act-figure {width: 150%;}
+.zsa-act-pwrap.zsa-act-z3 .zsa-act-figure {width: 200%;}
+.zsa-act-pwrap.zsa-act-z1 .zsa-act-diagram {max-width: 425px;}
+.zsa-act-pwrap.zsa-act-z2 .zsa-act-diagram {max-width: 510px;}
+.zsa-act-pwrap.zsa-act-z3 .zsa-act-diagram {max-width: 680px;}
+
+/* Question */
+.zsa-act-qhead {display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;}
+.zsa-act .zsa-act-qhead h2 {font-size: 20px; color: var(--act-blue);}
+.zsa-act .zsa-act-flag {display: inline-flex; align-items: center; gap: 8px; border: 2px solid var(--act-line); background: var(--act-bg); color: var(--act-ink); border-radius: 8px; padding: 6px 12px; font-size: 15px;}
+.zsa-act .zsa-act-flag:hover {border-color: var(--act-blue);}
+.zsa-act .zsa-act-flag[aria-pressed="true"] {border-color: var(--act-flag); background: var(--act-flag-soft); font-weight: 700;}
+.zsa-act-flag-pole {stroke: currentColor; stroke-width: 1.6; fill: none;}
+.zsa-act-flag-cloth {fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linejoin: round;}
+[aria-pressed="true"] .zsa-act-flag-cloth {fill: var(--act-flag); stroke: var(--act-flag);}
+.zsa-act-q {border: 0; margin: 0; padding: 0; min-width: 0;}
+.zsa-act-q-stem {padding: 0; margin-bottom: 14px; font-size: 18px; float: left; width: 100%;}
+.zsa-act-q-stem + * {clear: both;}
+.zsa-act-choices {display: grid; gap: 8px;}
+.zsa-act-choice-row {display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px; align-items: start;}
+.zsa-act-choice-tools {display: flex; gap: 4px;}
+.zsa-act .zsa-act-elim-btn, .zsa-act .zsa-act-mask-btn {display: none; width: 44px; height: 44px; min-height: 44px; padding: 0; place-items: center; border: 1px solid var(--act-line); background: var(--act-bg); color: var(--act-ink); border-radius: 8px;}
+.zsa-act--elim .zsa-act-elim-btn, .zsa-act--mask .zsa-act-mask-btn, .zsa-act .zsa-act-mask-btn[aria-pressed="true"] {display: inline-grid;}
+.zsa-act .zsa-act-elim-btn[aria-pressed="true"] {background: var(--act-bad-soft); border-color: var(--act-bad); color: var(--act-bad);}
+.zsa-act .zsa-act-mask-btn[aria-pressed="true"] {background: var(--act-surface); border-color: var(--act-ink);}
+.zsa-act-struck .zsa-act-choice-text {text-decoration: line-through 2px; color: var(--act-muted);}
+.zsa-act-struck .zsa-act-letter {opacity: .55;}
+.zsa-act-masked {font-style: italic; color: var(--act-muted); background: repeating-linear-gradient(135deg, var(--act-surface) 0 6px, transparent 6px 12px); border-radius: 4px; padding: 0 6px;}
+.zsa-act-choice {display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; align-items: start; border: 1px solid var(--act-line); border-radius: 8px; padding: 9px 10px; cursor: pointer; min-height: 44px; position: relative;}
+.zsa-act-choice:hover {border-color: var(--act-blue);}
+.zsa-act-choice input {position: absolute; opacity: 0; pointer-events: none; margin: 0;}
+.zsa-act-letter {width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--act-muted); display: grid; place-items: center; font-family: var(--act-data); font-size: 13px; font-weight: 700;}
+.zsa-act-choice:has(input:checked) {border-color: var(--act-blue); background: var(--act-blue-soft);}
+.zsa-act-choice:has(input:checked) .zsa-act-letter {background: var(--act-blue); border-color: var(--act-blue); color: var(--act-on-blue);}
+.zsa-act-choice:has(input:focus-visible) {outline: 3px solid var(--act-blue); outline-offset: 2px;}
+
+/* Bottom bar: Previous, numbered navigator, Next */
+.zsa-act-bottom {position: fixed; left: 0; right: 0; bottom: 0; z-index: 10; background: var(--act-bg); border-top: 1px solid var(--act-line);
+  box-shadow: 0 -6px 18px rgba(11, 42, 91, .08); padding-bottom: env(safe-area-inset-bottom, 0px);}
+.zsa-act-bottom-row {display: flex; align-items: center; gap: 10px; padding-top: 8px; padding-bottom: 8px;}
+.zsa-act .zsa-act-step {display: inline-flex; align-items: center; gap: 6px; flex: none; border: 2px solid var(--act-blue); background: var(--act-bg); color: var(--act-blue); border-radius: 8px; padding: 6px 12px; font-weight: 700; min-width: 44px; justify-content: center;}
+.zsa-act .zsa-act-step--next {background: var(--act-blue); color: var(--act-on-blue);}
+.zsa-act .zsa-act-step:hover:not(:disabled) {background: var(--act-blue-soft); color: var(--act-blue);}
+.zsa-act .zsa-act-step--next:hover:not(:disabled) {background: var(--act-navy); border-color: var(--act-navy); color: #ffffff;}
+.zsa-act .zsa-act-step:disabled {opacity: .45; cursor: default;}
+.zsa-act-chev {fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;}
+.zsa-act-strip {flex: 1; min-width: 0; display: flex; gap: 6px; overflow-x: auto; padding: 4px; scrollbar-width: thin;}
+/* Navigator states. Never color alone: unanswered is dashed, answered is solid and filled, flagged has a corner mark, current is bold and inverted. */
+.zsa-act .zsa-act-num {flex: none; position: relative; width: 44px; height: 44px; min-height: 44px; padding: 0; border-radius: 8px; border: 2px dashed var(--act-muted); background: var(--act-bg); color: var(--act-ink); font-family: var(--act-data); font-size: 15px; display: inline-grid; place-items: center;}
+.zsa-act .zsa-act-num--first {margin-left: 12px;}
+.zsa-act .zsa-act-num.zsa-act-is-answered {border-style: solid; border-color: var(--act-blue); background: var(--act-blue-soft);}
+.zsa-act .zsa-act-num[aria-current] {background: var(--act-blue); border: 2px solid var(--act-blue); color: var(--act-on-blue); font-weight: 700; box-shadow: 0 0 0 2px var(--act-bg), 0 0 0 4px var(--act-blue);}
+.zsa-act .zsa-act-num.zsa-act-is-flagged::after {content: ""; position: absolute; top: -2px; right: -2px; width: 0; height: 0; border-top: 14px solid var(--act-flag); border-left: 14px solid transparent; border-top-right-radius: 6px;}
+.zsa-act .zsa-act-num:hover {border-color: var(--act-blue);}
+
+/* Answer view (read-only, after the section) */
+.zsa-act-alist {list-style: none; margin: 0; padding: 0; display: grid; gap: 8px;}
+.zsa-act-achoice {display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 4px 10px; align-items: start; border: 1px solid var(--act-line); border-radius: 8px; padding: 9px 10px;}
+.zsa-act-achoice.zsa-act-is-key {border: 2px solid var(--act-good); background: var(--act-good-soft);}
+.zsa-act-achoice.zsa-act-is-wrong {border: 2px dashed var(--act-bad); background: var(--act-bad-soft);}
+.zsa-act-badges {grid-column: 2; font-family: var(--act-data); font-size: 13px; font-weight: 700;}
+.zsa-act-is-key .zsa-act-badges {color: var(--act-good);}
+.zsa-act-is-wrong .zsa-act-badges {color: var(--act-bad);}
+.zsa-act-explain {background: var(--act-surface); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px;}
+.zsa-act .zsa-act-explain h3 {font-size: 17px;}
+.zsa-act-apane .zsa-act-tag {font-family: var(--act-data); font-size: 13px; padding: 4px 10px; border-radius: 999px;}
+.zsa-act-apane .zsa-act-ok {background: var(--act-good-soft); color: var(--act-good);}
+.zsa-act-apane .zsa-act-no {background: var(--act-bad-soft); color: var(--act-bad);}
+/* Navigator in the answer view: a mark as well as a color. */
+.zsa-act .zsa-act-num.zsa-act-is-correct {border-style: solid; border-color: var(--act-good); background: var(--act-good-soft);}
+.zsa-act .zsa-act-num.zsa-act-is-missed {border-style: solid; border-color: var(--act-bad); background: var(--act-bad-soft);}
+.zsa-act .zsa-act-num.zsa-act-is-correct::after, .zsa-act .zsa-act-num.zsa-act-is-missed::after {position: absolute; right: 1px; bottom: -1px; font: 700 11px/1 var(--zsa-font);}
+.zsa-act .zsa-act-num.zsa-act-is-correct::after {content: "\2713"; color: var(--act-good);}
+.zsa-act .zsa-act-num.zsa-act-is-missed::after {content: "\2717"; color: var(--act-bad);}
+.zsa-act .zsa-act-num.zsa-act-is-correct[aria-current], .zsa-act .zsa-act-num.zsa-act-is-missed[aria-current] {background: var(--act-blue); border-color: var(--act-blue); color: var(--act-on-blue);}
+.zsa-act .zsa-act-num[aria-current]::after {color: var(--act-on-blue);}
+.zsa-act .zsa-act-open {justify-self: start; border: 1px solid var(--act-blue); background: var(--act-bg); color: var(--act-blue); border-radius: 8px; padding: 6px 12px; font-size: 15px; font-weight: 700;}
+.zsa-act--answers .zsa-act-split {height: max(340px, calc(100vh - 172px)); height: max(340px, calc(100dvh - 172px));}
+.zsa-act--answers:not(.zsa-act--review) {padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));}
+
+/* Section review */
+.zsa-act-main > h1 {font-size: clamp(28px, 4vw, 36px); margin-bottom: 12px;}
+.zsa-act-review-counts {font-size: 18px; margin-bottom: 4px;}
+.zsa-act-legend-states {list-style: none; padding: 0; margin: 14px 0 0; display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 15px;}
+.zsa-act-legend-states li {display: flex; align-items: center; gap: 8px;}
+.zsa-act .zsa-act-num--sample {width: 26px; height: 26px; min-height: 0;}
+.zsa-act-review-group {display: grid; gap: 10px; margin-top: 24px;}
+.zsa-act .zsa-act-review-group h2 {font-size: 20px;}
+.zsa-act .zsa-act-review-group h3 {font-size: 15px; font-family: var(--act-data); text-transform: uppercase; letter-spacing: .06em; color: var(--act-muted); margin-top: 6px;}
+.zsa-act-num-list {list-style: none; margin: 0; padding: 4px; display: flex; flex-wrap: wrap; gap: 8px;}
+.zsa-act-confirm {background: var(--act-warn-soft); border-radius: 12px; padding: 16px 18px; display: grid; gap: 10px; margin-top: 16px;}
+.zsa-act .zsa-act-confirm h2 {font-size: 20px;}
+.zsa-act-nav {display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--act-line);}
+.zsa-act-row {display: flex; gap: 12px; flex-wrap: wrap; align-items: center;}
+
+/* Score report */
+.zsa-act-res-top {display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 28px; align-items: start; margin-bottom: 28px;}
+.zsa-act-score-card {border: 2px solid var(--act-blue); border-radius: 14px; padding: 22px; display: grid; gap: 10px;}
+.zsa-act-big {font-family: var(--act-display); font-size: 56px; font-weight: 700; line-height: 1; color: var(--act-blue); font-variant-numeric: tabular-nums;}
+.zsa-act-big small {font-size: 22px; color: var(--act-muted); font-weight: 500;}
+.zsa-act-scale-box {display: grid; gap: 12px;}
+.zsa-act .zsa-act-scale-box h2, .zsa-act .zsa-act-section > h2 {font-size: 20px;}
+.zsa-act-scale {display: block; overflow: visible;}
+.zsa-act-scale-bar {fill: var(--act-line);}
+.zsa-act-scale-range {fill: var(--act-blue); opacity: .85;}
+.zsa-act-scale-mark {stroke: var(--act-ink); stroke-width: 2;}
+.zsa-act-section {display: grid; gap: 14px; margin-top: 30px;}
+.zsa-act-skills {list-style: none; margin: 0; padding: 0; display: grid; gap: 10px;}
+.zsa-act-skill {display: grid; grid-template-columns: minmax(0, 240px) minmax(0, 1fr) 64px; gap: 12px; align-items: center;}
+.zsa-act-meter {display: block;}
+.zsa-act-meter-bg {fill: var(--act-surface); stroke: var(--act-line);}
+.zsa-act-meter-fill {fill: var(--act-blue);}
+.zsa-act-meter-low {fill: var(--act-bad);}
+.zsa-act-val {font-family: var(--act-data); font-size: 14px; text-align: right; font-variant-numeric: tabular-nums;}
+.zsa-act-tips {display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px;}
+.zsa-act-tip {background: var(--act-surface); border-radius: 12px; padding: 18px; display: grid; gap: 8px; align-content: start;}
+.zsa-act .zsa-act-tip h3 {font-size: 17px;}
+.zsa-act-tip ul {margin: 0; padding-left: 20px; display: grid; gap: 6px;}
+.zsa-act-review {list-style: none; margin: 0; padding: 0; display: grid; gap: 10px;}
+.zsa-act-rv {border: 1px solid var(--act-line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 6px;}
+.zsa-act-rv.zsa-act-ok {border-left: 6px solid var(--act-good);}
+.zsa-act-rv.zsa-act-no {border-left: 6px solid var(--act-bad);}
+.zsa-act-tag {font-family: var(--act-data); font-size: 12px; padding: 2px 8px; border-radius: 999px; justify-self: start;}
+.zsa-act-ok .zsa-act-tag {background: var(--act-good-soft); color: var(--act-good);}
+.zsa-act-no .zsa-act-tag {background: var(--act-bad-soft); color: var(--act-bad);}
+.zsa-act-rv p {font-size: 15px;}
+.zsa-act-small {font-size: 14px; color: var(--act-muted);}
+
+/* Footer: the trademark notice shows on every screen, embedded or not. */
+.zsa-act-footer {border-top: 1px solid var(--act-line); padding-top: 16px; padding-bottom: 24px; font-size: 14px; color: var(--act-muted); display: grid; gap: 4px;}
+.zsa-act-footer a {display: inline-flex; align-items: center; min-height: 44px;}
+
+.zsa-act.zsa--embedded {padding: 0;}
+
+@media (max-width: 900px) {
+  .zsa-act-intro, .zsa-act-split, .zsa-act-res-top {grid-template-columns: minmax(0, 1fr);}
+  .zsa-act-split {height: auto;}
+  .zsa-act-passage, .zsa-act-qpane {overflow: visible;}
+  .zsa-act-pwrap[class*="zsa-act-z"] .zsa-act-passage {overflow-x: auto;}
+  .zsa-act-skill {grid-template-columns: minmax(0, 1fr) 64px;}
+  .zsa-act-meter {grid-column: 1 / -1; grid-row: 2;}
+}
+@media (max-width: 480px) {
+  .zsa-act-step-text {position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap;}
+  .zsa-act-bottom-row {gap: 6px;}
+  .zsa-act-passage {padding: 14px;}
+  .zsa-act-brand-section {display: none;}
+}
+@media (prefers-reduced-motion: no-preference) {
+  .zsa-act-choice, .zsa-act .zsa-act-mode {transition: border-color .15s, background-color .15s;}
+}
