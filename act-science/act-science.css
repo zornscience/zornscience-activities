@@ -1,0 +1,196 @@
+/* ACT Science Practice. Atkinson Hyperlegible (SIL OFL 1.1, see fonts/AtkinsonHyperlegible-OFL.txt), Latin subset. */
+@font-face {font-family: "Atkinson Hyperlegible"; src: url("fonts/AtkinsonHyperlegible-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap;}
+@font-face {font-family: "Atkinson Hyperlegible"; src: url("fonts/AtkinsonHyperlegible-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap;}
+@font-face {font-family: "Atkinson Hyperlegible"; src: url("fonts/AtkinsonHyperlegible-Italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap;}
+
+/* Colors: the site's white, blue and navy in light mode, and a matching dark mode. */
+:root {
+  --act-bg: #ffffff; --act-surface: #f2f5fb; --act-ink: #14213d; --act-muted: #4f5d75; --act-line: #d6e2f5;
+  --act-navy: #0b2a5b; --act-on-navy: #ffffff; --act-blue: #1d4ed8; --act-on-blue: #ffffff; --act-blue-soft: #e4ecfb;
+  --act-good: #15803d; --act-good-soft: #e3f4e9; --act-bad: #b91c1c; --act-bad-soft: #fbe7e5; --act-warn-soft: #fff4dc;
+  --act-s1: #1d4ed8; --act-s2: #b45309; --act-s3: #15803d; --act-water: #b9d4f5; --act-tile: #1d4ed8;
+  --act-font: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --act-display: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --act-data: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --act-bg: #0d1526; --act-surface: #142039; --act-ink: #e6ecf7; --act-muted: #a6b5cf; --act-line: #2c3c5c;
+    --act-navy: #081a3a; --act-blue: #8db4ff; --act-on-blue: #0d1526; --act-blue-soft: #1b2d52;
+    --act-good: #6ad69a; --act-good-soft: #13321f; --act-bad: #ff958c; --act-bad-soft: #3b1d1c; --act-warn-soft: #3a2f14;
+    --act-s1: #8db4ff; --act-s2: #f2a15a; --act-s3: #6ad69a; --act-water: #23426e; --act-tile: #1d4ed8;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --act-bg: #0d1526; --act-surface: #142039; --act-ink: #e6ecf7; --act-muted: #a6b5cf; --act-line: #2c3c5c;
+  --act-navy: #081a3a; --act-blue: #8db4ff; --act-on-blue: #0d1526; --act-blue-soft: #1b2d52;
+  --act-good: #6ad69a; --act-good-soft: #13321f; --act-bad: #ff958c; --act-bad-soft: #3b1d1c; --act-warn-soft: #3a2f14;
+  --act-s1: #8db4ff; --act-s2: #f2a15a; --act-s3: #6ad69a; --act-water: #23426e; --act-tile: #1d4ed8;
+  color-scheme: dark;
+}
+
+body {background: var(--act-bg);}
+/* The shared .zsa root is a 760 px column; this tool needs the full width for the passage and questions. */
+.zsa.zsa-act {max-width: none; margin: 0; padding: 0; color: var(--act-ink); background: var(--act-bg); color-scheme: inherit;
+  font: 400 17px/1.55 var(--act-font); --zsa-focus-ring: 3px solid var(--act-blue);}
+.zsa-act h1, .zsa-act h2, .zsa-act h3 {font-family: var(--act-display); color: var(--act-ink); font-weight: 600; line-height: 1.2; margin: 0; text-wrap: balance;}
+.zsa-act p {margin: 0;}
+.zsa-act a {color: var(--act-blue);}
+.zsa-act .zsa-eyebrow {color: var(--act-blue); margin: 0;}
+.zsa-act .zsa-btn {border: 2px solid var(--act-blue); background: var(--act-bg); color: var(--act-blue); font-weight: 700; padding: 10px 18px;}
+.zsa-act .zsa-btn:hover {background: var(--act-blue-soft);}
+.zsa-act .zsa-btn--primary {background: var(--act-blue); color: var(--act-on-blue);}
+.zsa-act .zsa-btn--primary:hover {background: var(--act-navy); border-color: var(--act-navy); color: #ffffff;}
+.zsa-act .zsa-panel {background: var(--act-surface); border-color: var(--act-line); margin: 16px 0;}
+.zsa-act :focus {outline: none;}
+.zsa-act :focus-visible {outline: 3px solid var(--act-blue); outline-offset: 2px;}
+.zsa-act [tabindex="-1"]:focus-visible {outline: none;}
+
+.zsa-act-wrap {max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));}
+
+/* Brand band */
+.zsa-act-band {background: var(--act-navy); color: var(--act-on-navy);}
+.zsa-act-band-row {display: flex; align-items: center; justify-content: space-between; gap: 8px 16px; padding-top: 10px; padding-bottom: 10px; flex-wrap: wrap;}
+.zsa-act-brand {display: flex; align-items: center; gap: 10px; font-family: var(--act-display); font-weight: 700; font-size: 18px;}
+.zsa-act-tile {flex: none;}
+.zsa-act-tile rect {fill: var(--act-tile); stroke: #93c5fd; stroke-width: 2;}
+.zsa-act-tile text {fill: #ffffff; font-family: var(--act-display); font-size: 22px; font-weight: 700;}
+.zsa-act-brand-section {font-weight: 500; opacity: .8; padding-left: 10px; border-left: 1px solid rgba(255,255,255,.4);}
+.zsa-act-clock {display: flex; gap: 16px; font-family: var(--act-data); font-size: 15px; font-variant-numeric: tabular-nums; margin: 0;}
+.zsa-act-clock b {font-weight: 700;}
+.zsa-act-band a {color: var(--act-on-navy); display: inline-flex; align-items: center; min-height: 44px; font-size: 15px;}
+
+.zsa-act-main {padding-top: 28px; padding-bottom: 48px; display: block;}
+.zsa-act-main:focus {outline: none;}
+
+/* Start screen */
+.zsa-act-intro {display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 32px; align-items: start;}
+.zsa-act-intro h1 {font-size: clamp(30px, 5vw, 44px); margin: 8px 0 12px;}
+.zsa-act .zsa-act-lede {color: var(--act-muted); max-width: 60ch; margin-bottom: 22px;}
+.zsa-act-modes {display: grid; gap: 14px;}
+.zsa-act .zsa-act-mode {text-align: left; border: 2px solid var(--act-line); background: var(--act-bg); color: var(--act-ink); border-radius: 12px; padding: 16px 18px; display: grid; gap: 4px; font-weight: 400;}
+.zsa-act .zsa-act-mode:hover {border-color: var(--act-blue); background: var(--act-bg);}
+.zsa-act-mode strong {font-family: var(--act-display); font-size: 18px; color: var(--act-blue);}
+.zsa-act-mode span {color: var(--act-muted); font-size: 15px;}
+.zsa-act-facts {background: var(--act-surface); border-radius: 12px; padding: 20px; display: grid; gap: 14px;}
+.zsa-act .zsa-act-facts h2 {font-size: 15px; text-transform: uppercase; letter-spacing: .06em; color: var(--act-muted);}
+.zsa-act-facts dl {margin: 0; display: grid; gap: 14px;}
+.zsa-act-fact {display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 12px; align-items: baseline;}
+.zsa-act-fact dt {font-family: var(--act-data); font-weight: 700; font-size: 22px; color: var(--act-blue); font-variant-numeric: tabular-nums;}
+.zsa-act-fact dd {margin: 0; font-size: 15px;}
+.zsa-act-note {font-size: 14px; color: var(--act-muted);}
+
+/* Passage pages */
+.zsa-act-test-head {display: flex; justify-content: space-between; align-items: end; gap: 12px; flex-wrap: wrap; margin-bottom: 16px;}
+.zsa-act .zsa-act-test-head h1 {font-size: 24px; margin-top: 4px;}
+.zsa-act-kind {font-family: var(--act-data); font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--act-muted);}
+.zsa-act-progress {display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--act-muted);}
+.zsa-act-pips {display: flex; gap: 6px;}
+.zsa-act-pips i {width: 34px; height: 6px; border-radius: 3px; background: var(--act-line);}
+.zsa-act-pips i.zsa-act-on {background: var(--act-blue);}
+.zsa-act-split {display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 28px; align-items: start;}
+.zsa-act-passage {border: 1px solid var(--act-line); border-radius: 12px; padding: 22px; display: grid; gap: 14px; position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow-y: auto;}
+.zsa-act .zsa-act-passage h2 {font-size: 17px; margin-top: 4px;}
+.zsa-act-passage p {max-width: 68ch;}
+.zsa-act-view {background: var(--act-surface); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px;}
+
+/* Figures */
+.zsa-act-figure {margin: 0; display: grid; gap: 6px; min-width: 0;}
+.zsa-act-figure figcaption, .zsa-act-tbl caption {font-size: 14px; font-weight: 700; text-align: center; padding-bottom: 4px;}
+.zsa-act-figure figcaption {order: 3;}
+.zsa-act-chart {width: 100%; height: auto; display: block;}
+.zsa-act-diagram {width: 100%; max-width: 340px; height: auto; display: block; margin: 0 auto;}
+.zsa-act svg text {fill: var(--act-ink); font-family: var(--act-font);}
+.zsa-act .zsa-act-muted {fill: var(--act-muted);}
+.zsa-act-axis {stroke: var(--act-muted); stroke-width: 1.2;}
+.zsa-act-grid {stroke: var(--act-line); stroke-width: 1;}
+.zsa-act-series {fill: none; stroke-width: 2.5;}
+.zsa-act-s1 {stroke: var(--act-s1);} .zsa-act-dot.zsa-act-s1 {fill: var(--act-s1); stroke: none;}
+.zsa-act-s2 {stroke: var(--act-s2);} .zsa-act-dot.zsa-act-s2 {fill: var(--act-s2); stroke: none;}
+.zsa-act-s3 {stroke: var(--act-s3);} .zsa-act-dot.zsa-act-s3 {fill: var(--act-s3); stroke: none;}
+.zsa-act-s4 {stroke: var(--act-ink);} .zsa-act-dot.zsa-act-s4 {fill: var(--act-ink); stroke: none;}
+.zsa-act-legend {list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 18px; font-size: 14px;}
+.zsa-act-legend li {display: flex; align-items: center; gap: 6px;}
+.zsa-act-f-none {fill: none;} .zsa-act-f-surface {fill: var(--act-surface);} .zsa-act-f-water {fill: var(--act-water);}
+.zsa-act-f-line {fill: var(--act-line);} .zsa-act-f-ink {fill: var(--act-ink);} .zsa-act-f-blue {fill: var(--act-blue);} .zsa-act-f-muted {fill: var(--act-muted);}
+.zsa-act-k-muted {stroke: var(--act-muted);} .zsa-act-k-blue {stroke: var(--act-blue);} .zsa-act-k-ink {stroke: var(--act-ink);} .zsa-act-k-line {stroke: var(--act-line);}
+.zsa-act-tbl {overflow-x: auto;}
+.zsa-act-tbl table {border-collapse: collapse; margin: 0 auto; font-size: 15px;}
+.zsa-act-tbl th, .zsa-act-tbl td {border: 1px solid var(--act-line); padding: 6px 12px; text-align: center;}
+.zsa-act-tbl th {background: var(--act-surface); font-weight: 700;}
+.zsa-act-tbl td {font-variant-numeric: tabular-nums;}
+
+/* Questions */
+.zsa-act-qs {display: grid; gap: 22px; min-width: 0;}
+.zsa-act-q {border: 0; margin: 0; padding: 0; display: grid; gap: 10px; min-width: 0;}
+.zsa-act-q-stem {display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 8px; padding: 0; margin-bottom: 10px; float: left; width: 100%;}
+.zsa-act-q-stem + * {clear: both;}
+.zsa-act-q-num {font-family: var(--act-data); font-weight: 700; color: var(--act-blue);}
+.zsa-act-choices {display: grid; gap: 6px; padding-left: 42px;}
+.zsa-act-choice {display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 10px; align-items: start; border: 1px solid var(--act-line); border-radius: 8px; padding: 8px 10px; cursor: pointer; min-height: 44px; position: relative;}
+.zsa-act-choice:hover {border-color: var(--act-blue);}
+.zsa-act-choice input {position: absolute; opacity: 0; pointer-events: none; margin: 0;}
+.zsa-act-letter {width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--act-muted); display: grid; place-items: center; font-family: var(--act-data); font-size: 13px; font-weight: 700;}
+.zsa-act-choice:has(input:checked) {border-color: var(--act-blue); background: var(--act-blue-soft);}
+.zsa-act-choice:has(input:checked) .zsa-act-letter {background: var(--act-blue); border-color: var(--act-blue); color: var(--act-on-blue);}
+.zsa-act-choice:has(input:focus-visible) {outline: 3px solid var(--act-blue); outline-offset: 2px;}
+.zsa-act-nav {display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 28px; padding-top: 18px; border-top: 1px solid var(--act-line);}
+.zsa-act-warn {background: var(--act-warn-soft); border-radius: 10px; padding: 14px 16px; display: grid; gap: 10px; margin-top: 16px;}
+.zsa-act-row {display: flex; gap: 12px; flex-wrap: wrap; align-items: center;}
+
+/* Score report */
+.zsa-act-main > h1 {font-size: clamp(28px, 4vw, 36px); margin-bottom: 12px;}
+.zsa-act-res-top {display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); gap: 28px; align-items: start; margin-bottom: 28px;}
+.zsa-act-score-card {border: 2px solid var(--act-blue); border-radius: 14px; padding: 22px; display: grid; gap: 10px;}
+.zsa-act-big {font-family: var(--act-display); font-size: 56px; font-weight: 700; line-height: 1; color: var(--act-blue); font-variant-numeric: tabular-nums;}
+.zsa-act-big small {font-size: 22px; color: var(--act-muted); font-weight: 500;}
+.zsa-act-scale-box {display: grid; gap: 12px;}
+.zsa-act .zsa-act-scale-box h2, .zsa-act .zsa-act-section > h2 {font-size: 20px;}
+.zsa-act-scale {display: block; overflow: visible;}
+.zsa-act-scale-bar {fill: var(--act-line);}
+.zsa-act-scale-range {fill: var(--act-blue); opacity: .85;}
+.zsa-act-scale-mark {stroke: var(--act-ink); stroke-width: 2;}
+.zsa-act-section {display: grid; gap: 14px; margin-top: 30px;}
+.zsa-act-skills {list-style: none; margin: 0; padding: 0; display: grid; gap: 10px;}
+.zsa-act-skill {display: grid; grid-template-columns: minmax(0, 240px) minmax(0, 1fr) 64px; gap: 12px; align-items: center;}
+.zsa-act-meter {display: block;}
+.zsa-act-meter-bg {fill: var(--act-surface); stroke: var(--act-line);}
+.zsa-act-meter-fill {fill: var(--act-blue);}
+.zsa-act-meter-low {fill: var(--act-bad);}
+.zsa-act-val {font-family: var(--act-data); font-size: 14px; text-align: right; font-variant-numeric: tabular-nums;}
+.zsa-act-tips {display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px;}
+.zsa-act-tip {background: var(--act-surface); border-radius: 12px; padding: 18px; display: grid; gap: 8px; align-content: start;}
+.zsa-act .zsa-act-tip h3 {font-size: 17px;}
+.zsa-act-tip ul {margin: 0; padding-left: 20px; display: grid; gap: 6px;}
+.zsa-act-review {list-style: none; margin: 0; padding: 0; display: grid; gap: 10px;}
+.zsa-act-rv {border: 1px solid var(--act-line); border-radius: 10px; padding: 12px 14px; display: grid; gap: 6px;}
+.zsa-act-rv.zsa-act-ok {border-left: 6px solid var(--act-good);}
+.zsa-act-rv.zsa-act-no {border-left: 6px solid var(--act-bad);}
+.zsa-act-tag {font-family: var(--act-data); font-size: 12px; padding: 2px 8px; border-radius: 999px; justify-self: start;}
+.zsa-act-ok .zsa-act-tag {background: var(--act-good-soft); color: var(--act-good);}
+.zsa-act-no .zsa-act-tag {background: var(--act-bad-soft); color: var(--act-bad);}
+.zsa-act-rv p {font-size: 15px;}
+.zsa-act-small {font-size: 14px; color: var(--act-muted);}
+
+/* Footer: the trademark notice shows on every screen, embedded or not. */
+.zsa-act-footer {border-top: 1px solid var(--act-line); padding-top: 16px; padding-bottom: 24px; font-size: 14px; color: var(--act-muted); display: grid; gap: 4px;}
+.zsa-act-footer a {display: inline-flex; align-items: center; min-height: 44px;}
+
+.zsa-act.zsa--embedded {padding: 0;}
+
+@media (max-width: 900px) {
+  .zsa-act-intro, .zsa-act-split, .zsa-act-res-top {grid-template-columns: minmax(0, 1fr);}
+  .zsa-act-passage {position: static; max-height: none; overflow: visible;}
+  .zsa-act-skill {grid-template-columns: minmax(0, 1fr) 64px;}
+  .zsa-act-meter {grid-column: 1 / -1; grid-row: 2;}
+}
+@media (max-width: 480px) {
+  .zsa-act-choices {padding-left: 0;}
+  .zsa-act-passage {padding: 14px;}
+  .zsa-act-brand-section {display: none;}
+}
+@media (prefers-reduced-motion: no-preference) {
+  .zsa-act-choice, .zsa-act .zsa-act-mode {transition: border-color .15s, background-color .15s;}
+}
