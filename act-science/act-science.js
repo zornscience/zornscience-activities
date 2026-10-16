@@ -1004,7 +1004,7 @@
       var pr = cfg.rank[est] || 1;
       var cmp = est > cfg.natAvg + 0.5 ? ui.above : est < cfg.natAvg - 0.5 ? ui.below : ui.about;
       box.appendChild(node("h2", null, single ? fill(ui.estimateSingleTitle, {est: est}) : fill(ui.estimateTitle, {lo: lo, hi: hi})));
-      var txt = rich(node("p"), fill(single ? ui.estimateSingleText : ui.estimateText, {cmp: cmp, avg: cfg.natAvg, est: est, pr: pr + ordinal(pr), prNum: pr}));
+      var txt = rich(node("p"), fill(single ? ui.estimateSingleText : ui.estimateText, {cmp: cmp, avg: cfg.natAvg, est: est, a: /^(8|11|18)$/.test(String(est)) ? "An" : "A", pr: pr + ordinal(pr), prNum: pr}));
       txt.appendChild(document.createTextNode(" " + fill(est >= cfg.benchmark ? ui.meetsBenchmark : ui.benchmarkIs, ctx)));
       box.appendChild(txt);
       box.appendChild(scaleSvg(lo, hi, est));

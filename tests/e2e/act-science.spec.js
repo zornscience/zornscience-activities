@@ -141,6 +141,7 @@ test("mixed practice: crosses passages both ways, keeps answers and flags, revie
   await endSection(page);
   await expect(page.getByText("0 / " + total, {exact: true})).toBeVisible();
   await expect(page.getByRole("heading", {name: "Estimated ACT Science score: 1 to 6"})).toBeVisible();
+  await expect(page.getByText(/A 1, the middle of your range,/)).toBeVisible();
   await expect(page.getByRole("listitem").filter({hasText: /^Missed ·/})).toHaveCount(total);
 });
 

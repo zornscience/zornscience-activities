@@ -262,9 +262,10 @@ body {background: var(--act-bg);}
 .zsa-act .zsa-act-num.zsa-act-is-correct::after, .zsa-act .zsa-act-num.zsa-act-is-missed::after {position: absolute; right: 1px; bottom: -1px; font: 700 11px/1 var(--zsa-font);}
 .zsa-act .zsa-act-num.zsa-act-is-correct::after {content: "\2713"; color: var(--act-good);}
 .zsa-act .zsa-act-num.zsa-act-is-missed::after {content: "\2717"; color: var(--act-bad);}
-.zsa-act .zsa-act-num.zsa-act-is-correct[aria-current], .zsa-act .zsa-act-num.zsa-act-is-missed[aria-current] {color: var(--act-on-blue);}
+.zsa-act .zsa-act-num.zsa-act-is-correct[aria-current], .zsa-act .zsa-act-num.zsa-act-is-missed[aria-current] {background: var(--act-blue); border-color: var(--act-blue); color: var(--act-on-blue);}
 .zsa-act .zsa-act-num[aria-current]::after {color: var(--act-on-blue);}
 .zsa-act .zsa-act-open {justify-self: start; border: 1px solid var(--act-blue); background: var(--act-bg); color: var(--act-blue); border-radius: 8px; padding: 6px 12px; font-size: 15px; font-weight: 700;}
+.zsa-act--answers .zsa-act-split {height: max(340px, calc(100vh - 172px)); height: max(340px, calc(100dvh - 172px));}
 .zsa-act--answers:not(.zsa-act--review) {padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));}
 
 /* Section review */
