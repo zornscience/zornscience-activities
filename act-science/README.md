@@ -1,9 +1,9 @@
 # ACT Science Practice
-Version: 0.4.0
+Version: 0.5.0
 
 Free ACT Science practice with original passages. Students read a passage, answer its questions, and get a score report that compares them with national results and gives tips for the skills they missed. Not linked from zornscience.org yet. The live URL after approval will be https://activities.zornscience.org/act-science/.
 
-Built in milestones from the build brief. Milestone 1 ported the prototype with the question bank in a data file. Milestone 2 added the test interface: directions, one question at a time, a numbered navigator, flags, a review screen, and a countdown timer. Milestone 3 added the tools: highlighter, line reader, answer eliminator, answer masking, and passage zoom. Milestone 4 (this version) connects the score report to the modes and adds the answer view.
+Built in milestones from the build brief. Milestone 1 ported the prototype with the question bank in a data file. Milestone 2 added the test interface: directions, one question at a time, a numbered navigator, flags, a review screen, and a countdown timer. Milestone 3 added the tools: highlighter, line reader, answer eliminator, answer masking, and passage zoom. Milestone 4 connected the score report to the modes and added the answer view. Milestone 5 (this version) adds four draft passages for review, bar graphs and scatter plots, and a review list for drafts.
 
 ## How a section works
 - **Start screen:** One passage (untimed, the clock counts up) or Mixed practice (one passage of each type, timed at 1 minute per question). A third mode, Full section (40 questions in 40 minutes), appears on its own once the reviewed bank can make one: 3 Data Representation, 3 Research Summaries and 1 Conflicting Viewpoints passage adding up to exactly 40 questions (`fullMix` and `fullQuestions` in `config.js`). Draft passages never count.
@@ -53,6 +53,30 @@ A tools row sits under the top bar during a section. Every tool is a button with
 - **The three prototype passages are marked `reviewed`**, since they come from the prototype you wrote. Change any to `draft` to hide it.
 - No en or em dashes anywhere (also checked by `tests/unit/static.test.js`).
 
+## Passages
+| Passage | Type | Topic | Questions | Figures | Status |
+|---|---|---|---|---|---|
+| Catalase and Temperature | Data Representation | Biology | 6 | line graph, table | reviewed |
+| Antacid Tablet Reactions | Research Summaries | Chemistry | 6 | 3 tables | reviewed |
+| The Candle in the Jar | Conflicting Viewpoints | Chemistry | 5 | diagram, 3 viewpoints | reviewed |
+| Dissolved Oxygen in Water | Data Representation | Earth and space science | 6 | line graph, table | draft |
+| Solar Panel Output | Data Representation | Physics | 6 | bar graph, scatter plot | draft |
+| Carts on a Ramp | Research Summaries | Physics | 6 | 3 tables | draft |
+| Salt and Radish Seed Germination | Research Summaries | Biology | 5 | bar graph, table | draft |
+
+All seven together make a full section: 3 Data Representation (6, 6, 6), 3 Research Summaries (6, 6, 5) and 1 Conflicting Viewpoints (5), 40 questions. The Full section mode appears on its own once all seven are reviewed.
+
+### Reviewing a draft
+1. Open the page with `?drafts=1` (on the live site: https://activities.zornscience.org/act-science/?drafts=1). A Review passages list under the modes shows every passage and its status; each button starts that passage on its own, untimed. Students never see this list or any draft.
+2. Answer the questions, end the section, and use the answer review (Show with passage) to read every explanation beside the passage.
+3. To approve a passage, change its `status` from `"draft"` to `"reviewed"` in `data.js`. To fix one, edit its text in `data.js`; `npm run test:unit` checks the shape.
+
+How the draft data were made consistent:
+- **Dissolved oxygen:** the solubility curves follow published O<sub>2</sub> solubility values for fresh water and seawater (35 parts per thousand) in contact with air. The lake's surface reading (8.4 mg/L at 24°C) is close to saturation, and the cold deep water is low in O<sub>2</sub>, as in a summer-stratified lake.
+- **Solar panel:** output is highest near a 45° tilt on a clear day and changes little with angle on a cloudy day (diffuse light). Efficiency falls about 0.09 percentage points per °C, a typical value for silicon panels.
+- **Carts on a ramp:** speeds follow v² = 0.92 × 2gh − 0.10 (rolling wheels and a little friction), so speed grows with height but less than in proportion; mass barely matters; rougher surfaces are slower.
+- **Radish seeds:** every percent is a whole number of 50 seeds. Experiment 2's 25°C row matches Experiment 1, and Experiment 3's 24 of 50 matches Experiment 1's 48% at 100 mM.
+
 ## Writing a passage
 Add an object to `passages` in `data.js` with `status: "draft"`. Text fields may use `<sub>`, `<sup>`, `<em>` and `<strong>` only; write symbols as characters (°C, ≈), not HTML entities. `npm run test:unit` checks the shape.
 
@@ -69,9 +93,9 @@ Add an object to `passages` in `data.js` with `status: "draft"`. Text fields may
 | `viewpoint` | `label` ("Student 1"), `html` |
 | `table` | `caption`, `headers` (list), `rows` (list of lists, same width as `headers`) |
 | `lineChart` | `caption`, `xLabel`, `yLabel`, `x` (list), `yMax`, `yStep`, `series: [{name, values}]` (1 to 4 series). Series get a color and a marker shape (circle, square, triangle, diamond) in order, with a legend, so color is never the only cue. Screen readers get the values as a table. |
+| `scatter` | `caption`, `xLabel`, `yLabel`, `xMin`, `xMax`, `xStep`, `yMin`, `yMax`, `yStep`, `series: [{name, points: [[x, y], ...]}]`. Points only, no line. A legend appears with more than one series. |
+| `barChart` | `caption`, `xLabel`, `yLabel`, `categories` (labels under the bars), `yMax`, `yStep`, optional `yMin`, `series: [{name, values}]`. Grouped bars; the second and later series are striped, so they differ without color. A legend appears with more than one series. |
 | `diagram` | `caption`, `label` (spoken description), `viewBox: [width, height]`, `shapes`: `path` (`d`), `rect` (`x, y, w, h`), `line` (`x1, y1, x2, y2`), `circle` (`cx, cy, r`), `text` (`x, y, text`, optional `size`, `anchor`). `fill` and `stroke` are named tones (`surface`, `water`, `line`, `ink`, `blue`, `muted`) so they follow dark mode; `width` is the stroke width. |
-
-Scatter plots and bar graphs are not built yet; they come with the new passages in milestone 5.
 
 Skill tags: `data`, `trends`, `inter`, `design`, `claims`, `views`. Explanations must not name a choice letter.
 
@@ -99,6 +123,8 @@ Each question in the answer review has a Show with passage button. It opens the 
 - Ending the section asks on the page, never with a `confirm()` dialog.
 
 ## Changelog
+0.5.0: Four draft passages (milestone 5): Dissolved Oxygen in Water, Solar Panel Output, Carts on a Ramp, Salt and Radish Seed Germination. Bar graphs and scatter plots. A Review passages list with `?drafts=1`. Unit checks for the new figures, for difficulty order and topic spread, and that the bank can make a full section once reviewed.
+
 0.4.0: Score report connected to the modes (milestone 4). Answer view: any question opens read-only beside its passage, with Previous, Next and a results navigator, and returns to its place in the report. Full section mode (one estimated score and percentile) built and hidden until the reviewed bank has the right 7 passages. Darker green in light mode for contrast on the Correct tags.
 
 0.3.0: Tools (milestone 3). Highlighter with three colors, erase and clear; line reader with drag, resize and keyboard control; answer eliminator; answer masking; passage zoom from 100 to 200 percent. Passages and questions are now built once per attempt so all marks stay.

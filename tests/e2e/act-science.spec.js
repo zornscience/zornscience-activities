@@ -647,7 +647,8 @@ test("full section: hidden with today's bank, offered with 7 reviewed passages o
   // A bank of 3 Data Representation (6, 6, 6), 3 Research Summaries (6, 6, 5) and 1 Conflicting Viewpoints (5): 40 questions.
   var bank = JSON.parse(JSON.stringify(data));
   var base = {};
-  bank.passages.forEach((p) => { base[p.type] = p; });
+  bank.passages.filter((p) => p.status === "reviewed").forEach((p) => { base[p.type] = p; });
+  bank.passages = bank.passages.filter((p) => p.status === "reviewed"); // today's reviewed three, without the drafts
   function clone(type, k, keep) {
     var p = JSON.parse(JSON.stringify(base[type]));
     p.id += "-" + k; p.title += " (" + k + ")";
@@ -677,3 +678,55 @@ test("full section: hidden with today's bank, offered with 7 reviewed passages o
   await expect(page.getByText(/converts your raw score with a typical past ACT conversion/)).toBeVisible();
   await audit(page, "full section report");
 });
+
+// ---------- Draft passages and the review list (milestone 5) ----------
+test("students never see draft passages; ?drafts=1 lists every passage with its status", async ({page, problems}) => {
+  void problems;
+  var drafts = data.passages.filter((p) => p.status === "draft");
+  expect(drafts.length).toBeGreaterThan(0);
+  await go(page, 41);
+  await expect(page.getByRole("heading", {name: "Review passages"})).toHaveCount(0);
+  // Many one-passage sets: never a draft.
+  for (var i = 0; i < 8; i++) {
+    await page.getByRole("button", {name: /^One passage/}).click();
+    await page.getByRole("button", {name: "Start the section"}).click();
+    var title = await page.getByRole("article").getByRole("heading", {level: 1}).textContent();
+    expect(drafts.map((p) => p.title)).not.toContain(title);
+    await navButton(page, (await current(page)).total).click();
+    await reviewBtn(page).click();
+    await page.getByRole("button", {name: "End section"}).click();
+    await page.getByRole("button", {name: "Yes, end the section"}).click();
+    await page.getByRole("button", {name: "Back to start"}).click();
+  }
+  await go(page, 42, {query: "?drafts=1"});
+  var list = page.getByRole("region", {name: "Review passages"});
+  for (var p of data.passages) {
+    await expect(list.getByRole("button", {name: new RegExp("^" + p.title.replace(/[()]/g, "\\$&") + " " + p.type + " · " + p.questions.length + " questions · " + (p.status === "draft" ? "Draft" : "Reviewed") + "$")})).toBeVisible();
+  }
+  await audit(page, "review list");
+});
+
+for (var dp of data.passages.filter((p) => p.status === "draft")) {
+  (function (p) {
+    test("draft passage plays through all correct, with readable figures: " + p.title, async ({page, problems}) => {
+      void problems;
+      byTitle[p.title] = p;
+      await go(page, 43, {query: "?drafts=1"});
+      await page.getByRole("region", {name: "Review passages"}).getByRole("button", {name: new RegExp("^" + p.title)}).click();
+      await page.getByRole("button", {name: "Start the section"}).click();
+      // Every graph has a screen reader data table with the same values.
+      var graphs = p.body.filter((b) => /Chart|scatter/.test(b.kind));
+      for (var g of graphs) await expect(page.getByRole("table", {name: "Data in " + g.caption, includeHidden: true})).toHaveCount(1);
+      for (var scheme of ["light", "dark"]) {
+        await page.emulateMedia({colorScheme: scheme});
+        await audit(page, p.id + " " + scheme);
+      }
+      var seen = await playAll(page, (q) => q.answer);
+      expect(seen.map((x) => x.title)).toEqual([p.title]);
+      await endSection(page);
+      var n = p.questions.length;
+      await expect(page.getByText(n + " / " + n, {exact: true})).toBeVisible();
+      await expect(page.getByText("100% correct")).toBeVisible();
+    });
+  })(dp);
+}
