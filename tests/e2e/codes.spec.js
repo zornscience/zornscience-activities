@@ -124,7 +124,8 @@ async function check(page, text) {
   await page.locator("#zsa-chk-check").click();
 }
 
-for (var slug of Object.keys(activities)) {
+// Only activities registered in shared/zsa-codes.js give codes; the others are covered by their own tests.
+for (var slug of Object.keys(activities).filter((s) => codes.activity(s))) {
   (function (slug) {
     var cfg = activities[slug], spec = codes.activity(slug);
     test(slug + ": a full keyboard round gives a code that the checker reads back exactly", async ({page, open, context}) => {

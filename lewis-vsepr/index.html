@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<meta name="description" content="Build Lewis structures step by step and predict molecular shape, bond angle and polarity with hints and feedback.">
+<title>Lewis Structure and VSEPR Builder | ZornScience</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-activity.css?v=1.0.0">
+<link rel="stylesheet" href="builder.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-engine.js?v=1.0.0" defer></script>
+<script src="data.js?v=1.0.0" defer></script>
+<script src="builder.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="zsa zsa-activity zsa-lv" data-zsa-activity="lewis-vsepr">
+<header class="zsa-header">
+<div class="zsa-topline" data-zsa-chrome>
+<a class="zsa-back" id="zsa-lv-back" href="https://zornscience.org/science/chemistry/">← Back to the lesson</a>
+<p class="zsa-eyebrow">Chemistry · Covalent Bonding</p>
+</div>
+<h1>Lewis Structure and VSEPR Builder</h1>
+</header>
+<noscript><p class="zsa-panel">This activity needs JavaScript. Enable it to practice.</p></noscript>
+<div class="zsa-layout zsa-lv-layout">
+<div class="zsa-lv-strip" id="zsa-lv-strip"></div>
+<section class="zsa-work" id="zsa-lv-work" aria-label="Lewis structure practice"></section>
+<section class="zsa-ref zsa-lv-ref" aria-label="Periodic table">
+<div class="zsa-table-wrap" id="zsa-lv-table-wrap">
+<div id="zsa-lv-table"></div>
+<div class="zsa-lv-table-foot">
+<p class="zsa-table-note" id="zsa-lv-table-note">Main groups, periods 1 to 5. Under each group number: valence electrons (He has 2).</p>
+<button class="zsa-btn zsa-lv-en-toggle" id="zsa-lv-en" type="button" aria-pressed="false">Show electronegativity</button>
+</div>
+</div>
+</section>
+</div>
+<p class="zsa-sr-only" id="zsa-lv-live" aria-live="polite" aria-atomic="true"></p>
+<details class="zsa-card zsa-modes" id="zsa-lv-options">
+<summary>Practice options</summary>
+<div class="zsa-modes-body">
+<p>Start a fresh mixed round or work on one structure. Starting again clears this round.</p>
+<div class="zsa-lv-option">
+<input type="checkbox" id="zsa-lv-ap" aria-describedby="zsa-lv-ap-note">
+<label for="zsa-lv-ap">AP: expanded octets and formal charge</label>
+</div>
+<p class="zsa-lv-option-note" id="zsa-lv-ap-note">Adds structures with more than 8 electrons around the center, and a step that picks the best structure by formal charge. Applies from the next round or chosen structure.</p>
+<button class="zsa-btn" id="zsa-lv-new" type="button">Start a new round</button>
+<div class="zsa-picker">
+<label for="zsa-lv-select">Choose a structure</label>
+<select id="zsa-lv-select"></select>
+<button class="zsa-btn" id="zsa-lv-pick" type="button">Practice this structure</button>
+</div>
+</div>
+</details>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+</main>
+</body>
+</html>

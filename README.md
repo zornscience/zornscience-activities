@@ -21,8 +21,12 @@ ion-charge-trainer/        Predicting Ion Charge Trainer, v1.4.0
 ionic-formula-builder/     Ionic Formula Builder, v1.1.0
 periodic-table/            Periodic Table reference, v1.0.0 (data built by periodic-table/tools/build-data.js)
 periodic-trends/           Periodic Trends Practice, v1.0.0 (questions built from the periodic table's data)
+<<<<<<< HEAD
+lewis-vsepr/               Lewis Structure and VSEPR Builder, v1.0.0
+=======
 check/                     completion code checker for teachers, v1.0.0 (linked under "For teachers")
 TEACHERS.md                assigning activities in Google Classroom and checking completion codes
+>>>>>>> origin/main
 templates/starter/         starter template for a new activity (not linked from the site)
 tests/                     automated tests (development only; see TESTING.md)
 package.json               test tooling only; the site has no dependencies

@@ -1,0 +1,167 @@
+/* Lewis Structure and VSEPR Builder: the layout, the structure drawings and editor, the strip, the table extras
+   and the answer grid sizes. Shared layout and components are in ../shared/zsa-activity.css. */
+
+/* Inter alternates: l with a tail and I with serifs, so Cl and I cannot be misread. */
+.zsa-lv {font-feature-settings:"cv05" 1,"cv08" 1;}
+/* Embed mode hides the top line; the page title stays as a visually hidden heading for screen readers. */
+.zsa--embedded .zsa-header {margin:0;}
+.zsa--embedded .zsa-header h1 {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+/* Layout: strip, question, then the table on phones; strip and table on the left of the question from 900px. */
+.zsa-lv-layout {grid-template-areas:"strip" "work" "ref";}
+.zsa-lv-strip {grid-area:strip;min-width:0;}
+.zsa-lv-layout .zsa-work {grid-area:work;min-width:0;}
+.zsa-lv-ref {grid-area:ref;}
+@media(min-width:900px) {
+  .zsa-lv-layout {grid-template-columns:minmax(0,380px) minmax(0,1fr);grid-template-rows:auto 1fr;grid-template-areas:"strip work" "ref work";row-gap:10px;}
+}
+
+/* Formulas */
+.zsa-lv-formula {white-space:nowrap;}
+.zsa-lv-formula sub {font-size:.7em;line-height:0;vertical-align:-.25em;}
+.zsa-lv-formula sup {font-size:.7em;line-height:0;vertical-align:.55em;}
+
+/* Strip: formula, name, progress and (after the build step) the finished structure. */
+.zsa-lv-strip-line {display:flex;flex-wrap:wrap;align-items:baseline;column-gap:12px;}
+.zsa-lv .zsa-lv-title {font-size:1.6rem;line-height:1.2;margin:0;}
+.zsa-lv-caption {font-size:15px;margin:0;}
+
+/* Structure drawings: 224 drawing units wide. --u is the size of one unit. */
+.zsa-lv {--u:1px;}
+.zsa-lv-svg {display:block;overflow:visible;}
+.zsa-lv-bond {stroke:var(--zsa-navy);stroke-width:2.6;stroke-linecap:round;}
+.zsa-lv-bond--unset {stroke:#64748b;stroke-width:1.6;stroke-dasharray:3 4;}
+.zsa-lv-dot {fill:var(--zsa-navy);}
+.zsa-lv-sym {fill:var(--zsa-navy);font-size:22px;font-weight:600;text-anchor:middle;dominant-baseline:central;font-family:var(--zsa-font);}
+.zsa-lv-svg--compact .zsa-lv-sym {font-size:30px;}
+.zsa-lv-svg--compact .zsa-lv-bond {stroke-width:3.4;}
+.zsa-lv-display .zsa-lv-svg {width:calc(224px * var(--s));height:auto;}
+.zsa-lv-display {--s:1;}
+.zsa-lv-display--strip {--s:.8;}
+.zsa-lv-display--cand {--s:.6;}
+.zsa-lv-display--summary {--s:.72;flex-shrink:0;}
+
+/* The editor: the drawing with an atom button over each atom, and the controls for the chosen atom. */
+.zsa-lv-build {display:flex;flex-wrap:wrap;align-items:flex-start;gap:10px 20px;margin:8px 0 0;}
+.zsa-lv-grid {position:relative;display:grid;padding-bottom:10px;grid-template-columns:calc(52*var(--u)) calc(34*var(--u)) calc(52*var(--u)) calc(34*var(--u)) calc(52*var(--u));}
+.zsa-lv-rows-1.zsa-lv-grid {grid-template-rows:calc(52*var(--u));}
+.zsa-lv-rows-3.zsa-lv-grid {grid-template-rows:calc(52*var(--u)) calc(34*var(--u)) calc(52*var(--u));}
+.zsa-lv-rows-5.zsa-lv-grid {grid-template-rows:calc(52*var(--u)) calc(34*var(--u)) calc(52*var(--u)) calc(34*var(--u)) calc(52*var(--u));}
+.zsa-lv-grid .zsa-lv-svg {position:absolute;left:0;top:0;z-index:1;width:calc(224*var(--u));height:calc(100% - 10px);pointer-events:none;}
+.zsa-lv-atoms {display:contents;}
+.zsa-lv-r1 {grid-row:1;} .zsa-lv-r3 {grid-row:3;} .zsa-lv-r5 {grid-row:5;}
+.zsa-lv-c1 {grid-column:1;} .zsa-lv-c3 {grid-column:3;} .zsa-lv-c5 {grid-column:5;}
+.zsa .zsa-choice.zsa-lv-atom {position:relative;width:100%;height:100%;min-height:44px;padding:0;border:2px solid transparent;border-radius:50%;background:transparent;}
+.zsa .zsa-choice.zsa-lv-atom:hover:not([aria-pressed="true"]) {background:rgba(238,244,255,.7);border-color:var(--zsa-border-strong);}
+.zsa .zsa-choice.zsa-lv-atom[aria-pressed="true"] {background:#dbeafe;border-color:var(--zsa-blue);color:var(--zsa-navy);}
+/* Electrons around each atom, on the atom's lower right. */
+.zsa-lv-badge {position:absolute;z-index:2;right:-17px;bottom:-8px;min-width:30px;padding:0 4px;border-radius:var(--zsa-radius-pill);font-size:12px;line-height:17px;font-weight:700;text-align:center;border:1px solid;background:var(--zsa-white);}
+.zsa-lv-badge--left {right:auto;left:-12px;}
+.zsa-lv-badge--full {color:var(--zsa-success);border-color:#86efac;background:var(--zsa-success-bg);}
+.zsa-lv-badge--short {color:#92400e;border-color:#fcd34d;background:#fffbeb;}
+.zsa-lv-badge--over {color:var(--zsa-error);border-color:#fca5a5;background:var(--zsa-error-bg);}
+.zsa-lv-badge--open {color:var(--zsa-navy);border-color:var(--zsa-border-strong);}
+.zsa-lv-editor {flex:1 1 250px;min-width:0;}
+.zsa-lv .zsa-lv-edtitle {margin:0 0 4px;font-size:16px;font-weight:600;color:var(--zsa-navy);line-height:1.35;}
+.zsa-lv-rows {display:grid;gap:6px;}
+.zsa-lv-row {display:flex;align-items:center;gap:8px;}
+.zsa-lv-rowlabel {flex:0 0 68px;font-size:14px;line-height:1.2;font-weight:600;color:var(--zsa-navy);}
+.zsa-lv-opts {display:flex;flex:1 1 auto;gap:6px;min-width:0;}
+.zsa-lv-opt {flex:1 1 0;min-width:44px;min-height:44px;margin:0;padding:4px 6px;border:1px solid var(--zsa-border-strong);border-radius:8px;background:var(--zsa-white);color:var(--zsa-navy);font-size:16px;font-weight:600;line-height:1.2;touch-action:manipulation;}
+.zsa-lv-opt:hover:not([aria-pressed="true"]) {background:var(--zsa-sky);border-color:var(--zsa-blue);}
+.zsa-lv-opt[aria-pressed="true"] {color:var(--zsa-white);background:var(--zsa-blue);border-color:var(--zsa-blue);}
+.zsa .zsa-lv-note {display:flex;align-items:center;min-height:44px;margin:0;font-size:15px;line-height:1.35;}
+.zsa .zsa-lv-status {margin:8px 0 0;font-size:15px;line-height:1.4;color:var(--zsa-navy);}
+
+/* Step 1: the atom count. */
+.zsa .zsa-lv-tally {display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:6px 0 0;font-size:15px;}
+.zsa-lv-tally-label {font-weight:600;color:var(--zsa-navy);}
+.zsa-lv-chip {padding:1px 10px;border-radius:var(--zsa-radius-pill);background:var(--zsa-sky);border:1px solid var(--zsa-border);color:var(--zsa-navy);font-weight:600;}
+
+/* Formal charge step: the candidate structures. */
+.zsa-lv-cands {display:grid;grid-template-columns:repeat(3,max-content);gap:8px 16px;margin:6px 0 0;}
+.zsa-lv-cand {padding:4px 8px 8px;border:1px solid var(--zsa-border);border-radius:8px;}
+.zsa .zsa-lv-cand-label {margin:0 0 2px;font-size:14px;font-weight:700;color:var(--zsa-navy);}
+
+/* Answer grids */
+.zsa-choices--six {grid-template-columns:repeat(6,minmax(0,1fr));}
+.zsa-choices--five {grid-template-columns:repeat(5,minmax(0,1fr));}
+.zsa-choices--atoms, .zsa-choices--letters {grid-template-columns:repeat(3,minmax(0,1fr));max-width:420px;}
+.zsa-choices--two {grid-template-columns:repeat(2,minmax(0,1fr));max-width:420px;}
+.zsa-choices--names {grid-template-columns:repeat(3,minmax(0,1fr));}
+.zsa-choices--names .zsa-choice, .zsa-choices--reasons .zsa-choice {font-size:15px;padding:4px 8px;}
+.zsa-choices--reasons {grid-template-columns:repeat(3,minmax(0,1fr));}
+.zsa-choices--angles4 {grid-template-columns:repeat(4,minmax(0,1fr));}
+.zsa-choices--angles5 {grid-template-columns:repeat(5,minmax(0,1fr));}
+.zsa-choices--angles4 .zsa-choice, .zsa-choices--angles5 .zsa-choice {font-size:15px;padding:4px 6px;}
+.zsa-sub {margin:6px 0 0;}
+.zsa-step .zsa-sub legend {line-height:1.4;}
+
+/* Item summary */
+.zsa-lv-summary {align-items:flex-start;margin-bottom:12px;}
+.zsa-lv-summary-text p {margin:0 0 4px;font-size:16px;}
+
+/* Periodic table extras: valence electrons under each group number, electronegativity on demand. */
+.zsa-lv-val {display:block;font-size:11px;font-weight:600;line-height:1.1;color:var(--zsa-blue);}
+.zsa-table th.zsa-highlight .zsa-lv-val {color:var(--zsa-white);}
+.zsa-lv-ref .zsa-table td {height:24px;}
+.zsa-lv-ref .zsa-lv-en {display:none;}
+.zsa-lv-en-on .zsa-table td {height:36px;line-height:1.1;}
+.zsa-lv-en-on span.zsa-lv-en[aria-hidden] {display:block;font-size:11px;font-weight:600;color:#475569;}
+.zsa-lv-en-on .zsa-table td.zsa-current span.zsa-lv-en[aria-hidden] {color:var(--zsa-white);}
+.zsa-lv-en-on .zsa-sr-only.zsa-lv-en {display:block;}
+.zsa-lv-table-foot {display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px;margin:2px 3px 2px;}
+.zsa-lv-table-foot .zsa-table-note {margin:0;flex:1 1 200px;}
+.zsa-lv-en-toggle.zsa-btn {padding:6px 12px;font-size:14px;}
+
+/* Practice options: the AP setting and the picker */
+.zsa-lv-option {display:flex;align-items:center;gap:12px;min-height:44px;}
+.zsa-lv-option input {width:24px;height:24px;margin:0;flex-shrink:0;accent-color:var(--zsa-blue);}
+.zsa-lv-option input:focus-visible {outline:var(--zsa-focus-ring);outline-offset:var(--zsa-focus-offset);}
+.zsa-lv-option label {font-size:16px;color:var(--zsa-navy);font-weight:600;cursor:pointer;}
+.zsa-modes .zsa-lv-option-note {margin:0 0 12px 36px;font-size:14px;}
+@media(min-width:600px) {.zsa-picker {display:grid;grid-template-columns:1fr auto;}.zsa-picker label {grid-column:1/-1;}}
+
+/* Table caption: read by screen readers only (the column and row labels say the same). */
+.zsa-lv-ref .zsa-table caption {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+/* The finished structure sits beside the formula, so the step (and on laptops the table) stays on screen. */
+.zsa-lv-strip {display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:12px;align-items:start;}
+.zsa-lv-strip-line, .zsa-lv-strip .zsa-progress {grid-column:1;}
+.zsa-lv-strip-structure {grid-column:2;grid-row:1 / span 2;margin:0;}
+.zsa-lv-strip .zsa-progress {text-wrap:balance;}
+@media(min-width:900px) {.zsa-lv-display--strip {--s:.7;}}
+
+/* Phones: smaller drawings and denser steps. */
+@media(max-width:599px) {
+  .zsa-lv {--u:.85px;}
+  .zsa-lv .zsa-lv-title {font-size:1.25rem;}
+  .zsa-lv-caption {font-size:14px;}
+  .zsa-lv-display--strip {--s:.5;}
+  .zsa-lv-display--cand {--s:.4;}
+  .zsa-lv-cands {gap:6px;grid-template-columns:repeat(3,minmax(0,1fr));}
+  .zsa-lv-cand {padding:2px 2px 4px;}
+  .zsa-lv-display--summary {--s:.6;}
+  .zsa-lv-build {gap:4px;margin-top:2px;}
+  .zsa-lv-grid {padding-bottom:6px;}
+  .zsa-lv-grid .zsa-lv-svg {height:calc(100% - 6px);}
+  .zsa-lv-rows {gap:4px;}
+  .zsa .zsa-lv-edtitle {margin-bottom:2px;}
+  .zsa-lv-rowlabel {flex-basis:52px;font-size:13px;}
+  .zsa-lv-opts {gap:4px;}
+  .zsa-lv-opt {font-size:15px;padding:2px 4px;}
+  .zsa .zsa-lv-status {margin-top:4px;font-size:14px;line-height:1.35;}
+  .zsa-lv .zsa-lv-edtitle {font-size:15px;}
+  .zsa-choices--six {grid-template-columns:repeat(3,minmax(0,1fr));}
+  .zsa-choices--names {grid-template-columns:repeat(3,minmax(0,1fr));}
+  .zsa-choices--reasons {grid-template-columns:repeat(3,minmax(0,1fr));}
+  .zsa-choices--angles4 .zsa-choice, .zsa-choices--angles5 .zsa-choice {font-size:14px;padding:2px 3px;line-height:1.15;}
+  .zsa-choices--names .zsa-choice, .zsa-choices--reasons .zsa-choice {font-size:14px;padding:2px 4px;line-height:1.15;}
+  .zsa-step {padding:2px 12px 10px;}
+  .zsa-feedback, .zsa-hint {padding:6px 10px;margin-top:8px;}
+  .zsa-trail {margin-bottom:6px;}
+  .zsa-lv .zsa-last {margin:0 0 6px;}
+  .zsa-actions {margin-top:8px;}
+  .zsa-lv-ref .zsa-table td {height:21px;}
+}
+@media(max-width:359px) {.zsa-step {padding:4px 8px 10px;}.zsa-lv-rowlabel {flex-basis:44px;}}
