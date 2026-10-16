@@ -254,7 +254,7 @@
       if (g) {
         $("p-atm").textContent = pText(g.total);
         $("p-kpa").textContent = sig(phys.atmToKpa(g.total), 3) + " " + ui.kpa;
-        $("p-note").textContent = fill(ui.gaugeNote, {s: g.time.toFixed(g.time < 10 ? 1 : 0)});
+        $("p-note").textContent = fill(ui.gaugeNote, {s: g.time < 1 ? g.time.toFixed(2) : g.time.toFixed(g.time < 10 ? 1 : 0)});
       } else {
         $("p-atm").textContent = playing ? ui.measuring : "-";
         $("p-kpa").textContent = "";

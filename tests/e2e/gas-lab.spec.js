@@ -293,7 +293,7 @@ test("gas lab: every control and graph works from the keyboard alone", async ({p
   await page.keyboard.press("Tab");
   expect(await page.evaluate(() => document.activeElement.id)).toBe("zsa-gl-step");
   await page.keyboard.press("Enter");
-  await expect(page.locator("#zsa-gl-p-note")).toHaveText("Averaged over 0.3 s of wall hits");
+  await expect(page.locator("#zsa-gl-p-note")).toHaveText(/^Averaged over 0\.\d\d s of wall hits$/);
   // Tabs: one Tab stop, arrows switch.
   await page.focus("#zsa-gl-tab-graphs");
   await page.keyboard.press("ArrowRight");
