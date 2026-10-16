@@ -1,0 +1,13 @@
+/* Periodic Trends Practice: the question strip and answer grid sizes. Everything else is in ../shared/zsa-activity.css. */
+/* Inter alternates: l with a tail and I with serifs, so Al, Cl and I cannot be misread. */
+.zsa-ptr {font-feature-settings:"cv05" 1,"cv08" 1;}
+.zsa-ptr-pair {display:flex;flex-wrap:wrap;align-items:baseline;column-gap:12px;min-height:52px;}
+.zsa-ptr .zsa-ptr-title {font-size:1.45rem;line-height:1.2;margin:0;}
+.zsa-ptr-caption {font-size:15px;font-weight:600;color:var(--zsa-navy);margin:0;}
+.zsa-ptr-pair .zsa-progress {flex-basis:100%;}
+.zsa-choices--two {grid-template-columns:repeat(2,minmax(0,1fr));}
+.zsa-choices--three {grid-template-columns:repeat(3,minmax(0,1fr));}
+.zsa-ptr .zsa-choice {font-size:16px;padding:4px 6px;}
+.zsa-ptr-link {display:inline-flex;align-items:center;min-height:44px;font-size:16px;}
+.zsa-summary p {margin:0 0 4px;font-size:16px;}
+@media(max-width:599px) {.zsa-ptr-pair {min-height:0;}.zsa-ptr .zsa-ptr-title {font-size:1.15rem;}.zsa-ptr .zsa-choice {font-size:14px;padding:4px 3px;}}
