@@ -368,7 +368,7 @@
       type: "Data Representation",
       title: "Dissolved Oxygen in Water",
       topic: "Earth and space science",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "Fish and other aquatic organisms depend on oxygen gas (O<sub>2</sub>) dissolved in water. The <em>solubility</em> of O<sub>2</sub> is the greatest amount that can dissolve in water that is in contact with air. Figure 1 shows the solubility of O<sub>2</sub> in fresh water and in seawater at several temperatures."},
         {kind: "lineChart", caption: "Figure 1", xLabel: "Water temperature (°C)", yLabel: "O<sub>2</sub> solubility (mg/L)", x: [0, 5, 10, 15, 20, 25, 30], yMax: 16, yStep: 2,
@@ -416,7 +416,7 @@
       type: "Data Representation",
       title: "Solar Panel Output",
       topic: "Physics",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "A solar panel converts sunlight into electrical power. Its <em>efficiency</em> is the percent of the sunlight energy reaching the panel that becomes electrical energy."},
         {kind: "text", html: "Students measured the power output of a small solar panel at noon on a clear day and on a cloudy day, with the panel tilted at different angles from horizontal. A fan kept the panel at 25°C during these trials (Figure 1)."},
@@ -471,7 +471,7 @@
       type: "Research Summaries",
       title: "Carts on a Ramp",
       topic: "Physics",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "Students released a cart from rest at the top of a 2.0 m long ramp and used a motion sensor to measure the cart's speed at the bottom. Unless stated otherwise, the cart had a mass of 0.50 kg and the ramp had a smooth plastic surface."},
         {kind: "heading", text: "Experiment 1"},
@@ -523,7 +523,7 @@
       type: "Research Summaries",
       title: "Salt and Radish Seed Germination",
       topic: "Biology",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "<em>Germination</em> is the start of growth from a seed. Students tested how sodium chloride (NaCl) dissolved in water affects the germination of radish seeds. In each trial, 50 seeds were placed on paper towels soaked with a solution in a covered dish. A seed counted as germinated when a root at least 2 mm long appeared."},
         {kind: "heading", text: "Experiment 1"},
