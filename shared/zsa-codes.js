@@ -21,11 +21,16 @@
   // totals and maxItems decide how a code is read. To change any of them, register a new id.
   //   id        1 to 31, unique, never reused
   //   prefix    2 to 4 capital letters, unique; the start of every code
-  //   slug      the activity folder and data-zsa-activity value
+  //   slug      the activity folder and data-zsa-activity value (two entries can share one: see setting)
+  //   setting   optional: the activity's setting, for an activity that writes its codes under one entry per setting
   //   maxItems  the most original items a mixed round can have
   //   stats     [key, label] for each first-try count, in the order of the round summary (labels as in data.js)
   //   totals    groups of stat keys that always have the same total; one total is stored per group
   //   items     the groups whose totals add up to the number of original items
+  var LEWIS_STATS = [["total", "Total valence electrons"], ["center", "Central atom"], ["build", "Lewis structure"],
+    ["fc", "Formal charge"], ["domains", "Domains and electron geometry"], ["shape", "Shape and bond angle"], ["polarity", "Polar or nonpolar"]];
+  // Every structure has the total and build steps; the others depend on the structure (and fc on the AP setting).
+  var LEWIS_TOTALS = [["total", "build"], ["center"], ["fc"], ["domains"], ["shape"], ["polarity"]];
   var ACTIVITIES = [
     {id:1, prefix:"ICT", slug:"ion-charge-trainer", name:"Predicting Ion Charge Trainer", maxItems:10,
       stats:[["0", "Valence electrons"], ["1", "Gain or lose"], ["2", "Ion charge"], ["3", "Name the ion"]],
@@ -33,7 +38,16 @@
     {id:2, prefix:"IFB", slug:"ionic-formula-builder", name:"Ionic Formula Builder", maxItems:10,
       stats:[["n2f0", "Name to formula: ion charges"], ["n2f1", "Name to formula: subscripts"],
         ["f2n0", "Formula to name: which ions"], ["f2n1", "Formula to name: name it"]],
-      totals:[["n2f0", "n2f1"], ["f2n0", "f2n1"]], items:[0, 1]}
+      totals:[["n2f0", "n2f1"], ["f2n0", "f2n1"]], items:[0, 1]},
+    {id:3, prefix:"PTR", slug:"periodic-trends", name:"Periodic Trends Practice", maxItems:9,
+      stats:[["0", "Same group or period"], ["1", "Trend direction"], ["2", "Which element"]],
+      totals:[["0", "1", "2"]], items:[0]},
+    // The Lewis and VSEPR Builder writes octet-rule rounds as LVB and AP rounds as LVA, so the code records the
+    // setting. Found by slug, "lewis-vsepr" is the octet-rule entry; the AP copy of the activity asks for "LVA".
+    {id:4, prefix:"LVB", slug:"lewis-vsepr", setting:"Octet rule", name:"Lewis Structure and VSEPR Builder", maxItems:6,
+      stats:LEWIS_STATS, totals:LEWIS_TOTALS, items:[0]},
+    {id:5, prefix:"LVA", slug:"lewis-vsepr", setting:"AP setting", name:"Lewis Structure and VSEPR Builder", maxItems:6,
+      stats:LEWIS_STATS, totals:LEWIS_TOTALS, items:[0]}
   ];
   // The fixed fields, least significant first: [name, how many values]. Then one total per totals group (0 to
   // maxItems) and one first-try count per stat (0 to its total). Show me and Hint counts stop at their top value.

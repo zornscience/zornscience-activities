@@ -232,6 +232,8 @@ async function main() {
   for (var slug of Object.keys(activities)) {
     // An activity that is new in this change has nothing to compare with.
     if (!fs.existsSync(path.join(baseDir, activities[slug].path))) { console.log("Skipping " + slug + ": not in " + BASE); continue; }
+    // An activity without an answer key here (the Lewis and VSEPR Builder) is driven by its own tests instead.
+    if (!activities[slug].answer) { console.log("Skipping " + slug + ": no answer key in tests/support/activities.js"); continue; }
     for (var vp of viewports) {
       for (var seed of QUICK ? [1] : [1, 2]) {
         await scenario(slug + " round " + vp.width + "x" + vp.height + " seed " + seed, slug, {viewport: vp, seed: seed}, async function (api) {

@@ -1,6 +1,6 @@
-// Periodic Trends Practice (periodic-trends/): every wrong pick in all 426 questions routes to the intended
+// Periodic Trends Practice (periodic-trends/): every wrong pick in all 418 questions routes to the intended
 // feedback, round rules, the flow (hints, Show me, trail, review, summaries, Practice my misses, trend picker),
-// keyboard, layout fit, axe-core, embed mode and network. Expected answers and feedback rules are worked out here
+// keyboard, layout fit, axe-core, embed mode and network, the completion code read back on check/, and ?from=. Expected answers and feedback rules are worked out here
 // from the Periodic Table's data and the lessons' trends, not from the activity's code. Selects by role, id, ARIA
 // state and text only, and fails on console errors or CSP violations (the `problems` fixture).
 "use strict";
@@ -9,6 +9,8 @@ var path = require("path");
 var {test, expect, seedRandom} = require("./fixtures");
 var {install} = require("../support/activities");
 var {loadData} = require("../support/load-data");
+var checker = require("./checker");
+var codes = require("../../shared/zsa-codes.js");
 
 var ROOT = path.join(__dirname, "..", "..");
 var AXE = fs.readFileSync(require.resolve("axe-core/axe.min.js"), "utf8");
@@ -351,11 +353,147 @@ test("periodic trends: embed mode and local files only", async ({page, problems}
   await open(page, "?embed=1");
   await page.evaluate(() => document.fonts.ready);
   urls.forEach((u) => expect(u.startsWith("/"), "outside request " + u).toBe(true));
-  urls.filter((u) => /\.(css|js)/.test(u)).forEach((u) => expect(u).toMatch(/\?v=1\.0\.0$/));
+  var version = await page.locator('meta[name="zsa-version"]').getAttribute("content");
+  expect(version).toBe("1.1.0");
+  urls.filter((u) => /\.(css|js)/.test(u)).forEach((u) => expect(u).toMatch(/\?v=1\.1\.0$/));
   await expect(page.locator("main")).toHaveClass(/zsa--embedded/);
   for (var x of await page.locator("[data-zsa-chrome]").all()) await expect(x).toBeHidden();
   await expect(page.getByRole("heading", {level: 1})).toBeVisible();
   for (var a of await page.locator("main a").all()) expect(await a.getAttribute("target")).toBe("_top");
   expect(await page.evaluate(() => window.__posted)).toEqual([]);
   expect(await page.evaluate(() => [localStorage.length, sessionStorage.length, document.cookie])).toEqual([0, 0, ""]);
+});
+
+// The completion code box on the round summary: the code as seen and as spoken, the first-try lines and the buttons.
+async function codeSummary(page) {
+  return page.evaluate(() => {
+    var z = window.__zsa, work = document.getElementById("zsa-ptr-work"), group = work.querySelector('[role="group"]');
+    var value = group && document.getElementById(group.getAttribute("aria-labelledby").replace(/-label$/, ""));
+    return {
+      groupName: group && z.spoken(document.getElementById(group.getAttribute("aria-labelledby"))),
+      code: value && z.visual(value).trim(), spoken: value && z.spoken(value).trim(),
+      stats: [].filter.call(work.querySelectorAll(":scope > div"), (d) => d.querySelector("strong") && !d.getAttribute("role"))
+        .map((d) => d.querySelector("span").textContent + ": " + d.querySelector("strong").textContent),
+      text: z.visual(work), live: z.state().live, focus: z.state().focus, buttons: z.state().finishButtons
+    };
+  });
+}
+
+test("periodic trends: a full mixed round gives a completion code that check/ reads back", async ({page, context, problems}) => {
+  void problems;
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  var outside = [];
+  page.on("request", (r) => { if (!r.url().startsWith("http://127.0.0.1:")) outside.push(r.url()); });
+  await open(page, "", 51);
+  await expect(page.getByRole("group", {name: "Completion code"})).toHaveCount(0);
+  // Both hints on question 1; question 2 step 1 wrong twice, then Show me (a review item is added); question 3 step 2 wrong once.
+  var run = await play(page, {0: {0: ["hint", "hint"]}, 1: {0: ["wrong", "wrong", "show"]}, 2: {1: ["wrong"]}});
+  expect(run.items).toHaveLength(10);
+  expect(run.items[9].progress).toMatch(/^Review 10 of 10/);
+  var sum = await codeSummary(page);
+  expect(sum.focus).toBe("h2:Round complete");
+  expect(sum.live).toBe("Round complete. Completion code ready.");
+  expect(sum.groupName).toBe("Completion code");
+  expect(sum.code).toMatch(/^PTR-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]$/);
+  expect(sum.spoken, "read one character at a time").toBe(codes.spoken(sum.code));
+  expect(sum.text).toContain("Paste this code into your Google Classroom assignment.");
+  expect(sum.buttons.slice(0, 2)).toEqual(["Copy code", "Practice again"]);
+  expect(sum.stats).toEqual(["Same group or period: 8 / 9", "Trend direction: 8 / 9", "Which element: 9 / 9"]);
+  // The code is exactly the one these results give, worked out here from the plan.
+  var day = codes.dayNumber(new Date());
+  expect(sum.code).toBe(codes.encode({activity: "periodic-trends", version: "1.1.0", day: day, items: 9, totals: {"0": 9, "1": 9, "2": 9},
+    results: {"0": 8, "1": 8, "2": 9}, show: 1, hints: 2}));
+  await checker.audit(page, "round summary with a code 1366x657");
+  await page.setViewportSize({width: 390, height: 664});
+  await checker.audit(page, "round summary with a code 390x664");
+  expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
+  var copy = page.getByRole("button", {name: "Copy code"}), box = await copy.boundingBox();
+  expect(box.width >= 44 && box.height >= 44, "Copy code is 44 px").toBe(true);
+  await page.setViewportSize({width: 1366, height: 657});
+  // Copy code from the keyboard: the next Tab stop after the heading.
+  await page.keyboard.press("Tab");
+  expect((await state(page)).focus).toBe("button:Copy code");
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("group", {name: "Completion code"}).getByText("Code copied.", {exact: true})).toBeVisible();
+  var copied = await page.evaluate(() => navigator.clipboard.readText());
+  expect(copied).toBe(sum.code);
+
+  await page.goto("/check/");
+  await checker.check(page, "Student\t" + copied);
+  expect(await checker.results(page)).toEqual([{
+    "Line": "1", "Code": sum.code, "Status": "Valid", "Activity": "Periodic Trends Practice", "Version": "1.1",
+    "Date completed": checker.readable(codes.isoDate(day)), "Items": "9", "First-try correct": sum.stats, "Show me uses": "1", "Hints used": "2"
+  }]);
+  await checker.audit(page, "checker with a Periodic Trends code");
+  expect(outside, "requests outside the site").toEqual([]);
+});
+
+test("periodic trends: no code for a round of one trend, one question or Practice my misses", async ({page, problems}) => {
+  void problems;
+  async function noCode(label) {
+    var sum = await codeSummary(page);
+    expect(sum.buttons, label).not.toContain("Copy code");
+    expect(sum.text, label).not.toContain("Completion code");
+    expect(sum.live, label).not.toContain("Completion code");
+    await expect(page.getByRole("group", {name: "Completion code"})).toHaveCount(0);
+  }
+  await open(page, "", 52);
+  var run = await play(page, {0: {2: ["wrong"]}});
+  expect((await codeSummary(page)).buttons[0]).toBe("Copy code");
+  await page.evaluate(() => window.__zsa.finishButton("Practice my misses"));
+  run = await play(page);
+  expect(run.finish.finish.title).toBe("Round complete");
+  await noCode("Practice my misses");
+  // The trend picker: 6 questions of one trend.
+  await page.locator("#zsa-ptr-options > summary").click();
+  await page.getByLabel("Choose a trend").selectOption("radius");
+  await page.getByRole("button", {name: "Practice this trend"}).click();
+  run = await play(page);
+  expect(run.items).toHaveLength(6);
+  expect(run.finish.finish.title).toBe("Round complete");
+  await noCode("trend picker");
+  // Practice again after it starts a full mixed round, which gives a code again.
+  await page.evaluate(() => window.__zsa.finishButton("Practice again"));
+  run = await play(page);
+  expect(run.items).toHaveLength(9);
+  expect((await codeSummary(page)).buttons[0]).toBe("Copy code");
+  await open(page, "?trend=en", 53);
+  run = await play(page);
+  expect(run.items).toHaveLength(6);
+  await noCode("?trend=en");
+  await open(page, "?q=radius-Na-Cl");
+  run = await play(page);
+  expect(run.finish.finish.title).toBe("Trend practice complete");
+  await noCode("?q=");
+});
+
+test("periodic trends: ?from= sets the back link for zornscience.org pages only, with ?trend= and ?embed=1", async ({page, problems}) => {
+  void problems;
+  var back = page.locator("#zsa-ptr-back"), lesson = "https://zornscience.org/science/chemistry/unit-2-quantum/periodic-trends-periods/";
+  var other = "https://zornscience.org/science/chemistry/unit-2-quantum/";
+  await open(page, "");
+  await expect(back).toHaveAttribute("href", lesson);
+  await expect(back).toHaveText("← Back to the lesson");
+  await open(page, "?from=" + encodeURIComponent(other));
+  await expect(back).toHaveAttribute("href", other);
+  await expect(back).toBeVisible();
+  // With ?trend= and ?embed=1: the round is one trend, the chrome is hidden, and the link (opened in the top window) still goes back.
+  await open(page, "?trend=ie&from=" + encodeURIComponent(other) + "&embed=1");
+  await expect(back).toHaveAttribute("href", other);
+  await expect(back).toHaveAttribute("target", "_top");
+  await expect(back).toBeHidden();
+  await expect(page.locator("main")).toHaveClass(/zsa--embedded/);
+  var run = await play(page);
+  expect(run.items).toHaveLength(6);
+  run.items.forEach((i) => expect(i.caption).toBe("Compare: first ionization energy"));
+  await open(page, "?embed=1&from=" + encodeURIComponent(other) + "&q=en-Li-F");
+  await expect(back).toHaveAttribute("href", other);
+  expect((await state(page)).heading).toBe("Lithium (Li) and fluorine (F)");
+  for (var bad of ["https://example.com/", "http://zornscience.org/science/", "https://zornscience.org.example.com/", "https://www.zornscience.org/",
+    "https://example.com/?https://zornscience.org/", "https://user@zornscience.org/", "https://zornscience.org:8443/", "javascript:alert(1)",
+    "//zornscience.org/x", "/science/", "not a url"]) {
+    await open(page, "?trend=radius&from=" + encodeURIComponent(bad));
+    await expect(back, bad).toHaveAttribute("href", lesson);
+    expect((await state(page)).caption, bad).toBe("Compare: atomic radius");
+  }
 });

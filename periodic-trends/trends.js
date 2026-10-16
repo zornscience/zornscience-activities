@@ -126,12 +126,21 @@
   var select = root.querySelector("#zsa-ptr-select");
   ui.practice.forEach(function (p) { if (p[0] === "mixed") return; var o = node("option", "", p[1]); o.value = p[0]; select.appendChild(o); });
   function trendStart(prop) { return zsa.shuffle(trendRound(prop, 6)).map(function (q) { return {item: q}; }); }
+  // A round of one trend is not a full mixed round, so it gives no completion code (the engine gives one only to "mixed").
   root.querySelector("#zsa-ptr-new").addEventListener("click", function () { activity.start(mixed(), "mixed"); });
-  root.querySelector("#zsa-ptr-pick").addEventListener("click", function () { activity.start(trendStart(select.value), "mixed"); });
+  root.querySelector("#zsa-ptr-pick").addEventListener("click", function () { activity.start(trendStart(select.value), "trend"); });
 
   // Links from a lesson: ?trend=radius (or en, ie) starts a round of one trend; ?q=<question id> one question.
   var params = new URLSearchParams(window.location.search);
+  // "Back to the lesson" follows ?from= only for an https page on the zornscience.org host itself.
+  var from = params.get("from");
+  if (from) {
+    try {
+      var url = new URL(from);
+      if (url.protocol === "https:" && url.hostname === "zornscience.org" && !url.port && !url.username && !url.password) root.querySelector("#zsa-ptr-back").href = url.href;
+    } catch (e) { /* not a URL: keep the default link */ }
+  }
   if (byId[params.get("q")]) activity.start([{item: byId[params.get("q")]}], "single", true);
-  else if (ui.props[params.get("trend")]) { select.value = params.get("trend"); activity.start(trendStart(params.get("trend")), "mixed", true); }
+  else if (ui.props[params.get("trend")]) { select.value = params.get("trend"); activity.start(trendStart(params.get("trend")), "trend", true); }
   else activity.start(mixed(), "mixed", true);
 }());

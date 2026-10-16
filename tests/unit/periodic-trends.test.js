@@ -1,6 +1,6 @@
 // Periodic Trends Practice: every question's answer against the Periodic Table's data and the trend rule (written
-// here from the lessons, not from the build script), every excluded pair accounted for and listed in the README,
-// and data.js exactly what tools/build-data.js writes.
+// here from the lessons, not from the build script), no near tie asked (values within 2% of the larger one), every
+// excluded pair accounted for and listed in the README, and data.js exactly what tools/build-data.js writes.
 "use strict";
 var test = require("node:test");
 var assert = require("node:assert/strict");
@@ -47,15 +47,17 @@ test("Periodic Trends: every question's answer matches the data and the trend ru
     var predicted = RULE[p.prop][p.relation] === "increases" ? p.b.symbol : p.a.symbol;
     var actual = va === vb ? null : (va > vb ? p.a.symbol : p.b.symbol);
     var q = asked[p.id];
-    if (actual === predicted) {
+    // A near tie: the two values differ by 2% of the larger one or less.
+    var near = Math.abs(va - vb) <= 0.02 * Math.max(va, vb);
+    if (actual === predicted && !near) {
       assert.ok(q, p.id + " should be asked");
       assert.equal(q.answer, predicted, p.id);
       assert.equal(q.relation, p.relation, p.id);
       assert.ok(!excluded[p.id], p.id);
     } else {
-      assert.ok(!q, p.id + " contradicts the trend or ties and must not be asked");
+      assert.ok(!q, p.id + " contradicts the trend, ties or nearly ties and must not be asked");
       assert.ok(excluded[p.id], p.id + " must be listed as excluded");
-      assert.equal(excluded[p.id].reason, actual === null ? "equal" : "against the trend", p.id);
+      assert.equal(excluded[p.id].reason, actual === null ? "equal" : actual !== predicted ? "against the trend" : "near tie", p.id);
     }
   });
   assert.equal(data.items.length + data.excluded.length, pairs.length);
@@ -74,11 +76,15 @@ test("Periodic Trends: every question's answer matches the data and the trend ru
 });
 
 test("Periodic Trends: the excluded pairs are exactly the documented ones and all are in the README", function () {
-  var listed = data.excluded.map(function (x) { return x.prop + " " + x.a + " " + x.b; });
+  var listed = data.excluded.filter(function (x) { return x.reason !== "near tie"; }).map(function (x) { return x.prop + " " + x.a + " " + x.b; });
   assert.deepEqual(listed, [
     "radius O F", "radius O Ne", "radius F Ne", "radius Al Ga", "radius Ge As", "radius Se Kr", "radius Br Kr", "radius Sn Sb",
     "en Al Ga", "en Al In", "en Si Ge", "en Si Sn", "en K Rb",
     "ie Be B", "ie N O", "ie Mg Al", "ie Al Ga", "ie P S", "ie Ca Ga", "ie As Se"
+  ]);
+  // The near ties that follow the trend, removed in 1.1.0.
+  assert.deepEqual(data.excluded.filter(function (x) { return x.reason === "near tie"; }).map(function (x) { return x.prop + " " + x.a + " " + x.b; }), [
+    "radius Se Br", "radius In Sn", "radius In Sb", "radius I Xe", "en P As", "en S Se", "en Ga In", "ie Sr In"
   ]);
   var readme = fs.readFileSync(path.join(ROOT, "periodic-trends/README.md"), "utf8");
   var label = {radius: "Atomic radius", en: "Electronegativity", ie: "First ionization energy"};

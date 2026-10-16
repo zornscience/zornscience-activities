@@ -97,14 +97,16 @@ A full mixed round ends with a completion code that students paste into a Google
 
 The round summary of a full mixed round, right under "Round complete", shows "Completion code", the code in a large monospace box, a Copy code button and the line "Paste this code into your Google Classroom assignment." The live region says "Round complete. Completion code ready." Screen readers get the code from a visually hidden copy with a space between characters and a pause between groups ("I C T, K 6 Q Y, ..."), so it is read one character at a time. Copy code uses the Clipboard API. If that is not available or fails, it selects the code and tries the browser's copy command, then says either "Code copied." or "The code is selected. Press Ctrl+C, or Command+C on a Mac, to copy it."
 
-There is no code for single practice, Practice my misses or an unfinished round, for an activity that is not registered, or when the result does not fit the activity's registered layout (then the summary is exactly as before).
+There is no code for single practice, Practice my misses or an unfinished round, for a round started with any type other than `"mixed"` (Periodic Trends Practice starts a round of one trend as `"trend"`, so it gives no code), for an activity that is not registered, or when the result does not fit the activity's registered layout (then the summary is exactly as before).
+
+Activities with codes: the Ion Charge Trainer (`ICT`), the Ionic Formula Builder (`IFB`), Periodic Trends Practice (`PTR`) and the Lewis Structure and VSEPR Builder (`LVB` with the octet rule, `LVA` with the AP setting).
 
 ### Format
 
 ```
 ICT-K6QY-0C22-7S11-86
 ^^^ prefix (2 to 4 letters, one per activity)
-    ^^^^ ^^^^ ^^^^ payload, 12 characters for both current activities
+    ^^^^ ^^^^ ^^^^ payload, 12 characters for this activity
                    ^^ 2 check characters
 ```
 
@@ -125,7 +127,7 @@ The payload is one whole number in mixed radix, written in base 32 with the most
 | One total per totals group | 0 to maxItems | How many original items had those steps. |
 | One first-try count per stat | 0 to its total | As on the round summary. |
 
-The number of original items is the sum of the totals of the activity's `items` groups. A code is as long as the largest possible payload for that activity needs; for the Ion Charge Trainer and the Ionic Formula Builder (4 stats, 2 totals groups, 10 items) that is 12 characters, about 60 bits.
+The number of original items is the sum of the totals of the activity's `items` groups. A code is as long as the largest possible payload for that activity needs; for the Ion Charge Trainer and the Ionic Formula Builder (4 stats, 2 totals groups, 10 items) that is 12 characters, about 60 bits. Periodic Trends Practice (3 stats, 1 totals group, 9 items) needs 11, and the Lewis builder (7 stats, 6 totals groups, 6 items) 16, so its codes are `LVB-` plus 16 payload and 2 check characters.
 
 ### Check characters
 
@@ -144,7 +146,8 @@ Add an entry to `ACTIVITIES` in `zsa-codes.js` and load `zsa-codes.js` on the ac
   items:[0]}                                                  // the totals groups that add up to the original items
 ```
 
-- `id` is 1 to 31 and `prefix` is 2 to 4 capital letters. Both must be new and are never reused, even after an activity is retired.
+- `id` is 1 to 31 and `prefix` is 2 to 4 capital letters. Both must be new and are never reused, even after an activity is retired. A prefix must not be the start of another prefix (codes pasted without hyphens are found by their prefix).
+- An activity whose setting should be recorded registers one entry per setting with the same `slug` and a `setting` label, which the checker shows after the name ("Lewis Structure and VSEPR Builder (AP setting)"). Found by slug, the first entry is used; the activity asks for another by its prefix. The Lewis builder runs one engine copy per setting and answers each copy's `zsa:request-codes` itself, with the module's `encode` wrapped to pass `activity: "LVA"` or `"LVB"` (see `lewis-vsepr/builder.js`). The code format does not change.
 - `stats` lists the activity's `stats` keys in the same order, with the labels from its `data.js` (the unit tests compare them).
 - `maxItems` is the round size. A round with more original items gets no code.
 - Once codes are in use, never change an entry: the checker reads every code with the current entry. If the stats, totals or round size change, register a new id and prefix.

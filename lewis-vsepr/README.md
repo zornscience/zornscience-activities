@@ -1,16 +1,16 @@
 # Lewis Structure and VSEPR Builder
-Version: 1.0.0
+Version: 1.1.0
 
 ## Assumptions and departures
 - Claude hosts these static files and the lesson link is added on WordPress separately. This package makes no hosting or WordPress changes.
-- Built from `templates/starter/` on the shared activity engine (`shared/zsa-engine.js`, `shared/zsa-activity.css`, see `shared/README.md`), with the Ion Charge Trainer's conventions: one step at a time, tap to check with no Check button, the answer trail, the last explanation above the next step, locked wrong picks, two hints, Show me after two wrong attempts, the review queue, the round summary and Practice options in a collapsed panel. `builder.js` keeps the steps, the structure editor, the misconception rules, the strip and the table extras. Nothing in `shared/` was changed.
+- Built from `templates/starter/` on the shared activity engine (`shared/zsa-engine.js`, `shared/zsa-activity.css`, see `shared/README.md`), with the Ion Charge Trainer's conventions: one step at a time, tap to check with no Check button, the answer trail, the last explanation above the next step, locked wrong picks, two hints, Show me after two wrong attempts, the review queue, the round summary and Practice options in a collapsed panel. `builder.js` keeps the steps, the structure editor, the misconception rules, the strip and the table extras. The only change to `shared/` (in 1.1.0) is this activity's two entries in the completion code registry, `shared/zsa-codes.js`.
 - The build step is a structure editor, not a set of answer buttons. The engine still checks it: the editor sits in the step's `build` area and, when every bond is set and every electron is placed, presses the step's one hidden answer button. The engine then classifies the structure, counts the attempt, shows feedback or moves on, exactly as for any other step. That hidden button is reused for each new check.
 - The engine's periodic table is used as the reference strip, given periods 1 to 5 only (no practice item uses period 6). After each redraw the activity adds the valence electrons under each group number and the electronegativity values, which stay hidden until "Show electronegativity" is pressed. The first hint in the central-atom step turns them on.
 - On phones the table sits below the question, not above it as in the other activities, so the build step and its feedback fit on the screen. From 900 px it is on the left under the strip, as elsewhere.
 - Each step can differ per item: 2 to 7 steps (see Steps). The engine reads the step count when each item loads.
 - The AP setting is read when a round or a chosen structure starts. It switches to a second copy of the activity with the larger item pool, so review fillers and Practice my misses never bring an AP item into an octet-rule round.
 - Inter's alternate letters are on (`cv05` tailed l, `cv08` serifed I) so Cl and I3 cannot be misread.
-- Version 1.0.0 was tested in Chromium by Claude. Real screen readers, Firefox, Safari and school devices remain untested. See TESTING.md.
+- Version 1.1.0 was tested in Chromium by Claude. Real screen readers, Firefox, Safari and school devices remain untested. See TESTING.md.
 
 ## Purpose and learning goal
 Students build the Lewis structure of a molecule or polyatomic ion step by step, then predict its shape and polarity.
@@ -35,6 +35,7 @@ shared/
   zsa-activity.css
   zsa-embed.js
   zsa-engine.js
+  zsa-codes.js
   fonts/
     InterVariable.woff2
     Inter-OFL.txt
@@ -62,6 +63,16 @@ All answers stay in memory and reset on reload. The page requests only its local
 - `?item=H2O` opens practice of that one structure (like Choose a structure). Write the formula in plain letters with the charge after it: `NO3-`, `NH4+` (or `NH4%2B`), `CO3%202-` or `CO32-`, `SO3-2`. Names work too: `?item=carbonate`. An AP item, such as `?item=SF4`, turns the AP setting on. An unknown item starts a normal round.
 - `?set=ap` turns the AP setting on.
 - The parameters combine, for example `?set=ap&from=...`, and with `?embed=1`.
+
+## Completion code
+A full mixed round (6 structures) ends with a completion code under "Round complete", with a Copy code button, from `shared/zsa-codes.js` exactly as in the Ion Charge Trainer and the Ionic Formula Builder. The code records the setting the round was played with:
+
+| Setting | Prefix | Activity id | Shown on the checker as |
+|---|---|---:|---|
+| Octet rule (default) | `LVB` | 4 | Lewis Structure and VSEPR Builder (Octet rule) |
+| AP setting | `LVA` | 5 | Lewis Structure and VSEPR Builder (AP setting) |
+
+The code holds the version, the day, the number of structures, the first-try count for each step type in the round (total, central atom, build, formal charge, domains, shape, polarity), and the Show me and Hint counts. A code is 16 characters after the prefix plus 2 check characters, such as `LVB-031A-S2DR-0822-8094-DW` (octet rule) or `LVA-0DCQ-HDMD-G822-8095-YE` (AP setting, with a formal charge line). The prefix is part of the check, so changing LVB to LVA by hand makes the code "Typo or edited". The page runs one copy of the engine per setting (see Assumptions); each copy gets the code module with its own registry entry, so the setting comes from the round that was played, not from the checkbox at the end. One structure (the picker or `?item=`) and Practice my misses give no code. Teachers read codes on `check/` ([TEACHERS.md](../TEACHERS.md)).
 
 ## Content
 Octet rule (default set, 29 items):
@@ -214,11 +225,12 @@ Button label: Open the Lewis and VSEPR Builder
 13. **Formal charge notation**: sign first (+1, −1), unlike ion charges (2−).
 
 ## Known limitations
-- No saving or grade reporting. This is formative practice.
+- No saving or grade reporting. This is formative practice. The completion code is a record of practice, not proof (see `shared/README.md`).
 - One central atom only; no organic chains, no radicals (NO, NO2), no hydrogen bonding or dipole sizes.
 - The Lewis drawing is 2D and its positions are not the 3D shape; the shape is asked in its own step.
 - Current Chrome, Edge, Firefox and Safari iOS 16+ are intended targets, but only Chromium was tested.
 - 320x568 and 683x384 (200% zoom) are not fit targets: some steps need a short scroll there. There is no sideways scrolling at any size.
 
 ## Changelog
+1.1.0: Completion codes for a full mixed round, LVB for the octet rule and LVA for the AP setting, read by `check/` with the setting.
 1.0.0: Initial builder with 29 octet-rule items and 8 AP expanded-octet items; steps for valence electrons, central atom, a keyboard-operable structure editor with live counters, the AP formal charge step, electron domains and geometry, molecular geometry and angle, and polarity; targeted feedback, two hint levels, Show me, review repeats, first-try summary, Practice my misses, structure picker, deep links (`?item`, `?set=ap`, `?from`), a periodic table with valence electrons and electronegativity on demand, and optional embed mode.

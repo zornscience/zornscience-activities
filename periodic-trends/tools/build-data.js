@@ -1,5 +1,6 @@
 // Builds periodic-trends/data.js: every question from the Periodic Table's data (../periodic-table/data.js), checked
-// against the trend rule, plus the excluded pairs and every word a student sees. Run from the repository root:
+// against the trend rule, without near ties (values within 2%), plus the excluded pairs and every word a student
+// sees. Run from the repository root:
 //   node periodic-trends/tools/build-data.js
 // Do not edit data.js by hand. Node only, no dependencies.
 "use strict";
@@ -36,6 +37,9 @@ function ruleWinner(prop, a, b, relation) {
   var upWithZ = prop.rule[relation] === "increases";
   return upWithZ ? b : a; // a has the smaller atomic number
 }
+// Two values within 2% of the larger one are too close to call from the trend alone, so the pair is not asked.
+var MIN_DIFFERENCE = 0.02;
+function nearTie(va, vb) { return Math.abs(va - vb) <= MIN_DIFFERENCE * Math.max(Math.abs(va), Math.abs(vb)); }
 var items = [], excluded = [];
 PROPS.forEach(function (prop) {
   for (var i = 0; i < pool.length; i++) {
@@ -50,6 +54,7 @@ PROPS.forEach(function (prop) {
       var actual = va === vb ? null : (va > vb ? a : b);
       if (actual === null) { excluded.push({id: id, prop: prop.id, a: a.symbol, b: b.symbol, relation: relation, values: [va, vb], reason: "equal"}); continue; }
       if (actual !== predicted) { excluded.push({id: id, prop: prop.id, a: a.symbol, b: b.symbol, relation: relation, values: [va, vb], reason: "against the trend"}); continue; }
+      if (nearTie(va, vb)) { excluded.push({id: id, prop: prop.id, a: a.symbol, b: b.symbol, relation: relation, values: [va, vb], reason: "near tie"}); continue; }
       items.push({id: id, prop: prop.id, a: a.symbol, b: b.symbol, relation: relation, answer: actual.symbol});
     }
   }

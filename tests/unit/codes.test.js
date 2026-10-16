@@ -10,6 +10,14 @@ var {loadData} = require("../support/load-data");
 
 var ROOT = path.join(__dirname, "..", "..");
 var FAR = 8191; // a "today" after every encodable day
+// Payload characters per activity: the code is the prefix, the payload and 2 check characters in groups of 4.
+var LENGTH = {ICT: 12, IFB: 12, PTR: 11, LVB: 16, LVA: 16};
+var SYMBOL = "[0-9A-HJKMNP-TV-Z]";
+function shape(spec) {
+  var n = LENGTH[spec.prefix] + 2, groups = [];
+  for (var i = 0; i < n; i += 4) groups.push(SYMBOL + "{" + Math.min(4, n - i) + "}");
+  return new RegExp("^" + spec.prefix + "-" + groups.join("-") + "$");
+}
 
 function seeded(seed) {
   var a = seed >>> 0;
@@ -32,7 +40,7 @@ function randomResult(spec, rand) {
     var totals = {}, results = {};
     spec.totals.forEach(function (group, g) { group.forEach(function (key) { totals[key] = groupTotals[g]; }); });
     spec.stats.forEach(function (stat) { results[stat[0]] = int(rand, 0, totals[stat[0]]); });
-    return {activity: spec.slug, version: int(rand, 0, 7) + "." + int(rand, 0, 31) + "." + int(rand, 0, 9), day: int(rand, 0, 8191),
+    return {activity: spec.prefix, version: int(rand, 0, 7) + "." + int(rand, 0, 31) + "." + int(rand, 0, 9), day: int(rand, 0, 8191),
       items: items, totals: totals, results: results, show: int(rand, 0, 90), hints: int(rand, 0, 160)};
   }
 }
@@ -51,7 +59,7 @@ test("the registry matches the activities and their round summaries", function (
     spec.stats.forEach(function (stat) {
       assert.equal(spec.totals.filter(function (g) { return g.indexOf(stat[0]) >= 0; }).length, 1, spec.slug + " " + stat[0]);
     });
-    assert.equal(codes.payloadLength(spec), 12, spec.slug + " payload length");
+    assert.equal(codes.payloadLength(spec), LENGTH[spec.prefix], spec.prefix + " payload length");
   });
   // The labels are the ones the round summary shows, from each activity's data.js.
   var ict = loadData("ion-charge-trainer/data.js").ui.stepNames.map(function (label, i) { return [String(i), label]; });
@@ -60,6 +68,152 @@ test("the registry matches the activities and their round summaries", function (
   assert.deepEqual(codes.activity("ionic-formula-builder").stats, ifb);
   assert.equal(codes.activity("ion-charge-trainer").name, "Predicting Ion Charge Trainer");
   assert.equal(codes.activity("ionic-formula-builder").name, "Ionic Formula Builder");
+  var ptr = loadData("periodic-trends/data.js").ui.stats.map(function (label, i) { return [String(i), label]; });
+  assert.deepEqual(codes.activity("periodic-trends").stats, ptr);
+  assert.equal(codes.activity("periodic-trends").name, "Periodic Trends Practice");
+  // The Lewis builder's stats in the order of its round summary (builder.js), with the labels from its data.js.
+  var lvLabels = loadData("lewis-vsepr/data.js").ui.stats;
+  var builder = fs.readFileSync(path.join(ROOT, "lewis-vsepr/builder.js"), "utf8");
+  var order = JSON.parse(/stats: (\[[^\]]*\])\.map/.exec(builder)[1]);
+  var lv = order.map(function (k) { return [k, lvLabels[k]]; });
+  ["LVB", "LVA"].forEach(function (prefix) {
+    var spec = codes.activity(prefix);
+    assert.deepEqual(spec.stats, lv, prefix);
+    assert.equal(spec.slug, "lewis-vsepr");
+    assert.equal(spec.name, "Lewis Structure and VSEPR Builder");
+  });
+  assert.equal(codes.activity("LVB").setting, "Octet rule");
+  assert.equal(codes.activity("LVA").setting, "AP setting");
+  // Found by its slug, the Lewis builder is the octet-rule entry; the AP copy asks for LVA by prefix.
+  assert.equal(codes.activity("lewis-vsepr").prefix, "LVB");
+  assert.match(builder, /activity: ap \? "LVA" : "LVB"/);
+  // The ids and prefixes already in use never change.
+  assert.deepEqual(codes.ACTIVITIES.map(function (a) { return [a.id, a.prefix, a.slug]; }), [
+    [1, "ICT", "ion-charge-trainer"], [2, "IFB", "ionic-formula-builder"], [3, "PTR", "periodic-trends"], [4, "LVB", "lewis-vsepr"], [5, "LVA", "lewis-vsepr"]
+  ]);
+});
+
+// Codes made by zsa-codes.js before Periodic Trends Practice and the Lewis builder were registered (main at
+// b30fa28). They must still read the same, and the same results must still give the same code.
+var OLD = [
+  {code: "ICT-K6QY-0C22-7S11-86", note: "the example in TEACHERS.md and shared/README.md"},
+  {code: "ICT-K6QY-0C22-8111-TR", r: {activity: "ion-charge-trainer", version: "1.4.0", day: 288, items: 10,
+    totals: {"0": 10, "1": 10, "2": 10, "3": 10}, results: {"0": 9, "1": 10, "2": 8, "3": 7}, show: 1, hints: 3}},
+  {code: "ICT-C952-0001-YH11-FG", r: {activity: "ion-charge-trainer", version: "1.4.2", day: 250, items: 10,
+    totals: {"0": 10, "1": 10, "2": 10, "3": 4}, results: {"0": 10, "1": 10, "2": 10, "3": 4}, show: 0, hints: 0}},
+  {code: "IFB-1SEF-0M42-8092-5D", r: {activity: "ionic-formula-builder", version: "1.1.0", day: 288, items: 10,
+    totals: {n2f0: 6, n2f1: 6, f2n0: 4, f2n1: 4}, results: {n2f0: 6, n2f1: 5, f2n0: 4, f2n1: 3}, show: 2, hints: 5}},
+  {code: "IFB-1AXH-FZY0-0092-WS", r: {activity: "ionic-formula-builder", version: "1.1.0", day: 0, items: 10,
+    totals: {n2f0: 5, n2f1: 5, f2n0: 5, f2n1: 5}, results: {n2f0: 0, n2f1: 1, f2n0: 2, f2n1: 3}, show: 70, hints: 200}}
+];
+test("codes made before the new activities were registered still check as valid", function () {
+  OLD.forEach(function (o) {
+    var d = codes.decode(o.code, FAR);
+    assert.equal(d.status, "valid", o.code);
+    assert.equal(d.code, o.code);
+    if (!o.r) return;
+    assert.equal(codes.encode(o.r), o.code, "the same results give the same code");
+    assert.equal(d.activity.slug, o.r.activity);
+    assert.equal(d.version, o.r.version.split(".").slice(0, 2).join("."));
+    assert.equal(d.day, o.r.day);
+    assert.equal(d.items, o.r.items);
+    assert.deepEqual(d.stats.map(function (s) { return [s.key, s.correct, s.total]; }),
+      d.activity.stats.map(function (s) { return [s[0], o.r.results[s[0]], o.r.totals[s[0]]]; }));
+    assert.equal(d.show, Math.min(o.r.show, 63)); assert.equal(d.hints, Math.min(o.r.hints, 127));
+  });
+  var first = codes.decode(OLD[0].code, FAR);
+  assert.equal(first.activity.prefix, "ICT");
+  assert.equal(first.date, "2026-10-15");
+  assert.equal(codes.checkText(OLD.map(function (o) { return "Name\t" + o.code; }).join("\n"), FAR).filter(function (x) { return x.result.status === "valid"; }).length, OLD.length);
+});
+
+// Every example code in the docs teachers and developers read is a real, valid code.
+test("the example codes in the docs check as valid", function () {
+  var docs = ["TEACHERS.md", "shared/README.md", "periodic-trends/README.md", "lewis-vsepr/README.md"], prefixes = new Set();
+  docs.forEach(function (doc) {
+    var found = fs.readFileSync(path.join(ROOT, doc), "utf8").match(/`[A-Z]{3}-[0-9A-Z]{1,4}(-[0-9A-Z]{1,4})+`/g) || [];
+    found.forEach(function (quoted) {
+      var code = quoted.slice(1, -1), d = codes.decode(code, FAR);
+      if (/^ICT-1A2B/.test(code)) return; // the "read one character at a time" illustration
+      assert.equal(d.status, "valid", doc + " " + code);
+      prefixes.add(d.activity.prefix);
+    });
+  });
+  assert.deepEqual(Array.from(prefixes).sort(), ["ICT", "IFB", "LVA", "LVB", "PTR"]);
+});
+
+// The new activities' codes: the fields a full round gives, read back exactly; the setting of the Lewis builder.
+test("Periodic Trends Practice and the Lewis builder: encode and decode", function () {
+  var ptr = {activity: "periodic-trends", version: "1.1.0", day: 288, items: 9, totals: {"0": 9, "1": 9, "2": 9},
+    results: {"0": 9, "1": 7, "2": 8}, show: 1, hints: 4};
+  var code = codes.encode(ptr);
+  assert.match(code, shape(codes.activity("PTR")));
+  var d = codes.decode(code, 288);
+  assert.equal(d.status, "valid");
+  assert.equal(d.activity.name, "Periodic Trends Practice");
+  assert.equal(d.version, "1.1"); assert.equal(d.date, "2026-10-16"); assert.equal(d.items, 9);
+  assert.deepEqual(d.stats.map(function (s) { return s.label + ": " + s.correct + " / " + s.total; }),
+    ["Same group or period: 9 / 9", "Trend direction: 7 / 9", "Which element: 8 / 9"]);
+  assert.equal(d.show, 1); assert.equal(d.hints, 4);
+  // A round of one trend has 6 items of 9; a round of more than 9 never gives a code.
+  assert.equal(codes.encode(Object.assign({}, ptr, {items: 10, totals: {"0": 10, "1": 10, "2": 10}})), null);
+
+  // An octet-rule round: 6 structures, 4 with a central-atom step, none with formal charge, 5 with shapes, 3 molecules.
+  var lv = {version: "1.1.0", day: 288, items: 6,
+    totals: {total: 6, build: 6, center: 4, domains: 5, shape: 5, polarity: 3},
+    results: {total: 5, build: 4, center: 4, domains: 5, shape: 3, polarity: 2}, show: 2, hints: 6};
+  var octet = codes.encode(Object.assign({activity: "lewis-vsepr"}, lv));
+  var ap = codes.encode(Object.assign({activity: "LVA"}, lv, {totals: Object.assign({}, lv.totals, {fc: 2}), results: Object.assign({}, lv.results, {fc: 1})}));
+  assert.match(octet, shape(codes.activity("LVB")));
+  assert.match(ap, shape(codes.activity("LVA")));
+  var o = codes.decode(octet, FAR), a = codes.decode(ap, FAR);
+  assert.equal(o.status, "valid"); assert.equal(a.status, "valid");
+  assert.equal(o.activity.setting, "Octet rule"); assert.equal(a.activity.setting, "AP setting");
+  assert.equal(o.items, 6); assert.equal(a.items, 6);
+  assert.deepEqual(o.stats.filter(function (s) { return s.total; }).map(function (s) { return s.key + " " + s.correct + "/" + s.total; }),
+    ["total 5/6", "center 4/4", "build 4/6", "domains 5/5", "shape 3/5", "polarity 2/3"]);
+  assert.deepEqual(a.stats.filter(function (s) { return s.total; }).map(function (s) { return s.key + " " + s.correct + "/" + s.total; }),
+    ["total 5/6", "center 4/4", "build 4/6", "fc 1/2", "domains 5/5", "shape 3/5", "polarity 2/3"]);
+  // The same payload under the other setting's prefix is not a real code: the setting cannot be switched by hand.
+  assert.equal(codes.decode("LVA" + octet.slice(3), FAR).status, "typo");
+  assert.equal(codes.decode("LVB" + ap.slice(3), FAR).status, "typo");
+  assert.equal(codes.decode("PTR" + octet.slice(3), FAR).status, "typo");
+  // The total and build steps always share a total; more than 6 structures gives no code.
+  assert.equal(codes.encode(Object.assign({activity: "LVB"}, lv, {totals: Object.assign({}, lv.totals, {build: 5})})), null);
+  assert.equal(codes.encode(Object.assign({activity: "LVB"}, lv, {items: 7, totals: Object.assign({}, lv.totals, {total: 7, build: 7})})), null);
+  // Codes are found without hyphens and among other text.
+  [code, octet, ap].forEach(function (c) {
+    assert.equal(codes.checkText("Pat Lee " + c.replace(/-/g, "").toLowerCase() + " done", FAR)[0].result.code, c);
+  });
+});
+
+test("typos in the new activities' codes: every one-character change and swap, on fixed codes", function () {
+  var samples = [
+    codes.encode({activity: "periodic-trends", version: "1.1.0", day: 288, items: 9, totals: {"0": 9, "1": 9, "2": 9}, results: {"0": 8, "1": 9, "2": 6}, show: 0, hints: 2}),
+    codes.encode({activity: "LVB", version: "1.1.0", day: 288, items: 6, totals: {total: 6, build: 6, center: 5, domains: 6, shape: 6, polarity: 4},
+      results: {total: 6, build: 5, center: 5, domains: 4, shape: 6, polarity: 4}, show: 1, hints: 3}),
+    codes.encode({activity: "LVA", version: "1.1.0", day: 288, items: 6, totals: {total: 6, build: 6, center: 6, fc: 1, domains: 6, shape: 6, polarity: 4},
+      results: {total: 6, build: 6, center: 6, fc: 0, domains: 5, shape: 5, polarity: 3}, show: 3, hints: 9})
+  ];
+  samples.forEach(function (code) {
+    assert.equal(codes.decode(code, FAR).status, "valid", code);
+    var caught = 0;
+    for (var p = 4; p < code.length; p++) {
+      if (code[p] === "-") continue;
+      for (var c of codes.ALPHABET) {
+        if (c === code[p]) continue;
+        assert.equal(codes.decode(code.slice(0, p) + c + code.slice(p + 1), FAR).status, "typo", code + " at " + p + " to " + c);
+        caught++;
+      }
+      var q = code[p + 1] === "-" ? p + 2 : p + 1;
+      if (q < code.length && code[q] !== code[p]) {
+        var swapped = code.split(""); swapped[p] = code[q]; swapped[q] = code[p];
+        assert.equal(codes.decode(swapped.join(""), FAR).status, "typo", code + " swap " + p);
+      }
+    }
+    assert.equal(codes.decode(code.slice(0, -1), FAR).status, "typo", "a missing character");
+    assert.ok(caught > 300);
+  });
 });
 
 test("codes round-trip: 10,000 random results for every activity", function () {
@@ -68,7 +222,7 @@ test("codes round-trip: 10,000 random results for every activity", function () {
     for (var i = 0; i < 10000; i++) {
       var r = randomResult(spec, rand), code = codes.encode(r);
       assert.ok(code, spec.slug + " " + JSON.stringify(r));
-      assert.match(code, new RegExp("^" + spec.prefix + "-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{2}$"));
+      assert.match(code, shape(spec));
       var d = codes.decode(code, FAR);
       assert.equal(d.status, "valid", code);
       assert.equal(d.code, code);
