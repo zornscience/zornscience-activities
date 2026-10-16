@@ -5,7 +5,7 @@ The site has no build step and no runtime dependencies. The tests are developmen
 ```
 npm ci
 npx playwright install chromium     # once; not needed where Chromium is preinstalled
-npm test                            # unit tests, then browser tests (about 7 minutes: 47 unit and 118 browser tests)
+npm test                            # unit tests, then browser tests (about 7 minutes: 53 unit and 156 browser tests)
 npm run test:unit                   # Node only, a few seconds
 npx playwright test tests/e2e/keyboard.spec.js    # one browser file
 npm run parity                      # behavior parity with origin/main (about 6 minutes; --quick: about 1.5)
@@ -56,7 +56,7 @@ Two known findings are recorded in the tests rather than fixed, because fixing t
 - every element's box and computed style, including the ✗ mark
 - a full-page screenshot, with a tolerance only for antialiasing noise (a pixel counts if a channel differs by more than 16 levels)
 
-It covers the activities with an answer key in `tests/support/activities.js` (the Ion Charge Trainer and the Ionic Formula Builder); the Lewis builder and Periodic Trends Practice are driven by their own tests and skipped. It plays full rounds with five answering styles (in order, hints first, Show me, keyboard, reverse order) at four screen sizes. It also covers Practice my misses, Practice options, embed mode, every element and compound from the picker, and step 4 turned off. Differences are written to a report with screenshot pairs.
+It covers the Ion Charge Trainer and the Ionic Formula Builder; activities in `tests/support/activities.js` without a picker list (the Lewis builder) are skipped, and the others are driven by their own tests. It plays full rounds with five answering styles (in order, hints first, Show me, keyboard, reverse order) at four screen sizes. It also covers Practice my misses, Practice options, embed mode, every element and compound from the picker, and step 4 turned off. Differences are written to a report with screenshot pairs.
 
 One intended change is set aside: the completion code box on the summary of a full mixed round (`[data-zsa-code]`) is hidden in both pages and left out of the DOM and layout before each comparison, and ". Completion code ready." is removed from the end of the live region text. Everything else, the rest of that summary included, is still compared.
 
