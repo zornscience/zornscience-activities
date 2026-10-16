@@ -12,7 +12,8 @@
   if (!data || !cfg) return;
   var ui = data.ui, SKILLS = data.skills;
   var bank = data.passages.filter(function (p) { return p.status === "reviewed"; });
-  var app = root.querySelector("#zsa-act-app"), clock = root.querySelector("#zsa-act-clock");
+  var app = root.querySelector("#zsa-act-app"), testbar = root.querySelector("#zsa-act-testbar"), bottom = root.querySelector("#zsa-act-bottom");
+  var dialog = root.querySelector("#zsa-act-dialog"), live = root.querySelector("#zsa-act-live"), alertBox = root.querySelector("#zsa-act-alert");
   var SVG = "http://www.w3.org/2000/svg";
   var ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
   var S = null, timer = null;
@@ -218,7 +219,8 @@
   function minutesFor(passages) { return passages.reduce(function (n, p) { return n + p.questions.length; }, 0); }
 
   function intro(focusIt) {
-    stopClock();
+    if (S) leaveTest();
+    S = null;
     var grid = node("div", "zsa-act-intro");
     var left = grid.appendChild(node("div"));
     left.appendChild(node("p", "zsa-eyebrow", ui.eyebrow));
@@ -248,92 +250,323 @@
     show([grid], focusIt ? h1 : null);
   }
 
+  // ---------- The section: directions, one question at a time, navigator, timer, review ----------
   function start(passages, mode) {
-    var n = 0;
-    var items = passages.map(function (p) {
-      return {p: p, qs: p.questions.map(function (q) { n += 1; return Object.assign({}, q, {n: n}); })};
+    var n = 0, qs = [];
+    var items = passages.map(function (p, pi) {
+      return {p: p, qs: p.questions.map(function (q) {
+        n += 1;
+        var item = Object.assign({}, q, {n: n, pi: pi});
+        qs.push(item);
+        return item;
+      })};
     });
-    S = {items: items, mode: mode, page: 0, answers: {}, total: n, t0: Date.now()};
-    startClock();
-    renderPage();
+    S = {items: items, qs: qs, mode: mode, total: n, cur: 0, answers: {}, flags: {}, limit: mode === "mixed" ? n * 60 : null,
+      t0: null, elapsed: 0, hidden: false, warned: false, ended: false, timeUp: false, panes: {}};
+    directionsScreen();
   }
 
-  function startClock() {
+  function directionsContent(parent, titleTag) {
+    var h = parent.appendChild(heading(titleTag, ui.directionsTitle));
+    var minutes = S.limit / 60;
+    parent.appendChild(node("p", null, fill(ui.directionsIntro, {passages: S.items.length, passageWord: S.items.length > 1 ? "passages" : "passage", count: S.total})));
+    parent.appendChild(node("p", null, S.limit ? fill(ui.directionsTimed, {minutes: minutes}) : ui.directionsUntimed));
+    var ul = parent.appendChild(node("ul", "zsa-act-directions"));
+    ui.directionsList.forEach(function (t) { ul.appendChild(node("li", null, t)); });
+    return h;
+  }
+  function directionsScreen() {
     stopClock();
-    clock.replaceChildren();
-    var el = node("b", null, "0:00");
-    var a = clock.appendChild(node("span", null, ui.time + " "));
-    a.appendChild(el);
-    clock.appendChild(node("span", null, ui.pace + " ")).appendChild(node("b", null, fmt(S.total * 60)));
-    clock.hidden = false;
-    function tick() { el.textContent = fmt(Math.floor((Date.now() - S.t0) / 1000)); }
-    tick();
-    timer = setInterval(tick, 1000);
+    var box = node("section", "zsa-act-dir-screen");
+    box.appendChild(node("p", "zsa-eyebrow", S.mode === "mixed" ? ui.modeMixed : ui.modeOne));
+    var h1 = directionsContent(box, "h1");
+    var row = box.appendChild(node("div", "zsa-act-row"));
+    row.appendChild(button(ui.back, "", function () { intro(true); }));
+    row.appendChild(button(ui.startSection, "zsa-btn--primary", beginSection));
+    show([box], h1);
   }
-  function stopClock() { if (timer) clearInterval(timer); timer = null; clock.hidden = true; }
+  function openDirections() {
+    dialog.replaceChildren();
+    var h = directionsContent(dialog, "h2");
+    h.id = "zsa-act-dialog-title";
+    var row = dialog.appendChild(node("div", "zsa-act-row"));
+    var closeBtn = row.appendChild(button(ui.close, "zsa-btn--primary", function () { dialog.close(); }));
+    dialog.showModal();
+    closeBtn.focus();
+  }
 
-  function renderPage() {
-    var it = S.items[S.page], p = it.p;
-    var last = S.page === S.items.length - 1;
-    var head = node("div", "zsa-act-test-head");
-    var titles = head.appendChild(node("div"));
-    titles.appendChild(node("p", "zsa-act-kind", fill(ui.passageLabel, {roman: ROMAN[S.page], type: p.type})));
-    var h1 = titles.appendChild(heading("h1", p.title));
-    var prog = head.appendChild(node("div", "zsa-act-progress"));
-    var pips = prog.appendChild(node("span", "zsa-act-pips"));
-    pips.setAttribute("aria-hidden", "true");
-    S.items.forEach(function (x, i) { pips.appendChild(node("i", i <= S.page ? "zsa-act-on" : "")); });
-    prog.appendChild(node("span", null, fill(ui.passageOf, {n: S.page + 1, total: S.items.length})));
+  // ----- Timer: counts down in timed practice, up in untimed practice. Time comes from the clock, not from ticks.
+  function elapsed() { return S.t0 === null ? S.elapsed : S.elapsed + Math.floor((Date.now() - S.t0) / 1000); }
+  function stopClock() { if (timer) clearInterval(timer); timer = null; }
+  var timeText = null;
+  function tick() {
+    var used = elapsed();
+    if (S.limit && used >= S.limit) { endSection(true); return; }
+    var shownSecs = S.limit ? S.limit - used : used;
+    timeText.textContent = S.hidden ? ui.timerHidden : fmt(shownSecs);
+    S.timerLabel.textContent = S.hidden ? "" : (S.limit ? ui.timeLeft : ui.timeUsedLabel) + " ";
+    if (S.limit && !S.warned && S.limit > 300 && S.limit - used <= 300) {
+      S.warned = true;
+      var box = node("div", "zsa-act-notice");
+      box.appendChild(node("p", null, ui.fiveLeft));
+      box.appendChild(button(ui.dismiss, "", function () { alertBox.replaceChildren(); }));
+      alertBox.replaceChildren(box);
+    }
+  }
+  function buildTestbar() {
+    testbar.replaceChildren();
+    S.label = testbar.appendChild(node("p", "zsa-act-bar-label"));
+    var clockBox = testbar.appendChild(node("p", "zsa-act-timer"));
+    clockBox.setAttribute("role", "timer");
+    S.timerLabel = clockBox.appendChild(node("span", "zsa-act-timer-label", (S.limit ? ui.timeLeft : ui.timeUsedLabel) + " "));
+    timeText = clockBox.appendChild(node("b", "zsa-act-time"));
+    var hide = testbar.appendChild(button(ui.hideTimer, "zsa-act-bar-btn", function () {
+      S.hidden = !S.hidden;
+      hide.textContent = S.hidden ? ui.showTimer : ui.hideTimer;
+      tick();
+    }));
+    testbar.appendChild(button(ui.directions, "zsa-act-bar-btn", openDirections));
+    testbar.hidden = false;
+    root.classList.add("zsa-act--testing");
+  }
+  function leaveTest() {
+    stopClock();
+    testbar.hidden = true;
+    bottom.hidden = true;
+    alertBox.replaceChildren();
+    root.classList.remove("zsa-act--testing", "zsa-act--review");
+    if (dialog.open) dialog.close();
+  }
+  function beginSection() {
+    S.t0 = Date.now();
+    buildTestbar();
+    buildBottom();
+    tick();
+    timer = setInterval(tick, 250);
+    renderTest(0, "heading");
+  }
 
-    var split = node("div", "zsa-act-split");
-    var art = split.appendChild(node("article", "zsa-act-passage"));
-    art.setAttribute("aria-label", ui.passageRegion);
+  // ----- Question view
+  function passagePane(pi) {
+    if (S.panes[pi]) return S.panes[pi];
+    var p = S.items[pi].p;
+    var art = node("article", "zsa-act-passage");
+    art.setAttribute("aria-label", fill(ui.passageRegion, {roman: ROMAN[pi]}));
     art.tabIndex = 0; // it scrolls on its own, so it must be reachable by keyboard
+    art.appendChild(node("p", "zsa-act-kind", fill(ui.passageLabel, {roman: ROMAN[pi], type: p.type})));
+    art.appendChild(node("h1", null, p.title));
     renderBody(p).forEach(function (el) { art.appendChild(el); });
-
-    var qs = split.appendChild(node("section", "zsa-act-qs"));
-    qs.setAttribute("aria-label", p.title);
-    it.qs.forEach(function (q) {
-      var fs = qs.appendChild(node("fieldset", "zsa-act-q"));
-      var lg = fs.appendChild(node("legend", "zsa-act-q-stem"));
-      lg.appendChild(node("span", "zsa-act-q-num", q.n + "."));
-      rich(lg.appendChild(node("span")), q.stem);
-      var list = fs.appendChild(node("div", "zsa-act-choices"));
-      q.choices.forEach(function (c, i) {
-        var id = "zsa-act-q" + q.n + "-" + i;
-        var lab = list.appendChild(node("label", "zsa-act-choice"));
-        lab.htmlFor = id;
-        var input = lab.appendChild(node("input"));
-        input.type = "radio"; input.name = "zsa-act-q" + q.n; input.id = id; input.value = String(i);
-        input.checked = S.answers[q.n] === i;
-        input.addEventListener("change", function () { S.answers[q.n] = i; });
-        lab.appendChild(node("span", "zsa-act-letter", letters(q.n)[i])).setAttribute("aria-hidden", "true");
-        var txt = lab.appendChild(node("span"));
-        txt.appendChild(node("span", "zsa-sr-only", letters(q.n)[i] + ". "));
-        rich(txt, c);
-      });
+    S.panes[pi] = art;
+    return art;
+  }
+  function questionPane(q) {
+    var pane = node("section", "zsa-act-qpane");
+    pane.setAttribute("aria-labelledby", "zsa-act-qtitle");
+    var head = pane.appendChild(node("div", "zsa-act-qhead"));
+    var h = head.appendChild(heading("h2", fill(ui.question, {n: q.n})));
+    h.id = "zsa-act-qtitle";
+    h.appendChild(node("span", "zsa-sr-only", fill(ui.ofTotal, {total: S.total})));
+    var flag = head.appendChild(button("", "zsa-act-flag", function () {
+      S.flags[q.n] = !S.flags[q.n];
+      flag.setAttribute("aria-pressed", String(!!S.flags[q.n]));
+      updateNav();
+    }));
+    flag.appendChild(flagIcon());
+    flag.appendChild(node("span", null, ui.flag));
+    flag.setAttribute("aria-pressed", String(!!S.flags[q.n]));
+    var fs = pane.appendChild(node("fieldset", "zsa-act-q"));
+    rich(fs.appendChild(node("legend", "zsa-act-q-stem")), q.stem);
+    var list = fs.appendChild(node("div", "zsa-act-choices"));
+    q.choices.forEach(function (c, i) {
+      var id = "zsa-act-q" + q.n + "-" + i;
+      var lab = list.appendChild(node("label", "zsa-act-choice"));
+      lab.htmlFor = id;
+      var input = lab.appendChild(node("input"));
+      input.type = "radio"; input.name = "zsa-act-q" + q.n; input.id = id; input.value = String(i);
+      input.checked = S.answers[q.n] === i;
+      input.addEventListener("change", function () { S.answers[q.n] = i; updateNav(); });
+      lab.appendChild(node("span", "zsa-act-letter", letters(q.n)[i])).setAttribute("aria-hidden", "true");
+      var txt = lab.appendChild(node("span"));
+      txt.appendChild(node("span", "zsa-sr-only", letters(q.n)[i] + ". "));
+      rich(txt, c);
     });
-    var nav = qs.appendChild(node("div", "zsa-act-nav"));
-    var warn = node("div");
-    nav.appendChild(button(S.page ? ui.previous : ui.quit, "", function () {
-      if (S.page) { S.page -= 1; renderPage(); } else intro(true);
+    return {pane: pane, heading: h};
+  }
+  function flagIcon() {
+    var s = svg("svg", {viewBox: "0 0 16 16", width: 16, height: 16, "aria-hidden": "true", focusable: "false", "class": "zsa-act-flag-icon"});
+    svg("path", {d: "M3 1.5 V15", "class": "zsa-act-flag-pole"}, s);
+    svg("path", {d: "M3.5 2 H13 L10.5 5.5 L13 9 H3.5 Z", "class": "zsa-act-flag-cloth"}, s);
+    return s;
+  }
+  // focus: "heading" moves focus to the question heading; "keep" leaves it where it is (Previous and Next).
+  function renderTest(i, focus) {
+    if (S.ended) return;
+    var narrow = window.matchMedia("(max-width: 900px)").matches;
+    var prevPi = S.screen === "test" ? S.qs[S.cur].pi : -1;
+    S.cur = i;
+    S.screen = "test";
+    root.classList.remove("zsa-act--review");
+    bottom.hidden = false;
+    var q = S.qs[i];
+    var split = app.querySelector(".zsa-act-split");
+    if (!split) {
+      split = node("div", "zsa-act-split");
+      app.replaceChildren(split);
+    }
+    var art = passagePane(q.pi);
+    if (split.firstChild !== art) {
+      split.replaceChildren(art);
+      art.scrollTop = 0;
+    }
+    var built = questionPane(q);
+    if (split.children[1]) split.replaceChild(built.pane, split.children[1]); else split.appendChild(built.pane);
+    S.label.textContent = fill(ui.barLabel, {n: q.pi + 1, total: S.items.length});
+    updateNav();
+    if (narrow) {
+      if (q.pi !== prevPi) window.scrollTo(0, 0); else built.pane.scrollIntoView({block: "start"});
+    } else window.scrollTo(0, 0);
+    if (focus === "heading") built.heading.focus();
+    else live.textContent = fill(ui.announce, {n: q.n, total: S.total});
+  }
+
+  // ----- Bottom bar: Previous, the numbered navigator (one Tab stop, arrow keys move), Next
+  var navButtons = [], prevBtn, nextBtn;
+  function chevron(dir) {
+    var s = svg("svg", {viewBox: "0 0 16 16", width: 16, height: 16, "aria-hidden": "true", focusable: "false"});
+    svg("path", {d: dir < 0 ? "M10 3 L5 8 L10 13" : "M6 3 L11 8 L6 13", "class": "zsa-act-chev"}, s);
+    return s;
+  }
+  function navState(q) {
+    var parts = [S.answers[q.n] !== undefined ? ui.answered : ui.unanswered];
+    if (S.flags[q.n]) parts.push(ui.flagged);
+    return parts.join(", ");
+  }
+  function styleNavButton(b, q, current) {
+    b.classList.toggle("zsa-act-is-answered", S.answers[q.n] !== undefined);
+    b.classList.toggle("zsa-act-is-flagged", !!S.flags[q.n]);
+    if (current) b.setAttribute("aria-current", "step"); else b.removeAttribute("aria-current");
+    b.setAttribute("aria-label", fill(ui.navItem, {n: q.n}) + ", " + navState(q));
+  }
+  function buildBottom() {
+    bottom.replaceChildren();
+    bottom.setAttribute("aria-label", ui.navLabel);
+    var row = bottom.appendChild(node("div", "zsa-act-wrap zsa-act-bottom-row"));
+    prevBtn = row.appendChild(button("", "zsa-act-step", function () { if (S.cur > 0) renderTest(S.cur - 1, "keep"); }));
+    prevBtn.appendChild(chevron(-1));
+    prevBtn.appendChild(node("span", "zsa-act-step-text", ui.previous));
+    var strip = row.appendChild(node("div", "zsa-act-strip"));
+    strip.setAttribute("role", "toolbar");
+    strip.setAttribute("aria-label", ui.navLabel);
+    navButtons = S.qs.map(function (q, i) {
+      var b = strip.appendChild(button(String(q.n), "zsa-act-num" + (i && q.pi !== S.qs[i - 1].pi ? " zsa-act-num--first" : ""), function () { renderTest(i, "heading"); }));
+      b.addEventListener("keydown", function (e) {
+        var to = {ArrowRight: i + 1, ArrowDown: i + 1, ArrowLeft: i - 1, ArrowUp: i - 1, Home: 0, End: navButtons.length - 1}[e.key];
+        if (to === undefined) return;
+        e.preventDefault();
+        to = Math.max(0, Math.min(navButtons.length - 1, to));
+        navButtons.forEach(function (x, k) { x.tabIndex = k === to ? 0 : -1; });
+        navButtons[to].focus();
+      });
+      return b;
+    });
+    nextBtn = row.appendChild(button("", "zsa-act-step zsa-act-step--next", function () {
+      if (S.cur < S.total - 1) renderTest(S.cur + 1, "keep"); else reviewScreen();
     }));
-    nav.appendChild(button(last ? ui.score : ui.next, "zsa-btn--primary", function () {
-      if (!last) { S.page += 1; renderPage(); return; }
-      var blank = S.total - Object.keys(S.answers).length;
-      if (!blank) { results(); return; }
-      var box = node("div", "zsa-act-warn");
-      box.setAttribute("role", "alert");
-      var msg = box.appendChild(node("p"));
-      msg.appendChild(node("strong", null, fill(ui.blank, {count: blank, questions: blank > 1 ? "questions" : "question"})));
-      msg.appendChild(document.createTextNode(" " + ui.blankAdvice));
-      var row = box.appendChild(node("div", "zsa-act-row"));
-      row.appendChild(button(ui.keepWorking, "", function () { warn.replaceChildren(); }));
-      row.appendChild(button(ui.scoreAnyway, "zsa-btn--primary", results));
-      warn.replaceChildren(box);
+    nextBtn.appendChild(node("span", "zsa-act-step-text"));
+    nextBtn.appendChild(chevron(1));
+  }
+  function updateNav() {
+    navButtons.forEach(function (b, i) {
+      var cur = S.screen === "test" && i === S.cur;
+      styleNavButton(b, S.qs[i], cur);
+      // The roving Tab stop follows the current question unless focus is inside the strip.
+      if (!b.parentNode.contains(document.activeElement)) b.tabIndex = cur || (S.screen !== "test" && !i) ? 0 : -1;
+    });
+    if (S.screen === "test") navButtons[S.cur].scrollIntoView({block: "nearest", inline: "nearest"});
+    var first = S.cur === 0, last = S.cur === S.total - 1;
+    if (first && document.activeElement === prevBtn) nextBtn.focus();
+    prevBtn.disabled = first;
+    prevBtn.setAttribute("aria-label", ui.previous);
+    nextBtn.querySelector(".zsa-act-step-text").textContent = last ? ui.toReview : ui.next;
+    nextBtn.setAttribute("aria-label", last ? ui.toReview : ui.next);
+  }
+
+  // ----- Review screen and ending the section
+  function numButton(q, onClick) {
+    var b = button(String(q.n), "zsa-act-num", onClick);
+    styleNavButton(b, q, false);
+    return b;
+  }
+  function reviewScreen() {
+    if (S.ended) return;
+    S.screen = "review";
+    root.classList.add("zsa-act--review");
+    bottom.hidden = true;
+    S.label.textContent = ui.section + " · " + ui.reviewHeading;
+    var answered = S.qs.filter(function (q) { return S.answers[q.n] !== undefined; });
+    var blank = S.qs.filter(function (q) { return S.answers[q.n] === undefined; });
+    var flagged = S.qs.filter(function (q) { return S.flags[q.n]; });
+    var out = [];
+    var h1 = heading("h1", ui.reviewHeading);
+    out.push(h1);
+    out.push(node("p", "zsa-act-review-counts", fill(ui.reviewCounts, {answered: answered.length, unanswered: blank.length, flagged: flagged.length, total: S.total})));
+    out.push(node("p", "zsa-act-small", ui.reviewHint));
+    var legend = node("ul", "zsa-act-legend-states");
+    legend.setAttribute("aria-hidden", "true");
+    [["", ui.legendUnanswered], ["zsa-act-is-answered", ui.legendAnswered], ["zsa-act-is-flagged", ui.legendFlagged]].forEach(function (l) {
+      var li = legend.appendChild(node("li"));
+      li.appendChild(node("span", "zsa-act-num zsa-act-num--sample " + l[0]));
+      li.appendChild(node("span", null, l[1]));
+    });
+    out.push(legend);
+    var groups = 0;
+    function labelled(sec, h) { groups += 1; h.id = "zsa-act-rg" + groups; sec.setAttribute("aria-labelledby", h.id); }
+    function group(title, list) {
+      var sec = node("section", "zsa-act-review-group");
+      labelled(sec, sec.appendChild(node("h2", null, title + " (" + list.length + ")")));
+      if (!list.length) { sec.appendChild(node("p", "zsa-act-small", ui.reviewNone)); return sec; }
+      var ul = sec.appendChild(node("ul", "zsa-act-num-list"));
+      list.forEach(function (q) { ul.appendChild(node("li")).appendChild(numButton(q, function () { renderTest(S.qs.indexOf(q), "heading"); })); });
+      return sec;
+    }
+    out.push(group(ui.reviewUnanswered, blank));
+    out.push(group(ui.reviewFlagged, flagged));
+    var all = node("section", "zsa-act-review-group");
+    labelled(all, all.appendChild(node("h2", null, ui.reviewAll)));
+    S.items.forEach(function (it, pi) {
+      all.appendChild(node("h3", null, fill(ui.passageLabel, {roman: ROMAN[pi], type: it.p.type})));
+      var ul = all.appendChild(node("ul", "zsa-act-num-list"));
+      it.qs.forEach(function (q) { ul.appendChild(node("li")).appendChild(numButton(q, function () { renderTest(S.qs.indexOf(q), "heading"); })); });
+    });
+    out.push(all);
+    var confirmBox = node("div");
+    var row = node("div", "zsa-act-nav");
+    row.appendChild(button(ui.returnToQuestions, "", function () { renderTest(S.cur, "heading"); }));
+    row.appendChild(button(ui.endSection, "zsa-btn--primary", function () {
+      var box = node("section", "zsa-act-confirm");
+      box.setAttribute("aria-labelledby", "zsa-act-confirm-title");
+      var h = box.appendChild(heading("h2", ui.endTitle));
+      h.id = "zsa-act-confirm-title";
+      box.appendChild(node("p", null, ui.endText));
+      if (blank.length) box.appendChild(node("p", null, fill(ui.endBlank, {count: blank.length, questions: blank.length > 1 ? "questions" : "question"})));
+      var r = box.appendChild(node("div", "zsa-act-row"));
+      r.appendChild(button(ui.endNo, "", function () { confirmBox.replaceChildren(); h1.focus(); }));
+      r.appendChild(button(ui.endYes, "zsa-btn--primary", function () { endSection(false); }));
+      confirmBox.replaceChildren(box);
+      h.focus();
     }));
-    qs.appendChild(warn);
-    show([head, split], h1);
+    out.push(row);
+    out.push(confirmBox);
+    show(out, h1);
+  }
+  function endSection(timeUp) {
+    if (S.ended) return;
+    S.elapsed = S.limit && timeUp ? S.limit : elapsed();
+    S.t0 = null;
+    S.ended = true;
+    S.timeUp = timeUp;
+    leaveTest();
+    results();
   }
 
   function scaleSvg(lo, hi, est) {
@@ -373,8 +606,7 @@
   }
 
   function results() {
-    var secs = Math.floor((Date.now() - S.t0) / 1000);
-    stopClock();
+    var secs = S.elapsed;
     var all = [];
     S.items.forEach(function (it) { it.qs.forEach(function (q) { all.push(q); }); });
     var right = all.filter(function (q) { return S.answers[q.n] === q.answer; }).length;
@@ -392,6 +624,7 @@
     var out = [];
     var h1 = heading("h1", ui.reportTitle);
     out.push(h1);
+    if (S.timeUp) out.push(node("p", "zsa-act-notice", ui.timeUp));
     var top = node("div", "zsa-act-res-top");
     out.push(top);
     var card = top.appendChild(node("div", "zsa-act-score-card"));
