@@ -1,0 +1,162 @@
+/* Gas Laws and KMT Lab. Shared tokens and components come from ../shared/zsa-base.css and the engine's styles from
+   ../shared/zsa-activity.css (used by the Investigations tab). Classes are zsa-gl-.
+   Layout: one column on phones (the container and its gauge side by side, then the controls); from 900px the
+   container and the controls sit side by side with the tools below; from 1200px the tools are a third column. */
+.zsa.zsa-gl {--zsa-max-width:1440px; padding-top:8px; padding-bottom:16px;}
+.zsa-gl-header {display:flex;flex-wrap:wrap;align-items:center;column-gap:16px;margin-bottom:6px;}
+.zsa-gl-topline {display:flex;flex-wrap:wrap;align-items:center;column-gap:16px;}
+.zsa-gl-topline .zsa-eyebrow {margin:0;}
+.zsa-gl .zsa-gl-header h1 {font-size:1.5rem;line-height:1.2;margin:0;order:-1;}
+
+.zsa-gl-layout {display:grid;gap:12px;align-items:start;}
+@media(min-width:900px) {.zsa-gl-layout {grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;} .zsa-gl-panel {grid-column:1 / -1;}}
+@media(min-width:1200px) {.zsa-gl-layout {grid-template-columns:minmax(300px,360px) minmax(340px,390px) minmax(0,1fr);} .zsa-gl-panel {grid-column:auto;}}
+
+/* Container and gauge */
+.zsa-gl-box {display:grid;grid-template-columns:minmax(0,1fr) 128px;gap:8px;align-items:start;}
+.zsa-gl-canvas {display:block;width:100%;height:208px;}
+@media(min-width:900px) {.zsa-gl-box {grid-template-columns:minmax(0,1fr);} .zsa-gl-canvas {height:340px;}}
+@media(min-width:1200px) {.zsa-gl-canvas {height:350px;}}
+.zsa-gl-gauge {background:var(--zsa-sky);border:1px solid var(--zsa-border);border-radius:var(--zsa-radius-lg);padding:8px 10px;}
+.zsa-gl-gauge p {margin:0;}
+.zsa-gl-gauge-label {font-size:13px;font-weight:600;color:var(--zsa-navy);line-height:1.3;}
+.zsa-gl-gauge {min-width:0;}
+.zsa-gl-gauge-value {overflow-wrap:anywhere;font-size:22px;font-weight:700;color:var(--zsa-navy);line-height:1.25;font-variant-numeric:tabular-nums;}
+.zsa-gl-gauge-sub {font-size:14px;line-height:1.35;font-variant-numeric:tabular-nums;}
+.zsa-gl-gauge-z {font-weight:700;color:var(--zsa-navy);}
+.zsa-gl-gauge-note {font-size:12px;line-height:1.3;margin-top:2px;}
+@media(min-width:900px) {
+  .zsa-gl-gauge {display:flex;flex-wrap:wrap;align-items:baseline;column-gap:12px;}
+  .zsa-gl-gauge-label {flex-basis:100%;}
+  .zsa-gl-gauge-note {flex-basis:100%;}
+}
+.zsa-gl-play {display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px;}
+.zsa-gl-play .zsa-btn {padding:8px 16px;min-width:76px;}
+.zsa-gl-play-note {margin:0;font-size:13px;line-height:1.35;flex:1 1 160px;}
+
+/* Controls */
+.zsa-gl-controls {display:grid;gap:6px;align-content:start;min-width:0;}
+.zsa-gl-moderow {display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+.zsa-gl-seg {display:flex;flex-wrap:wrap;gap:6px;border:0;margin:0;padding:0;min-width:0;}
+.zsa-gl-seg legend:not(.zsa-sr-only) {font-size:14px;font-weight:600;color:var(--zsa-navy);padding:0;margin-bottom:2px;float:left;width:100%;}
+.zsa-gl-pill {display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 12px;border:1px solid var(--zsa-border-strong);border-radius:var(--zsa-radius-pill);font-size:15px;font-weight:600;color:var(--zsa-navy);background:var(--zsa-white);cursor:pointer;}
+.zsa-gl-pill:hover {background:var(--zsa-sky);border-color:var(--zsa-blue);}
+.zsa-gl-pill:has(input:checked) {background:var(--zsa-sky);border-color:var(--zsa-blue);box-shadow:inset 0 0 0 1px var(--zsa-blue);}
+.zsa-gl-pill:has(input:disabled) {color:#64748b;background:#f8fafc;border-style:dashed;cursor:default;}
+.zsa-gl-pill input {width:18px;height:18px;margin:0;accent-color:var(--zsa-blue);}
+.zsa-gl-pill:has(input:focus-visible) {outline:var(--zsa-focus-ring);outline-offset:var(--zsa-focus-offset);}
+.zsa-gl-pill input:focus-visible {outline:none;}
+.zsa-gl-row {display:grid;grid-template-columns:72px minmax(0,1fr) 76px 32px;align-items:center;column-gap:8px;min-height:44px;}
+.zsa-gl-row--gas {grid-template-columns:72px minmax(0,1fr) 24px;}
+.zsa-gl-row--gas:not(:has(.zsa-gl-shape)) {grid-template-columns:72px minmax(0,1fr);}
+.zsa-gl-row-label {font-size:15px;font-weight:600;color:var(--zsa-navy);line-height:1.2;}
+.zsa-gl-range {width:100%;min-width:0;height:44px;margin:0;accent-color:var(--zsa-blue);cursor:pointer;}
+.zsa-gl-range:disabled {cursor:default;opacity:.55;}
+.zsa-gl-num {width:100%;min-height:44px;border:1px solid var(--zsa-navy);border-radius:var(--zsa-radius);padding:4px 6px;color:var(--zsa-navy);background:var(--zsa-white);font-size:16px;font-variant-numeric:tabular-nums;}
+.zsa-gl-num:disabled {color:var(--zsa-slate);background:#f1f5f9;border-color:var(--zsa-border-strong);}
+.zsa-gl-unit {font-size:15px;color:var(--zsa-navy);}
+.zsa-gl-celsius {grid-column:2 / -1;font-size:13px;line-height:1.2;margin-top:-6px;}
+.zsa-gl select {min-height:44px;border:1px solid var(--zsa-navy);border-radius:var(--zsa-radius);padding:6px 8px;color:var(--zsa-navy);background:var(--zsa-white);font-size:16px;max-width:100%;min-width:0;}
+.zsa-gl-gas-select {width:100%;}
+.zsa-gl-hold legend {margin-bottom:2px;}
+.zsa-gl-note {margin:0;font-size:14px;line-height:1.4;color:var(--zsa-navy);min-height:1.4em;}
+.zsa-gl-small {margin:4px 0;font-size:14px;line-height:1.45;}
+.zsa-gl-warn {color:var(--zsa-navy);background:#fff7ed;border:1px solid #fdba74;border-radius:var(--zsa-radius);padding:6px 10px;}
+.zsa-gl-more {display:grid;gap:4px;}
+.zsa-gl-readouts {margin:0;display:grid;gap:4px;}
+.zsa-gl-readouts > div {display:grid;gap:0;}
+.zsa-gl-readouts dt {font-size:13px;font-weight:600;color:var(--zsa-navy);}
+.zsa-gl-readouts dd {margin:0;font-size:15px;line-height:1.4;font-variant-numeric:tabular-nums;}
+.zsa-gl-speed {display:inline-block;margin-right:12px;}
+#zsa-gl-ke-measured {display:block;margin:0;}
+
+/* Particle shapes in a mixture (also drawn on the canvas) */
+.zsa-gl-shape {display:inline-block;width:14px;height:14px;margin-right:6px;vertical-align:-1px;}
+.zsa-gl-shape--0 {background:#1d4ed8;border-radius:50%;}
+.zsa-gl-shape--1 {background:#b45309;}
+.zsa-gl-shape--2 {width:0;height:0;border-left:8px solid transparent;border-right:8px solid transparent;border-bottom:14px solid #047857;}
+
+/* Tables */
+.zsa-gl-table {width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums;}
+.zsa-gl-table caption {text-align:left;font-size:13px;font-weight:600;color:var(--zsa-navy);padding-bottom:2px;}
+.zsa-gl-table th, .zsa-gl-table td {border-bottom:1px solid var(--zsa-border);padding:4px 6px;text-align:right;white-space:nowrap;}
+.zsa-gl-table th:first-child {text-align:left;}
+.zsa-gl-table thead th {font-size:13px;color:var(--zsa-navy);white-space:normal;vertical-align:bottom;}
+.zsa-gl-total th, .zsa-gl-total td {font-weight:700;border-top:2px solid var(--zsa-border-strong);}
+.zsa-gl-data {overflow-x:auto;margin-top:6px;}
+
+/* Tabs and the tools panel */
+.zsa-gl-panel {min-width:0;}
+.zsa-gl-tabs {display:flex;gap:4px;border-bottom:2px solid var(--zsa-border);}
+.zsa-gl-tab {min-height:44px;padding:6px 14px;border:1px solid transparent;border-bottom:0;border-radius:var(--zsa-radius) var(--zsa-radius) 0 0;background:transparent;color:var(--zsa-navy);font:inherit;font-size:15px;font-weight:600;cursor:pointer;margin-bottom:-2px;}
+.zsa-gl-tab:hover {background:var(--zsa-sky);}
+.zsa-gl-tab[aria-selected="true"] {background:var(--zsa-white);border-color:var(--zsa-border);border-bottom:2px solid var(--zsa-white);color:var(--zsa-blue);box-shadow:inset 0 3px 0 var(--zsa-blue);}
+.zsa-gl-tabpanel {padding:8px 2px 0;}
+.zsa-gl-tabpanel:focus-visible {outline:var(--zsa-focus-ring);outline-offset:var(--zsa-focus-offset);}
+.zsa-gl-graph-bar, .zsa-gl-graph-actions {display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin:4px 0;}
+.zsa-gl-graph-actions .zsa-btn {padding:8px 14px;}
+.zsa-gl-inline {font-size:15px;font-weight:600;color:var(--zsa-navy);}
+.zsa-gl-inline-group {display:inline-flex;align-items:center;gap:6px;}
+.zsa-gl-inline-group .zsa-gl-num {width:84px;}
+.zsa-gl-chart {margin-top:4px;}
+.zsa-gl-svg {display:block;width:100%;height:auto;max-height:320px;font-family:var(--zsa-font);}
+.zsa-gl-grid {stroke:#e2e8f0;stroke-width:1;}
+.zsa-gl-axis {stroke:#334155;stroke-width:1.5;}
+.zsa-gl-tick {font-size:13px;fill:#334155;}
+.zsa-gl-axis-label {font-size:15px;font-weight:600;fill:#0b2a5b;}
+.zsa-gl-point {fill:#1d4ed8;stroke:#ffffff;stroke-width:1.5;}
+.zsa-gl-fitline {stroke:#0b2a5b;stroke-width:2;fill:none;}
+.zsa-gl-extrap {stroke-dasharray:6 5;}
+.zsa-gl-zero {fill:#ffffff;stroke:#b91c1c;stroke-width:2.5;}
+.zsa-gl-annot {font-size:14px;font-weight:600;fill:#0b2a5b;}
+.zsa-gl-annot-bg {fill:#ffffff;fill-opacity:.88;}
+.zsa-gl-bar {fill:#c7d6ee;stroke:#93a9cc;stroke-width:1;}
+.zsa-gl-curve {stroke:#0b2a5b;stroke-width:2.5;fill:none;}
+.zsa-gl-curve--dashed {stroke:#b45309;stroke-dasharray:8 5;}
+.zsa-gl-fit {margin:2px 0;font-size:15px;line-height:1.4;color:var(--zsa-navy);font-weight:600;}
+.zsa-gl-status {margin:0;font-size:14px;line-height:1.4;color:var(--zsa-navy);min-height:1.4em;}
+.zsa-gl-legend {list-style:none;margin:4px 0;padding:0;display:flex;flex-wrap:wrap;gap:4px 16px;font-size:14px;}
+.zsa-gl-key::before {content:"";display:inline-block;width:28px;height:0;margin-right:6px;vertical-align:middle;border-top:3px solid #0b2a5b;}
+.zsa-gl-key--dashed::before {border-top:3px dashed #b45309;}
+.zsa-gl-key--bar::before {height:12px;width:14px;border:1px solid #93a9cc;background:#c7d6ee;}
+
+/* Investigations: the engine's step and summary styles from zsa-activity.css */
+.zsa-gl-strip h2 {font-size:1.2rem;margin:4px 0 0;}
+.zsa-gl-strip p {margin:0;}
+.zsa-gl-investigate .zsa-work {margin-top:6px;}
+.zsa-gl-mini {max-width:420px;}
+.zsa-gl-setup {display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:6px 0 2px;}
+.zsa-gl-setup .zsa-btn {padding:8px 14px;}
+.zsa-gl-setup p {margin:0;font-size:14px;line-height:1.4;flex:1 1 200px;}
+.zsa-gl-investigate .zsa-choices {grid-template-columns:minmax(0,1fr);}
+.zsa-gl-investigate .zsa-choices--two {grid-template-columns:repeat(2,minmax(0,1fr));}
+.zsa-gl-investigate .zsa-choice {justify-content:flex-start;text-align:left;padding:6px 12px;font-weight:500;}
+.zsa-gl-investigate .zsa-choices--two .zsa-choice {justify-content:center;text-align:center;}
+
+/* Phones: a shorter header, denser controls. */
+@media(max-width:599px) {
+  .zsa-gl-topline .zsa-eyebrow {display:none;}
+  .zsa-gl .zsa-gl-header h1 {font-size:1.2rem;}
+  .zsa-gl-header {margin-bottom:4px;}
+  .zsa-gl-layout {gap:8px;}
+  .zsa-gl-box {grid-template-columns:minmax(0,1fr) 116px;gap:6px;}
+  .zsa-gl-canvas {height:196px;}
+  .zsa-gl-gauge {padding:6px 8px;}
+  .zsa-gl-gauge-value {font-size:19px;}
+  .zsa-gl-gauge-sub {font-size:13px;}
+  .zsa-gl-play {margin-top:4px;}
+  .zsa-gl-pill {padding:0 10px;font-size:14px;}
+  .zsa-gl-row {grid-template-columns:62px minmax(0,1fr) 70px 28px;column-gap:6px;}
+  .zsa-gl-row--gas {grid-template-columns:62px minmax(0,1fr) 22px;}
+  .zsa-gl-row--gas:not(:has(.zsa-gl-shape)) {grid-template-columns:62px minmax(0,1fr);}
+  .zsa-gl-row-label {font-size:14px;}
+  .zsa-gl-controls {gap:4px;}
+  .zsa-gl-hold legend {font-size:13px;}
+  .zsa-gl-note {font-size:13px;}
+}
+@media(max-width:399px) {.zsa-gl-tab {padding:6px 9px;font-size:14px;} .zsa-gl-tabs {gap:2px;}}
+@media(max-width:359px) {
+  .zsa-gl-box {grid-template-columns:minmax(0,1fr) 104px;}
+  .zsa-gl-gauge-value {font-size:17px;}
+  .zsa-gl-row {grid-template-columns:56px minmax(0,1fr) 64px 24px;}
+}

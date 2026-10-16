@@ -33,7 +33,10 @@
     {id:2, prefix:"IFB", slug:"ionic-formula-builder", name:"Ionic Formula Builder", maxItems:10,
       stats:[["n2f0", "Name to formula: ion charges"], ["n2f1", "Name to formula: subscripts"],
         ["f2n0", "Formula to name: which ions"], ["f2n1", "Formula to name: name it"]],
-      totals:[["n2f0", "n2f1"], ["f2n0", "f2n1"]], items:[0, 1]}
+      totals:[["n2f0", "n2f1"], ["f2n0", "f2n1"]], items:[0, 1]},
+    {id:3, prefix:"GAS", slug:"gas-lab", name:"Gas Laws and KMT Lab", maxItems:6,
+      stats:[["predict", "Predict"], ["test", "Test in the lab"], ["explain", "Explain with particles"]],
+      totals:[["predict", "test", "explain"]], items:[0]}
   ];
   // The fixed fields, least significant first: [name, how many values]. Then one total per totals group (0 to
   // maxItems) and one first-try count per stat (0 to its total). Show me and Hint counts stop at their top value.

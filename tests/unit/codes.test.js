@@ -10,6 +10,14 @@ var {loadData} = require("../support/load-data");
 
 var ROOT = path.join(__dirname, "..", "..");
 var FAR = 8191; // a "today" after every encodable day
+// Payload characters per activity: the code is the prefix, the payload and 2 check characters in groups of 4.
+var LENGTH = {ICT: 12, IFB: 12, GAS: 11};
+var SYMBOL = "[0-9A-HJKMNP-TV-Z]";
+function shape(spec) {
+  var n = LENGTH[spec.prefix] + 2, groups = [];
+  for (var i = 0; i < n; i += 4) groups.push(SYMBOL + "{" + Math.min(4, n - i) + "}");
+  return new RegExp("^" + spec.prefix + "-" + groups.join("-") + "$");
+}
 
 function seeded(seed) {
   var a = seed >>> 0;
@@ -51,7 +59,7 @@ test("the registry matches the activities and their round summaries", function (
     spec.stats.forEach(function (stat) {
       assert.equal(spec.totals.filter(function (g) { return g.indexOf(stat[0]) >= 0; }).length, 1, spec.slug + " " + stat[0]);
     });
-    assert.equal(codes.payloadLength(spec), 12, spec.slug + " payload length");
+    assert.equal(codes.payloadLength(spec), LENGTH[spec.prefix], spec.slug + " payload length");
   });
   // The labels are the ones the round summary shows, from each activity's data.js.
   var ict = loadData("ion-charge-trainer/data.js").ui.stepNames.map(function (label, i) { return [String(i), label]; });
@@ -60,6 +68,10 @@ test("the registry matches the activities and their round summaries", function (
   assert.deepEqual(codes.activity("ionic-formula-builder").stats, ifb);
   assert.equal(codes.activity("ion-charge-trainer").name, "Predicting Ion Charge Trainer");
   assert.equal(codes.activity("ionic-formula-builder").name, "Ionic Formula Builder");
+  // The Gas Laws and KMT Lab's investigations: one total for its three steps, labels from its data.js.
+  assert.deepEqual(codes.activity("gas-lab").stats, loadData("gas-lab/data.js").inv.stats);
+  assert.equal(codes.activity("gas-lab").name, "Gas Laws and KMT Lab");
+  assert.equal(codes.activity("GAS").id, 3);
 });
 
 test("codes round-trip: 10,000 random results for every activity", function () {
@@ -68,7 +80,7 @@ test("codes round-trip: 10,000 random results for every activity", function () {
     for (var i = 0; i < 10000; i++) {
       var r = randomResult(spec, rand), code = codes.encode(r);
       assert.ok(code, spec.slug + " " + JSON.stringify(r));
-      assert.match(code, new RegExp("^" + spec.prefix + "-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{2}$"));
+      assert.match(code, shape(spec));
       var d = codes.decode(code, FAR);
       assert.equal(d.status, "valid", code);
       assert.equal(d.code, code);

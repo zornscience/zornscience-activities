@@ -12,6 +12,7 @@ The checker runs in your browser. Nothing you paste is sent anywhere or saved.
 2. Add the activity's link with Add, then Link:
    - Predicting Ion Charge Trainer: https://activities.zornscience.org/ion-charge-trainer/
    - Ionic Formula Builder: https://activities.zornscience.org/ionic-formula-builder/
+   - Gas Laws and KMT Lab: https://activities.zornscience.org/gas-lab/ (the code comes from the Investigations tab)
 3. In the instructions, ask students to finish one full round and paste their completion code. For an Assignment they can paste it as a private comment or in a Google Doc they turn in; for a Question they paste it as their answer.
 
 A sample instruction: "Open the link and finish one full round. At the end, select Copy code and paste the code here."
@@ -19,10 +20,10 @@ A sample instruction: "Open the link and finish one full round. At the end, sele
 ## 2. What students do
 
 1. Open the link. No account is needed, and nothing they enter leaves the device.
-2. Play a full round (10 elements or compounds, plus any review items the activity adds).
-3. On the round summary, under "Round complete", select **Copy code** and paste the code into the assignment. A code looks like `ICT-K6QY-0C22-7S11-86`.
+2. Play a full round (10 elements or compounds, or 6 investigations in the Gas Laws and KMT Lab, plus any review items the activity adds).
+3. On the round summary, under "Round complete", select **Copy code** and paste the code into the assignment. A code looks like `ICT-K6QY-0C22-7S11-86` (the Gas Laws and KMT Lab's codes start with `GAS` and are one character shorter).
 
-Only a full mixed round gives a code. Practicing one chosen element or compound, and "Practice my misses", do not. A student who starts a new round before finishing gets no code for the unfinished one. Every full round gives a code; any of them can be turned in.
+Only a full mixed round gives a code. Practicing one chosen element, compound or investigation, and "Practice my misses", do not. A student who starts a new round before finishing gets no code for the unfinished one. Every full round gives a code; any of them can be turned in.
 
 If copying does not work on a device, the code is selected so the student can press Ctrl+C (Command+C on a Mac), or they can type it. Lowercase and missing hyphens are fine, and the letters I, L and O are read as 1, 1 and 0.
 
