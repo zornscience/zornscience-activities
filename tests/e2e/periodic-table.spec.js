@@ -265,18 +265,26 @@ test("periodic table: deep links and the back link", async ({page, problems}) =>
   expect(await page.evaluate(() => [window.scrollX, window.scrollY])).toEqual([0, 0]);
   await page.setViewportSize({width: 1366, height: 657});
 
-  var back = page.locator("#zsa-pt-back");
+  // The header: the ZornScience logo links home; no back link unless a lesson passes ?from=.
+  var back = page.locator("#zsa-pt-back"), logo = page.getByRole("link", {name: "ZornScience home"});
   await go(page);
-  await expect(back).toHaveAttribute("href", "https://zornscience.org/science/");
+  await expect(logo).toHaveAttribute("href", "https://zornscience.org/");
+  await expect(logo).toBeVisible();
+  await expect(page.getByRole("heading", {level: 1})).toHaveText("Periodic Table");
+  await expect(back).toBeHidden();
+  await expect(page.getByText("ZornScience lessons")).toHaveCount(0);
+  await expect(page.getByText("Chemistry · Reference")).toHaveCount(0);
   var lesson = "https://zornscience.org/science/chemistry/unit-2-quantum/periodic-trends-periods/";
   await go(page, "?from=" + encodeURIComponent(lesson) + "&mode=radius");
   await expect(back).toHaveAttribute("href", lesson);
   await expect(back).toHaveText("← Back to the lesson");
+  await expect(back).toBeVisible();
+  await expect(logo).toHaveAttribute("href", "https://zornscience.org/");
   for (var bad of ["https://example.com/", "http://zornscience.org/science/", "https://zornscience.org.example.com/", "https://www.zornscience.org/",
     "https://user@zornscience.org/", "https://zornscience.org:8443/", "javascript:alert(1)", "//zornscience.org/x", "/science/"]) {
     await go(page, "?from=" + encodeURIComponent(bad));
+    await expect(back, bad).toBeHidden();
     await expect(back, bad).toHaveAttribute("href", "https://zornscience.org/science/");
-    await expect(back).toHaveText("← ZornScience lessons");
   }
   // Changing the view keeps ?from.
   await go(page, "?from=" + encodeURIComponent(lesson));
@@ -301,6 +309,10 @@ test("periodic table: embed mode, local files only, no storage", async ({page, p
   expect(await page.evaluate(() => [localStorage.length, sessionStorage.length, document.cookie])).toEqual([0, 0, ""]);
   await cell(page, "Na").click();
   await expect(page.locator("#zsa-pt-details-title")).toHaveText("Sodium");
+  // Embedded on a lesson page, neither the logo nor a back link shows, even with ?from=.
+  await go(page, "?embed=1&from=" + encodeURIComponent("https://zornscience.org/science/chemistry/"));
+  await expect(page.locator("#zsa-pt-back")).toBeHidden();
+  await expect(page.getByRole("link", {name: "ZornScience home"})).toBeHidden();
 });
 
 test("periodic table: no axe violations in eight states", async ({page, problems}) => {
@@ -395,7 +407,7 @@ test("periodic table: full screen for presenting, with Esc to leave", async ({pa
     await inFullscreen(page, false);
     await expect(page.getByRole("button", {name: "Full screen"})).toBeVisible();
     await expect(page.locator("#zsa-pt-details-title")).toHaveText("Bromine");
-    await expect(page.locator("#zsa-pt-back")).toBeVisible();
+    await expect(page.getByRole("link", {name: "ZornScience home"})).toBeVisible();
     await page.keyboard.press("Escape");
     await expect(page.locator("#zsa-pt-details-title")).toHaveText("Element details");
   }

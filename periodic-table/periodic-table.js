@@ -37,7 +37,7 @@
   if (modes[params.get("mode")]) state.mode = params.get("mode");
   if (params.get("trends") === "0") state.trends = false;
   var start = find(params.get("el") || "");
-  // ?from= sets the back link, for https://zornscience.org/ pages only.
+  // ?from= adds a back link to the lesson, for https://zornscience.org/ pages only. The logo always links home.
   (function () {
     var raw = params.get("from");
     if (!raw) return;
@@ -45,8 +45,10 @@
       var u = new URL(raw);
       if (u.protocol !== "https:" || u.hostname !== "zornscience.org" || u.port || u.username || u.password) return;
       state.from = u.href;
+      // The back link shows only when a lesson sent the student here (never in embed mode, which hides it).
       var back = $("back");
       back.href = u.href; back.textContent = ui.backToLesson;
+      if (!root.classList.contains("zsa--embedded")) back.hidden = false;
     } catch (err) { /* not a URL: keep the default link */ }
   }());
   function syncUrl() {
