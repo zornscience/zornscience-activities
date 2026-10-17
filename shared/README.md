@@ -140,7 +140,7 @@ The first check character is a sum over the prefix letters (A = 0 to Z = 25) and
 Add an entry to `ACTIVITIES` in `zsa-codes.js` and load `zsa-codes.js` on the activity page:
 
 ```js
-{id:3, prefix:"BEQ", slug:"balancing-equations", name:"Balancing Equations", maxItems:10,
+{id:7, prefix:"BEQ", slug:"balancing-equations", name:"Balancing Equations", maxItems:10,
   stats:[["0", "Count atoms"], ["1", "Pick coefficients"]],   // the keys and labels of the round summary's stats
   totals:[["0", "1"]],                                        // stat keys that always share a total
   items:[0]}                                                  // the totals groups that add up to the original items

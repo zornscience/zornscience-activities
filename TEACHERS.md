@@ -14,6 +14,7 @@ The checker runs in your browser. Nothing you paste is sent anywhere or saved.
    - Ionic Formula Builder: https://activities.zornscience.org/ionic-formula-builder/
    - Periodic Trends Practice: https://activities.zornscience.org/periodic-trends/
    - Lewis Structure and VSEPR Builder: https://activities.zornscience.org/lewis-vsepr/ (octet rule), or https://activities.zornscience.org/lewis-vsepr/?set=ap for the AP setting (expanded octets and formal charge)
+   - Gas Laws and KMT Lab: https://activities.zornscience.org/gas-lab/ (the code comes from the Investigations tab)
 3. In the instructions, ask students to finish one full round and paste their completion code. For an Assignment they can paste it as a private comment or in a Google Doc they turn in; for a Question they paste it as their answer.
 
 A sample instruction: "Open the link and finish one full round. At the end, select Copy code and paste the code here."
@@ -21,7 +22,7 @@ A sample instruction: "Open the link and finish one full round. At the end, sele
 ## 2. What students do
 
 1. Open the link. No account is needed, and nothing they enter leaves the device.
-2. Play a full round, plus any review items the activity adds: 10 elements or compounds in the Ion Charge Trainer and the Ionic Formula Builder, 9 questions (all three trends) in Periodic Trends Practice, 6 structures in the Lewis Structure and VSEPR Builder.
+2. Play a full round, plus any review items the activity adds: 10 elements or compounds in the Ion Charge Trainer and the Ionic Formula Builder, 9 questions (all three trends) in Periodic Trends Practice, 6 structures in the Lewis Structure and VSEPR Builder, 6 investigations in the Gas Laws and KMT Lab (Investigations tab).
 3. On the round summary, under "Round complete", select **Copy code** and paste the code into the assignment.
 
 Example codes, one per activity (each checks as Valid):
@@ -30,13 +31,14 @@ Example codes, one per activity (each checks as Valid):
 |---|---|---|
 | Predicting Ion Charge Trainer | `ICT-K6QY-0C22-7S11-86` | Predicting Ion Charge Trainer, 10 items |
 | Ionic Formula Builder | `IFB-1SEF-0M42-8092-5D` | Ionic Formula Builder, 10 items |
-| Periodic Trends Practice | `PTR-4TGG-8228-0936-F` | Periodic Trends Practice, 9 items |
-| Lewis Structure and VSEPR Builder, octet rule | `LVB-031A-S2DR-0822-8094-DW` | Lewis Structure and VSEPR Builder (Octet rule), 6 items |
-| Lewis Structure and VSEPR Builder, AP setting | `LVA-0DCQ-HDMD-G822-8095-YE` | Lewis Structure and VSEPR Builder (AP setting), 6 items, with a Formal charge line |
+| Periodic Trends Practice | `PTR-4TGG-8228-094M-T` | Periodic Trends Practice, 9 items |
+| Lewis Structure and VSEPR Builder, octet rule | `LVB-031A-S2DR-0822-8095-Q8` | Lewis Structure and VSEPR Builder (Octet rule), 6 items |
+| Lewis Structure and VSEPR Builder, AP setting | `LVA-0DCQ-HDMD-G822-8096-N5` | Lewis Structure and VSEPR Builder (AP setting), 6 items, with a Formal charge line |
+| Gas Laws and KMT Lab | `GAS-0TNG-C228-0136-A` | Gas Laws and KMT Lab, 6 items |
 
 The Lewis builder's code records whether the round was played with the octet rule or the AP setting, and the checker shows it after the activity name. The AP setting is the checkbox under Practice options (or the `?set=ap` link); it applies from the next round.
 
-Only a full mixed round gives a code. Practicing one chosen element, compound, question or structure, a round of one trend in Periodic Trends Practice, and "Practice my misses" do not. A student who starts a new round before finishing gets no code for the unfinished one. Every full round gives a code; any of them can be turned in.
+Only a full mixed round gives a code. Practicing one chosen element, compound, question, structure or investigation, a round of one trend in Periodic Trends Practice, and "Practice my misses" do not. A student who starts a new round before finishing gets no code for the unfinished one. Every full round gives a code; any of them can be turned in.
 
 If copying does not work on a device, the code is selected so the student can press Ctrl+C (Command+C on a Mac), or they can type it. Lowercase and missing hyphens are fine, and the letters I, L and O are read as 1, 1 and 0.
 

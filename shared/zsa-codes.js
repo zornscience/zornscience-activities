@@ -39,14 +39,17 @@
       stats:[["n2f0", "Name to formula: ion charges"], ["n2f1", "Name to formula: subscripts"],
         ["f2n0", "Formula to name: which ions"], ["f2n1", "Formula to name: name it"]],
       totals:[["n2f0", "n2f1"], ["f2n0", "f2n1"]], items:[0, 1]},
-    {id:3, prefix:"PTR", slug:"periodic-trends", name:"Periodic Trends Practice", maxItems:9,
+    {id:3, prefix:"GAS", slug:"gas-lab", name:"Gas Laws and KMT Lab", maxItems:6,
+      stats:[["predict", "Predict"], ["test", "Test in the lab"], ["explain", "Explain with particles"]],
+      totals:[["predict", "test", "explain"]], items:[0]},
+    {id:4, prefix:"PTR", slug:"periodic-trends", name:"Periodic Trends Practice", maxItems:9,
       stats:[["0", "Same group or period"], ["1", "Trend direction"], ["2", "Which element"]],
       totals:[["0", "1", "2"]], items:[0]},
     // The Lewis and VSEPR Builder writes octet-rule rounds as LVB and AP rounds as LVA, so the code records the
     // setting. Found by slug, "lewis-vsepr" is the octet-rule entry; the AP copy of the activity asks for "LVA".
-    {id:4, prefix:"LVB", slug:"lewis-vsepr", setting:"Octet rule", name:"Lewis Structure and VSEPR Builder", maxItems:6,
+    {id:5, prefix:"LVB", slug:"lewis-vsepr", setting:"Octet rule", name:"Lewis Structure and VSEPR Builder", maxItems:6,
       stats:LEWIS_STATS, totals:LEWIS_TOTALS, items:[0]},
-    {id:5, prefix:"LVA", slug:"lewis-vsepr", setting:"AP setting", name:"Lewis Structure and VSEPR Builder", maxItems:6,
+    {id:6, prefix:"LVA", slug:"lewis-vsepr", setting:"AP setting", name:"Lewis Structure and VSEPR Builder", maxItems:6,
       stats:LEWIS_STATS, totals:LEWIS_TOTALS, items:[0]}
   ];
   // The fixed fields, least significant first: [name, how many values]. Then one total per totals group (0 to

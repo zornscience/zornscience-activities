@@ -69,10 +69,10 @@ A full mixed round (6 structures) ends with a completion code under "Round compl
 
 | Setting | Prefix | Activity id | Shown on the checker as |
 |---|---|---:|---|
-| Octet rule (default) | `LVB` | 4 | Lewis Structure and VSEPR Builder (Octet rule) |
-| AP setting | `LVA` | 5 | Lewis Structure and VSEPR Builder (AP setting) |
+| Octet rule (default) | `LVB` | 5 | Lewis Structure and VSEPR Builder (Octet rule) |
+| AP setting | `LVA` | 6 | Lewis Structure and VSEPR Builder (AP setting) |
 
-The code holds the version, the day, the number of structures, the first-try count for each step type in the round (total, central atom, build, formal charge, domains, shape, polarity), and the Show me and Hint counts. A code is 16 characters after the prefix plus 2 check characters, such as `LVB-031A-S2DR-0822-8094-DW` (octet rule) or `LVA-0DCQ-HDMD-G822-8095-YE` (AP setting, with a formal charge line). The prefix is part of the check, so changing LVB to LVA by hand makes the code "Typo or edited". The page runs one copy of the engine per setting (see Assumptions); each copy gets the code module with its own registry entry, so the setting comes from the round that was played, not from the checkbox at the end. One structure (the picker or `?item=`) and Practice my misses give no code. Teachers read codes on `check/` ([TEACHERS.md](../TEACHERS.md)).
+The code holds the version, the day, the number of structures, the first-try count for each step type in the round (total, central atom, build, formal charge, domains, shape, polarity), and the Show me and Hint counts. A code is 16 characters after the prefix plus 2 check characters, such as `LVB-031A-S2DR-0822-8095-Q8` (octet rule) or `LVA-0DCQ-HDMD-G822-8096-N5` (AP setting, with a formal charge line). The prefix is part of the check, so changing LVB to LVA by hand makes the code "Typo or edited". The page runs one copy of the engine per setting (see Assumptions); each copy gets the code module with its own registry entry, so the setting comes from the round that was played, not from the checkbox at the end. One structure (the picker or `?item=`) and Practice my misses give no code. Teachers read codes on `check/` ([TEACHERS.md](../TEACHERS.md)).
 
 ## Content
 Octet rule (default set, 29 items):

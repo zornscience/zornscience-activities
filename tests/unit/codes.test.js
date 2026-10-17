@@ -11,7 +11,7 @@ var {loadData} = require("../support/load-data");
 var ROOT = path.join(__dirname, "..", "..");
 var FAR = 8191; // a "today" after every encodable day
 // Payload characters per activity: the code is the prefix, the payload and 2 check characters in groups of 4.
-var LENGTH = {ICT: 12, IFB: 12, PTR: 11, LVB: 16, LVA: 16};
+var LENGTH = {ICT: 12, IFB: 12, GAS: 11, PTR: 11, LVB: 16, LVA: 16};
 var SYMBOL = "[0-9A-HJKMNP-TV-Z]";
 function shape(spec) {
   var n = LENGTH[spec.prefix] + 2, groups = [];
@@ -87,9 +87,14 @@ test("the registry matches the activities and their round summaries", function (
   // Found by its slug, the Lewis builder is the octet-rule entry; the AP copy asks for LVA by prefix.
   assert.equal(codes.activity("lewis-vsepr").prefix, "LVB");
   assert.match(builder, /activity: ap \? "LVA" : "LVB"/);
+  // The Gas Laws and KMT Lab's investigations: one total for its three steps, labels from its data.js.
+  assert.deepEqual(codes.activity("gas-lab").stats, loadData("gas-lab/data.js").inv.stats);
+  assert.equal(codes.activity("gas-lab").name, "Gas Laws and KMT Lab");
+  assert.equal(codes.activity("GAS").id, 3);
   // The ids and prefixes already in use never change.
   assert.deepEqual(codes.ACTIVITIES.map(function (a) { return [a.id, a.prefix, a.slug]; }), [
-    [1, "ICT", "ion-charge-trainer"], [2, "IFB", "ionic-formula-builder"], [3, "PTR", "periodic-trends"], [4, "LVB", "lewis-vsepr"], [5, "LVA", "lewis-vsepr"]
+    [1, "ICT", "ion-charge-trainer"], [2, "IFB", "ionic-formula-builder"], [3, "GAS", "gas-lab"], [4, "PTR", "periodic-trends"],
+    [5, "LVB", "lewis-vsepr"], [6, "LVA", "lewis-vsepr"]
   ]);
 });
 
@@ -139,7 +144,7 @@ test("the example codes in the docs check as valid", function () {
       prefixes.add(d.activity.prefix);
     });
   });
-  assert.deepEqual(Array.from(prefixes).sort(), ["ICT", "IFB", "LVA", "LVB", "PTR"]);
+  assert.deepEqual(Array.from(prefixes).sort(), ["GAS", "ICT", "IFB", "LVA", "LVB", "PTR"]);
 });
 
 // The new activities' codes: the fields a full round gives, read back exactly; the setting of the Lewis builder.

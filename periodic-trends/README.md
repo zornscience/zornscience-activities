@@ -99,7 +99,7 @@ Hints: step 1, "Find both elements on the table..." then both elements' group an
 - The parameters combine, for example `?trend=ie&from=...&embed=1`.
 
 ## Completion code
-A full mixed round (9 questions, all three trends) ends with a completion code under "Round complete", with a Copy code button, from `shared/zsa-codes.js` exactly as in the Ion Charge Trainer and the Ionic Formula Builder. Prefix `PTR`, activity id 3, for example `PTR-4TGG-8228-0936-F` (a 9-question round on 2026-10-16: 8, 8 and 9 of 9 on the first try, one Show me, two hints). The code holds the version, the day, the three first-try counts out of 9, and the Show me and Hint counts. A round of one trend (the picker or `?trend=`), one question (`?q=`) and Practice my misses give no code. Teachers read codes on `check/` ([TEACHERS.md](../TEACHERS.md)).
+A full mixed round (9 questions, all three trends) ends with a completion code under "Round complete", with a Copy code button, from `shared/zsa-codes.js` exactly as in the Ion Charge Trainer and the Ionic Formula Builder. Prefix `PTR`, activity id 4, for example `PTR-4TGG-8228-094M-T` (a 9-question round on 2026-10-16: 8, 8 and 9 of 9 on the first try, one Show me, two hints). The code holds the version, the day, the three first-try counts out of 9, and the Show me and Hint counts. A round of one trend (the picker or `?trend=`), one question (`?q=`) and Practice my misses give no code. Teachers read codes on `check/` ([TEACHERS.md](../TEACHERS.md)).
 
 ## Layout
 - The same layout as the other activities: question strip and main-group table on the left, the step on the right from 900 px; strip, table, step on narrower screens. Both elements are marked in the table and read as "(in this question)".
