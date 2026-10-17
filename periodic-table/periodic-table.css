@@ -48,7 +48,10 @@
 .zsa-pt-num {font-size:10px;}
 .zsa-pt-sym {font-size:17px;font-weight:700;}
 .zsa-pt-val {font-size:11px;min-height:11px;font-weight:600;}
-.zsa-pt-el.zsa-pt-selected {box-shadow:0 0 0 2px var(--zsa-white),0 0 0 5px #b45309;}
+/* The selected ring is drawn outside the cell, so the cell is lifted above its neighbours (which come later in the
+   table and would otherwise paint over its right and bottom sides). Keyboard focus sits above that. */
+.zsa-pt-el.zsa-pt-selected {box-shadow:0 0 0 2px var(--zsa-white),0 0 0 5px #b45309;position:relative;z-index:2;}
+.zsa-pt-el.zsa-pt-selected:focus-visible {z-index:3;}
 
 /* Color modes. Category and block: light fills, each with a different border. Heatmaps: a sequential scale of the
    site's blues, navy text on the light steps and white on the dark ones (at least 4.5:1). No data: gray, dashed. */

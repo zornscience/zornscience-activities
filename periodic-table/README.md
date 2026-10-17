@@ -1,5 +1,5 @@
 # Periodic Table
-Version: 1.1.0
+Version: 1.1.1
 
 An interactive reference table of all 118 elements, with color modes for metal, nonmetal and metalloid, for the s, p, d and f blocks, and heatmaps of atomic radius, electronegativity and first ionization energy with trend arrows.
 
@@ -108,6 +108,8 @@ Button label: Open the Periodic Table
 - Current Chrome, Edge, Firefox and Safari iOS 16+ are intended targets, but only Chromium was tested. The mode buttons use the CSS `:has()` selector for their checked style; older browsers still show the native radio button.
 
 ## Changelog
+1.1.1: The selected element's orange ring is no longer partly hidden by the cells to its right and below.
+
 1.1.0: Full screen button for presenting: the page fills the screen, the table grows to fit, and Esc or the button leaves.
 
 1.0.0: Initial periodic table with all 118 elements, category, block and three heatmap modes with legend and trend arrows, details panel, search, keyboard grid, linkable views, embed mode and data sources.

@@ -446,3 +446,38 @@ test("periodic table: full screen still fits with a wider fallback font", async 
     await context.close();
   }
 });
+
+// The selected element's ring is drawn outside the cell, so it must sit above the neighbouring cells. Reads the
+// screenshot's pixels just outside each side of the cell (on the ring) and checks they are the ring's amber.
+async function ringSides(page, symbol) {
+  var box = await cell(page, symbol).boundingBox();
+  var pad = 8, clip = {x: box.x - pad, y: box.y - pad, width: box.width + 2 * pad, height: box.height + 2 * pad};
+  var png = (await page.screenshot({clip: clip})).toString("base64");
+  return page.evaluate(([png, w, h, pad]) => new Promise((resolve) => {
+    var img = new Image();
+    img.onload = function () {
+      var c = document.createElement("canvas"); c.width = img.width; c.height = img.height;
+      var ctx = c.getContext("2d", {willReadFrequently: true}); ctx.drawImage(img, 0, 0);
+      var sx = img.width / (w + 2 * pad), sy = img.height / (h + 2 * pad);
+      function amber(x, y) { var d = ctx.getImageData(Math.round(x * sx), Math.round(y * sy), 1, 1).data; return d[0] > 150 && d[1] < 120 && d[2] < 60; }
+      // 4 px outside the cell, past the 2 px white gap, in the middle of each side.
+      resolve({top: amber(pad + w / 2, pad - 4), right: amber(pad + w + 3.5, pad + h / 2), bottom: amber(pad + w / 2, pad + h + 3.5), left: amber(pad - 4, pad + h / 2)});
+    };
+    img.src = "data:image/png;base64," + png;
+  }), [png, box.width, box.height, pad]);
+}
+
+test("periodic table: the selected element's ring is not hidden by its neighbours", async ({page, problems}) => {
+  void problems;
+  for (var [w, h] of [[1366, 657], [390, 664]]) {
+    await page.setViewportSize({width: w, height: h});
+    for (var mode of ["category", "ionization"]) {
+      // Boron has neighbours on the right (C) and below (Al); iron has neighbours on every side.
+      for (var symbol of ["B", "Fe"]) {
+        await go(page, "?mode=" + mode + "&el=" + symbol);
+        await cell(page, symbol).scrollIntoViewIfNeeded();
+        expect(await ringSides(page, symbol), w + "x" + h + " " + mode + " " + symbol).toEqual({top: true, right: true, bottom: true, left: true});
+      }
+    }
+  }
+});

@@ -1,5 +1,5 @@
 # Verification record
-Version: 1.1.0
+Version: 1.1.1
 Date: 2026-10-17
 Reviewer: Claude (built and tested 1.0.0)
 
@@ -29,6 +29,11 @@ PASS means the check was run on version 1.0.0 as committed and passed. NOT TESTE
 | Deep links and back link | PASS | `?mode=electronegativity&el=F` opens fluorine's details in that mode without moving focus or scrolling; `el=26`; bad `el` and `mode` values fall back. On a 360 px phone, `el=Kr` scrolls the region, not the page. `from` accepted only for https://zornscience.org/ pages; 9 bad values (other hosts, http, www, user name, port, javascript:, relative) keep the default link. `from` is kept when the view changes. |
 | Embed mode, network, storage | PASS | `?embed=1`: back link line and footer hidden, h1 visible, links target `_top`. Only local files load, each stylesheet and script with `?v=1.0.0`, plus the Inter font. No storage or cookies. |
 | Console and CSP | PASS | Every browser test fails on any console error or warning, page error or CSP violation. |
+
+## 1.1.1: Selected ring
+| Check | Status | Evidence |
+|---|---|---|
+| Ring fully visible | PASS | Reported by the teacher: the selected element's ring was covered on its right and bottom sides by the neighbouring cells. `tests/e2e/periodic-table.spec.js` now reads the screenshot pixels just outside all four sides of the selected cell (boron and iron, category and ionization modes, 1366x657 and 390x664) and requires the ring's orange on each. It failed before the fix (right and bottom) and passes after. Screenshots also checked for hydrogen on a phone and nitrogen in full screen. |
 
 ## 1.1.0: Full screen
 | Check | Status | Evidence |
