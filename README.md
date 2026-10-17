@@ -23,7 +23,8 @@ periodic-table/            Periodic Table reference, v1.0.0 (data built by perio
 periodic-trends/           Periodic Trends Practice, v1.0.0 (questions built from the periodic table's data)
 lewis-vsepr/               Lewis Structure and VSEPR Builder, v1.0.0
 act-science/               ACT Science Practice, v1.0.0 (question bank in act-science/data.js)
-check/                     completion code checker for teachers, v1.0.0 (linked under "For teachers")
+gas-lab/                   Gas Laws and KMT Lab, v1.0.0 (particle simulation, graphs and investigations)
+check/                     completion code checker for teachers, v1.1.0 (linked under "For teachers")
 TEACHERS.md                assigning activities in Google Classroom and checking completion codes
 templates/starter/         starter template for a new activity (not linked from the site)
 tests/                     automated tests (development only; see TESTING.md)

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<meta name="description" content="A gas particle simulation with a movable piston, live pressure, graphs of the gas laws, Maxwell-Boltzmann speed distributions, mixtures and real gases, from ZornScience.">
+<title>Gas Laws and KMT Lab | ZornScience</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-activity.css?v=1.0.0">
+<link rel="stylesheet" href="gas-lab.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-engine.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-codes.js?v=1.0.0" defer></script>
+<script src="physics.js?v=1.0.0" defer></script>
+<script src="data.js?v=1.0.0" defer></script>
+<script src="lab.js?v=1.0.0" defer></script>
+<script src="charts.js?v=1.0.0" defer></script>
+<script src="investigations.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="zsa zsa-gl" data-zsa-activity="gas-lab">
+<header class="zsa-gl-header">
+<div class="zsa-gl-topline" data-zsa-chrome>
+<a class="zsa-back" id="zsa-gl-back" href="https://zornscience.org/science/ap-chemistry/unit-3-properties-of-substances-and-mixtures/">← Back to the lesson</a>
+<p class="zsa-eyebrow">AP Chemistry · Gases</p>
+</div>
+<h1>Gas Laws and KMT Lab</h1>
+</header>
+<noscript><p class="zsa-panel">This lab needs JavaScript. Enable it to run the simulation.</p></noscript>
+<div class="zsa-gl-layout" id="zsa-gl-layout">
+<section class="zsa-gl-stage" aria-labelledby="zsa-gl-stage-title">
+<h2 class="zsa-sr-only" id="zsa-gl-stage-title">Container</h2>
+<div class="zsa-gl-box">
+<canvas class="zsa-gl-canvas" id="zsa-gl-canvas" role="img" aria-label="Container with a piston"></canvas>
+<div class="zsa-gl-gauge" id="zsa-gl-gauge">
+<p class="zsa-gl-gauge-label" id="zsa-gl-gauge-label">Pressure gauge</p>
+<p class="zsa-gl-gauge-value"><span id="zsa-gl-p-atm">…</span></p>
+<p class="zsa-gl-gauge-sub" id="zsa-gl-p-kpa"></p>
+<p class="zsa-gl-gauge-sub" id="zsa-gl-p-law"></p>
+<p class="zsa-gl-gauge-sub zsa-gl-gauge-z" id="zsa-gl-p-z" hidden></p>
+<p class="zsa-gl-gauge-note" id="zsa-gl-p-note"></p>
+</div>
+</div>
+<div class="zsa-gl-play">
+<button class="zsa-btn" id="zsa-gl-playpause" type="button">Pause</button>
+<button class="zsa-btn" id="zsa-gl-step" type="button">Step</button>
+<p class="zsa-gl-play-note" id="zsa-gl-play-note"></p>
+</div>
+</section>
+<section class="zsa-gl-controls" aria-labelledby="zsa-gl-controls-title">
+<h2 class="zsa-sr-only" id="zsa-gl-controls-title">Controls</h2>
+<div class="zsa-gl-moderow">
+<fieldset class="zsa-gl-seg" id="zsa-gl-mode">
+<legend class="zsa-sr-only">Gas model</legend>
+<label class="zsa-gl-pill"><input type="radio" name="zsa-gl-mode" value="ideal" checked> Ideal</label>
+<label class="zsa-gl-pill"><input type="radio" name="zsa-gl-mode" value="real"> Real gas</label>
+</fieldset>
+<label class="zsa-gl-pill zsa-gl-check"><input type="checkbox" id="zsa-gl-mix"> Mixture</label>
+</div>
+<div class="zsa-gl-gases" id="zsa-gl-gases"></div>
+<div class="zsa-gl-row" id="zsa-gl-row-V">
+<label class="zsa-gl-row-label" id="zsa-gl-V-label" for="zsa-gl-V-num">Volume</label>
+<input class="zsa-gl-range" type="range" id="zsa-gl-V" min="1" max="10" step="0.1" value="5" aria-labelledby="zsa-gl-V-label">
+<input class="zsa-gl-num" type="number" id="zsa-gl-V-num" min="1" max="10" step="0.1" value="5" inputmode="decimal">
+<span class="zsa-gl-unit" aria-hidden="true">L</span>
+</div>
+<div class="zsa-gl-row" id="zsa-gl-row-T">
+<label class="zsa-gl-row-label" id="zsa-gl-T-label" for="zsa-gl-T-num">Temp.</label>
+<input class="zsa-gl-range" type="range" id="zsa-gl-T" min="100" max="1000" step="1" value="300" aria-labelledby="zsa-gl-T-label">
+<input class="zsa-gl-num" type="number" id="zsa-gl-T-num" min="100" max="1000" step="1" value="300" inputmode="numeric">
+<span class="zsa-gl-unit" aria-hidden="true">K</span>
+<span class="zsa-gl-celsius" id="zsa-gl-T-c"></span>
+</div>
+<fieldset class="zsa-gl-seg zsa-gl-hold" id="zsa-gl-hold">
+<legend>Hold constant</legend>
+<label class="zsa-gl-pill"><input type="radio" name="zsa-gl-hold" value="T" checked> Temperature</label>
+<label class="zsa-gl-pill"><input type="radio" name="zsa-gl-hold" value="V"> Volume</label>
+<label class="zsa-gl-pill"><input type="radio" name="zsa-gl-hold" value="P"> Pressure</label>
+</fieldset>
+<p class="zsa-gl-note" id="zsa-gl-note" role="status"></p>
+<div class="zsa-gl-more" id="zsa-gl-more">
+<div class="zsa-gl-mixture" id="zsa-gl-mixture" hidden>
+<table class="zsa-gl-table">
+<caption>Partial pressures (Dalton's law)</caption>
+<thead><tr><th scope="col">Gas</th><th scope="col">Moles</th><th scope="col">Mole fraction</th><th scope="col">Partial pressure</th></tr></thead>
+<tbody id="zsa-gl-mix-body"></tbody>
+</table>
+<p class="zsa-gl-small" id="zsa-gl-mix-sum"></p>
+</div>
+<div class="zsa-gl-real" id="zsa-gl-real" hidden>
+<p class="zsa-gl-small" id="zsa-gl-real-terms"></p>
+<p class="zsa-gl-small" id="zsa-gl-real-why"></p>
+<p class="zsa-gl-small zsa-gl-warn" id="zsa-gl-real-condensed" hidden></p>
+<p class="zsa-gl-small" id="zsa-gl-real-note"></p>
+</div>
+<dl class="zsa-gl-readouts">
+<div><dt>Average kinetic energy</dt><dd><span id="zsa-gl-ke-theory"></span> <span class="zsa-gl-small" id="zsa-gl-ke-measured"></span></dd></div>
+<div><dt>Average speed</dt><dd id="zsa-gl-speeds"></dd></div>
+</dl>
+<p class="zsa-gl-small" id="zsa-gl-dots"></p>
+<p class="zsa-gl-small" id="zsa-gl-speed-note"></p>
+</div>
+</section>
+<section class="zsa-gl-panel" aria-label="Graphs, speeds and investigations">
+<div class="zsa-gl-tabs" role="tablist" aria-label="Lab tools">
+<button class="zsa-gl-tab" type="button" role="tab" id="zsa-gl-tab-graphs" aria-controls="zsa-gl-panel-graphs" aria-selected="true">Graphs</button>
+<button class="zsa-gl-tab" type="button" role="tab" id="zsa-gl-tab-speeds" aria-controls="zsa-gl-panel-speeds" aria-selected="false" tabindex="-1">Speeds</button>
+<button class="zsa-gl-tab" type="button" role="tab" id="zsa-gl-tab-investigate" aria-controls="zsa-gl-panel-investigate" aria-selected="false" tabindex="-1">Investigations</button>
+</div>
+<div class="zsa-gl-tabpanel" role="tabpanel" id="zsa-gl-panel-graphs" aria-labelledby="zsa-gl-tab-graphs" tabindex="0">
+<div class="zsa-gl-graph-bar">
+<label class="zsa-gl-inline" for="zsa-gl-graph">Graph</label>
+<select id="zsa-gl-graph">
+<option value="pv">P vs V</option>
+<option value="p1v">P vs 1/V</option>
+<option value="vt">V vs T</option>
+<option value="pt">P vs T</option>
+<option value="vn">V vs n</option>
+<option value="z">PV/nRT vs P</option>
+</select>
+<label class="zsa-gl-pill zsa-gl-check" id="zsa-gl-celsius-label"><input type="checkbox" id="zsa-gl-celsius"> °C axis</label>
+</div>
+<div class="zsa-gl-graph-actions">
+<button class="zsa-btn zsa-btn--primary" id="zsa-gl-record" type="button">Record point</button>
+<button class="zsa-btn" id="zsa-gl-sweep" type="button">Run sweep</button>
+<button class="zsa-btn" id="zsa-gl-clear" type="button">Clear</button>
+</div>
+<p class="zsa-gl-small" id="zsa-gl-sweep-note"></p>
+<div class="zsa-gl-chart" id="zsa-gl-chart"></div>
+<p class="zsa-gl-fit" id="zsa-gl-fit"></p>
+<div class="zsa-gl-graph-actions">
+<button class="zsa-btn" id="zsa-gl-table-toggle" type="button" aria-expanded="false" aria-controls="zsa-gl-data">Show data table</button>
+<button class="zsa-btn" id="zsa-gl-copy" type="button">Copy data</button>
+</div>
+<p class="zsa-gl-status" id="zsa-gl-graph-status" role="status"></p>
+<div class="zsa-gl-data" id="zsa-gl-data" role="region" aria-labelledby="zsa-gl-data-caption" tabindex="0" hidden>
+<table class="zsa-gl-table">
+<caption id="zsa-gl-data-caption">Recorded data, one row per point</caption>
+<thead><tr id="zsa-gl-data-head"><th scope="col">Point</th><th scope="col">Gas</th><th scope="col">V (L)</th><th scope="col">1/V (1/L)</th><th scope="col">T (K)</th><th scope="col">T (°C)</th><th scope="col">n (mol)</th><th scope="col">P (atm)</th><th scope="col">P (kPa)</th><th scope="col">PV/nRT</th></tr></thead>
+<tbody id="zsa-gl-data-body"></tbody>
+</table>
+</div>
+<p class="zsa-gl-small" id="zsa-gl-measure-note"></p>
+</div>
+<div class="zsa-gl-tabpanel" role="tabpanel" id="zsa-gl-panel-speeds" aria-labelledby="zsa-gl-tab-speeds" tabindex="0" hidden>
+<div class="zsa-gl-graph-bar">
+<label class="zsa-gl-inline" for="zsa-gl-mb-gas" id="zsa-gl-mb-gas-label">Bars for</label>
+<select id="zsa-gl-mb-gas"></select>
+<label class="zsa-gl-inline" for="zsa-gl-mb-overlay">Compare with</label>
+<select id="zsa-gl-mb-overlay">
+<option value="none">Nothing</option>
+<option value="t">Another temperature</option>
+<option value="gas">Another gas</option>
+</select>
+<span class="zsa-gl-inline-group" id="zsa-gl-mb-t2-wrap" hidden><label class="zsa-gl-inline" for="zsa-gl-mb-t2">at</label> <input class="zsa-gl-num" type="number" id="zsa-gl-mb-t2" min="100" max="1000" step="1" value="600" inputmode="numeric"> <span class="zsa-gl-unit" aria-hidden="true">K</span></span>
+<span class="zsa-gl-inline-group" id="zsa-gl-mb-gas2-wrap" hidden><label class="zsa-gl-inline" for="zsa-gl-mb-gas2">gas</label> <select id="zsa-gl-mb-gas2"></select></span>
+</div>
+<div class="zsa-gl-graph-actions" role="group" aria-label="Comparisons">
+<button class="zsa-btn" id="zsa-gl-preset-t" type="button">300 K vs 600 K</button>
+<button class="zsa-btn" id="zsa-gl-preset-hear" type="button">He vs Ar</button>
+<button class="zsa-btn" id="zsa-gl-preset-nekr" type="button">Ne vs Kr</button>
+</div>
+<div class="zsa-gl-chart" id="zsa-gl-mb-chart"></div>
+<ul class="zsa-gl-legend" id="zsa-gl-mb-legend"></ul>
+<div class="zsa-gl-data" role="region" aria-labelledby="zsa-gl-mb-caption" tabindex="0">
+<table class="zsa-gl-table">
+<caption id="zsa-gl-mb-caption">Speeds from the Maxwell-Boltzmann distribution</caption>
+<thead><tr><th scope="col">Curve</th><th scope="col">Most probable (m/s)</th><th scope="col">Average (m/s)</th><th scope="col">Root mean square (m/s)</th></tr></thead>
+<tbody id="zsa-gl-mb-body"></tbody>
+</table>
+</div>
+<p class="zsa-gl-small" id="zsa-gl-mb-note"></p>
+</div>
+<div class="zsa-gl-tabpanel zsa-gl-investigate" role="tabpanel" id="zsa-gl-panel-investigate" aria-labelledby="zsa-gl-tab-investigate" hidden>
+<p class="zsa-gl-small" id="zsa-gl-inv-intro">Predict, test it in the lab, then explain in terms of particles. A full round of 6 investigations gives a completion code.</p>
+<div class="zsa-gl-strip" id="zsa-gl-strip"></div>
+<section class="zsa-work" id="zsa-gl-work" aria-label="Investigation"></section>
+<div id="zsa-gl-table" hidden></div>
+<p id="zsa-gl-table-note" hidden>Not used.</p>
+<p class="zsa-sr-only" id="zsa-gl-live" aria-live="polite" aria-atomic="true"></p>
+<details class="zsa-card zsa-modes" id="zsa-gl-options">
+<summary>Practice options</summary>
+<div class="zsa-modes-body">
+<p>Start a fresh round or work on one investigation. Starting again clears this round.</p>
+<button class="zsa-btn" id="zsa-gl-new" type="button">Start a new round</button>
+<div class="zsa-picker">
+<label for="zsa-gl-select">Choose an investigation</label>
+<select id="zsa-gl-select"></select>
+<button class="zsa-btn" id="zsa-gl-pick" type="button">Practice this investigation</button>
+</div>
+</div>
+</details>
+</div>
+</section>
+</div>
+<p class="zsa-sr-only" id="zsa-gl-lab-live" aria-live="polite" aria-atomic="true"></p>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+</main>
+</body>
+</html>
