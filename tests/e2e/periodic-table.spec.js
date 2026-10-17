@@ -429,3 +429,20 @@ test("periodic table: the Full screen button appears only where full screen is a
   await expect(page.frameLocator("#a").locator("#zsa-pt-present")).toBeHidden();
   await expect(page.frameLocator("#b").locator("#zsa-pt-present")).toBeVisible();
 });
+
+test("periodic table: full screen still fits with a wider fallback font", async ({browser}) => {
+  // If Inter has not loaded (or a browser substitutes a wider font), the toolbar must not push the table off the
+  // screen. DejaVu Sans is wider than Inter; the style is injected for this test only, so CSP is bypassed here.
+  for (var [w, h] of [[1280, 720], [1366, 768], [1024, 768]]) {
+    var context = await browser.newContext({viewport: {width: w, height: h}, bypassCSP: true});
+    var page = await context.newPage();
+    await go(page, "?mode=radius");
+    await page.addStyleTag({content: "main{--zsa-font:'DejaVu Sans';font-family:'DejaVu Sans'!important}"});
+    await page.getByRole("button", {name: "Full screen"}).click();
+    await inFullscreen(page, true);
+    var st = await fullscreenState(page);
+    expect(st.allOnScreen, w + "x" + h + " whole table on screen with DejaVu Sans").toBe(true);
+    expect(st.small, w + "x" + h + " small targets").toBe(0);
+    await context.close();
+  }
+});

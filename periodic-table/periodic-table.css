@@ -161,7 +161,7 @@
 .zsa-pt--present [data-zsa-chrome], .zsa-pt--present .zsa-pt-sources {display:none;}
 .zsa-pt--present .zsa-pt-sym {font-size:max(17px, calc(var(--pt-row) * .36));}
 .zsa-pt--present .zsa-pt-num, .zsa-pt--present .zsa-pt-val {font-size:max(10px, calc(var(--pt-row) * .19));}
-.zsa-pt--present .zsa-pt-grid th {font-size:max(12px, calc(var(--pt-row) * .2));}
+.zsa-pt--present .zsa-pt-grid th {font-size:clamp(12px, calc(var(--pt-row) * .2), 16px);line-height:1.2;}
 .zsa-pt--present .zsa-pt-key-title {font-size:clamp(13px, calc(var(--pt-row) * .2), 18px);line-height:1.3;}
 .zsa-pt--present .zsa-pt-legend li {font-size:clamp(12px, calc(var(--pt-row) * .18), 16px);}
 .zsa-pt--present .zsa-pt-trends p {font-size:clamp(12px, calc(var(--pt-row) * .19), 17px);}
@@ -172,3 +172,20 @@
 .zsa-pt--present .zsa-pt-facts, .zsa-pt--present .zsa-pt-notes {font-size:clamp(14px, calc(var(--pt-row) * .18), 17px);}
 /* Narrower screens (4:3 projectors): the toolbar wraps to two lines, so the rows leave it more room. */
 @media (max-width:1279px) {.zsa.zsa-pt.zsa-pt--present {--pt-row:clamp(46px, calc((100vh - 316px) / 9 - 2px), 130px);}}
+/* Where container queries work (current browsers), the rows come from the height actually left under the header
+   and toolbar, so the table still fits when the toolbar wraps (a larger font, browser zoom, or a fallback font).
+   The page is a grid: header, toolbar, then the table area, which is a size container. The 90px is what the table
+   adds besides its element rows (the arrow, the group numbers, the gap and the cell spacing). The rules above are the
+   fallback for older browsers. */
+@supports (container-type: size) {
+  .zsa.zsa-pt.zsa-pt--present {display:grid;grid-template-rows:auto auto minmax(0,1fr);height:100vh;overflow:hidden;align-content:stretch;}
+  .zsa-pt--present .zsa-pt-layout {container-type:size;overflow:auto;min-height:0;
+    --pt-row:clamp(46px, calc((100cqh - 90px) / 9), 130px);}
+}
+/* A tighter toolbar in full screen, so it stays on one line at 1280 px even with a wider fallback font. */
+.zsa-pt--present .zsa-pt-toolbar {column-gap:12px;}
+.zsa-pt--present .zsa-pt-mode-list {gap:4px;}
+.zsa-pt--present .zsa-pt-mode {padding:0 9px;font-size:14px;gap:5px;}
+.zsa-pt--present .zsa-pt-tools {column-gap:12px;}
+.zsa-pt--present .zsa-pt-check {font-size:14px;}
+.zsa-pt--present .zsa-pt-search input {width:160px;}
