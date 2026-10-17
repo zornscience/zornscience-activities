@@ -8,7 +8,7 @@
   --act-bg: #ffffff; --act-surface: #f2f5fb; --act-ink: #14213d; --act-muted: #4f5d75; --act-line: #d6e2f5;
   --act-navy: #0b2a5b; --act-on-navy: #ffffff; --act-blue: #1d4ed8; --act-on-blue: #ffffff; --act-blue-soft: #e4ecfb;
   --act-good: #166534; --act-good-soft: #e3f4e9; --act-bad: #b91c1c; --act-bad-soft: #fbe7e5; --act-warn-soft: #fff4dc;
-  --act-flag: #c2410c; --act-flag-soft: #fff1e8; --act-hl-yellow: #fde68a; --act-hl-green: #bbf7d0; --act-hl-blue: #bfdbfe; --act-s1: #1d4ed8; --act-s2: #b45309; --act-s3: #15803d; --act-water: #b9d4f5; --act-tile: #1d4ed8;
+  --act-flag: #c2410c; --act-flag-soft: #fff1e8; --act-hl-yellow: #fde68a; --act-hl-green: #bbf7d0; --act-hl-blue: #bfdbfe; --act-s1: #1d4ed8; --act-s2: #b45309; --act-s3: #15803d; --act-water: #b9d4f5;
   --act-font: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --act-display: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
   --act-data: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
@@ -19,7 +19,7 @@
     --act-bg: #0d1526; --act-surface: #142039; --act-ink: #e6ecf7; --act-muted: #a6b5cf; --act-line: #2c3c5c;
     --act-navy: #081a3a; --act-blue: #8db4ff; --act-on-blue: #0d1526; --act-blue-soft: #1b2d52;
     --act-good: #6ad69a; --act-good-soft: #13321f; --act-bad: #ff958c; --act-bad-soft: #3b1d1c; --act-warn-soft: #3a2f14;
-    --act-flag: #fb923c; --act-flag-soft: #3a2414; --act-hl-yellow: #6b5410; --act-hl-green: #1e5135; --act-hl-blue: #24406e; --act-s1: #8db4ff; --act-s2: #f2a15a; --act-s3: #6ad69a; --act-water: #23426e; --act-tile: #1d4ed8;
+    --act-flag: #fb923c; --act-flag-soft: #3a2414; --act-hl-yellow: #6b5410; --act-hl-green: #1e5135; --act-hl-blue: #24406e; --act-s1: #8db4ff; --act-s2: #f2a15a; --act-s3: #6ad69a; --act-water: #23426e;
     color-scheme: dark;
   }
 }
@@ -27,7 +27,7 @@
   --act-bg: #0d1526; --act-surface: #142039; --act-ink: #e6ecf7; --act-muted: #a6b5cf; --act-line: #2c3c5c;
   --act-navy: #081a3a; --act-blue: #8db4ff; --act-on-blue: #0d1526; --act-blue-soft: #1b2d52;
   --act-good: #6ad69a; --act-good-soft: #13321f; --act-bad: #ff958c; --act-bad-soft: #3b1d1c; --act-warn-soft: #3a2f14;
-  --act-flag: #fb923c; --act-flag-soft: #3a2414; --act-hl-yellow: #6b5410; --act-hl-green: #1e5135; --act-hl-blue: #24406e; --act-s1: #8db4ff; --act-s2: #f2a15a; --act-s3: #6ad69a; --act-water: #23426e; --act-tile: #1d4ed8;
+  --act-flag: #fb923c; --act-flag-soft: #3a2414; --act-hl-yellow: #6b5410; --act-hl-green: #1e5135; --act-hl-blue: #24406e; --act-s1: #8db4ff; --act-s2: #f2a15a; --act-s3: #6ad69a; --act-water: #23426e;
   color-scheme: dark;
 }
 
@@ -54,9 +54,7 @@ body {background: var(--act-bg);}
 .zsa-act-band {background: var(--act-navy); color: var(--act-on-navy);}
 .zsa-act-band-row {display: flex; align-items: center; justify-content: space-between; gap: 8px 16px; padding-top: 10px; padding-bottom: 10px; flex-wrap: wrap;}
 .zsa-act-brand {display: flex; align-items: center; gap: 10px; font-family: var(--act-display); font-weight: 700; font-size: 18px;}
-.zsa-act-tile {flex: none;}
-.zsa-act-tile rect {fill: var(--act-tile); stroke: #93c5fd; stroke-width: 2;}
-.zsa-act-tile text {fill: #ffffff; font-family: var(--act-display); font-size: 22px; font-weight: 700;}
+.zsa-act-logo {flex: none; display: block; width: 46px; height: 44px;}
 .zsa-act-brand-section {font-weight: 500; opacity: .8; padding-left: 10px; border-left: 1px solid rgba(255,255,255,.4);}
 .zsa-act-clock {display: flex; gap: 16px; font-family: var(--act-data); font-size: 15px; font-variant-numeric: tabular-nums; margin: 0;}
 .zsa-act-clock b {font-weight: 700;}

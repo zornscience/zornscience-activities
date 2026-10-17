@@ -1,9 +1,9 @@
 # Verification record
-Version: 1.0.0
+Version: 1.0.1
 Date: 2026-10-16
-Reviewer: Claude (built and tested 1.0.0)
+Reviewer: Claude (built and tested 1.0.1)
 
-PASS means the check was run on version 1.0.0 as committed and passed. Browser checks use Playwright 1.56 with Chromium.
+PASS means the check was run on version 1.0.1 as committed and passed. Browser checks use Playwright 1.56 with Chromium.
 
 | Check | Status | Evidence |
 |---|---|---|
