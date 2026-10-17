@@ -1,6 +1,6 @@
 # Verification record
-Version: 1.0.0
-Date: 2026-10-16
+Version: 1.1.0
+Date: 2026-10-17
 Reviewer: Claude (built and tested 1.0.0)
 
 PASS means the check was run on version 1.0.0 as committed and passed. NOT TESTED rows say why. Browser checks use Playwright 1.56 with Chromium over the local test server and run in CI with `npm test`.
@@ -29,6 +29,17 @@ PASS means the check was run on version 1.0.0 as committed and passed. NOT TESTE
 | Deep links and back link | PASS | `?mode=electronegativity&el=F` opens fluorine's details in that mode without moving focus or scrolling; `el=26`; bad `el` and `mode` values fall back. On a 360 px phone, `el=Kr` scrolls the region, not the page. `from` accepted only for https://zornscience.org/ pages; 9 bad values (other hosts, http, www, user name, port, javascript:, relative) keep the default link. `from` is kept when the view changes. |
 | Embed mode, network, storage | PASS | `?embed=1`: back link line and footer hidden, h1 visible, links target `_top`. Only local files load, each stylesheet and script with `?v=1.0.0`, plus the Inter font. No storage or cookies. |
 | Console and CSP | PASS | Every browser test fails on any console error or warning, page error or CSP violation. |
+
+## 1.1.0: Full screen
+| Check | Status | Evidence |
+|---|---|---|
+| Full screen fits | PASS | `tests/e2e/periodic-table.spec.js` at 1920x1080, 1366x768, 1280x720 and 1024x768: the button enters full screen on the page, every one of the 118 cells is on screen in all five modes, the back link, footer and data sources are hidden, no sideways scroll, and every control and cell is at least 44 px. Also checked by hand at 2560x1440, 1280x800, 1280x1024 and 1152x864. |
+| Works in full screen | PASS | Search moves focus to the match, arrow keys and Enter open the details. |
+| Leaving | PASS | Esc leaves full screen and keeps the open details and view; a second Esc closes the details. "Exit full screen" also leaves and keeps focus on the button. |
+| Only where allowed | PASS | Framed on a simulated zornscience.org page: hidden in an iframe without `allowfullscreen`, shown with it. |
+| axe-core in full screen | PASS | Zero violations. |
+| Screenshots reviewed | PASS | 1920x1080, 1366x768, 1280x720 and 1024x768 viewed by Claude. Fixes made from them: larger trend arrow labels, placeholders and details text in full screen, and more room for the two-line toolbar on 4:3 screens. |
+| Real whiteboards, Safari on iPad, Firefox | NOT TESTED | Only Chromium is available. Real browsers leave full screen on Esc themselves; the page also handles Esc for any that pass it on. |
 
 ## Layout and accessibility
 | Check | Status | Evidence |

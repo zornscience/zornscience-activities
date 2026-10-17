@@ -1,5 +1,5 @@
 # Periodic Table
-Version: 1.0.0
+Version: 1.1.0
 
 An interactive reference table of all 118 elements, with color modes for metal, nonmetal and metalloid, for the s, p, d and f blocks, and heatmaps of atomic radius, electronegativity and first ionization energy with trend arrows.
 
@@ -26,6 +26,7 @@ A reference students can open from any lesson or activity that shows a table, an
 - Details panel (tap, click or Enter on an element): atomic number, symbol, atomic mass, group, period, block, type, state at room temperature, full and noble-gas electron configurations, valence electrons (main groups), common ion charges with names, electronegativity, atomic radius and first ionization energy, plus notes for configuration exceptions, predicted values and borderline classifications.
 - Search by name, symbol or atomic number (British spellings aluminium, caesium and sulphur also work). The match is highlighted and receives focus; Enter then opens its details.
 - A "Data sources" note at the bottom of the page.
+- **Full screen** (for presenting on a projector or interactive whiteboard): the "Full screen" button at the top right makes the whole page fill the screen, like presenting in Google Slides. The back link, footer and data sources are hidden, and the element cells grow with the screen so the whole table still fits: about 81 by 90 px per cell at 1920x1080, and the table fits at 1366x768, 1280x720 and 4:3 projectors such as 1024x768. Every color mode, the trend arrows, search, the keyboard grid and the details panel keep working. Esc or "Exit full screen" returns to the normal page; in full screen, the first Esc leaves full screen and a second one closes the details. The button only appears where the browser allows full screen: it is hidden on iPhones (Safari has no full screen for web pages there) and in a frame that does not allow it.
 
 ## Data sources and licenses
 | Data | Source | License |
@@ -86,7 +87,7 @@ Views are linkable with URL parameters only (nothing is stored):
 - `el`: a symbol or atomic number; opens that element's details without moving focus, for example `?mode=electronegativity&el=F`
 - `trends=0`: trend arrows off
 - `from`: sets the back link to "← Back to the lesson" for `https://zornscience.org/` pages only (https, that exact host, no port or user name). Anything else keeps the default link to https://zornscience.org/science/.
-- `embed=1`: embed mode
+- `embed=1`: embed mode. To offer the Full screen button in an embed, the iframe needs the `allowfullscreen` attribute.
 
 Changing the mode, the arrows or the open element updates the address with `history.replaceState`, so a teacher can copy the link. Other parameters, such as `from`, are kept.
 
@@ -107,4 +108,6 @@ Button label: Open the Periodic Table
 - Current Chrome, Edge, Firefox and Safari iOS 16+ are intended targets, but only Chromium was tested. The mode buttons use the CSS `:has()` selector for their checked style; older browsers still show the native radio button.
 
 ## Changelog
+1.1.0: Full screen button for presenting: the page fills the screen, the table grows to fit, and Esc or the button leaves.
+
 1.0.0: Initial periodic table with all 118 elements, category, block and three heatmap modes with legend and trend arrows, details panel, search, keyboard grid, linkable views, embed mode and data sources.

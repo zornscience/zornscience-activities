@@ -245,6 +245,8 @@
       "unknown": "Unknown"
     },
     "backToLesson": "← Back to the lesson",
+    "fullscreen": "Full screen",
+    "exitFullscreen": "Exit full screen",
     "paulingScale": "Pauling scale",
     "range": "{low} to {high}",
     "noData": "No data",
