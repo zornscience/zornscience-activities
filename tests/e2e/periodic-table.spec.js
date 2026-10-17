@@ -356,6 +356,13 @@ async function fullscreenState(page) {
   });
 }
 
+// Waits until the page has finished switching: the browser sets document.fullscreenElement first, and the page's
+// fullscreenchange handler then applies the full-screen layout and relabels the button.
+async function inFullscreen(page, on) {
+  await page.waitForFunction((on) => !!document.fullscreenElement === on &&
+    document.getElementById("zsa-pt-present").textContent === (on ? "Exit full screen" : "Full screen"), on);
+}
+
 test("periodic table: full screen for presenting, with Esc to leave", async ({page, problems}) => {
   void problems;
   for (var [w, h] of [[1920, 1080], [1366, 768], [1280, 720], [1024, 768]]) {
@@ -364,7 +371,7 @@ test("periodic table: full screen for presenting, with Esc to leave", async ({pa
     var button = page.getByRole("button", {name: "Full screen"});
     await expect(button).toBeVisible();
     await button.click();
-    await page.waitForFunction(() => !!document.fullscreenElement);
+    await inFullscreen(page, true);
     for (var [mode, label] of MODES) {
       await page.getByRole("radio", {name: label}).check();
       var st = await fullscreenState(page);
@@ -385,7 +392,7 @@ test("periodic table: full screen for presenting, with Esc to leave", async ({pa
     await expect(page.locator("#zsa-pt-details-title")).toHaveText("Bromine");
     // Esc leaves full screen first and keeps everything else as it was; a second Esc closes the details.
     await page.keyboard.press("Escape");
-    await page.waitForFunction(() => !document.fullscreenElement);
+    await inFullscreen(page, false);
     await expect(page.getByRole("button", {name: "Full screen"})).toBeVisible();
     await expect(page.locator("#zsa-pt-details-title")).toHaveText("Bromine");
     await expect(page.locator("#zsa-pt-back")).toBeVisible();
@@ -394,10 +401,10 @@ test("periodic table: full screen for presenting, with Esc to leave", async ({pa
   }
   // The button leaves full screen too, and keeps focus.
   await page.getByRole("button", {name: "Full screen"}).click();
-  await page.waitForFunction(() => !!document.fullscreenElement);
+  await inFullscreen(page, true);
   await audit(page, "full screen");
   await page.getByRole("button", {name: "Exit full screen"}).click();
-  await page.waitForFunction(() => !document.fullscreenElement);
+  await inFullscreen(page, false);
   expect(await focused(page)).toBe("#zsa-pt-present");
 });
 
