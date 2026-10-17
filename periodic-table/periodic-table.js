@@ -340,6 +340,36 @@
   $("trends").checked = state.trends;
   $("trends").addEventListener("change", function () { state.trends = $("trends").checked; paint(); syncUrl(); });
 
+  // ---------- Full screen, for presenting on a projector or whiteboard ----------
+  // The whole page (table, controls and details) fills the screen; Esc or the button leaves. The button only
+  // appears where the browser allows it (not on iPhones, or in a frame without allowfullscreen).
+  (function () {
+    var button = $("present");
+    var enabled = document.fullscreenEnabled || document.webkitFullscreenEnabled;
+    if (!enabled || !(root.requestFullscreen || root.webkitRequestFullscreen)) return;
+    function current() { return document.fullscreenElement || document.webkitFullscreenElement || null; }
+    function update() {
+      var on = current() === root;
+      root.classList.toggle("zsa-pt--present", on);
+      button.textContent = on ? ui.exitFullscreen : ui.fullscreen;
+    }
+    button.hidden = false;
+    button.addEventListener("click", function () {
+      var result = current() ? (document.exitFullscreen || document.webkitExitFullscreen).call(document)
+        : (root.requestFullscreen || root.webkitRequestFullscreen).call(root);
+      if (result && result.catch) result.catch(function () { /* refused (for example by a policy): stay as is */ });
+    });
+    // Browsers leave full screen on Esc themselves; this covers any that pass the key to the page instead. In full
+    // screen Esc always leaves full screen first (a second Esc closes the details, as usual).
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key !== "Escape" || current() !== root) return;
+      ev.preventDefault(); ev.stopPropagation();
+      (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    }, true);
+    document.addEventListener("fullscreenchange", update);
+    document.addEventListener("webkitfullscreenchange", update);
+  }());
+
   // The arrows repeat the trend sentences below the legend, so screen readers skip them.
   $("across").setAttribute("aria-hidden", "true"); $("down").setAttribute("aria-hidden", "true");
   buildGrid();

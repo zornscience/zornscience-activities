@@ -193,6 +193,8 @@ var ui = {
   blocks: [["s", "s-block"], ["p", "p-block"], ["d", "d-block"], ["f", "f-block"]],
   states: {solid: "Solid", liquid: "Liquid", gas: "Gas", unknown: "Unknown"},
   backToLesson: "\u2190 Back to the lesson",
+  fullscreen: "Full screen",
+  exitFullscreen: "Exit full screen",
   paulingScale: "Pauling scale",
   range: "{low} to {high}",
   noData: "No data",

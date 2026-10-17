@@ -9,6 +9,7 @@
 .zsa-pt-topline {display:flex;flex-wrap:wrap;align-items:center;column-gap:16px;}
 .zsa-pt-topline .zsa-eyebrow {margin:0;}
 .zsa-pt .zsa-pt-header h1 {font-size:1.5rem;line-height:1.2;margin:0;order:-1;}
+.zsa-pt-present {padding:6px 16px;margin-left:auto;line-height:1.2;}
 .zsa-pt-toolbar {display:flex;flex-wrap:wrap;align-items:flex-end;column-gap:20px;row-gap:6px;margin:6px 0 4px;}
 .zsa-pt-modes {border:0;margin:0;padding:0;min-width:0;}
 .zsa-pt-modes legend {font-size:14px;font-weight:600;color:var(--zsa-navy);padding:0;margin-bottom:2px;}
@@ -152,3 +153,39 @@
   .zsa-pt.zsa-pt--arrows {--pt-arrow-w:22px;}
   .zsa-pt-corner, .zsa-pt-rowhead {width:18px;}
 }
+
+/* Full screen (the Full screen button): the page fills the screen for presenting. The back link, footer and data
+   sources are hidden, and the cells grow with the screen height so the whole table still fits. */
+.zsa.zsa-pt.zsa-pt--present {max-width:none;width:100%;height:100%;overflow:auto;margin:0;padding:10px 20px;background:var(--zsa-white);
+  --pt-row:clamp(46px, calc((100vh - 248px) / 9 - 2px), 130px);}
+.zsa-pt--present [data-zsa-chrome], .zsa-pt--present .zsa-pt-sources {display:none;}
+.zsa-pt--present .zsa-pt-sym {font-size:max(17px, calc(var(--pt-row) * .36));}
+.zsa-pt--present .zsa-pt-num, .zsa-pt--present .zsa-pt-val {font-size:max(10px, calc(var(--pt-row) * .19));}
+.zsa-pt--present .zsa-pt-grid th {font-size:clamp(12px, calc(var(--pt-row) * .2), 16px);line-height:1.2;}
+.zsa-pt--present .zsa-pt-key-title {font-size:clamp(13px, calc(var(--pt-row) * .2), 18px);line-height:1.3;}
+.zsa-pt--present .zsa-pt-legend li {font-size:clamp(12px, calc(var(--pt-row) * .18), 16px);}
+.zsa-pt--present .zsa-pt-trends p {font-size:clamp(12px, calc(var(--pt-row) * .19), 17px);}
+@media (min-width:1340px) {.zsa-pt--present .zsa-pt-trends {top:calc(var(--pt-row) + 6px);}}
+@media (min-width:1280px) {.zsa-pt--present .zsa-pt-layout {grid-template-columns:minmax(0,1fr) 320px;}}
+.zsa-pt--present .zsa-pt-across span, .zsa-pt--present .zsa-pt-down span {font-size:clamp(13px, calc(var(--pt-row) * .17), 16px);}
+.zsa-pt--present .zsa-pt-placeholder {font-size:max(10px, calc(var(--pt-row) * .15));}
+.zsa-pt--present .zsa-pt-facts, .zsa-pt--present .zsa-pt-notes {font-size:clamp(14px, calc(var(--pt-row) * .18), 17px);}
+/* Narrower screens (4:3 projectors): the toolbar wraps to two lines, so the rows leave it more room. */
+@media (max-width:1279px) {.zsa.zsa-pt.zsa-pt--present {--pt-row:clamp(46px, calc((100vh - 316px) / 9 - 2px), 130px);}}
+/* Where container queries work (current browsers), the rows come from the height actually left under the header
+   and toolbar, so the table still fits when the toolbar wraps (a larger font, browser zoom, or a fallback font).
+   The page is a grid: header, toolbar, then the table area, which is a size container. The 90px is what the table
+   adds besides its element rows (the arrow, the group numbers, the gap and the cell spacing). The rules above are the
+   fallback for older browsers. */
+@supports (container-type: size) {
+  .zsa.zsa-pt.zsa-pt--present {display:grid;grid-template-rows:auto auto minmax(0,1fr);height:100vh;overflow:hidden;align-content:stretch;}
+  .zsa-pt--present .zsa-pt-layout {container-type:size;overflow:auto;min-height:0;
+    --pt-row:clamp(46px, calc((100cqh - 90px) / 9), 130px);}
+}
+/* A tighter toolbar in full screen, so it stays on one line at 1280 px even with a wider fallback font. */
+.zsa-pt--present .zsa-pt-toolbar {column-gap:12px;}
+.zsa-pt--present .zsa-pt-mode-list {gap:4px;}
+.zsa-pt--present .zsa-pt-mode {padding:0 9px;font-size:14px;gap:5px;}
+.zsa-pt--present .zsa-pt-tools {column-gap:12px;}
+.zsa-pt--present .zsa-pt-check {font-size:14px;}
+.zsa-pt--present .zsa-pt-search input {width:160px;}

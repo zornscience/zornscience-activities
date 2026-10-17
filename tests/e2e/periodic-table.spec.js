@@ -336,3 +336,113 @@ test("landing page links to the Periodic Table and Periodic Trends Practice", as
   await page.locator('a[href="periodic-table/"]').click();
   await expect(page).toHaveTitle("Periodic Table | ZornScience");
 });
+
+// Full screen for presenting: the whole page fills the screen, the table still fits, and Esc or the button leaves.
+async function fullscreenState(page) {
+  return page.evaluate(() => {
+    var cells = [].map.call(document.querySelectorAll("td[role=gridcell]"), (td) => td.getBoundingClientRect());
+    var main = document.querySelector("main");
+    function visible(el) { return el.getClientRects().length > 0 && getComputedStyle(el).visibility !== "hidden"; }
+    var small = [].filter.call(main.querySelectorAll("button, a, input[type=search], label:has(input), td[role=gridcell]"), visible)
+      .map((el) => el.getBoundingClientRect()).filter((r) => r.width < 44 || r.height < 44).length;
+    return {
+      element: document.fullscreenElement ? document.fullscreenElement.tagName : null,
+      button: document.getElementById("zsa-pt-present").textContent,
+      allOnScreen: cells.every((r) => r.top >= 0 && r.bottom <= window.innerHeight && r.left >= 0 && r.right <= window.innerWidth),
+      chromeHidden: [].every.call(document.querySelectorAll("[data-zsa-chrome], #zsa-pt-sources"), (el) => !visible(el)),
+      overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      small: small
+    };
+  });
+}
+
+// Waits until the page has finished switching: the browser sets document.fullscreenElement first, and the page's
+// fullscreenchange handler then applies the full-screen layout and relabels the button.
+async function inFullscreen(page, on) {
+  await page.waitForFunction((on) => !!document.fullscreenElement === on &&
+    document.getElementById("zsa-pt-present").textContent === (on ? "Exit full screen" : "Full screen"), on);
+}
+
+test("periodic table: full screen for presenting, with Esc to leave", async ({page, problems}) => {
+  void problems;
+  for (var [w, h] of [[1920, 1080], [1366, 768], [1280, 720], [1024, 768]]) {
+    await page.setViewportSize({width: w, height: h});
+    await go(page, "?mode=radius");
+    var button = page.getByRole("button", {name: "Full screen"});
+    await expect(button).toBeVisible();
+    await button.click();
+    await inFullscreen(page, true);
+    for (var [mode, label] of MODES) {
+      await page.getByRole("radio", {name: label}).check();
+      var st = await fullscreenState(page);
+      var where = w + "x" + h + " " + mode;
+      expect(st.element, where).toBe("MAIN");
+      expect(st.button).toBe("Exit full screen");
+      expect(st.allOnScreen, where + " whole table on screen").toBe(true);
+      expect(st.chromeHidden, where + " back link, footer and sources hidden").toBe(true);
+      expect(st.overflow, where).toBeLessThanOrEqual(0);
+      expect(st.small, where + " small targets").toBe(0);
+    }
+    // The table still works in full screen: search, keyboard, details.
+    await page.getByLabel("Find an element").fill("Kr");
+    await page.getByLabel("Find an element").press("Enter");
+    expect(await focused(page)).toBe("cell:Kr");
+    await page.keyboard.press("ArrowLeft");
+    await page.keyboard.press("Enter");
+    await expect(page.locator("#zsa-pt-details-title")).toHaveText("Bromine");
+    // Esc leaves full screen first and keeps everything else as it was; a second Esc closes the details.
+    await page.keyboard.press("Escape");
+    await inFullscreen(page, false);
+    await expect(page.getByRole("button", {name: "Full screen"})).toBeVisible();
+    await expect(page.locator("#zsa-pt-details-title")).toHaveText("Bromine");
+    await expect(page.locator("#zsa-pt-back")).toBeVisible();
+    await page.keyboard.press("Escape");
+    await expect(page.locator("#zsa-pt-details-title")).toHaveText("Element details");
+  }
+  // The button leaves full screen too, and keeps focus.
+  await page.getByRole("button", {name: "Full screen"}).click();
+  await inFullscreen(page, true);
+  await audit(page, "full screen");
+  await page.getByRole("button", {name: "Exit full screen"}).click();
+  await inFullscreen(page, false);
+  expect(await focused(page)).toBe("#zsa-pt-present");
+});
+
+test("periodic table: the Full screen button appears only where full screen is allowed", async ({page, problems}) => {
+  void problems;
+  // Framed on a zornscience.org page: without allowfullscreen the button stays hidden; with it, it shows.
+  var fs = require("fs"), path = require("path"), ROOT = path.join(__dirname, "..", "..");
+  var TYPES = {".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".woff2": "font/woff2"};
+  await page.route("https://activities.zornscience.org/**", (route) => {
+    var file = path.join(ROOT, new URL(route.request().url()).pathname);
+    if (file.endsWith("/")) file = path.join(file, "index.html");
+    if (!fs.existsSync(file)) return route.fulfill({status: 404, body: ""});
+    return route.fulfill({status: 200, contentType: TYPES[path.extname(file)] || "application/octet-stream", body: fs.readFileSync(file)});
+  });
+  var src = "https://activities.zornscience.org/periodic-table/?embed=1";
+  await page.route("https://zornscience.org/host", (route) => route.fulfill({status: 200, contentType: "text/html", body:
+    "<!doctype html><title>Host</title><iframe id='a' title='Without' src='" + src + "' width='1000' height='700'></iframe>" +
+    "<iframe id='b' title='With' src='" + src + "' width='1000' height='700' allowfullscreen></iframe>"}));
+  await page.goto("https://zornscience.org/host");
+  await expect(page.frameLocator("#a").locator("#zsa-pt-grid tbody")).toBeAttached();
+  await expect(page.frameLocator("#b").locator("#zsa-pt-grid tbody")).toBeAttached();
+  await expect(page.frameLocator("#a").locator("#zsa-pt-present")).toBeHidden();
+  await expect(page.frameLocator("#b").locator("#zsa-pt-present")).toBeVisible();
+});
+
+test("periodic table: full screen still fits with a wider fallback font", async ({browser}) => {
+  // If Inter has not loaded (or a browser substitutes a wider font), the toolbar must not push the table off the
+  // screen. DejaVu Sans is wider than Inter; the style is injected for this test only, so CSP is bypassed here.
+  for (var [w, h] of [[1280, 720], [1366, 768], [1024, 768]]) {
+    var context = await browser.newContext({viewport: {width: w, height: h}, bypassCSP: true});
+    var page = await context.newPage();
+    await go(page, "?mode=radius");
+    await page.addStyleTag({content: "main{--zsa-font:'DejaVu Sans';font-family:'DejaVu Sans'!important}"});
+    await page.getByRole("button", {name: "Full screen"}).click();
+    await inFullscreen(page, true);
+    var st = await fullscreenState(page);
+    expect(st.allOnScreen, w + "x" + h + " whole table on screen with DejaVu Sans").toBe(true);
+    expect(st.small, w + "x" + h + " small targets").toBe(0);
+    await context.close();
+  }
+});
