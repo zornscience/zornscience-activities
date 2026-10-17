@@ -9,7 +9,11 @@
 .zsa-pt-topline {display:flex;flex-wrap:wrap;align-items:center;column-gap:16px;}
 .zsa-pt-topline .zsa-eyebrow {margin:0;}
 .zsa-pt .zsa-pt-header h1 {font-size:1.5rem;line-height:1.2;margin:0;order:-1;}
-.zsa-pt-present {padding:6px 16px;margin-left:auto;line-height:1.2;}
+/* Full screen button: solid blue with outward arrows (inward arrows while in full screen), so it stands out. */
+.zsa-pt-present {display:inline-flex;align-items:center;gap:8px;padding:6px 16px 6px 12px;margin-left:auto;line-height:1.2;font-weight:600;}
+.zsa-pt-icon {width:22px;height:22px;flex:none;}
+.zsa-pt-icon--collapse, .zsa-pt--present .zsa-pt-icon--expand {display:none;}
+.zsa-pt--present .zsa-pt-icon--collapse {display:block;}
 .zsa-pt-toolbar {display:flex;flex-wrap:wrap;align-items:flex-end;column-gap:20px;row-gap:6px;margin:6px 0 4px;}
 .zsa-pt-modes {border:0;margin:0;padding:0;min-width:0;}
 .zsa-pt-modes legend {font-size:14px;font-weight:600;color:var(--zsa-navy);padding:0;margin-bottom:2px;}

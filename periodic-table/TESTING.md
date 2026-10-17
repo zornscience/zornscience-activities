@@ -33,6 +33,7 @@ PASS means the check was run on version 1.0.0 as committed and passed. NOT TESTE
 ## 1.1.1: Selected ring
 | Check | Status | Evidence |
 |---|---|---|
+| Full screen button look | PASS | Now the primary (solid blue) button with an inline SVG icon: four arrows pointing outward, and pointing inward while in full screen. The icon is hidden from screen readers, so the accessible name stays "Full screen" or "Exit full screen" and the existing tests still find it by name. The button is still 44 px tall and the header height is unchanged. Checked at 4x zoom in both states. |
 | Ring fully visible | PASS | Reported by the teacher: the selected element's ring was covered on its right and bottom sides by the neighbouring cells. `tests/e2e/periodic-table.spec.js` now reads the screenshot pixels just outside all four sides of the selected cell (boron and iron, category and ionization modes, 1366x657 and 390x664) and requires the ring's orange on each. It failed before the fix (right and bottom) and passes after. Screenshots also checked for hydrogen on a phone and nitrogen in full screen. |
 
 ## 1.1.0: Full screen

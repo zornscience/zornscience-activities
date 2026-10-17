@@ -347,7 +347,7 @@ async function fullscreenState(page) {
       .map((el) => el.getBoundingClientRect()).filter((r) => r.width < 44 || r.height < 44).length;
     return {
       element: document.fullscreenElement ? document.fullscreenElement.tagName : null,
-      button: document.getElementById("zsa-pt-present").textContent,
+      button: document.getElementById("zsa-pt-present").textContent.trim(),
       allOnScreen: cells.every((r) => r.top >= 0 && r.bottom <= window.innerHeight && r.left >= 0 && r.right <= window.innerWidth),
       chromeHidden: [].every.call(document.querySelectorAll("[data-zsa-chrome], #zsa-pt-sources"), (el) => !visible(el)),
       overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
@@ -360,7 +360,7 @@ async function fullscreenState(page) {
 // fullscreenchange handler then applies the full-screen layout and relabels the button.
 async function inFullscreen(page, on) {
   await page.waitForFunction((on) => !!document.fullscreenElement === on &&
-    document.getElementById("zsa-pt-present").textContent === (on ? "Exit full screen" : "Full screen"), on);
+    document.getElementById("zsa-pt-present").textContent.trim() === (on ? "Exit full screen" : "Full screen"), on);
 }
 
 test("periodic table: full screen for presenting, with Esc to leave", async ({page, problems}) => {

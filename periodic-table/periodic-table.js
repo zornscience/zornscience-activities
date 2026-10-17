@@ -351,7 +351,7 @@
     function update() {
       var on = current() === root;
       root.classList.toggle("zsa-pt--present", on);
-      button.textContent = on ? ui.exitFullscreen : ui.fullscreen;
+      $("present-label").textContent = on ? ui.exitFullscreen : ui.fullscreen; // the icon flips with the class above
     }
     button.hidden = false;
     button.addEventListener("click", function () {
