@@ -5,11 +5,16 @@
 .zsa-pt.zsa-pt--arrows {--pt-arrow-h:26px; --pt-arrow-w:26px;}
 
 /* Header and toolbar */
-.zsa-pt-header {display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;column-gap:16px;}
-.zsa-pt-topline {display:flex;flex-wrap:wrap;align-items:center;column-gap:16px;}
-.zsa-pt-topline .zsa-eyebrow {margin:0;}
-.zsa-pt .zsa-pt-header h1 {font-size:1.5rem;line-height:1.2;margin:0;order:-1;}
-.zsa-pt-present {padding:6px 16px;margin-left:auto;line-height:1.2;}
+.zsa-pt-header {display:flex;flex-wrap:wrap;align-items:center;column-gap:14px;}
+.zsa-pt .zsa-pt-header h1 {font-size:1.5rem;line-height:1.2;margin:0;}
+/* The ZornScience logo, linking home: a 44 px target. */
+.zsa-pt-logo {display:inline-flex;align-items:center;min-height:44px;border-radius:var(--zsa-radius);}
+.zsa-pt-logo img {display:block;width:46px;height:44px;}
+/* Full screen button: solid blue with outward arrows (inward arrows while in full screen), so it stands out. */
+.zsa-pt-present {display:inline-flex;align-items:center;gap:8px;padding:6px 16px 6px 12px;margin-left:auto;line-height:1.2;font-weight:600;}
+.zsa-pt-icon {width:22px;height:22px;flex:none;}
+.zsa-pt-icon--collapse, .zsa-pt--present .zsa-pt-icon--expand {display:none;}
+.zsa-pt--present .zsa-pt-icon--collapse {display:block;}
 .zsa-pt-toolbar {display:flex;flex-wrap:wrap;align-items:flex-end;column-gap:20px;row-gap:6px;margin:6px 0 4px;}
 .zsa-pt-modes {border:0;margin:0;padding:0;min-width:0;}
 .zsa-pt-modes legend {font-size:14px;font-weight:600;color:var(--zsa-navy);padding:0;margin-bottom:2px;}
@@ -48,7 +53,10 @@
 .zsa-pt-num {font-size:10px;}
 .zsa-pt-sym {font-size:17px;font-weight:700;}
 .zsa-pt-val {font-size:11px;min-height:11px;font-weight:600;}
-.zsa-pt-el.zsa-pt-selected {box-shadow:0 0 0 2px var(--zsa-white),0 0 0 5px #b45309;}
+/* The selected ring is drawn outside the cell, so the cell is lifted above its neighbours (which come later in the
+   table and would otherwise paint over its right and bottom sides). Keyboard focus sits above that. */
+.zsa-pt-el.zsa-pt-selected {box-shadow:0 0 0 2px var(--zsa-white),0 0 0 5px #b45309;position:relative;z-index:2;}
+.zsa-pt-el.zsa-pt-selected:focus-visible {z-index:3;}
 
 /* Color modes. Category and block: light fills, each with a different border. Heatmaps: a sequential scale of the
    site's blues, navy text on the light steps and white on the dark ones (at least 4.5:1). No data: gray, dashed. */
@@ -117,7 +125,6 @@
   .zsa-pt-grid th.zsa-pt-flabel {text-align:left;padding-left:4px;}
 }
 @media (max-width:599px) {
-  .zsa-pt-topline .zsa-eyebrow {display:none;}
   .zsa-pt .zsa-pt-header h1 {font-size:1.25rem;}
   .zsa-pt-toolbar {column-gap:12px;}
   .zsa-pt-mode {padding:0 10px;font-size:14px;}

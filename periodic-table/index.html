@@ -4,25 +4,27 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.1.0">
+<meta name="zsa-version" content="1.1.1">
 <meta name="description" content="An interactive periodic table of all 118 elements with heatmaps for atomic radius, electronegativity and ionization energy, from ZornScience.">
 <title>Periodic Table | ZornScience</title>
 <link rel="icon" href="data:,">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.1.0">
-<link rel="stylesheet" href="periodic-table.css?v=1.1.0">
-<script src="../shared/zsa-embed.js?v=1.1.0" defer></script>
-<script src="data.js?v=1.1.0" defer></script>
-<script src="periodic-table.js?v=1.1.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.1.1">
+<link rel="stylesheet" href="periodic-table.css?v=1.1.1">
+<script src="../shared/zsa-embed.js?v=1.1.1" defer></script>
+<script src="data.js?v=1.1.1" defer></script>
+<script src="periodic-table.js?v=1.1.1" defer></script>
 </head>
 <body>
 <main class="zsa zsa-pt" data-zsa-activity="periodic-table">
 <header class="zsa-pt-header">
-<div class="zsa-pt-topline" data-zsa-chrome>
-<a class="zsa-back" id="zsa-pt-back" href="https://zornscience.org/science/">← ZornScience lessons</a>
-<p class="zsa-eyebrow">Chemistry · Reference</p>
-</div>
+<a class="zsa-pt-logo" href="https://zornscience.org/" data-zsa-chrome><img src="zornscience-logo.png?v=1.1.1" alt="ZornScience home" width="46" height="44"></a>
 <h1>Periodic Table</h1>
-<button class="zsa-btn zsa-pt-present" id="zsa-pt-present" type="button" hidden>Full screen</button>
+<a class="zsa-back" id="zsa-pt-back" href="https://zornscience.org/science/" data-zsa-chrome hidden>← Back to the lesson</a>
+<button class="zsa-btn zsa-btn--primary zsa-pt-present" id="zsa-pt-present" type="button" hidden>
+<svg class="zsa-pt-icon zsa-pt-icon--expand" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 9.5 3.5 3.5M3.5 8V3.5H8M14.5 9.5l6-6M16 3.5h4.5V8M9.5 14.5l-6 6M3.5 16v4.5H8M14.5 14.5l6 6M20.5 16v4.5H16"/></svg>
+<svg class="zsa-pt-icon zsa-pt-icon--collapse" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 3.5l6 6M5 9.5h4.5V5M20.5 3.5l-6 6M14.5 5v4.5H19M3.5 20.5l6-6M5 14.5h4.5V19M20.5 20.5l-6-6M14.5 19v-4.5H19"/></svg>
+<span id="zsa-pt-present-label">Full screen</span>
+</button>
 </header>
 <noscript><p class="zsa-panel">This periodic table needs JavaScript. Enable it to explore the elements.</p></noscript>
 <div class="zsa-pt-toolbar">

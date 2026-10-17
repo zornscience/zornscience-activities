@@ -265,18 +265,26 @@ test("periodic table: deep links and the back link", async ({page, problems}) =>
   expect(await page.evaluate(() => [window.scrollX, window.scrollY])).toEqual([0, 0]);
   await page.setViewportSize({width: 1366, height: 657});
 
-  var back = page.locator("#zsa-pt-back");
+  // The header: the ZornScience logo links home; no back link unless a lesson passes ?from=.
+  var back = page.locator("#zsa-pt-back"), logo = page.getByRole("link", {name: "ZornScience home"});
   await go(page);
-  await expect(back).toHaveAttribute("href", "https://zornscience.org/science/");
+  await expect(logo).toHaveAttribute("href", "https://zornscience.org/");
+  await expect(logo).toBeVisible();
+  await expect(page.getByRole("heading", {level: 1})).toHaveText("Periodic Table");
+  await expect(back).toBeHidden();
+  await expect(page.getByText("ZornScience lessons")).toHaveCount(0);
+  await expect(page.getByText("Chemistry · Reference")).toHaveCount(0);
   var lesson = "https://zornscience.org/science/chemistry/unit-2-quantum/periodic-trends-periods/";
   await go(page, "?from=" + encodeURIComponent(lesson) + "&mode=radius");
   await expect(back).toHaveAttribute("href", lesson);
   await expect(back).toHaveText("← Back to the lesson");
+  await expect(back).toBeVisible();
+  await expect(logo).toHaveAttribute("href", "https://zornscience.org/");
   for (var bad of ["https://example.com/", "http://zornscience.org/science/", "https://zornscience.org.example.com/", "https://www.zornscience.org/",
     "https://user@zornscience.org/", "https://zornscience.org:8443/", "javascript:alert(1)", "//zornscience.org/x", "/science/"]) {
     await go(page, "?from=" + encodeURIComponent(bad));
+    await expect(back, bad).toBeHidden();
     await expect(back, bad).toHaveAttribute("href", "https://zornscience.org/science/");
-    await expect(back).toHaveText("← ZornScience lessons");
   }
   // Changing the view keeps ?from.
   await go(page, "?from=" + encodeURIComponent(lesson));
@@ -301,6 +309,10 @@ test("periodic table: embed mode, local files only, no storage", async ({page, p
   expect(await page.evaluate(() => [localStorage.length, sessionStorage.length, document.cookie])).toEqual([0, 0, ""]);
   await cell(page, "Na").click();
   await expect(page.locator("#zsa-pt-details-title")).toHaveText("Sodium");
+  // Embedded on a lesson page, neither the logo nor a back link shows, even with ?from=.
+  await go(page, "?embed=1&from=" + encodeURIComponent("https://zornscience.org/science/chemistry/"));
+  await expect(page.locator("#zsa-pt-back")).toBeHidden();
+  await expect(page.getByRole("link", {name: "ZornScience home"})).toBeHidden();
 });
 
 test("periodic table: no axe violations in eight states", async ({page, problems}) => {
@@ -347,7 +359,7 @@ async function fullscreenState(page) {
       .map((el) => el.getBoundingClientRect()).filter((r) => r.width < 44 || r.height < 44).length;
     return {
       element: document.fullscreenElement ? document.fullscreenElement.tagName : null,
-      button: document.getElementById("zsa-pt-present").textContent,
+      button: document.getElementById("zsa-pt-present").textContent.trim(),
       allOnScreen: cells.every((r) => r.top >= 0 && r.bottom <= window.innerHeight && r.left >= 0 && r.right <= window.innerWidth),
       chromeHidden: [].every.call(document.querySelectorAll("[data-zsa-chrome], #zsa-pt-sources"), (el) => !visible(el)),
       overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
@@ -360,7 +372,7 @@ async function fullscreenState(page) {
 // fullscreenchange handler then applies the full-screen layout and relabels the button.
 async function inFullscreen(page, on) {
   await page.waitForFunction((on) => !!document.fullscreenElement === on &&
-    document.getElementById("zsa-pt-present").textContent === (on ? "Exit full screen" : "Full screen"), on);
+    document.getElementById("zsa-pt-present").textContent.trim() === (on ? "Exit full screen" : "Full screen"), on);
 }
 
 test("periodic table: full screen for presenting, with Esc to leave", async ({page, problems}) => {
@@ -395,7 +407,7 @@ test("periodic table: full screen for presenting, with Esc to leave", async ({pa
     await inFullscreen(page, false);
     await expect(page.getByRole("button", {name: "Full screen"})).toBeVisible();
     await expect(page.locator("#zsa-pt-details-title")).toHaveText("Bromine");
-    await expect(page.locator("#zsa-pt-back")).toBeVisible();
+    await expect(page.getByRole("link", {name: "ZornScience home"})).toBeVisible();
     await page.keyboard.press("Escape");
     await expect(page.locator("#zsa-pt-details-title")).toHaveText("Element details");
   }
@@ -444,5 +456,40 @@ test("periodic table: full screen still fits with a wider fallback font", async 
     expect(st.allOnScreen, w + "x" + h + " whole table on screen with DejaVu Sans").toBe(true);
     expect(st.small, w + "x" + h + " small targets").toBe(0);
     await context.close();
+  }
+});
+
+// The selected element's ring is drawn outside the cell, so it must sit above the neighbouring cells. Reads the
+// screenshot's pixels just outside each side of the cell (on the ring) and checks they are the ring's amber.
+async function ringSides(page, symbol) {
+  var box = await cell(page, symbol).boundingBox();
+  var pad = 8, clip = {x: box.x - pad, y: box.y - pad, width: box.width + 2 * pad, height: box.height + 2 * pad};
+  var png = (await page.screenshot({clip: clip})).toString("base64");
+  return page.evaluate(([png, w, h, pad]) => new Promise((resolve) => {
+    var img = new Image();
+    img.onload = function () {
+      var c = document.createElement("canvas"); c.width = img.width; c.height = img.height;
+      var ctx = c.getContext("2d", {willReadFrequently: true}); ctx.drawImage(img, 0, 0);
+      var sx = img.width / (w + 2 * pad), sy = img.height / (h + 2 * pad);
+      function amber(x, y) { var d = ctx.getImageData(Math.round(x * sx), Math.round(y * sy), 1, 1).data; return d[0] > 150 && d[1] < 120 && d[2] < 60; }
+      // 4 px outside the cell, past the 2 px white gap, in the middle of each side.
+      resolve({top: amber(pad + w / 2, pad - 4), right: amber(pad + w + 3.5, pad + h / 2), bottom: amber(pad + w / 2, pad + h + 3.5), left: amber(pad - 4, pad + h / 2)});
+    };
+    img.src = "data:image/png;base64," + png;
+  }), [png, box.width, box.height, pad]);
+}
+
+test("periodic table: the selected element's ring is not hidden by its neighbours", async ({page, problems}) => {
+  void problems;
+  for (var [w, h] of [[1366, 657], [390, 664]]) {
+    await page.setViewportSize({width: w, height: h});
+    for (var mode of ["category", "ionization"]) {
+      // Boron has neighbours on the right (C) and below (Al); iron has neighbours on every side.
+      for (var symbol of ["B", "Fe"]) {
+        await go(page, "?mode=" + mode + "&el=" + symbol);
+        await cell(page, symbol).scrollIntoViewIfNeeded();
+        expect(await ringSides(page, symbol), w + "x" + h + " " + mode + " " + symbol).toEqual({top: true, right: true, bottom: true, left: true});
+      }
+    }
   }
 });
