@@ -1,5 +1,5 @@
 # ACT Science Practice
-Version: 1.0.0
+Version: 1.0.1
 
 Free ACT Science practice with original passages. Students read a passage, answer its questions, and get a score report that compares them with national results and gives tips for the skills they missed. Not linked from zornscience.org yet. The live URL after approval will be https://activities.zornscience.org/act-science/.
 
@@ -29,11 +29,12 @@ A tools row sits under the top bar during a section. Every tool is a button with
 ## Files
 | File | What it holds |
 |---|---|
-| `index.html` | Page shell: brand band with the "Zs" tile logo, the app area, and the trademark footer. |
+| `index.html` | Page shell: brand band with the ZornScience logo and "Test Prep", the app area, and the trademark footer. |
 | `data.js` | The question bank (`passages`), the skill names and tips (`skills`), and every word a student sees (`ui`). |
 | `config.js` | Raw to scale conversion, national ranks, national average and benchmark. **Refresh each fall** (see the comment at the top). |
 | `act-science.js` | Start screen, passage pages, score report, and the figure drawing (line graphs, tables, diagrams). |
 | `act-science.css` | Layout, light and dark colors. |
+| `zornscience-logo.png` | The ZornScience logo for the header (the same file as the Periodic Table's), shown at 46 by 44 px. |
 | `fonts/` | Atkinson Hyperlegible, regular, bold and italic, Latin subset (SIL OFL 1.1). |
 
 ## Assumptions and departures from the brief
@@ -123,6 +124,8 @@ Each question in the answer review has a Show with passage button. It opens the 
 - Ending the section asks on the page, never with a `confirm()` dialog.
 
 ## Changelog
+1.0.1: The header shows the ZornScience logo in place of the "Zs" tile, next to "Test Prep".
+
 1.0.0: All seven passages reviewed, so the Full section (40 questions, 40 minutes, one estimated score and percentile) is on (milestone 6). End-to-end tests on the real bank. Screen reader data tables no longer widen the page on narrow phones, and a table that has to scroll sideways becomes a labeled region in the Tab order.
 
 0.5.0: Four draft passages (milestone 5): Dissolved Oxygen in Water, Solar Panel Output, Carts on a Ramp, Salt and Radish Seed Germination. Bar graphs and scatter plots. A Review passages list with `?drafts=1`. Unit checks for the new figures, for difficulty order and topic spread, and that the bank can make a full section once reviewed.
