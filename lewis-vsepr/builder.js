@@ -9,6 +9,16 @@
   root.dispatchEvent(new CustomEvent("zsa:request-data", {detail: {receive: function (value) { data = value; }}}));
   root.dispatchEvent(new CustomEvent("zsa:request-engine", {detail: {receive: function (value) { zsa = value; }}}));
   if (!data || !zsa) return;
+  // Completion codes (shared/zsa-codes.js), when the page loads them. This page runs two copies of the engine, one per
+  // setting, and each asks for the codes. Each copy gets them with its own registry entry, LVB for the octet rule and
+  // LVA for the AP setting, so a code records the setting its round was played with.
+  var codes = null;
+  root.dispatchEvent(new CustomEvent("zsa:request-codes", {detail: {receive: function (value) { codes = value; }}}));
+  function codesFor(ap) {
+    var mine = Object.create(codes);
+    mine.encode = function (r, spec) { return codes.encode(Object.assign({}, r, {activity: ap ? "LVA" : "LVB"}), spec); };
+    return mine;
+  }
   var ui = data.ui, node = zsa.node, fill = zsa.fill, render = zsa.render, speak = zsa.speak;
   // The SVG namespace is a name, not a link: nothing is fetched from it.
   var SVG_NS = "http://www.w3.org/2000/svg";
@@ -705,6 +715,7 @@
       : {quotas: [{test: function (it) { return it.domains && lonePairsOnCenter(it) > 0; }, min: 2}, {test: hasMultiple, min: 1},
         {test: function (it) { return it.charge !== 0; }, min: 1}, {test: function (it) { return it.polar === false; }, min: 1}], size: 6};
 
+    if (codes) root.addEventListener("zsa:request-codes", function (event) { event.detail.receive(codesFor(ap)); }, {once: true});
     return zsa.create(root, {
       prefix: "zsa-lv", strip: "zsa-lv-strip", labels: ui.labels,
       pool: pool, key: function (it) { return it.id; }, round: round,

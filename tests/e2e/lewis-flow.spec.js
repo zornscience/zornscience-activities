@@ -316,7 +316,7 @@ test("review queue, first-try counts and Practice my misses", async ({page, open
   expect(text).toContain("Total valence electrons4 / 6");
   expect(text).toContain("Lewis structure6 / 6");
   expect(text).toContain("Keep practicing");
-  expect(run.finish.finishButtons).toEqual(["Practice again", "Practice my misses"]);
+  expect(run.finish.finishButtons).toEqual(["Copy code", "Practice again", "Practice my misses"]);
   var missed = [run.items[0].id, run.items[2].id];
   missed.forEach((id) => expect(text).toContain(lv.item(id).name));
   await page.evaluate(() => window.__zsa.finishButton("Practice my misses"));

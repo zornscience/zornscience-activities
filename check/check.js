@@ -28,13 +28,15 @@
     var p = iso.split("-");
     return MONTHS[Number(p[1]) - 1] + " " + Number(p[2]) + ", " + p[0];
   }
+  // The activity's name, with its setting for an activity that records one: "Lewis Structure and VSEPR Builder (AP setting)".
+  function activityName(spec) {return spec.name + (spec.setting ? " (" + spec.setting + ")" : "");}
   function capped(n, top) {return n + (top ? " or more" : "");}
   // One row's cells as text: line, code, status, activity, version, date (shown and copied), items, steps (a list), show, hints.
   function cells(row) {
     var r = row.result, ok = r.status === "valid" || r.status === "future";
     var steps = ok ? r.stats.filter(function (s) {return s.total > 0;}).map(function (s) {return s.label + ": " + s.correct + " / " + s.total;}) : [];
     return {
-      line:String(row.line), code:r.code, activity:ok ? r.activity.name : "", version:ok ? r.version : "",
+      line:String(row.line), code:r.code, activity:ok ? activityName(r.activity) : "", version:ok ? r.version : "",
       date:ok ? readableDate(r.date) : "", iso:ok ? r.date : "", items:ok ? String(r.items) : "", steps:steps,
       show:ok ? capped(r.show, r.showMax) : "", hints:ok ? capped(r.hints, r.hintsMax) : "", status:STATUS[r.status], key:r.status
     };

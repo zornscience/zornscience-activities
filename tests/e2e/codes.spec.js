@@ -2,21 +2,12 @@
 // copied and checked on /check/ and every field matches the round, no code for single practice or Practice my
 // misses, a bulk paste of mixed lines, Copy results, the copy fallback, axe-core, layout and network.
 "use strict";
-var fs = require("fs");
 var {test, expect, state, activities} = require("./fixtures");
 var {answerKey, play} = require("./play");
+var {audit, results, check, readable} = require("./checker");
 var codes = require("../../shared/zsa-codes.js");
 
-var AXE = fs.readFileSync(require.resolve("axe-core/axe.min.js"), "utf8");
-var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-function readable(iso) { var p = iso.split("-"); return MONTHS[Number(p[1]) - 1] + " " + Number(p[2]) + ", " + p[0]; }
 var VERSION = {"ion-charge-trainer": "1.4", "ionic-formula-builder": "1.1"};
-
-async function audit(page, label) {
-  await page.evaluate(AXE);
-  var result = await page.evaluate(() => window.axe.run(document, {runOnly: {type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"]}}));
-  expect(result.violations.map((v) => label + ": " + v.id + " " + v.nodes.map((n) => n.target.join(" ")).join(", "))).toEqual([]);
-}
 // Focus as the activity helpers describe it, or on the checker page "#id" (or the tag name).
 async function focusOf(page) {
   return page.evaluate(() => {
@@ -105,27 +96,9 @@ async function summaryOf(page, cfg) {
       code: value && z.visual(value).trim(), spoken: value && z.spoken(value).trim(), text: z.visual(work), live: z.state().live};
   }, cfg.ids);
 }
-// The checker's results table as text, one object per row keyed by column header.
-async function results(page) {
-  return page.evaluate(() => {
-    var heads = [].map.call(document.querySelectorAll("#zsa-chk-table thead th"), (th) => th.textContent);
-    return [].map.call(document.querySelectorAll("#zsa-chk-table tbody tr"), (tr) => {
-      var row = {};
-      [].forEach.call(tr.children, (cell, i) => {
-        var items = cell.querySelectorAll("li");
-        row[heads[i]] = items.length ? [].map.call(items, (li) => li.textContent) : cell.textContent;
-      });
-      return row;
-    });
-  });
-}
-async function check(page, text) {
-  await page.locator("#zsa-chk-input").fill(text);
-  await page.locator("#zsa-chk-check").click();
-}
-
-// Only activities registered in shared/zsa-codes.js give codes; the others are covered by their own tests.
-for (var slug of Object.keys(activities).filter((s) => codes.activity(s))) {
+// The two activities played here from the shared answer key. Periodic Trends Practice and the Lewis and VSEPR Builder
+// have their own code tests (periodic-trends.spec.js, lewis-codes.spec.js); activities without codes have none.
+for (var slug of Object.keys(activities).filter((s) => codes.activity(s) && activities[s].answer)) {
   (function (slug) {
     var cfg = activities[slug], spec = codes.activity(slug);
     test(slug + ": a full keyboard round gives a code that the checker reads back exactly", async ({page, open, context}) => {
