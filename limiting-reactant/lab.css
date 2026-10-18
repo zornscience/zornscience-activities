@@ -1,0 +1,120 @@
+/* Limiting Reactant Visualizer. Shared tokens and components come from ../shared/zsa-base.css; everything here is
+   zsa-lr-. Layout: one column on phones (set up, predict, box, table, explanation, questions, reflection); from
+   600px to 1099px set up and predict sit side by side; from 900px the table and the explanation sit side by side;
+   from 1100px set up and predict are a 300px column beside the work. */
+.zsa.zsa-lr {--zsa-max-width:1440px; --zsa-lr-amber:#b45309; --zsa-lr-amber-bg:#fffbeb;}
+.zsa-lr-header {margin-bottom:8px;}
+.zsa-lr-topline {display:flex;flex-wrap:wrap;align-items:center;column-gap:16px;}
+.zsa-lr-topline .zsa-eyebrow {margin:0;}
+.zsa-lr .zsa-lr-header h1 {margin:8px 0 8px;}
+.zsa-lr-lede {margin:0 0 8px;max-width:64ch;}
+.zsa-lr h2 {font-size:1.35rem;line-height:1.3;margin:4px 0 12px;}
+.zsa-lr h3 {font-size:1.1rem;line-height:1.3;margin:12px 0 8px;}
+.zsa-lr .zsa-eyebrow {margin:0;}
+.zsa-lr-small {font-size:var(--zsa-text-sm);margin:8px 0;}
+.zsa-lr-print-only {display:none;}
+
+/* Toolbar */
+.zsa-lr-toolbar {display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;border-top:1px solid var(--zsa-border);border-bottom:1px solid var(--zsa-border);padding:8px 0;margin:16px 0;}
+.zsa-lr-toolbar-note {margin:0;}
+.zsa-lr-print {margin-left:auto;padding:8px 16px;}
+
+/* Layout */
+.zsa-lr-layout {display:grid;grid-template-columns:minmax(0,1fr);gap:16px;}
+.zsa-lr-side,.zsa-lr-work {min-width:0;}
+.zsa-lr .zsa-card {margin:0 0 16px;background:var(--zsa-white);}
+@media(min-width:600px) and (max-width:1099px) {
+  .zsa-lr-side {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:16px;align-items:start;}
+}
+@media(min-width:1100px) {
+  .zsa-lr-layout {grid-template-columns:300px minmax(0,1fr);column-gap:24px;align-items:start;}
+  .zsa-lr .zsa-card {padding:20px 24px;}
+}
+.zsa-lr-results {display:grid;grid-template-columns:minmax(0,1fr);column-gap:16px;}
+@media(min-width:900px) {.zsa-lr-results {grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;}}
+
+/* Set up */
+.zsa-lr-field {display:block;font-size:var(--zsa-text-sm);font-weight:600;color:var(--zsa-navy);margin:8px 0 4px;}
+.zsa-lr-select {display:block;width:100%;border:1px solid var(--zsa-navy);border-radius:var(--zsa-radius);padding:8px 10px;background:var(--zsa-white);color:var(--zsa-navy);font-size:16px;}
+.zsa-lr-equation {font-size:1.25rem;font-weight:600;color:var(--zsa-navy);margin:12px 0 4px;}
+.zsa-lr-amounts {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px;}
+.zsa-lr-amount {min-width:0;}
+.zsa-lr-stepper {display:flex;align-items:stretch;}
+.zsa-lr-step {flex:none;width:44px;padding:0;font-size:1.25rem;line-height:1;}
+.zsa-lr-step:first-child {border-radius:var(--zsa-radius) 0 0 var(--zsa-radius);}
+.zsa-lr-step:last-child {border-radius:0 var(--zsa-radius) var(--zsa-radius) 0;}
+.zsa-lr-number {flex:1 1 auto;width:0;min-width:2.5em;min-height:44px;border:1px solid var(--zsa-navy);border-left:0;border-right:0;text-align:center;font-size:1.15rem;font-weight:600;color:var(--zsa-navy);font-variant-numeric:tabular-nums;-moz-appearance:textfield;appearance:textfield;}
+.zsa-lr-number::-webkit-inner-spin-button,.zsa-lr-number::-webkit-outer-spin-button {-webkit-appearance:none;margin:0;}
+.zsa-lr-text {display:block;width:100%;min-height:44px;border:1px solid var(--zsa-navy);border-radius:var(--zsa-radius);padding:8px 12px;font-size:16px;color:var(--zsa-slate);}
+.zsa-lr-text:disabled {background:#f8fafc;color:var(--zsa-slate);border-color:var(--zsa-border-strong);}
+
+/* Predict */
+.zsa-lr-question {border:1px solid var(--zsa-border);border-radius:var(--zsa-radius);margin:0 0 4px;padding:8px 12px 10px;min-width:0;}
+.zsa-lr-question legend {font-size:var(--zsa-text-sm);font-weight:600;color:var(--zsa-navy);padding:0 4px;}
+.zsa-lr-choice {display:flex;align-items:center;gap:10px;min-height:44px;font-size:var(--zsa-text-sm);cursor:pointer;}
+.zsa-lr-choice input {flex:none;width:20px;height:20px;margin:0;accent-color:var(--zsa-blue);}
+.zsa-lr-choice:has(input:disabled) {cursor:default;}
+
+/* The box */
+.zsa-lr-canvas {display:block;width:100%;aspect-ratio:3 / 2;height:auto;background:#f8fbff;border:2px solid var(--zsa-navy);border-radius:var(--zsa-radius-sm);}
+.zsa-lr-legend {display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:6px 0 0;font-size:var(--zsa-text-label);}
+.zsa-lr-key {display:inline-block;flex:none;width:14px;height:14px;border-radius:50%;border:1.5px solid #475569;}
+.zsa-lr-key-text {margin-right:10px;}
+.zsa-lr-key-H {background:#f1f5f9;}
+.zsa-lr-key-O {background:#dc2626;border-color:#7f1d1d;}
+.zsa-lr-key-N {background:#2563eb;border-color:#1e3a8a;}
+.zsa-lr-key-C {background:#334155;border-color:#0f172a;}
+.zsa-lr-key-Cl {background:#16a34a;border-color:#14532d;}
+.zsa-lr-key-stranded {width:16px;height:16px;border:2.5px dashed #d97706;background:transparent;}
+.zsa-lr-actions {display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+.zsa-lr-actions .zsa-btn {padding:10px 16px;min-width:7em;}
+.zsa-lr-status {min-height:1.65em;font-weight:600;color:var(--zsa-navy);}
+
+/* Table */
+.zsa-lr-tablewrap {overflow-x:auto;}
+.zsa-lr-table {width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;}
+.zsa-lr-table caption {text-align:left;caption-side:bottom;color:var(--zsa-slate);}
+.zsa-lr-table th,.zsa-lr-table td {border-bottom:1px solid var(--zsa-border);padding:6px 8px;text-align:right;vertical-align:bottom;}
+.zsa-lr-table thead th {color:var(--zsa-navy);font-weight:600;font-size:1.05rem;}
+.zsa-lr-table tbody th {text-align:left;font-size:var(--zsa-text-sm);font-weight:600;color:var(--zsa-navy);}
+.zsa-lr-table td {font-size:1.1rem;color:var(--zsa-navy);}
+.zsa-lr-count-row th,.zsa-lr-count-row td {font-size:var(--zsa-text-sm);font-weight:400;color:var(--zsa-slate);border-bottom:0;}
+.zsa-lr-tag {display:block;font-size:var(--zsa-text-label);font-weight:600;letter-spacing:.04em;text-transform:uppercase;}
+.zsa-lr-tag-limiting {color:var(--zsa-blue);}
+.zsa-lr-tag-excess {color:var(--zsa-lr-amber);}
+.zsa-lr-tag-product {color:var(--zsa-success);}
+.zsa-lr-left {background:var(--zsa-lr-amber-bg);color:var(--zsa-lr-amber);font-weight:600;}
+
+/* Explanation and questions */
+.zsa-lr-why p {margin:8px 0;font-size:var(--zsa-text-sm);}
+.zsa-lr-why .zsa-lr-result {font-size:1.1rem;font-weight:600;color:var(--zsa-navy);}
+.zsa-lr-questions {display:grid;gap:12px 32px;}
+@media(min-width:900px) {.zsa-lr-questions {grid-template-columns:repeat(2,minmax(0,1fr));}}
+.zsa-lr-feedback {border:1px solid var(--zsa-border);border-left:6px solid var(--zsa-blue);border-radius:var(--zsa-radius);background:var(--zsa-sky);padding:10px 16px;margin:16px 0 0;font-size:var(--zsa-text-sm);}
+.zsa-lr-feedback h3 {margin:4px 0 8px;}
+.zsa-lr-feedback p {margin:6px 0;}
+.zsa-lr .zsa-lr-ok {color:var(--zsa-success);font-weight:600;}
+.zsa-lr-notyet {color:var(--zsa-slate);}
+@media(max-width:599px) {
+  .zsa-lr-topline .zsa-eyebrow {display:none;}
+  .zsa-lr-print {margin-left:0;}
+}
+
+/* Reflection */
+.zsa-lr-reflection {display:grid;gap:8px 32px;}
+@media(min-width:900px) {.zsa-lr-reflection {grid-template-columns:repeat(2,minmax(0,1fr));}}
+.zsa-lr-textarea {display:block;width:100%;min-height:8em;resize:vertical;border:1px solid var(--zsa-navy);border-radius:var(--zsa-radius);padding:10px 12px;font:inherit;font-size:16px;color:var(--zsa-slate);}
+.zsa-lr-textarea:focus-visible,.zsa-lr-text:focus-visible {outline:var(--zsa-focus-ring);outline-offset:var(--zsa-focus-offset);}
+
+/* Print: the set up line, the box, the table, the explanation, the answers and the whole reflection; no controls. */
+@media print {
+  .zsa.zsa-lr {max-width:none;padding:0;}
+  .zsa-lr-topline,.zsa-lr-lede,.zsa-lr-toolbar,.zsa-lr-setup,.zsa-lr-actions,.zsa-lr .zsa-footer,.zsa-lr-textarea,#zsa-lr-reflection-note {display:none!important;}
+  .zsa-lr-print-only {display:block;}
+  .zsa-lr-print-reflection {white-space:pre-wrap;border:1px solid #94a3b8;border-radius:6px;padding:8px 10px;min-height:6em;}
+  .zsa-lr .zsa-lr-header h1 {font-size:1.6rem;margin:0 0 4px;}
+  .zsa-lr-layout,.zsa-lr-side {display:block;}
+  .zsa-lr-results {grid-template-columns:repeat(2,minmax(0,1fr));}
+  .zsa-lr-boxcard,.zsa-lr-tablecard,.zsa-lr-why,.zsa-lr-question {break-inside:avoid;}
+  .zsa-lr-reflection {grid-template-columns:1fr;}
+}

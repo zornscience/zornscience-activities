@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<meta name="description" content="Pick starting moles of two reactants, watch the molecules pair up into products, and see the excess reactant left stranded when the limiting reactant runs out, from ZornScience.">
+<title>Limiting Reactant Visualizer | ZornScience</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="lab.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="model.js?v=1.0.0" defer></script>
+<script src="lab.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="zsa zsa-lr" data-zsa-activity="limiting-reactant">
+<header class="zsa-lr-header">
+<div class="zsa-lr-topline" data-zsa-chrome>
+<a class="zsa-back" id="zsa-lr-back" href="https://zornscience.org/science/chemistry/unit-6-stoichiometry/">← Back to the lesson</a>
+<p class="zsa-eyebrow">Chemistry · Stoichiometry</p>
+</div>
+<h1>Limiting Reactant Visualizer</h1>
+<p class="zsa-lr-lede">Choose how many moles of each reactant to start with, predict which one runs out, then watch the molecules pair up into products. Whatever is left over has nothing to react with.</p>
+</header>
+<noscript><p class="zsa-panel">This visualizer needs JavaScript. Enable it to see the molecules react.</p></noscript>
+<div class="zsa-lr-toolbar">
+<p class="zsa-lr-small zsa-lr-toolbar-note" id="zsa-lr-scale"></p>
+<button class="zsa-btn zsa-lr-print" id="zsa-lr-print" type="button">Print</button>
+</div>
+<p class="zsa-lr-print-only" id="zsa-lr-print-summary"></p>
+<div class="zsa-lr-layout">
+<aside class="zsa-lr-side" aria-label="Set up and predict">
+<section class="zsa-card zsa-lr-setup" aria-labelledby="zsa-lr-setup-title">
+<p class="zsa-eyebrow">1. Set up</p>
+<h2 id="zsa-lr-setup-title">Starting amounts</h2>
+<label class="zsa-lr-field" for="zsa-lr-rxn">Reaction</label>
+<select class="zsa-lr-select" id="zsa-lr-rxn"></select>
+<p class="zsa-lr-equation" id="zsa-lr-equation"></p>
+<div class="zsa-lr-amounts">
+<div class="zsa-lr-amount">
+<label class="zsa-lr-field" for="zsa-lr-a" id="zsa-lr-a-label"></label>
+<div class="zsa-lr-stepper">
+<button class="zsa-btn zsa-lr-step" id="zsa-lr-a-down" type="button">−</button>
+<input class="zsa-lr-number" id="zsa-lr-a" type="number" inputmode="numeric" aria-describedby="zsa-lr-moles-help">
+<button class="zsa-btn zsa-lr-step" id="zsa-lr-a-up" type="button">+</button>
+</div>
+</div>
+<div class="zsa-lr-amount">
+<label class="zsa-lr-field" for="zsa-lr-b" id="zsa-lr-b-label"></label>
+<div class="zsa-lr-stepper">
+<button class="zsa-btn zsa-lr-step" id="zsa-lr-b-down" type="button">−</button>
+<input class="zsa-lr-number" id="zsa-lr-b" type="number" inputmode="numeric" aria-describedby="zsa-lr-moles-help">
+<button class="zsa-btn zsa-lr-step" id="zsa-lr-b-up" type="button">+</button>
+</div>
+</div>
+</div>
+<p class="zsa-lr-small" id="zsa-lr-moles-help">Whole numbers from 0 to 10 mol. A change starts over.</p>
+</section>
+<section class="zsa-card zsa-lr-predict" aria-labelledby="zsa-lr-predict-title">
+<p class="zsa-eyebrow">2. Predict</p>
+<h2 id="zsa-lr-predict-title">Before you react</h2>
+<fieldset class="zsa-lr-question" id="zsa-lr-pick">
+<legend>Which reactant will run out first?</legend>
+<label class="zsa-lr-choice"><input type="radio" name="zsa-lr-pick" value="0"><span id="zsa-lr-pick-0"></span></label>
+<label class="zsa-lr-choice"><input type="radio" name="zsa-lr-pick" value="1"><span id="zsa-lr-pick-1"></span></label>
+<label class="zsa-lr-choice"><input type="radio" name="zsa-lr-pick" value="both"><span>Both at the same time</span></label>
+</fieldset>
+<label class="zsa-lr-field" for="zsa-lr-amount" id="zsa-lr-amount-label"></label>
+<input class="zsa-lr-text" id="zsa-lr-amount" type="text" inputmode="decimal" autocomplete="off" aria-describedby="zsa-lr-predict-note">
+<p class="zsa-lr-small" id="zsa-lr-predict-note">Both are optional. They lock when the reaction starts; Start over to change them.</p>
+</section>
+</aside>
+<div class="zsa-lr-work">
+<section class="zsa-card zsa-lr-boxcard" aria-labelledby="zsa-lr-box-title">
+<p class="zsa-eyebrow">3. Watch the molecules</p>
+<h2 id="zsa-lr-box-title">The reaction box</h2>
+<canvas class="zsa-lr-canvas" id="zsa-lr-canvas" role="img" aria-label="Reaction box"></canvas>
+<p class="zsa-lr-legend" id="zsa-lr-legend" aria-hidden="true"></p>
+<div class="zsa-lr-actions">
+<button class="zsa-btn zsa-btn--primary" id="zsa-lr-play" type="button">React all</button>
+<button class="zsa-btn" id="zsa-lr-once" type="button">React once</button>
+<button class="zsa-btn" id="zsa-lr-reset" type="button">Start over</button>
+</div>
+<p class="zsa-lr-small zsa-lr-status" id="zsa-lr-status"></p>
+</section>
+<div class="zsa-lr-results">
+<section class="zsa-card zsa-lr-tablecard" aria-labelledby="zsa-lr-table-title">
+<p class="zsa-eyebrow">4. Track the moles</p>
+<h2 id="zsa-lr-table-title">Before, change, after</h2>
+<div class="zsa-lr-tablewrap">
+<table class="zsa-lr-table" id="zsa-lr-table">
+<caption class="zsa-lr-small">Amounts in mol. After and the molecule counts update as each reaction happens.</caption>
+<thead><tr id="zsa-lr-thead"></tr></thead>
+<tbody id="zsa-lr-tbody"></tbody>
+</table>
+</div>
+</section>
+<section class="zsa-card zsa-lr-why" aria-labelledby="zsa-lr-why-title">
+<p class="zsa-eyebrow">5. Explain</p>
+<h2 id="zsa-lr-why-title">Why did it stop?</h2>
+<div id="zsa-lr-why-body"></div>
+</section>
+</div>
+<section class="zsa-card zsa-lr-quiz" aria-labelledby="zsa-lr-quiz-title">
+<p class="zsa-eyebrow">6. Check your thinking</p>
+<h2 id="zsa-lr-quiz-title">Test each idea in the box</h2>
+<div class="zsa-lr-questions" id="zsa-lr-questions"></div>
+<div class="zsa-lr-actions">
+<button class="zsa-btn zsa-btn--primary" id="zsa-lr-check" type="button">Check my answers</button>
+</div>
+<div class="zsa-lr-feedback" id="zsa-lr-feedback" hidden></div>
+</section>
+<section class="zsa-card zsa-lr-reflection" aria-labelledby="zsa-lr-reflect-title">
+<div>
+<p class="zsa-eyebrow">7. Make sense of it</p>
+<h2 id="zsa-lr-reflect-title">What decides how much product forms?</h2>
+<p class="zsa-lr-small">Try a box where you have more of the reactant that runs out first, and one with the exact ratio of the equation.</p>
+</div>
+<div>
+<label class="zsa-lr-field" for="zsa-lr-reflection">Explain using what you saw in the box.</label>
+<p class="zsa-lr-small" id="zsa-lr-reflection-help">Why did the reaction stop while some molecules were still there? Is the limiting reactant always the one you have less of? What would adding more of the excess reactant do?</p>
+<textarea class="zsa-lr-textarea" id="zsa-lr-reflection" rows="5" placeholder="I noticed... The leftover molecules... This means..." aria-describedby="zsa-lr-reflection-help zsa-lr-reflection-note"></textarea>
+<p class="zsa-lr-print-only zsa-lr-print-reflection" id="zsa-lr-print-reflection"></p>
+<p class="zsa-lr-small" id="zsa-lr-reflection-note">Your response stays in this tab. Print to keep a copy.</p>
+</div>
+</section>
+</div>
+</div>
+<p class="zsa-sr-only" id="zsa-lr-live" aria-live="polite" aria-atomic="true"></p>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Predict. React. Explain. Nothing you enter leaves this tab.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+</main>
+</body>
+</html>
