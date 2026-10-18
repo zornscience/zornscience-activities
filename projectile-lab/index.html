@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<meta name="description" content="Fire a cannon from any height, angle and speed, and watch live velocity and acceleration vectors on the projectile, from ZornScience.">
+<title>Projectile Motion Vector Lab | ZornScience</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="lab.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="model.js?v=1.0.0" defer></script>
+<script src="lab.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="zsa zsa-pj" data-zsa-activity="projectile-lab">
+<header class="zsa-pj-header">
+<div class="zsa-pj-topline" data-zsa-chrome>
+<a class="zsa-back" id="zsa-pj-back" href="https://zornscience.org/science/physics/">← Back to the lesson</a>
+<p class="zsa-eyebrow">Physics · 2D Dynamics</p>
+</div>
+<div class="zsa-pj-titlerow">
+<div>
+<h1>Projectile Motion Vector Lab</h1>
+<p class="zsa-pj-lede">Fire the cannon and turn on the vectors. Watch which part of the velocity changes during the flight, and which part never does.</p>
+</div>
+<button class="zsa-btn zsa-pj-print" id="zsa-pj-print" type="button">Print lab</button>
+</div>
+</header>
+<noscript><p class="zsa-panel">This lab needs JavaScript. Enable it to fire the cannon and draw the vectors.</p></noscript>
+<p class="zsa-pj-print-only" id="zsa-pj-print-summary"></p>
+<div class="zsa-pj-layout">
+<aside class="zsa-pj-side" aria-label="Launch settings">
+<section class="zsa-card zsa-pj-settings" aria-labelledby="zsa-pj-settings-title">
+<p class="zsa-eyebrow">1. Aim the cannon</p>
+<h2 id="zsa-pj-settings-title">Launch settings</h2>
+<label class="zsa-pj-field" for="zsa-pj-scenario">Start with a scenario</label>
+<select id="zsa-pj-scenario"></select>
+<p class="zsa-pj-small" id="zsa-pj-scenario-text"></p>
+<div class="zsa-pj-control">
+<div class="zsa-pj-control-label"><label for="zsa-pj-h0">Launch height, h₀</label><output id="zsa-pj-h0-out" for="zsa-pj-h0"></output></div>
+<input class="zsa-pj-range" id="zsa-pj-h0" type="range" min="0" max="50" step="1" value="15">
+<div class="zsa-pj-ends" aria-hidden="true"><span>0 m</span><span>50 m</span></div>
+</div>
+<div class="zsa-pj-control">
+<div class="zsa-pj-control-label"><label for="zsa-pj-angle">Launch angle, θ</label><output id="zsa-pj-angle-out" for="zsa-pj-angle"></output></div>
+<input class="zsa-pj-range" id="zsa-pj-angle" type="range" min="0" max="90" step="1" value="50">
+<div class="zsa-pj-ends" aria-hidden="true"><span>0°</span><span>90°</span></div>
+</div>
+<div class="zsa-pj-control">
+<div class="zsa-pj-control-label"><label for="zsa-pj-speed">Launch speed, v₀</label><output id="zsa-pj-speed-out" for="zsa-pj-speed"></output></div>
+<input class="zsa-pj-range" id="zsa-pj-speed" type="range" min="2" max="30" step="1" value="18">
+<div class="zsa-pj-ends" aria-hidden="true"><span>2 m/s</span><span>30 m/s</span></div>
+</div>
+<p class="zsa-pj-components" id="zsa-pj-launch-parts"></p>
+<div class="zsa-pj-model">
+<h3>The model</h3>
+<p class="zsa-pj-equations">v<sub>x</sub> = v₀ cos θ (never changes)<br>v<sub>y</sub> = v₀ sin θ − gt<br>x = v<sub>x</sub>t<br>y = h₀ + v₀ sin θ · t − ½gt²<br>a = g = 9.80 m/s² down</p>
+<p class="zsa-pj-small">Right and up are positive. The ball starts at the cannon's pivot. Air resistance is not modeled.</p>
+</div>
+<button class="zsa-btn zsa-pj-wide" id="zsa-pj-csv" type="button">Download flight data (CSV)</button>
+</section>
+</aside>
+<div class="zsa-pj-work">
+<section class="zsa-card zsa-pj-scenecard" aria-labelledby="zsa-pj-scene-title">
+<div class="zsa-pj-label"><div><p class="zsa-eyebrow">2. Fire and watch the vectors</p><h2 id="zsa-pj-scene-title">The flight</h2></div></div>
+<fieldset class="zsa-pj-toggles">
+<legend>Show on the ball</legend>
+<label class="zsa-pj-toggle zsa-pj-toggle-v"><input type="checkbox" id="zsa-pj-show-v" checked><span class="zsa-pj-swatch" aria-hidden="true"></span><span>Velocity, v</span></label>
+<label class="zsa-pj-toggle zsa-pj-toggle-c"><input type="checkbox" id="zsa-pj-show-c" checked><span class="zsa-pj-swatch" aria-hidden="true"></span><span>Components, v<sub>x</sub> and v<sub>y</sub></span></label>
+<label class="zsa-pj-toggle zsa-pj-toggle-a"><input type="checkbox" id="zsa-pj-show-a"><span class="zsa-pj-swatch" aria-hidden="true"></span><span>Acceleration, a</span></label>
+<label class="zsa-pj-toggle zsa-pj-toggle-s"><input type="checkbox" id="zsa-pj-show-s"><span class="zsa-pj-swatch" aria-hidden="true"></span><span>Snapshots along the path</span></label>
+</fieldset>
+<svg class="zsa-pj-scene" id="zsa-pj-scene" viewBox="0 0 900 460" role="img" aria-labelledby="zsa-pj-scene-desc"><title id="zsa-pj-scene-desc">Cannon and ball</title></svg>
+<p class="zsa-pj-scale-note" id="zsa-pj-scale-note"></p>
+<div class="zsa-pj-playback">
+<button class="zsa-btn zsa-btn--primary zsa-pj-play" id="zsa-pj-play" type="button">Launch</button>
+<button class="zsa-btn" id="zsa-pj-reset" type="button">Reset</button>
+<div class="zsa-pj-scrub"><label for="zsa-pj-time">Time</label><input class="zsa-pj-range" id="zsa-pj-time" type="range" min="0" max="1" step="0.05" value="0"></div>
+</div>
+<div class="zsa-pj-options">
+<label class="zsa-pj-check"><input type="checkbox" id="zsa-pj-slow"><span>Slow motion (¼ speed)</span></label>
+<label class="zsa-pj-check"><input type="checkbox" id="zsa-pj-pausetop"><span>Pause at the top</span></label>
+</div>
+<dl class="zsa-pj-readouts">
+<div><dt>Time</dt><dd id="zsa-pj-t-value"></dd></div>
+<div><dt>Across, x</dt><dd id="zsa-pj-x-value"></dd></div>
+<div><dt>Height, y</dt><dd id="zsa-pj-y-value"></dd></div>
+<div class="zsa-pj-ro-v"><dt>Speed, |v|</dt><dd id="zsa-pj-speed-value"></dd></div>
+<div class="zsa-pj-ro-vx"><dt>v<sub>x</sub></dt><dd id="zsa-pj-vx-value"></dd></div>
+<div class="zsa-pj-ro-vy"><dt>v<sub>y</sub></dt><dd id="zsa-pj-vy-value"></dd></div>
+<div class="zsa-pj-ro-a"><dt>Acceleration</dt><dd id="zsa-pj-a-value"></dd></div>
+<div><dt>Direction</dt><dd id="zsa-pj-dir-value"></dd></div>
+</dl>
+<p class="zsa-pj-insight" id="zsa-pj-insight"></p>
+</section>
+<section class="zsa-card zsa-pj-graphcard" aria-labelledby="zsa-pj-graph-title">
+<div class="zsa-pj-label"><div><p class="zsa-eyebrow">3. Read the graph</p><h2 id="zsa-pj-graph-title">Velocity components versus time</h2></div>
+<p class="zsa-pj-legend" aria-hidden="true"><span class="zsa-pj-key-vx"></span><span>v<sub>x</sub></span> <span class="zsa-pj-key-vy"></span><span>v<sub>y</sub></span></p></div>
+<svg class="zsa-pj-graph" id="zsa-pj-graph" viewBox="0 0 520 250" role="img" aria-labelledby="zsa-pj-graph-desc" focusable="false"><title id="zsa-pj-graph-desc"></title></svg>
+<p class="zsa-pj-small">The graph draws itself during the flight. A flat line means a component that does not change; the slope of the v<sub>y</sub> line is the acceleration.</p>
+</section>
+<section class="zsa-card zsa-pj-results" aria-labelledby="zsa-pj-results-title">
+<h2 id="zsa-pj-results-title">Flight results</h2>
+<dl class="zsa-pj-resultlist">
+<div><dt>Time in the air</dt><dd id="zsa-pj-r-time"></dd></div>
+<div><dt>Highest point</dt><dd id="zsa-pj-r-height"></dd></div>
+<div><dt>Distance across (range)</dt><dd id="zsa-pj-r-range"></dd></div>
+<div><dt>Landing velocity</dt><dd id="zsa-pj-r-landing"></dd></div>
+</dl>
+<p class="zsa-pj-small" id="zsa-pj-results-note"></p>
+</section>
+<section class="zsa-card zsa-pj-quiz" aria-labelledby="zsa-pj-quiz-title">
+<p class="zsa-eyebrow">4. Check your thinking</p>
+<h2 id="zsa-pj-quiz-title">Test each idea with the vectors</h2>
+<div class="zsa-pj-questions" id="zsa-pj-questions"></div>
+<div class="zsa-pj-actions">
+<button class="zsa-btn zsa-btn--primary" id="zsa-pj-check" type="button">Check my answers</button>
+</div>
+<div class="zsa-pj-feedback" id="zsa-pj-feedback" hidden></div>
+</section>
+<section class="zsa-card zsa-pj-reflection" aria-labelledby="zsa-pj-reflect-title">
+<div>
+<p class="zsa-eyebrow">5. Make sense of it</p>
+<h2 id="zsa-pj-reflect-title">Why does only one component change?</h2>
+<p class="zsa-pj-small">Turn on the components, the acceleration and the snapshots, then launch with Pause at the top.</p>
+</div>
+<div>
+<label class="zsa-pj-field" for="zsa-pj-reflection">Explain using evidence from the vectors.</label>
+<p class="zsa-pj-small" id="zsa-pj-reflection-help">What happens to v<sub>x</sub> and to v<sub>y</sub> during the flight? Which way does the acceleration point, and how does that explain what each component does?</p>
+<textarea class="zsa-pj-textarea" id="zsa-pj-reflection" rows="5" placeholder="I notice... The vectors show... This means..." aria-describedby="zsa-pj-reflection-help zsa-pj-reflection-note"></textarea>
+<p class="zsa-pj-print-only zsa-pj-print-reflection" id="zsa-pj-print-reflection"></p>
+<p class="zsa-pj-small" id="zsa-pj-reflection-note">Your response stays in this tab. Print to keep a copy.</p>
+</div>
+</section>
+</div>
+</div>
+<p class="zsa-sr-only" id="zsa-pj-live" aria-live="polite" aria-atomic="true"></p>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Predict. Observe. Explain. Nothing you enter leaves this tab.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+</main>
+</body>
+</html>
