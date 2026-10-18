@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<meta name="description" content="Watch reactant particles collide in a box, change the temperature, concentration and activation energy, add a catalyst, and see the rate of successful collisions and a live concentration graph, from ZornScience.">
+<title>Kinetics and Collision Theory Sandbox | ZornScience</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="lab.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="sim.js?v=1.0.0" defer></script>
+<script src="lab.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="zsa zsa-kn" data-zsa-activity="kinetics-lab">
+<header class="zsa-kn-header">
+<div class="zsa-kn-topline" data-zsa-chrome>
+<a class="zsa-back" id="zsa-kn-back" href="https://zornscience.org/science/ap-chemistry/">← Back to the lesson</a>
+<p class="zsa-eyebrow">AP Chemistry · Kinetics</p>
+</div>
+<h1>Kinetics and Collision Theory Sandbox</h1>
+<p class="zsa-kn-lede">A and B react only when they collide hard enough. Change the temperature, the concentration and the activation energy, add a catalyst, and watch the rate of successful collisions and the concentration graph respond.</p>
+</header>
+<noscript><p class="zsa-panel">This sandbox needs JavaScript. Enable it to run the particles and draw the graph.</p></noscript>
+<div class="zsa-kn-toolbar">
+<p class="zsa-kn-small zsa-kn-toolbar-note">A + B → C + D in one step. Each particle of A stands for 0.01 M. Energies are scaled down so reactions happen in seconds.</p>
+<button class="zsa-btn zsa-kn-print" id="zsa-kn-print" type="button">Print lab</button>
+</div>
+<p class="zsa-kn-print-only" id="zsa-kn-print-summary"></p>
+<div class="zsa-kn-layout">
+<aside class="zsa-kn-side" aria-label="Conditions">
+<section class="zsa-card zsa-kn-setup" aria-labelledby="zsa-kn-setup-title">
+<p class="zsa-eyebrow">1. Set conditions</p>
+<h2 id="zsa-kn-setup-title">Conditions</h2>
+<div class="zsa-kn-slider">
+<label class="zsa-kn-field" for="zsa-kn-temp">Temperature <output id="zsa-kn-temp-out" for="zsa-kn-temp"></output></label>
+<input type="range" id="zsa-kn-temp" aria-describedby="zsa-kn-temp-help">
+<p class="zsa-kn-small" id="zsa-kn-temp-help">Sets how fast the particles move. Changes apply right away.</p>
+</div>
+<div class="zsa-kn-slider">
+<label class="zsa-kn-field" for="zsa-kn-conc">Concentration of A and B <output id="zsa-kn-conc-out" for="zsa-kn-conc"></output></label>
+<input type="range" id="zsa-kn-conc" aria-describedby="zsa-kn-conc-help">
+<p class="zsa-kn-small" id="zsa-kn-conc-help">Sets how many particles start in the box. A change starts a new run.</p>
+</div>
+<div class="zsa-kn-slider">
+<label class="zsa-kn-field" for="zsa-kn-ea">Activation energy, Ea <output id="zsa-kn-ea-out" for="zsa-kn-ea"></output></label>
+<input type="range" id="zsa-kn-ea" aria-describedby="zsa-kn-ea-help">
+<p class="zsa-kn-small" id="zsa-kn-ea-help">The smallest collision energy that makes A and B react.</p>
+</div>
+<button class="zsa-btn zsa-kn-wide zsa-kn-catalyst" id="zsa-kn-catalyst" type="button" aria-pressed="false" aria-describedby="zsa-kn-catalyst-text">Add a catalyst</button>
+<p class="zsa-kn-small" id="zsa-kn-catalyst-text"></p>
+<button class="zsa-btn zsa-kn-wide" id="zsa-kn-csv" type="button">Download run data (CSV)</button>
+</section>
+</aside>
+<div class="zsa-kn-work">
+<div class="zsa-kn-lab">
+<section class="zsa-card zsa-kn-boxcard" aria-labelledby="zsa-kn-box-title">
+<p class="zsa-eyebrow">2. Watch the particles</p>
+<h2 id="zsa-kn-box-title">The reaction box</h2>
+<canvas class="zsa-kn-canvas" id="zsa-kn-canvas" role="img" aria-label="Reaction box"></canvas>
+<p class="zsa-kn-legend" aria-hidden="true"><span class="zsa-kn-key-a"></span>A <span class="zsa-kn-key-b"></span>B <span class="zsa-kn-key-c"></span>C <span class="zsa-kn-key-d"></span>D <span class="zsa-kn-key-hit"></span>Bounce <span class="zsa-kn-key-win"></span>Reaction</p>
+<div class="zsa-kn-actions">
+<button class="zsa-btn zsa-btn--primary" id="zsa-kn-play" type="button">Pause</button>
+<button class="zsa-btn" id="zsa-kn-new" type="button">New run</button>
+</div>
+<p class="zsa-kn-small zsa-kn-status" id="zsa-kn-status"></p>
+<dl class="zsa-kn-readouts">
+<div><dt>Time</dt><dd id="zsa-kn-time-value"></dd></div>
+<div><dt>[A] = [B]</dt><dd id="zsa-kn-a-value"></dd></div>
+<div><dt>A-B collisions</dt><dd id="zsa-kn-hits-value"></dd></div>
+<div><dt>Successful</dt><dd id="zsa-kn-wins-value"></dd></div>
+<div><dt>Success rate</dt><dd id="zsa-kn-pct-value"></dd></div>
+<div><dt>Reaction rate</dt><dd id="zsa-kn-rate-value"></dd></div>
+</dl>
+<p class="zsa-kn-small">Collisions and rates are per second over the last 5 s.</p>
+</section>
+<section class="zsa-card zsa-kn-graphcard" aria-labelledby="zsa-kn-graph-title">
+<p class="zsa-eyebrow">3. Read the graph</p>
+<h2 id="zsa-kn-graph-title">Concentration vs. time</h2>
+<svg class="zsa-kn-graph" id="zsa-kn-graph" viewBox="0 0 640 320" role="img" aria-labelledby="zsa-kn-graph-desc" focusable="false"><title id="zsa-kn-graph-desc"></title></svg>
+<p class="zsa-kn-legend" aria-hidden="true"><span class="zsa-kn-key-ca"></span>[A] = [B] <span class="zsa-kn-key-cc"></span>[C] = [D] <span class="zsa-kn-key-mark"></span>A change</p>
+<div class="zsa-kn-earlier" id="zsa-kn-earlier" hidden>
+<h3>Earlier runs ([A] only)</h3>
+<ol class="zsa-kn-runs" id="zsa-kn-runs"></ol>
+<button class="zsa-btn" id="zsa-kn-clear" type="button">Clear earlier runs</button>
+</div>
+<p class="zsa-kn-small">Start a new run to keep this one on the graph for comparison (up to 3).</p>
+</section>
+</div>
+<section class="zsa-card zsa-kn-energy" aria-labelledby="zsa-kn-energy-title">
+<p class="zsa-eyebrow">4. Look at the energy</p>
+<h2 id="zsa-kn-energy-title">Why most collisions just bounce</h2>
+<div class="zsa-kn-energy-grid">
+<figure class="zsa-kn-figure">
+<svg class="zsa-kn-chart" id="zsa-kn-profile" viewBox="0 0 320 220" role="img" aria-labelledby="zsa-kn-profile-desc" focusable="false"><title id="zsa-kn-profile-desc"></title></svg>
+<figcaption class="zsa-kn-small">Energy profile: A and B must climb the barrier to become C and D.</figcaption>
+</figure>
+<figure class="zsa-kn-figure">
+<svg class="zsa-kn-chart" id="zsa-kn-dist" viewBox="0 0 320 220" role="img" aria-labelledby="zsa-kn-dist-desc" focusable="false"><title id="zsa-kn-dist-desc"></title></svg>
+<figcaption class="zsa-kn-small">Collision energies: the curve is collision theory, the bars are this run. Only the shaded part reacts.</figcaption>
+</figure>
+</div>
+<p class="zsa-kn-energy-text" id="zsa-kn-energy-text"></p>
+</section>
+<section class="zsa-card zsa-kn-quiz" aria-labelledby="zsa-kn-quiz-title">
+<p class="zsa-eyebrow">5. Check your thinking</p>
+<h2 id="zsa-kn-quiz-title">Test each idea in the box</h2>
+<div class="zsa-kn-questions" id="zsa-kn-questions"></div>
+<div class="zsa-kn-actions">
+<button class="zsa-btn zsa-btn--primary" id="zsa-kn-check" type="button">Check my answers</button>
+</div>
+<div class="zsa-kn-feedback" id="zsa-kn-feedback" hidden></div>
+</section>
+<section class="zsa-card zsa-kn-reflection" aria-labelledby="zsa-kn-reflect-title">
+<div>
+<p class="zsa-eyebrow">6. Make sense of it</p>
+<h2 id="zsa-kn-reflect-title">What changes the rate?</h2>
+<p class="zsa-kn-small">Run the default, then change one condition at a time and start a new run, so the earlier runs stay on the graph to compare.</p>
+</div>
+<div>
+<label class="zsa-kn-field" for="zsa-kn-reflection">Explain using evidence from your runs.</label>
+<p class="zsa-kn-small" id="zsa-kn-reflection-help">Which change sped up the reaction the most? How did it change the number of collisions, and the fraction that were successful? Why does the graph level off?</p>
+<textarea class="zsa-kn-textarea" id="zsa-kn-reflection" rows="5" placeholder="I notice... The graph shows... This means..." aria-describedby="zsa-kn-reflection-help zsa-kn-reflection-note"></textarea>
+<p class="zsa-kn-print-only zsa-kn-print-reflection" id="zsa-kn-print-reflection"></p>
+<p class="zsa-kn-small" id="zsa-kn-reflection-note">Your response stays in this tab. Print to keep a copy.</p>
+</div>
+</section>
+</div>
+</div>
+<p class="zsa-sr-only" id="zsa-kn-live" aria-live="polite" aria-atomic="true"></p>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Collide. Graph. Explain. Nothing you enter leaves this tab.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+</main>
+</body>
+</html>
