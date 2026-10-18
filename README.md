@@ -26,6 +26,7 @@ act-science/               ACT Science Practice, v1.0.1 (question bank in act-sc
 gas-lab/                   Gas Laws and KMT Lab, v1.0.0 (particle simulation, graphs and investigations)
 stoichiometry-coach/       Stoichiometry Coach, v1.0.0 (conversion factor setups with unit cancellation)
 physics-graphing-lab/      Physics Graphing Lab, v1.0.0 (a cart with linked position, velocity and acceleration graphs)
+titration-lab/             Virtual Titration Simulator, v1.0.0 (burette, indicators and a live pH curve for strong and weak acids and bases)
 check/                     completion code checker for teachers, v1.2.0 (linked under "For teachers")
 TEACHERS.md                assigning activities in Google Classroom and checking completion codes
 templates/starter/         starter template for a new activity (not linked from the site)
