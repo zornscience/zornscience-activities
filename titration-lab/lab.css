@@ -1,0 +1,139 @@
+/* Virtual Titration Simulator. Shared tokens and components come from ../shared/zsa-base.css; everything here is
+   zsa-ti-. Layout: one column on phones (setup, bench, curve, analysis, reflection); from 760px the bench and the
+   curve sit side by side; from 1100px the setup is a 280px column beside the work. */
+.zsa.zsa-ti {--zsa-max-width:1440px; --zsa-ti-data:#1d4ed8; --zsa-ti-key:#7e22ce; --zsa-ti-end:#b45309;}
+.zsa-ti-header {margin-bottom:8px;}
+.zsa-ti-topline {display:flex;flex-wrap:wrap;align-items:center;column-gap:16px;}
+.zsa-ti-topline .zsa-eyebrow {margin:0;}
+.zsa-ti .zsa-ti-header h1 {margin:8px 0 8px;}
+.zsa-ti-lede {margin:0 0 8px;max-width:64ch;}
+.zsa-ti h2 {font-size:1.35rem;line-height:1.3;margin:4px 0 12px;}
+.zsa-ti h3 {font-size:1.1rem;line-height:1.3;margin:12px 0 8px;}
+.zsa-ti .zsa-eyebrow {margin:0;}
+.zsa-ti-small {font-size:var(--zsa-text-sm);margin:8px 0;}
+.zsa-ti-print-only {display:none;}
+
+/* Toolbar */
+.zsa-ti-toolbar {display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;border-top:1px solid var(--zsa-border);border-bottom:1px solid var(--zsa-border);padding:8px 0;margin:16px 0;}
+.zsa-ti-toolbar-note {margin:0;}
+.zsa-ti-print {margin-left:auto;padding:8px 16px;}
+
+/* Layout */
+.zsa-ti-layout {display:grid;grid-template-columns:minmax(0,1fr);gap:16px;}
+.zsa-ti-side,.zsa-ti-work {min-width:0;}
+.zsa-ti .zsa-card {margin:0 0 16px;background:var(--zsa-white);}
+@media(min-width:1100px) {
+  .zsa-ti-layout {grid-template-columns:280px minmax(0,1fr);column-gap:24px;align-items:start;}
+  .zsa-ti .zsa-card {padding:20px 24px;}
+}
+.zsa-ti-lab {display:grid;grid-template-columns:minmax(0,1fr);column-gap:16px;}
+@media(min-width:760px) {.zsa-ti-lab {grid-template-columns:minmax(270px,320px) minmax(0,1fr);align-items:start;}}
+
+/* Setup */
+.zsa-ti-group {border:0;margin:0 0 8px;padding:0;min-width:0;}
+.zsa-ti-group legend {font-weight:600;color:var(--zsa-navy);padding:0;margin-top:8px;}
+.zsa-ti-field {display:block;font-size:var(--zsa-text-sm);font-weight:600;color:var(--zsa-navy);margin:8px 0 4px;}
+.zsa-ti select {width:100%;min-height:44px;border:1px solid var(--zsa-navy);border-radius:var(--zsa-radius);padding:6px 8px;color:var(--zsa-navy);background:var(--zsa-white);font-size:16px;}
+.zsa-ti-wide {width:100%;margin-top:8px;}
+#zsa-ti-reaction {color:var(--zsa-navy);font-weight:600;}
+@media(min-width:600px) and (max-width:1099px) {
+  .zsa-ti-setup {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:24px;}
+  .zsa-ti-setup > .zsa-eyebrow,.zsa-ti-setup > h2,.zsa-ti-setup > #zsa-ti-reaction,.zsa-ti-setup > .zsa-ti-wide {grid-column:1 / -1;}
+}
+
+/* Bench */
+.zsa-ti-apparatus {display:block;width:100%;max-width:280px;height:auto;margin:0 auto 8px;}
+.zsa-ti-stand {fill:#94a3b8;}
+.zsa-ti-glass {fill:rgba(219,234,254,.25);stroke:#64748b;stroke-width:1.5;}
+.zsa-ti-titrant {fill:#bfdbfe;}
+.zsa-ti-grad {stroke:#334155;stroke-width:1;}
+.zsa-ti-grad-label {font-size:12px;fill:var(--zsa-slate);font-variant-numeric:tabular-nums;}
+.zsa-ti-valve {fill:#e2e8f0;stroke:#475569;stroke-width:1.5;}
+.zsa-ti-handle {fill:var(--zsa-navy);}
+.zsa-ti-stream {stroke:#93c5fd;stroke-width:2;stroke-linecap:round;}
+.zsa-ti-stream-fast {stroke-width:3.5;}
+.zsa-ti-dropshape {fill:#93c5fd;stroke:#3b82f6;stroke-width:1;}
+.zsa-ti-liquid {stroke:none;}
+.zsa-ti-flask {fill:none;stroke:#475569;stroke-width:2;stroke-linejoin:round;}
+.zsa-ti-flask-lip {fill:#cbd5e1;stroke:#475569;stroke-width:1;}
+.zsa-ti-stirbar {fill:#f8fafc;stroke:#475569;stroke-width:1;}
+.zsa-ti-probe {fill:#334155;}
+.zsa-ti-cable {fill:none;stroke:#334155;stroke-width:2;}
+.zsa-ti-meter {fill:var(--zsa-navy);}
+.zsa-ti-meter-text {font-size:16px;font-weight:600;fill:#ffffff;font-variant-numeric:tabular-nums;}
+.zsa-ti-readouts {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 0;margin:0;background:var(--zsa-sky);border-radius:var(--zsa-radius);padding:10px 0;}
+.zsa-ti-readouts > div {padding:0 12px;min-width:0;}
+.zsa-ti-readouts > div:nth-child(odd) {border-right:1px solid var(--zsa-border);}
+.zsa-ti-readouts dt {font-size:var(--zsa-text-label);font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--zsa-blue);}
+.zsa-ti-readouts dd {margin:0;font-size:1.15rem;font-weight:600;color:var(--zsa-navy);font-variant-numeric:tabular-nums;overflow-wrap:anywhere;}
+.zsa-ti-stopcock {margin-top:12px;}
+.zsa-ti-flows {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;background:var(--zsa-sky);border:1px solid var(--zsa-border);border-radius:var(--zsa-radius);padding:4px;}
+.zsa-ti-flow {border:1px solid transparent;border-radius:var(--zsa-radius-sm);background:transparent;color:var(--zsa-navy);padding:8px;font-size:16px;}
+.zsa-ti-flow:hover {background:var(--zsa-white);}
+.zsa-ti-flow[aria-pressed="true"] {background:var(--zsa-white);border-color:var(--zsa-navy);font-weight:600;box-shadow:0 2px 6px rgba(11,42,91,.12);}
+.zsa-ti-actions {display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+.zsa-ti-actions .zsa-btn {padding:10px 16px;}
+.zsa-ti-status {min-height:1.65em;}
+
+/* Graph */
+.zsa-ti-graph {display:block;width:100%;height:340px;}
+.zsa-ti-gridline {stroke:#e2e8f0;stroke-width:1;}
+.zsa-ti-seven {stroke:#94a3b8;stroke-width:1;stroke-dasharray:6 4;}
+.zsa-ti-axis {stroke:#64748b;stroke-width:1.5;}
+.zsa-ti-tick {font-size:13px;fill:var(--zsa-slate);font-variant-numeric:tabular-nums;}
+.zsa-ti-axis-label {font-size:13px;fill:var(--zsa-slate);}
+.zsa-ti-band {fill-opacity:.28;}
+.zsa-ti-band-label {font-size:12px;fill:var(--zsa-slate);font-weight:600;}
+.zsa-ti-data {fill:none;stroke:var(--zsa-ti-data);stroke-width:2.5;stroke-linejoin:round;}
+.zsa-ti-data-dot {fill:var(--zsa-ti-data);}
+.zsa-ti-now {fill:var(--zsa-white);stroke:var(--zsa-ti-data);stroke-width:3;}
+.zsa-ti-key-line {stroke:var(--zsa-ti-key);stroke-width:1.5;stroke-dasharray:3 3;}
+.zsa-ti-key-point {fill:var(--zsa-white);stroke:var(--zsa-ti-key);stroke-width:2.5;}
+.zsa-ti-key-label {font-size:13px;font-weight:600;fill:var(--zsa-ti-key);paint-order:stroke;stroke:#ffffff;stroke-width:4px;}
+.zsa-ti-endline {stroke:var(--zsa-ti-end);stroke-width:2;stroke-dasharray:8 4;}
+.zsa-ti-end-label {font-size:13px;font-weight:600;fill:#92400e;paint-order:stroke;stroke:#ffffff;stroke-width:4px;}
+.zsa-ti-legend {display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:4px 0 0;font-size:var(--zsa-text-label);}
+.zsa-ti-key-data {display:inline-block;width:18px;border-top:3px solid var(--zsa-ti-data);}
+.zsa-ti-key-band {display:inline-block;width:18px;height:10px;background:#cbd5e1;margin-left:10px;}
+.zsa-ti-key-end {display:inline-block;width:18px;border-top:3px dashed var(--zsa-ti-end);margin-left:10px;}
+
+/* Analysis */
+.zsa-ti-analysis-grid {display:grid;gap:8px 32px;}
+@media(min-width:900px) {.zsa-ti-analysis-grid {grid-template-columns:minmax(0,1fr) minmax(0,2fr);}}
+.zsa-ti-endpoint-text {font-size:var(--zsa-text-sm);font-weight:600;color:var(--zsa-navy);margin:8px 0;}
+.zsa-ti-question {display:flex;flex-direction:column;gap:4px;font-size:var(--zsa-text-sm);font-weight:600;color:var(--zsa-navy);margin:0 0 10px;}
+.zsa-ti-input {width:100%;max-width:14em;min-height:44px;border:1px solid var(--zsa-navy);border-radius:var(--zsa-radius-sm);padding:4px 8px;color:var(--zsa-navy);font-size:16px;font-variant-numeric:tabular-nums;}
+.zsa-ti-feedback,.zsa-ti-keypoints {border:1px solid var(--zsa-border);border-left:6px solid var(--zsa-blue);border-radius:var(--zsa-radius);background:var(--zsa-sky);padding:10px 16px;margin:16px 0 0;font-size:var(--zsa-text-sm);}
+.zsa-ti-keypoints {border-left-color:var(--zsa-ti-key);}
+.zsa-ti-feedback h3,.zsa-ti-keypoints h3 {margin:4px 0 8px;}
+.zsa-ti-feedback p,.zsa-ti-keypoints p {margin:6px 0;}
+.zsa-ti-ok {color:var(--zsa-success);font-weight:600;}
+.zsa-ti-notyet {color:var(--zsa-slate);}
+.zsa-ti-keylist {display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 16px;margin:0 0 8px;}
+.zsa-ti-keylist dt {font-weight:600;color:var(--zsa-navy);}
+.zsa-ti-keylist dd {margin:0;font-variant-numeric:tabular-nums;}
+@media(max-width:599px) {
+  .zsa-ti-keylist {grid-template-columns:minmax(0,1fr);}
+  .zsa-ti-keylist dd {margin-bottom:6px;}
+  .zsa-ti-topline .zsa-eyebrow {display:none;}
+  .zsa-ti-print {margin-left:0;}
+}
+
+/* Reflection */
+.zsa-ti-reflection {display:grid;gap:8px 32px;}
+@media(min-width:900px) {.zsa-ti-reflection {grid-template-columns:repeat(2,minmax(0,1fr));}}
+.zsa-ti-textarea {display:block;width:100%;min-height:8em;resize:vertical;border:1px solid var(--zsa-navy);border-radius:var(--zsa-radius);padding:10px 12px;font:inherit;font-size:16px;color:var(--zsa-slate);}
+.zsa-ti-textarea:focus-visible {outline:var(--zsa-focus-ring);outline-offset:var(--zsa-focus-offset);}
+
+/* Print: the setup line, the bench, the curve, the analysis and the whole reflection; no controls. */
+@media print {
+  .zsa.zsa-ti {max-width:none;padding:0;}
+  .zsa-ti-topline,.zsa-ti-lede,.zsa-ti-toolbar,.zsa-ti-side,.zsa-ti-stopcock,.zsa-ti-actions,.zsa-ti-status,.zsa-ti .zsa-footer,.zsa-ti-textarea,#zsa-ti-reflection-note,#zsa-ti-endpoint {display:none!important;}
+  .zsa-ti-print-only {display:block;}
+  .zsa-ti-print-reflection {white-space:pre-wrap;border:1px solid #94a3b8;border-radius:6px;padding:8px 10px;min-height:6em;}
+  .zsa-ti .zsa-ti-header h1 {font-size:1.6rem;margin:0 0 4px;}
+  .zsa-ti-layout {display:block;}
+  .zsa-ti-lab {grid-template-columns:220px minmax(0,1fr);}
+  .zsa-ti-bench,.zsa-ti-graphcard,.zsa-ti-feedback,.zsa-ti-keypoints {break-inside:avoid;}
+  .zsa-ti-reflection {grid-template-columns:1fr;}
+}

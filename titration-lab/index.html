@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<meta name="description" content="Titrate strong and weak acids and bases with a virtual burette, pH meter and indicators, and connect the pH curve to the equivalence point and pKa, from ZornScience.">
+<title>Virtual Titration Simulator | ZornScience</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="lab.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="chem.js?v=1.0.0" defer></script>
+<script src="lab.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="zsa zsa-ti" data-zsa-activity="titration-lab">
+<header class="zsa-ti-header">
+<div class="zsa-ti-topline" data-zsa-chrome>
+<a class="zsa-back" id="zsa-ti-back" href="https://zornscience.org/science/ap-chemistry/">← Back to the lesson</a>
+<p class="zsa-eyebrow">AP Chemistry · Acids and Bases</p>
+</div>
+<h1>Virtual Titration Simulator</h1>
+<p class="zsa-ti-lede">Choose an analyte, a titrant and an indicator. Open the stopcock, watch the pH curve grow, and find the equivalence point and the pKa from your own data.</p>
+</header>
+<noscript><p class="zsa-panel">This simulator needs JavaScript. Enable it to run the titration and draw the curve.</p></noscript>
+<div class="zsa-ti-toolbar">
+<p class="zsa-ti-small zsa-ti-toolbar-note">25 °C, monoprotic acids and bases. One drop is 0.05 mL.</p>
+<button class="zsa-btn zsa-ti-print" id="zsa-ti-print" type="button">Print lab</button>
+</div>
+<p class="zsa-ti-print-only" id="zsa-ti-print-summary"></p>
+<div class="zsa-ti-layout">
+<aside class="zsa-ti-side" aria-label="Titration setup">
+<section class="zsa-card zsa-ti-setup" aria-labelledby="zsa-ti-setup-title">
+<p class="zsa-eyebrow">1. Set up</p>
+<h2 id="zsa-ti-setup-title">Your titration</h2>
+<fieldset class="zsa-ti-group">
+<legend>In the flask (analyte)</legend>
+<label class="zsa-ti-field" for="zsa-ti-analyte">Analyte</label>
+<select id="zsa-ti-analyte"></select>
+<label class="zsa-ti-field" for="zsa-ti-ca">Concentration</label>
+<select id="zsa-ti-ca"></select>
+<label class="zsa-ti-field" for="zsa-ti-va">Volume</label>
+<select id="zsa-ti-va"></select>
+</fieldset>
+<fieldset class="zsa-ti-group">
+<legend>In the burette (titrant)</legend>
+<label class="zsa-ti-field" for="zsa-ti-titrant">Titrant</label>
+<select id="zsa-ti-titrant"></select>
+<label class="zsa-ti-field" for="zsa-ti-ct">Concentration</label>
+<select id="zsa-ti-ct"></select>
+</fieldset>
+<fieldset class="zsa-ti-group">
+<legend>Indicator</legend>
+<label class="zsa-ti-field" for="zsa-ti-indicator">Indicator</label>
+<select id="zsa-ti-indicator" aria-describedby="zsa-ti-indicator-text"></select>
+<p class="zsa-ti-small" id="zsa-ti-indicator-text"></p>
+</fieldset>
+<p class="zsa-ti-small" id="zsa-ti-reaction"></p>
+<button class="zsa-btn zsa-ti-wide" id="zsa-ti-csv" type="button">Download titration data (CSV)</button>
+</section>
+</aside>
+<div class="zsa-ti-work">
+<div class="zsa-ti-lab">
+<section class="zsa-card zsa-ti-bench" aria-labelledby="zsa-ti-bench-title">
+<p class="zsa-eyebrow">2. Titrate</p>
+<h2 id="zsa-ti-bench-title">The bench</h2>
+<svg class="zsa-ti-apparatus" id="zsa-ti-apparatus" viewBox="0 0 240 380" role="img" aria-labelledby="zsa-ti-apparatus-desc"><title id="zsa-ti-apparatus-desc">Burette over a flask with a pH probe</title></svg>
+<dl class="zsa-ti-readouts">
+<div><dt>pH</dt><dd id="zsa-ti-ph-value"></dd></div>
+<div><dt>Titrant added</dt><dd id="zsa-ti-v-value"></dd></div>
+<div><dt>Burette reading</dt><dd id="zsa-ti-reading-value"></dd></div>
+<div><dt>Solution color</dt><dd id="zsa-ti-color-value"></dd></div>
+</dl>
+<div class="zsa-ti-stopcock" role="group" aria-labelledby="zsa-ti-stopcock-label">
+<p class="zsa-ti-field" id="zsa-ti-stopcock-label">Stopcock</p>
+<div class="zsa-ti-flows" id="zsa-ti-flows"></div>
+</div>
+<div class="zsa-ti-actions">
+<button class="zsa-btn zsa-btn--primary" id="zsa-ti-drop" type="button">Add one drop</button>
+<button class="zsa-btn" id="zsa-ti-refill" type="button">Refill burette</button>
+<button class="zsa-btn" id="zsa-ti-restart" type="button">Start over</button>
+</div>
+<p class="zsa-ti-small zsa-ti-status" id="zsa-ti-status"></p>
+</section>
+<section class="zsa-card zsa-ti-graphcard" aria-labelledby="zsa-ti-graph-title">
+<p class="zsa-eyebrow">3. Watch the curve</p>
+<h2 id="zsa-ti-graph-title">pH curve</h2>
+<svg class="zsa-ti-graph" id="zsa-ti-graph" viewBox="0 0 640 340" role="img" aria-labelledby="zsa-ti-graph-desc" focusable="false"><title id="zsa-ti-graph-desc"></title></svg>
+<p class="zsa-ti-legend" aria-hidden="true"><span class="zsa-ti-key-data"></span>Your data <span class="zsa-ti-key-band"></span>Indicator range <span class="zsa-ti-key-end"></span>Your endpoint</p>
+<p class="zsa-ti-small">Go drop by drop near the steep part to see it clearly. The shaded band is where the indicator changes color.</p>
+</section>
+</div>
+<section class="zsa-card zsa-ti-analysis" aria-labelledby="zsa-ti-analysis-title">
+<p class="zsa-eyebrow">4. Analyze</p>
+<h2 id="zsa-ti-analysis-title">Find the key points</h2>
+<div class="zsa-ti-analysis-grid">
+<div>
+<h3>The endpoint</h3>
+<p class="zsa-ti-small">When the indicator changes color and the color stays, record the endpoint.</p>
+<button class="zsa-btn" id="zsa-ti-endpoint" type="button">Record endpoint</button>
+<p class="zsa-ti-endpoint-text" id="zsa-ti-endpoint-text">No endpoint recorded yet.</p>
+</div>
+<div>
+<h3>From your curve</h3>
+<div id="zsa-ti-questions"></div>
+<div class="zsa-ti-actions">
+<button class="zsa-btn zsa-btn--primary" id="zsa-ti-check" type="button">Check my answers</button>
+<button class="zsa-btn" id="zsa-ti-show" type="button" aria-pressed="false">Show key points</button>
+</div>
+</div>
+</div>
+<div class="zsa-ti-feedback" id="zsa-ti-feedback" hidden></div>
+<div class="zsa-ti-keypoints" id="zsa-ti-keypoints" hidden></div>
+</section>
+<section class="zsa-card zsa-ti-reflection" aria-labelledby="zsa-ti-reflect-title">
+<div>
+<p class="zsa-eyebrow">5. Make sense of it</p>
+<h2 id="zsa-ti-reflect-title">What does the curve tell you?</h2>
+<p class="zsa-ti-small">Try a strong acid, then a weak acid, with the same base. Then switch indicators and record the endpoint again.</p>
+</div>
+<div>
+<label class="zsa-ti-field" for="zsa-ti-reflection">Explain using evidence from your curve.</label>
+<p class="zsa-ti-small" id="zsa-ti-reflection-help">Why is the curve steepest at the equivalence point? Why does the pH at the half-equivalence point equal the pKa? Which indicator worked, and why?</p>
+<textarea class="zsa-ti-textarea" id="zsa-ti-reflection" rows="5" placeholder="I notice... The curve shows... This means..." aria-describedby="zsa-ti-reflection-help zsa-ti-reflection-note"></textarea>
+<p class="zsa-ti-print-only zsa-ti-print-reflection" id="zsa-ti-print-reflection"></p>
+<p class="zsa-ti-small" id="zsa-ti-reflection-note">Your response stays in this tab. Print to keep a copy.</p>
+</div>
+</section>
+</div>
+</div>
+<p class="zsa-sr-only" id="zsa-ti-live" aria-live="polite" aria-atomic="true"></p>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Titrate. Graph. Explain. Nothing you enter leaves this tab.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+</main>
+</body>
+</html>
