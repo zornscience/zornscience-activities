@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<meta name="description" content="Build conversion factors, cancel units and solve stoichiometry problems with guided feedback, from ZornScience.">
+<title>Stoichiometry Coach | ZornScience</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="coach.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="model.js?v=1.0.0" defer></script>
+<script src="coach.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="zsa zsa-sc" data-zsa-activity="stoichiometry-coach">
+<header class="zsa-sc-header">
+<div class="zsa-sc-topline" data-zsa-chrome>
+<a class="zsa-back" id="zsa-sc-back" href="https://zornscience.org/science/chemistry/unit-6-stoichiometry/3-step-conversions/">← Back to the lesson</a>
+<p class="zsa-eyebrow">Chemistry · Stoichiometry</p>
+</div>
+<h1>Stoichiometry Coach</h1>
+<p class="zsa-sc-lede">Build a conversion setup, watch the units cancel, and make sense of the numbers before you calculate.</p>
+</header>
+<noscript><p class="zsa-panel">This activity needs JavaScript. Enable it to practice.</p></noscript>
+<div class="zsa-sc-modebar">
+<div class="zsa-sc-modes" role="group" aria-label="Practice mode">
+<button class="zsa-sc-mode" id="zsa-sc-guided" type="button" aria-pressed="true">Guided practice</button>
+<button class="zsa-sc-mode" id="zsa-sc-independent" type="button" aria-pressed="false">Independent practice</button>
+</div>
+<p class="zsa-sc-mode-note" id="zsa-sc-mode-note">Feedback after each step</p>
+<p class="zsa-sc-solved"><strong id="zsa-sc-solved">0</strong> solved this session</p>
+</div>
+<div class="zsa-sc-layout">
+<aside class="zsa-sc-side zsa-sc-side-settings" aria-label="Practice settings">
+<section class="zsa-card zsa-sc-settings" aria-labelledby="zsa-sc-settings-title">
+<h2 id="zsa-sc-settings-title">Choose your path</h2>
+<label for="zsa-sc-type">Problem type</label>
+<select id="zsa-sc-type"></select>
+<label for="zsa-sc-reaction">Reaction</label>
+<select id="zsa-sc-reaction"></select>
+<button class="zsa-btn zsa-btn--primary zsa-sc-wide" id="zsa-sc-new" type="button">New problem</button>
+<p class="zsa-sc-small">Changing a setting starts a new problem.</p>
+</section>
+</aside>
+<div class="zsa-sc-work">
+<section class="zsa-card zsa-sc-problem" aria-labelledby="zsa-sc-question">
+<div class="zsa-sc-label"><p class="zsa-eyebrow">1. Read the problem</p><p class="zsa-sc-pill">Assume complete reaction</p></div>
+<p class="zsa-sc-equation" id="zsa-sc-equation"></p>
+<h2 id="zsa-sc-question"></h2>
+<p id="zsa-sc-context"></p>
+<dl class="zsa-sc-known">
+<div><dt>You have</dt><dd id="zsa-sc-given"></dd></div>
+<div><dt>You need</dt><dd id="zsa-sc-target"></dd></div>
+<div><dt>Your route</dt><dd id="zsa-sc-route"></dd></div>
+</dl>
+</section>
+<section class="zsa-card zsa-sc-builder" aria-labelledby="zsa-sc-builder-title">
+<div class="zsa-sc-label"><p class="zsa-eyebrow">2. Build your setup</p><button class="zsa-btn zsa-sc-quiet" id="zsa-sc-clear" type="button">Start over</button></div>
+<h2 id="zsa-sc-builder-title">A path from given to wanted</h2>
+<p class="zsa-sc-small" id="zsa-sc-instruction"></p>
+<ol class="zsa-sc-chain" id="zsa-sc-chain" aria-label="Your setup"></ol>
+<p class="zsa-sc-feedback" id="zsa-sc-feedback" hidden></p>
+<h3 id="zsa-sc-bank-title">Choose a conversion factor</h3>
+<p class="zsa-sc-small">Some choices contain errors. Add factors in order, use the arrows to rearrange them, or × to remove one.</p>
+<div class="zsa-sc-bank" id="zsa-sc-bank" role="group" aria-labelledby="zsa-sc-bank-title"></div>
+</section>
+<section class="zsa-card zsa-sc-answer" aria-labelledby="zsa-sc-answer-title">
+<p class="zsa-eyebrow">3. Calculate and check</p>
+<h2 id="zsa-sc-answer-title">What is your final answer?</h2>
+<p class="zsa-sc-small" id="zsa-sc-answer-help">Enter three significant figures. Scientific notation works, too (1.20e2 or 1.20 x 10^2).</p>
+<div class="zsa-sc-entry">
+<label for="zsa-sc-input">Numerical answer</label>
+<div class="zsa-sc-entry-row">
+<input class="zsa-sc-input" id="zsa-sc-input" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" aria-describedby="zsa-sc-unit zsa-sc-answer-help">
+<span class="zsa-sc-unit" id="zsa-sc-unit"></span>
+<button class="zsa-btn zsa-btn--primary" id="zsa-sc-check" type="button">Check my work</button>
+</div>
+</div>
+<p class="zsa-sc-feedback" id="zsa-sc-result" hidden></p>
+<div class="zsa-sc-actions">
+<button class="zsa-btn" id="zsa-sc-hint" type="button">Need a hint?</button>
+<button class="zsa-btn" id="zsa-sc-solution" type="button">Show worked solution</button>
+<button class="zsa-btn" id="zsa-sc-next" type="button">Next problem</button>
+</div>
+<p class="zsa-sc-hintbox" id="zsa-sc-hintbox" hidden></p>
+<div class="zsa-sc-solutionbox" id="zsa-sc-solutionbox" tabindex="-1" hidden></div>
+</section>
+</div>
+<aside class="zsa-sc-side zsa-sc-side-reference" aria-label="Reference">
+<section class="zsa-panel zsa-sc-reference" aria-labelledby="zsa-sc-masses-title">
+<h2 id="zsa-sc-masses-title">Molar masses</h2>
+<dl class="zsa-sc-masses" id="zsa-sc-masses"></dl>
+<p class="zsa-sc-small">Use these molar masses throughout the problem. Balanced coefficients are exact.</p>
+<h3>Three significant figures</h3>
+<p class="zsa-sc-small">Keep extra digits while calculating. Round only your final answer.</p>
+</section>
+<details class="zsa-card zsa-sc-tip">
+<summary>How do conversion factors work?</summary>
+<p>A conversion factor compares two equal amounts. Put the unit you have on the bottom and the unit you want on top. The substance names must match, too.</p>
+<p>Molar mass connects grams and moles of one substance. The balanced equation connects moles of different substances.</p>
+</details>
+</aside>
+</div>
+<p class="zsa-sr-only" id="zsa-sc-live" aria-live="polite" aria-atomic="true"></p>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Progress stays in this tab. No account needed.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+</main>
+</body>
+</html>
