@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<meta name="description" content="Build circuits with batteries, wires, resistors, switches and bulbs, then probe voltage and current with a multimeter, from ZornScience.">
+<title>Circuit Builder | ZornScience</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="lab.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="model.js?v=1.0.0" defer></script>
+<script src="lab.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="zsa zsa-cb" data-zsa-activity="circuit-builder">
+<header class="zsa-cb-header">
+<div class="zsa-cb-topline" data-zsa-chrome>
+<a class="zsa-back" id="zsa-cb-back" href="https://zornscience.org/science/physics/">← Back to the lesson</a>
+<p class="zsa-eyebrow">Physics · Electric Circuits</p>
+</div>
+<div class="zsa-cb-titlerow">
+<div>
+<h1>Circuit Builder</h1>
+<p class="zsa-cb-lede">Build circuits from batteries, wires, resistors, switches and bulbs. Probe them with the multimeter and find out why bulbs in series and in parallel glow so differently.</p>
+</div>
+<button class="zsa-btn zsa-cb-print" id="zsa-cb-print" type="button">Print lab</button>
+</div>
+</header>
+<noscript><p class="zsa-panel">This lab needs JavaScript. Enable it to build and measure circuits.</p></noscript>
+<p class="zsa-cb-print-only" id="zsa-cb-print-summary"></p>
+<div class="zsa-cb-layout">
+<aside class="zsa-cb-side" aria-label="Circuits and parts">
+<section class="zsa-card zsa-cb-start" aria-labelledby="zsa-cb-start-title">
+<p class="zsa-eyebrow">1. Choose a circuit</p>
+<h2 id="zsa-cb-start-title">Start with a circuit</h2>
+<label class="zsa-cb-field" for="zsa-cb-preset">Circuit</label>
+<select id="zsa-cb-preset"></select>
+<p class="zsa-cb-small" id="zsa-cb-preset-text"></p>
+</section>
+<section class="zsa-card zsa-cb-palette" aria-labelledby="zsa-cb-palette-title">
+<p class="zsa-eyebrow">2. Build</p>
+<h2 id="zsa-cb-palette-title">Parts</h2>
+<div class="zsa-cb-tools" id="zsa-cb-tools" role="group" aria-labelledby="zsa-cb-palette-title" aria-describedby="zsa-cb-tools-help"></div>
+<p class="zsa-cb-small" id="zsa-cb-tools-help">Drag a part onto a spot between two dots, or pick a part and tap the spots. With a keyboard, pick a part, Tab to the board, move with the arrow keys and press Enter.</p>
+</section>
+</aside>
+<div class="zsa-cb-work">
+<section class="zsa-card zsa-cb-boardcard" aria-labelledby="zsa-cb-board-title">
+<div class="zsa-cb-label">
+<div><p class="zsa-eyebrow">3. Build and measure</p><h2 id="zsa-cb-board-title">The circuit board</h2></div>
+<div class="zsa-cb-toolbar">
+<label class="zsa-cb-check"><input type="checkbox" id="zsa-cb-flow"><span>Show current flow</span></label>
+<button class="zsa-btn" id="zsa-cb-undo" type="button">Undo</button>
+<button class="zsa-btn" id="zsa-cb-clear" type="button">Clear board</button>
+</div>
+</div>
+<div class="zsa-cb-bench">
+<div class="zsa-cb-boardwrap">
+<svg class="zsa-cb-board" id="zsa-cb-board" role="group" aria-labelledby="zsa-cb-board-name" aria-describedby="zsa-cb-board-help"><title id="zsa-cb-board-name">Circuit board: points in columns A to G and rows 1 to 5</title></svg>
+<p class="zsa-cb-small zsa-cb-boardhelp" id="zsa-cb-board-help">Each spot between two dots holds one part. Tap a part to select it; drag it to move it, or off the board to remove it.</p>
+</div>
+<div class="zsa-cb-panel">
+<section class="zsa-cb-meter" aria-labelledby="zsa-cb-meter-title">
+<h3 id="zsa-cb-meter-title">Multimeter</h3>
+<fieldset class="zsa-cb-modes">
+<legend>Measure</legend>
+<label class="zsa-cb-mode"><input type="radio" name="zsa-cb-mode" id="zsa-cb-mode-v" value="voltage" checked><span>Voltage (V)</span></label>
+<label class="zsa-cb-mode"><input type="radio" name="zsa-cb-mode" id="zsa-cb-mode-a" value="current"><span>Current (A)</span></label>
+</fieldset>
+<div class="zsa-cb-screen">
+<output class="zsa-cb-display" id="zsa-cb-meter-value"></output>
+<p class="zsa-cb-caption" id="zsa-cb-meter-caption"></p>
+</div>
+<div class="zsa-cb-probes" id="zsa-cb-volt-controls">
+<div class="zsa-cb-probe zsa-cb-probe-red">
+<label class="zsa-cb-field" for="zsa-cb-red">Red probe (+)</label>
+<div class="zsa-cb-probe-row"><select id="zsa-cb-red"></select><button class="zsa-btn" id="zsa-cb-place-red" type="button" aria-pressed="false">Tap board</button></div>
+</div>
+<div class="zsa-cb-probe zsa-cb-probe-black">
+<label class="zsa-cb-field" for="zsa-cb-black">Black probe (COM)</label>
+<div class="zsa-cb-probe-row"><select id="zsa-cb-black"></select><button class="zsa-btn" id="zsa-cb-place-black" type="button" aria-pressed="false">Tap board</button></div>
+</div>
+<button class="zsa-btn zsa-cb-wide" id="zsa-cb-swap" type="button">Swap probes</button>
+</div>
+<div class="zsa-cb-amps" id="zsa-cb-amp-controls" hidden>
+<label class="zsa-cb-field" for="zsa-cb-target">Current through</label>
+<select id="zsa-cb-target"></select>
+<p class="zsa-cb-small">Or tap a part on the board. The meter reads the current through that part without breaking the circuit.</p>
+</div>
+</section>
+<section class="zsa-cb-part" id="zsa-cb-part" aria-labelledby="zsa-cb-part-title" hidden>
+<h3 id="zsa-cb-part-title"></h3>
+<p class="zsa-cb-part-reading" id="zsa-cb-part-reading"></p>
+<div class="zsa-cb-part-controls">
+<div class="zsa-cb-part-field" id="zsa-cb-part-volts-wrap"><label class="zsa-cb-field" for="zsa-cb-part-volts">Battery voltage</label><select id="zsa-cb-part-volts"></select></div>
+<div class="zsa-cb-part-field" id="zsa-cb-part-ohms-wrap"><label class="zsa-cb-field" for="zsa-cb-part-ohms">Resistance</label><select id="zsa-cb-part-ohms"></select></div>
+<button class="zsa-btn" id="zsa-cb-flip" type="button">Flip battery</button>
+<button class="zsa-btn zsa-btn--primary" id="zsa-cb-toggle" type="button">Close switch</button>
+<button class="zsa-btn" id="zsa-cb-measure-v" type="button">Measure voltage across it</button>
+<button class="zsa-btn" id="zsa-cb-measure-a" type="button">Measure current through it</button>
+<button class="zsa-btn" id="zsa-cb-remove" type="button">Remove</button>
+</div>
+</section>
+</div>
+</div>
+<p class="zsa-cb-insight" id="zsa-cb-insight"></p>
+</section>
+<section class="zsa-card zsa-cb-readings" aria-labelledby="zsa-cb-table-title">
+<h2 id="zsa-cb-table-title">Readings for every part</h2>
+<div class="zsa-cb-tablewrap" tabindex="0" role="region" aria-label="Readings table">
+<table class="zsa-cb-table" id="zsa-cb-table">
+<thead><tr><th scope="col">Part</th><th scope="col">Where</th><th scope="col">Setting</th><th scope="col">Voltage</th><th scope="col">Current</th><th scope="col">Power</th><th scope="col">Brightness</th></tr></thead>
+<tbody id="zsa-cb-table-body"></tbody>
+</table>
+</div>
+<p class="zsa-cb-small" id="zsa-cb-table-note">Voltage is across the part and current is through it. Wires are left out; measure one with the multimeter.</p>
+<button class="zsa-btn" id="zsa-cb-csv" type="button">Download readings (CSV)</button>
+<div class="zsa-cb-model">
+<h3>The model</h3>
+<p class="zsa-cb-equations">V = IR and P = VI. Bulbs: 10 Ω each, 100% brightness at 3.6 W. Wires and closed switches: no resistance.</p>
+<p class="zsa-cb-small">Batteries are ideal: they keep the same voltage whatever the current. Current is conventional current, from + to −.</p>
+</div>
+</section>
+<section class="zsa-card zsa-cb-quiz" aria-labelledby="zsa-cb-quiz-title">
+<p class="zsa-eyebrow">4. Check your thinking</p>
+<h2 id="zsa-cb-quiz-title">Test each idea with the meter</h2>
+<div class="zsa-cb-questions" id="zsa-cb-questions"></div>
+<div class="zsa-cb-actions">
+<button class="zsa-btn zsa-btn--primary" id="zsa-cb-check" type="button">Check my answers</button>
+</div>
+<div class="zsa-cb-feedback" id="zsa-cb-feedback" hidden></div>
+</section>
+<section class="zsa-card zsa-cb-reflection" aria-labelledby="zsa-cb-reflect-title">
+<div>
+<p class="zsa-eyebrow">5. Make sense of it</p>
+<h2 id="zsa-cb-reflect-title">Why are bulbs in parallel brighter than bulbs in series?</h2>
+<p class="zsa-cb-small">Load Series and parallel side by side, then measure the voltage across and the current through each bulb.</p>
+</div>
+<div>
+<label class="zsa-cb-field" for="zsa-cb-reflection">Explain using your measurements.</label>
+<p class="zsa-cb-small" id="zsa-cb-reflection-help">How much voltage does each bulb get in series and in parallel? What happens to the current? How do the voltage and current decide the brightness?</p>
+<textarea class="zsa-cb-textarea" id="zsa-cb-reflection" rows="5" placeholder="I measured... In series... In parallel... This means..." aria-describedby="zsa-cb-reflection-help zsa-cb-reflection-note"></textarea>
+<p class="zsa-cb-print-only zsa-cb-print-reflection" id="zsa-cb-print-reflection"></p>
+<p class="zsa-cb-small" id="zsa-cb-reflection-note">Your response stays in this tab. Print to keep a copy.</p>
+</div>
+</section>
+</div>
+</div>
+<p class="zsa-sr-only" id="zsa-cb-live" aria-live="polite" aria-atomic="true"></p>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Predict. Observe. Explain. Nothing you enter leaves this tab.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+</main>
+</body>
+</html>

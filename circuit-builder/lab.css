@@ -1,0 +1,181 @@
+/* Circuit Builder. Shared tokens and components come from ../shared/zsa-base.css; everything here is zsa-cb-.
+   Layout: one column on phones and tablets (circuits and parts, then the board, readings, questions and reflection);
+   from 1100px the circuits and parts sit in a 280px column beside the work. From 760px the multimeter sits beside the
+   board. */
+.zsa.zsa-cb {--zsa-max-width:1440px; --zsa-cb-wire:#334155; --zsa-cb-red:#c81e1e; --zsa-cb-black:#111827; --zsa-cb-flow:#f59e0b; --zsa-cb-band:#2563eb;}
+.zsa-cb-header {margin-bottom:8px;}
+.zsa-cb-topline {display:flex;flex-wrap:wrap;align-items:center;column-gap:16px;}
+.zsa-cb-topline .zsa-eyebrow {margin:0;}
+.zsa-cb-titlerow {display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px 16px;border-bottom:1px solid var(--zsa-border);padding-bottom:12px;margin-bottom:16px;}
+.zsa-cb .zsa-cb-header h1 {margin:8px 0 8px;}
+.zsa-cb-lede {margin:0;max-width:66ch;}
+.zsa-cb h2 {font-size:1.35rem;line-height:1.3;margin:4px 0 12px;}
+.zsa-cb h3 {font-size:1.1rem;line-height:1.3;margin:16px 0 8px;}
+.zsa-cb .zsa-eyebrow {margin:0;}
+.zsa-cb-small {font-size:var(--zsa-text-sm);margin:8px 0;}
+.zsa-cb-print-only {display:none;}
+.zsa-cb-print {padding:8px 16px;}
+
+/* Layout */
+.zsa-cb-layout {display:grid;grid-template-columns:minmax(0,1fr);gap:16px;}
+.zsa-cb-side,.zsa-cb-work {min-width:0;}
+.zsa-cb .zsa-card {margin:0 0 16px;background:var(--zsa-white);}
+@media(min-width:1100px) {
+  .zsa-cb-layout {grid-template-columns:280px minmax(0,1fr);column-gap:24px;align-items:start;}
+  .zsa-cb .zsa-card {padding:20px 24px;}
+}
+.zsa-cb-label {display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:8px;}
+
+/* Circuits and parts */
+.zsa-cb-field {display:block;font-size:var(--zsa-text-sm);font-weight:600;color:var(--zsa-navy);margin:12px 0 4px;}
+.zsa-cb select {width:100%;min-height:44px;border:1px solid var(--zsa-navy);border-radius:var(--zsa-radius);padding:6px 8px;color:var(--zsa-navy);background:var(--zsa-white);font-size:16px;}
+.zsa-cb-tools {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;}
+.zsa-cb-tool {display:flex;align-items:center;gap:8px;min-height:48px;padding:6px 10px;text-align:left;touch-action:none;cursor:grab;line-height:1.2;}
+.zsa-cb-tool[aria-pressed="true"] {background:var(--zsa-sky);border:2px solid var(--zsa-blue);padding:5px 9px;font-weight:600;}
+.zsa-cb-tool:first-child {cursor:pointer;}
+.zsa-cb-tool:last-child {cursor:pointer;}
+.zsa-cb-icon {flex:none;overflow:visible;}
+.zsa-cb-icon-pointer {fill:var(--zsa-navy);}
+.zsa-cb-icon-erase {stroke:var(--zsa-cb-red);stroke-width:4;stroke-linecap:round;fill:none;}
+.zsa-cb-model {margin-top:16px;padding-top:4px;border-top:1px solid var(--zsa-border);}
+.zsa-cb-model h3 {margin-top:12px;}
+.zsa-cb-equations {color:var(--zsa-navy);margin:0;font-size:var(--zsa-text-sm);}
+.zsa-cb-wide {width:100%;margin-top:8px;}
+@media(min-width:600px) and (max-width:1099px) {
+  .zsa-cb-side {display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);column-gap:16px;align-items:stretch;}
+  .zsa-cb-tools {grid-template-columns:repeat(3,minmax(0,1fr));}
+}
+/* In the narrow side column, each tool's icon sits above its name. */
+@media(min-width:1100px) {
+  .zsa-cb-tool {flex-direction:column;justify-content:center;gap:2px;text-align:center;padding:6px 4px;font-size:15px;}
+  .zsa-cb-tool[aria-pressed="true"] {padding:5px 3px;}
+}
+
+/* The board */
+.zsa-cb-toolbar {display:flex;flex-wrap:wrap;align-items:center;gap:8px;}
+.zsa-cb-toolbar .zsa-btn {padding:8px 16px;min-height:44px;}
+.zsa-cb-toolbar .zsa-btn:disabled {opacity:.55;cursor:default;}
+.zsa-cb-check {display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 10px 0 6px;border-radius:var(--zsa-radius);font-size:var(--zsa-text-sm);cursor:pointer;}
+.zsa-cb-check:hover {background:var(--zsa-sky);}
+.zsa-cb-check input {flex:none;width:20px;height:20px;margin:0;accent-color:var(--zsa-blue);cursor:pointer;}
+.zsa-cb-bench {display:grid;grid-template-columns:minmax(0,1fr);gap:12px 20px;margin-top:8px;}
+@media(min-width:760px) {.zsa-cb-bench {grid-template-columns:minmax(0,1fr) 280px;align-items:start;}}
+.zsa-cb-boardwrap {min-width:0;}
+.zsa-cb-board {display:block;width:100%;height:auto;border:1px solid var(--zsa-border);border-radius:var(--zsa-radius);touch-action:none;user-select:none;-webkit-user-select:none;}
+.zsa-cb-board.zsa-cb-probing {cursor:crosshair;}
+.zsa-cb-boardhelp {font-size:var(--zsa-text-label);line-height:1.4;margin:4px 0 0;}
+.zsa-cb-boardbg {fill:#fbfdff;}
+.zsa-cb-guide {stroke:#dbe4f0;stroke-width:1.5;stroke-dasharray:3 5;}
+.zsa-cb-axis {font-size:12px;font-weight:600;fill:#475569;}
+.zsa-cb-dot {fill:#94a3b8;}
+.zsa-cb-joint {fill:var(--zsa-cb-wire);}
+.zsa-cb-lead {stroke:var(--zsa-cb-wire);stroke-width:4;stroke-linecap:round;}
+.zsa-cb-lead.zsa-cb-short,.zsa-cb-plate-minus.zsa-cb-short {stroke:var(--zsa-cb-red);}
+.zsa-cb-bg {fill:#fbfdff;}
+.zsa-cb-zigzag {fill:none;stroke:#7c2d12;stroke-width:3;stroke-linejoin:round;}
+.zsa-cb-glow {fill:#fde047;}
+.zsa-cb-glass {stroke:#1e293b;stroke-width:2.5;}
+.zsa-cb-filament {fill:none;stroke:#1e293b;stroke-width:1.75;}
+.zsa-cb-plate-plus {stroke:#1e293b;stroke-width:3;stroke-linecap:round;}
+.zsa-cb-plate-minus {stroke:#1e293b;stroke-width:7;}
+.zsa-cb-sign {font-size:14px;font-weight:700;fill:#1e293b;}
+.zsa-cb-lever {stroke:#1e293b;stroke-width:3.5;stroke-linecap:round;}
+.zsa-cb-contact {fill:#fbfdff;stroke:#1e293b;stroke-width:2;}
+.zsa-cb-flow {stroke:var(--zsa-cb-flow);stroke-width:6;stroke-linecap:round;fill:none;}
+.zsa-cb-tag {font-size:12.5px;font-weight:600;fill:var(--zsa-navy);paint-order:stroke;stroke:#fbfdff;stroke-width:3px;font-variant-numeric:tabular-nums;}
+.zsa-cb-tag-bad {fill:var(--zsa-cb-red);}
+.zsa-cb-band {stroke:var(--zsa-cb-band);stroke-opacity:.22;stroke-width:22;stroke-linecap:round;}
+.zsa-cb-arrow {fill:var(--zsa-cb-band);}
+.zsa-cb-selected {fill:none;stroke:var(--zsa-blue);stroke-width:2;stroke-dasharray:6 4;}
+.zsa-cb-ghost {opacity:.5;}
+.zsa-cb-probelead {stroke-width:2.5;}
+.zsa-cb-probetip {stroke:none;}
+.zsa-cb-probehead {stroke:#fff;stroke-width:2;}
+.zsa-cb-probesign {font-size:14px;font-weight:700;fill:#fff;}
+.zsa-cb-probe-red .zsa-cb-probelead {stroke:var(--zsa-cb-red);}
+.zsa-cb-probe-red .zsa-cb-probetip,.zsa-cb-probe-red .zsa-cb-probehead {fill:var(--zsa-cb-red);}
+.zsa-cb-probe-black .zsa-cb-probelead {stroke:var(--zsa-cb-black);}
+.zsa-cb-probe-black .zsa-cb-probetip,.zsa-cb-probe-black .zsa-cb-probehead {fill:var(--zsa-cb-black);}
+.zsa-cb-spots {pointer-events:none;}
+.zsa-cb-spot {outline:none;}
+.zsa-cb-ring {fill:none;stroke:none;}
+.zsa-cb-spot:focus-visible .zsa-cb-ring {stroke:var(--zsa-blue);stroke-width:3;fill:rgba(29,78,216,.08);}
+
+/* The multimeter and the selected part */
+.zsa-cb-panel {min-width:0;}
+.zsa-cb-meter {border:1px solid var(--zsa-border);border-radius:var(--zsa-radius-lg);padding:4px 14px 14px;background:#f8fafc;}
+.zsa-cb-meter h3 {margin-top:10px;}
+.zsa-cb-modes {border:0;margin:0;padding:0;min-width:0;display:flex;flex-wrap:wrap;gap:0 4px;}
+.zsa-cb-modes legend {font-size:var(--zsa-text-sm);font-weight:600;color:var(--zsa-navy);padding:0;}
+.zsa-cb-mode {display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 10px 0 4px;border-radius:var(--zsa-radius);font-size:var(--zsa-text-sm);cursor:pointer;}
+.zsa-cb-mode input {flex:none;width:20px;height:20px;margin:0;accent-color:var(--zsa-blue);}
+.zsa-cb-screen {background:#13241b;border-radius:var(--zsa-radius);padding:10px 14px;margin:6px 0 4px;}
+.zsa-cb-display {display:block;font-size:2rem;line-height:1.2;font-weight:700;color:#bbf7d0;font-variant-numeric:tabular-nums;letter-spacing:.02em;}
+.zsa-cb-display.zsa-cb-blank {color:#86efac;}
+.zsa-cb-caption {margin:4px 0 0;font-size:var(--zsa-text-sm);line-height:1.4;color:#ecfdf5;}
+.zsa-cb-probe-row {display:flex;gap:8px;}
+.zsa-cb-probe-row select {flex:1 1 auto;min-width:0;}
+.zsa-cb-probe-row .zsa-btn {flex:none;padding:8px 12px;min-height:44px;}
+.zsa-cb-probe-row .zsa-btn[aria-pressed="true"] {background:var(--zsa-sky);border:2px solid var(--zsa-blue);font-weight:600;}
+.zsa-cb-probe-red .zsa-cb-field::before,.zsa-cb-probe-black .zsa-cb-field::before {content:"";display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:-1px;}
+.zsa-cb-probe-red .zsa-cb-field::before {background:var(--zsa-cb-red);}
+.zsa-cb-probe-black .zsa-cb-field::before {background:var(--zsa-cb-black);}
+.zsa-cb-part {border:1px solid var(--zsa-border);border-left:6px solid var(--zsa-blue);border-radius:var(--zsa-radius);padding:2px 14px 12px;margin-top:12px;}
+.zsa-cb-part h3 {margin-top:10px;}
+.zsa-cb-part-reading {font-size:var(--zsa-text-sm);margin:0 0 8px;font-variant-numeric:tabular-nums;}
+.zsa-cb-part-controls {display:flex;flex-wrap:wrap;gap:8px;}
+.zsa-cb-part-controls .zsa-btn {padding:8px 14px;min-height:44px;}
+.zsa-cb-part-field {flex:1 1 100%;}
+.zsa-cb-part-field .zsa-cb-field {margin-top:0;}
+.zsa-cb-insight {border-left:6px solid var(--zsa-blue);background:var(--zsa-sky);border-radius:var(--zsa-radius);padding:10px 14px;margin:12px 0 0;font-size:var(--zsa-text-sm);color:var(--zsa-navy);}
+.zsa-cb-insight.zsa-cb-warn {border-left-color:var(--zsa-error);background:var(--zsa-error-bg);color:var(--zsa-error);font-weight:600;}
+
+/* Readings */
+.zsa-cb-tablewrap {overflow-x:auto;border:1px solid var(--zsa-border);border-radius:var(--zsa-radius);}
+.zsa-cb-tablewrap:focus-visible {outline:var(--zsa-focus-ring);outline-offset:var(--zsa-focus-offset);}
+.zsa-cb-table {width:100%;border-collapse:collapse;font-size:var(--zsa-text-sm);font-variant-numeric:tabular-nums;}
+.zsa-cb-table th,.zsa-cb-table td {padding:8px 12px;text-align:left;border-bottom:1px solid var(--zsa-border);white-space:nowrap;}
+.zsa-cb-table thead th {font-size:var(--zsa-text-label);letter-spacing:.06em;text-transform:uppercase;color:var(--zsa-blue);background:var(--zsa-sky);}
+.zsa-cb-table tbody th {color:var(--zsa-navy);}
+.zsa-cb-table tbody tr:last-child th,.zsa-cb-table tbody tr:last-child td {border-bottom:0;}
+
+/* Questions */
+.zsa-cb-questions {display:grid;gap:12px 32px;}
+@media(min-width:900px) {.zsa-cb-questions {grid-template-columns:repeat(2,minmax(0,1fr));}}
+.zsa-cb-question {border:1px solid var(--zsa-border);border-radius:var(--zsa-radius);margin:0;padding:8px 12px 10px;min-width:0;}
+.zsa-cb-question legend {font-size:var(--zsa-text-sm);font-weight:600;color:var(--zsa-navy);padding:0 4px;}
+.zsa-cb-choice {display:flex;align-items:center;gap:10px;min-height:44px;font-size:var(--zsa-text-sm);cursor:pointer;}
+.zsa-cb-choice input {flex:none;width:20px;height:20px;margin:0;accent-color:var(--zsa-blue);}
+.zsa-cb-actions {display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+.zsa-cb-feedback {border:1px solid var(--zsa-border);border-left:6px solid var(--zsa-blue);border-radius:var(--zsa-radius);background:var(--zsa-sky);padding:10px 16px;margin:16px 0 0;font-size:var(--zsa-text-sm);}
+.zsa-cb-feedback h3 {margin:4px 0 8px;}
+.zsa-cb-feedback p {margin:6px 0;}
+.zsa-cb-ok {color:var(--zsa-success);font-weight:600;}
+.zsa-cb-notyet {color:var(--zsa-slate);}
+
+/* Reflection */
+.zsa-cb-reflection {display:grid;gap:8px 32px;}
+@media(min-width:900px) {.zsa-cb-reflection {grid-template-columns:repeat(2,minmax(0,1fr));}}
+.zsa-cb-textarea {display:block;width:100%;min-height:8em;resize:vertical;border:1px solid var(--zsa-navy);border-radius:var(--zsa-radius);padding:10px 12px;font:inherit;font-size:16px;color:var(--zsa-slate);}
+.zsa-cb-textarea:focus-visible {outline:var(--zsa-focus-ring);outline-offset:var(--zsa-focus-offset);}
+
+@media(max-width:599px) {
+  .zsa-cb-topline .zsa-eyebrow {display:none;}
+  .zsa-cb-display {font-size:1.6rem;}
+}
+
+/* Print: the circuit line, the board, the meter, the readings, the answers and the whole reflection; no controls. */
+@media print {
+  .zsa.zsa-cb {max-width:none;padding:0;}
+  .zsa-cb-topline,.zsa-cb-lede,.zsa-cb-print,.zsa-cb-side,.zsa-cb-toolbar,.zsa-cb-boardhelp,.zsa-cb-modes,.zsa-cb-probes,.zsa-cb-amps,.zsa-cb-part,
+  .zsa-cb-actions,.zsa-cb .zsa-footer,.zsa-cb-textarea,#zsa-cb-reflection-note {display:none!important;}
+  .zsa-cb-print-only {display:block;}
+  .zsa-cb-print-reflection {white-space:pre-wrap;border:1px solid #94a3b8;border-radius:6px;padding:8px 10px;min-height:6em;}
+  .zsa-cb .zsa-cb-header h1 {font-size:1.6rem;margin:0 0 4px;}
+  .zsa-cb-layout {display:block;}
+  #zsa-cb-csv {display:none;}
+  .zsa-cb-bench {grid-template-columns:minmax(0,1fr) 240px;}
+  .zsa-cb-boardcard,.zsa-cb-readings,.zsa-cb-question {break-inside:avoid;}
+  .zsa-cb-tablewrap {overflow:visible;}
+  .zsa-cb-reflection {grid-template-columns:1fr;}
+}
