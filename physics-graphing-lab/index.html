@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<meta name="description" content="Predict, observe and explain one-dimensional motion with a moving cart and linked position, velocity and acceleration graphs, from ZornScience.">
+<title>Physics Graphing Lab | ZornScience</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="lab.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="physics.js?v=1.0.0" defer></script>
+<script src="lab.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="zsa zsa-pg" data-zsa-activity="physics-graphing-lab">
+<header class="zsa-pg-header">
+<div class="zsa-pg-topline" data-zsa-chrome>
+<a class="zsa-back" id="zsa-pg-back" href="https://zornscience.org/science/physics/unit-1-linear-motion/velocity-time-graphs/">← Back to the lesson</a>
+<p class="zsa-eyebrow">Physics · Linear Motion</p>
+</div>
+<h1>Physics Graphing Lab</h1>
+<p class="zsa-pg-lede">One moving cart. Three connected graphs. Make a prediction, run the experiment, and explain what changes.</p>
+</header>
+<noscript><p class="zsa-panel">This lab needs JavaScript. Enable it to run the cart and draw the graphs.</p></noscript>
+<div class="zsa-pg-modebar">
+<div class="zsa-pg-modes" role="group" aria-label="Lab mode">
+<button class="zsa-pg-mode" id="zsa-pg-explore" type="button" aria-pressed="true">Explore</button>
+<button class="zsa-pg-mode" id="zsa-pg-predict" type="button" aria-pressed="false">Predict and compare</button>
+</div>
+<p class="zsa-pg-mode-note">Constant acceleration from 0 to 10 seconds</p>
+<button class="zsa-btn zsa-pg-print" id="zsa-pg-print" type="button">Print lab</button>
+</div>
+<p class="zsa-pg-print-only" id="zsa-pg-print-summary"></p>
+<div class="zsa-pg-layout">
+<aside class="zsa-pg-side" aria-label="Experiment settings">
+<section class="zsa-card zsa-pg-settings" aria-labelledby="zsa-pg-settings-title">
+<p class="zsa-eyebrow">1. Set the motion</p>
+<h2 id="zsa-pg-settings-title">Your experiment</h2>
+<label class="zsa-pg-field" for="zsa-pg-scenario">Start with a scenario</label>
+<select id="zsa-pg-scenario"></select>
+<p class="zsa-pg-small" id="zsa-pg-scenario-text"></p>
+<div class="zsa-pg-control">
+<div class="zsa-pg-control-label"><label for="zsa-pg-x0">Initial position, x₀</label><output id="zsa-pg-x0-out" for="zsa-pg-x0"></output></div>
+<input class="zsa-pg-range" id="zsa-pg-x0" type="range" min="-20" max="20" step="1" value="0">
+<div class="zsa-pg-ends" aria-hidden="true"><span>−20 m</span><span>+20 m</span></div>
+</div>
+<div class="zsa-pg-control">
+<div class="zsa-pg-control-label"><label for="zsa-pg-v0">Initial velocity, v₀</label><output id="zsa-pg-v0-out" for="zsa-pg-v0"></output></div>
+<input class="zsa-pg-range" id="zsa-pg-v0" type="range" min="-5" max="5" step="0.5" value="0">
+<div class="zsa-pg-ends" aria-hidden="true"><span>−5 m/s</span><span>+5 m/s</span></div>
+</div>
+<div class="zsa-pg-control">
+<div class="zsa-pg-control-label"><label for="zsa-pg-a">Acceleration, a</label><output id="zsa-pg-a-out" for="zsa-pg-a"></output></div>
+<input class="zsa-pg-range" id="zsa-pg-a" type="range" min="-1" max="1" step="0.1" value="0">
+<div class="zsa-pg-ends" aria-hidden="true"><span>−1 m/s²</span><span>+1 m/s²</span></div>
+</div>
+<div class="zsa-pg-model">
+<h3>The model</h3>
+<p class="zsa-pg-equations">x = x₀ + v₀t + ½at²<br>v = v₀ + at<br>a = constant</p>
+<p class="zsa-pg-small">Right is positive. The cart is a point object on a straight track. Friction is not modeled.</p>
+</div>
+<button class="zsa-btn zsa-pg-wide" id="zsa-pg-csv" type="button">Download motion data (CSV)</button>
+</section>
+</aside>
+<div class="zsa-pg-work">
+<section class="zsa-card zsa-pg-trackcard" aria-labelledby="zsa-pg-track-title">
+<div class="zsa-pg-label"><div><p class="zsa-eyebrow">2. Watch it move</p><h2 id="zsa-pg-track-title">The motion track</h2></div><p class="zsa-pg-pill">← negative | positive →</p></div>
+<svg class="zsa-pg-track" id="zsa-pg-track" viewBox="0 0 900 130" role="img" aria-labelledby="zsa-pg-track-desc"><title id="zsa-pg-track-desc">Cart on a position axis</title></svg>
+<dl class="zsa-pg-readouts">
+<div><dt>Time</dt><dd id="zsa-pg-t-value"></dd></div>
+<div><dt>Position</dt><dd id="zsa-pg-x-value"></dd></div>
+<div><dt>Velocity</dt><dd id="zsa-pg-v-value"></dd></div>
+<div><dt>Acceleration</dt><dd id="zsa-pg-a-value"></dd></div>
+</dl>
+<div class="zsa-pg-playback">
+<button class="zsa-btn zsa-btn--primary zsa-pg-play" id="zsa-pg-play" type="button">Run motion</button>
+<button class="zsa-btn" id="zsa-pg-reset" type="button">Reset</button>
+<div class="zsa-pg-scrub"><label for="zsa-pg-time">Time</label><input class="zsa-pg-range" id="zsa-pg-time" type="range" min="0" max="10" step="0.1" value="0"></div>
+</div>
+</section>
+<section class="zsa-pg-predictbar" id="zsa-pg-predictbar" aria-labelledby="zsa-pg-predict-title" hidden>
+<h2 id="zsa-pg-predict-title">Predict before you reveal</h2>
+<p>Drag across each graph to sketch a prediction, or enter values with the keyboard below the graphs.</p>
+<div class="zsa-pg-predict-actions">
+<button class="zsa-btn zsa-btn--primary" id="zsa-pg-reveal" type="button">Reveal and compare</button>
+<button class="zsa-btn" id="zsa-pg-clear" type="button">Clear predictions</button>
+</div>
+</section>
+<section class="zsa-pg-graphsection" aria-labelledby="zsa-pg-graphs-title">
+<div class="zsa-pg-label"><div><p class="zsa-eyebrow">3. Connect the graphs</p><h2 id="zsa-pg-graphs-title">Three views of the same motion</h2></div>
+<p class="zsa-pg-legend" aria-hidden="true"><span class="zsa-pg-key-model"></span>Model <span class="zsa-pg-key-pred"></span>Your prediction</p></div>
+<div class="zsa-pg-graphs" id="zsa-pg-graphs"></div>
+<p class="zsa-pg-small">All graphs share the same time axis. Vertical scales adjust to the experiment. A negative velocity means motion to the left, not necessarily slowing down.</p>
+</section>
+<div class="zsa-pg-feedback" id="zsa-pg-feedback" tabindex="-1" hidden></div>
+<details class="zsa-card zsa-pg-keyboard" id="zsa-pg-keyboard" hidden>
+<summary>Enter prediction values with a keyboard</summary>
+<p class="zsa-pg-small">Enter predictions at 0, 2, 4, 6, 8 and 10 seconds. Each value becomes a point on its graph, joined to the others. Leave a box empty to skip it.</p>
+<div id="zsa-pg-inputs"></div>
+</details>
+<section class="zsa-card zsa-pg-reflection" aria-labelledby="zsa-pg-reflect-title">
+<div>
+<p class="zsa-eyebrow">4. Make sense of it</p>
+<h2 id="zsa-pg-reflect-title">What does the graph tell you?</h2>
+<p id="zsa-pg-insight"></p>
+</div>
+<div>
+<label class="zsa-pg-field" for="zsa-pg-reflection">Explain using evidence from the graphs.</label>
+<p class="zsa-pg-small" id="zsa-pg-reflection-help">How does the slope of the position graph relate to velocity? When does the cart speed up or slow down?</p>
+<textarea class="zsa-pg-textarea" id="zsa-pg-reflection" rows="5" placeholder="I notice... The graph shows... This means..." aria-describedby="zsa-pg-reflection-help zsa-pg-reflection-note"></textarea>
+<p class="zsa-pg-print-only zsa-pg-print-reflection" id="zsa-pg-print-reflection"></p>
+<p class="zsa-pg-small" id="zsa-pg-reflection-note">Your response stays in this tab. Print to keep a copy.</p>
+</div>
+</section>
+</div>
+</div>
+<p class="zsa-sr-only" id="zsa-pg-live" aria-live="polite" aria-atomic="true"></p>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Predict. Observe. Explain. Nothing you enter leaves this tab.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+</main>
+</body>
+</html>
