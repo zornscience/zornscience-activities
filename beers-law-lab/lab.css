@@ -1,0 +1,145 @@
+/* Beer's Law Spectrophotometer Lab. Shared tokens and components come from ../shared/zsa-base.css; everything here is
+   zsa-bl-. Layout: one column on phones (setup, instrument, graph, analysis, reflection); from 860px the instrument and
+   the graph sit side by side; from 1100px the setup is a 280px column beside the work. */
+.zsa.zsa-bl {--zsa-max-width:1440px; --zsa-bl-std:#1d4ed8; --zsa-bl-fit:#0b2a5b; --zsa-bl-unk:#b45309;}
+.zsa-bl-header {margin-bottom:8px;}
+.zsa-bl-topline {display:flex;flex-wrap:wrap;align-items:center;column-gap:16px;}
+.zsa-bl-topline .zsa-eyebrow {margin:0;}
+.zsa-bl .zsa-bl-header h1 {margin:8px 0 8px;}
+/* "Spectrophotometer" is one long word: a smaller title keeps it on the screen on the narrowest phones. */
+@media(max-width:399px) {.zsa-bl .zsa-bl-header h1 {font-size:1.85rem;overflow-wrap:break-word;}}
+.zsa-bl-lede {margin:0 0 8px;max-width:64ch;}
+.zsa-bl h2 {font-size:1.35rem;line-height:1.3;margin:4px 0 12px;}
+.zsa-bl h3 {font-size:1.1rem;line-height:1.3;margin:12px 0 8px;}
+.zsa-bl .zsa-eyebrow {margin:0;}
+.zsa-bl-small {font-size:var(--zsa-text-sm);margin:8px 0;}
+.zsa-bl-print-only {display:none;}
+
+/* Toolbar */
+.zsa-bl-toolbar {display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;border-top:1px solid var(--zsa-border);border-bottom:1px solid var(--zsa-border);padding:8px 0;margin:16px 0;}
+.zsa-bl-toolbar-note {margin:0;}
+.zsa-bl-print {margin-left:auto;padding:8px 16px;}
+
+/* Layout */
+.zsa-bl-layout {display:grid;grid-template-columns:minmax(0,1fr);gap:16px;}
+.zsa-bl-side,.zsa-bl-work {min-width:0;}
+.zsa-bl .zsa-card {margin:0 0 16px;background:var(--zsa-white);}
+@media(min-width:1100px) {
+  .zsa-bl-layout {grid-template-columns:280px minmax(0,1fr);column-gap:24px;align-items:start;}
+  .zsa-bl .zsa-card {padding:20px 24px;}
+}
+.zsa-bl-lab {display:grid;grid-template-columns:minmax(0,1fr);column-gap:16px;}
+@media(min-width:860px) {.zsa-bl-lab {grid-template-columns:minmax(320px,400px) minmax(0,1fr);align-items:start;}}
+
+/* Setup */
+.zsa-bl-field {display:block;font-size:var(--zsa-text-sm);font-weight:600;color:var(--zsa-navy);margin:8px 0 4px;}
+.zsa-bl select {width:100%;min-height:44px;border:1px solid var(--zsa-navy);border-radius:var(--zsa-radius);padding:6px 8px;color:var(--zsa-navy);background:var(--zsa-white);font-size:16px;}
+.zsa-bl-range {display:block;width:100%;height:44px;margin:0;accent-color:var(--zsa-blue);}
+.zsa-bl-range:disabled {opacity:.55;}
+.zsa-bl-wide {width:100%;margin-top:8px;}
+.zsa-bl .zsa-btn:disabled {background:#f8fafc;border-color:var(--zsa-border-strong);color:#475569;}
+@media(min-width:600px) and (max-width:1099px) {
+  .zsa-bl-setup {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:24px;}
+  .zsa-bl-setup > .zsa-eyebrow,.zsa-bl-setup > h2,.zsa-bl-setup > .zsa-bl-wide {grid-column:1 / -1;}
+}
+
+/* The spectrophotometer */
+.zsa-bl-instrument {display:block;width:100%;max-width:420px;height:auto;margin:0 auto 8px;}
+.zsa-bl-body {fill:#e2e8f0;stroke:#64748b;stroke-width:1.5;}
+.zsa-bl-brand {font-size:15px;font-weight:600;fill:var(--zsa-navy);}
+.zsa-bl-knob {fill:#f8fafc;stroke:#475569;stroke-width:2;}
+.zsa-bl-pointer {stroke:var(--zsa-navy);stroke-width:3;stroke-linecap:round;}
+.zsa-bl-label-dark {font-size:13px;fill:var(--zsa-slate);}
+.zsa-bl-lcd {fill:#10231a;stroke:#334155;stroke-width:2;}
+.zsa-bl-lcd-small {font-size:16px;fill:#a7f3d0;font-variant-numeric:tabular-nums;}
+.zsa-bl-lcd-big {font-size:26px;font-weight:600;fill:#d1fae5;font-variant-numeric:tabular-nums;}
+.zsa-bl-inside {fill:#1e293b;stroke:#475569;stroke-width:1.5;}
+.zsa-bl-lamp {fill:#fde68a;stroke:#f59e0b;stroke-width:2;}
+.zsa-bl-white {stroke:#f8fafc;stroke-width:4;stroke-linecap:round;}
+.zsa-bl-grating {fill:rgba(226,232,240,.35);stroke:#cbd5e1;stroke-width:1.5;}
+.zsa-bl-beam {stroke-width:5;stroke-linecap:round;}
+.zsa-bl-beam-ir {stroke-dasharray:6 4;}
+.zsa-bl-holder {fill:none;stroke:#64748b;stroke-width:1.5;stroke-dasharray:3 3;}
+.zsa-bl-cuvette {fill:rgba(241,245,249,.18);stroke:#e2e8f0;stroke-width:1.5;}
+.zsa-bl-liquid {stroke:none;}
+.zsa-bl-detector {fill:#94a3b8;stroke:#e2e8f0;stroke-width:1;}
+.zsa-bl-cable {fill:none;stroke:#94a3b8;stroke-width:2;}
+.zsa-bl-label {font-size:13px;fill:#e2e8f0;}
+.zsa-bl-readouts {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 0;margin:0;background:var(--zsa-sky);border-radius:var(--zsa-radius);padding:10px 0;}
+.zsa-bl-readouts > div {padding:0 12px;min-width:0;}
+.zsa-bl-readouts > div:nth-child(odd) {border-right:1px solid var(--zsa-border);}
+.zsa-bl-readouts dt {font-size:var(--zsa-text-label);font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--zsa-blue);}
+.zsa-bl-readouts dd {margin:0;font-size:1.05rem;font-weight:600;color:var(--zsa-navy);font-variant-numeric:tabular-nums;overflow-wrap:anywhere;}
+.zsa-bl-steps {display:grid;gap:4px;margin-top:8px;}
+.zsa-bl-step {border-top:1px solid var(--zsa-border);padding-top:4px;}
+.zsa-bl-step:first-child {border-top:0;}
+.zsa-bl-row {display:flex;flex-wrap:wrap;gap:8px;}
+.zsa-bl-row .zsa-bl-input {flex:1 1 7em;max-width:none;}
+.zsa-bl-row .zsa-btn {flex:1 1 auto;padding:10px 16px;}
+.zsa-bl-input {width:100%;max-width:14em;min-height:44px;border:1px solid var(--zsa-navy);border-radius:var(--zsa-radius-sm);padding:4px 8px;color:var(--zsa-navy);font-size:16px;font-variant-numeric:tabular-nums;}
+.zsa-bl-status {min-height:1.65em;font-weight:600;color:var(--zsa-navy);}
+
+/* Graph */
+.zsa-bl-graph {display:block;width:100%;height:340px;}
+.zsa-bl-gridline {stroke:#e2e8f0;stroke-width:1;}
+.zsa-bl-axis {stroke:#64748b;stroke-width:1.5;}
+.zsa-bl-tick {font-size:13px;fill:var(--zsa-slate);font-variant-numeric:tabular-nums;}
+.zsa-bl-axis-label {font-size:13px;fill:var(--zsa-slate);}
+.zsa-bl-std {fill:var(--zsa-bl-std);stroke:#ffffff;stroke-width:1.5;}
+.zsa-bl-fit {stroke:var(--zsa-bl-fit);stroke-width:2;}
+.zsa-bl-unk-line {stroke:var(--zsa-bl-unk);stroke-width:2;stroke-dasharray:8 4;}
+.zsa-bl-unk-point {fill:var(--zsa-bl-unk);stroke:#ffffff;stroke-width:1.5;}
+.zsa-bl-unk-label {font-size:13px;font-weight:600;fill:#92400e;paint-order:stroke;stroke:#ffffff;stroke-width:4px;}
+.zsa-bl-legend {display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:4px 0 0;font-size:var(--zsa-text-label);}
+.zsa-bl-key-std {display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--zsa-bl-std);}
+.zsa-bl-key-fit {display:inline-block;width:18px;border-top:2px solid var(--zsa-bl-fit);margin-left:10px;}
+.zsa-bl-key-unk {display:inline-block;width:18px;border-top:3px dashed var(--zsa-bl-unk);margin-left:10px;}
+.zsa-bl-fitrow {display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;margin-top:12px;}
+.zsa-bl-fitrow .zsa-btn {padding:8px 16px;}
+.zsa-bl-fitrow .zsa-btn[aria-pressed="true"] {background:var(--zsa-sky);font-weight:600;box-shadow:inset 0 0 0 2px var(--zsa-navy);}
+.zsa-bl-equation {margin:0;font-size:var(--zsa-text-sm);font-weight:600;color:var(--zsa-navy);font-variant-numeric:tabular-nums;}
+
+/* Analysis */
+.zsa-bl-analysis-grid {display:grid;grid-template-columns:minmax(0,1fr);gap:8px 32px;}
+.zsa-bl-analysis-grid > div {min-width:0;}
+@media(min-width:900px) {.zsa-bl-analysis-grid {grid-template-columns:minmax(0,3fr) minmax(0,2fr);}}
+.zsa-bl-tablewrap {overflow-x:auto;position:relative;}
+.zsa-bl-table {width:100%;border-collapse:collapse;font-size:var(--zsa-text-sm);font-variant-numeric:tabular-nums;margin-bottom:8px;}
+.zsa-bl-table th,.zsa-bl-table td {border-bottom:1px solid var(--zsa-border);padding:4px 8px;text-align:left;}
+.zsa-bl-table thead th {color:var(--zsa-navy);font-size:var(--zsa-text-label);text-transform:uppercase;letter-spacing:.04em;}
+.zsa-bl-table tbody th {font-weight:600;color:var(--zsa-navy);}
+.zsa-bl-unknown-row th,.zsa-bl-unknown-row td {background:#fff7ed;}
+.zsa-bl-remove {padding:6px 12px;min-width:44px;}
+.zsa-bl-question {display:block;font-size:var(--zsa-text-sm);font-weight:600;color:var(--zsa-navy);margin:8px 0 4px;}
+.zsa-bl-actions {display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
+.zsa-bl-actions .zsa-btn {padding:10px 16px;}
+.zsa-bl-feedback {border:1px solid var(--zsa-border);border-left:6px solid var(--zsa-blue);border-radius:var(--zsa-radius);background:var(--zsa-sky);padding:10px 16px;margin:16px 0 0;font-size:var(--zsa-text-sm);}
+.zsa-bl-feedback p {margin:6px 0;}
+.zsa-bl-ok {color:var(--zsa-success);font-weight:600;}
+.zsa-bl-notyet {color:var(--zsa-slate);}
+.zsa-bl-shown {color:var(--zsa-navy);}
+@media(max-width:599px) {
+  .zsa-bl-topline .zsa-eyebrow {display:none;}
+  .zsa-bl-table th,.zsa-bl-table td {padding:4px 6px;}
+  .zsa-bl-table thead th {text-transform:none;letter-spacing:0;}
+  .zsa-bl-print {margin-left:0;}
+}
+
+/* Reflection */
+.zsa-bl-reflection {display:grid;gap:8px 32px;}
+@media(min-width:900px) {.zsa-bl-reflection {grid-template-columns:repeat(2,minmax(0,1fr));}}
+.zsa-bl-textarea {display:block;width:100%;min-height:8em;resize:vertical;border:1px solid var(--zsa-navy);border-radius:var(--zsa-radius);padding:10px 12px;font:inherit;font-size:16px;color:var(--zsa-slate);}
+.zsa-bl-textarea:focus-visible {outline:var(--zsa-focus-ring);outline-offset:var(--zsa-focus-offset);}
+
+/* Print: the summary line, the instrument, the curve, the data and the whole reflection; no controls. */
+@media print {
+  .zsa.zsa-bl {max-width:none;padding:0;}
+  .zsa-bl-topline,.zsa-bl-lede,.zsa-bl-toolbar,.zsa-bl-side,.zsa-bl-steps,.zsa-bl-status,.zsa-bl-actions,.zsa-bl-fitrow .zsa-btn,.zsa-bl-remove,#zsa-bl-clear,.zsa-bl .zsa-footer,.zsa-bl-textarea,#zsa-bl-reflection-note {display:none!important;}
+  .zsa-bl-print-only {display:block;}
+  .zsa-bl-print-reflection {white-space:pre-wrap;border:1px solid #94a3b8;border-radius:6px;padding:8px 10px;min-height:6em;}
+  .zsa-bl .zsa-bl-header h1 {font-size:1.6rem;margin:0 0 4px;}
+  .zsa-bl-layout {display:block;}
+  .zsa-bl-lab {grid-template-columns:260px minmax(0,1fr);}
+  .zsa-bl-bench,.zsa-bl-graphcard,.zsa-bl-analysis {break-inside:avoid;}
+  .zsa-bl-reflection {grid-template-columns:1fr;}
+}
