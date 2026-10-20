@@ -31,6 +31,7 @@ kinetics-lab/              Kinetics and Collision Theory Sandbox, v1.0.0 (collid
 limiting-reactant/         Limiting Reactant Visualizer, v1.0.0 (molecules pair up into products and the excess reactant is left stranded, with a before, change and after table)
 projectile-lab/             Projectile Motion Vector Lab, v1.0.0 (a cannon with live velocity, component and acceleration vectors, snapshots and a velocity components graph)
 circuit-builder/           Circuit Builder, v1.0.0 (drag batteries, wires, resistors, switches and bulbs onto a board; a multimeter probes voltage and current, and bulbs glow by their power)
+beers-law-lab/             Beer's Law Spectrophotometer Lab, v1.0.0 (zero with a blank, measure standards for a calibration curve, then calculate the concentration of a random unknown)
 check/                     completion code checker for teachers, v1.2.0 (linked under "For teachers")
 TEACHERS.md                assigning activities in Google Classroom and checking completion codes
 templates/starter/         starter template for a new activity (not linked from the site)

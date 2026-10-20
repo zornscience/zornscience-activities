@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<meta name="description" content="Measure standards with a virtual spectrophotometer, build a Beer's law calibration curve, and find the concentration of a random unknown, from ZornScience.">
+<title>Beer's Law Spectrophotometer Lab | ZornScience</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="lab.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="model.js?v=1.0.0" defer></script>
+<script src="lab.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="zsa zsa-bl" data-zsa-activity="beers-law-lab">
+<header class="zsa-bl-header">
+<div class="zsa-bl-topline" data-zsa-chrome>
+<a class="zsa-back" id="zsa-bl-back" href="https://zornscience.org/science/ap-chemistry/">← Back to the lesson</a>
+<p class="zsa-eyebrow">Chemistry · Beer's Law</p>
+</div>
+<h1>Beer's Law Spectrophotometer Lab</h1>
+<p class="zsa-bl-lede">Zero the spectrophotometer, measure standards of known concentration to build a calibration curve, then measure an unknown and calculate its concentration.</p>
+</header>
+<noscript><p class="zsa-panel">This lab needs JavaScript. Enable it to use the spectrophotometer and draw the calibration curve.</p></noscript>
+<div class="zsa-bl-toolbar">
+<p class="zsa-bl-small zsa-bl-toolbar-note">1.00 cm cuvettes. Readings have a little noise, like a real instrument.</p>
+<button class="zsa-btn zsa-bl-print" id="zsa-bl-print" type="button">Print lab</button>
+</div>
+<p class="zsa-bl-print-only" id="zsa-bl-print-summary"></p>
+<div class="zsa-bl-layout">
+<aside class="zsa-bl-side" aria-label="Lab setup">
+<section class="zsa-card zsa-bl-setup" aria-labelledby="zsa-bl-setup-title">
+<p class="zsa-eyebrow">1. Set up</p>
+<h2 id="zsa-bl-setup-title">Your solution</h2>
+<div>
+<label class="zsa-bl-field" for="zsa-bl-solution">Solution</label>
+<select id="zsa-bl-solution" aria-describedby="zsa-bl-solution-text"></select>
+<p class="zsa-bl-small" id="zsa-bl-solution-text"></p>
+</div>
+<div>
+<label class="zsa-bl-field" for="zsa-bl-wavelength">Wavelength: <span id="zsa-bl-wavelength-value"></span></label>
+<input class="zsa-bl-range" id="zsa-bl-wavelength" type="range" step="1" aria-describedby="zsa-bl-wavelength-note">
+<button class="zsa-btn zsa-bl-wide" id="zsa-bl-peak" type="button"></button>
+<p class="zsa-bl-small" id="zsa-bl-wavelength-note"></p>
+</div>
+<button class="zsa-btn zsa-bl-wide" id="zsa-bl-csv" type="button">Download data (CSV)</button>
+</section>
+</aside>
+<div class="zsa-bl-work">
+<div class="zsa-bl-lab">
+<section class="zsa-card zsa-bl-bench" aria-labelledby="zsa-bl-bench-title">
+<p class="zsa-eyebrow">2. Measure</p>
+<h2 id="zsa-bl-bench-title">The spectrophotometer</h2>
+<svg class="zsa-bl-instrument" id="zsa-bl-instrument" viewBox="0 0 360 250" role="img" aria-labelledby="zsa-bl-instrument-desc"><title id="zsa-bl-instrument-desc">Spectrophotometer</title></svg>
+<dl class="zsa-bl-readouts">
+<div><dt>Absorbance</dt><dd id="zsa-bl-a-value"></dd></div>
+<div><dt>Transmittance</dt><dd id="zsa-bl-t-value"></dd></div>
+<div><dt>Wavelength</dt><dd id="zsa-bl-nm-value"></dd></div>
+<div><dt>In the cuvette</dt><dd id="zsa-bl-cuvette-value"></dd></div>
+</dl>
+<div class="zsa-bl-steps">
+<div class="zsa-bl-step">
+<p class="zsa-bl-field" id="zsa-bl-blank-label">Blank</p>
+<button class="zsa-btn zsa-btn--primary zsa-bl-wide" id="zsa-bl-zero" type="button">Insert blank and zero</button>
+</div>
+<div class="zsa-bl-step">
+<label class="zsa-bl-field" for="zsa-bl-conc" id="zsa-bl-conc-label">Standard concentration (M)</label>
+<div class="zsa-bl-row">
+<input class="zsa-bl-input" id="zsa-bl-conc" type="number" step="0.001" min="0" inputmode="decimal" aria-describedby="zsa-bl-conc-help">
+<button class="zsa-btn" id="zsa-bl-standard" type="button">Measure standard</button>
+</div>
+<p class="zsa-bl-small" id="zsa-bl-conc-help"></p>
+</div>
+<div class="zsa-bl-step">
+<p class="zsa-bl-field">Unknown</p>
+<button class="zsa-btn zsa-bl-wide" id="zsa-bl-unknown" type="button">Measure the unknown</button>
+</div>
+</div>
+<p class="zsa-bl-small zsa-bl-status" id="zsa-bl-status"></p>
+</section>
+<section class="zsa-card zsa-bl-graphcard" aria-labelledby="zsa-bl-graph-title">
+<p class="zsa-eyebrow">3. Graph</p>
+<h2 id="zsa-bl-graph-title">Calibration curve</h2>
+<svg class="zsa-bl-graph" id="zsa-bl-graph" viewBox="0 0 640 340" role="img" aria-labelledby="zsa-bl-graph-desc" focusable="false"><title id="zsa-bl-graph-desc"></title></svg>
+<p class="zsa-bl-legend" aria-hidden="true"><span class="zsa-bl-key-std"></span>Standards <span class="zsa-bl-key-fit"></span>Best-fit line <span class="zsa-bl-key-unk"></span>Unknown's absorbance</p>
+<div class="zsa-bl-fitrow">
+<button class="zsa-btn" id="zsa-bl-fit" type="button" aria-pressed="true">Best-fit line</button>
+<p class="zsa-bl-equation" id="zsa-bl-equation"></p>
+</div>
+</section>
+</div>
+<section class="zsa-card zsa-bl-analysis" aria-labelledby="zsa-bl-analysis-title">
+<p class="zsa-eyebrow">4. Analyze</p>
+<h2 id="zsa-bl-analysis-title">Find the unknown</h2>
+<div class="zsa-bl-analysis-grid">
+<div>
+<h3 id="zsa-bl-table-title">Your data</h3>
+<div class="zsa-bl-tablewrap">
+<table class="zsa-bl-table" aria-labelledby="zsa-bl-table-title">
+<thead><tr><th scope="col">Sample</th><th scope="col">Concentration (M)</th><th scope="col">Absorbance</th><th scope="col"><span class="zsa-sr-only">Remove</span></th></tr></thead>
+<tbody id="zsa-bl-rows"></tbody>
+</table>
+</div>
+<button class="zsa-btn" id="zsa-bl-clear" type="button">Clear standards</button>
+<p class="zsa-bl-small" id="zsa-bl-insight"></p>
+</div>
+<div>
+<h3>The unknown</h3>
+<p class="zsa-bl-small" id="zsa-bl-task"></p>
+<label class="zsa-bl-question" for="zsa-bl-answer">Concentration of the unknown (M)</label>
+<input class="zsa-bl-input" id="zsa-bl-answer" type="number" step="any" inputmode="decimal">
+<div class="zsa-bl-actions">
+<button class="zsa-btn zsa-btn--primary" id="zsa-bl-check" type="button">Check my answer</button>
+<button class="zsa-btn" id="zsa-bl-show" type="button">Show the answer</button>
+<button class="zsa-btn" id="zsa-bl-new" type="button">New unknown</button>
+</div>
+<div class="zsa-bl-feedback" id="zsa-bl-feedback" hidden></div>
+<p class="zsa-bl-small" id="zsa-bl-solved"></p>
+</div>
+</div>
+</section>
+<section class="zsa-card zsa-bl-reflection" aria-labelledby="zsa-bl-reflect-title">
+<div>
+<p class="zsa-eyebrow">5. Make sense of it</p>
+<h2 id="zsa-bl-reflect-title">What does the curve tell you?</h2>
+<p class="zsa-bl-small">Try a wavelength far from λmax and build the curve again. Then try standards above an absorbance of 1.5.</p>
+</div>
+<div>
+<label class="zsa-bl-field" for="zsa-bl-reflection">Explain using evidence from your data.</label>
+<p class="zsa-bl-small" id="zsa-bl-reflection-help">Why is the calibration curve a straight line? What does its slope tell you? Why is it best to measure at λmax, and to keep the unknown between your standards?</p>
+<textarea class="zsa-bl-textarea" id="zsa-bl-reflection" rows="5" placeholder="I notice... The curve shows... This means..." aria-describedby="zsa-bl-reflection-help zsa-bl-reflection-note"></textarea>
+<p class="zsa-bl-print-only zsa-bl-print-reflection" id="zsa-bl-print-reflection"></p>
+<p class="zsa-bl-small" id="zsa-bl-reflection-note">Your response stays in this tab. Print to keep a copy.</p>
+</div>
+</section>
+</div>
+</div>
+<p class="zsa-sr-only" id="zsa-bl-live" aria-live="polite" aria-atomic="true"></p>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Measure. Graph. Calculate. Nothing you enter leaves this tab.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+</main>
+</body>
+</html>
