@@ -16,7 +16,6 @@ body {background:#f8f9fb;}
 .zsa-ir-title-tools {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px 20px;}
 .zsa-ir-title-tools h1 {min-width:0;}
 .zsa-ir-instructions-open {flex-shrink:0;}
-.zsa-ir-title-row::before {content:"";display:block;width:70px;height:3px;margin-bottom:20px;background:linear-gradient(90deg,#2d93bf 0 28%,#dc1d65 28% 58%,#dfb92b 58% 79%,#82b947 79%);border-radius:3px;}
 .zsa-ir h1 {font-size:clamp(2.4rem,2rem + 1.8vw,3.6rem);letter-spacing:-.05em;margin:7px 0 12px;font-weight:650;}
 .zsa-ir-lede {color:var(--zsa-navy);font-size:clamp(1.05rem,1rem + .3vw,1.2rem);font-weight:500;}
 .zsa-ir-intro {max-width:720px;font-size:15px;margin-top:9px!important;color:#536075;line-height:1.65;}

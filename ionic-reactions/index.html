@@ -4,25 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="3.1.0">
+<meta name="zsa-version" content="3.2.0">
 <meta name="description" content="Choose synthesis, decomposition, single replacement or double replacement practice, then predict products and balance equations, from ZornScience.">
 <title>Ionic Reaction Builder | ZornScience</title>
-<link rel="icon" href="zornscience-logo.png?v=3.1.0" type="image/png">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=3.1.0">
-<link rel="stylesheet" href="activity.css?v=3.1.0">
-<script src="../shared/zsa-embed.js?v=3.1.0" defer></script>
-<script src="data.js?v=3.1.0" defer></script>
-<script src="model.js?v=3.1.0" defer></script>
-<script src="share.js?v=3.1.0" defer></script>
-<script src="instructions.js?v=3.1.0" defer></script>
-<script src="activity.js?v=3.1.0" defer></script>
+<link rel="icon" href="zornscience-logo.png?v=3.2.0" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=3.2.0">
+<link rel="stylesheet" href="activity.css?v=3.2.0">
+<script src="../shared/zsa-embed.js?v=3.2.0" defer></script>
+<script src="data.js?v=3.2.0" defer></script>
+<script src="model.js?v=3.2.0" defer></script>
+<script src="share.js?v=3.2.0" defer></script>
+<script src="instructions.js?v=3.2.0" defer></script>
+<script src="activity.js?v=3.2.0" defer></script>
 </head>
 <body>
 <main class="zsa zsa-ir" data-zsa-activity="ionic-reactions">
 <header class="zsa-ir-header">
 <div class="zsa-ir-topline" data-zsa-chrome>
 <a class="zsa-ir-brand" href="https://zornscience.org/">
-<img src="zornscience-logo.png?v=3.1.0" alt="" width="52" height="50">
+<img src="zornscience-logo.png?v=3.2.0" alt="" width="52" height="50">
 <span><strong>ZornScience</strong><span class="zsa-ir-brand-tagline">Chemistry practice</span></span>
 </a>
 <nav class="zsa-ir-header-tools" aria-label="Activity links">
@@ -53,7 +53,6 @@
 <p class="zsa-ir-share-status" id="zsa-ir-share-status" aria-live="polite" aria-atomic="true"></p>
 </section>
 <div class="zsa-ir-title-row">
-<p class="zsa-eyebrow">Predict · Build · Balance</p>
 <div class="zsa-ir-title-tools"><h1>Ionic Reaction Builder</h1><button class="zsa-btn zsa-ir-instructions-open" id="zsa-ir-instructions-open" type="button" aria-haspopup="dialog" aria-controls="zsa-ir-instructions">Instructions</button></div>
 </div>
 </header>
@@ -62,15 +61,15 @@
 <p id="zsa-ir-instructions-intro">Predict the products first, then balance the equation. Here is a double replacement example.</p>
 <ol class="zsa-ir-instructions-steps">
 <li><strong>Choose your practice.</strong> Select at least one reaction type, then choose Start practice.</li>
-<li><strong>Build the products.</strong> For CaCl<sub>2</sub> + Na<sub>2</sub>CO<sub>3</sub>, pair Ca<sup>2+</sup> with CO<sub>3</sub><sup>2−</sup> to build CaCO<sub>3</sub>. Pair Na<sup>+</sup> with Cl<sup>−</sup> to build NaCl. Leave each ion subscript blank for 1. Use the arrows when more than one ion or atom is needed.</li>
+<li><strong>Build the products.</strong> For CuSO<sub>4</sub> + Na<sub>3</sub>PO<sub>4</sub>, pair Cu<sup>2+</sup> with PO<sub>4</sub><sup>3−</sup>. Use the subscript arrows to set 3 copper ions and 2 phosphate ions, making Cu<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub>. Pair Na<sup>+</sup> with SO<sub>4</sub><sup>2−</sup> and set 2 sodium ions to make Na<sub>2</sub>SO<sub>4</sub>. Leave a subscript blank for 1.</li>
 <li><strong>Check your products.</strong> Drag blocks into the spaces, or select a block and then its space. Either product order is accepted. Check products opens balancing when the formulas are correct.</li>
-<li><strong>Balance with coefficients.</strong> Increase the coefficient for NaCl to 2. Keep the subscripts fixed. The live table shows a green check when the counts on the two sides are equal.</li>
+<li><strong>Balance with coefficients.</strong> Set the coefficients to 3, 2, 1 and 3 in the order shown below. Keep the subscripts fixed. The live table shows a green check when the counts on the two sides are equal.</li>
 </ol>
 <div class="zsa-ir-instructions-example">
 <p class="zsa-ir-instructions-example-label">Products predicted</p>
-<p class="zsa-ir-instructions-equation">CaCl<sub>2</sub> + Na<sub>2</sub>CO<sub>3</sub> → CaCO<sub>3</sub> + NaCl</p>
+<p class="zsa-ir-instructions-equation">CuSO<sub>4</sub> + Na<sub>3</sub>PO<sub>4</sub> → Cu<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub> + Na<sub>2</sub>SO<sub>4</sub></p>
 <p class="zsa-ir-instructions-example-label">Balanced equation</p>
-<p class="zsa-ir-instructions-equation">CaCl<sub>2</sub> + Na<sub>2</sub>CO<sub>3</sub> → CaCO<sub>3</sub> + <strong>2</strong>NaCl</p>
+<p class="zsa-ir-instructions-equation"><strong>3</strong>CuSO<sub>4</sub> + <strong>2</strong>Na<sub>3</sub>PO<sub>4</sub> → Cu<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub> + <strong>3</strong>Na<sub>2</sub>SO<sub>4</sub></p>
 </div>
 <p class="zsa-ir-instructions-note">Choose Check balance to continue. Skip problem advances without finishing it. The summary reviews missed and skipped problems; a problem counts only once.</p>
 </dialog>
@@ -130,8 +129,7 @@
 </section>
 <div class="zsa-ir-feedback" id="zsa-ir-feedback" hidden></div>
 <section class="zsa-ir-workspace zsa-ir-balance" id="zsa-ir-balance" aria-labelledby="zsa-ir-balance-title" hidden>
-<p class="zsa-eyebrow">Step 2 of 2 · Balance</p>
-<h2 id="zsa-ir-balance-title" tabindex="-1">Same atoms. Balanced equation.</h2>
+<h2 id="zsa-ir-balance-title" tabindex="-1">Balance the equation</h2>
 <p class="zsa-ir-small" id="zsa-ir-coefficient-help">Use the ▲ and ▼ buttons, type a coefficient, or use the up and down arrow keys. Use the smallest whole-number ratio. The formulas stay fixed.</p>
 <div class="zsa-ir-equation" id="zsa-ir-equation" role="group" aria-label="Equation coefficients" aria-describedby="zsa-ir-coefficient-help"></div>
 <div class="zsa-ir-count-controls" id="zsa-ir-count-controls" hidden>
@@ -174,7 +172,7 @@
 </section>
 <p class="zsa-sr-only" id="zsa-ir-live" aria-live="polite" aria-atomic="true"></p>
 <footer class="zsa-footer" data-zsa-chrome>
-<span class="zsa-ir-footer-brand"><img src="zornscience-logo.png?v=3.1.0" alt="" width="27" height="26"><strong>ZornScience</strong></span>
+<span class="zsa-ir-footer-brand"><img src="zornscience-logo.png?v=3.2.0" alt="" width="27" height="26"><strong>ZornScience</strong></span>
 <span>Practice with purpose. Nothing you enter leaves this tab.</span>
 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
 </footer>

@@ -10,49 +10,47 @@ var TYPES = ["synthesis", "decomposition", "single-replacement", "double-replace
 // Filled from independently written formula and balancing references, never the application's solver.
 function product(formula, parts) { return {formula: formula, parts: parts}; }
 function reference(reactants, products, coefficients) { return {reactants: reactants, products: products, coefficients: coefficients}; }
-var WATER = product("H2O", [["h_atom", 2], ["o_atom", 1]]);
-var CARBON_DIOXIDE = product("CO2", [["c_atom", 1], ["o_atom", 2]]);
 var REFERENCES = {
   "magnesium-oxygen": reference(["Mg", "O2"], [product("MgO", [["mg", 1], ["o", 1]])], [2, 1, 2]),
   "calcium-oxygen": reference(["Ca", "O2"], [product("CaO", [["ca", 1], ["o", 1]])], [2, 1, 2]),
   "aluminum-oxygen": reference(["Al", "O2"], [product("Al2O3", [["al", 2], ["o", 3]])], [4, 3, 2]),
   "sodium-chlorine": reference(["Na", "Cl2"], [product("NaCl", [["na", 1], ["cl", 1]])], [2, 1, 2]),
-  "hydrogen-oxygen": reference(["H2", "O2"], [WATER], [2, 1, 2]),
-  "iron-sulfur": reference(["Fe", "S"], [product("FeS", [["fe", 1], ["s", 1]])], [1, 1, 1]),
-  "peroxide-breakdown": reference(["H2O2"], [WATER, product("O2", [["o_atom", 2]])], [2, 2, 1]),
-  "water-electrolysis": reference(["H2O"], [product("H2", [["h_atom", 2]]), product("O2", [["o_atom", 2]])], [2, 2, 1]),
+  "lithium-oxygen": reference(["Li", "O2"], [product("Li2O", [["li", 2], ["o", 1]])], [4, 1, 2]),
+  "lithium-nitrogen": reference(["Li", "N2"], [product("Li3N", [["li", 3], ["n", 1]])], [6, 1, 2]),
+  "magnesium-nitrogen": reference(["Mg", "N2"], [product("Mg3N2", [["mg", 3], ["n", 2]])], [3, 1, 1]),
+  "calcium-nitrogen": reference(["Ca", "N2"], [product("Ca3N2", [["ca", 3], ["n", 2]])], [3, 1, 1]),
+  "aluminum-sulfur": reference(["Al", "S8"], [product("Al2S3", [["al", 2], ["s", 3]])], [16, 3, 8]),
+  "sodium-bromine": reference(["Na", "Br2"], [product("NaBr", [["na", 1], ["br", 1]])], [2, 1, 2]),
   "silver-oxide-breakdown": reference(["Ag2O"], [product("Ag", [["ag_atom", 1]]), product("O2", [["o_atom", 2]])], [2, 4, 1]),
-  "zinc-hydrochloric": reference(["Zn", "HCl"], [product("ZnCl2", [["zn", 1], ["cl", 2]]), product("H2", [["h_atom", 2]])], [1, 2, 1, 1]),
-  "magnesium-hydrochloric": reference(["Mg", "HCl"], [product("MgCl2", [["mg", 1], ["cl", 2]]), product("H2", [["h_atom", 2]])], [1, 2, 1, 1]),
-  "iron-copper-sulfate": reference(["Fe", "CuSO4"], [product("FeSO4", [["fe", 1], ["so4", 1]]), product("Cu", [["cu_atom", 1]])], [1, 1, 1, 1]),
-  "copper-silver-nitrate": reference(["Cu", "AgNO3"], [product("Cu(NO3)2", [["cu", 1], ["no3", 2]]), product("Ag", [["ag_atom", 1]])], [1, 2, 1, 2]),
-  "chlorine-bromide": reference(["Cl2", "KBr"], [product("KCl", [["k", 1], ["cl", 1]]), product("Br2", [["br_atom", 2]])], [1, 2, 2, 1]),
-  "zinc-copper-sulfate": reference(["Zn", "CuSO4"], [product("ZnSO4", [["zn", 1], ["so4", 1]]), product("Cu", [["cu_atom", 1]])], [1, 1, 1, 1]),
-  "calcium-carbonate": reference(["CaCl2", "Na2CO3"], [product("CaCO3", [["ca", 1], ["co3", 1]]), product("NaCl", [["na", 1], ["cl", 1]])], [1, 1, 1, 2]),
-  "silver-chloride": reference(["AgNO3", "NaCl"], [product("AgCl", [["ag", 1], ["cl", 1]]), product("NaNO3", [["na", 1], ["no3", 1]])], [1, 1, 1, 1]),
-  "magnesium-hydroxide": reference(["Mg(NO3)2", "KOH"], [product("Mg(OH)2", [["mg", 1], ["oh", 2]]), product("KNO3", [["k", 1], ["no3", 1]])], [1, 2, 1, 2]),
-  "silver-iodate": reference(["AgNO3", "NaIO3"], [product("AgIO3", [["ag", 1], ["io3", 1]]), product("NaNO3", [["na", 1], ["no3", 1]])], [1, 1, 1, 1]),
-  "calcium-sulfite": reference(["Ca(NO3)2", "Na2SO3"], [product("CaSO3", [["ca", 1], ["so3", 1]]), product("NaNO3", [["na", 1], ["no3", 1]])], [1, 1, 1, 2]),
-  "calcium-phosphate": reference(["CaCl2", "Na3PO4"], [product("Ca3(PO4)2", [["ca", 3], ["po4", 2]]), product("NaCl", [["na", 1], ["cl", 1]])], [3, 2, 1, 6]),
-  "calcium-nitrite-carbonate": reference(["Ca(NO2)2", "Na2CO3"], [product("CaCO3", [["ca", 1], ["co3", 1]]), product("NaNO2", [["na", 1], ["no2", 1]])], [1, 1, 1, 2]),
-  "ammonium-calcium-phosphate": reference(["(NH4)3PO4", "CaCl2"], [product("NH4Cl", [["nh4", 1], ["cl", 1]]), product("Ca3(PO4)2", [["ca", 3], ["po4", 2]])], [2, 3, 6, 1]),
-  "barium-sulfate": reference(["BaCl2", "Na2SO4"], [product("BaSO4", [["ba", 1], ["so4", 1]]), product("NaCl", [["na", 1], ["cl", 1]])], [1, 1, 1, 2]),
-  "calcium-phosphite": reference(["CaCl2", "Na3PO3"], [product("Ca3(PO3)2", [["ca", 3], ["po3", 2]]), product("NaCl", [["na", 1], ["cl", 1]])], [3, 2, 1, 6]),
-  "magnesium-chlorine": reference(["Mg", "Cl2"], [product("MgCl2", [["mg", 1], ["cl", 2]])], [1, 1, 1]),
-  "aluminum-chlorine": reference(["Al", "Cl2"], [product("AlCl3", [["al", 1], ["cl", 3]])], [2, 3, 2]),
-  "carbon-oxygen": reference(["C", "O2"], [CARBON_DIOXIDE], [1, 1, 1]),
-  "nitrogen-hydrogen": reference(["N2", "H2"], [product("NH3", [["n_atom", 1], ["h_atom", 3]])], [1, 3, 2]),
+  "aluminum-oxide-electrolysis": reference(["Al2O3"], [product("Al", [["al_atom", 1]]), product("O2", [["o_atom", 2]])], [2, 4, 3]),
+  "iron-oxide-electrolysis": reference(["Fe2O3"], [product("Fe", [["fe_atom", 1]]), product("O2", [["o_atom", 2]])], [2, 4, 3]),
+  "lithium-chloride-electrolysis": reference(["LiCl"], [product("Li", [["li_atom", 1]]), product("Cl2", [["cl_atom", 2]])], [2, 2, 1]),
   "sodium-chloride-electrolysis": reference(["NaCl"], [product("Na", [["na_atom", 1]]), product("Cl2", [["cl_atom", 2]])], [2, 2, 1]),
-  "magnesium-chloride-electrolysis": reference(["MgCl2"], [product("Mg", [["mg_atom", 1]]), product("Cl2", [["cl_atom", 2]])], [1, 1, 1]),
-  "calcium-chloride-electrolysis": reference(["CaCl2"], [product("Ca", [["ca_atom", 1]]), product("Cl2", [["cl_atom", 2]])], [1, 1, 1]),
-  "zinc-chloride-electrolysis": reference(["ZnCl2"], [product("Zn", [["zn_atom", 1]]), product("Cl2", [["cl_atom", 2]])], [1, 1, 1]),
-  "copper-chloride-electrolysis": reference(["CuCl2"], [product("Cu", [["cu_atom", 1]]), product("Cl2", [["cl_atom", 2]])], [1, 1, 1]),
+  "potassium-chloride-electrolysis": reference(["KCl"], [product("K", [["k_atom", 1]]), product("Cl2", [["cl_atom", 2]])], [2, 2, 1]),
+  "lithium-bromide-electrolysis": reference(["LiBr"], [product("Li", [["li_atom", 1]]), product("Br2", [["br_atom", 2]])], [2, 2, 1]),
   "sodium-bromide-electrolysis": reference(["NaBr"], [product("Na", [["na_atom", 1]]), product("Br2", [["br_atom", 2]])], [2, 2, 1]),
   "potassium-bromide-electrolysis": reference(["KBr"], [product("K", [["k_atom", 1]]), product("Br2", [["br_atom", 2]])], [2, 2, 1]),
-  "magnesium-copper-sulfate": reference(["Mg", "CuSO4"], [product("MgSO4", [["mg", 1], ["so4", 1]]), product("Cu", [["cu_atom", 1]])], [1, 1, 1, 1]),
+  "sodium-iodide-electrolysis": reference(["NaI"], [product("Na", [["na_atom", 1]]), product("I2", [["i_atom", 2]])], [2, 2, 1]),
+  "aluminum-copper-sulfate": reference(["Al", "CuSO4"], [product("Al2(SO4)3", [["al", 2], ["so4", 3]]), product("Cu", [["cu_atom", 1]])], [2, 3, 1, 3]),
+  "aluminum-zinc-sulfate": reference(["Al", "ZnSO4"], [product("Al2(SO4)3", [["al", 2], ["so4", 3]]), product("Zn", [["zn_atom", 1]])], [2, 3, 1, 3]),
+  "aluminum-iron-sulfate": reference(["Al", "FeSO4"], [product("Al2(SO4)3", [["al", 2], ["so4", 3]]), product("Fe", [["fe_atom", 1]])], [2, 3, 1, 3]),
+  "zinc-iron-iii-sulfate": reference(["Zn", "Fe2(SO4)3"], [product("ZnSO4", [["zn", 1], ["so4", 1]]), product("Fe", [["fe_atom", 1]])], [3, 1, 3, 2]),
+  "copper-silver-nitrate": reference(["Cu", "AgNO3"], [product("Cu(NO3)2", [["cu", 1], ["no3", 2]]), product("Ag", [["ag_atom", 1]])], [1, 2, 1, 2]),
   "zinc-silver-nitrate": reference(["Zn", "AgNO3"], [product("Zn(NO3)2", [["zn", 1], ["no3", 2]]), product("Ag", [["ag_atom", 1]])], [1, 2, 1, 2]),
-  "iron-hydrochloric": reference(["Fe", "HCl"], [product("FeCl2", [["fe", 1], ["cl", 2]]), product("H2", [["h_atom", 2]])], [1, 2, 1, 1]),
-  "magnesium-zinc-sulfate": reference(["Mg", "ZnSO4"], [product("MgSO4", [["mg", 1], ["so4", 1]]), product("Zn", [["zn_atom", 1]])], [1, 1, 1, 1]),
+  "magnesium-silver-fluoride": reference(["Mg", "AgF"], [product("MgF2", [["mg", 1], ["f", 2]]), product("Ag", [["ag_atom", 1]])], [1, 2, 1, 2]),
+  "chlorine-bromide": reference(["Cl2", "KBr"], [product("KCl", [["k", 1], ["cl", 1]]), product("Br2", [["br_atom", 2]])], [1, 2, 2, 1]),
+  "chlorine-sodium-iodide": reference(["Cl2", "NaI"], [product("NaCl", [["na", 1], ["cl", 1]]), product("I2", [["i_atom", 2]])], [1, 2, 2, 1]),
+  "bromine-potassium-iodide": reference(["Br2", "KI"], [product("KBr", [["k", 1], ["br", 1]]), product("I2", [["i_atom", 2]])], [1, 2, 2, 1]),
+  "silver-carbonate": reference(["AgNO3", "Na2CO3"], [product("Ag2CO3", [["ag", 2], ["co3", 1]]), product("NaNO3", [["na", 1], ["no3", 1]])], [2, 1, 1, 2]),
+  "magnesium-nitrite-hydroxide": reference(["Mg(NO2)2", "NaOH"], [product("Mg(OH)2", [["mg", 1], ["oh", 2]]), product("NaNO2", [["na", 1], ["no2", 1]])], [1, 2, 1, 2]),
+  "barium-iodate": reference(["BaCl2", "KIO3"], [product("Ba(IO3)2", [["ba", 1], ["io3", 2]]), product("KCl", [["k", 1], ["cl", 1]])], [1, 2, 1, 2]),
+  "silver-sulfite": reference(["AgF", "Na2SO3"], [product("Ag2SO3", [["ag", 2], ["so3", 1]]), product("NaF", [["na", 1], ["f", 1]])], [2, 1, 1, 2]),
+  "ammonium-calcium-phosphate": reference(["CaCl2", "(NH4)3PO4"], [product("Ca3(PO4)2", [["ca", 3], ["po4", 2]]), product("NH4Cl", [["nh4", 1], ["cl", 1]])], [3, 2, 1, 6]),
+  "barium-sulfate": reference(["BaCl2", "Na2SO4"], [product("BaSO4", [["ba", 1], ["so4", 1]]), product("NaCl", [["na", 1], ["cl", 1]])], [1, 1, 1, 2]),
+  "calcium-nitrite-carbonate": reference(["Ca(NO2)2", "Na2CO3"], [product("CaCO3", [["ca", 1], ["co3", 1]]), product("NaNO2", [["na", 1], ["no2", 1]])], [1, 1, 1, 2]),
+  "aluminum-hydroxide": reference(["Al2(SO4)3", "KOH"], [product("Al(OH)3", [["al", 1], ["oh", 3]]), product("K2SO4", [["k", 2], ["so4", 1]])], [1, 6, 2, 3]),
+  "iron-hydroxide": reference(["Fe2(SO4)3", "NaOH"], [product("Fe(OH)3", [["fe3", 1], ["oh", 3]]), product("Na2SO4", [["na", 2], ["so4", 1]])], [1, 6, 2, 3]),
+  "copper-phosphate": reference(["CuSO4", "Na3PO4"], [product("Cu3(PO4)2", [["cu", 3], ["po4", 2]]), product("Na2SO4", [["na", 2], ["so4", 1]])], [3, 2, 1, 3]),
 };
 
 function atomTotals(reference) {
@@ -135,6 +133,12 @@ async function predict(page, reference, options) {
   await expect(page.locator("#zsa-ir-predict")).toBeHidden();
   await expect(page.locator("#zsa-ir-bank")).toBeHidden();
   await expect(page.locator("#zsa-ir-balance-title")).toBeFocused();
+  await expect(page.locator("#zsa-ir-balance-title")).toHaveText("Balance the equation");
+  await expect(page.locator("#zsa-ir-balance")).not.toContainText(/Step\s*2\s*of\s*2/);
+  var initialCoefficients = await page.locator("#zsa-ir-equation input").evaluateAll((inputs) => inputs.map((input) => input.value));
+  expect(initialCoefficients).toEqual(reference.coefficients.map(() => "1"));
+  var initialChecks = await page.locator("#zsa-ir-counts tr td:last-child").allTextContents();
+  expect(initialChecks.some((text) => text === ""), "every problem requires balancing from its initial coefficients").toBe(true);
   var type = await page.locator("main[data-zsa-activity]").getAttribute("data-reaction-type");
   if (type === "double-replacement") {
     await expect(page.locator("#zsa-ir-count-mode")).toBeVisible();
@@ -201,7 +205,7 @@ test("practice requires at least one selected family before any problem appears"
   await expect(page.locator("main[data-zsa-activity]")).toHaveAttribute("data-reaction-type", "synthesis");
 });
 
-test("single-family rounds have ten distinct problems and replay preserves the chosen family", async ({page, problems}) => {
+test("all forty ionic problems require balancing and each selected family can be completed and replayed", async ({page, problems}) => {
   void problems;
   for (var family of TYPES) {
     await go(page, 22, [family]);
@@ -210,9 +214,11 @@ test("single-family rounds have ten distinct problems and replay preserves the c
       await expect(page.locator("main[data-zsa-activity]")).toHaveAttribute("data-reaction-type", family);
       var active = await current(page);
       expect(ids.has(active.id)).toBe(false); ids.add(active.id);
-      await page.locator("#zsa-ir-skip").click();
+      await solve(page, active.reference, {reverse: index % 2 === 0});
+      await page.locator("#zsa-ir-next").click();
     }
     expect(ids.size).toBe(10);
+    await stat(page, "balanced", 10); await stat(page, "missed", 0);
     await expect(page.locator("#zsa-ir-summary-types > *")).toHaveCount(1);
     await page.locator("#zsa-ir-restart").click();
     await expect(page.locator("main[data-zsa-activity]")).toHaveAttribute("data-reaction-type", family);
@@ -257,6 +263,38 @@ test("product subscript arrows have large targets, update previews, clamp values
   for (var button of await page.locator(".zsa-ir-sub-step").all()) await expect(button).toBeDisabled();
 });
 
+test("aluminum sulfide requires a 2:3 ionic formula and supports a coefficient of sixteen", async ({page, problems}) => {
+  void problems;
+  await go(page, 41, ["synthesis"]);
+  for (var index = 0; index < 9 && await page.locator("main[data-zsa-activity]").getAttribute("data-reaction") !== "aluminum-sulfur"; index++) {
+    await page.locator("#zsa-ir-skip").click();
+  }
+  var active = await current(page);
+  expect(active.id).toBe("aluminum-sulfur");
+  await place(page, "al", 0, 0); await place(page, "s", 0, 1);
+  await page.locator("#zsa-ir-check-products").click();
+  await expect(page.locator("#zsa-ir-balance")).toBeHidden();
+  await expect(page.locator("#zsa-ir-feedback")).toContainText(/subscripts/i);
+  await page.getByRole("button", {name: "Increase product 1 component 1 subscript", exact: true}).click();
+  await page.getByRole("button", {name: "Increase product 1 component 2 subscript", exact: true}).click({clickCount: 2});
+  await expect(subscript(page, 0, 0)).toHaveValue("2");
+  await expect(subscript(page, 0, 1)).toHaveValue("3");
+  await expect(page.locator("#zsa-ir-products .zsa-ir-preview")).toHaveText("Al2S3");
+  await predict(page, active.reference);
+  await setBalance(page, active.reference);
+  await coefficient(page, "Al").fill("15");
+  await page.locator("#zsa-ir-check-balance").click();
+  await expect(page.locator("#zsa-ir-next")).toBeDisabled();
+  await page.getByRole("button", {name: "Increase coefficient for Al", exact: true}).click();
+  await expect(coefficient(page, "Al")).toHaveValue("16");
+  expect(await counts(page, "Al")).toEqual([16, 16]);
+  expect(await counts(page, "S")).toEqual([24, 24]);
+  await page.locator("#zsa-ir-check-balance").click();
+  await expect(page.locator("#zsa-ir-next")).toBeEnabled();
+  await page.setViewportSize({width: 320, height: 664});
+  expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
+});
+
 test("the equation places reactants left, the arrow between, products right and the bank below", async ({page, problems}) => {
   void problems;
   await page.setViewportSize({width: 1366, height: 900});
@@ -280,6 +318,7 @@ test("the simplified header opens worked instructions without changing the curre
   var opener = page.locator("#zsa-ir-instructions-open"), dialog = page.locator("#zsa-ir-instructions");
   await expect(page.locator(".zsa-ir-title-row")).not.toContainText("Find the products. Make every atom count.");
   await expect(page.locator(".zsa-ir-title-row")).not.toContainText("Choose your reaction types, then build and balance ten problems.");
+  await expect(page.locator(".zsa-ir-title-row")).not.toContainText("Predict · Build · Balance");
   await expect(page.locator("#zsa-ir-stage")).toHaveCount(0);
   await expect(dialog).toBeHidden();
   await opener.click();
@@ -290,10 +329,10 @@ test("the simplified header opens worked instructions without changing the curre
   await expect(page.locator("#zsa-ir-instructions-close")).toBeFocused();
   await audit(page, "desktop instructions");
   var example = (await dialog.textContent()).replace(/\s+/g, " ");
-  expect(example).toContain("CaCl2");
-  expect(example).toContain("Na2CO3");
-  expect(example).toContain("CaCO3");
-  expect(example).toMatch(/2\s*NaCl/);
+  expect(example).toContain("CuSO4");
+  expect(example).toContain("Na3PO4");
+  expect(example).toContain("Cu3(PO4)2");
+  expect(example).toMatch(/3\s*CuSO4\s*\+\s*2\s*Na3PO4\s*→\s*Cu3\(PO4\)2\s*\+\s*3\s*Na2SO4/);
   await page.keyboard.press("Escape");
   await expect(dialog).toBeHidden();
   await expect(opener).toBeFocused();
