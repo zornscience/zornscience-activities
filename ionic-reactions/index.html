@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<meta name="description" content="Predict ionic products, build neutral formulas and balance the equation with a live ion-count table, from ZornScience.">
+<title>Ionic Reaction Builder | ZornScience</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="activity.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="data.js?v=1.0.0" defer></script>
+<script src="model.js?v=1.0.0" defer></script>
+<script src="activity.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="zsa zsa-ir" data-zsa-activity="ionic-reactions">
+<header class="zsa-ir-header">
+<div class="zsa-ir-topline" data-zsa-chrome>
+<a class="zsa-back" href="../">← All activities</a>
+<p class="zsa-eyebrow">Chemistry · Ionic reactions</p>
+</div>
+<h1>Ionic Reaction Builder</h1>
+<p class="zsa-ir-lede">New partners. Neutral products. A balanced equation.</p>
+<p class="zsa-ir-intro">Swap the ions to predict two products, then use coefficients to conserve every ion.</p>
+</header>
+<noscript><p class="zsa-panel">This activity needs JavaScript. Enable it to build and balance reactions.</p></noscript>
+<div class="zsa-ir-session">
+<h2 id="zsa-ir-round" tabindex="-1">Problem 1</h2>
+<p id="zsa-ir-progress">0 reactions balanced</p>
+</div>
+<section class="zsa-ir-workspace" aria-labelledby="zsa-ir-products-title">
+<div class="zsa-ir-section-heading">
+<div>
+<p class="zsa-eyebrow" id="zsa-ir-stage">Step 1 of 2 · Predict</p>
+<h2 id="zsa-ir-products-title">What are the products?</h2>
+</div>
+<p class="zsa-ir-badge">Cation + anion</p>
+</div>
+<div class="zsa-ir-reactant-panel">
+<h3>Reactants</h3>
+<div class="zsa-ir-reactants" id="zsa-ir-reactants" aria-label="Reactants"></div>
+</div>
+<div class="zsa-ir-bank-header">
+<h3 id="zsa-ir-bank-title">Your ion bank</h3>
+<p class="zsa-ir-key"><span class="zsa-ir-key-cation">+ Cations</span><span class="zsa-ir-key-anion">− Anions</span></p>
+</div>
+<p class="zsa-ir-small" id="zsa-ir-place-help">Drag an ion into a product space, or select an ion and then select its space. You can use each ion again.</p>
+<div class="zsa-ir-bank" id="zsa-ir-bank" role="group" aria-labelledby="zsa-ir-bank-title" aria-describedby="zsa-ir-place-help"></div>
+<p class="zsa-ir-selection" id="zsa-ir-selection">Choose an ion to place.</p>
+<div class="zsa-ir-products" id="zsa-ir-products" aria-label="Build the products"></div>
+<p class="zsa-ir-tip" id="zsa-ir-subscript-help">Subscripts count ions in one formula unit. Leave blank for 1. Keep polyatomic ions together; parentheses appear when you need more than one. Select a filled space without choosing an ion to clear it.</p>
+<div class="zsa-ir-actions">
+<button class="zsa-btn zsa-btn--primary" id="zsa-ir-check-products" type="button">Check products</button>
+<button class="zsa-btn zsa-ir-quiet" id="zsa-ir-hint" type="button">Hint</button>
+</div>
+</section>
+<div class="zsa-ir-feedback" id="zsa-ir-feedback" hidden></div>
+<section class="zsa-ir-workspace zsa-ir-balance" id="zsa-ir-balance" aria-labelledby="zsa-ir-balance-title" hidden>
+<p class="zsa-eyebrow">Step 2 of 2 · Balance</p>
+<h2 id="zsa-ir-balance-title" tabindex="-1">Same ions. Same numbers.</h2>
+<p class="zsa-ir-small" id="zsa-ir-coefficient-help">Change the coefficients in front of each formula. Use the smallest whole-number ratio. The formulas stay the same.</p>
+<div class="zsa-ir-equation" id="zsa-ir-equation" role="group" aria-label="Equation coefficients" aria-describedby="zsa-ir-coefficient-help"></div>
+<div class="zsa-ir-table-wrap">
+<table class="zsa-ir-table">
+<caption>Ion count on each side. Every row must match.</caption>
+<thead><tr><th scope="col">Ion</th><th scope="col">Reactants</th><th scope="col">Products</th><th scope="col">Match</th></tr></thead>
+<tbody id="zsa-ir-counts"></tbody>
+</table>
+</div>
+<div class="zsa-ir-actions">
+<button class="zsa-btn zsa-btn--primary" id="zsa-ir-check-balance" type="button">Check balance</button>
+</div>
+</section>
+<div class="zsa-ir-finish">
+<p class="zsa-ir-small" id="zsa-ir-note"></p>
+<button class="zsa-btn zsa-btn--primary" id="zsa-ir-next" type="button" disabled>Next reaction <span aria-hidden="true">→</span></button>
+</div>
+<p class="zsa-sr-only" id="zsa-ir-live" aria-live="polite" aria-atomic="true"></p>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Build. Balance. Try another.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+</main>
+</body>
+</html>

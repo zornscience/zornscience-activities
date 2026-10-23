@@ -19,6 +19,7 @@ shared/
   fonts/InterVariable.woff2, Inter-OFL.txt
 ion-charge-trainer/        Predicting Ion Charge Trainer, v1.4.0
 ionic-formula-builder/     Ionic Formula Builder, v1.1.0
+ionic-reactions/           Ionic Reaction Builder, v1.0.0 (drag ions into products, then balance with live ion counts)
 periodic-table/            Periodic Table reference, v1.1.1 (data built by periodic-table/tools/build-data.js)
 periodic-trends/           Periodic Trends Practice, v1.1.0 (questions built from the periodic table's data)
 lewis-vsepr/               Lewis Structure and VSEPR Builder, v1.1.0
