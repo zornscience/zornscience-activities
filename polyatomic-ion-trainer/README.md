@@ -6,4 +6,4 @@ Five minutes of randomized four-choice questions about names, complete ionic for
 
 Start begins a wall-clock 300-second deadline, including feedback time and time spent in a background tab. One answer per question; every incorrect attempt counts separately. Missed questions enter a queue and return after at least three intervening answers when time permits. The results rank all missed ions by incorrect attempts and show correct, incorrect and accuracy totals. New rounds reset progress. No accounts, saved results, completion codes or network requests.
 
-Uses the Ionic Reaction Builder's shared font, logo, layout and sharing controls. Share sends the canonical fresh activity URL and no results. Mobile choices stack vertically. Number keys 1–4 choose answers; Next is explicit so students can read corrections.
+Uses the Ionic Reaction Builder's shared font, logo, layout and sharing controls. Share sends the canonical fresh activity URL and no results. Mobile choices stack vertically. Number keys 1-4 choose answers; Next is explicit so students can read corrections.

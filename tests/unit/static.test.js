@@ -55,7 +55,7 @@ test("pages have one CSP, no inline scripts or styles, and only the expected out
   var allowed = /^(https:\/\/((activities\.)?zornscience\.org(\/[\w\-\/]*)?|creativecommons\.org\/licenses\/by-nc-sa\/4\.0\/)|http:\/\/www\.w3\.org\/2000\/svg)$/;
   // User-initiated share links are plain outbound anchors, with no social SDK or page-load requests.
   var shareLinks = new Set(["https://www.facebook.com/sharer/sharer.php?u=", "https://x.com/intent/tweet?text="]);
-  var shareFiles = new Set(["ionic-reactions/share.js", "periodic-table/data.js"]);
+  var shareFiles = new Set(["ionic-reactions/share.js", "polyatomic-ion-trainer/share.js", "periodic-table/data.js"]);
   pages.concat(siteJs).forEach(function (f) {
     (read(f).match(/https?:\/\/[^\s"'<>)]+/g) || []).forEach(function (url) {
       if (shareFiles.has(f) && shareLinks.has(url)) return;
