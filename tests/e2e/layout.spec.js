@@ -7,11 +7,11 @@ var {play} = require("./play");
 
 var WIDTHS = [320, 360, 390, 768, 1280, 1366, 1920];
 var FIT = [[360, 640], [390, 664], [768, 1024], [1280, 617], [1366, 657], [1920, 960]];
-// Items named in TESTING.md: chlorine; Sr3P2, Al2O3 and CaO name to formula; Ba3P2 formula to name.
+// Items named in TESTING.md: chlorine.
 // Widths each activity's TESTING.md measured for 44 px targets. (At 360 px the Ion Charge Trainer's seven count
 // buttons are about 38 px wide: a known limitation recorded in its README, still above WCAG 2.2's 24 px minimum.)
-var TARGET_WIDTHS = {"ion-charge-trainer": [320, 1366], "ionic-formula-builder": [320, 360, 1366]};
-var ITEMS = {"ion-charge-trainer": [["Cl"]], "ionic-formula-builder": [["63", "n2f"], ["76", "n2f"], ["52", "n2f"], ["71", "f2n"]]};
+var TARGET_WIDTHS = {"ion-charge-trainer": [320, 1366]};
+var ITEMS = {"ion-charge-trainer": [["Cl"]]};
 
 function measure() {
   var vw = document.documentElement.clientWidth, vh = window.innerHeight;

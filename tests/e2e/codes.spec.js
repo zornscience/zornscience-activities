@@ -7,7 +7,7 @@ var {answerKey, play} = require("./play");
 var {audit, results, check, readable} = require("./checker");
 var codes = require("../../shared/zsa-codes.js");
 
-var VERSION = {"ion-charge-trainer": "1.4", "ionic-formula-builder": "1.1"};
+var VERSION = {"ion-charge-trainer": "1.4"};
 // Focus as the activity helpers describe it, or on the checker page "#id" (or the tag name).
 async function focusOf(page) {
   return page.evaluate(() => {
@@ -189,9 +189,9 @@ test("Copy code falls back to selecting the code when the Clipboard API fails", 
   await page.addInitScript(() => {
     Object.defineProperty(navigator, "clipboard", {value: {writeText: () => Promise.reject(new Error("blocked"))}});
   });
-  await open("ionic-formula-builder", {seed: 44});
-  await play(page, "ionic-formula-builder");
-  var sum = await summaryOf(page, activities["ionic-formula-builder"]);
+  await open("ion-charge-trainer", {seed: 44});
+  await play(page, "ion-charge-trainer");
+  var sum = await summaryOf(page, activities["ion-charge-trainer"]);
   await page.getByRole("button", {name: "Copy code"}).click();
   await expect.poll(() => page.evaluate(() => String(window.getSelection()))).toBe(sum.code);
   var status = (await state(page)).live;

@@ -12,6 +12,7 @@ var ROOT = path.join(__dirname, "..", "..");
 var FAR = 8191; // a "today" after every encodable day
 // Payload characters per activity: the code is the prefix, the payload and 2 check characters in groups of 4.
 var LENGTH = {ICT: 12, IFB: 12, GAS: 11, PTR: 11, LVB: 16, LVA: 16};
+var RETIRED = ["ionic-formula-builder"];
 var SYMBOL = "[0-9A-HJKMNP-TV-Z]";
 function shape(spec) {
   var n = LENGTH[spec.prefix] + 2, groups = [];
@@ -52,9 +53,13 @@ test("the registry matches the activities and their round summaries", function (
     assert.match(spec.prefix, /^[A-Z]{2,4}$/);
     assert.ok(!prefixes.has(spec.prefix), spec.slug + " prefix");
     ids.add(spec.id); prefixes.add(spec.prefix);
-    var html = fs.readFileSync(path.join(ROOT, spec.slug, "index.html"), "utf8");
-    assert.match(html, new RegExp('data-zsa-activity="' + spec.slug + '"'));
-    assert.match(html, /<script src="\.\.\/shared\/zsa-codes\.js\?v=[\d.]+" defer><\/script>/, spec.slug + " loads zsa-codes.js");
+    // A retired activity keeps its registry entry so codes students already earned still check; its page is only
+    // a redirect now.
+    if (RETIRED.indexOf(spec.slug) < 0) {
+      var html = fs.readFileSync(path.join(ROOT, spec.slug, "index.html"), "utf8");
+      assert.match(html, new RegExp('data-zsa-activity="' + spec.slug + '"'));
+      assert.match(html, /<script src="\.\.\/shared\/zsa-codes\.js\?v=[\d.]+" defer><\/script>/, spec.slug + " loads zsa-codes.js");
+    }
     // Every stat key is in exactly one totals group.
     spec.stats.forEach(function (stat) {
       assert.equal(spec.totals.filter(function (g) { return g.indexOf(stat[0]) >= 0; }).length, 1, spec.slug + " " + stat[0]);
@@ -64,8 +69,9 @@ test("the registry matches the activities and their round summaries", function (
   // The labels are the ones the round summary shows, from each activity's data.js.
   var ict = loadData("ion-charge-trainer/data.js").ui.stepNames.map(function (label, i) { return [String(i), label]; });
   assert.deepEqual(codes.activity("ion-charge-trainer").stats, ict);
-  var ifb = loadData("ionic-formula-builder/data.js").ui.stepNames.map(function (e) { return [e[0] + e[1], e[2]]; });
-  assert.deepEqual(codes.activity("ionic-formula-builder").stats, ifb);
+  // The Ionic Formula Builder is retired, but codes students already earned must keep checking with the same labels.
+  assert.deepEqual(codes.activity("ionic-formula-builder").stats, [["n2f0", "Name to formula: ion charges"],
+    ["n2f1", "Name to formula: subscripts"], ["f2n0", "Formula to name: which ions"], ["f2n1", "Formula to name: name it"]]);
   assert.equal(codes.activity("ion-charge-trainer").name, "Predicting Ion Charge Trainer");
   assert.equal(codes.activity("ionic-formula-builder").name, "Ionic Formula Builder");
   var ptr = loadData("periodic-trends/data.js").ui.stats.map(function (label, i) { return [String(i), label]; });

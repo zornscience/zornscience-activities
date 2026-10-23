@@ -25,31 +25,6 @@ var activities = {
     },
     marked: function (id) { return [id.item.symbol]; }
   },
-  "ionic-formula-builder": {
-    slug: "ionic-formula-builder", code: "ifb", path: "/ionic-formula-builder/",
-    ids: {work: "zsa-ifb-work", strip: "zsa-ifb-compound", heading: "zsa-ifb-compound-heading", progress: "zsa-ifb-progress",
-      live: "zsa-ifb-live", options: "zsa-ifb-options", newRound: "zsa-ifb-new", pick: "zsa-ifb-pick", select: "zsa-ifb-select",
-      direction: "zsa-ifb-direction", table: "zsa-ifb-table", note: "zsa-ifb-table-note"},
-    itemCount: 80, roundSize: 10, currentMark: "(in this compound)",
-    // Picker values: the compound's index in the select, in both directions.
-    pickValues: function () {
-      var out = [];
-      ref.compounds.forEach(function (cp, i) { out.push({value: String(i), dir: "n2f"}); out.push({value: String(i), dir: "f2n"}); });
-      return out;
-    },
-    identify: function (st) {
-      var dir = /formula/i.test(st.caption) ? "n2f" : "f2n";
-      var cp = ref.compounds.find(function (x) { return dir === "n2f" ? cap(x.name) === st.heading : x.spoken === st.heading; });
-      if (!cp) throw new Error("unknown compound heading " + JSON.stringify(st.heading));
-      return {item: cp, dir: dir, key: cp.formula};
-    },
-    answer: function (id, step) {
-      var cp = id.item;
-      if (step === 0) return {metal: cp.c, nonmetal: -cp.q};
-      return id.dir === "n2f" ? {msub: cp.subscripts[0], xsub: cp.subscripts[1]} : {name: cp.name};
-    },
-    marked: function (id) { return [id.item.metal.symbol, id.item.nonmetal.symbol]; }
-  },
   // Its steps differ per item (a structure editor, an AP formal charge step), so its own tests drive it:
   // tests/e2e/lewis-*.spec.js with the answers from tests/support/lewis-reference.js.
   "lewis-vsepr": {
