@@ -319,6 +319,7 @@ test("the compact header keeps the title beside the logo and Instructions beside
   var header = page.locator(".zsa-ir-header"), title = header.getByRole("heading", {level: 1});
   await expect(header).not.toContainText("ZornScience");
   await expect(header).not.toContainText("Chemistry practice");
+  await expect(header.getByRole("link", {name: "All activities", exact: true})).toHaveCount(0);
   await expect(page.locator(".zsa-ir-title-row")).toHaveCount(0);
   await expect(page.locator(".zsa-ir-identity > h1")).toHaveCount(1);
   for (var width of [1366, 768, 390, 320]) {
@@ -330,6 +331,9 @@ test("the compact header keeps the title beside the logo and Instructions beside
     expect(instructions.x + instructions.width, "adjacent Instructions and Share at " + width).toBeLessThanOrEqual(share.x);
     expect(share.x - instructions.x - instructions.width).toBeLessThanOrEqual(20);
     expect(Math.abs(instructions.y - share.y)).toBeLessThanOrEqual(1);
+    var fullscreen = await page.locator("#zsa-ir-fullscreen-toggle").boundingBox();
+    expect(fullscreen.width, "fullscreen target width at " + width).toBeGreaterThanOrEqual(44);
+    expect(fullscreen.height, "fullscreen target height at " + width).toBeGreaterThanOrEqual(44);
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
   }
   await page.goto("/ionic-reactions/?embed=1");
@@ -337,8 +341,77 @@ test("the compact header keeps the title beside the logo and Instructions beside
   await expect(header.locator(".zsa-ir-brand")).toBeHidden();
   await expect(page.locator("#zsa-ir-instructions-open")).toBeVisible();
   await expect(page.locator("#zsa-ir-share-toggle")).toBeHidden();
-  await expect(header.getByRole("link", {name: "All activities", exact: true})).toBeHidden();
+  await expect(header.getByRole("link", {name: "All activities", exact: true})).toHaveCount(0);
+  await expect(page.locator("#zsa-ir-fullscreen-toggle")).toBeVisible();
   await audit(page, "embedded compact header");
+});
+
+test("fullscreen enters, exits and follows an external exit without changing the current answer", async ({page, problems}) => {
+  void problems;
+  await go(page);
+  var active = await current(page), part = active.reference.products[0].parts[0];
+  await place(page, part[0], 0, 0); await subscript(page, 0, 0).fill("2");
+  var preview = await page.locator("#zsa-ir-products .zsa-ir-preview").first().textContent();
+  var toggle = page.locator("#zsa-ir-fullscreen-toggle");
+  await expect(toggle).toBeVisible();
+  await expect(toggle).toHaveAttribute("aria-label", "Enter fullscreen");
+  await expect(toggle).toHaveAttribute("title", "Enter fullscreen");
+  await expect(toggle).toHaveAttribute("aria-pressed", "false");
+  await toggle.click();
+  await expect.poll(() => page.evaluate(() => document.fullscreenElement === document.documentElement)).toBe(true);
+  await expect(toggle).toHaveAttribute("aria-label", "Exit fullscreen");
+  await expect(toggle).toHaveAttribute("title", "Exit fullscreen");
+  await expect(toggle).toHaveAttribute("aria-pressed", "true");
+  await toggle.click();
+  await expect.poll(() => page.evaluate(() => document.fullscreenElement)).toBe(null);
+  await expect(toggle).toHaveAttribute("aria-pressed", "false");
+  await toggle.click();
+  await expect.poll(() => page.evaluate(() => document.fullscreenElement === document.documentElement)).toBe(true);
+  await page.evaluate(() => document.exitFullscreen());
+  await expect(toggle).toHaveAttribute("aria-label", "Enter fullscreen");
+  await expect(toggle).toHaveAttribute("title", "Enter fullscreen");
+  await expect(toggle).toHaveAttribute("aria-pressed", "false");
+  await expect(page.locator("main[data-zsa-activity]")).toHaveAttribute("data-reaction", active.id);
+  await expect(subscript(page, 0, 0)).toHaveValue("2");
+  await expect(page.locator("#zsa-ir-products .zsa-ir-preview").first()).toHaveText(preview);
+  await expect(page.locator("#zsa-ir-round")).toHaveText("Problem 1 of 10");
+  await expect(page.locator("#zsa-ir-predict")).toBeVisible();
+  await page.goto("/ionic-reactions/?embed=1");
+  await toggle.click();
+  await expect.poll(() => page.evaluate(() => document.fullscreenElement === document.documentElement)).toBe(true);
+  await toggle.click();
+  await expect.poll(() => page.evaluate(() => document.fullscreenElement)).toBe(null);
+});
+
+test("fullscreen rejection is announced and unsupported pages keep practice usable", async ({page, problems}) => {
+  void problems;
+  await page.addInitScript(() => {
+    if (new URL(location.href).searchParams.has("fullscreen-disabled")) {
+      Object.defineProperty(document, "fullscreenEnabled", {configurable: true, value: false});
+    } else {
+      Object.defineProperty(Element.prototype, "requestFullscreen", {configurable: true, value: function () {
+        return Promise.reject(new DOMException("Fullscreen permission denied", "NotAllowedError"));
+      }});
+    }
+  });
+  await go(page);
+  var active = await current(page), part = active.reference.products[0].parts[0];
+  await place(page, part[0], 0, 0);
+  var toggle = page.locator("#zsa-ir-fullscreen-toggle"), status = page.locator("#zsa-ir-fullscreen-status");
+  await toggle.click();
+  await expect(status).toHaveAttribute("aria-live", "polite");
+  await expect(status).toBeVisible();
+  await expect(status).not.toHaveText("");
+  await expect(toggle).toHaveAttribute("aria-label", "Enter fullscreen");
+  await expect(toggle).toHaveAttribute("aria-pressed", "false");
+  expect(await page.evaluate(() => document.fullscreenElement)).toBe(null);
+  await expect(page.locator("main[data-zsa-activity]")).toHaveAttribute("data-reaction", active.id);
+  await expect(slot(page, 0, 0)).not.toHaveText(/First part/i);
+  await page.goto("/ionic-reactions/?embed=1&fullscreen-disabled=1");
+  await expect(toggle).toBeHidden();
+  await expect(page.getByRole("heading", {level: 1, name: "Ionic Reaction Builder", exact: true})).toBeVisible();
+  await page.locator("#zsa-ir-start").click();
+  await expect(page.locator("#zsa-ir-bank button[data-token]").first()).toBeVisible();
 });
 
 test("the simplified header opens worked instructions without changing the current problem", async ({page, problems}) => {

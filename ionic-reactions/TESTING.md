@@ -1,6 +1,6 @@
 # Ionic Reaction Builder checks
 
-Version: 3.3.0
+Version: 3.4.0
 
 `node --test tests/unit/ionic-reactions.test.js` verifies all 40 independently pinned reaction equations, elemental counts, smallest coefficients, ionic and elemental species, product-order permutations, invalid coefficients and round sampling. It checks all 15 nonempty combinations of the four allowed reaction types, unique questions and fair distribution, and the polyatomic-ion restrictions for each family. Chemistry checks require ionic compounds, valid ion charges, conserved polyatomic anions in single replacement, and a coefficient change in every equation. They also check product-subscript variety and reduced nitrate repetition.
 
@@ -14,6 +14,8 @@ The stage-transition checks verify that balancing replaces prediction in the sam
 
 Automatic-balance checks cover typed coefficients and stepper controls: the smallest whole-number ratio immediately shows green confirmation, records completion and enables Next. Equal counts at a larger ratio keep Next locked with a reduction prompt. Editing a completed balance away from the answer removes completion and relocks Next; restoring the answer completes it again. Exploratory coefficient changes do not add misses, while an explicit incorrect Check balance still does. Check balance remains available as optional feedback.
 
-Bank relevance checks independently verify that every offered block uses current reactant elements, each polyatomic block occurs in a reactant, and no unrelated distractor options remain. Neutral atom blocks are used only for elemental products. The browser suite checks the worked copper(II) phosphate instructions example, preserved problem state, dismissal and focus return, larger equation typography, stronger coefficient borders, and icon-labelled sharing without LinkedIn. It also checks the compact logo-and-title header, Instructions beside Share, product-card labels without the extra Products heading, and the "Balance the equation" heading with full-width directions and no step label.
+Bank relevance checks independently verify that every offered block uses current reactant elements, each polyatomic block occurs in a reactant, and no unrelated distractor options remain. Neutral atom blocks are used only for elemental products. The browser suite checks the worked copper(II) phosphate instructions example, preserved problem state, dismissal and focus return, larger equation typography, stronger coefficient borders, and icon-labelled sharing without LinkedIn. It also checks the compact logo-and-title header without a separate All activities link, Instructions beside Share, product-card labels without the extra Products heading, and the "Balance the equation" heading with full-width directions and no step label.
+
+Fullscreen checks cover entry and exit, icon and accessible-state updates after native fullscreen changes, activity state preservation, unsupported-browser hiding and polite inline feedback for a rejected request. The control remains available in embeds when the host permits fullscreen.
 
 The static checks keep the site CSP and prohibit injection, globals, inline styles/scripts, storage and network requests. Only the two explicit user-initiated social-share URL templates in `share.js` are added to the outside-link check.

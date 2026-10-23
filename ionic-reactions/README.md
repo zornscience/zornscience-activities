@@ -1,6 +1,6 @@
 # Ionic Reaction Builder
 
-Version: 3.3.0
+Version: 3.4.0
 
 Choose Synthesis, Decomposition, Single Replacement, Double Replacement, or any combination before starting a ten-problem round. At least one checkbox must be selected. The 40-reaction bank contains ten examples per family, so even a single-family round has ten distinct problems. Rounds distribute questions as evenly as possible across the selected families and shuffle the order, including the first problem. The existing `ionic-reactions/` address stays the same.
 
@@ -33,14 +33,19 @@ The bank contains only blocks needed for the current products, all composed of e
 
 ## Branding and sharing
 
-The header, favicon and footer use the existing ZornScience logo. The compact header places the activity title beside the logo and Instructions beside Share, without a separate wordmark, tagline or colored rule. Product cards retain their individual labels without an extra Products heading. The balancing panel is headed "Balance the equation" without a step label, with its directions spanning the panel width. Its equation uses larger type, and coefficient inputs have a stronger border. An amber badge identifies the reaction type. The Share button offers Copy link, icon-labelled email, Facebook and X links, and the device share sheet when supported. Sharing always uses the canonical activity URL, without round answers or progress. Social links load only when the user chooses them; there are no social SDKs or embedded widgets. If clipboard permission is unavailable, the link is selected for manual copying.
+The header, favicon and footer use the existing ZornScience logo. The compact header places the activity title beside the linked logo, which returns to the activities home page; there is no separate All activities link, wordmark, tagline or colored rule. Instructions, Share and the Fullscreen icon share the header controls. Product cards retain their individual labels without an extra Products heading. The balancing panel is headed "Balance the equation" without a step label, with its directions spanning the panel width. Its equation uses larger type, and coefficient inputs have a stronger border. An amber badge identifies the reaction type.
+
+The Share button offers Copy link, icon-labelled email, Facebook and X links, and the device share sheet when supported. Sharing always uses the canonical activity URL, without round answers or progress. Social links load only when the user chooses them; there are no social SDKs or embedded widgets. If clipboard permission is unavailable, the link is selected for manual copying.
+
+Where supported, Fullscreen expands the activity and returns it to the page without changing answers or progress. Its icon, accessible label and pressed state follow fullscreen changes, including exits through Escape. It is also available in embeds when the host allows fullscreen. Unsupported controls stay hidden, and a failed request produces a brief inline message.
 
 ## Implementation
 
-Static HTML, CSS and strict JavaScript IIFEs, with shared site styles and embed support. Data and model APIs use root request events rather than globals. `data.js` contains the curated species, conditions and equations; `model.js` provides formula rendering, atom/ion counts, validation and round construction; `activity.js` handles prediction, balancing and results; `share.js` handles sharing; `instructions.js` controls the native modal dialog. Shared production assets and the site CSP are unchanged.
+Static HTML, CSS and strict JavaScript IIFEs, with shared site styles and embed support. Data and model APIs use root request events rather than globals. `data.js` contains the curated species, conditions and equations; `model.js` provides formula rendering, atom/ion counts, validation and round construction; `activity.js` handles prediction, balancing and results; `share.js` handles sharing; `instructions.js` controls the native modal dialog; `fullscreen.js` uses the native Fullscreen API on `document.documentElement` and tracks `fullscreenchange`. Shared production assets and the site CSP are unchanged.
 
 ## Changelog
 
+- 3.4.0: Remove the separate All activities header link and add a Fullscreen toggle beside Share. Preserve activity state through fullscreen changes, synchronize the icon and accessible state after external exits, and give brief feedback when a fullscreen request fails.
 - 3.3.0: Put the title beside the logo, group Instructions with Share, remove the extra Products heading and give balancing directions the full panel width. Automatically confirm the smallest whole-number balance and enable Next; keep Check balance optional, avoid counting exploratory edits as misses, and relock a completed balance if its coefficients change.
 - 3.2.0: Audit the bank for ionic compounds, chemically specific conditions, varied product subscripts and coefficient changes in every problem. Remove molecular compounds, acid reactants and the phosphite model; broaden the ion selection and reduce nitrate repetition. Replace the worked instructions example with copper(II) phosphate. Remove the colored header rule, header tagline and balancing step label, and simplify the balancing heading.
 - 3.1.0: Larger equations and stronger coefficient borders, Ionic Reaction Builder title, worked instructions dialog, simplified labels, centered product heading, amber type badge, relevant bank blocks only, and share icons without LinkedIn.

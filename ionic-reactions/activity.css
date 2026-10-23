@@ -1,4 +1,5 @@
 body {background:#f8f9fb;}
+html:fullscreen {background:#f8f9fb;overflow:auto;}
 .zsa-ir {--zsa-max-width:1080px;--zsa-ir-cation:#184a93;--zsa-ir-cation-bg:#edf4ff;--zsa-ir-anion:#9a3a2a;--zsa-ir-anion-bg:#fff1eb;--zsa-ir-neutral:#23615b;--zsa-ir-neutral-bg:#eff8f5;--zsa-ir-line:#dce3ec;background:#f8f9fb;padding-top:22px;}
 .zsa-ir p {margin:0;}
 .zsa-ir h2,.zsa-ir h3 {margin:0;}
@@ -10,7 +11,6 @@ body {background:#f8f9fb;}
 .zsa-ir-brand img {display:block;flex-shrink:0;}
 .zsa-ir-header-tools {display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:16px;max-width:100%;margin-left:auto;}
 .zsa-ir-header-buttons {display:flex;align-items:center;gap:8px;}
-.zsa-ir .zsa-back {font-size:13px;text-decoration:none;}
 .zsa-ir .zsa-ir-share-toggle {display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:9px 12px;min-height:44px;background:white;}
 .zsa-ir-icon {width:18px;height:18px;flex-shrink:0;}
 .zsa-ir-instructions-open {flex-shrink:0;}
@@ -137,6 +137,10 @@ body {background:#f8f9fb;}
 .zsa-ir-share-heading {display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:5px;}
 .zsa-ir-share-heading h2 {font-size:18px;font-weight:600;}
 .zsa-ir .zsa-ir-icon-button {display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;border:1px solid #d5deea;border-radius:8px;background:#f7f9fc;color:#425a7b;font-size:24px;padding:0;line-height:1;}
+.zsa-ir .zsa-ir-fullscreen-toggle {width:46px;min-width:46px;height:46px;min-height:46px;flex-shrink:0;background:white;}
+.zsa-ir .zsa-ir-fullscreen-toggle[hidden] {display:none;}
+.zsa-ir-fullscreen-toggle[aria-pressed="true"] {background:#edf4ff;border-color:#194d9d;}
+.zsa-ir .zsa-ir-fullscreen-status {margin-top:12px;}
 .zsa-ir-share-label {display:block;margin:14px 0 6px;font-size:12px;font-weight:600;color:#536075;}
 .zsa-ir-share-link {display:flex;gap:8px;align-items:stretch;}
 .zsa-ir-share-link input {display:block;flex:1 1 200px;min-width:0;min-height:46px;width:100%;border:1px solid #b8c8dc;border-radius:8px;padding:9px 11px;background:#f8fafd;color:#334e72;font-size:13px;}
@@ -173,8 +177,7 @@ body {background:#f8f9fb;}
   .zsa-ir-identity {gap:10px;}
   .zsa-ir .zsa-ir-brand {min-width:44px;min-height:44px;}
   .zsa-ir-brand img {width:43px;height:auto;}
-  .zsa-ir-header-tools {gap:10px;width:100%;justify-content:space-between;}
-  .zsa-ir .zsa-back {font-size:11px;}
+  .zsa-ir-header-tools {gap:10px;width:100%;justify-content:flex-end;}
   .zsa-ir .zsa-ir-instructions-open {padding:8px 10px;}
   .zsa-ir .zsa-ir-share-toggle {padding:8px 10px;}
   .zsa-ir h1 {font-size:25px;}
