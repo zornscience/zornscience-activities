@@ -55,9 +55,10 @@ test("pages have one CSP, no inline scripts or styles, and only the expected out
   var allowed = /^(https:\/\/((activities\.)?zornscience\.org(\/[\w\-\/]*)?|creativecommons\.org\/licenses\/by-nc-sa\/4\.0\/)|http:\/\/www\.w3\.org\/2000\/svg)$/;
   // User-initiated share links are plain outbound anchors, with no social SDK or page-load requests.
   var shareLinks = new Set(["https://www.facebook.com/sharer/sharer.php?u=", "https://x.com/intent/tweet?text="]);
+  var shareFiles = new Set(["ionic-reactions/share.js", "periodic-table/data.js"]);
   pages.concat(siteJs).forEach(function (f) {
     (read(f).match(/https?:\/\/[^\s"'<>)]+/g) || []).forEach(function (url) {
-      if (f === "ionic-reactions/share.js" && shareLinks.has(url)) return;
+      if (shareFiles.has(f) && shareLinks.has(url)) return;
       assert.match(url, allowed, f + " links to " + url);
     });
   });
@@ -83,10 +84,19 @@ test("each activity's version agrees across its page, assets and docs", function
   });
 });
 
-test("Ionic Formula Builder data.js is exactly what tools/build-data.js writes", function () {
-  var written = null;
-  var script = read("ionic-formula-builder/tools/build-data.js");
-  var fakeFs = {writeFileSync: function (file, out) { written = out; }};
-  vm.runInNewContext(script, {require: function (m) { return m === "fs" ? fakeFs : require(m); }, __dirname: path.join(ROOT, "ionic-formula-builder", "tools"), console: console});
-  assert.equal(written, read("ionic-formula-builder/data.js"));
+
+test("the retired Ionic Formula Builder address redirects to the Ionic Reaction Builder", function () {
+  var page = read("ionic-formula-builder/index.html");
+  assert.match(page, /<meta http-equiv="refresh" content="0; url=\.\.\/ionic-reactions\/">/);
+  assert.match(page, /<link rel="canonical" href="https:\/\/activities\.zornscience\.org\/ionic-reactions\/">/);
+  assert.match(page, /<a href="\.\.\/ionic-reactions\/">Ionic Reaction Builder<\/a>/);
+  assert.deepEqual(fs.readdirSync(path.join(ROOT, "ionic-formula-builder")), ["index.html"]);
+});
+
+test("the landing page lists the Ionic Reaction Builder, not the retired builder, and uses the ZornScience favicon", function () {
+  var page = read("index.html");
+  assert.match(page, /<a href="ionic-reactions\/">Ionic Reaction Builder<\/a>/);
+  assert.doesNotMatch(page, /ionic-formula-builder/);
+  assert.match(page, /<link rel="icon" href="favicon\.png" type="image\/png">/);
+  assert.ok(fs.existsSync(path.join(ROOT, "favicon.png")));
 });

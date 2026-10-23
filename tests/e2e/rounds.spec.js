@@ -46,29 +46,8 @@ test("Ion Charge Trainer: 200 mixed rounds meet the round rules", async ({page, 
   expect(Object.keys(seen)).toHaveLength(19);
 });
 
-test("Ionic Formula Builder: 300 mixed rounds meet the round rules", async ({page, open}) => {
-  await open("ionic-formula-builder", {seed: 202});
-  var pairs = {}, orders = {};
-  for (var r = 0; r < 300; r++) {
-    if (r) await newRound(page);
-    var run = await play(page, "ionic-formula-builder");
-    var items = run.items.map(ifbItem);
-    expect(items).toHaveLength(10);
-    expect(new Set(items.map((x) => x.cp.formula)).size).toBe(10);
-    expect(items.filter((x) => x.dir === "n2f")).toHaveLength(6);
-    expect(items.filter((x) => x.cp.c === x.cp.q).length).toBeGreaterThanOrEqual(3);
-    expect(items.filter((x) => x.cp.metal.symbol === "Al").length).toBeGreaterThanOrEqual(2);
-    expect(items.filter((x) => x.cp.reduced && x.dir === "n2f").length).toBeGreaterThanOrEqual(2);
-    run.items.forEach((it, i) => expect(it.progress).toBe("Compound " + (i + 1) + " of 10 · Step 1 of 2"));
-    items.forEach((x) => { pairs[x.cp.formula + x.dir] = true; });
-    orders[items.map((x) => x.dir).join()] = true;
-  }
-  expect(Object.keys(pairs).length).toBeGreaterThan(150);
-  expect(Object.keys(orders).length).toBeGreaterThan(100);
-});
-
 var MISS_PLANS = [[2], [0, 1, 2, 3], [9], [8, 9], [7], [0, 5, 9], [3, 4, 5, 6, 7, 8, 9]];
-for (var slug of ["ion-charge-trainer", "ionic-formula-builder"]) {
+for (var slug of ["ion-charge-trainer"]) {
   for (var [k, missAt] of MISS_PLANS.entries()) {
     (function (slug, missAt, seed) {
       test(slug + ": review queue after misses at " + missAt.join(", "), async ({page, open}) => {
@@ -137,20 +116,6 @@ test("Ion Charge Trainer: hints do not lose the first try, and Practice my misse
   expect(new Set(els.map((e) => e.symbol)).size).toBe(els.length);
 });
 
-test("Ionic Formula Builder: Practice my misses keeps each miss in its direction plus compounds with the same charges", async ({page, open}) => {
-  await open("ionic-formula-builder", {seed: 8});
-  var run = await play(page, "ionic-formula-builder", {2: {1: ["wrong"]}});
-  var miss = ifbItem(run.items[2]);
-  await page.evaluate(() => window.__zsa.finishButton("Practice my misses"));
-  var again = await play(page, "ionic-formula-builder");
-  var items = again.items.map(ifbItem);
-  var samePair = ref.compounds.filter((c) => c.c === miss.cp.c && c.q === miss.cp.q).length;
-  expect(items).toHaveLength(Math.min(10, samePair));
-  expect(items.some((x) => x.cp === miss.cp && x.dir === miss.dir), "miss kept in its direction").toBe(true);
-  items.forEach((x) => expect(x.cp.c === miss.cp.c && x.cp.q === miss.cp.q, x.cp.formula + " same charge pair").toBe(true));
-  expect(again.items[0].progress).toMatch(new RegExp("^Compound 1 of " + items.length + " "));
-});
-
 test("single-item practice: one item, no repeat, its own labels", async ({page, open}) => {
   var cfg = await open("ion-charge-trainer");
   await page.evaluate(() => window.__zsa.single("Al"));
@@ -160,17 +125,6 @@ test("single-item practice: one item, no repeat, its own labels", async ({page, 
   expect(run.finish.finish.title).toBe("Chosen element complete");
   expect(run.finish.finish.text).toContain("Valence electrons0 / 1");
   void cfg;
-  await page.goto("/ionic-formula-builder/");
-  await page.waitForSelector("#zsa-ifb-table table");
-  await page.evaluate(require("../support/activities").install, require("../support/activities").activities["ionic-formula-builder"].ids);
-  await page.evaluate(() => window.__zsa.single("79", "f2n"));
-  var run2 = await play(page, "ionic-formula-builder", {0: {1: ["wrong", "wrong", "show"]}});
-  expect(run2.items).toHaveLength(1);
-  expect(run2.items[0].progress).toBe("Chosen compound 1 of 1 · Step 1 of 2");
-  expect(run2.items[0].heading).toBe("Al P");
-  expect(run2.finish.finish.title).toBe("Chosen compound complete");
-  expect(run2.finish.finish.text).toContain("Formula to name: name it0 / 1");
-  expect(run2.finish.finish.text).not.toContain("Name to formula");
 });
 
 test("Ion Charge Trainer: step 4 can be turned off and counts only items that had it", async ({page, open}) => {

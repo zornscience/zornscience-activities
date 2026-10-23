@@ -10,7 +10,7 @@ shared/
   fonts/              Inter (SIL OFL 1.1)
 ```
 
-The engine runs everything the activities have in common. A new activity is mostly a data file plus a small script with its steps and misconception rules. The Ion Charge Trainer and the Ionic Formula Builder both run on it. A working example is in [`templates/starter/`](../templates/starter/).
+The engine runs everything the activities have in common. A new activity is mostly a data file plus a small script with its steps and misconception rules. The Ion Charge Trainer runs on it (the retired Ionic Formula Builder did too). A working example is in [`templates/starter/`](../templates/starter/).
 
 ## What the engine does
 
@@ -63,7 +63,7 @@ var activity = zsa.create(root, {
 activity.start(activity.mixed(), "mixed", true); // true: quiet first load, no focus move
 ```
 
-An **entry** is `{item, variant, review}`. `variant` is optional and lets one item be asked more than one way. The Ionic Formula Builder uses it for the direction: name to formula or formula to name.
+An **entry** is `{item, variant, review}`. `variant` is optional and lets one item be asked more than one way. The retired Ionic Formula Builder used it for the direction: name to formula or formula to name.
 
 | Hook | Returns |
 |---|---|
@@ -99,7 +99,7 @@ The round summary of a full mixed round, right under "Round complete", shows "Co
 
 There is no code for single practice, Practice my misses or an unfinished round, for a round started with any type other than `"mixed"` (Periodic Trends Practice starts a round of one trend as `"trend"`, so it gives no code), for an activity that is not registered, or when the result does not fit the activity's registered layout (then the summary is exactly as before).
 
-Activities with codes: the Ion Charge Trainer (`ICT`), the Ionic Formula Builder (`IFB`), Periodic Trends Practice (`PTR`) and the Lewis Structure and VSEPR Builder (`LVB` with the octet rule, `LVA` with the AP setting).
+Activities with codes: the Ion Charge Trainer (`ICT`), the Ionic Formula Builder (`IFB`, retired; its codes still check), Periodic Trends Practice (`PTR`) and the Lewis Structure and VSEPR Builder (`LVB` with the octet rule, `LVA` with the AP setting).
 
 ### Format
 

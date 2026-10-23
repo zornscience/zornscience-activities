@@ -29,11 +29,11 @@
   ui.modes.forEach(function (m) { modes[m.id] = m; });
   var grid = $("grid"), scroller = $("scroll"), details = $("details"), detailsBody = $("details-body"), detailsTitle = $("details-title");
   var trendsBox = $("trend-text"), status = $("status"), query = $("query");
-  var state = {mode: "category", trends: true, active: 1, selected: null, open: false, from: null};
+  var state = {mode: "block", trends: true, active: 1, selected: null, open: false, from: null};
   var cells = {};
 
   // ---------- URL parameters (the only way a view is remembered) ----------
-  var params = new URLSearchParams(window.location.search);
+  var params = new URLSearchParams(window.location.search); // the table opens in block colors unless ?mode= says otherwise
   if (modes[params.get("mode")]) state.mode = params.get("mode");
   if (params.get("trends") === "0") state.trends = false;
   var start = find(params.get("el") || "");
@@ -58,7 +58,9 @@
     if (!state.trends) p.set("trends", "0"); else p.delete("trends");
     var url = window.location.pathname + "?" + p.toString();
     try { window.history.replaceState(null, "", url); } catch (err) { /* a sandboxed frame may refuse; the view still works */ }
+    if (refreshShare) refreshShare();
   }
+  var refreshShare = null;
 
   // ---------- The table ----------
   function buildGrid() {
@@ -341,6 +343,64 @@
   });
   $("trends").checked = state.trends;
   $("trends").addEventListener("change", function () { state.trends = $("trends").checked; paint(); syncUrl(); });
+
+  // ---------- Share: copy link, email, Facebook, X ----------
+  // The link opens the table the way it looks now (color mode, open element, trend arrows), never with ?from or
+  // ?embed. Facebook and X are plain links the student chooses to follow; nothing loads from them on this page.
+  (function () {
+    var toggle = $("share-toggle"), panel = $("share-panel"), sh = ui.share;
+    function link() {
+      var p = new URLSearchParams();
+      p.set("mode", state.mode);
+      if (state.selected && state.open) p.set("el", byZ[state.selected].symbol);
+      if (!state.trends) p.set("trends", "0");
+      return sh.url + "?" + p.toString();
+    }
+    refreshShare = function () {
+      var url = link();
+      $("share-url").value = url;
+      $("share-email").href = "mailto:?subject=" + encodeURIComponent(sh.title) + "&body=" + encodeURIComponent(sh.text + "\n\n" + url);
+      $("share-facebook").href = sh.facebook + encodeURIComponent(url);
+      $("share-x").href = sh.x + encodeURIComponent(sh.text) + "&url=" + encodeURIComponent(url);
+    };
+    function close(restoreFocus) {
+      panel.hidden = true;
+      toggle.setAttribute("aria-expanded", "false");
+      if (restoreFocus) toggle.focus();
+    }
+    toggle.addEventListener("click", function () {
+      if (!panel.hidden) { close(false); return; }
+      refreshShare();
+      panel.hidden = false;
+      toggle.setAttribute("aria-expanded", "true");
+      $("share-status").textContent = "";
+      $("share-copy").focus();
+    });
+    $("share-close").addEventListener("click", function () { close(true); });
+    document.addEventListener("keydown", function (ev) {
+      if (ev.key === "Escape" && !panel.hidden) { ev.preventDefault(); close(true); }
+    });
+    document.addEventListener("click", function (ev) {
+      if (!panel.hidden && !panel.contains(ev.target) && !toggle.contains(ev.target)) close(false);
+    });
+    $("share-copy").addEventListener("click", function () {
+      var url = $("share-url").value;
+      function fallback() {
+        $("share-url").focus(); $("share-url").select();
+        $("share-status").textContent = sh.selected;
+      }
+      if (!navigator.clipboard || !navigator.clipboard.writeText) { fallback(); return; }
+      navigator.clipboard.writeText(url).then(function () { $("share-status").textContent = sh.copied; }, fallback);
+    });
+    if (typeof navigator.share === "function") {
+      $("share-device").hidden = false;
+      $("share-device").addEventListener("click", function () {
+        navigator.share({title: sh.title, text: sh.text, url: $("share-url").value}).then(function () {
+          $("share-status").textContent = sh.opened;
+        }, function (err) { if (err && err.name !== "AbortError") $("share-status").textContent = sh.failed; });
+      });
+    }
+  }());
 
   // ---------- Full screen, for presenting on a projector or whiteboard ----------
   // The whole page (table, controls and details) fills the screen; Esc or the button leaves. The button only

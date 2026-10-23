@@ -18,7 +18,7 @@ async function audit(page, label, slug) {
   expect(problems).toEqual([]);
 }
 
-var ITEMS = {"ion-charge-trainer": ["Cl"], "ionic-formula-builder": ["37", "f2n"]}; // chlorine; magnesium oxide named from MgO
+var ITEMS = {"ion-charge-trainer": ["Cl"]}; // chlorine
 for (var slug of Object.keys(ITEMS)) {
   for (var vp of [{width: 1366, height: 657}, {width: 390, height: 664}]) {
     (function (slug, vp) {

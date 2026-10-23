@@ -193,6 +193,17 @@ var ui = {
   blocks: [["s", "s-block"], ["p", "p-block"], ["d", "d-block"], ["f", "f-block"]],
   states: {solid: "Solid", liquid: "Liquid", gas: "Gas", unknown: "Unknown"},
   backToLesson: "\u2190 Back to the lesson",
+  share: {
+    url: "https://activities.zornscience.org/periodic-table/",
+    title: "Periodic Table | ZornScience",
+    text: "Explore all 118 elements and see periodic trends as heatmaps with ZornScience.",
+    facebook: "https://www.facebook.com/sharer/sharer.php?u=",
+    x: "https://x.com/intent/tweet?text=",
+    copied: "Link copied.",
+    selected: "Link selected. Press Ctrl+C, or Command+C on a Mac, to copy it.",
+    opened: "Share options opened.",
+    failed: "Use Copy link, email, or one of the social links instead."
+  },
   fullscreen: "Full screen",
   exitFullscreen: "Exit full screen",
   paulingScale: "Pauling scale",
