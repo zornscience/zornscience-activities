@@ -286,6 +286,9 @@ test("the simplified header opens worked instructions without changing the curre
   await expect(dialog).toBeVisible();
   await expect(dialog).toHaveJSProperty("open", true);
   await expect(page.getByRole("dialog")).toHaveCount(1);
+  await expect(dialog).toHaveAccessibleName("How to use Ionic Reaction Builder");
+  await expect(page.locator("#zsa-ir-instructions-close")).toBeFocused();
+  await audit(page, "desktop instructions");
   var example = (await dialog.textContent()).replace(/\s+/g, " ");
   expect(example).toContain("CaCl2");
   expect(example).toContain("Na2CO3");
@@ -295,6 +298,10 @@ test("the simplified header opens worked instructions without changing the curre
   await expect(dialog).toBeHidden();
   await expect(opener).toBeFocused();
   await expect(page.locator("#zsa-ir-setup")).toBeVisible();
+  await opener.click();
+  await page.mouse.click(1, 1);
+  await expect(dialog).toBeHidden();
+  await expect(opener).toBeFocused();
   await page.locator("#zsa-ir-start").click();
   var active = await current(page), first = active.reference.products[0].parts[0];
   await place(page, first[0], 0, 0);
@@ -316,6 +323,7 @@ test("the simplified header opens worked instructions without changing the curre
   expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
   await page.keyboard.press("Escape");
   await expect(dialog).toBeHidden();
+  await audit(page, "phone after instructions");
 });
 
 test("balancing formulas are larger and coefficient boxes have a clear border on desktop and phone", async ({page, problems}) => {
@@ -534,10 +542,11 @@ test("share options expose encoded links, copy the canonical activity URL and cl
   await expect(page.locator("#zsa-ir-share-panel")).toBeVisible();
   await expect(page.locator("#zsa-ir-share-url")).toHaveValue(SHARE_URL);
   expect(await page.locator("#zsa-ir-share-email").getAttribute("href")).toMatch(/^mailto:\?/);
-  for (var id of ["email", "facebook", "x"]) {
+  for (var [id, label] of [["email", "Email"], ["facebook", "Facebook"], ["x", "X"]]) {
     var icon = page.locator("#zsa-ir-share-" + id + " svg");
     await expect(icon).toHaveCount(1);
     await expect(icon).toHaveAttribute("aria-hidden", "true");
+    await expect(page.locator("#zsa-ir-share-" + id + " > span").first()).toHaveText(label);
   }
   await expect(page.locator("#zsa-ir-share-linkedin")).toHaveCount(0);
   for (var [id, parameter] of [["facebook", "u"], ["x", "url"]]) {
