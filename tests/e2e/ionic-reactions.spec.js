@@ -184,6 +184,59 @@ test("zero, negative and fractional coefficients cannot pass; balanced multiples
   await expect(page.getByRole("button", {name: "Next reaction", exact: true})).toBeEnabled();
 });
 
+test("large coefficient buttons update ion counts, work from the keyboard and respect the allowed range", async ({page, problems}) => {
+  void problems;
+  await go(page);
+  await unlock(page);
+  var increase = page.getByRole("button", {name: "Increase coefficient for NaOH", exact: true});
+  var decrease = page.getByRole("button", {name: "Decrease coefficient for NaOH", exact: true});
+  var input = coefficient(page, "NaOH");
+  var buttons = page.getByRole("button", {name: /^(Increase|Decrease) coefficient for /});
+  await expect(buttons).toHaveCount(8);
+  for (var button of await buttons.all()) {
+    var box = await button.boundingBox();
+    expect(box.width).toBeGreaterThanOrEqual(48);
+    expect(box.height).toBeGreaterThanOrEqual(48);
+  }
+  await increase.click();
+  await expect(input).toHaveValue("2");
+  expect(await counts(page, "Na")).toEqual([2, 1]);
+  expect(await counts(page, "OH")).toEqual([2, 2]);
+  await decrease.focus();
+  await page.keyboard.press("Space");
+  await expect(input).toHaveValue("1");
+  expect(await counts(page, "OH")).toEqual([1, 2]);
+  if (await decrease.isEnabled()) await decrease.click();
+  await expect(input).toHaveValue("1");
+  await increase.focus();
+  await page.keyboard.press("Enter");
+  await expect(input).toHaveValue("2");
+  await input.fill("99");
+  if (await increase.isEnabled()) await increase.click();
+  await expect(input).toHaveValue("99");
+  await decrease.click();
+  await expect(input).toHaveValue("98");
+  await input.fill("");
+  await increase.click();
+  await expect(input).toHaveValue("2");
+  await input.fill("");
+  await decrease.click();
+  await expect(input).toHaveValue("1");
+  await balance(page);
+  await page.getByRole("button", {name: "Check balance", exact: true}).click();
+  await expect(page.getByRole("button", {name: "Next reaction", exact: true})).toBeEnabled();
+  await page.getByRole("button", {name: "Decrease coefficient for BaCl2", exact: true}).click();
+  await expect(coefficient(page, "BaCl2")).toHaveValue("1");
+  await expect(page.getByRole("button", {name: "Next reaction", exact: true})).toBeEnabled();
+  await increase.click();
+  await expect(input).toHaveValue("3");
+  expect(await counts(page, "Na")).toEqual([3, 2]);
+  await expect(page.getByRole("button", {name: "Next reaction", exact: true})).toBeDisabled();
+  await decrease.click();
+  await page.getByRole("button", {name: "Check balance", exact: true}).click();
+  await expect(page.getByRole("button", {name: "Next reaction", exact: true})).toBeEnabled();
+});
+
 test("an incomplete numeric subscript is rejected instead of being treated as the optional blank for one", async ({page, problems}) => {
   void problems;
   await go(page);

@@ -191,7 +191,8 @@
     el("equation").replaceChildren(); coefficientInputs = [];
     compounds().forEach(function (c, i) {
       if (i) el("equation").appendChild(node("span", "zsa-ir-symbol", i === 2 ? "→" : "+"));
-      var term = node("label", "zsa-ir-term");
+      var term = node("div", "zsa-ir-term");
+      var stepper = node("div", "zsa-ir-stepper");
       var input = node("input", "zsa-ir-coefficient");
       input.type = "number"; input.min = "1"; input.max = "99"; input.step = "1"; input.inputMode = "numeric"; input.value = "1";
       input.setAttribute("aria-label", "Coefficient for " + c.formula);
@@ -203,7 +204,25 @@
         el("feedback").textContent = "Counts updated. Check the balance when both sides match.";
         el("feedback").dataset.kind = "hint";
       });
-      coefficientInputs.push(input); term.append(input, formula(c.formula)); el("equation").appendChild(term);
+      function stepButton(delta) {
+        var button = node("button", "zsa-ir-step");
+        button.type = "button";
+        button.setAttribute("aria-label", (delta < 0 ? "Decrease" : "Increase") + " coefficient for " + c.formula);
+        var symbol = node("span", "", delta < 0 ? "−" : "+");
+        symbol.setAttribute("aria-hidden", "true");
+        button.appendChild(symbol);
+        button.addEventListener("click", function () {
+          var current = Number(input.value);
+          if (!Number.isInteger(current) || current < 1 || current > 99) current = 1;
+          var value = String(Math.max(1, Math.min(99, current + delta)));
+          if (input.value === value) return;
+          input.value = value;
+          input.dispatchEvent(new Event("input", {bubbles: true}));
+        });
+        return button;
+      }
+      stepper.append(stepButton(-1), input, stepButton(1));
+      coefficientInputs.push(input); term.append(stepper, formula(c.formula)); el("equation").appendChild(term);
     });
     updateCounts();
   }

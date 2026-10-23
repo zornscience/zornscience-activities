@@ -70,8 +70,13 @@ body {background:#faf9f6;}
 .zsa-ir-balance {margin-top:20px;}
 .zsa-ir-balance > .zsa-ir-small {margin-top:10px;max-width:760px;}
 .zsa-ir-equation {display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:24px 0;}
-.zsa-ir-term {display:inline-flex;align-items:center;justify-content:center;gap:7px;min-width:0;}
-.zsa-ir-coefficient {width:58px;min-height:48px;padding:8px 3px 8px 7px;border:1px solid #a8bad2;border-radius:8px;background:#f6f9ff;color:#16458a;font-size:19px;text-align:center;}
+.zsa-ir-term {display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:7px;min-width:0;max-width:100%;}
+.zsa-ir-stepper {display:inline-flex;align-items:center;gap:5px;flex-shrink:0;}
+.zsa-ir .zsa-ir-step {display:inline-flex;align-items:center;justify-content:center;width:48px;min-width:48px;min-height:48px;padding:0;border:1px solid #a8bad2;border-radius:8px;background:#edf4ff;color:#16458a;font-size:26px;line-height:1;}
+.zsa-ir-step:hover {background:#dbeafe;border-color:#194d9d;}
+.zsa-ir-step:active {background:#c7ddfc;}
+.zsa-ir-coefficient {width:52px;min-height:48px;padding:8px 3px;border:1px solid #a8bad2;border-radius:8px;background:#f6f9ff;color:#16458a;font-size:19px;text-align:center;-moz-appearance:textfield;appearance:textfield;}
+.zsa-ir-coefficient::-webkit-inner-spin-button,.zsa-ir-coefficient::-webkit-outer-spin-button {-webkit-appearance:none;margin:0;}
 .zsa-ir-equation .zsa-ir-formula {font-size:23px;}
 .zsa-ir-table-wrap {border:1px solid #dce3ec;border-radius:11px;overflow:hidden;}
 .zsa-ir-table {width:100%;border-collapse:collapse;text-align:left;font-size:15px;}
