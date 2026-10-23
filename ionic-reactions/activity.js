@@ -20,11 +20,18 @@
     });
     return n;
   }
-  function charge(ion) { return (Math.abs(ion.charge) === 1 ? "" : Math.abs(ion.charge)) + (ion.charge > 0 ? "+" : "−"); }
-  function ionVisual(id) {
-    var ion = data.ions[id], n = formula(ion.formula);
-    n.appendChild(node("sup", "", charge(ion)));
+  function charge(token) {
+    return token.charge ? (Math.abs(token.charge) === 1 ? "" : Math.abs(token.charge)) + (token.charge > 0 ? "+" : "−") : "";
+  }
+  function category(token) { return token.charge > 0 ? "cation" : token.charge < 0 ? "anion" : "neutral"; }
+  function tokenVisual(id) {
+    var token = data.tokens[id], n = formula(token.formula);
+    if (token.charge) n.appendChild(node("sup", "", charge(token)));
     return n;
+  }
+  function typeLabel(type) {
+    var entry = data.types.find(function (t) { return t.id === type; });
+    return entry ? entry.label : type;
   }
   function say(text) { el("live").textContent = text; }
   function feedback(text, kind) {
@@ -35,8 +42,7 @@
     say(text);
     if (!root.classList.contains("zsa--embedded")) el("feedback").scrollIntoView({block: "nearest"});
   }
-  var reaction, problem = 0, completed = 0, counted = false, deck = [], selected = null, stage = "products";
-  var products, fields, previews, slots, coefficientInputs, hintLevel = 0;
+  function incorrect(text) { record.missed = true; feedback(text, "error"); }
   function shuffle(list) {
     var copy = list.slice();
     for (var i = copy.length - 1; i > 0; i--) {
@@ -44,65 +50,72 @@
     }
     return copy;
   }
-  function nextReaction() {
-    if (!reaction) return data.reactions[0];
-    if (!deck.length) deck = shuffle(data.reactions.filter(function (r) { return r.id !== reaction.id; }));
-    return deck.pop();
+  var round, records, position, reaction, record, selected, stage;
+  var products, fields, previews, slots, coefficientInputs, productOrder, hintLevel;
+  function progress() {
+    var finished = position + (record.solved ? 1 : 0);
+    el("meter").value = finished;
+    el("progress").textContent = finished + " of " + round.length + " finished";
   }
   function setSelected(id) {
     selected = selected === id ? null : id;
-    el("bank").querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.ion === selected)); });
-    var text = selected ? data.ions[selected].name + " selected. Choose a matching product space." : "Choose an ion to place.";
+    el("bank").querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.token === selected)); });
+    var text = selected ? data.tokens[selected].name + " selected. Choose a product space." : "Choose a building block to place.";
     el("selection").textContent = text;
     say(text);
   }
+  function readSubscript(index, part) {
+    var input = fields[index][part], value = input.value;
+    if (input.validity.badInput) return null;
+    return value === "" ? 1 : /^[1-9]$/.test(value) ? Number(value) : null;
+  }
+  function readParts(index) {
+    var parts = [];
+    for (var part = 0; part < 2; part++) {
+      var id = products[index][part], count = readSubscript(index, part);
+      if (!id) {
+        if (part === 0 || count !== 1) return null;
+      } else {
+        if (count === null) return null;
+        parts.push({token: id, count: count});
+      }
+    }
+    return parts;
+  }
   function preview(index) {
-    var p = products[index], text = "";
-    ["cation", "anion"].forEach(function (part) {
-      var id = p[part], value = fields[index][part].value;
-      if (!id) { text += "?"; return; }
-      var ion = data.ions[id], count = value === "" ? 1 : Number(value);
-      var repeated = Number.isInteger(count) && count > 1;
-      text += (repeated && ion.polyatomic ? "(" + ion.formula + ")" : ion.formula) + (repeated ? count : "");
-    });
-    previews[index].replaceChildren(formula(text));
+    var parts = readParts(index);
+    previews[index].replaceChildren(formula(parts ? model.speciesFormula(parts) : "?"));
   }
   function place(index, part, id) {
     if (stage !== "products") return;
     if (!id) {
       products[index][part] = null;
-      slots[index][part].textContent = part === "cation" ? "+ Cation" : "− Anion";
-      slots[index][part].setAttribute("aria-label", "Product " + (index + 1) + " " + part);
+      slots[index][part].className = "zsa-ir-slot zsa-ir-slot--component";
+      slots[index][part].textContent = part === 0 ? "First part" : "Second part";
+      slots[index][part].setAttribute("aria-label", "Product " + (index + 1) + " component " + (part + 1) + ": " + (part === 0 ? "First part" : "Second part"));
       preview(index);
-      say("Product " + (index + 1) + " " + part + " cleared.");
+      say("Product " + (index + 1) + " component " + (part + 1) + " cleared.");
       return;
     }
-    if (!data.ions[id] || !bankIds().includes(id)) return;
-    var ion = data.ions[id];
-    if ((part === "cation") !== (ion.charge > 0)) {
-      feedback("Place positive cations in cation spaces and negative anions in anion spaces.", "error");
-      return;
-    }
+    if (!data.tokens[id] || !reaction.bank.includes(id)) return;
+    var token = data.tokens[id];
     products[index][part] = id;
-    slots[index][part].replaceChildren(ionVisual(id), node("span", "zsa-ir-slot-name", ion.name));
-    slots[index][part].setAttribute("aria-label", "Product " + (index + 1) + " " + part + ": " + ion.formula + charge(ion) + " " + ion.name);
+    slots[index][part].className = "zsa-ir-slot zsa-ir-slot--" + category(token);
+    slots[index][part].replaceChildren(tokenVisual(id), document.createTextNode(" "), node("span", "zsa-ir-slot-name", token.name));
+    slots[index][part].setAttribute("aria-label", "Product " + (index + 1) + " component " + (part + 1) + ": " + token.formula + charge(token) + " " + token.name);
     preview(index);
     selected = null;
     el("bank").querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
-    el("selection").textContent = "Choose another ion, or select a filled space to clear it.";
-    say(ion.name + " placed in product " + (index + 1) + " " + part + ".");
-  }
-  function bankIds() {
-    return reaction.reactants.reduce(function (ids, r) { return ids.concat(r.cation, r.anion); }, []);
+    el("selection").textContent = "Choose another block, or select a filled space to clear it.";
+    say(token.name + " placed in product " + (index + 1) + ", component " + (part + 1) + ".");
   }
   function buildBank() {
     el("bank").replaceChildren();
-    shuffle(bankIds()).forEach(function (id) {
-      var ion = data.ions[id];
-      var button = node("button", "zsa-ir-ion zsa-ir-ion--" + (ion.charge > 0 ? "cation" : "anion"));
-      button.type = "button"; button.draggable = true; button.dataset.ion = id;
+    shuffle(reaction.bank).forEach(function (id) {
+      var token = data.tokens[id], button = node("button", "zsa-ir-ion zsa-ir-ion--" + category(token));
+      button.type = "button"; button.draggable = true; button.dataset.token = id;
       button.setAttribute("aria-pressed", "false");
-      button.append(ionVisual(id), node("span", "zsa-ir-ion-name", ion.name));
+      button.append(tokenVisual(id), document.createTextNode(" "), node("span", "zsa-ir-ion-name", token.name));
       button.addEventListener("click", function () { setSelected(id); });
       button.addEventListener("dragstart", function (event) {
         event.dataTransfer.setData("text/plain", id);
@@ -116,26 +129,28 @@
     products.forEach(function (p, index) {
       var card = node("fieldset", "zsa-ir-product");
       card.appendChild(node("legend", "", "Product " + (index + 1)));
-      var parts = node("div", "zsa-ir-parts"); fields[index] = {}; slots[index] = {};
-      ["cation", "anion"].forEach(function (part) {
+      var parts = node("div", "zsa-ir-parts"); fields[index] = []; slots[index] = [];
+      [0, 1].forEach(function (part) {
         var group = node("div", "zsa-ir-compound");
-        var slot = node("button", "zsa-ir-slot zsa-ir-slot--" + part, part === "cation" ? "+ Cation" : "− Anion");
-        slot.type = "button"; slot.dataset.product = String(index); slot.dataset.part = part;
-        slot.setAttribute("aria-label", "Product " + (index + 1) + " " + part);
+        var slot = node("button", "zsa-ir-slot zsa-ir-slot--component", part === 0 ? "First part" : "Second part");
+        slot.type = "button"; slot.dataset.product = String(index); slot.dataset.part = String(part);
+        slot.setAttribute("aria-label", "Product " + (index + 1) + " component " + (part + 1) + ": " + (part === 0 ? "First part" : "Second part"));
+        slot.setAttribute("aria-describedby", "zsa-ir-subscript-help");
         slot.addEventListener("click", function () { place(index, part, selected); });
-        slot.addEventListener("dragover", function (event) { if (stage === "products") { event.preventDefault(); event.dataTransfer.dropEffect = "copy"; } });
+        slot.addEventListener("dragover", function (event) {
+          if (stage === "products") { event.preventDefault(); event.dataTransfer.dropEffect = "copy"; }
+        });
         slot.addEventListener("drop", function (event) { event.preventDefault(); place(index, part, event.dataTransfer.getData("text/plain")); });
         var label = node("label", "zsa-ir-subscript-label", "Subscript");
         var input = node("input", "zsa-ir-subscript");
         input.type = "number"; input.min = "1"; input.max = "9"; input.step = "1"; input.inputMode = "numeric"; input.placeholder = "1";
         input.id = "zsa-ir-sub-" + index + "-" + part;
-        input.setAttribute("aria-label", "Product " + (index + 1) + " " + part + " subscript");
+        input.setAttribute("aria-label", "Product " + (index + 1) + " component " + (part + 1) + " subscript");
         input.setAttribute("aria-describedby", "zsa-ir-subscript-help");
         label.htmlFor = input.id;
         input.addEventListener("input", function () { preview(index); });
         fields[index][part] = input; slots[index][part] = slot;
-        label.appendChild(input);
-        group.append(slot, label); parts.appendChild(group);
+        label.appendChild(input); group.append(slot, label); parts.appendChild(group);
       });
       var result = node("p", "zsa-ir-preview");
       result.setAttribute("aria-label", "Product " + (index + 1) + " formula preview");
@@ -143,151 +158,202 @@
       card.append(parts, result); el("products").appendChild(card); preview(index);
     });
   }
-  function readSubscript(index, part) {
-    var input = fields[index][part], value = input.value;
-    if (input.validity.badInput) return null;
-    return value === "" ? 1 : /^[1-9]$/.test(value) ? Number(value) : null;
+  function sameParts(a, b, counts) {
+    return a.length === b.length && a.every(function (part, i) { return part.token === b[i].token && (!counts || part.count === b[i].count); });
   }
   function checkProducts() {
     if (stage !== "products") return;
-    if (products.some(function (p) { return !p.cation || !p.anion; })) {
-      feedback("Place a cation and an anion in each product before checking.", "error"); return;
+    var parts = products.map(function (_, i) { return readParts(i); });
+    if (parts.some(function (p) { return !p; })) {
+      incorrect("Fill the first space in each product and use whole-number subscripts from 1 to 9. Leave the second space empty for a one-part product. A blank subscript means 1."); return;
     }
-    var expected = [
-      {cation: reaction.reactants[0].cation, anion: reaction.reactants[1].anion},
-      {cation: reaction.reactants[1].cation, anion: reaction.reactants[0].anion}
-    ];
-    var matches = products.map(function (p) { return expected.findIndex(function (e) { return e.cation === p.cation && e.anion === p.anion; }); });
-    if (matches.includes(-1) || matches[0] === matches[1]) {
-      feedback("Swap partners: pair each reactant's cation with the other reactant's anion. Use each ion in one of the two products.", "error"); return;
+    var matches = parts.map(function (p) { return reaction.products.findIndex(function (expected) { return sameParts(p, expected.parts, true); }); });
+    if (!matches.includes(-1) && new Set(matches).size !== matches.length) {
+      incorrect("Use each different product once. Two identical product cards leave another product missing."); return;
     }
-    for (var i = 0; i < 2; i++) {
-      var c = model.compound(products[i].cation, products[i].anion);
-      if (readSubscript(i, "cation") !== c.cationCount || readSubscript(i, "anion") !== c.anionCount) {
-        feedback("Check the subscripts in product " + (i + 1) + ". Its positive and negative charges must cancel, using the smallest whole-number ratio. Keep polyatomic ions together.", "error"); return;
-      }
+    if (matches.includes(-1) || new Set(matches).size !== matches.length) {
+      var hasRightComponents = parts.every(function (p) { return reaction.products.some(function (expected) { return sameParts(p, expected.parts, false); }); });
+      incorrect(hasRightComponents ? "Check the subscripts. Use the simplest neutral formula, and remember the 2 in diatomic elements such as H2 and O2. Keep polyatomic ions together." :
+        "Check the products for this reaction type. Put positive ions before negative ions in ionic formulas. Molecular products use atom blocks, and each different product belongs in its own card.");
+      return;
     }
-    stage = "balance"; hintLevel = 0;
+    productOrder = matches; stage = "balance"; hintLevel = 0;
     el("bank").querySelectorAll("button").forEach(function (b) { b.disabled = true; b.draggable = false; });
     el("products").querySelectorAll("button, input").forEach(function (b) { b.disabled = true; });
     el("check-products").disabled = true;
     el("selection").textContent = "Products are set. Change only the coefficients below.";
+    el("note").textContent = reaction.note || "Correct formulas are locked. Change coefficients to balance the equation.";
     el("balance").hidden = false;
     el("stage").textContent = "Step 2 of 2 · Balance the equation";
+    var ones = reaction.reactants.concat(reaction.products).map(function () { return 1; });
+    var canCountIons = !!model.ionCounts(reaction, ones, productOrder);
+    el("count-controls").hidden = !canCountIons;
+    el("count-mode").value = canCountIons ? "ions" : "atoms";
     buildEquation();
-    feedback("Correct products! Now change coefficients until each ion has the same count on both sides. Keep the formulas fixed.", "correct");
+    feedback("Correct products! Now conserve every atom by changing coefficients. Keep the formulas fixed.", "correct");
     el("balance-title").focus();
   }
-  function compounds() { return reaction.reactants.concat(products).map(function (p) { return model.compound(p.cation, p.anion); }); }
+  function displayedSpecies() { return reaction.reactants.concat(productOrder.map(function (index) { return reaction.products[index]; })); }
   function readCoefficients() {
     return coefficientInputs.map(function (input) { return /^[1-9]\d?$/.test(input.value) ? Number(input.value) : null; });
   }
-  function canonicalCoefficients() {
-    var values = readCoefficients();
-    if (products[0].cation !== reaction.reactants[0].cation) { var t = values[2]; values[2] = values[3]; values[3] = t; }
-    return values;
-  }
   function buildEquation() {
     el("equation").replaceChildren(); coefficientInputs = [];
-    compounds().forEach(function (c, i) {
-      if (i) el("equation").appendChild(node("span", "zsa-ir-symbol", i === 2 ? "→" : "+"));
-      var term = node("div", "zsa-ir-term");
-      var stepper = node("div", "zsa-ir-stepper");
+    displayedSpecies().forEach(function (species, i) {
+      if (i) el("equation").appendChild(node("span", "zsa-ir-symbol", i === reaction.reactants.length ? "→" : "+"));
+      var term = node("div", "zsa-ir-term"), stepper = node("div", "zsa-ir-stepper");
       var input = node("input", "zsa-ir-coefficient");
       input.type = "number"; input.min = "1"; input.max = "99"; input.step = "1"; input.inputMode = "numeric"; input.value = "1";
-      input.setAttribute("aria-label", "Coefficient for " + c.formula);
+      input.setAttribute("aria-label", "Coefficient for " + species.formula);
       input.setAttribute("aria-describedby", "zsa-ir-coefficient-help");
       input.addEventListener("input", function () {
-        if (stage === "complete") { stage = "balance"; el("stage").textContent = "Step 2 of 2 · Balance the equation"; }
-        el("next").disabled = true;
+        if (stage === "complete") { stage = "balance"; record.solved = false; el("stage").textContent = "Step 2 of 2 · Balance the equation"; progress(); }
+        el("next").disabled = true; el("skip").disabled = false;
         updateCounts();
         el("feedback").textContent = "Counts updated. Check the balance when both sides match.";
         el("feedback").dataset.kind = "hint";
       });
       function stepButton(delta) {
-        var button = node("button", "zsa-ir-step");
-        button.type = "button";
-        button.setAttribute("aria-label", (delta < 0 ? "Decrease" : "Increase") + " coefficient for " + c.formula);
-        var symbol = node("span", "", delta < 0 ? "−" : "+");
-        symbol.setAttribute("aria-hidden", "true");
-        button.appendChild(symbol);
+        var button = node("button", "zsa-ir-step"); button.type = "button";
+        button.setAttribute("aria-label", (delta < 0 ? "Decrease" : "Increase") + " coefficient for " + species.formula);
+        var symbol = node("span", "", delta < 0 ? "−" : "+"); symbol.setAttribute("aria-hidden", "true"); button.appendChild(symbol);
         button.addEventListener("click", function () {
           var current = Number(input.value);
           if (!Number.isInteger(current) || current < 1 || current > 99) current = 1;
           var value = String(Math.max(1, Math.min(99, current + delta)));
           if (input.value === value) return;
-          input.value = value;
-          input.dispatchEvent(new Event("input", {bubbles: true}));
+          input.value = value; input.dispatchEvent(new Event("input", {bubbles: true}));
         });
         return button;
       }
-      stepper.append(stepButton(-1), input, stepButton(1));
-      coefficientInputs.push(input); term.append(stepper, formula(c.formula)); el("equation").appendChild(term);
+      stepper.append(stepButton(-1), input, stepButton(1)); coefficientInputs.push(input);
+      term.append(stepper, formula(species.formula)); el("equation").appendChild(term);
     });
     updateCounts();
   }
+  function countRows(values) {
+    return el("count-mode").value === "ions" ? model.ionCounts(reaction, values, productOrder) : model.atomCounts(reaction, values, productOrder);
+  }
   function updateCounts() {
-    var coefficients = canonicalCoefficients(), valid = coefficients.every(function (n) { return n !== null; });
-    var counts = model.ionCounts(reaction, valid ? coefficients : [1, 1, 1, 1]);
+    var values = readCoefficients(), valid = values.every(function (n) { return n !== null; });
+    var rows = countRows(valid ? values : values.map(function () { return 1; }));
+    var ions = el("count-mode").value === "ions";
+    el("count-label").textContent = ions ? "Ion" : "Atom";
+    el("count-caption").textContent = ions ? "Whole ions are unchanged in this partner swap. Every row must match." : "Atoms are conserved in every reaction type. Every row must match.";
     el("counts").replaceChildren();
     var spoken = [];
-    counts.forEach(function (row) {
-      var tr = node("tr"), th = node("th"); th.scope = "row"; th.appendChild(ionVisual(row.ion));
+    rows.forEach(function (row) {
+      var tr = node("tr"), th = node("th"); th.scope = "row";
+      th.appendChild(ions && row.token ? tokenVisual(row.token) : formula(row.symbol));
       var equal = valid && row.left === row.right;
       tr.append(th, node("td", "", valid ? String(row.left) : "?"), node("td", "", valid ? String(row.right) : "?"),
         node("td", "zsa-ir-match" + (equal ? " zsa-ir-match--yes" : ""), !valid ? "Enter whole numbers" : equal ? "Equal" : "Not equal"));
       el("counts").appendChild(tr);
-      spoken.push(data.ions[row.ion].name + ": " + row.left + " on reactants, " + row.right + " on products");
+      spoken.push(row.symbol + ": " + row.left + " on reactants, " + row.right + " on products");
     });
     if (stage === "balance") say(valid ? spoken.join(". ") + "." : "Coefficients must be whole numbers from 1 to 99.");
   }
   function checkBalance() {
-    var values = canonicalCoefficients();
-    if (values.some(function (n) { return n === null; })) { feedback("Enter whole numbers from 1 to 99 for every coefficient.", "error"); return; }
-    if (!model.isBalanced(reaction, values)) { feedback("Not balanced yet. Compare each row in the ion table, then change coefficients to make both sides equal.", "error"); return; }
-    if (!model.isLowest(reaction, values)) { feedback("The ions match! Now reduce all coefficients to the smallest whole-number ratio.", "error"); return; }
-    if (!counted) { completed++; counted = true; }
-    stage = "complete";
-    el("stage").textContent = "Both steps complete";
-    el("progress").textContent = completed + " reaction" + (completed === 1 ? "" : "s") + " balanced";
-    el("next").disabled = false;
-    feedback("Balanced! Every ion is conserved and the coefficients are in the smallest whole-number ratio. Ready for the next reaction.", "correct");
+    var values = readCoefficients();
+    if (values.some(function (n) { return n === null; })) { incorrect("Enter whole numbers from 1 to 99 for every coefficient."); return; }
+    if (!model.isBalanced(reaction, values, productOrder)) { incorrect("Not balanced yet. Compare each row in the table, then change coefficients to conserve the atoms on both sides."); return; }
+    if (!model.isLowest(reaction, values, productOrder)) { incorrect("The counts match! Now reduce all coefficients to the smallest whole-number ratio."); return; }
+    record.solved = true; stage = "complete";
+    el("stage").textContent = "Both steps complete"; progress();
+    el("next").disabled = false; el("skip").disabled = true;
+    feedback("Balanced! Every atom is conserved and the coefficients are in the smallest whole-number ratio.", "correct");
   }
   function hint() {
     hintLevel++;
     if (stage === "products") {
-      var text = hintLevel === 1 ? "Swap the anions, keeping cations first. Choose subscripts so each product has total charge zero." :
-        "For product 1, try " + data.ions[reaction.reactants[0].cation].name + " with " + data.ions[reaction.reactants[1].anion].name + ". A 2+ ion needs two 1− ions, or one 2− ion. Do not change the formula inside a polyatomic ion.";
-      feedback(text, "hint");
+      var hints = {
+        synthesis: "Synthesis combines simpler reactants into one product. If it is ionic, make its positive and negative charges cancel.",
+        decomposition: "Decomposition breaks one compound into simpler substances. Use the reaction conditions and remember diatomic gases.",
+        "single-replacement": "A more reactive element replaces another element in a compound. The displaced element is an uncombined element, not an ion.",
+        "double-replacement": "Swap the ion partners. Keep cations first and use the smallest subscripts that make each product neutral.",
+        "acid-base": "An acid and a hydroxide base form a salt and water. Build water from hydrogen and oxygen atoms as H2O."
+      };
+      feedback(hintLevel === 1 ? hints[reaction.type] : "One product is " + reaction.products[0].formula + ". " + (reaction.hint || "Use the available blocks to build the remaining product, if any. Put each different product in its own card."), "hint");
     } else {
-      var rows = model.ionCounts(reaction, canonicalCoefficients().map(function (n) { return n || 1; }));
+      var rows = countRows(readCoefficients().map(function (n) { return n || 1; }));
       var mismatch = rows.find(function (row) { return row.left !== row.right; });
-      feedback(mismatch ? "Start with " + data.ions[mismatch.ion].name + ": there are " + mismatch.left + " on the reactant side and " + mismatch.right + " on the product side. A coefficient multiplies every ion in its formula." : "All ion counts match. If needed, divide every coefficient by their greatest common factor.", "hint");
+      feedback(mismatch ? "Start with " + mismatch.symbol + ": " + mismatch.left + " on the reactant side and " + mismatch.right + " on the product side. A coefficient multiplies the entire formula." : "All counts match. If needed, divide every coefficient by their greatest common factor.", "hint");
     }
   }
-  function start(quiet) {
-    reaction = nextReaction(); problem++; stage = "products"; counted = false; selected = null; hintLevel = 0;
-    products = [{cation: null, anion: null}, {cation: null, anion: null}];
-    el("round").textContent = "Problem " + problem;
-    el("progress").textContent = completed + " reaction" + (completed === 1 ? "" : "s") + " balanced";
+  function loadProblem(quiet) {
+    reaction = round[position]; record = {reaction: reaction, missed: false, skipped: false, solved: false}; records.push(record);
+    stage = "products"; selected = null; hintLevel = 0; productOrder = [];
+    products = reaction.products.map(function () { return [null, null]; });
+    root.dataset.reaction = reaction.id; root.dataset.reactionType = reaction.type;
+    el("round").textContent = "Problem " + (position + 1) + " of " + round.length;
+    el("type").textContent = typeLabel(reaction.type); progress();
     el("stage").textContent = "Step 1 of 2 · Predict the products";
-    el("selection").textContent = "Choose an ion to place.";
-    el("note").textContent = reaction.note || "Practice the ion-exchange pattern and conserve each ion. Predicting a precipitate or a net ionic reaction is a separate step.";
+    el("selection").textContent = "Choose a building block to place.";
+    el("note").textContent = "Predict the products first, then balance the equation. Skip a problem to return to its answer in the summary.";
+    el("condition").textContent = reaction.condition || ""; el("condition").hidden = !reaction.condition;
     el("reactants").replaceChildren();
-    reaction.reactants.forEach(function (r, i) {
+    reaction.reactants.forEach(function (species, i) {
       if (i) el("reactants").appendChild(node("span", "zsa-ir-symbol", "+"));
-      el("reactants").appendChild(formula(model.compound(r.cation, r.anion).formula));
+      el("reactants").appendChild(formula(species.formula));
     });
     buildBank(); buildProducts();
     el("balance").hidden = true;
     el("check-products").closest("section").after(el("feedback"));
-    el("check-products").disabled = false; el("next").disabled = true;
+    el("check-products").disabled = false; el("next").disabled = true; el("skip").disabled = false;
+    el("next").textContent = position === round.length - 1 ? "View summary" : "Next reaction";
     el("feedback").textContent = ""; el("feedback").hidden = true; el("feedback").removeAttribute("data-kind");
-    if (!quiet) { el("round").focus(); say("Problem " + problem + ". Predict the products."); }
+    if (!quiet) { el("round").focus(); say("Problem " + (position + 1) + " of " + round.length + ". " + typeLabel(reaction.type) + ". Predict the products."); }
+  }
+  function balancedEquation(r) {
+    var container = node("p", "zsa-ir-review-equation"), values = model.coefficients(r);
+    r.reactants.concat(r.products).forEach(function (species, i) {
+      if (i) container.appendChild(node("span", "zsa-ir-symbol", i === r.reactants.length ? "→" : "+"));
+      var term = node("span", "zsa-ir-review-term");
+      if (values[i] !== 1) term.appendChild(node("span", "", String(values[i])));
+      term.appendChild(formula(species.formula)); container.appendChild(term);
+    });
+    return container;
+  }
+  function showSummary() {
+    stage = "summary"; el("practice").hidden = true; el("summary").hidden = false;
+    var missed = records.filter(function (r) { return r.missed || r.skipped; });
+    var skipped = records.filter(function (r) { return r.skipped; }).length;
+    var solved = records.filter(function (r) { return r.solved && !r.skipped; }).length;
+    el("summary-lede").textContent = "You finished " + round.length + " problems. You missed " + missed.length + ", including " + skipped + " skipped.";
+    el("summary-totals").replaceChildren();
+    [["balanced", solved, "Balanced"], ["first-try", round.length - missed.length, "Correct first try"], ["missed", missed.length, "Missed (includes skips)"], ["skipped", skipped, "Skipped"]].forEach(function (stat) {
+      var n = node("div", "zsa-ir-stat"); n.dataset.stat = stat[0]; n.append(node("strong", "", String(stat[1])), node("span", "", stat[2])); el("summary-totals").appendChild(n);
+    });
+    el("summary-review").replaceChildren();
+    missed.forEach(function (r) {
+      var item = node("li", "zsa-ir-review-item");
+      item.append(node("p", "zsa-ir-review-status", typeLabel(r.reaction.type) + " · " + (r.skipped ? "Skipped" : "Needed another try")), balancedEquation(r.reaction));
+      if (r.reaction.condition) item.appendChild(node("p", "zsa-ir-small", r.reaction.condition));
+      el("summary-review").appendChild(item);
+    });
+    if (!missed.length) el("summary-review").appendChild(node("li", "zsa-ir-review-item", "Every problem was correct on the first check. Nice work!"));
+    el("summary-types").replaceChildren();
+    data.types.forEach(function (type) {
+      var entries = records.filter(function (r) { return r.reaction.type === type.id; });
+      var misses = entries.filter(function (r) { return r.missed || r.skipped; }).length;
+      el("summary-types").appendChild(node("p", "zsa-ir-type-result", type.label + ": " + (entries.length - misses) + " of " + entries.length + " correct first try"));
+    });
+    el("summary-title").focus(); say("Practice complete. " + missed.length + " problems missed, including " + skipped + " skipped.");
+  }
+  function advance() { position++; if (position === round.length) showSummary(); else loadProblem(false); }
+  function startRound(quiet) {
+    round = model.makeRound(Math.random, data.roundSize); records = []; position = 0;
+    el("summary").hidden = true; el("practice").hidden = false; el("meter").max = round.length;
+    loadProblem(quiet);
   }
   el("check-products").addEventListener("click", checkProducts);
   el("check-balance").addEventListener("click", checkBalance);
+  el("count-mode").addEventListener("change", updateCounts);
   el("hint").addEventListener("click", hint);
-  el("next").addEventListener("click", function () { if (stage === "complete") start(false); });
-  start(true);
+  el("next").addEventListener("click", function () { if (stage === "complete") advance(); });
+  el("skip").addEventListener("click", function () {
+    if (stage === "products" || stage === "balance") { record.skipped = true; record.solved = false; advance(); }
+  });
+  el("restart").addEventListener("click", function () { startRound(false); });
+  startRound(true);
 }());
