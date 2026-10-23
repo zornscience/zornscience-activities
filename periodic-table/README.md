@@ -1,5 +1,5 @@
 # Periodic Table
-Version: 1.1.1
+Version: 1.2.0
 
 An interactive reference table of all 118 elements, with color modes for metal, nonmetal and metalloid, for the s, p, d and f blocks, and heatmaps of atomic radius, electronegativity and first ionization energy with trend arrows.
 
@@ -20,11 +20,12 @@ A reference students can open from any lesson or activity that shows a table, an
 ## What it shows
 - The full 18-column table with the lanthanide and actinide rows below. Group 3 in periods 6 and 7 holds a "57-71" and "89-103" placeholder.
 - Each cell: atomic number, symbol, and in block and heatmap modes the block letter or the value.
-- Color modes: Category (metal, nonmetal, metalloid), Block (s, p, d, f), Atomic radius, Electronegativity, Ionization energy. Heatmaps use seven steps of the site's blues, light to navy, with a legend that gives each step's range and units. Elements with no value are gray with a dashed border and show "n/a".
+- Color modes: Block (s, p, d, f; the default when the page opens), Category (metal, nonmetal, metalloid), Atomic radius, Electronegativity, Ionization energy. Heatmaps use seven steps of the site's blues, light to navy, with a legend that gives each step's range and units. Elements with no value are gray with a dashed border and show "n/a".
 - Color is never the only cue: heatmap cells show their value, block cells show their block letter, metalloid cells have a dashed border, and every cell's accessible name includes the category, block or value with units.
 - Trend arrows (heatmap modes, on by default): an arrow across the top ("Across a period: increases" or "decreases") and one down the left side ("Down a group"), plus one sentence each in the lessons' words (effective nuclear charge across a period, more energy levels down a group). Ionization energy adds one line about the small dips from group 2 to 13 and from group 15 to 16.
 - Details panel (tap, click or Enter on an element): atomic number, symbol, atomic mass, group, period, block, type, state at room temperature, full and noble-gas electron configurations, valence electrons (main groups), common ion charges with names, electronegativity, atomic radius and first ionization energy, plus notes for configuration exceptions, predicted values and borderline classifications.
 - Search by name, symbol or atomic number (British spellings aluminium, caesium and sulphur also work). The match is highlighted and receives focus; Enter then opens its details.
+- **Share** (top right): opens a panel with the link to this view and Copy link, Email, Facebook and X, plus "More share options" (the device share sheet) where the browser has one. The link is `https://activities.zornscience.org/periodic-table/` with the current `mode`, any open element (`el`) and `trends=0` if the arrows are off; it never includes `from` or `embed`. Facebook and X are ordinary links the student chooses to follow (they open in a new tab); nothing is loaded from them on this page. Escape, the × button or a click outside closes the panel. Hidden in embed mode and in full screen. On phones the Share and Full screen buttons show only their icons.
 - A "Data sources" note at the bottom of the page.
 - **Full screen** (for presenting on a projector or interactive whiteboard): the "Full screen" button at the top right (solid blue, with four arrows pointing outward) makes the whole page fill the screen, like presenting in Google Slides. The logo, back link, footer and data sources are hidden, and the element cells grow to fill the height left under the toolbar, so the whole table still fits even if the toolbar wraps (a larger font or browser zoom): about 81 by 90 px per cell at 1920x1080, and the table fits at 1366x768, 1280x720 and 4:3 projectors such as 1024x768. Every color mode, the trend arrows, search, the keyboard grid and the details panel keep working. Esc or "Exit full screen" returns to the normal page; in full screen, the first Esc leaves full screen and a second one closes the details. The button only appears where the browser allows full screen: it is hidden on iPhones (Safari has no full screen for web pages there) and in a frame that does not allow it.
 
@@ -83,7 +84,7 @@ All 118 elements were compared with the second source (TESTING.md). Symbols, nam
 
 ## Links and URL parameters
 Views are linkable with URL parameters only (nothing is stored):
-- `mode`: `category` (default), `block`, `radius`, `electronegativity`, `ionization`
+- `mode`: `block` (default), `category`, `radius`, `electronegativity`, `ionization`
 - `el`: a symbol or atomic number; opens that element's details without moving focus, for example `?mode=electronegativity&el=F`
 - `trends=0`: trend arrows off
 - `from`: adds a "← Back to the lesson" link to that page, for `https://zornscience.org/` pages only (https, that exact host, no port or user name). Without it, or with anything else, there is no back link; the logo always links to https://zornscience.org/.
@@ -108,6 +109,8 @@ Button label: Open the Periodic Table
 - Current Chrome, Edge, Firefox and Safari iOS 16+ are intended targets, but only Chromium was tested. The mode buttons use the CSS `:has()` selector for their checked style; older browsers still show the native radio button.
 
 ## Changelog
+1.2.0: Opens in block colors instead of category. A Share button (like the Ionic Reaction Builder's) offers Copy link, Email, Facebook and X, plus the device share sheet where the browser has one; the link opens the table in the current color mode with any open element.
+
 1.1.1: The selected element's orange ring is no longer partly hidden by the cells to its right and below. The header now shows the ZornScience logo (linking to zornscience.org) and the title; the "ZornScience lessons" link and the "Chemistry · Reference" label are gone, and "← Back to the lesson" appears only with `?from=`. The Full screen button is now solid blue with an icon of four arrows pointing outward (pointing inward on "Exit full screen"), so it is easier to spot.
 
 1.1.0: Full screen button for presenting: the page fills the screen, the table grows to fit, and Esc or the button leaves.

@@ -20,7 +20,7 @@ shared/
 ion-charge-trainer/        Predicting Ion Charge Trainer, v1.4.0
 ionic-formula-builder/     Ionic Formula Builder, v1.1.0
 ionic-reactions/           Ionic Reaction Builder, v3.1.0 (select four reaction families, build products, balance and review)
-periodic-table/            Periodic Table reference, v1.1.1 (data built by periodic-table/tools/build-data.js)
+periodic-table/            Periodic Table reference, v1.2.0 (data built by periodic-table/tools/build-data.js)
 periodic-trends/           Periodic Trends Practice, v1.1.0 (questions built from the periodic table's data)
 lewis-vsepr/               Lewis Structure and VSEPR Builder, v1.1.0
 act-science/               ACT Science Practice, v1.0.1 (question bank in act-science/data.js)

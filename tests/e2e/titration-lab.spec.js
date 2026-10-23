@@ -118,8 +118,14 @@ test("the stopcock: flow rates in real time, color changes, closing and one anim
   await flow(page, "Closed").click();
   var v4 = await added(page);
   expect(v4).toBeGreaterThan(25);
-  await expect(readout(page, "color")).toHaveText(M.color("phenolphthalein", M.pH(DEFAULT, v4)).name);
-  await expect(readout(page, "ph")).toHaveText(M.fmt(M.pH(DEFAULT, v4)));
+  // The readout shows the volume to 0.01 mL, but the page works from the exact volume. Just past the equivalence
+  // point the curve is steep enough that 0.005 mL moves the pH by several hundredths, so the expected values are
+  // the ones at either end of the volume's rounding range.
+  var low = M.pH(DEFAULT, v4 - 0.005), high = M.pH(DEFAULT, v4 + 0.005);
+  expect([M.color("phenolphthalein", low).name, M.color("phenolphthalein", high).name]).toContain(await readout(page, "color").textContent());
+  var shownPH = Number(await readout(page, "ph").textContent());
+  expect(shownPH).toBeGreaterThanOrEqual(Number(M.fmt(low)));
+  expect(shownPH).toBeLessThanOrEqual(Number(M.fmt(high)));
   // The drops between 23 mL and the close are 0.05 mL apart in the data.
   await expect(graph(page)).toHaveAccessibleName(/Steepest change between 2[45]\.\d\d and 2[45]\.\d\d mL/);
   // Start over empties the flask and keeps the setup.
