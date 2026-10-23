@@ -1,10 +1,10 @@
 # Reaction Builder checks
 
-Version: 2.0.0
+Version: 3.0.0
 
-`node --test tests/unit/ionic-reactions.test.js` verifies all 35 independently pinned reaction equations, elemental counts, smallest coefficients, neutral species and polyatomic formulas, product-order permutations, invalid coefficients, and round sampling. One hundred seeded rounds must contain ten distinct problems, two per reaction type, with varied first problems.
+`node --test tests/unit/ionic-reactions.test.js` verifies all 40 independently pinned reaction equations, elemental counts, smallest coefficients, neutral species and polyatomic formulas, product-order permutations, invalid coefficients, and round sampling. It checks all 15 nonempty combinations of the four allowed reaction types, unique questions and fair distribution, and the polyatomic-ion restrictions for each family.
 
-`npx playwright test tests/e2e/ionic-reactions.spec.js` exercises independent known answers through a complete mixed round. It verifies neutral atoms and ions, drag/drop and keyboard placement, subscripts, reversed product order, live atom counts, optional whole-ion counts, 48 px coefficient controls, invalid inputs, skipping in both stages, unique-per-problem missed counts, summary review, and replay. Share checks cover canonical and encoded links, clipboard fallback, native sharing, dismissal and focus. Accessibility, small-screen target sizes and overflow, embed behavior, and local-only loading are included.
+`npx playwright test tests/e2e/ionic-reactions.spec.js` verifies the pre-start checkbox screen, empty-selection error, selected-only practice, unique randomized rounds and retained selections. It exercises the reactants-arrow-products layout and bank placement, large subscript arrows, neutral atoms and ions, drag/drop and keyboard placement, reversed product order, live atom and ion counts, coefficient controls, invalid inputs, skipping, missed-problem summaries and replay. Sharing, accessibility, mobile overflow and target sizes, embed behavior, and local-only loading are also checked.
 
 The environment's external Playwright configuration selects preinstalled Chromium: `npx playwright test --config=/workspace/.zsa-playwright.config.cjs tests/e2e/ionic-reactions.spec.js`. Firefox is not installed in this environment. The controls use ordinary HTML buttons and retain number-input keyboard support. The normal repository configuration uses its pinned Chromium when installed.
 

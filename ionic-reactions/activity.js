@@ -50,7 +50,7 @@
     }
     return copy;
   }
-  var round, records, position, reaction, record, selected, stage;
+  var round, records, position, reaction, record, selected, stage = "setup", selectedTypes = [];
   var products, fields, previews, slots, coefficientInputs, productOrder, hintLevel;
   function progress() {
     var finished = position + (record.solved ? 1 : 0);
@@ -127,6 +127,9 @@
   function buildProducts() {
     el("products").replaceChildren(); fields = []; previews = []; slots = [];
     products.forEach(function (p, index) {
+      if (index) {
+        var plus = node("span", "zsa-ir-product-plus", "+"); plus.setAttribute("aria-hidden", "true"); el("products").appendChild(plus);
+      }
       var card = node("fieldset", "zsa-ir-product");
       card.appendChild(node("legend", "", "Product " + (index + 1)));
       var parts = node("div", "zsa-ir-parts"); fields[index] = []; slots[index] = [];
@@ -150,7 +153,23 @@
         label.htmlFor = input.id;
         input.addEventListener("input", function () { preview(index); });
         fields[index][part] = input; slots[index][part] = slot;
-        label.appendChild(input); group.append(slot, label); parts.appendChild(group);
+        var subscriptField = node("div", "zsa-ir-subscript-field");
+        var control = node("div", "zsa-ir-sub-control"), arrows = node("span", "zsa-ir-sub-arrows");
+        function subscriptButton(delta) {
+          var button = node("button", "zsa-ir-sub-step"); button.type = "button";
+          button.setAttribute("aria-label", (delta > 0 ? "Increase" : "Decrease") + " product " + (index + 1) + " component " + (part + 1) + " subscript");
+          var icon = node("span", "", delta > 0 ? "▲" : "▼"); icon.setAttribute("aria-hidden", "true"); button.appendChild(icon);
+          button.addEventListener("click", function () {
+            var current = readSubscript(index, part);
+            if (current === null) current = 1;
+            var value = String(Math.max(1, Math.min(9, current + delta)));
+            if (input.value === value) return;
+            input.value = value; input.dispatchEvent(new Event("input", {bubbles: true}));
+          });
+          return button;
+        }
+        arrows.append(subscriptButton(1), subscriptButton(-1)); control.append(input, arrows);
+        subscriptField.append(label, control); group.append(slot, subscriptField); parts.appendChild(group);
       });
       var result = node("p", "zsa-ir-preview");
       result.setAttribute("aria-label", "Product " + (index + 1) + " formula preview");
@@ -270,8 +289,7 @@
         synthesis: "Synthesis combines simpler reactants into one product. If it is ionic, make its positive and negative charges cancel.",
         decomposition: "Decomposition breaks one compound into simpler substances. Use the reaction conditions and remember diatomic gases.",
         "single-replacement": "A more reactive element replaces another element in a compound. The displaced element is an uncombined element, not an ion.",
-        "double-replacement": "Swap the ion partners. Keep cations first and use the smallest subscripts that make each product neutral.",
-        "acid-base": "An acid and a hydroxide base form a salt and water. Build water from hydrogen and oxygen atoms as H2O."
+        "double-replacement": "Swap the ion partners. Keep cations first and use the smallest subscripts that make each product neutral."
       };
       feedback(hintLevel === 1 ? hints[reaction.type] : "One product is " + reaction.products[0].formula + ". " + (reaction.hint || "Use the available blocks to build the remaining product, if any. Put each different product in its own card."), "hint");
     } else {
@@ -333,7 +351,7 @@
     });
     if (!missed.length) el("summary-review").appendChild(node("li", "zsa-ir-review-item", "Every problem was correct on the first check. Nice work!"));
     el("summary-types").replaceChildren();
-    data.types.forEach(function (type) {
+    data.types.filter(function (type) { return selectedTypes.includes(type.id); }).forEach(function (type) {
       var entries = records.filter(function (r) { return r.reaction.type === type.id; });
       var misses = entries.filter(function (r) { return r.missed || r.skipped; }).length;
       el("summary-types").appendChild(node("p", "zsa-ir-type-result", type.label + ": " + (entries.length - misses) + " of " + entries.length + " correct first try"));
@@ -342,10 +360,30 @@
   }
   function advance() { position++; if (position === round.length) showSummary(); else loadProblem(false); }
   function startRound(quiet) {
-    round = model.makeRound(Math.random, data.roundSize); records = []; position = 0;
+    round = model.makeRound(Math.random, data.roundSize, selectedTypes); records = []; position = 0;
+    el("setup").hidden = true;
     el("summary").hidden = true; el("practice").hidden = false; el("meter").max = round.length;
     loadProblem(quiet);
   }
+  function showSetup(quiet) {
+    stage = "setup"; el("setup").hidden = false; el("practice").hidden = true; el("summary").hidden = true;
+    el("setup-error").hidden = true;
+    delete root.dataset.reaction; delete root.dataset.reactionType;
+    if (!quiet) { el("setup-title").focus(); say("Choose at least one reaction type, then start practice."); }
+  }
+  el("start").addEventListener("click", function () {
+    var checked = Array.from(root.querySelectorAll('input[name="reaction-type"]:checked')).map(function (input) { return input.value; });
+    if (!checked.length) {
+      el("setup-error").textContent = "Choose at least one reaction type before starting.";
+      el("setup-error").hidden = false;
+      root.querySelector('input[name="reaction-type"]').focus();
+      return;
+    }
+    selectedTypes = checked; el("setup-error").hidden = true; startRound(false);
+  });
+  root.querySelectorAll('input[name="reaction-type"]').forEach(function (input) {
+    input.addEventListener("change", function () { if (input.checked) el("setup-error").hidden = true; });
+  });
   el("check-products").addEventListener("click", checkProducts);
   el("check-balance").addEventListener("click", checkBalance);
   el("count-mode").addEventListener("change", updateCounts);
@@ -355,5 +393,6 @@
     if (stage === "products" || stage === "balance") { record.skipped = true; record.solved = false; advance(); }
   });
   el("restart").addEventListener("click", function () { startRound(false); });
-  startRound(true);
+  el("change-types").addEventListener("click", function () { showSetup(false); });
+  showSetup(true);
 }());

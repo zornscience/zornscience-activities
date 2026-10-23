@@ -1,15 +1,15 @@
 # Reaction Builder
 
-Version: 2.0.0
+Version: 3.0.0
 
-Predict products and balance chemical equations in a ten-problem round. Each round selects two synthesis, two decomposition, two single replacement, two double replacement, and two acid base reactions from a bank of 35. Both the selection and order are shuffled, including the first problem. The existing `ionic-reactions/` address stays the same.
+Choose Synthesis, Decomposition, Single Replacement, Double Replacement, or any combination before starting a ten-problem round. At least one checkbox must be selected. The 40-reaction bank contains ten examples per family, so even a single-family round has ten distinct problems. Rounds distribute questions as evenly as possible across the selected families and shuffle the order, including the first problem. The existing `ionic-reactions/` address stays the same.
 
 ## Student workflow
 
-1. Use the reaction family and stated conditions to predict products. Drag blocks into the product spaces, or select a block and then its space with a mouse, touch, Enter, or Space. Blue blocks are cations, warm blocks are anions, and teal blocks are neutral atoms. The same block can be reused.
-2. Build each product in its own card, in either product order. Each card has a first component and an optional second component. Enter subscripts, leaving blank for 1. Use the positive ion first in ionic formulas, keep polyatomic ions intact, and build molecular and elemental products with neutral atoms. For example, O2 uses one O atom block with subscript 2; H2O uses H with subscript 2 and O with subscript 1. Parentheses appear automatically for repeated polyatomic ions.
+1. Select at least one reaction family and choose Start practice. The reactants are left-justified, followed by a reaction arrow and product-building spaces on the right. The bank of ions and atoms is below both sides of the equation. Use the reaction family and stated conditions to predict products. Drag blocks into the product spaces, or select a block and then its space with a mouse, touch, Enter, or Space. Blue blocks are cations, warm blocks are anions, and teal blocks are neutral atoms. The same block can be reused.
+2. Build each product in its own card, in either product order. Each card has a first component and an optional second component. Enter subscripts or use the large up and down buttons; blank means 1, with a range of 1 to 9. Use the positive ion first in ionic formulas, keep polyatomic ions intact, and build molecular and elemental products with neutral atoms. For example, O2 uses one O atom block with subscript 2; H2O uses H with subscript 2 and O with subscript 1. Parentheses appear automatically for repeated polyatomic ions.
 3. After correct products, the formulas lock. Adjust coefficients from 1 to 99 with separate 48 px minus and plus buttons, by typing, or with keyboard arrows. Live counts update immediately. All reaction types conserve atoms. Double replacement also offers a whole-ion view because those ions stay intact.
-4. Check the smallest whole-number balance to enable Next reaction. Skip problem advances from either prediction or balancing. The last problem leads to a summary, with a new round available afterward.
+4. Check the smallest whole-number balance to enable Next reaction. Skip problem advances from either prediction or balancing. The last problem leads to a summary. Start a new round keeps the selected families; Change reaction types returns to the checkbox screen.
 
 ## Results and review
 
@@ -21,9 +21,9 @@ Review lists the correct balanced equation for every missed or skipped problem, 
 
 The bank uses introductory metal ions and basic polyatomic ions: NH4+, OH−, NO3−, NO2−, IO3−, SO3²−, SO4²−, CO3²−, PO4³−, and the simplified classroom PO3³−. SO2 was clarified as sulfate. Ammonium is a cation; neutral atoms are separate blocks from ions of the same element.
 
-Reaction conditions distinguish thermal decomposition, electrolysis, catalysts, ignition, activity-series replacements, and complete neutralization. Explanations that reveal products appear only after successful prediction or through an explicit hint. The old BaCl2 + NaOH no-net-ionic example is replaced with actual precipitation reactions, including BaCl2 + Na2SO4. The phosphite item is explicitly identified as an idealized classroom model; common aqueous phosphite is HPO3²−.
+Synthesis and decomposition use no polyatomic ions, including in the option bank. Neutral molecules such as water and hydrogen peroxide are distinct from polyatomic ions. Single replacement may include a polyatomic anion in the compound, but that anion is conserved: the displaced or incoming species is never polyatomic. Double replacement can include polyatomic cations such as ammonium and polyatomic anions.
 
-The live table uses atoms for synthesis, decomposition, single replacement, and acid base reactions. It does not claim that H+ and OH− survive neutralization unchanged. Whole-ion counting is restricted to double replacement.
+Conditions distinguish thermal decomposition, electrolysis, catalysts, ignition, and activity-series replacements. Explanations that reveal products appear only after successful prediction or through an explicit hint. The phosphite item is explicitly identified as an idealized classroom model; common aqueous phosphite is HPO3²−. The live table counts atoms for synthesis, decomposition, and single replacement, with optional whole-ion counting for double replacement.
 
 ## Branding and sharing
 
@@ -35,6 +35,7 @@ Static HTML, CSS and strict JavaScript IIFEs, with shared site styles and embed 
 
 ## Changelog
 
+- 3.0.0: Reactants-arrow-products layout with the bank underneath, large subscript arrows, pre-practice selection of four reaction families, and stricter polyatomic-ion rules.
 - 2.0.0: ZornScience branding, share options, mixed reaction families, shuffled ten-problem rounds, skipping, and a scored summary with answer review.
 - 1.0.1: Large coefficient minus and plus controls.
 - 1.0.0: Initial ion-exchange product prediction and balancing activity.

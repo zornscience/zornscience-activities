@@ -1,4 +1,4 @@
-// Formula construction, conserved counts and shuffled practice rounds for five reaction families.
+// Formula construction, conserved counts and shuffled practice rounds for four selectable reaction families.
 (function () {
   "use strict";
   var data;
@@ -69,17 +69,22 @@
     }
     return copy;
   }
-  function makeRound(random, size) {
+  function makeRound(random, size, selectedTypes) {
     random = typeof random === "function" ? random : Math.random;
     size = size === undefined ? data.roundSize : size;
-    if (!Number.isInteger(size) || size < 1 || size > data.reactions.length) throw new RangeError("Choose a round size within the reaction bank.");
-    var perType = Math.floor(size / data.types.length), remainder = size % data.types.length, chosen = [];
-    var typeOrder = shuffled(data.types, random);
+    var allowed = data.types.map(function (type) { return type.id; });
+    var selection = selectedTypes === undefined ? allowed : selectedTypes;
+    if (!Array.isArray(selection) || !selection.length || new Set(selection).size !== selection.length ||
+      selection.some(function (id) { return allowed.indexOf(id) < 0; })) throw new RangeError("Select at least one valid reaction type.");
+    var eligible = data.reactions.filter(function (reaction) { return selection.indexOf(reaction.type) >= 0; });
+    if (!Number.isInteger(size) || size < 1 || size > eligible.length) throw new RangeError("Choose a round size within the selected reaction bank.");
+    var perType = Math.floor(size / selection.length), remainder = size % selection.length, chosen = [];
+    var typeOrder = shuffled(selection, random);
     typeOrder.forEach(function (type, index) {
-      var pool = shuffled(data.reactions.filter(function (reaction) { return reaction.type === type.id; }), random);
+      var pool = shuffled(eligible.filter(function (reaction) { return reaction.type === type; }), random);
       chosen = chosen.concat(pool.slice(0, perType + (index < remainder ? 1 : 0)));
     });
-    if (chosen.length < size) chosen = chosen.concat(shuffled(data.reactions.filter(function (reaction) { return chosen.indexOf(reaction) < 0; }), random).slice(0, size - chosen.length));
+    if (chosen.length < size) chosen = chosen.concat(shuffled(eligible.filter(function (reaction) { return chosen.indexOf(reaction) < 0; }), random).slice(0, size - chosen.length));
     return shuffled(chosen, random);
   }
   var api = {speciesFormula: speciesFormula, atomCounts: atomCounts, ionCounts: ionCounts, isBalanced: isBalanced, isLowest: isLowest, coefficients: coefficients, makeRound: makeRound};

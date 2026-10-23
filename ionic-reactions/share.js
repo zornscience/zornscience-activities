@@ -7,7 +7,7 @@
   if (!toggle || !panel) return;
   var url = "https://activities.zornscience.org/ionic-reactions/";
   var title = "Reaction Builder | ZornScience";
-  var description = "Predict products and balance five types of chemical reactions with ZornScience.";
+  var description = "Choose from four reaction types, predict the products, and balance chemical equations with ZornScience.";
   el("url").value = url;
   el("email").href = "mailto:?subject=" + encodeURIComponent(title) + "&body=" + encodeURIComponent(description + "\n\n" + url);
   el("facebook").href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);

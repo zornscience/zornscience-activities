@@ -12,13 +12,9 @@ var expected = {
   "sodium-chlorine": [["Na", "Cl2"], ["NaCl"], [2, 1, 2]],
   "hydrogen-oxygen": [["H2", "O2"], ["H2O"], [2, 1, 2]],
   "iron-sulfur": [["Fe", "S"], ["FeS"], [1, 1, 1]],
-  "calcium-carbonate-breakdown": [["CaCO3"], ["CaO", "CO2"], [1, 1, 1]],
-  "magnesium-carbonate-breakdown": [["MgCO3"], ["MgO", "CO2"], [1, 1, 1]],
-  "calcium-hydroxide-breakdown": [["Ca(OH)2"], ["CaO", "H2O"], [1, 1, 1]],
   "peroxide-breakdown": [["H2O2"], ["H2O", "O2"], [2, 2, 1]],
   "water-electrolysis": [["H2O"], ["H2", "O2"], [2, 2, 1]],
   "silver-oxide-breakdown": [["Ag2O"], ["Ag", "O2"], [2, 4, 1]],
-  "ammonium-carbonate-breakdown": [["(NH4)2CO3"], ["NH3", "CO2", "H2O"], [1, 2, 1, 1]],
   "zinc-hydrochloric": [["Zn", "HCl"], ["ZnCl2", "H2"], [1, 2, 1, 1]],
   "magnesium-hydrochloric": [["Mg", "HCl"], ["MgCl2", "H2"], [1, 2, 1, 1]],
   "iron-copper-sulfate": [["Fe", "CuSO4"], ["FeSO4", "Cu"], [1, 1, 1, 1]],
@@ -35,12 +31,21 @@ var expected = {
   "ammonium-calcium-phosphate": [["(NH4)3PO4", "CaCl2"], ["NH4Cl", "Ca3(PO4)2"], [2, 3, 6, 1]],
   "barium-sulfate": [["BaCl2", "Na2SO4"], ["BaSO4", "NaCl"], [1, 1, 1, 2]],
   "calcium-phosphite": [["CaCl2", "Na3PO3"], ["Ca3(PO3)2", "NaCl"], [3, 2, 1, 6]],
-  "hydrochloric-sodium-hydroxide": [["HCl", "NaOH"], ["NaCl", "H2O"], [1, 1, 1, 1]],
-  "nitric-potassium-hydroxide": [["HNO3", "KOH"], ["KNO3", "H2O"], [1, 1, 1, 1]],
-  "sulfuric-sodium-hydroxide": [["H2SO4", "NaOH"], ["Na2SO4", "H2O"], [1, 2, 1, 2]],
-  "hydrochloric-calcium-hydroxide": [["HCl", "Ca(OH)2"], ["CaCl2", "H2O"], [2, 1, 1, 2]],
-  "nitric-magnesium-hydroxide": [["HNO3", "Mg(OH)2"], ["Mg(NO3)2", "H2O"], [2, 1, 1, 2]],
-  "phosphoric-potassium-hydroxide": [["H3PO4", "KOH"], ["K3PO4", "H2O"], [1, 3, 1, 3]]
+  "magnesium-chlorine": [["Mg", "Cl2"], ["MgCl2"], [1, 1, 1]],
+  "aluminum-chlorine": [["Al", "Cl2"], ["AlCl3"], [2, 3, 2]],
+  "carbon-oxygen": [["C", "O2"], ["CO2"], [1, 1, 1]],
+  "nitrogen-hydrogen": [["N2", "H2"], ["NH3"], [1, 3, 2]],
+  "sodium-chloride-electrolysis": [["NaCl"], ["Na", "Cl2"], [2, 2, 1]],
+  "magnesium-chloride-electrolysis": [["MgCl2"], ["Mg", "Cl2"], [1, 1, 1]],
+  "calcium-chloride-electrolysis": [["CaCl2"], ["Ca", "Cl2"], [1, 1, 1]],
+  "zinc-chloride-electrolysis": [["ZnCl2"], ["Zn", "Cl2"], [1, 1, 1]],
+  "copper-chloride-electrolysis": [["CuCl2"], ["Cu", "Cl2"], [1, 1, 1]],
+  "sodium-bromide-electrolysis": [["NaBr"], ["Na", "Br2"], [2, 2, 1]],
+  "potassium-bromide-electrolysis": [["KBr"], ["K", "Br2"], [2, 2, 1]],
+  "magnesium-copper-sulfate": [["Mg", "CuSO4"], ["MgSO4", "Cu"], [1, 1, 1, 1]],
+  "zinc-silver-nitrate": [["Zn", "AgNO3"], ["Zn(NO3)2", "Ag"], [1, 2, 1, 2]],
+  "iron-hydrochloric": [["Fe", "HCl"], ["FeCl2", "H2"], [1, 2, 1, 1]],
+  "magnesium-zinc-sulfate": [["Mg", "ZnSO4"], ["MgSO4", "Zn"], [1, 1, 1, 1]]
 };
 function parseAtoms(formula) {
   var tokens = formula.match(/[A-Z][a-z]?|\d+|[()]/g), index = 0;
@@ -69,8 +74,8 @@ function sum(formulas, values) {
 function reaction(id) { return D.reactions.find(function (r) { return r.id === id; }); }
 function seeded(seed) { return function () { seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0; return seed / 4294967296; }; }
 
-test("all 35 equations have independently pinned formulas, atom counts and smallest coefficients", function () {
-  assert.equal(D.reactions.length, 35);
+test("all 40 equations have independently pinned formulas, atom counts and smallest coefficients", function () {
+  assert.equal(D.reactions.length, 40);
   assert.deepEqual(D.reactions.map(function (r) { return r.id; }).sort(), Object.keys(expected).sort());
   D.reactions.forEach(function (r) {
     var answer = expected[r.id];
@@ -113,24 +118,24 @@ test("neutral atom tokens, ions and polyatomic formulas remain chemically distin
   assert.equal(M.speciesFormula([]), "");
 });
 
-test("the atom table tracks transformed atoms rather than pretending hydroxide or carbonate stays intact", function () {
-  var acid = reaction("hydrochloric-sodium-hydroxide");
-  assert.deepEqual(M.atomCounts(acid, [1, 1, 1, 1]), [
-    {symbol: "H", left: 2, right: 2}, {symbol: "Cl", left: 1, right: 1}, {symbol: "Na", left: 1, right: 1}, {symbol: "O", left: 1, right: 1}
+test("the atom table counts neutral products while whole-ion counting is limited to double replacement", function () {
+  var water = reaction("water-electrolysis");
+  assert.deepEqual(M.atomCounts(water, [2, 2, 1]), [
+    {symbol: "H", left: 4, right: 4}, {symbol: "O", left: 2, right: 2}
   ]);
-  assert.deepEqual(M.atomCounts(acid, [1, 2, 1, 1]), [
-    {symbol: "H", left: 3, right: 2}, {symbol: "Cl", left: 1, right: 1}, {symbol: "Na", left: 2, right: 1}, {symbol: "O", left: 2, right: 1}
+  assert.deepEqual(M.atomCounts(water, [1, 2, 1]), [
+    {symbol: "H", left: 2, right: 4}, {symbol: "O", left: 1, right: 2}
   ]);
-  assert.equal(M.ionCounts(acid, [1, 1, 1, 1]), null);
-  assert.equal(M.ionCounts(reaction("calcium-carbonate-breakdown"), [1, 1, 1]), null);
+  assert.equal(M.ionCounts(water, [2, 2, 1]), null);
+  assert.equal(M.ionCounts(reaction("iron-copper-sulfate"), [1, 1, 1, 1]), null);
   assert.deepEqual(M.ionCounts(reaction("calcium-phosphate"), [3, 2, 1, 6]), [
     {symbol: "Ca", token: "ca", left: 3, right: 3}, {symbol: "Cl", token: "cl", left: 6, right: 6},
     {symbol: "Na", token: "na", left: 6, right: 6}, {symbol: "PO4", token: "po4", left: 2, right: 2}
   ]);
-  assert.ok(M.atomCounts(acid, ["", -1, NaN, undefined]).every(function (row) { return row.left === 0 && row.right === 0; }));
+  assert.ok(M.atomCounts(water, ["", -1, NaN]).every(function (row) { return row.left === 0 && row.right === 0; }));
 });
 
-test("displayed product permutations preserve balance with unequal coefficients and three products", function () {
+test("displayed product permutations preserve balance with unequal coefficients", function () {
   D.reactions.forEach(function (r) {
     var order = r.products.map(function (_, index) { return index; }).reverse();
     var answer = expected[r.id][2], split = r.reactants.length;
@@ -151,33 +156,93 @@ test("balance validation rejects empty, zero, fractional, unsafe and wrong-lengt
   });
 });
 
-test("ten-question rounds contain two of each family, no repeats, and shuffled starting problems", function () {
+test("ten-question rounds fairly mix all four types without repeats and shuffle their first problem", function () {
   var starts = new Set(), snapshot = D.reactions.map(function (r) { return r.id; });
   for (var seed = 1; seed <= 100; seed++) {
     var round = M.makeRound(seeded(seed));
     assert.equal(round.length, 10);
     assert.equal(new Set(round.map(function (r) { return r.id; })).size, 10);
-    D.types.forEach(function (type) { assert.equal(round.filter(function (r) { return r.type === type.id; }).length, 2); });
+    var counts = D.types.map(function (type) { return round.filter(function (r) { return r.type === type.id; }).length; });
+    assert.ok(Math.max.apply(null, counts) - Math.min.apply(null, counts) <= 1);
+    assert.ok(counts.every(function (n) { return n === 2 || n === 3; }));
     starts.add(round[0].id);
   }
   assert.ok(starts.size > 15, "first problems vary across seeds");
   assert.deepEqual(D.reactions.map(function (r) { return r.id; }), snapshot);
-  for (var size of [1, 5, 10, 17, 35]) assert.equal(M.makeRound(seeded(99), size).length, size);
+  for (var size of [1, 4, 10, 17, 40]) assert.equal(M.makeRound(seeded(99), size).length, size);
   assert.throws(function () { M.makeRound(Math.random, 0); }, RangeError);
-  assert.throws(function () { M.makeRound(Math.random, 36); }, RangeError);
+  assert.throws(function () { M.makeRound(Math.random, 41); }, RangeError);
   assert.throws(function () { M.makeRound(Math.random, 1.5); }, RangeError);
 });
 
-test("reaction families have adequate coverage, conditions and all required product tokens", function () {
-  assert.deepEqual(D.types.map(function (type) { return type.id; }), ["synthesis", "decomposition", "single-replacement", "double-replacement", "acid-base"]);
-  D.types.forEach(function (type) { assert.ok(D.reactions.filter(function (r) { return r.type === type.id; }).length >= 6); });
+test("every nonempty type selection produces ten unique questions only from selected families", function () {
+  var ids = D.types.map(function (type) { return type.id; });
+  for (var mask = 1; mask < 16; mask++) {
+    var selection = ids.filter(function (_, index) { return mask & (1 << index); });
+    var snapshot = selection.slice(), starts = new Set();
+    for (var seed = 1; seed <= 30; seed++) {
+      var round = M.makeRound(seeded(seed), 10, selection);
+      assert.equal(round.length, 10);
+      assert.equal(new Set(round.map(function (r) { return r.id; })).size, 10);
+      round.forEach(function (r) { assert.ok(selection.includes(r.type), r.type + " is selected"); });
+      var counts = selection.map(function (type) { return round.filter(function (r) { return r.type === type; }).length; });
+      assert.ok(Math.max.apply(null, counts) - Math.min.apply(null, counts) <= 1);
+      starts.add(round[0].id);
+    }
+    assert.ok(starts.size > 3, "selected round starts vary: " + selection.join(", "));
+    assert.deepEqual(selection, snapshot, "selection not mutated");
+  }
+  for (var invalid of [[], ["acid-base"], ["unknown"], ["synthesis", "synthesis"], "synthesis", null]) {
+    assert.throws(function () { M.makeRound(Math.random, 10, invalid); }, RangeError);
+  }
+  assert.throws(function () { M.makeRound(Math.random, 11, ["synthesis"]); }, RangeError);
+});
+
+test("reaction families enforce the requested polyatomic-ion restrictions in formulas and option banks", function () {
+  assert.deepEqual(D.types.map(function (type) { return type.id; }), ["synthesis", "decomposition", "single-replacement", "double-replacement"]);
+  D.types.forEach(function (type) { assert.equal(D.reactions.filter(function (r) { return r.type === type.id; }).length, 10); });
   D.reactions.forEach(function (r) {
     assert.ok(r.hint && r.condition && r.note, r.id + " has chemistry context");
-    assert.ok(r.products.length >= 1 && r.products.length <= 3);
+    assert.ok(r.products.length >= 1 && r.products.length <= 2);
     assert.equal(new Set(r.bank).size, r.bank.length);
     r.products.forEach(function (s) { s.parts.forEach(function (p) { assert.ok(r.bank.includes(p.token), r.id + " bank contains " + p.token); }); });
     assert.ok(!r.reactants.concat(r.products).some(function (s) { return s.formula === "NH4OH"; }));
+    var species = r.reactants.concat(r.products);
+    if (r.type === "synthesis" || r.type === "decomposition") {
+      species.forEach(function (s) { s.parts.forEach(function (p) { assert.equal(D.tokens[p.token].polyatomic, false, r.id + " species " + s.formula); }); });
+      r.bank.forEach(function (id) { assert.equal(D.tokens[id].polyatomic, false, r.id + " option " + id); });
+    }
+    if (r.type === "single-replacement") {
+      var polyatomic = r.bank.filter(function (id) { return D.tokens[id].polyatomic; });
+      species.forEach(function (s) {
+        s.parts.forEach(function (p, index) {
+          if (D.tokens[p.token].polyatomic) {
+            assert.equal(s.kind, "ionic", r.id);
+            assert.equal(index, 1, r.id + " polyatomic ion must be anion");
+            assert.ok(D.tokens[p.token].charge < 0, r.id);
+          }
+        });
+      });
+      polyatomic.forEach(function (id) {
+        assert.ok(D.tokens[id].charge < 0);
+        var totals = [0, 0];
+        species.forEach(function (s, index) {
+          s.parts.forEach(function (p, partIndex) {
+            if (p.token === id) {
+              assert.equal(s.kind, "ionic"); assert.equal(partIndex, 1);
+              totals[index < r.reactants.length ? 0 : 1] += p.count * expected[r.id][2][index];
+            }
+          });
+        });
+        assert.ok(totals[0] > 0, r.id + " no unused polyatomic distractor");
+        assert.equal(totals[0], totals[1], r.id + " unchanged polyatomic anion");
+      });
+    }
   });
+  var doubles = D.reactions.filter(function (r) { return r.type === "double-replacement"; });
+  assert.ok(doubles.some(function (r) { return r.reactants.concat(r.products).some(function (s) { return D.tokens[s.parts[0].token].polyatomic && D.tokens[s.parts[0].token].charge > 0; }); }), "double replacement includes a polyatomic cation");
+  assert.ok(doubles.some(function (r) { return r.reactants.concat(r.products).some(function (s) { return s.parts.some(function (p) { return D.tokens[p.token].polyatomic && D.tokens[p.token].charge < 0; }); }); }), "double replacement includes polyatomic anions");
   assert.match(reaction("water-electrolysis").condition, /Electrolysis/);
-  assert.match(reaction("phosphoric-potassium-hydroxide").condition, /enough KOH/);
+  assert.match(reaction("sodium-chloride-electrolysis").condition, /molten/);
+  assert.match(reaction("copper-chloride-electrolysis").condition, /aqueous.*inert electrodes/);
 });

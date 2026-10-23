@@ -1,10 +1,11 @@
-// Reaction Builder: exercise a mixed round using independent chemistry anchors, then verify
-// feedback accounting, accessible component placement, sharing, and responsive controls.
+// Reaction Builder: selectable practice families, independent chemistry anchors, equation layout,
+// accessible controls, feedback accounting, sharing and responsive behavior.
 "use strict";
 var fs = require("fs");
 var {test, expect, seedRandom} = require("./fixtures");
 var AXE = fs.readFileSync(require.resolve("axe-core/axe.min.js"), "utf8");
 var SHARE_URL = "https://activities.zornscience.org/ionic-reactions/";
+var TYPES = ["synthesis", "decomposition", "single-replacement", "double-replacement"];
 
 // Filled from independently written formula and balancing references, never the application's solver.
 function product(formula, parts) { return {formula: formula, parts: parts}; }
@@ -18,13 +19,9 @@ var REFERENCES = {
   "sodium-chlorine": reference(["Na", "Cl2"], [product("NaCl", [["na", 1], ["cl", 1]])], [2, 1, 2]),
   "hydrogen-oxygen": reference(["H2", "O2"], [WATER], [2, 1, 2]),
   "iron-sulfur": reference(["Fe", "S"], [product("FeS", [["fe", 1], ["s", 1]])], [1, 1, 1]),
-  "calcium-carbonate-breakdown": reference(["CaCO3"], [product("CaO", [["ca", 1], ["o", 1]]), CARBON_DIOXIDE], [1, 1, 1]),
-  "magnesium-carbonate-breakdown": reference(["MgCO3"], [product("MgO", [["mg", 1], ["o", 1]]), CARBON_DIOXIDE], [1, 1, 1]),
-  "calcium-hydroxide-breakdown": reference(["Ca(OH)2"], [product("CaO", [["ca", 1], ["o", 1]]), WATER], [1, 1, 1]),
   "peroxide-breakdown": reference(["H2O2"], [WATER, product("O2", [["o_atom", 2]])], [2, 2, 1]),
   "water-electrolysis": reference(["H2O"], [product("H2", [["h_atom", 2]]), product("O2", [["o_atom", 2]])], [2, 2, 1]),
   "silver-oxide-breakdown": reference(["Ag2O"], [product("Ag", [["ag_atom", 1]]), product("O2", [["o_atom", 2]])], [2, 4, 1]),
-  "ammonium-carbonate-breakdown": reference(["(NH4)2CO3"], [product("NH3", [["n_atom", 1], ["h_atom", 3]]), CARBON_DIOXIDE, WATER], [1, 2, 1, 1]),
   "zinc-hydrochloric": reference(["Zn", "HCl"], [product("ZnCl2", [["zn", 1], ["cl", 2]]), product("H2", [["h_atom", 2]])], [1, 2, 1, 1]),
   "magnesium-hydrochloric": reference(["Mg", "HCl"], [product("MgCl2", [["mg", 1], ["cl", 2]]), product("H2", [["h_atom", 2]])], [1, 2, 1, 1]),
   "iron-copper-sulfate": reference(["Fe", "CuSO4"], [product("FeSO4", [["fe", 1], ["so4", 1]]), product("Cu", [["cu_atom", 1]])], [1, 1, 1, 1]),
@@ -41,12 +38,21 @@ var REFERENCES = {
   "ammonium-calcium-phosphate": reference(["(NH4)3PO4", "CaCl2"], [product("NH4Cl", [["nh4", 1], ["cl", 1]]), product("Ca3(PO4)2", [["ca", 3], ["po4", 2]])], [2, 3, 6, 1]),
   "barium-sulfate": reference(["BaCl2", "Na2SO4"], [product("BaSO4", [["ba", 1], ["so4", 1]]), product("NaCl", [["na", 1], ["cl", 1]])], [1, 1, 1, 2]),
   "calcium-phosphite": reference(["CaCl2", "Na3PO3"], [product("Ca3(PO3)2", [["ca", 3], ["po3", 2]]), product("NaCl", [["na", 1], ["cl", 1]])], [3, 2, 1, 6]),
-  "hydrochloric-sodium-hydroxide": reference(["HCl", "NaOH"], [product("NaCl", [["na", 1], ["cl", 1]]), WATER], [1, 1, 1, 1]),
-  "nitric-potassium-hydroxide": reference(["HNO3", "KOH"], [product("KNO3", [["k", 1], ["no3", 1]]), WATER], [1, 1, 1, 1]),
-  "sulfuric-sodium-hydroxide": reference(["H2SO4", "NaOH"], [product("Na2SO4", [["na", 2], ["so4", 1]]), WATER], [1, 2, 1, 2]),
-  "hydrochloric-calcium-hydroxide": reference(["HCl", "Ca(OH)2"], [product("CaCl2", [["ca", 1], ["cl", 2]]), WATER], [2, 1, 1, 2]),
-  "nitric-magnesium-hydroxide": reference(["HNO3", "Mg(OH)2"], [product("Mg(NO3)2", [["mg", 1], ["no3", 2]]), WATER], [2, 1, 1, 2]),
-  "phosphoric-potassium-hydroxide": reference(["H3PO4", "KOH"], [product("K3PO4", [["k", 3], ["po4", 1]]), WATER], [1, 3, 1, 3])
+  "magnesium-chlorine": reference(["Mg", "Cl2"], [product("MgCl2", [["mg", 1], ["cl", 2]])], [1, 1, 1]),
+  "aluminum-chlorine": reference(["Al", "Cl2"], [product("AlCl3", [["al", 1], ["cl", 3]])], [2, 3, 2]),
+  "carbon-oxygen": reference(["C", "O2"], [CARBON_DIOXIDE], [1, 1, 1]),
+  "nitrogen-hydrogen": reference(["N2", "H2"], [product("NH3", [["n_atom", 1], ["h_atom", 3]])], [1, 3, 2]),
+  "sodium-chloride-electrolysis": reference(["NaCl"], [product("Na", [["na_atom", 1]]), product("Cl2", [["cl_atom", 2]])], [2, 2, 1]),
+  "magnesium-chloride-electrolysis": reference(["MgCl2"], [product("Mg", [["mg_atom", 1]]), product("Cl2", [["cl_atom", 2]])], [1, 1, 1]),
+  "calcium-chloride-electrolysis": reference(["CaCl2"], [product("Ca", [["ca_atom", 1]]), product("Cl2", [["cl_atom", 2]])], [1, 1, 1]),
+  "zinc-chloride-electrolysis": reference(["ZnCl2"], [product("Zn", [["zn_atom", 1]]), product("Cl2", [["cl_atom", 2]])], [1, 1, 1]),
+  "copper-chloride-electrolysis": reference(["CuCl2"], [product("Cu", [["cu_atom", 1]]), product("Cl2", [["cl_atom", 2]])], [1, 1, 1]),
+  "sodium-bromide-electrolysis": reference(["NaBr"], [product("Na", [["na_atom", 1]]), product("Br2", [["br_atom", 2]])], [2, 2, 1]),
+  "potassium-bromide-electrolysis": reference(["KBr"], [product("K", [["k_atom", 1]]), product("Br2", [["br_atom", 2]])], [2, 2, 1]),
+  "magnesium-copper-sulfate": reference(["Mg", "CuSO4"], [product("MgSO4", [["mg", 1], ["so4", 1]]), product("Cu", [["cu_atom", 1]])], [1, 1, 1, 1]),
+  "zinc-silver-nitrate": reference(["Zn", "AgNO3"], [product("Zn(NO3)2", [["zn", 1], ["no3", 2]]), product("Ag", [["ag_atom", 1]])], [1, 2, 1, 2]),
+  "iron-hydrochloric": reference(["Fe", "HCl"], [product("FeCl2", [["fe", 1], ["cl", 2]]), product("H2", [["h_atom", 2]])], [1, 2, 1, 1]),
+  "magnesium-zinc-sulfate": reference(["Mg", "ZnSO4"], [product("MgSO4", [["mg", 1], ["so4", 1]]), product("Zn", [["zn_atom", 1]])], [1, 1, 1, 1]),
 };
 
 function atomTotals(reference) {
@@ -70,10 +76,21 @@ function atomTotals(reference) {
   return total;
 }
 
-async function go(page, seed) {
+async function open(page, seed) {
   await page.addInitScript(seedRandom, seed === undefined ? 41 : seed);
   await page.goto("/ionic-reactions/");
   await expect(page.getByRole("heading", {level: 1, name: "Reaction Builder", exact: true})).toBeVisible();
+  await expect(page.locator("#zsa-ir-setup")).toBeVisible();
+  await expect(page.locator("#zsa-ir-practice")).toBeHidden();
+}
+async function chooseTypes(page, selected) {
+  for (var type of TYPES) await page.locator("input[name='reaction-type'][value='" + type + "']").setChecked(selected.includes(type));
+}
+async function go(page, seed, selected) {
+  await open(page, seed);
+  if (selected) await chooseTypes(page, selected);
+  await page.locator("#zsa-ir-start").click();
+  await expect(page.locator("#zsa-ir-setup")).toBeHidden();
   await expect(page.locator("#zsa-ir-bank button[data-token]").first()).toBeVisible();
 }
 async function current(page) {
@@ -159,7 +176,94 @@ async function audit(page, label) {
   expect(result.violations.map((v) => label + ": " + v.id + " " + v.nodes.map((n) => n.target.join(" ")).join(", "))).toEqual([]);
 }
 
-test("branding and randomized first problems appear without moving initial focus", async ({page, browser, problems}) => {
+test("practice requires at least one selected family before any problem appears", async ({page, problems}) => {
+  void problems;
+  await open(page);
+  expect(await page.evaluate(() => document.activeElement === document.body)).toBe(true);
+  await expect(page.locator("input[name='reaction-type']")).toHaveCount(4);
+  for (var name of ["Synthesis", "Decomposition", "Single Replacement", "Double Replacement"]) await expect(page.getByRole("checkbox", {name: name, exact: true})).toBeChecked();
+  await expect(page.locator("#zsa-ir-bank")).toBeHidden();
+  await chooseTypes(page, []);
+  await page.locator("#zsa-ir-start").click();
+  await expect(page.locator("#zsa-ir-setup-error")).toContainText(/at least one/i);
+  await expect(page.locator("#zsa-ir-practice")).toBeHidden();
+  await expect(page.locator("main[data-zsa-activity]")).not.toHaveAttribute("data-reaction", /.+/);
+  await page.getByRole("checkbox", {name: "Synthesis", exact: true}).check();
+  await page.locator("#zsa-ir-start").click();
+  await expect(page.locator("#zsa-ir-practice")).toBeVisible();
+  await expect(page.locator("main[data-zsa-activity]")).toHaveAttribute("data-reaction-type", "synthesis");
+});
+
+test("single-family rounds have ten distinct problems and replay preserves the chosen family", async ({page, problems}) => {
+  void problems;
+  for (var family of TYPES) {
+    await go(page, 22, [family]);
+    var ids = new Set();
+    for (var index = 0; index < 10; index++) {
+      await expect(page.locator("main[data-zsa-activity]")).toHaveAttribute("data-reaction-type", family);
+      var active = await current(page);
+      expect(ids.has(active.id)).toBe(false); ids.add(active.id);
+      await page.locator("#zsa-ir-skip").click();
+    }
+    expect(ids.size).toBe(10);
+    await expect(page.locator("#zsa-ir-summary-types > *")).toHaveCount(1);
+    await page.locator("#zsa-ir-restart").click();
+    await expect(page.locator("main[data-zsa-activity]")).toHaveAttribute("data-reaction-type", family);
+    await skipRound(page);
+    await page.locator("#zsa-ir-change-types").click();
+    await expect(page.locator("#zsa-ir-setup")).toBeVisible();
+    for (var type of TYPES) expect(await page.locator("input[name='reaction-type'][value='" + type + "']").isChecked()).toBe(type === family);
+  }
+});
+
+test("a selected two-family round includes only those families in an even mix", async ({page, problems}) => {
+  void problems;
+  await go(page, 73, ["decomposition", "double-replacement"]);
+  var types = {};
+  for (var i = 0; i < 10; i++) {
+    var type = await page.locator("main[data-zsa-activity]").getAttribute("data-reaction-type");
+    types[type] = (types[type] || 0) + 1;
+    await page.locator("#zsa-ir-skip").click();
+  }
+  expect(types).toEqual({decomposition: 5, "double-replacement": 5});
+});
+
+test("product subscript arrows have large targets, update previews, clamp values and lock after checking", async ({page, problems}) => {
+  void problems;
+  await go(page, 41, ["synthesis"]);
+  var ref = (await current(page)).reference, answer = ref.products[0].parts[0];
+  await place(page, answer[0], 0, 0);
+  var input = subscript(page, 0, 0);
+  var increase = page.getByRole("button", {name: "Increase product 1 component 1 subscript", exact: true});
+  var decrease = page.getByRole("button", {name: "Decrease product 1 component 1 subscript", exact: true});
+  for (var button of await page.locator(".zsa-ir-sub-step").all()) {
+    var box = await button.boundingBox(); expect(box.width).toBeGreaterThanOrEqual(44); expect(box.height).toBeGreaterThanOrEqual(44);
+  }
+  var before = await page.locator("#zsa-ir-products .zsa-ir-preview").first().textContent();
+  await increase.click(); await expect(input).toHaveValue("2");
+  expect(await page.locator("#zsa-ir-products .zsa-ir-preview").first().textContent()).not.toBe(before);
+  await decrease.focus(); await page.keyboard.press("Space"); await expect(input).toHaveValue("1");
+  await decrease.click(); await expect(input).toHaveValue("1");
+  await input.fill("9"); await increase.click(); await expect(input).toHaveValue("9");
+  await input.fill(""); await increase.focus(); await page.keyboard.press("Enter"); await expect(input).toHaveValue("2");
+  await predict(page, ref);
+  for (var button of await page.locator(".zsa-ir-sub-step").all()) await expect(button).toBeDisabled();
+});
+
+test("the equation places reactants left, the arrow between, products right and the bank below", async ({page, problems}) => {
+  void problems;
+  await page.setViewportSize({width: 1366, height: 900});
+  await go(page);
+  var reactants = await page.locator("#zsa-ir-reactants").boundingBox();
+  var arrow = await page.locator("#zsa-ir-reaction-arrow").boundingBox();
+  var products = await page.locator("#zsa-ir-products").boundingBox();
+  var bank = await page.locator("#zsa-ir-bank").boundingBox();
+  expect(reactants.x + reactants.width).toBeLessThanOrEqual(arrow.x);
+  expect(arrow.x + arrow.width).toBeLessThanOrEqual(products.x);
+  expect(bank.y).toBeGreaterThan(Math.max(reactants.y + reactants.height, products.y + products.height));
+});
+
+test("branding and randomized first problems appear after starting selected practice", async ({page, browser, problems}) => {
   void problems;
   await go(page);
   await expect(page.locator("#zsa-ir-round")).toHaveText("Problem 1 of 10");
@@ -168,7 +272,7 @@ test("branding and randomized first problems appear without moving initial focus
   expect(await logo.evaluate((image) => image.complete && image.naturalWidth > 0)).toBe(true);
   await expect(page.locator("#zsa-ir-balance")).toBeHidden();
   await expect(page.locator("#zsa-ir-next")).toBeDisabled();
-  expect(await page.evaluate(() => document.activeElement === document.body)).toBe(true);
+  await expect(page.locator("#zsa-ir-round")).toBeFocused();
   var first = new Set([await page.locator("main[data-zsa-activity]").getAttribute("data-reaction")]);
   var origin = new URL(page.url()).origin;
   for (var seed of [2, 11, 89]) {
@@ -198,7 +302,8 @@ test("a ten-problem mixed round counts each missed problem once and includes ski
     await solve(page, active.reference, {reverse: i % 2 === 0, keyboard: i === 0});
     await page.locator("#zsa-ir-next").click();
   }
-  expect(types).toEqual({synthesis: 2, decomposition: 2, "single-replacement": 2, "double-replacement": 2, "acid-base": 2});
+  expect(Object.keys(types).sort()).toEqual(TYPES.slice().sort());
+  expect(Object.values(types).sort()).toEqual([2, 2, 3, 3]);
   await expect(page.locator("#zsa-ir-practice")).toBeHidden();
   await expect(page.locator("#zsa-ir-summary")).toBeVisible();
   await expect(page.locator("#zsa-ir-summary-title")).toBeFocused();
@@ -227,20 +332,6 @@ test("skipping works before and after product prediction, and replay resets the 
   await expect(page.locator("#zsa-ir-next")).toBeDisabled();
 });
 
-test("three-product decomposition conserves atoms when the products are built in reverse order", async ({page, problems}) => {
-  void problems;
-  await go(page, 45);
-  var active = await current(page);
-  expect(active.id).toBe("ammonium-carbonate-breakdown");
-  await expect(page.locator("#zsa-ir-products .zsa-ir-product")).toHaveCount(3);
-  await solve(page, active.reference, {reverse: true, keyboard: true});
-  expect(await counts(page, "N")).toEqual([2, 2]);
-  expect(await counts(page, "H")).toEqual([8, 8]);
-  expect(await counts(page, "C")).toEqual([1, 1]);
-  expect(await counts(page, "O")).toEqual([3, 3]);
-  await expect(page.locator("#zsa-ir-equation input")).toHaveCount(4);
-});
-
 test("components support HTML drag and drop, keyboard placement, and reject a malformed subscript", async ({page, problems}) => {
   void problems;
   await go(page);
@@ -249,7 +340,7 @@ test("components support HTML drag and drop, keyboard placement, and reject a ma
   await token(page, answer[0]).dispatchEvent("dragstart", {dataTransfer: transfer});
   await slot(page, 0, 0).dispatchEvent("dragover", {dataTransfer: transfer});
   await slot(page, 0, 0).dispatchEvent("drop", {dataTransfer: transfer});
-  await expect(slot(page, 0, 0)).not.toHaveText(/First component/i);
+  await expect(slot(page, 0, 0)).not.toHaveText(/First part/i);
   await transfer.dispose();
   for (var [product, expected] of ref.products.entries()) {
     for (var [part, component] of expected.parts.entries()) {
@@ -340,7 +431,9 @@ test("copy failure keeps a manually selectable link and native sharing stays use
 
 test("prediction, balancing, share options and summary pass axe accessibility at desktop and phone sizes", async ({page, problems}) => {
   void problems;
-  await go(page);
+  await open(page);
+  await audit(page, "setup");
+  await page.locator("#zsa-ir-start").click();
   await audit(page, "prediction");
   await page.locator("#zsa-ir-share-toggle").click(); await audit(page, "share options");
   await page.keyboard.press("Escape");
@@ -354,8 +447,9 @@ test("all controls retain usable targets without overflow, and activity loads on
   void problems;
   var requests = [];
   page.on("request", (request) => requests.push(request.url()));
-  await go(page);
-  for (var stage of ["prediction", "balancing", "summary"]) {
+  await open(page);
+  for (var stage of ["setup", "prediction", "balancing", "summary"]) {
+    if (stage === "prediction") await page.locator("#zsa-ir-start").click();
     if (stage === "balancing") await predict(page, (await current(page)).reference);
     if (stage === "summary") for (var i = 0; i < 10; i++) await page.locator("#zsa-ir-skip").click();
     for (var width of [320, 390, 768, 1366]) {
@@ -363,7 +457,8 @@ test("all controls retain usable targets without overflow, and activity loads on
       var layout = await page.evaluate(() => {
         var small = [];
         document.querySelectorAll("button,input,select,a").forEach((element) => {
-          var rect = element.getBoundingClientRect();
+          var target = element.matches("input[type=checkbox]") ? element.closest("label") : element;
+          var rect = target.getBoundingClientRect();
           if (!rect.width || !rect.height || element.closest("[hidden]")) return;
           if (rect.width < 43.5 || rect.height < 43.5) small.push((element.id || element.getAttribute("aria-label") || element.tagName) + " " + Math.round(rect.width) + "x" + Math.round(rect.height));
         });
