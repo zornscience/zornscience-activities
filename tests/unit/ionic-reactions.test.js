@@ -198,6 +198,28 @@ test("every nonempty type selection produces ten unique questions only from sele
   assert.throws(function () { M.makeRound(Math.random, 11, ["synthesis"]); }, RangeError);
 });
 
+test("option banks contain only the atoms and ions needed from the current reactants", function () {
+  assert.deepEqual(reaction("magnesium-oxygen").bank, ["mg", "o"]);
+  assert.deepEqual(reaction("water-electrolysis").bank, ["h_atom", "o_atom"]);
+  assert.deepEqual(reaction("iron-copper-sulfate").bank, ["fe", "so4", "cu_atom"]);
+  D.reactions.forEach(function (r) {
+    var reactantAtoms = new Set(), reactantTokens = new Set(), productTokens = new Set();
+    r.reactants.forEach(function (s) {
+      Object.keys(s.atoms).forEach(function (symbol) { reactantAtoms.add(symbol); });
+      s.parts.forEach(function (p) { reactantTokens.add(p.token); });
+    });
+    r.products.forEach(function (s) { s.parts.forEach(function (p) { productTokens.add(p.token); }); });
+    r.bank.forEach(function (id) {
+      assert.ok(productTokens.has(id), r.id + " has no unused option: " + id);
+      Object.keys(D.tokens[id].atoms).forEach(function (symbol) {
+        assert.ok(reactantAtoms.has(symbol), r.id + " does not introduce " + symbol);
+      });
+      if (D.tokens[id].polyatomic) assert.ok(reactantTokens.has(id), r.id + " keeps a reactant polyatomic ion: " + id);
+    });
+    productTokens.forEach(function (id) { assert.ok(r.bank.includes(id), r.id + " can build " + id); });
+  });
+});
+
 test("reaction families enforce the requested polyatomic-ion restrictions in formulas and option banks", function () {
   assert.deepEqual(D.types.map(function (type) { return type.id; }), ["synthesis", "decomposition", "single-replacement", "double-replacement"]);
   D.types.forEach(function (type) { assert.equal(D.reactions.filter(function (r) { return r.type === type.id; }).length, 10); });

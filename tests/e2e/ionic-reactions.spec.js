@@ -79,7 +79,8 @@ function atomTotals(reference) {
 async function open(page, seed) {
   await page.addInitScript(seedRandom, seed === undefined ? 41 : seed);
   await page.goto("/ionic-reactions/");
-  await expect(page.getByRole("heading", {level: 1, name: "Reaction Builder", exact: true})).toBeVisible();
+  await expect(page.getByRole("heading", {level: 1, name: "Ionic Reaction Builder", exact: true})).toBeVisible();
+  await expect(page).toHaveTitle("Ionic Reaction Builder | ZornScience");
   await expect(page.locator("#zsa-ir-setup")).toBeVisible();
   await expect(page.locator("#zsa-ir-practice")).toBeHidden();
 }
@@ -96,6 +97,9 @@ async function go(page, seed, selected) {
 async function current(page) {
   var id = await page.locator("main[data-zsa-activity]").getAttribute("data-reaction");
   expect(REFERENCES[id], "independent reference for " + id).toBeTruthy();
+  var expectedTokens = [...new Set(REFERENCES[id].products.flatMap((product) => product.parts.map((part) => part[0])))].sort();
+  var offeredTokens = await page.locator("#zsa-ir-bank button[data-token]").evaluateAll((buttons) => buttons.map((button) => button.dataset.token).sort());
+  expect(offeredTokens, "only relevant building blocks for " + id).toEqual(expectedTokens);
   return {id: id, reference: REFERENCES[id]};
 }
 function token(page, id) { return page.locator("#zsa-ir-bank button[data-token='" + id + "']"); }
@@ -264,6 +268,80 @@ test("the equation places reactants left, the arrow between, products right and 
   expect(reactants.x + reactants.width).toBeLessThanOrEqual(arrow.x);
   expect(arrow.x + arrow.width).toBeLessThanOrEqual(products.x);
   expect(bank.y).toBeGreaterThan(Math.max(reactants.y + reactants.height, products.y + products.height));
+  var heading = page.locator(".zsa-ir-product-side > h3");
+  await expect(heading).toHaveCSS("text-align", "center");
+  var title = await heading.boundingBox();
+  expect(Math.abs(title.x + title.width / 2 - products.x - products.width / 2)).toBeLessThanOrEqual(1);
+});
+
+test("the simplified header opens worked instructions without changing the current problem", async ({page, problems}) => {
+  void problems;
+  await open(page);
+  var opener = page.locator("#zsa-ir-instructions-open"), dialog = page.locator("#zsa-ir-instructions");
+  await expect(page.locator(".zsa-ir-title-row")).not.toContainText("Find the products. Make every atom count.");
+  await expect(page.locator(".zsa-ir-title-row")).not.toContainText("Choose your reaction types, then build and balance ten problems.");
+  await expect(page.locator("#zsa-ir-stage")).toHaveCount(0);
+  await expect(dialog).toBeHidden();
+  await opener.click();
+  await expect(dialog).toBeVisible();
+  await expect(dialog).toHaveJSProperty("open", true);
+  await expect(page.getByRole("dialog")).toHaveCount(1);
+  var example = (await dialog.textContent()).replace(/\s+/g, " ");
+  expect(example).toContain("CaCl2");
+  expect(example).toContain("Na2CO3");
+  expect(example).toContain("CaCO3");
+  expect(example).toMatch(/2\s*NaCl/);
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+  await expect(opener).toBeFocused();
+  await expect(page.locator("#zsa-ir-setup")).toBeVisible();
+  await page.locator("#zsa-ir-start").click();
+  var active = await current(page), first = active.reference.products[0].parts[0];
+  await place(page, first[0], 0, 0);
+  await subscript(page, 0, 0).fill("2");
+  var preview = await page.locator("#zsa-ir-products .zsa-ir-preview").first().textContent();
+  await opener.click();
+  await expect(dialog).toBeVisible();
+  await page.locator("#zsa-ir-instructions-close").click();
+  await expect(dialog).toBeHidden();
+  await expect(opener).toBeFocused();
+  await expect(page.locator("main[data-zsa-activity]")).toHaveAttribute("data-reaction", active.id);
+  await expect(subscript(page, 0, 0)).toHaveValue("2");
+  await expect(page.locator("#zsa-ir-products .zsa-ir-preview").first()).toHaveText(preview);
+  await expect(page.locator("#zsa-ir-predict")).toBeVisible();
+  await page.setViewportSize({width: 320, height: 664});
+  await opener.click();
+  await audit(page, "phone instructions");
+  expect(await dialog.evaluate((element) => element.scrollWidth - element.clientWidth)).toBeLessThanOrEqual(0);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
+  await page.keyboard.press("Escape");
+  await expect(dialog).toBeHidden();
+});
+
+test("balancing formulas are larger and coefficient boxes have a clear border on desktop and phone", async ({page, problems}) => {
+  void problems;
+  await page.setViewportSize({width: 1366, height: 900});
+  await go(page);
+  var badge = await page.locator("#zsa-ir-type").evaluate((element) => getComputedStyle(element).backgroundColor.match(/\d+/g).slice(0, 3).map(Number));
+  expect(badge[0]).toBeGreaterThan(badge[2]);
+  expect(badge[1]).toBeGreaterThan(badge[2]);
+  await predict(page, (await current(page)).reference);
+  for (var [width, minimumSize] of [[1366, 32], [390, 28], [320, 28]]) {
+    await page.setViewportSize({width: width, height: 900});
+    var formulas = await page.locator("#zsa-ir-equation .zsa-ir-formula").evaluateAll((elements) => elements.map((element) => parseFloat(getComputedStyle(element).fontSize)));
+    expect(formulas.length).toBeGreaterThan(0);
+    for (var size of formulas) expect(size, "equation font at " + width).toBeGreaterThanOrEqual(minimumSize);
+    var borders = await page.locator("#zsa-ir-equation input").evaluateAll((inputs) => inputs.map((input) => {
+      var style = getComputedStyle(input);
+      return {width: parseFloat(style.borderTopWidth), color: style.borderTopColor, background: style.backgroundColor};
+    }));
+    for (var border of borders) {
+      expect(border.width, "coefficient border at " + width).toBeGreaterThanOrEqual(3);
+      expect(border.color).not.toBe(border.background);
+      expect(border.color).not.toBe("rgba(0, 0, 0, 0)");
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
+  }
 });
 
 test("branding and randomized first problems appear after starting selected practice", async ({page, browser, problems}) => {
@@ -456,7 +534,13 @@ test("share options expose encoded links, copy the canonical activity URL and cl
   await expect(page.locator("#zsa-ir-share-panel")).toBeVisible();
   await expect(page.locator("#zsa-ir-share-url")).toHaveValue(SHARE_URL);
   expect(await page.locator("#zsa-ir-share-email").getAttribute("href")).toMatch(/^mailto:\?/);
-  for (var [id, parameter] of [["facebook", "u"], ["x", "url"], ["linkedin", "url"]]) {
+  for (var id of ["email", "facebook", "x"]) {
+    var icon = page.locator("#zsa-ir-share-" + id + " svg");
+    await expect(icon).toHaveCount(1);
+    await expect(icon).toHaveAttribute("aria-hidden", "true");
+  }
+  await expect(page.locator("#zsa-ir-share-linkedin")).toHaveCount(0);
+  for (var [id, parameter] of [["facebook", "u"], ["x", "url"]]) {
     var link = page.locator("#zsa-ir-share-" + id), url = new URL(await link.getAttribute("href"));
     expect(url.searchParams.get(parameter)).toBe(SHARE_URL);
     await expect(link).toHaveAttribute("rel", /noopener/);

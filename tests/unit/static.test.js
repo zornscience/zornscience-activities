@@ -54,7 +54,7 @@ test("pages have one CSP, no inline scripts or styles, and only the expected out
   // The SVG namespace is an identifier for createElementNS, not a link; nothing is fetched from it.
   var allowed = /^(https:\/\/((activities\.)?zornscience\.org(\/[\w\-\/]*)?|creativecommons\.org\/licenses\/by-nc-sa\/4\.0\/)|http:\/\/www\.w3\.org\/2000\/svg)$/;
   // User-initiated share links are plain outbound anchors, with no social SDK or page-load requests.
-  var shareLinks = new Set(["https://www.facebook.com/sharer/sharer.php?u=", "https://x.com/intent/tweet?text=", "https://www.linkedin.com/sharing/share-offsite/?url="]);
+  var shareLinks = new Set(["https://www.facebook.com/sharer/sharer.php?u=", "https://x.com/intent/tweet?text="]);
   pages.concat(siteJs).forEach(function (f) {
     (read(f).match(/https?:\/\/[^\s"'<>)]+/g) || []).forEach(function (url) {
       if (f === "ionic-reactions/share.js" && shareLinks.has(url)) return;

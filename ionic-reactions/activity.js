@@ -204,7 +204,6 @@
     el("note").textContent = reaction.note || "Correct formulas are locked. Change coefficients to balance the equation.";
     el("predict").hidden = true;
     el("balance").hidden = false;
-    el("stage").textContent = "Step 2 of 2 · Balance the equation";
     var ones = reaction.reactants.concat(reaction.products).map(function () { return 1; });
     var canCountIons = !!model.ionCounts(reaction, ones, productOrder);
     el("count-controls").hidden = !canCountIons;
@@ -227,7 +226,7 @@
       input.setAttribute("aria-label", "Coefficient for " + species.formula);
       input.setAttribute("aria-describedby", "zsa-ir-coefficient-help");
       input.addEventListener("input", function () {
-        if (stage === "complete") { stage = "balance"; record.solved = false; el("stage").textContent = "Step 2 of 2 · Balance the equation"; progress(); }
+        if (stage === "complete") { stage = "balance"; record.solved = false; progress(); }
         el("next").disabled = true; el("skip").disabled = false;
         updateCounts();
         el("feedback").textContent = "Counts updated. Check the balance when both sides match.";
@@ -282,7 +281,7 @@
     if (!model.isBalanced(reaction, values, productOrder)) { incorrect("Not balanced yet. Compare each row in the table, then change coefficients to conserve the atoms on both sides."); return; }
     if (!model.isLowest(reaction, values, productOrder)) { incorrect("The counts match! Now reduce all coefficients to the smallest whole-number ratio."); return; }
     record.solved = true; stage = "complete";
-    el("stage").textContent = "Both steps complete"; progress();
+    progress();
     el("next").disabled = false; el("skip").disabled = true;
     feedback("Balanced! Every atom is conserved and the coefficients are in the smallest whole-number ratio.", "correct");
   }
@@ -309,7 +308,6 @@
     root.dataset.reaction = reaction.id; root.dataset.reactionType = reaction.type;
     el("round").textContent = "Problem " + (position + 1) + " of " + round.length;
     el("type").textContent = typeLabel(reaction.type); progress();
-    el("stage").textContent = "Step 1 of 2 · Predict the products";
     el("selection").textContent = "Choose a building block to place.";
     el("note").textContent = "Predict the products first, then balance the equation. Skip a problem to return to its answer in the summary.";
     el("condition").textContent = reaction.condition || ""; el("condition").hidden = !reaction.condition;

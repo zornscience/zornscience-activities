@@ -4,24 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="3.0.1">
+<meta name="zsa-version" content="3.1.0">
 <meta name="description" content="Choose synthesis, decomposition, single replacement or double replacement practice, then predict products and balance equations, from ZornScience.">
-<title>Reaction Builder | ZornScience</title>
-<link rel="icon" href="zornscience-logo.png?v=3.0.1" type="image/png">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=3.0.1">
-<link rel="stylesheet" href="activity.css?v=3.0.1">
-<script src="../shared/zsa-embed.js?v=3.0.1" defer></script>
-<script src="data.js?v=3.0.1" defer></script>
-<script src="model.js?v=3.0.1" defer></script>
-<script src="share.js?v=3.0.1" defer></script>
-<script src="activity.js?v=3.0.1" defer></script>
+<title>Ionic Reaction Builder | ZornScience</title>
+<link rel="icon" href="zornscience-logo.png?v=3.1.0" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=3.1.0">
+<link rel="stylesheet" href="activity.css?v=3.1.0">
+<script src="../shared/zsa-embed.js?v=3.1.0" defer></script>
+<script src="data.js?v=3.1.0" defer></script>
+<script src="model.js?v=3.1.0" defer></script>
+<script src="share.js?v=3.1.0" defer></script>
+<script src="instructions.js?v=3.1.0" defer></script>
+<script src="activity.js?v=3.1.0" defer></script>
 </head>
 <body>
 <main class="zsa zsa-ir" data-zsa-activity="ionic-reactions">
 <header class="zsa-ir-header">
 <div class="zsa-ir-topline" data-zsa-chrome>
 <a class="zsa-ir-brand" href="https://zornscience.org/">
-<img src="zornscience-logo.png?v=3.0.1" alt="" width="52" height="50">
+<img src="zornscience-logo.png?v=3.1.0" alt="" width="52" height="50">
 <span><strong>ZornScience</strong><span class="zsa-ir-brand-tagline">Chemistry practice</span></span>
 </a>
 <nav class="zsa-ir-header-tools" aria-label="Activity links">
@@ -44,21 +45,35 @@
 <button class="zsa-btn zsa-btn--primary" id="zsa-ir-share-copy" type="button">Copy link</button>
 </div>
 <div class="zsa-ir-share-options">
-<a id="zsa-ir-share-email" href="#">Email</a>
-<a id="zsa-ir-share-facebook" href="#" target="_blank" rel="noopener noreferrer">Facebook<span class="zsa-sr-only"> (opens in a new tab)</span></a>
-<a id="zsa-ir-share-x" href="#" target="_blank" rel="noopener noreferrer">X<span class="zsa-sr-only"> (opens in a new tab)</span></a>
-<a id="zsa-ir-share-linkedin" href="#" target="_blank" rel="noopener noreferrer">LinkedIn<span class="zsa-sr-only"> (opens in a new tab)</span></a>
+<a id="zsa-ir-share-email" href="#"><svg class="zsa-ir-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></svg><span>Email</span></a>
+<a id="zsa-ir-share-facebook" href="#" target="_blank" rel="noopener noreferrer"><svg class="zsa-ir-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M14 22v-9h3l.5-4H14V7c0-1.2.4-2 2-2h1.7V1.4A23 23 0 0 0 15.2 1C12.4 1 10 2.7 10 6v3H7v4h3v9z"/></svg><span>Facebook</span><span class="zsa-sr-only"> (opens in a new tab)</span></a>
+<a id="zsa-ir-share-x" href="#" target="_blank" rel="noopener noreferrer"><svg class="zsa-ir-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3h4l12 18h-4zM20 3 4 21"/></svg><span>X</span><span class="zsa-sr-only"> (opens in a new tab)</span></a>
 <button class="zsa-btn" id="zsa-ir-share-device" type="button" hidden>More share options</button>
 </div>
 <p class="zsa-ir-share-status" id="zsa-ir-share-status" aria-live="polite" aria-atomic="true"></p>
 </section>
 <div class="zsa-ir-title-row">
 <p class="zsa-eyebrow">Predict · Build · Balance</p>
-<h1>Reaction Builder</h1>
-<p class="zsa-ir-lede">Find the products. Make every atom count.</p>
-<p class="zsa-ir-intro">Choose your reaction types, then build and balance ten problems.</p>
+<div class="zsa-ir-title-tools"><h1>Ionic Reaction Builder</h1><button class="zsa-btn zsa-ir-instructions-open" id="zsa-ir-instructions-open" type="button" aria-haspopup="dialog" aria-controls="zsa-ir-instructions">Instructions</button></div>
 </div>
 </header>
+<dialog class="zsa-ir-instructions" id="zsa-ir-instructions" aria-labelledby="zsa-ir-instructions-title" aria-describedby="zsa-ir-instructions-intro">
+<div class="zsa-ir-instructions-heading"><h2 id="zsa-ir-instructions-title">How to use Ionic Reaction Builder</h2><button class="zsa-ir-icon-button" id="zsa-ir-instructions-close" type="button" aria-label="Close instructions" autofocus><span aria-hidden="true">×</span></button></div>
+<p id="zsa-ir-instructions-intro">Predict the products first, then balance the equation. Here is a double replacement example.</p>
+<ol class="zsa-ir-instructions-steps">
+<li><strong>Choose your practice.</strong> Select at least one reaction type, then choose Start practice.</li>
+<li><strong>Build the products.</strong> For CaCl<sub>2</sub> + Na<sub>2</sub>CO<sub>3</sub>, pair Ca<sup>2+</sup> with CO<sub>3</sub><sup>2−</sup> to build CaCO<sub>3</sub>. Pair Na<sup>+</sup> with Cl<sup>−</sup> to build NaCl. Leave each ion subscript blank for 1. Use the arrows when more than one ion or atom is needed.</li>
+<li><strong>Check your products.</strong> Drag blocks into the spaces, or select a block and then its space. Either product order is accepted. Check products opens balancing when the formulas are correct.</li>
+<li><strong>Balance with coefficients.</strong> Increase the coefficient for NaCl to 2. Keep the subscripts fixed. The live table shows a green check when the counts on the two sides are equal.</li>
+</ol>
+<div class="zsa-ir-instructions-example">
+<p class="zsa-ir-instructions-example-label">Products predicted</p>
+<p class="zsa-ir-instructions-equation">CaCl<sub>2</sub> + Na<sub>2</sub>CO<sub>3</sub> → CaCO<sub>3</sub> + NaCl</p>
+<p class="zsa-ir-instructions-example-label">Balanced equation</p>
+<p class="zsa-ir-instructions-equation">CaCl<sub>2</sub> + Na<sub>2</sub>CO<sub>3</sub> → CaCO<sub>3</sub> + <strong>2</strong>NaCl</p>
+</div>
+<p class="zsa-ir-instructions-note">Choose Check balance to continue. Skip problem advances without finishing it. The summary reviews missed and skipped problems; a problem counts only once.</p>
+</dialog>
 <noscript><p class="zsa-panel">This activity needs JavaScript. Enable it to build and balance reactions.</p></noscript>
 <section class="zsa-ir-workspace zsa-ir-setup" id="zsa-ir-setup" aria-labelledby="zsa-ir-setup-title">
 <p class="zsa-eyebrow">Choose your practice</p>
@@ -83,7 +98,7 @@
 </div>
 <section class="zsa-ir-workspace" id="zsa-ir-predict" aria-labelledby="zsa-ir-products-title">
 <div class="zsa-ir-section-heading">
-<div><p class="zsa-eyebrow" id="zsa-ir-stage">Step 1 of 2 · Predict</p><h2 id="zsa-ir-products-title">What are the products?</h2></div>
+<div><h2 id="zsa-ir-products-title">What are the products?</h2></div>
 <p class="zsa-ir-badge" id="zsa-ir-type">Mixed reaction practice</p>
 </div>
 <div class="zsa-ir-reaction-row">
@@ -159,7 +174,7 @@
 </section>
 <p class="zsa-sr-only" id="zsa-ir-live" aria-live="polite" aria-atomic="true"></p>
 <footer class="zsa-footer" data-zsa-chrome>
-<span class="zsa-ir-footer-brand"><img src="zornscience-logo.png?v=3.0.1" alt="" width="27" height="26"><strong>ZornScience</strong></span>
+<span class="zsa-ir-footer-brand"><img src="zornscience-logo.png?v=3.1.0" alt="" width="27" height="26"><strong>ZornScience</strong></span>
 <span>Practice with purpose. Nothing you enter leaves this tab.</span>
 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
 </footer>

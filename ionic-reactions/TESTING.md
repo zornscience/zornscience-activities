@@ -1,6 +1,6 @@
-# Reaction Builder checks
+# Ionic Reaction Builder checks
 
-Version: 3.0.1
+Version: 3.1.0
 
 `node --test tests/unit/ionic-reactions.test.js` verifies all 40 independently pinned reaction equations, elemental counts, smallest coefficients, neutral species and polyatomic formulas, product-order permutations, invalid coefficients, and round sampling. It checks all 15 nonempty combinations of the four allowed reaction types, unique questions and fair distribution, and the polyatomic-ion restrictions for each family.
 
@@ -10,4 +10,6 @@ The environment's external Playwright configuration selects preinstalled Chromiu
 
 The stage-transition checks verify that balancing replaces prediction in the same document slot, focus moves to its heading, and Next, Skip, and replay restore prediction. Balance controls use vertically stacked 48 px arrows. The "Balanced?" column shows only a green check for equal counts and an empty cell otherwise, including invalid coefficients.
 
-The static checks keep the site CSP and prohibit injection, globals, inline styles/scripts, storage and network requests. Only the three explicit user-initiated social-share URL templates in `share.js` are added to the outside-link check.
+Bank relevance checks independently verify that every offered block uses current reactant elements, each polyatomic block occurs in a reactant, and no unrelated distractor options remain. The browser suite checks the worked instructions dialog, preserved problem state, dismissal and focus return, larger equation typography, stronger coefficient borders, centered product heading, and icon-labelled sharing without LinkedIn.
+
+The static checks keep the site CSP and prohibit injection, globals, inline styles/scripts, storage and network requests. Only the two explicit user-initiated social-share URL templates in `share.js` are added to the outside-link check.

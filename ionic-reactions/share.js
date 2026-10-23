@@ -6,14 +6,13 @@
   var toggle = el("toggle"), panel = el("panel");
   if (!toggle || !panel) return;
   var url = "https://activities.zornscience.org/ionic-reactions/";
-  var title = "Reaction Builder | ZornScience";
+  var title = "Ionic Reaction Builder | ZornScience";
   var description = "Choose from four reaction types, predict the products, and balance chemical equations with ZornScience.";
   el("url").value = url;
   el("email").href = "mailto:?subject=" + encodeURIComponent(title) + "&body=" + encodeURIComponent(description + "\n\n" + url);
   el("facebook").href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);
   el("x").href = "https://x.com/intent/tweet?text=" + encodeURIComponent(description) + "&url=" + encodeURIComponent(url);
-  el("linkedin").href = "https://www.linkedin.com/sharing/share-offsite/?url=" + encodeURIComponent(url);
-  ["facebook", "x", "linkedin"].forEach(function (id) {
+  ["facebook", "x"].forEach(function (id) {
     el(id).target = "_blank";
     el(id).rel = "noopener noreferrer";
   });
