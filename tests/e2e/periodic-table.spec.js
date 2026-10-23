@@ -178,7 +178,7 @@ test("periodic table: every color mode, legend and screen reader names", async (
     expect(await legend.allInnerTexts()).toEqual(x.legend);
     await expect(page.getByRole("gridcell", {name: x.name, exact: true})).toHaveCount(1);
     expect((await cell(page, "F").locator("[aria-hidden]").innerText()).replace(/\s+/g, " ").trim()).toBe(("9 F " + x.shown).trim());
-    expect(new URL(page.url()).searchParams.get("mode") || "category").toBe(mode);
+    expect(new URL(page.url()).searchParams.get("mode") || "block").toBe(mode);
     var heat = mode !== "category" && mode !== "block";
     await expect(page.locator("#zsa-pt-trends")).toBeVisible({visible: heat});
     await expect(page.locator("#zsa-pt-across")).toBeVisible({visible: heat});
@@ -253,7 +253,11 @@ test("periodic table: deep links and the back link", async ({page, problems}) =>
   await go(page, "?mode=ionization&el=xx");
   await expect(page.locator("#zsa-pt-details-title")).toHaveText("Element details");
   await go(page, "?mode=nonsense");
-  await expect(page.getByRole("radio", {name: "Category"})).toBeChecked();
+  await expect(page.getByRole("radio", {name: "Block"})).toBeChecked();
+  // With no mode in the address the table opens in block colors.
+  await go(page);
+  await expect(page.getByRole("radio", {name: "Block"})).toBeChecked();
+  expect((await cell(page, "Fe").locator("[aria-hidden]").innerText()).replace(/\s+/g, " ").trim()).toBe("26 Fe d");
   await go(page, "?mode=radius&trends=0");
   await expect(page.getByRole("checkbox", {name: "Show trend arrows"})).not.toBeChecked();
   await expect(page.locator("#zsa-pt-across")).toBeHidden();
@@ -318,7 +322,7 @@ test("periodic table: embed mode, local files only, no storage", async ({page, p
 test("periodic table: no axe violations in eight states", async ({page, problems}) => {
   void problems;
   await go(page);
-  await audit(page, "category start");
+  await audit(page, "block start");
   await page.getByRole("radio", {name: "Block"}).check();
   await audit(page, "block");
   await go(page, "?mode=ionization&el=N");
@@ -492,4 +496,73 @@ test("periodic table: the selected element's ring is not hidden by its neighbour
       }
     }
   }
+});
+
+test("periodic table: share the current view by link, email, Facebook or X", async ({page, problems, context}) => {
+  void problems;
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  var base = "https://activities.zornscience.org/periodic-table/";
+  var toggle = page.getByRole("button", {name: "Share", exact: true}), panel = page.locator("#zsa-pt-share-panel");
+  await go(page, "?mode=electronegativity&el=F&from=" + encodeURIComponent("https://zornscience.org/science/chemistry/"));
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await expect(panel).toBeHidden();
+  await toggle.click();
+  await expect(panel).toBeVisible();
+  await expect(toggle).toHaveAttribute("aria-expanded", "true");
+  await expect(page.locator("#zsa-pt-share-copy")).toBeFocused();
+  // The link opens this view, and never carries ?from or ?embed.
+  var url = base + "?mode=electronegativity&el=F";
+  await expect(page.getByLabel("Share link")).toHaveValue(url);
+  var email = new URL(await page.getByRole("link", {name: "Email"}).getAttribute("href"));
+  expect(email.protocol).toBe("mailto:");
+  expect(email.searchParams.get("subject")).toBe("Periodic Table | ZornScience");
+  expect(email.searchParams.get("body")).toContain(url);
+  var fb = page.getByRole("link", {name: "Facebook (opens in a new tab)"});
+  expect(new URL(await fb.getAttribute("href")).searchParams.get("u")).toBe(url);
+  expect(await fb.getAttribute("target")).toBe("_blank");
+  expect(await fb.getAttribute("rel")).toBe("noopener noreferrer");
+  var x = new URL(await page.getByRole("link", {name: "X (opens in a new tab)"}).getAttribute("href"));
+  expect(x.origin + x.pathname).toBe("https://x.com/intent/tweet");
+  expect(x.searchParams.get("url")).toBe(url);
+  // Copy link puts the link on the clipboard.
+  await page.locator("#zsa-pt-share-copy").click();
+  await expect(page.locator("#zsa-pt-share-status")).toHaveText("Link copied.");
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(url);
+  await audit(page, "share panel open");
+  // Escape closes it and returns focus to Share; a click outside closes it too.
+  await page.keyboard.press("Escape");
+  await expect(panel).toBeHidden();
+  await expect(toggle).toBeFocused();
+  await expect(page.locator("#zsa-pt-details-title")).toHaveText("Fluorine"); // Escape closed only the share panel
+  await toggle.click();
+  await page.getByRole("heading", {level: 1}).click();
+  await expect(panel).toBeHidden();
+  // The link follows the view: another mode and no open element.
+  await page.getByRole("radio", {name: "Atomic radius"}).check();
+  await page.getByRole("button", {name: "Close details"}).click();
+  await toggle.click();
+  await expect(page.getByLabel("Share link")).toHaveValue(base + "?mode=radius");
+  await toggle.click();
+  await expect(panel).toBeHidden();
+  // No Share button in embed mode or in full screen.
+  await go(page, "?embed=1");
+  await expect(page.locator("#zsa-pt-share-toggle")).toBeHidden();
+  await go(page);
+  await page.getByRole("button", {name: "Full screen"}).click();
+  await inFullscreen(page, true);
+  await expect(page.locator("#zsa-pt-share-toggle")).toBeHidden();
+});
+
+test("periodic table: the device share sheet is offered where the browser has one", async ({page, problems}) => {
+  void problems;
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, "share", {configurable: true, value: async (details) => { window.__shared = details; }});
+  });
+  await go(page, "?mode=ionization");
+  await page.getByRole("button", {name: "Share", exact: true}).click();
+  await page.getByRole("button", {name: "More share options"}).click();
+  await expect(page.locator("#zsa-pt-share-status")).toHaveText("Share options opened.");
+  expect(await page.evaluate(() => window.__shared)).toEqual({title: "Periodic Table | ZornScience",
+    text: "Explore all 118 elements and see periodic trends as heatmaps with ZornScience.",
+    url: "https://activities.zornscience.org/periodic-table/?mode=ionization"});
 });

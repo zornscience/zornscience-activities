@@ -10,6 +10,31 @@
 /* The ZornScience logo, linking home: a 44 px target. */
 .zsa-pt-logo {display:inline-flex;align-items:center;min-height:44px;border-radius:var(--zsa-radius);}
 .zsa-pt-logo img {display:block;width:46px;height:44px;}
+/* Share button and panel (like the Ionic Reaction Builder's). */
+.zsa-pt-share-toggle {display:inline-flex;align-items:center;gap:8px;padding:6px 14px 6px 12px;margin-left:auto;line-height:1.2;font-weight:600;}
+.zsa-pt-share-toggle + .zsa-pt-present {margin-left:0;}
+.zsa-pt-share-panel {margin:10px 0 4px;padding:16px 18px;border:1px solid var(--zsa-border-strong);border-radius:var(--zsa-radius-lg);background:var(--zsa-white);box-shadow:0 7px 20px rgba(11,42,91,.06);}
+.zsa-pt-share-heading {display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.zsa-pt .zsa-pt-share-heading h2 {font-size:1.15rem;line-height:1.3;margin:0;}
+.zsa-pt-share-close {min-width:44px;padding:0;font-size:22px;line-height:1;}
+.zsa-pt-share-note {margin:4px 0 0;font-size:15px;}
+.zsa-pt-share-label {display:block;margin:12px 0 4px;font-size:14px;font-weight:600;color:var(--zsa-navy);}
+.zsa-pt-share-link {display:flex;gap:8px;align-items:stretch;}
+.zsa-pt-share-link input {flex:1 1 200px;min-width:0;min-height:44px;border:1px solid var(--zsa-border-strong);border-radius:var(--zsa-radius);padding:8px 11px;background:#f8fafd;color:var(--zsa-navy);font-size:15px;}
+.zsa-pt-share-options {display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px;}
+.zsa-pt-share-options a {display:inline-flex;align-items:center;justify-content:center;gap:7px;min-width:44px;min-height:44px;padding:8px 12px;border:1px solid var(--zsa-border-strong);border-radius:var(--zsa-radius);color:var(--zsa-navy);font-size:15px;text-decoration:none;background:var(--zsa-white);}
+.zsa-pt-share-options a:hover {background:var(--zsa-sky);}
+.zsa-pt-share-status {min-height:22px;margin:8px 0 0;font-size:14px;color:var(--zsa-success);}
+@media (max-width:599px) {
+  /* Phones: Share and Full screen show only their icons so the header stays on one line; the words remain for
+     screen readers. */
+  .zsa-pt-share-toggle, .zsa-pt-present {min-width:44px;justify-content:center;padding:6px 10px;}
+  .zsa-pt-share-toggle span, .zsa-pt-present span {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+  .zsa-pt-share-link {flex-wrap:wrap;}
+  .zsa-pt-share-link input {flex-basis:100%;}
+  .zsa-pt-share-link .zsa-btn {width:100%;}
+  .zsa-pt-share-options a {flex:1 1 95px;}
+}
 /* Full screen button: solid blue with outward arrows (inward arrows while in full screen), so it stands out. */
 .zsa-pt-present {display:inline-flex;align-items:center;gap:8px;padding:6px 16px 6px 12px;margin-left:auto;line-height:1.2;font-weight:600;}
 .zsa-pt-icon {width:22px;height:22px;flex:none;}

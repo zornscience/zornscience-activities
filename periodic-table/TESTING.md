@@ -1,6 +1,6 @@
 # Verification record
-Version: 1.1.1
-Date: 2026-10-17
+Version: 1.2.0
+Date: 2026-10-23
 Reviewer: Claude (built and tested 1.0.0)
 
 PASS means the check was run on version 1.0.0 as committed and passed. NOT TESTED rows say why. Browser checks use Playwright 1.56 with Chromium over the local test server and run in CI with `npm test`.
@@ -29,6 +29,15 @@ PASS means the check was run on version 1.0.0 as committed and passed. NOT TESTE
 | Deep links and back link | PASS | `?mode=electronegativity&el=F` opens fluorine's details in that mode without moving focus or scrolling; `el=26`; bad `el` and `mode` values fall back. On a 360 px phone, `el=Kr` scrolls the region, not the page. `from` accepted only for https://zornscience.org/ pages; 9 bad values (other hosts, http, www, user name, port, javascript:, relative) keep the default link. `from` is kept when the view changes. |
 | Embed mode, network, storage | PASS | `?embed=1`: back link line and footer hidden, h1 visible, links target `_top`. Only local files load, each stylesheet and script with `?v=1.0.0`, plus the Inter font. No storage or cookies. |
 | Console and CSP | PASS | Every browser test fails on any console error or warning, page error or CSP violation. |
+
+## 1.2.0: Block colors by default, and Share
+| Check | Status | Evidence |
+|---|---|---|
+| Opens in block colors | PASS | With no `mode` in the address the Block radio is checked and cells show their block letter (iron reads "26 Fe d"); an unknown `mode` also falls back to block. Every mode is still reachable and linkable. |
+| Share panel | PASS | `tests/e2e/periodic-table.spec.js`: Share has aria-expanded and aria-controls; opening it moves focus to Copy link. The link reflects the view (`?mode=electronegativity&el=F`, and `?mode=radius` after changing mode and closing the details) and drops `from` and `embed`. Email is a mailto with the title as subject and the link in the body; Facebook (`u`) and X (`url`) carry the encoded link, open in a new tab with `rel="noopener noreferrer"`, and say so to screen readers. Copy link puts the link on the clipboard and announces "Link copied." Escape closes the panel and returns focus to Share without closing the open element; a click outside closes it. Hidden in embed mode and in full screen. With a browser share sheet, "More share options" passes the title, text and link. |
+| No outside requests | PASS | The social links are plain anchors; the existing network test still sees only local files. `tests/unit/static.test.js` allows the two share-link prefixes only in `ionic-reactions/share.js` and `periodic-table/data.js`. |
+| Layout | PASS | The header keeps its height at 1366x657, so the whole table still fits. On phones Share and Full screen show icons only (44x44, names kept for screen readers) and the header is one line from 360 px; at 320 px it wraps. No sideways scroll at any size. |
+| axe-core | PASS | Zero violations with the share panel open, and in the existing states. |
 
 ## 1.1.1: Selected ring
 | Check | Status | Evidence |
