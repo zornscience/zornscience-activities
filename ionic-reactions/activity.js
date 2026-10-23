@@ -192,8 +192,8 @@
     }
     if (matches.includes(-1) || new Set(matches).size !== matches.length) {
       var hasRightComponents = parts.every(function (p) { return reaction.products.some(function (expected) { return sameParts(p, expected.parts, false); }); });
-      incorrect(hasRightComponents ? "Check the subscripts. Use the simplest neutral formula, and remember the 2 in diatomic elements such as H2 and O2. Keep polyatomic ions together." :
-        "Check the products for this reaction type. Put positive ions before negative ions in ionic formulas. Molecular products use atom blocks, and each different product belongs in its own card.");
+      incorrect(hasRightComponents ? "Check the subscripts. Use the simplest neutral formula, and remember the 2 in diatomic elements such as O2 and Cl2. Keep polyatomic ions together." :
+        "Check the products for this reaction type. Put positive ions before negative ions in ionic formulas. Use atom blocks for free elements, and put each different product in its own card.");
       return;
     }
     productOrder = matches; stage = "balance"; hintLevel = 0;
@@ -225,13 +225,7 @@
       input.type = "number"; input.min = "1"; input.max = "99"; input.step = "1"; input.inputMode = "numeric"; input.value = "1";
       input.setAttribute("aria-label", "Coefficient for " + species.formula);
       input.setAttribute("aria-describedby", "zsa-ir-coefficient-help");
-      input.addEventListener("input", function () {
-        if (stage === "complete") { stage = "balance"; record.solved = false; progress(); }
-        el("next").disabled = true; el("skip").disabled = false;
-        updateCounts();
-        el("feedback").textContent = "Counts updated. Check the balance when both sides match.";
-        el("feedback").dataset.kind = "hint";
-      });
+      input.addEventListener("input", syncBalance);
       function stepButton(delta) {
         var button = node("button", "zsa-ir-step"); button.type = "button";
         button.setAttribute("aria-label", (delta < 0 ? "Decrease" : "Increase") + " coefficient for " + species.formula);
@@ -275,17 +269,37 @@
     });
     if (stage === "balance") say(valid ? spoken.join(". ") + "." : "Coefficients must be whole numbers from 1 to 99.");
   }
+  function completeBalance(preventScroll) {
+    if (stage !== "complete" || !record.solved) {
+      record.solved = true; stage = "complete"; progress();
+    }
+    el("next").disabled = false; el("skip").disabled = true;
+    feedback("Balanced! Every atom is conserved and the coefficients are in the smallest whole-number ratio.", "correct", preventScroll);
+  }
+  function syncBalance() {
+    if (stage !== "balance" && stage !== "complete") return;
+    var values = readCoefficients();
+    updateCounts();
+    if (values.every(function (n) { return n !== null; }) && model.isLowest(reaction, values, productOrder)) {
+      completeBalance(true); return;
+    }
+    if (stage === "complete") { stage = "balance"; record.solved = false; progress(); }
+    el("next").disabled = true; el("skip").disabled = false;
+    var message = values.some(function (n) { return n === null; }) ? "Enter whole numbers from 1 to 99 for every coefficient." :
+      model.isBalanced(reaction, values, productOrder) ? "The counts match. Reduce all coefficients to the smallest whole-number ratio." :
+        "Counts updated. Keep adjusting coefficients until every row matches.";
+    feedback(message, "hint", true);
+  }
   function checkBalance() {
+    if (stage !== "balance" && stage !== "complete") return;
     var values = readCoefficients();
     if (values.some(function (n) { return n === null; })) { incorrect("Enter whole numbers from 1 to 99 for every coefficient."); return; }
     if (!model.isBalanced(reaction, values, productOrder)) { incorrect("Not balanced yet. Compare each row in the table, then change coefficients to conserve the atoms on both sides."); return; }
     if (!model.isLowest(reaction, values, productOrder)) { incorrect("The counts match! Now reduce all coefficients to the smallest whole-number ratio."); return; }
-    record.solved = true; stage = "complete";
-    progress();
-    el("next").disabled = false; el("skip").disabled = true;
-    feedback("Balanced! Every atom is conserved and the coefficients are in the smallest whole-number ratio.", "correct");
+    completeBalance(false);
   }
   function hint() {
+    if (stage === "complete") { completeBalance(true); return; }
     hintLevel++;
     if (stage === "products") {
       var hints = {

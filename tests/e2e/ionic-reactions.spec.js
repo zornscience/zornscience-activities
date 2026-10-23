@@ -139,6 +139,7 @@ async function predict(page, reference, options) {
   expect(initialCoefficients).toEqual(reference.coefficients.map(() => "1"));
   var initialChecks = await page.locator("#zsa-ir-counts tr td:last-child").allTextContents();
   expect(initialChecks.some((text) => text === ""), "every problem requires balancing from its initial coefficients").toBe(true);
+  await expect(page.locator("#zsa-ir-next")).toBeDisabled();
   var type = await page.locator("main[data-zsa-activity]").getAttribute("data-reaction-type");
   if (type === "double-replacement") {
     await expect(page.locator("#zsa-ir-count-mode")).toBeVisible();
@@ -159,10 +160,12 @@ async function setBalance(page, reference, order, factor) {
 async function solve(page, reference, options) {
   var order = await predict(page, reference, options);
   await setBalance(page, reference, order);
+  await expect(page.locator("#zsa-ir-next")).toBeEnabled();
+  await expect(page.locator("#zsa-ir-skip")).toBeDisabled();
+  await expect(page.locator("#zsa-ir-feedback")).toHaveAttribute("data-kind", "correct");
+  await expect(page.locator("#zsa-ir-feedback")).toContainText(/^Balanced!/);
   var expectedCounts = atomTotals(reference);
   for (var symbol of Object.keys(expectedCounts)) expect(await counts(page, symbol)).toEqual([expectedCounts[symbol], expectedCounts[symbol]]);
-  await page.locator("#zsa-ir-check-balance").click();
-  await expect(page.locator("#zsa-ir-next")).toBeEnabled();
 }
 async function atomMode(page) {
   if (await page.locator("#zsa-ir-count-mode").isVisible()) await page.locator("#zsa-ir-count-mode").selectOption("atoms");
@@ -287,10 +290,10 @@ test("aluminum sulfide requires a 2:3 ionic formula and supports a coefficient o
   await expect(page.locator("#zsa-ir-next")).toBeDisabled();
   await page.getByRole("button", {name: "Increase coefficient for Al", exact: true}).click();
   await expect(coefficient(page, "Al")).toHaveValue("16");
+  await expect(page.locator("#zsa-ir-next")).toBeEnabled();
+  await expect(page.locator("#zsa-ir-feedback")).toContainText(/^Balanced!/);
   expect(await counts(page, "Al")).toEqual([16, 16]);
   expect(await counts(page, "S")).toEqual([24, 24]);
-  await page.locator("#zsa-ir-check-balance").click();
-  await expect(page.locator("#zsa-ir-next")).toBeEnabled();
   await page.setViewportSize({width: 320, height: 664});
   expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
 });
@@ -306,19 +309,45 @@ test("the equation places reactants left, the arrow between, products right and 
   expect(reactants.x + reactants.width).toBeLessThanOrEqual(arrow.x);
   expect(arrow.x + arrow.width).toBeLessThanOrEqual(products.x);
   expect(bank.y).toBeGreaterThan(Math.max(reactants.y + reactants.height, products.y + products.height));
-  var heading = page.locator(".zsa-ir-product-side > h3");
-  await expect(heading).toHaveCSS("text-align", "center");
-  var title = await heading.boundingBox();
-  expect(Math.abs(title.x + title.width / 2 - products.x - products.width / 2)).toBeLessThanOrEqual(1);
+  await expect(page.locator(".zsa-ir-product-side > h3")).toHaveCount(0);
+  await expect(page.locator("#zsa-ir-products-title")).toHaveText("What are the products?");
+});
+
+test("the compact header keeps the title beside the logo and Instructions beside Share", async ({page, problems}) => {
+  void problems;
+  await open(page);
+  var header = page.locator(".zsa-ir-header"), title = header.getByRole("heading", {level: 1});
+  await expect(header).not.toContainText("ZornScience");
+  await expect(header).not.toContainText("Chemistry practice");
+  await expect(page.locator(".zsa-ir-title-row")).toHaveCount(0);
+  await expect(page.locator(".zsa-ir-identity > h1")).toHaveCount(1);
+  for (var width of [1366, 768, 390, 320]) {
+    await page.setViewportSize({width: width, height: 664});
+    var logo = await header.locator(".zsa-ir-brand img").boundingBox(), heading = await title.boundingBox();
+    var instructions = await page.locator("#zsa-ir-instructions-open").boundingBox(), share = await page.locator("#zsa-ir-share-toggle").boundingBox();
+    expect(logo.x + logo.width, "logo left of title at " + width).toBeLessThanOrEqual(heading.x);
+    expect(Math.min(logo.y + logo.height, heading.y + heading.height) - Math.max(logo.y, heading.y), "title beside logo at " + width).toBeGreaterThan(0);
+    expect(instructions.x + instructions.width, "adjacent Instructions and Share at " + width).toBeLessThanOrEqual(share.x);
+    expect(share.x - instructions.x - instructions.width).toBeLessThanOrEqual(20);
+    expect(Math.abs(instructions.y - share.y)).toBeLessThanOrEqual(1);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
+  }
+  await page.goto("/ionic-reactions/?embed=1");
+  await expect(title).toBeVisible();
+  await expect(header.locator(".zsa-ir-brand")).toBeHidden();
+  await expect(page.locator("#zsa-ir-instructions-open")).toBeVisible();
+  await expect(page.locator("#zsa-ir-share-toggle")).toBeHidden();
+  await expect(header.getByRole("link", {name: "All activities", exact: true})).toBeHidden();
+  await audit(page, "embedded compact header");
 });
 
 test("the simplified header opens worked instructions without changing the current problem", async ({page, problems}) => {
   void problems;
   await open(page);
   var opener = page.locator("#zsa-ir-instructions-open"), dialog = page.locator("#zsa-ir-instructions");
-  await expect(page.locator(".zsa-ir-title-row")).not.toContainText("Find the products. Make every atom count.");
-  await expect(page.locator(".zsa-ir-title-row")).not.toContainText("Choose your reaction types, then build and balance ten problems.");
-  await expect(page.locator(".zsa-ir-title-row")).not.toContainText("Predict · Build · Balance");
+  await expect(page.locator(".zsa-ir-header")).not.toContainText("Find the products. Make every atom count.");
+  await expect(page.locator(".zsa-ir-header")).not.toContainText("Choose your reaction types, then build and balance ten problems.");
+  await expect(page.locator(".zsa-ir-header")).not.toContainText("Predict · Build · Balance");
   await expect(page.locator("#zsa-ir-stage")).toHaveCount(0);
   await expect(dialog).toBeHidden();
   await opener.click();
@@ -387,6 +416,10 @@ test("balancing formulas are larger and coefficient boxes have a clear border on
       expect(border.color).not.toBe(border.background);
       expect(border.color).not.toBe("rgba(0, 0, 0, 0)");
     }
+    var help = await page.locator("#zsa-ir-coefficient-help").boundingBox(), equation = await page.locator("#zsa-ir-equation").boundingBox();
+    expect(Math.abs(help.x - equation.x), "instructions start at equation edge at " + width).toBeLessThanOrEqual(1);
+    expect(Math.abs(help.width - equation.width), "instructions span equation width at " + width).toBeLessThanOrEqual(1);
+    expect(help.y + help.height).toBeLessThanOrEqual(equation.y);
     expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
   }
 });
@@ -426,8 +459,15 @@ test("a ten-problem mixed round counts each missed problem once and includes ski
       await expect(page.locator("#zsa-ir-balance")).toBeHidden();
     }
     if (i === 1) { await page.locator("#zsa-ir-skip").click(); continue; }
-    if (i === 2) await page.locator("#zsa-ir-hint").click();
-    await solve(page, active.reference, {reverse: i % 2 === 0, keyboard: i === 0});
+    if (i === 2) {
+      await page.locator("#zsa-ir-hint").click();
+      var order = await predict(page, active.reference);
+      await page.locator("#zsa-ir-check-balance").click();
+      await page.locator("#zsa-ir-check-balance").click();
+      await expect(page.locator("#zsa-ir-next")).toBeDisabled();
+      await setBalance(page, active.reference, order);
+      await expect(page.locator("#zsa-ir-next")).toBeEnabled();
+    } else await solve(page, active.reference, {reverse: i % 2 === 0, keyboard: i === 0});
     await page.locator("#zsa-ir-next").click();
   }
   expect(Object.keys(types).sort()).toEqual(TYPES.slice().sort());
@@ -435,8 +475,8 @@ test("a ten-problem mixed round counts each missed problem once and includes ski
   await expect(page.locator("#zsa-ir-practice")).toBeHidden();
   await expect(page.locator("#zsa-ir-summary")).toBeVisible();
   await expect(page.locator("#zsa-ir-summary-title")).toBeFocused();
-  await stat(page, "missed", 2); await stat(page, "skipped", 1); await stat(page, "first-try", 8); await stat(page, "balanced", 9);
-  await expect(page.locator("#zsa-ir-summary-review .zsa-ir-review-item")).toHaveCount(2);
+  await stat(page, "missed", 3); await stat(page, "skipped", 1); await stat(page, "first-try", 7); await stat(page, "balanced", 9);
+  await expect(page.locator("#zsa-ir-summary-review .zsa-ir-review-item")).toHaveCount(3);
   await expect(page.locator("#zsa-ir-summary-lede")).toContainText(/skip/i);
 });
 
@@ -508,12 +548,87 @@ test("large coefficient controls update atom counts, reject invalid or nonminima
     await expect(page.locator("#zsa-ir-next")).toBeDisabled();
     await expect(page.locator("#zsa-ir-feedback")).toContainText(/whole numbers/i);
   }
-  await setBalance(page, ref, order, 2); await page.locator("#zsa-ir-check-balance").click();
+  await setBalance(page, ref, order, 2);
+  await expect(page.locator("#zsa-ir-next")).toBeDisabled();
+  await expect(page.locator("#zsa-ir-feedback")).toContainText(/smallest|reduce/i);
+  await page.locator("#zsa-ir-check-balance").click();
   await expect(page.locator("#zsa-ir-next")).toBeDisabled();
   await expect(page.locator("#zsa-ir-feedback")).toContainText(/smallest/i);
-  await setBalance(page, ref, order); await page.locator("#zsa-ir-check-balance").click();
+  await setBalance(page, ref, order);
+  await expect(page.locator("#zsa-ir-next")).toBeEnabled();
+  await page.locator("#zsa-ir-check-balance").click();
   await expect(page.locator("#zsa-ir-next")).toBeEnabled();
   await increase.click(); await expect(page.locator("#zsa-ir-next")).toBeDisabled();
+});
+
+test("automatic balance feedback and progress follow edits without counting exploratory changes as misses", async ({page, problems}) => {
+  void problems;
+  await go(page);
+  var ref = (await current(page)).reference, order = await predict(page, ref);
+  var formula = ref.reactants[0], input = coefficient(page, formula);
+  var feedback = page.locator("#zsa-ir-feedback"), next = page.locator("#zsa-ir-next"), meter = page.locator("#zsa-ir-meter");
+  var increase = page.getByRole("button", {name: "Increase coefficient for " + formula, exact: true});
+  var decrease = page.getByRole("button", {name: "Decrease coefficient for " + formula, exact: true});
+  var initialMessage = await feedback.textContent();
+  await decrease.click();
+  await expect(input).toHaveValue("1");
+  await expect(feedback).toHaveText(initialMessage);
+  await expect(meter).toHaveJSProperty("value", 0);
+  for (var value of ["", "0", "-1", "1.5", "100"]) {
+    await input.fill(value);
+    await expect(next).toBeDisabled();
+    await expect(page.locator("#zsa-ir-skip")).toBeEnabled();
+    await expect(meter).toHaveJSProperty("value", 0);
+    await expect(feedback).not.toHaveAttribute("data-kind", "correct");
+  }
+  await input.fill("99");
+  var upperBoundMessage = await feedback.textContent();
+  await increase.click();
+  await expect(input).toHaveValue("99");
+  await expect(feedback).toHaveText(upperBoundMessage);
+  await expect(meter).toHaveJSProperty("value", 0);
+  await setBalance(page, ref, order, 2);
+  await expect(next).toBeDisabled();
+  await expect(feedback).toContainText(/smallest|reduce/i);
+  await expect(feedback).not.toHaveAttribute("data-kind", "correct");
+  var checks = page.locator("#zsa-ir-counts tr td:last-child");
+  await expect(checks).toHaveText(Array(await checks.count()).fill("✓"));
+  await setBalance(page, ref, order);
+  await expect(next).toBeEnabled();
+  await expect(page.locator("#zsa-ir-skip")).toBeDisabled();
+  await expect(meter).toHaveJSProperty("value", 1);
+  await expect(feedback).toHaveAttribute("data-kind", "correct");
+  await expect(feedback).toContainText(/^Balanced!/);
+  var color = await feedback.evaluate((element) => getComputedStyle(element).color.match(/\d+/g).slice(0, 3).map(Number));
+  expect(color[1]).toBeGreaterThan(color[0]); expect(color[1]).toBeGreaterThan(color[2]);
+  await input.focus(); await page.keyboard.press("ArrowUp");
+  await expect(input).toHaveValue(String(ref.coefficients[0] + 1));
+  await expect(next).toBeDisabled();
+  await expect(page.locator("#zsa-ir-skip")).toBeEnabled();
+  await expect(meter).toHaveJSProperty("value", 0);
+  await expect(feedback).not.toHaveAttribute("data-kind", "correct");
+  await page.keyboard.press("ArrowDown");
+  await expect(input).toHaveValue(String(ref.coefficients[0]));
+  await expect(input).toBeFocused();
+  await expect(next).toBeEnabled();
+  await expect(meter).toHaveJSProperty("value", 1);
+  for (var repeat = 0; repeat < 2; repeat++) {
+    await page.locator("#zsa-ir-check-balance").click();
+    await expect(next).toBeEnabled();
+    await expect(meter).toHaveJSProperty("value", 1);
+  }
+  await page.locator("#zsa-ir-balance-hint").click();
+  await expect(feedback).toHaveAttribute("data-kind", "correct");
+  await expect(feedback).toContainText(/^Balanced!/);
+  await input.fill("");
+  await expect(next).toBeDisabled();
+  await expect(meter).toHaveJSProperty("value", 0);
+  await input.fill(String(ref.coefficients[0]));
+  await expect(next).toBeEnabled();
+  await expect(meter).toHaveJSProperty("value", 1);
+  await next.click();
+  for (var index = 1; index < 10; index++) await page.locator("#zsa-ir-skip").click();
+  await stat(page, "balanced", 1); await stat(page, "missed", 9); await stat(page, "skipped", 9); await stat(page, "first-try", 1);
 });
 
 test("balancing replaces prediction in the same space and restores prediction for the next problem", async ({page, problems}) => {
@@ -530,7 +645,7 @@ test("balancing replaces prediction in the same space and restores prediction fo
   await page.locator("#zsa-ir-balance-hint").click();
   await expect(page.locator("#zsa-ir-feedback")).toBeVisible();
   await setBalance(page, ref, order);
-  await page.locator("#zsa-ir-check-balance").click();
+  await expect(page.locator("#zsa-ir-next")).toBeEnabled();
   await page.locator("#zsa-ir-next").click();
   await expect(page.locator("#zsa-ir-predict")).toBeVisible();
   await expect(page.locator("#zsa-ir-bank")).toBeVisible();

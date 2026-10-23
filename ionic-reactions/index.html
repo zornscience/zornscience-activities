@@ -4,33 +4,38 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="3.2.0">
+<meta name="zsa-version" content="3.3.0">
 <meta name="description" content="Choose synthesis, decomposition, single replacement or double replacement practice, then predict products and balance equations, from ZornScience.">
 <title>Ionic Reaction Builder | ZornScience</title>
-<link rel="icon" href="zornscience-logo.png?v=3.2.0" type="image/png">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=3.2.0">
-<link rel="stylesheet" href="activity.css?v=3.2.0">
-<script src="../shared/zsa-embed.js?v=3.2.0" defer></script>
-<script src="data.js?v=3.2.0" defer></script>
-<script src="model.js?v=3.2.0" defer></script>
-<script src="share.js?v=3.2.0" defer></script>
-<script src="instructions.js?v=3.2.0" defer></script>
-<script src="activity.js?v=3.2.0" defer></script>
+<link rel="icon" href="zornscience-logo.png?v=3.3.0" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=3.3.0">
+<link rel="stylesheet" href="activity.css?v=3.3.0">
+<script src="../shared/zsa-embed.js?v=3.3.0" defer></script>
+<script src="data.js?v=3.3.0" defer></script>
+<script src="model.js?v=3.3.0" defer></script>
+<script src="share.js?v=3.3.0" defer></script>
+<script src="instructions.js?v=3.3.0" defer></script>
+<script src="activity.js?v=3.3.0" defer></script>
 </head>
 <body>
 <main class="zsa zsa-ir" data-zsa-activity="ionic-reactions">
 <header class="zsa-ir-header">
-<div class="zsa-ir-topline" data-zsa-chrome>
-<a class="zsa-ir-brand" href="https://zornscience.org/">
-<img src="zornscience-logo.png?v=3.2.0" alt="" width="52" height="50">
-<span><strong>ZornScience</strong><span class="zsa-ir-brand-tagline">Chemistry practice</span></span>
+<div class="zsa-ir-topline">
+<div class="zsa-ir-identity">
+<a class="zsa-ir-brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome>
+<img src="zornscience-logo.png?v=3.3.0" alt="" width="52" height="50">
 </a>
+<h1>Ionic Reaction Builder</h1>
+</div>
 <nav class="zsa-ir-header-tools" aria-label="Activity links">
-<a class="zsa-back" href="../">All activities</a>
-<button class="zsa-btn zsa-ir-share-toggle" id="zsa-ir-share-toggle" type="button" aria-label="Share activity" aria-expanded="false" aria-controls="zsa-ir-share-panel">
+<a class="zsa-back" href="../" data-zsa-chrome>All activities</a>
+<div class="zsa-ir-header-buttons">
+<button class="zsa-btn zsa-ir-instructions-open" id="zsa-ir-instructions-open" type="button" aria-haspopup="dialog" aria-controls="zsa-ir-instructions">Instructions</button>
+<button class="zsa-btn zsa-ir-share-toggle" id="zsa-ir-share-toggle" type="button" aria-label="Share activity" aria-expanded="false" aria-controls="zsa-ir-share-panel" data-zsa-chrome>
 <svg class="zsa-ir-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg>
 <span>Share</span>
 </button>
+</div>
 </nav>
 </div>
 <section class="zsa-ir-share-panel" id="zsa-ir-share-panel" aria-labelledby="zsa-ir-share-title" data-zsa-chrome hidden>
@@ -52,9 +57,6 @@
 </div>
 <p class="zsa-ir-share-status" id="zsa-ir-share-status" aria-live="polite" aria-atomic="true"></p>
 </section>
-<div class="zsa-ir-title-row">
-<div class="zsa-ir-title-tools"><h1>Ionic Reaction Builder</h1><button class="zsa-btn zsa-ir-instructions-open" id="zsa-ir-instructions-open" type="button" aria-haspopup="dialog" aria-controls="zsa-ir-instructions">Instructions</button></div>
-</div>
 </header>
 <dialog class="zsa-ir-instructions" id="zsa-ir-instructions" aria-labelledby="zsa-ir-instructions-title" aria-describedby="zsa-ir-instructions-intro">
 <div class="zsa-ir-instructions-heading"><h2 id="zsa-ir-instructions-title">How to use Ionic Reaction Builder</h2><button class="zsa-ir-icon-button" id="zsa-ir-instructions-close" type="button" aria-label="Close instructions" autofocus><span aria-hidden="true">×</span></button></div>
@@ -63,7 +65,7 @@
 <li><strong>Choose your practice.</strong> Select at least one reaction type, then choose Start practice.</li>
 <li><strong>Build the products.</strong> For CuSO<sub>4</sub> + Na<sub>3</sub>PO<sub>4</sub>, pair Cu<sup>2+</sup> with PO<sub>4</sub><sup>3−</sup>. Use the subscript arrows to set 3 copper ions and 2 phosphate ions, making Cu<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub>. Pair Na<sup>+</sup> with SO<sub>4</sub><sup>2−</sup> and set 2 sodium ions to make Na<sub>2</sub>SO<sub>4</sub>. Leave a subscript blank for 1.</li>
 <li><strong>Check your products.</strong> Drag blocks into the spaces, or select a block and then its space. Either product order is accepted. Check products opens balancing when the formulas are correct.</li>
-<li><strong>Balance with coefficients.</strong> Set the coefficients to 3, 2, 1 and 3 in the order shown below. Keep the subscripts fixed. The live table shows a green check when the counts on the two sides are equal.</li>
+<li><strong>Balance with coefficients.</strong> Set the coefficients to 3, 2, 1 and 3 in the order shown below. Keep the subscripts fixed. The live table shows a green check when the counts on the two sides are equal. The green Balanced confirmation appears automatically at the smallest whole-number ratio, and Next reaction becomes available.</li>
 </ol>
 <div class="zsa-ir-instructions-example">
 <p class="zsa-ir-instructions-example-label">Products predicted</p>
@@ -71,7 +73,7 @@
 <p class="zsa-ir-instructions-example-label">Balanced equation</p>
 <p class="zsa-ir-instructions-equation"><strong>3</strong>CuSO<sub>4</sub> + <strong>2</strong>Na<sub>3</sub>PO<sub>4</sub> → Cu<sub>3</sub>(PO<sub>4</sub>)<sub>2</sub> + <strong>3</strong>Na<sub>2</sub>SO<sub>4</sub></p>
 </div>
-<p class="zsa-ir-instructions-note">Choose Check balance to continue. Skip problem advances without finishing it. The summary reviews missed and skipped problems; a problem counts only once.</p>
+<p class="zsa-ir-instructions-note">Check balance gives feedback whenever you need it. Skip problem advances without finishing it. The summary reviews missed and skipped problems; a problem counts only once.</p>
 </dialog>
 <noscript><p class="zsa-panel">This activity needs JavaScript. Enable it to build and balance reactions.</p></noscript>
 <section class="zsa-ir-workspace zsa-ir-setup" id="zsa-ir-setup" aria-labelledby="zsa-ir-setup-title">
@@ -108,7 +110,6 @@
 </div>
 <span class="zsa-ir-reaction-arrow" id="zsa-ir-reaction-arrow" aria-hidden="true">→</span>
 <div class="zsa-ir-product-side">
-<h3>Products</h3>
 <div class="zsa-ir-products" id="zsa-ir-products" aria-label="Build the products"></div>
 </div>
 </div>
@@ -172,7 +173,7 @@
 </section>
 <p class="zsa-sr-only" id="zsa-ir-live" aria-live="polite" aria-atomic="true"></p>
 <footer class="zsa-footer" data-zsa-chrome>
-<span class="zsa-ir-footer-brand"><img src="zornscience-logo.png?v=3.2.0" alt="" width="27" height="26"><strong>ZornScience</strong></span>
+<span class="zsa-ir-footer-brand"><img src="zornscience-logo.png?v=3.3.0" alt="" width="27" height="26"><strong>ZornScience</strong></span>
 <span>Practice with purpose. Nothing you enter leaves this tab.</span>
 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
 </footer>

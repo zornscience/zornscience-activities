@@ -2,21 +2,19 @@ body {background:#f8f9fb;}
 .zsa-ir {--zsa-max-width:1080px;--zsa-ir-cation:#184a93;--zsa-ir-cation-bg:#edf4ff;--zsa-ir-anion:#9a3a2a;--zsa-ir-anion-bg:#fff1eb;--zsa-ir-neutral:#23615b;--zsa-ir-neutral-bg:#eff8f5;--zsa-ir-line:#dce3ec;background:#f8f9fb;padding-top:22px;}
 .zsa-ir p {margin:0;}
 .zsa-ir h2,.zsa-ir h3 {margin:0;}
+.zsa-ir [data-zsa-chrome][hidden] {display:none;}
 .zsa-ir-header {position:relative;margin-bottom:28px;}
 .zsa-ir-topline {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding:0 0 20px;border-bottom:1px solid #dde4ed;}
-.zsa-ir .zsa-ir-brand {display:inline-flex;align-items:center;gap:12px;min-height:52px;text-decoration:none;color:var(--zsa-navy);}
+.zsa-ir-identity {display:flex;align-items:center;gap:12px;min-width:0;flex:1 1 400px;}
+.zsa-ir .zsa-ir-brand {display:inline-flex;align-items:center;flex-shrink:0;min-height:52px;min-width:52px;text-decoration:none;color:var(--zsa-navy);}
 .zsa-ir-brand img {display:block;flex-shrink:0;}
-.zsa-ir-brand strong {display:block;font-size:21px;font-weight:650;letter-spacing:-.035em;line-height:1.2;}
-.zsa-ir-brand-tagline {display:block;margin-top:4px;font-size:12px;color:#5a6b80;line-height:1.3;}
-.zsa-ir-header-tools {display:flex;align-items:center;gap:18px;}
+.zsa-ir-header-tools {display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:16px;max-width:100%;margin-left:auto;}
+.zsa-ir-header-buttons {display:flex;align-items:center;gap:8px;}
 .zsa-ir .zsa-back {font-size:13px;text-decoration:none;}
 .zsa-ir .zsa-ir-share-toggle {display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:9px 12px;min-height:44px;background:white;}
 .zsa-ir-icon {width:18px;height:18px;flex-shrink:0;}
-.zsa-ir-title-row {padding-top:24px;}
-.zsa-ir-title-tools {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px 20px;}
-.zsa-ir-title-tools h1 {min-width:0;}
 .zsa-ir-instructions-open {flex-shrink:0;}
-.zsa-ir h1 {font-size:clamp(2.4rem,2rem + 1.8vw,3.6rem);letter-spacing:-.05em;margin:7px 0 12px;font-weight:650;}
+.zsa-ir h1 {min-width:0;font-size:clamp(1.6rem,1.2rem + 1.2vw,2rem);letter-spacing:-.035em;line-height:1.15;margin:0;font-weight:650;}
 .zsa-ir-lede {color:var(--zsa-navy);font-size:clamp(1.05rem,1rem + .3vw,1.2rem);font-weight:500;}
 .zsa-ir-intro {max-width:720px;font-size:15px;margin-top:9px!important;color:#536075;line-height:1.65;}
 .zsa-ir .zsa-eyebrow {font-size:11px;letter-spacing:.12em;margin-bottom:8px;}
@@ -86,7 +84,7 @@ body {background:#f8f9fb;}
 .zsa-ir-feedback[data-kind="error"] {color:#9a2424;background:#fff5f3;border-color:#edc5bd;}
 .zsa-ir-feedback[data-kind="hint"] {color:#584313;background:#fffbed;border-color:#e9dbab;}
 .zsa-ir-balance {margin-top:0;}
-.zsa-ir-balance > .zsa-ir-small {margin-top:10px;max-width:790px;}
+.zsa-ir-balance > .zsa-ir-small {margin-top:10px;max-width:none;}
 .zsa-ir-equation {display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:24px 0;}
 .zsa-ir-term {display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:7px;min-width:0;max-width:100%;}
 .zsa-ir-stepper {display:inline-flex;align-items:center;gap:5px;flex-shrink:0;}
@@ -172,15 +170,14 @@ body {background:#f8f9fb;}
 @media(max-width:560px) {
   .zsa-ir {padding-top:15px;}
   .zsa-ir-topline {gap:10px;padding-bottom:15px;}
+  .zsa-ir-identity {gap:10px;}
+  .zsa-ir .zsa-ir-brand {min-width:44px;min-height:44px;}
   .zsa-ir-brand img {width:43px;height:auto;}
-  .zsa-ir-brand strong {font-size:18px;}
-  .zsa-ir-brand-tagline {font-size:11px;}
-  .zsa-ir-header-tools {gap:12px;margin-left:auto;}
-  .zsa-ir .zsa-back {font-size:12px;}
+  .zsa-ir-header-tools {gap:10px;width:100%;justify-content:space-between;}
+  .zsa-ir .zsa-back {font-size:11px;}
+  .zsa-ir .zsa-ir-instructions-open {padding:8px 10px;}
   .zsa-ir .zsa-ir-share-toggle {padding:8px 10px;}
-  .zsa-ir-title-row {padding-top:18px;}
-  .zsa-ir-title-row::before {margin-bottom:15px;}
-  .zsa-ir h1 {font-size:2.4rem;}
+  .zsa-ir h1 {font-size:25px;}
   .zsa-ir-intro {font-size:14px;}
   .zsa-ir-header {margin-bottom:23px;}
   .zsa-ir-session p {font-size:12px;}
@@ -235,7 +232,6 @@ body {background:#f8f9fb;}
 .zsa-ir-reaction-row {display:grid;grid-template-columns:minmax(150px,.8fr) 36px minmax(0,2.6fr);gap:15px;align-items:center;margin:23px 0 22px;}
 .zsa-ir-reaction-arrow {align-self:center;justify-self:center;color:#3e5b82;font-size:37px;line-height:1;}
 .zsa-ir-product-side {min-width:0;}
-.zsa-ir-product-side > h3 {font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#5b6b80;margin-bottom:8px;font-weight:650;text-align:center;}
 .zsa-ir-product-plus {display:flex;align-items:center;justify-content:center;align-self:center;flex:0 0 15px;color:#657a94;font-size:24px;}
 .zsa-ir-bank-section {border-top:1px solid #e1e7ef;padding-top:19px;}
 .zsa-ir-subscript-field {display:flex;align-items:center;flex-direction:column;gap:5px;max-width:100%;}
@@ -262,7 +258,7 @@ body {background:#f8f9fb;}
   .zsa-ir-reactants {display:flex;flex-direction:column;align-items:flex-start;gap:7px;}
   .zsa-ir-reactants > .zsa-ir-formula {font-size:15px;}
   .zsa-ir-reactants > .zsa-ir-symbol {font-size:19px;}
-  .zsa-ir-reactant-panel h3,.zsa-ir-product-side > h3 {font-size:10px;letter-spacing:.06em;}
+  .zsa-ir-reactant-panel h3 {font-size:10px;letter-spacing:.06em;}
   .zsa-ir-condition {font-size:10px;overflow-wrap:anywhere;}
   .zsa-ir-reaction-arrow {font-size:28px;}
   .zsa-ir-product {padding:12px 6px;}

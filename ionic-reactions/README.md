@@ -1,6 +1,6 @@
 # Ionic Reaction Builder
 
-Version: 3.2.0
+Version: 3.3.0
 
 Choose Synthesis, Decomposition, Single Replacement, Double Replacement, or any combination before starting a ten-problem round. At least one checkbox must be selected. The 40-reaction bank contains ten examples per family, so even a single-family round has ten distinct problems. Rounds distribute questions as evenly as possible across the selected families and shuffle the order, including the first problem. The existing `ionic-reactions/` address stays the same.
 
@@ -9,13 +9,13 @@ Choose Synthesis, Decomposition, Single Replacement, Double Replacement, or any 
 1. Select at least one reaction family and choose Start practice. The reactants are left-justified, followed by a reaction arrow and product-building spaces on the right. The bank of ions and atoms is below both sides of the equation. Use the reaction family and stated conditions to predict products. Drag blocks into the product spaces, or select a block and then its space with a mouse, touch, Enter, or Space. Blue blocks are cations, warm blocks are anions, and teal blocks are neutral atoms. The same block can be reused.
 2. Build each product in its own card, in either product order. Each card has a first component and an optional second component. Enter subscripts or use the large up and down buttons; blank means 1, with a range of 1 to 9. Use the positive ion first in ionic formulas and keep polyatomic ions intact. Neutral atom blocks build elemental products: for example, O2 uses one O atom block with subscript 2. Parentheses appear automatically for repeated polyatomic ions.
 3. After correct products, prediction hides and the balancing panel replaces it in the same space. The formulas lock. Adjust coefficients from 1 to 99 with vertically stacked 48 px up and down arrows, by typing, or with keyboard arrows. Live counts update immediately. The "Balanced?" column shows a green check only when a row matches and stays blank otherwise. All reaction types conserve atoms. Double replacement also offers a whole-ion view because those ions stay intact.
-4. Check the smallest whole-number balance to enable Next reaction. Skip problem advances from either prediction or balancing. The last problem leads to a summary. Start a new round keeps the selected families; Change reaction types returns to the checkbox screen.
+4. The smallest whole-number balance is recognized automatically: a green confirmation appears and Next reaction becomes available. Check balance remains an optional way to request feedback. A larger equivalent ratio keeps Next locked and prompts students to reduce the coefficients. Skip problem advances from either prediction or balancing. The last problem leads to a summary. Start a new round keeps the selected families; Change reaction types returns to the checkbox screen.
 
-The Instructions button opens an accessible dialog with the worked example 3CuSO4 + 2Na3PO4 → Cu3(PO4)2 + 3Na2SO4. Students build Cu3(PO4)2 from three copper(II) ions and two phosphate ions, then Na2SO4 from two sodium ions and one sulfate ion. The example also distinguishes subscripts from coefficients. Opening or closing it does not change the current problem or its results. Escape, Close, or the backdrop dismisses it and returns focus to Instructions.
+The Instructions button opens an accessible dialog with the worked example 3CuSO4 + 2Na3PO4 → Cu3(PO4)2 + 3Na2SO4. Students build Cu3(PO4)2 from three copper(II) ions and two phosphate ions, then Na2SO4 from two sodium ions and one sulfate ion. The example distinguishes subscripts from coefficients and explains automatic balance confirmation. Opening or closing it does not change the current problem or its results. Escape, Close, or the backdrop dismisses it and returns focus to Instructions.
 
 ## Results and review
 
-The summary shows balanced problems, correct first tries, missed problems, and skipped problems. A problem is missed if any products or balance check was incorrect, or if it was skipped. Skips are included in missed; each problem counts once regardless of repeated attempts. Hints do not count as a miss. Editing a checked equation disables Next until the equation is checked again.
+The summary shows balanced problems, correct first tries, missed problems, and skipped problems. A problem is missed if an explicit products or balance check was incorrect, or if it was skipped. Changing coefficients while exploring does not count as a miss. Skips are included in missed; each problem counts once regardless of repeated attempts. Hints do not count as a miss. Editing a completed balance away from the correct ratio removes its balanced status and disables Next until the smallest whole-number balance is restored.
 
 Review lists the correct balanced equation for every missed or skipped problem, plus results by reaction family. All progress is held in memory in the current tab. Starting a new round resets it. There is no completion code, saved state, account, tracking, or automatic outside request.
 
@@ -33,7 +33,7 @@ The bank contains only blocks needed for the current products, all composed of e
 
 ## Branding and sharing
 
-The header, favicon and footer use the existing ZornScience logo. The header shows the title and Instructions button without a tagline or colored rule. The balancing panel is headed "Balance the equation" without a step label. Its equation uses larger type, and coefficient inputs have a stronger border. Products is centered over the product cards; an amber badge identifies the reaction type. The Share button offers Copy link, icon-labelled email, Facebook and X links, and the device share sheet when supported. Sharing always uses the canonical activity URL, without round answers or progress. Social links load only when the user chooses them; there are no social SDKs or embedded widgets. If clipboard permission is unavailable, the link is selected for manual copying.
+The header, favicon and footer use the existing ZornScience logo. The compact header places the activity title beside the logo and Instructions beside Share, without a separate wordmark, tagline or colored rule. Product cards retain their individual labels without an extra Products heading. The balancing panel is headed "Balance the equation" without a step label, with its directions spanning the panel width. Its equation uses larger type, and coefficient inputs have a stronger border. An amber badge identifies the reaction type. The Share button offers Copy link, icon-labelled email, Facebook and X links, and the device share sheet when supported. Sharing always uses the canonical activity URL, without round answers or progress. Social links load only when the user chooses them; there are no social SDKs or embedded widgets. If clipboard permission is unavailable, the link is selected for manual copying.
 
 ## Implementation
 
@@ -41,6 +41,7 @@ Static HTML, CSS and strict JavaScript IIFEs, with shared site styles and embed 
 
 ## Changelog
 
+- 3.3.0: Put the title beside the logo, group Instructions with Share, remove the extra Products heading and give balancing directions the full panel width. Automatically confirm the smallest whole-number balance and enable Next; keep Check balance optional, avoid counting exploratory edits as misses, and relock a completed balance if its coefficients change.
 - 3.2.0: Audit the bank for ionic compounds, chemically specific conditions, varied product subscripts and coefficient changes in every problem. Remove molecular compounds, acid reactants and the phosphite model; broaden the ion selection and reduce nitrate repetition. Replace the worked instructions example with copper(II) phosphate. Remove the colored header rule, header tagline and balancing step label, and simplify the balancing heading.
 - 3.1.0: Larger equations and stronger coefficient borders, Ionic Reaction Builder title, worked instructions dialog, simplified labels, centered product heading, amber type badge, relevant bank blocks only, and share icons without LinkedIn.
 - 3.0.1: Replace prediction with balancing in place, stack the balancing arrows, and show green checks for balanced rows.
