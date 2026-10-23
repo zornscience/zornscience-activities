@@ -128,6 +128,9 @@ async function predict(page, reference, options) {
   }
   await page.locator("#zsa-ir-check-products").click();
   await expect(page.locator("#zsa-ir-balance")).toBeVisible();
+  await expect(page.locator("#zsa-ir-predict")).toBeHidden();
+  await expect(page.locator("#zsa-ir-bank")).toBeHidden();
+  await expect(page.locator("#zsa-ir-balance-title")).toBeFocused();
   var type = await page.locator("main[data-zsa-activity]").getAttribute("data-reaction-type");
   if (type === "double-replacement") {
     await expect(page.locator("#zsa-ir-count-mode")).toBeVisible();
@@ -386,6 +389,62 @@ test("large coefficient controls update atom counts, reject invalid or nonminima
   await setBalance(page, ref, order); await page.locator("#zsa-ir-check-balance").click();
   await expect(page.locator("#zsa-ir-next")).toBeEnabled();
   await increase.click(); await expect(page.locator("#zsa-ir-next")).toBeDisabled();
+});
+
+test("balancing replaces prediction in the same space and restores prediction for the next problem", async ({page, problems}) => {
+  void problems;
+  await page.setViewportSize({width: 1366, height: 900});
+  await go(page);
+  var predictionTop = await page.locator("#zsa-ir-predict").evaluate((element) => element.getBoundingClientRect().top + scrollY);
+  var ref = (await current(page)).reference;
+  var order = await predict(page, ref);
+  var balanceTop = await page.locator("#zsa-ir-balance").evaluate((element) => element.getBoundingClientRect().top + scrollY);
+  expect(Math.abs(balanceTop - predictionTop)).toBeLessThanOrEqual(24);
+  await expect(page.locator("#zsa-ir-check-products")).toBeHidden();
+  await expect(page.locator("#zsa-ir-balance-hint")).toBeVisible();
+  await page.locator("#zsa-ir-balance-hint").click();
+  await expect(page.locator("#zsa-ir-feedback")).toBeVisible();
+  await setBalance(page, ref, order);
+  await page.locator("#zsa-ir-check-balance").click();
+  await page.locator("#zsa-ir-next").click();
+  await expect(page.locator("#zsa-ir-predict")).toBeVisible();
+  await expect(page.locator("#zsa-ir-bank")).toBeVisible();
+  await expect(page.locator("#zsa-ir-balance")).toBeHidden();
+  var next = (await current(page)).reference;
+  await predict(page, next);
+  await page.locator("#zsa-ir-skip").click();
+  await expect(page.locator("#zsa-ir-predict")).toBeVisible();
+  await expect(page.locator("#zsa-ir-balance")).toBeHidden();
+});
+
+test("vertical balancing arrows update green checks while unequal and invalid rows remain blank", async ({page, problems}) => {
+  void problems;
+  await go(page);
+  var ref = (await current(page)).reference, order = await predict(page, ref);
+  await expect(page.getByRole("columnheader", {name: "Balanced?", exact: true})).toBeVisible();
+  var formula = ref.reactants[0], input = coefficient(page, formula);
+  var increase = page.getByRole("button", {name: "Increase coefficient for " + formula, exact: true});
+  var decrease = page.getByRole("button", {name: "Decrease coefficient for " + formula, exact: true});
+  var up = await increase.boundingBox(), down = await decrease.boundingBox(), field = await input.boundingBox();
+  expect(Math.abs(up.x - down.x)).toBeLessThanOrEqual(1);
+  expect(up.y + up.height).toBeLessThanOrEqual(down.y);
+  expect(field.x + field.width).toBeLessThanOrEqual(up.x + 1);
+  for (var arrow of [up, down]) { expect(arrow.width).toBeGreaterThanOrEqual(48); expect(arrow.height).toBeGreaterThanOrEqual(48); }
+  await setBalance(page, ref, order);
+  var cells = page.locator("#zsa-ir-counts tr td:last-child");
+  expect(await cells.count()).toBeGreaterThan(0);
+  await expect(cells).toHaveText(Array(await cells.count()).fill("✓"));
+  var colors = await cells.evaluateAll((elements) => elements.map((element) => getComputedStyle(element).color.match(/\d+/g).slice(0, 3).map(Number)));
+  for (var color of colors) { expect(color[1]).toBeGreaterThan(color[0]); expect(color[1]).toBeGreaterThan(color[2]); }
+  await increase.click();
+  await expect(input).toHaveValue(String(ref.coefficients[0] + 1));
+  expect((await cells.allTextContents()).some((text) => text === "")).toBe(true);
+  expect((await cells.allTextContents()).every((text) => text === "" || text === "✓")).toBe(true);
+  await decrease.focus(); await page.keyboard.press("Space");
+  await expect(input).toHaveValue(String(ref.coefficients[0]));
+  await expect(cells).toHaveText(Array(await cells.count()).fill("✓"));
+  await input.fill("0");
+  await expect(cells).toHaveText(Array(await cells.count()).fill(""));
 });
 
 test("share options expose encoded links, copy the canonical activity URL and close with Escape", async ({page, problems}) => {

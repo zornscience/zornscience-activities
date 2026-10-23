@@ -4,24 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="3.0.0">
+<meta name="zsa-version" content="3.0.1">
 <meta name="description" content="Choose synthesis, decomposition, single replacement or double replacement practice, then predict products and balance equations, from ZornScience.">
 <title>Reaction Builder | ZornScience</title>
-<link rel="icon" href="zornscience-logo.png?v=3.0.0" type="image/png">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=3.0.0">
-<link rel="stylesheet" href="activity.css?v=3.0.0">
-<script src="../shared/zsa-embed.js?v=3.0.0" defer></script>
-<script src="data.js?v=3.0.0" defer></script>
-<script src="model.js?v=3.0.0" defer></script>
-<script src="share.js?v=3.0.0" defer></script>
-<script src="activity.js?v=3.0.0" defer></script>
+<link rel="icon" href="zornscience-logo.png?v=3.0.1" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=3.0.1">
+<link rel="stylesheet" href="activity.css?v=3.0.1">
+<script src="../shared/zsa-embed.js?v=3.0.1" defer></script>
+<script src="data.js?v=3.0.1" defer></script>
+<script src="model.js?v=3.0.1" defer></script>
+<script src="share.js?v=3.0.1" defer></script>
+<script src="activity.js?v=3.0.1" defer></script>
 </head>
 <body>
 <main class="zsa zsa-ir" data-zsa-activity="ionic-reactions">
 <header class="zsa-ir-header">
 <div class="zsa-ir-topline" data-zsa-chrome>
 <a class="zsa-ir-brand" href="https://zornscience.org/">
-<img src="zornscience-logo.png?v=3.0.0" alt="" width="52" height="50">
+<img src="zornscience-logo.png?v=3.0.1" alt="" width="52" height="50">
 <span><strong>ZornScience</strong><span class="zsa-ir-brand-tagline">Chemistry practice</span></span>
 </a>
 <nav class="zsa-ir-header-tools" aria-label="Activity links">
@@ -81,7 +81,7 @@
 <div class="zsa-ir-session-heading"><h2 id="zsa-ir-round" tabindex="-1">Problem 1 of 10</h2><p id="zsa-ir-progress">0 of 10 completed</p></div>
 <progress class="zsa-ir-meter" id="zsa-ir-meter" max="10" value="0" aria-label="Round progress">0 of 10</progress>
 </div>
-<section class="zsa-ir-workspace" aria-labelledby="zsa-ir-products-title">
+<section class="zsa-ir-workspace" id="zsa-ir-predict" aria-labelledby="zsa-ir-products-title">
 <div class="zsa-ir-section-heading">
 <div><p class="zsa-eyebrow" id="zsa-ir-stage">Step 1 of 2 · Predict</p><h2 id="zsa-ir-products-title">What are the products?</h2></div>
 <p class="zsa-ir-badge" id="zsa-ir-type">Mixed reaction practice</p>
@@ -117,7 +117,7 @@
 <section class="zsa-ir-workspace zsa-ir-balance" id="zsa-ir-balance" aria-labelledby="zsa-ir-balance-title" hidden>
 <p class="zsa-eyebrow">Step 2 of 2 · Balance</p>
 <h2 id="zsa-ir-balance-title" tabindex="-1">Same atoms. Balanced equation.</h2>
-<p class="zsa-ir-small" id="zsa-ir-coefficient-help">Use the − and + buttons, type a coefficient, or use the up and down arrow keys. Use the smallest whole-number ratio. The formulas stay fixed.</p>
+<p class="zsa-ir-small" id="zsa-ir-coefficient-help">Use the ▲ and ▼ buttons, type a coefficient, or use the up and down arrow keys. Use the smallest whole-number ratio. The formulas stay fixed.</p>
 <div class="zsa-ir-equation" id="zsa-ir-equation" role="group" aria-label="Equation coefficients" aria-describedby="zsa-ir-coefficient-help"></div>
 <div class="zsa-ir-count-controls" id="zsa-ir-count-controls" hidden>
 <label for="zsa-ir-count-mode">Count</label>
@@ -126,11 +126,11 @@
 <div class="zsa-ir-table-wrap">
 <table class="zsa-ir-table">
 <caption id="zsa-ir-count-caption">Atom count on each side. Every row must match.</caption>
-<thead><tr><th scope="col" id="zsa-ir-count-label">Atom</th><th scope="col">Reactants</th><th scope="col">Products</th><th scope="col">Match</th></tr></thead>
+<thead><tr><th scope="col" id="zsa-ir-count-label">Atom</th><th scope="col">Reactants</th><th scope="col">Products</th><th scope="col">Balanced?</th></tr></thead>
 <tbody id="zsa-ir-counts"></tbody>
 </table>
 </div>
-<div class="zsa-ir-actions"><button class="zsa-btn zsa-btn--primary" id="zsa-ir-check-balance" type="button">Check balance</button></div>
+<div class="zsa-ir-actions"><button class="zsa-btn zsa-btn--primary" id="zsa-ir-check-balance" type="button">Check balance</button><button class="zsa-btn zsa-ir-quiet" id="zsa-ir-balance-hint" type="button">Hint</button></div>
 </section>
 <div class="zsa-ir-finish">
 <p class="zsa-ir-small" id="zsa-ir-note"></p>
@@ -159,7 +159,7 @@
 </section>
 <p class="zsa-sr-only" id="zsa-ir-live" aria-live="polite" aria-atomic="true"></p>
 <footer class="zsa-footer" data-zsa-chrome>
-<span class="zsa-ir-footer-brand"><img src="zornscience-logo.png?v=3.0.0" alt="" width="27" height="26"><strong>ZornScience</strong></span>
+<span class="zsa-ir-footer-brand"><img src="zornscience-logo.png?v=3.0.1" alt="" width="27" height="26"><strong>ZornScience</strong></span>
 <span>Practice with purpose. Nothing you enter leaves this tab.</span>
 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
 </footer>

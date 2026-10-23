@@ -34,13 +34,13 @@
     return entry ? entry.label : type;
   }
   function say(text) { el("live").textContent = text; }
-  function feedback(text, kind) {
+  function feedback(text, kind, preventScroll) {
     if (stage !== "products" && el("feedback").parentNode !== el("balance")) el("balance").appendChild(el("feedback"));
     el("feedback").hidden = false;
     el("feedback").textContent = text;
     el("feedback").dataset.kind = kind;
     say(text);
-    if (!root.classList.contains("zsa--embedded")) el("feedback").scrollIntoView({block: "nearest"});
+    if (!preventScroll && !root.classList.contains("zsa--embedded")) el("feedback").scrollIntoView({block: "nearest"});
   }
   function incorrect(text) { record.missed = true; feedback(text, "error"); }
   function shuffle(list) {
@@ -202,6 +202,7 @@
     el("check-products").disabled = true;
     el("selection").textContent = "Products are set. Change only the coefficients below.";
     el("note").textContent = reaction.note || "Correct formulas are locked. Change coefficients to balance the equation.";
+    el("predict").hidden = true;
     el("balance").hidden = false;
     el("stage").textContent = "Step 2 of 2 · Balance the equation";
     var ones = reaction.reactants.concat(reaction.products).map(function () { return 1; });
@@ -209,7 +210,7 @@
     el("count-controls").hidden = !canCountIons;
     el("count-mode").value = canCountIons ? "ions" : "atoms";
     buildEquation();
-    feedback("Correct products! Now conserve every atom by changing coefficients. Keep the formulas fixed.", "correct");
+    feedback("Correct products! Now conserve every atom by changing coefficients. Keep the formulas fixed.", "correct", true);
     el("balance-title").focus();
   }
   function displayedSpecies() { return reaction.reactants.concat(productOrder.map(function (index) { return reaction.products[index]; })); }
@@ -235,7 +236,7 @@
       function stepButton(delta) {
         var button = node("button", "zsa-ir-step"); button.type = "button";
         button.setAttribute("aria-label", (delta < 0 ? "Decrease" : "Increase") + " coefficient for " + species.formula);
-        var symbol = node("span", "", delta < 0 ? "−" : "+"); symbol.setAttribute("aria-hidden", "true"); button.appendChild(symbol);
+        var symbol = node("span", "", delta < 0 ? "▼" : "▲"); symbol.setAttribute("aria-hidden", "true"); button.appendChild(symbol);
         button.addEventListener("click", function () {
           var current = Number(input.value);
           if (!Number.isInteger(current) || current < 1 || current > 99) current = 1;
@@ -245,7 +246,8 @@
         });
         return button;
       }
-      stepper.append(stepButton(-1), input, stepButton(1)); coefficientInputs.push(input);
+      var arrows = node("span", "zsa-ir-step-arrows"); arrows.append(stepButton(1), stepButton(-1));
+      stepper.append(input, arrows); coefficientInputs.push(input);
       term.append(stepper, formula(species.formula)); el("equation").appendChild(term);
     });
     updateCounts();
@@ -265,8 +267,10 @@
       var tr = node("tr"), th = node("th"); th.scope = "row";
       th.appendChild(ions && row.token ? tokenVisual(row.token) : formula(row.symbol));
       var equal = valid && row.left === row.right;
+      var status = node("td", "zsa-ir-match" + (equal ? " zsa-ir-match--yes" : ""), equal ? "✓" : "");
+      status.setAttribute("aria-label", !valid ? "Enter whole-number coefficients" : equal ? "Balanced" : "Not balanced");
       tr.append(th, node("td", "", valid ? String(row.left) : "?"), node("td", "", valid ? String(row.right) : "?"),
-        node("td", "zsa-ir-match" + (equal ? " zsa-ir-match--yes" : ""), !valid ? "Enter whole numbers" : equal ? "Equal" : "Not equal"));
+        status);
       el("counts").appendChild(tr);
       spoken.push(row.symbol + ": " + row.left + " on reactants, " + row.right + " on products");
     });
@@ -315,6 +319,7 @@
       el("reactants").appendChild(formula(species.formula));
     });
     buildBank(); buildProducts();
+    el("predict").hidden = false;
     el("balance").hidden = true;
     el("check-products").closest("section").after(el("feedback"));
     el("check-products").disabled = false; el("next").disabled = true; el("skip").disabled = false;
@@ -388,6 +393,7 @@
   el("check-balance").addEventListener("click", checkBalance);
   el("count-mode").addEventListener("change", updateCounts);
   el("hint").addEventListener("click", hint);
+  el("balance-hint").addEventListener("click", hint);
   el("next").addEventListener("click", function () { if (stage === "complete") advance(); });
   el("skip").addEventListener("click", function () {
     if (stage === "products" || stage === "balance") { record.skipped = true; record.solved = false; advance(); }

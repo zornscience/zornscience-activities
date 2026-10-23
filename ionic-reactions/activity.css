@@ -83,11 +83,12 @@ body {background:#f8f9fb;}
 .zsa-ir-feedback[data-kind="correct"] {color:#166534;background:#f0fdf4;border-color:#b5ddc2;}
 .zsa-ir-feedback[data-kind="error"] {color:#9a2424;background:#fff5f3;border-color:#edc5bd;}
 .zsa-ir-feedback[data-kind="hint"] {color:#584313;background:#fffbed;border-color:#e9dbab;}
-.zsa-ir-balance {margin-top:19px;}
+.zsa-ir-balance {margin-top:0;}
 .zsa-ir-balance > .zsa-ir-small {margin-top:10px;max-width:790px;}
 .zsa-ir-equation {display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:24px 0;}
 .zsa-ir-term {display:inline-flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:7px;min-width:0;max-width:100%;}
 .zsa-ir-stepper {display:inline-flex;align-items:center;gap:5px;flex-shrink:0;}
+.zsa-ir-step-arrows {display:flex;flex-direction:column;gap:3px;}
 .zsa-ir .zsa-ir-step {display:inline-flex;align-items:center;justify-content:center;width:48px;min-width:48px;min-height:48px;padding:0;border:1px solid #a8bad2;border-radius:8px;background:#edf4ff;color:#16458a;font-size:26px;line-height:1;}
 .zsa-ir-step:hover {background:#dbeafe;border-color:#194d9d;}
 .zsa-ir-step:active {background:#c7ddfc;}
@@ -106,7 +107,7 @@ body {background:#f8f9fb;}
 .zsa-ir-table th:not(:first-child),.zsa-ir-table td:not(:first-child) {text-align:center;}
 .zsa-ir-table .zsa-ir-formula {font-size:19px;}
 .zsa-ir-match {color:#7b4b35;font-size:12px;}
-.zsa-ir-match--yes {color:#166534;font-weight:600;}
+.zsa-ir-match--yes {color:#166534;font-size:22px;line-height:1;font-weight:700;}
 .zsa-ir-finish {display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px;margin-top:21px;}
 .zsa-ir-finish > p {max-width:620px;flex:1 1 340px;font-size:12px;}
 .zsa-ir-finish-actions {display:flex;align-items:center;flex-wrap:wrap;gap:10px;}

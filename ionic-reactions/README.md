@@ -1,6 +1,6 @@
 # Reaction Builder
 
-Version: 3.0.0
+Version: 3.0.1
 
 Choose Synthesis, Decomposition, Single Replacement, Double Replacement, or any combination before starting a ten-problem round. At least one checkbox must be selected. The 40-reaction bank contains ten examples per family, so even a single-family round has ten distinct problems. Rounds distribute questions as evenly as possible across the selected families and shuffle the order, including the first problem. The existing `ionic-reactions/` address stays the same.
 
@@ -8,7 +8,7 @@ Choose Synthesis, Decomposition, Single Replacement, Double Replacement, or any 
 
 1. Select at least one reaction family and choose Start practice. The reactants are left-justified, followed by a reaction arrow and product-building spaces on the right. The bank of ions and atoms is below both sides of the equation. Use the reaction family and stated conditions to predict products. Drag blocks into the product spaces, or select a block and then its space with a mouse, touch, Enter, or Space. Blue blocks are cations, warm blocks are anions, and teal blocks are neutral atoms. The same block can be reused.
 2. Build each product in its own card, in either product order. Each card has a first component and an optional second component. Enter subscripts or use the large up and down buttons; blank means 1, with a range of 1 to 9. Use the positive ion first in ionic formulas, keep polyatomic ions intact, and build molecular and elemental products with neutral atoms. For example, O2 uses one O atom block with subscript 2; H2O uses H with subscript 2 and O with subscript 1. Parentheses appear automatically for repeated polyatomic ions.
-3. After correct products, the formulas lock. Adjust coefficients from 1 to 99 with separate 48 px minus and plus buttons, by typing, or with keyboard arrows. Live counts update immediately. All reaction types conserve atoms. Double replacement also offers a whole-ion view because those ions stay intact.
+3. After correct products, prediction hides and the balancing panel replaces it in the same space. The formulas lock. Adjust coefficients from 1 to 99 with vertically stacked 48 px up and down arrows, by typing, or with keyboard arrows. Live counts update immediately. The "Balanced?" column shows a green check only when a row matches and stays blank otherwise. All reaction types conserve atoms. Double replacement also offers a whole-ion view because those ions stay intact.
 4. Check the smallest whole-number balance to enable Next reaction. Skip problem advances from either prediction or balancing. The last problem leads to a summary. Start a new round keeps the selected families; Change reaction types returns to the checkbox screen.
 
 ## Results and review
@@ -35,6 +35,7 @@ Static HTML, CSS and strict JavaScript IIFEs, with shared site styles and embed 
 
 ## Changelog
 
+- 3.0.1: Replace prediction with balancing in place, stack the balancing arrows, and show green checks for balanced rows.
 - 3.0.0: Reactants-arrow-products layout with the bank underneath, large subscript arrows, pre-practice selection of four reaction families, and stricter polyatomic-ion rules.
 - 2.0.0: ZornScience branding, share options, mixed reaction families, shuffled ten-problem rounds, skipping, and a scored summary with answer review.
 - 1.0.1: Large coefficient minus and plus controls.
