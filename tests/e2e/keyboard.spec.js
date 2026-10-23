@@ -5,7 +5,7 @@ var {test, expect, state} = require("./fixtures");
 
 async function focusDesc(page) { return (await state(page)).focus; }
 
-for (var slug of ["ion-charge-trainer", "ionic-formula-builder"]) {
+for (var slug of ["ion-charge-trainer"]) {
   (function (slug) {
     test(slug + ": first load leaves focus at the top; arrows never submit", async ({page, open}) => {
       var cfg = await open(slug, {seed: 5});

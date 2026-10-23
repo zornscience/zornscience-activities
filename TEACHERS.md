@@ -11,7 +11,6 @@ The checker runs in your browser. Nothing you paste is sent anywhere or saved.
 1. In Classroom, open Classwork, choose Create, then Assignment (or Question with a short answer).
 2. Add the activity's link with Add, then Link:
    - Predicting Ion Charge Trainer: https://activities.zornscience.org/ion-charge-trainer/
-   - Ionic Formula Builder: https://activities.zornscience.org/ionic-formula-builder/
    - Periodic Trends Practice: https://activities.zornscience.org/periodic-trends/
    - Lewis Structure and VSEPR Builder: https://activities.zornscience.org/lewis-vsepr/ (octet rule), or https://activities.zornscience.org/lewis-vsepr/?set=ap for the AP setting (expanded octets and formal charge)
    - Gas Laws and KMT Lab: https://activities.zornscience.org/gas-lab/ (the code comes from the Investigations tab)
@@ -22,7 +21,7 @@ A sample instruction: "Open the link and finish one full round. At the end, sele
 ## 2. What students do
 
 1. Open the link. No account is needed, and nothing they enter leaves the device.
-2. Play a full round, plus any review items the activity adds: 10 elements or compounds in the Ion Charge Trainer and the Ionic Formula Builder, 9 questions (all three trends) in Periodic Trends Practice, 6 structures in the Lewis Structure and VSEPR Builder, 6 investigations in the Gas Laws and KMT Lab (Investigations tab).
+2. Play a full round, plus any review items the activity adds: 10 elements in the Ion Charge Trainer, 9 questions (all three trends) in Periodic Trends Practice, 6 structures in the Lewis Structure and VSEPR Builder, 6 investigations in the Gas Laws and KMT Lab (Investigations tab).
 3. On the round summary, under "Round complete", select **Copy code** and paste the code into the assignment.
 
 Example codes, one per activity (each checks as Valid):
@@ -30,7 +29,7 @@ Example codes, one per activity (each checks as Valid):
 | Activity | Example code | What the checker shows |
 |---|---|---|
 | Predicting Ion Charge Trainer | `ICT-K6QY-0C22-7S11-86` | Predicting Ion Charge Trainer, 10 items |
-| Ionic Formula Builder | `IFB-1SEF-0M42-8092-5D` | Ionic Formula Builder, 10 items |
+| Ionic Formula Builder (retired; codes students already earned still check) | `IFB-1SEF-0M42-8092-5D` | Ionic Formula Builder, 10 items |
 | Periodic Trends Practice | `PTR-4TGG-8228-094M-T` | Periodic Trends Practice, 9 items |
 | Lewis Structure and VSEPR Builder, octet rule | `LVB-031A-S2DR-0822-8095-Q8` | Lewis Structure and VSEPR Builder (Octet rule), 6 items |
 | Lewis Structure and VSEPR Builder, AP setting | `LVA-0DCQ-HDMD-G822-8096-N5` | Lewis Structure and VSEPR Builder (AP setting), 6 items, with a Formal charge line |

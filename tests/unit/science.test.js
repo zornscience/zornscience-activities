@@ -34,27 +34,3 @@ test("Ion Charge Trainer: all 19 elements match the reference", function () {
   assert.deepEqual(data.gases, ref.ICT_GASES);
 });
 
-test("Ionic Formula Builder: all 80 compounds match the reference", function () {
-  var data = loadData("ionic-formula-builder/data.js");
-  assert.equal(data.compounds.length, 80);
-  assert.deepEqual(data.cations.map(function (c) { return [c.symbol, c.name, c.group, c.charge]; }),
-    ref.CATIONS.map(function (c) { return [c.symbol, c.name, c.group, c.charge]; }));
-  assert.deepEqual(data.anions.map(function (a) { return [a.symbol, a.name, a.element, a.group, a.charge]; }),
-    ref.ANIONS.map(function (a) { return [a.symbol, a.name, a.element, a.group, a.charge]; }));
-  var reduced = [];
-  ref.compounds.forEach(function (r, i) {
-    var cp = data.compounds[i];
-    assert.equal(cp.formula, r.formula, "formula " + i);
-    assert.equal(cp.name, r.name);
-    assert.deepEqual(cp.subscripts, r.subscripts, r.formula);
-    assert.deepEqual(cp.crossed, [r.q, r.c], r.formula + " crossed");
-    assert.equal(cp.prefixName, r.prefixName);
-    assert.equal(cp.elementName, r.elementName);
-    assert.equal(cp.reversedName, r.reversedName);
-    // Total charge 0 and lowest terms.
-    assert.equal(r.subscripts[0] * r.c - r.subscripts[1] * r.q, 0);
-    if (r.reduced) reduced.push(r.formula);
-  });
-  assert.deepEqual(reduced, ["MgO", "MgS", "CaO", "CaS", "SrO", "SrS", "BaO", "BaS", "AlN", "AlP"]);
-  assert.deepEqual(data.table, MAIN_GROUPS);
-});

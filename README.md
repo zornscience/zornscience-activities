@@ -8,6 +8,7 @@ A full round ends with a completion code that students paste into Google Classro
 
 ```
 index.html                 landing page listing the activities
+favicon.png                ZornScience logo, the landing page icon
 .nojekyll                  tells GitHub Pages to serve files as they are
 shared/
   README.md                the activity engine and how to make a new activity
@@ -18,7 +19,7 @@ shared/
   zsa-codes.js             completion codes: activity registry, writing and reading codes
   fonts/InterVariable.woff2, Inter-OFL.txt
 ion-charge-trainer/        Predicting Ion Charge Trainer, v1.4.0
-ionic-formula-builder/     Ionic Formula Builder, v1.1.0
+ionic-formula-builder/     Redirect only: the retired Ionic Formula Builder now sends visitors to ionic-reactions/
 ionic-reactions/           Ionic Reaction Builder, v3.1.0 (select four reaction families, build products, balance and review)
 periodic-table/            Periodic Table reference, v1.2.0 (data built by periodic-table/tools/build-data.js)
 periodic-trends/           Periodic Trends Practice, v1.1.0 (questions built from the periodic table's data)
