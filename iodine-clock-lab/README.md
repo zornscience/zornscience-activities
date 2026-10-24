@@ -1,4 +1,4 @@
-# Iodine Clock Lab · v1.0.0
+# Iodine Clock Lab · v1.0.1
 
 Self-contained simulation of the supplied U8.A1 Summative Lab Iodine Clock handout. Uses existing shared ZornScience branding, local font, logo, embed support, and a copy of the equilibrium lab's share behavior. No student data entry, storage, accounts, network requests, export, or completion codes.
 
@@ -20,4 +20,4 @@ The 2% starch and 0.20 M sodium metabisulfite in the handout describe stocks use
 
 `index.html`, `lab.css`, `lab.js`, `model.js`, and `share.js`. Reuses `../shared/zsa-base.css`, `../shared/zsa-embed.js`, and the equilibrium lab header stylesheet. No shared files are changed. Deploy by committing the activity folder and homepage link to the existing GitHub Pages `main` branch.
 
-Version: 1.0.0
+Version: 1.0.1

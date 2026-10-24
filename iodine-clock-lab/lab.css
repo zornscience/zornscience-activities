@@ -3,3 +3,6 @@
 @media(max-width:760px){.lab-layout{grid-template-columns:1fr}.setup{display:block}.clock .experiment-tabs{gap:0;margin-bottom:18px}.clock .tab{flex:1;flex-direction:column;gap:2px;padding:9px 5px;line-height:1.4}.clock .tab span{font-size:12px}.clock .setup h2{font-size:22px}.setup>p{margin-bottom:12px}.setup fieldset{margin-top:14px}.clock .recipe{margin:14px 0}.clock .readout output{font-size:30px}.clock .bench-heading h2{font-size:17px}.bench-heading{gap:8px;padding:15px}.bench-metrics{grid-template-columns:repeat(2,1fr)}.bench-bottom>div{min-width:190px}.clock .zsa-th-header-tools{margin-left:0}.clock .zsa-th-share-link{flex-wrap:wrap}}
 /* Readable secondary text at all screen sizes. */
 .clock .tab{color:#52657e}.clock .card-label,.clock .range-ends,.clock .fixed-note,.clock .bench-bottom p,.clock .speed-control,.clock .bench-metrics span{color:#536a80}.clock .tab.active{color:#1d4ed8}
+
+/* Compact single-line activity identity. */
+.clock .zsa-th-brand{min-width:40px;min-height:40px}.clock .zsa-th-brand img{width:40px;height:auto}.clock .zsa-th-identity{gap:10px}
