@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<meta name="description" content="Turn your lab data into a scatter plot with a line of best fit. Label axes, explore slope, and download a graph for your lab write-up.">
+<title>Virtual Lab Graphing Tool | ZornScience</title>
+<link rel="canonical" href="https://activities.zornscience.org/virtual-lab-graphing/">
+<link rel="icon" href="../favicon.png?v=1.0.0" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="graphing.css?v=1.0.0">
+<script src="model.js?v=1.0.0" defer></script>
+<script src="graphing.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="zsa zsa-vlg" data-zsa-activity="virtual-lab-graphing">
+<header class="zsa-vlg-header" data-zsa-chrome>
+<a class="zsa-vlg-brand" href="https://zornscience.org/"><img src="../favicon.png" width="38" height="37" alt="">ZornScience<span>LAB TOOLS</span></a>
+<a href="https://zornscience.org/science/quantitative-skills/graphs-and-change/reading-graphs/">← Reading Graphs lesson</a>
+</header>
+<section class="zsa-vlg-intro">
+<p class="zsa-eyebrow">Quantitative skills / Graphs and change</p>
+<h1>Your data. A clearer picture.</h1>
+<p>Virtual Lab Graphing Tool</p>
+<p class="zsa-vlg-lede">Enter your measurements, look for a relationship, and take a graph straight into your lab write-up.</p>
+</section>
+<noscript><p class="zsa-panel">Enable JavaScript to enter data and plot your graph. Your data is processed only in your browser.</p></noscript>
+<div class="zsa-vlg-workspace">
+<section class="zsa-vlg-editor zsa-vlg-card" aria-labelledby="zsa-vlg-data-title">
+<div class="zsa-vlg-sectionhead"><span class="zsa-vlg-step">01</span><div><h2 id="zsa-vlg-data-title">Set up your data</h2><p>Independent on x. Dependent on y.</p></div></div>
+<label for="zsa-vlg-title">Graph title</label><input id="zsa-vlg-title" maxlength="100" placeholder="e.g. Temperature of water over time">
+<div class="zsa-vlg-axisfields"><label for="zsa-vlg-xname">x-axis variable<input id="zsa-vlg-xname" maxlength="50" placeholder="Time"></label><label for="zsa-vlg-xunit">Unit<input id="zsa-vlg-xunit" maxlength="20" placeholder="min"></label></div>
+<div class="zsa-vlg-axisfields"><label for="zsa-vlg-yname">y-axis variable<input id="zsa-vlg-yname" maxlength="50" placeholder="Temperature"></label><label for="zsa-vlg-yunit">Unit<input id="zsa-vlg-yunit" maxlength="20" placeholder="°C"></label></div>
+<div class="zsa-vlg-tablehead"><h3>Measurements</h3><span id="zsa-vlg-pointcount">0 points</span></div>
+<p class="zsa-vlg-small" id="zsa-vlg-number-help">Numbers only; scientific notation such as 1.2e-3 works. Up to 500 points.</p>
+<div class="zsa-vlg-tablewrap"><table class="zsa-vlg-datatable"><caption class="zsa-sr-only">Your measurements. Enter one x and y pair per row.</caption><thead><tr><th scope="col">#</th><th scope="col" id="zsa-vlg-xheading">x</th><th scope="col" id="zsa-vlg-yheading">y</th><th scope="col"><span class="zsa-sr-only">Remove row</span></th></tr></thead><tbody id="zsa-vlg-rows"></tbody></table></div>
+<div class="zsa-vlg-actions"><button class="zsa-btn" id="zsa-vlg-add" type="button">+ Add row</button><button class="zsa-vlg-textbtn" id="zsa-vlg-clear" type="button">Clear data</button></div>
+<p id="zsa-vlg-data-error" class="zsa-vlg-error" role="status"></p>
+<details class="zsa-vlg-import"><summary>Paste data or import CSV</summary><p class="zsa-vlg-small" id="zsa-vlg-paste-help">Paste two columns separated by commas or tabs. An optional first row can contain axis labels. Import replaces the table.</p><label for="zsa-vlg-paste">Two-column data</label><textarea id="zsa-vlg-paste" rows="5" aria-describedby="zsa-vlg-paste-help" placeholder="Time (min),Temperature (°C)&#10;0,20&#10;1,35&#10;2,50"></textarea><div class="zsa-vlg-actions"><button class="zsa-btn" id="zsa-vlg-import" type="button">Use pasted data</button><label class="zsa-vlg-filebtn" for="zsa-vlg-file">Choose CSV<input type="file" id="zsa-vlg-file" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values"></label></div><p class="zsa-vlg-error" id="zsa-vlg-import-error" role="alert"></p></details>
+<div class="zsa-vlg-example"><label for="zsa-vlg-example">Try a lesson example</label><div class="zsa-vlg-example-controls"><select id="zsa-vlg-example"><option value="water">Heating water</option><option value="candle">Burning candle</option><option value="gas">Gas production (curved)</option></select><button class="zsa-btn" id="zsa-vlg-load" type="button">Load</button></div></div>
+<p class="zsa-vlg-small zsa-vlg-privacy">Your data stays in this tab. Download CSV to keep a copy before closing or reloading.</p>
+</section>
+<section class="zsa-vlg-output" aria-labelledby="zsa-vlg-graph-title">
+<div class="zsa-vlg-card zsa-vlg-chartcard">
+<div class="zsa-vlg-sectionhead"><span class="zsa-vlg-step">02</span><div><h2 id="zsa-vlg-graph-title">See the relationship</h2><p>Your scatter plot updates as you type.</p></div></div>
+<div class="zsa-vlg-chartoptions"><label><input type="checkbox" id="zsa-vlg-fit" checked> Linear best fit</label><label><input type="checkbox" id="zsa-vlg-zero" checked> Include zero on axes</label></div>
+<div class="zsa-vlg-chart" id="zsa-vlg-chart"></div>
+<p class="zsa-vlg-chartnote" id="zsa-vlg-chartnote">Add at least two complete points to explore a line of best fit.</p>
+<div class="zsa-vlg-export"><span>For your lab write-up</span><div class="zsa-vlg-actions"><button class="zsa-btn zsa-btn--primary" id="zsa-vlg-png" disabled>Download PNG</button><button class="zsa-btn" id="zsa-vlg-svg" disabled>SVG</button><button class="zsa-btn" id="zsa-vlg-csv" disabled>CSV</button><button class="zsa-vlg-textbtn" id="zsa-vlg-print" disabled>Print graph</button></div></div>
+</div>
+<section class="zsa-vlg-card zsa-vlg-results" aria-labelledby="zsa-vlg-fit-title">
+<div class="zsa-vlg-resultheading"><h2 id="zsa-vlg-fit-title">Read your best-fit line</h2><span class="zsa-vlg-badge">y = mx + b</span></div>
+<p id="zsa-vlg-fit-message">A best-fit line summarizes an approximately straight trend. It does not join the dots.</p>
+<div id="zsa-vlg-stats" hidden><p class="zsa-vlg-equation" id="zsa-vlg-equation"></p><dl class="zsa-vlg-statgrid"><div><dt>Slope, m</dt><dd id="zsa-vlg-slope"></dd></div><div><dt>y-intercept, b</dt><dd id="zsa-vlg-intercept"></dd></div><div><dt>R²</dt><dd id="zsa-vlg-r2"></dd></div></dl><p id="zsa-vlg-trend"></p><p class="zsa-vlg-small">R² describes how closely the points follow this straight line. Closer to 1 means a closer fit. Check the shape of your data: a high R² does not prove causation or guarantee a linear relationship.</p><div class="zsa-vlg-predict"><label for="zsa-vlg-predict-x">Read the line at x =</label><input id="zsa-vlg-predict-x" inputmode="decimal" placeholder="Enter x"><output id="zsa-vlg-prediction" for="zsa-vlg-predict-x"></output></div></div>
+</section>
+<aside class="zsa-vlg-reminder"><strong>Before you turn it in</strong><p>Give your graph a descriptive title, label both variables with units, and describe what happens to y as x increases. Use a straight best-fit line only when the pattern is approximately linear.</p></aside>
+</section>
+</div>
+<details class="zsa-vlg-guide"><summary>A little graphing help</summary><div class="zsa-vlg-guidegrid"><div><h3>Remember DRY MIX</h3><p>Dependent, Responding, Y-axis. Manipulated, Independent, X-axis. Put what you change on x and what you measure on y.</p></div><div><h3>Read the scale</h3><p>Each axis uses evenly spaced steps. The axes can use different step sizes. Including zero shows the origin; turning it off zooms in on the measured range.</p></div><div><h3>Explain the slope</h3><p>The slope is the change in y for one unit of x. Its units are y-units per x-unit. A negative slope means y tends to decrease as x increases.</p></div><div><h3>Take it with you</h3><p>PNG works in Google Docs and most lab reports. SVG stays sharp at any size. CSV saves your table for later. Downloads include only valid, complete data pairs.</p></div></div></details>
+<p class="zsa-sr-only" id="zsa-vlg-live" role="status" aria-live="polite"></p>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><a href="../">All activities</a><a href="https://zornscience.org/science/quantitative-skills/graphs-and-change/reading-graphs/">Reading Graphs</a><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+</main>
+</body>
+</html>
