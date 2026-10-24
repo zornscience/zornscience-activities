@@ -156,7 +156,7 @@ test("English: numbered underlined parts follow the question, NO CHANGE first, a
   await go(page, "english", {query: "?drafts=1", seed: 3});
   var list = page.getByRole("region", {name: "Review drafts"});
   await expect(list.getByRole("button", {name: p.title + " Informative · 10 questions · Draft", exact: true})).toBeVisible();
-  await page.getByRole("button", {name: /^One passage/}).click();
+  await list.getByRole("button", {name: new RegExp("^" + p.title)}).click();
   await startSection(page, "English");
   var art = page.getByRole("article");
   // Every underlined part and boxed spot carries its question number, read as "Question n".
@@ -191,6 +191,57 @@ test("English: numbered underlined parts follow the question, NO CHANGE first, a
   await expect(page.getByRole("heading", {level: 2, name: "Question 2 of 10"})).toBeFocused();
   await expect(art.locator(".zsa-act-u--current")).toHaveText(/are labeled/);
   await auditBoth(page, "english answer view");
+});
+
+// Every English passage: its numbered parts match its questions, every choice reads with its letter, axe-core finds
+// nothing in light or dark mode, and all correct scores 10 / 10.
+for (var ep of bank.english.passages) {
+  (function (p) {
+    test("every English passage plays through all correct: " + p.title, async ({page, problems}) => {
+      void problems;
+      await go(page, "english", {query: "?drafts=1"});
+      await page.getByRole("region", {name: "Review drafts"}).getByRole("button", {name: new RegExp("^" + p.title + " " + p.type)}).click();
+      await startSection(page, "English");
+      var text = p.body.map((b) => b.html || "").join(" ");
+      var art = page.getByRole("article");
+      await expect(art.locator("u")).toHaveCount((text.match(/<u\d+>/g) || []).length);
+      for (var n = 1; n <= 10; n++) {
+        var q = p.questions[n - 1];
+        await expect(page.getByRole("group", {name: q.stem || "Choose the best version of underlined part " + n + ". If the original is best, choose NO CHANGE."})).toBeVisible();
+        var letters = n % 2 ? ["A", "B", "C", "D"] : ["F", "G", "H", "J"];
+        for (var k = 0; k < 4; k++) await expect(page.getByRole("radio").nth(k)).toHaveAccessibleName(letters[k] + ". " + spoken(q.choices[k]));
+        var under = text.match(new RegExp("<u" + n + ">([^<]*)</u" + n + ">"));
+        if (under) await expect(art.locator(".zsa-act-u--current u")).toHaveText(under[1]);
+        if (n === 1) await auditBoth(page, p.id);
+        await page.locator("fieldset label").nth(q.answer).click();
+        if (n < 10) await next(page).click();
+      }
+      await page.getByRole("button", {name: "Review", exact: true}).click();
+      await page.getByRole("button", {name: "End section"}).click();
+      await page.getByRole("button", {name: "Yes, end the section"}).click();
+      await expect(page.getByText("10 / 10", {exact: true})).toBeVisible();
+      await expect(page.getByText("100% correct")).toBeVisible();
+    });
+  })(ep);
+}
+
+test("English with the drafts: mixed practice is 2 passages in 14 minutes, the full section 5 passages in 35 minutes", async ({page, problems}) => {
+  void problems;
+  await go(page, "english", {query: "?drafts=1", clock: true});
+  await expect(page.getByRole("button", {name: /^Mixed practice 2 passages timed at ACT pace \(14 minutes\)/})).toBeVisible();
+  await page.getByRole("button", {name: /^Full section/}).click();
+  await expect(page.getByText("This section has 5 passages and 50 questions.", {exact: false})).toBeVisible();
+  await startSection(page, "English");
+  await expect(page.getByRole("timer")).toHaveText("Time left 35:00");
+  await expect(nav(page).getByRole("button")).toHaveCount(50);
+  // Question 50 is the last question of the fifth passage, and its numbered part is numbered 50 in the passage.
+  await nav(page).getByRole("button", {name: /^Question 41,/}).click();
+  await expect(page.getByRole("heading", {level: 2, name: "Question 41 of 50"})).toBeFocused();
+  await expect(page.getByRole("article").getByText("Question 41", {exact: true}).first()).toBeVisible();
+  for (var [w, h] of [[1366, 657], [390, 664], [320, 568]]) {
+    await page.setViewportSize({width: w, height: h});
+    await noSideScroll(page, "english full " + w);
+  }
 });
 
 // ---------- Math ----------

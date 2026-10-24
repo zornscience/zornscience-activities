@@ -1,5 +1,5 @@
 # ACT Practice
-Version: 1.1.0
+Version: 1.2.0
 
 Free ACT practice with original questions in all four sections: English, Math, Reading and the optional Science. Students practice a few questions, one timed section, or the full ACT, and get a score report that compares them with national results and gives tips for the skills they missed. Nothing is saved or sent anywhere. Not linked from zornscience.org yet. The live URL after approval will be https://activities.zornscience.org/act/. The old address, https://activities.zornscience.org/act-science/, redirects to the Science section.
 
@@ -135,12 +135,31 @@ Add to a bank file with `status: "draft"`. Write symbols as characters (°C, ≈
 | `barChart` | `caption`, `xLabel`, `yLabel`, `categories` (labels under the bars), `yMax`, `yStep`, optional `yMin`, `series: [{name, values}]`. Grouped bars; the second and later series are striped, so they differ without color. A legend appears with more than one series. |
 | `diagram` | `caption`, `label` (spoken description), `viewBox: [width, height]`, `shapes`: `path` (`d`), `rect` (`x, y, w, h`), `line` (`x1, y1, x2, y2`), `circle` (`cx, cy, r`), `text` (`x, y, text`, optional `size`, `anchor`). `fill` and `stroke` are named tones (`surface`, `water`, `line`, `ink`, `blue`, `muted`) so they follow dark mode; `width` is the stroke width. |
 
-## Draft samples (milestone A)
-Small samples so each section can be tried with `?drafts=1`. All are drafts and need Nick's review.
+## English passages (milestone B)
+Ten original passages, 100 questions, all drafts for Nick's review. With `?drafts=1`, the English modes use them, so a full 50-question section can be tried before any are approved. Once at least five are reviewed, students get the Full section; the full ACT also needs Math and Reading.
+
+| Passage | Type | Questions by skill |
+|---|---|---|
+| The Library That Lends Seeds | Informative | punctuation 1, grammar 3, sentence structure 1, word choice 2, topic development 2, transitions 1 |
+| Saturday Bread | Narrative | punctuation 2, grammar 2, sentence structure 2, word choice 1, topic development 2, transitions 1 |
+| Bring Back the Drinking Fountain | Argument | punctuation 3, grammar 2, sentence structure 2, topic development 2, transitions 1 |
+| The Woman Who Mapped the Sea Floor | Informative | punctuation 3, grammar 2, sentence structure 1, word choice 1, topic development 3 |
+| The Bike Shop on Fifth Street | Narrative | punctuation 3, grammar 1, sentence structure 2, word choice 1, topic development 2, transitions 1 |
+| Cooking Belongs in High School | Argument | punctuation 2, grammar 2, sentence structure 1, word choice 2, topic development 2, transitions 1 |
+| The Monarch Relay | Informative | punctuation 3, grammar 3, word choice 1, topic development 2, transitions 1 |
+| When the Lights Went Out | Narrative | punctuation 2, grammar 3, sentence structure 1, word choice 1, topic development 2, transitions 1 |
+| Turn Down the Lights | Argument | punctuation 3, grammar 2, sentence structure 1, word choice 1, topic development 2, transitions 1 |
+| The Ditch That Changed a Nation | Informative | punctuation 1, grammar 3, sentence structure 2, topic development 3, transitions 1 |
+
+Across the bank: punctuation 23, grammar and usage 23, sentence structure 13, word choice and style 10, topic development 22, organization and transitions 9, close to the real test's weight on Conventions of Standard English (about half). Difficulty: 35 easy, 49 medium, 16 hard. The correct answer is the first, second, third and fourth choice 23, 28, 26 and 23 times; NO CHANGE is correct in 17 of the 78 questions that offer it. Every passage has at least one question about adding a sentence or about the essay's goal.
+
+Facts in the informative passages (Marie Tharp, monarch migration, the Erie Canal) follow standard published accounts; numbers are rounded the way they usually are ("about 363 miles", "as far as 3,000 miles", shipping cost "about $100" to "about $10" a ton).
+
+## Other draft samples (milestone A)
+Small samples so Math and Reading can be tried with `?drafts=1`. All are drafts and need Nick's review.
 
 | Section | Sample | Questions |
 |---|---|---|
-| English | The Library That Lends Seeds (Informative) | 10: punctuation, grammar, sentence structure, style, topic development, a transition, a boxed spot and a whole-passage question |
 | Math | 8 questions: a linear equation, powers, a median, the Pythagorean theorem (with a figure), a function value, a percent, adding fractions, and sine | 8 |
 | Reading | The Hummingbird's Night Budget (Natural Science) | 9 |
 
@@ -177,6 +196,8 @@ Each question in the answer review has a Show with passage button (Show question
 - Ending the section asks on the page, never with a `confirm()` dialog.
 
 ## Changelog
+1.2.0: The English bank (milestone B): nine new passages, for 10 passages and 100 questions, all drafts. The sample passage's first question now has its answer in a different position. Browser tests play every English passage and a 50-question English section.
+
 1.1.0: ACT Practice (milestone A of the full ACT). The folder moved from `act-science/` to `act/`, with a redirect from the old address. A home screen with the full ACT and the four sections; English (numbered underlined parts that follow the question), Math (one question at a time, fractions, roots and figures), and Reading (numbered paragraphs) on the same test platform; per-section words, skills, tips, timing, conversions, averages and benchmarks; the full ACT with a 10-minute break, optional Science, a composite and STEM score, and links to each section's report. The Science bank moved to `bank-science.js` unchanged. Draft samples for English, Math and Reading. `?drafts=1` now lets the practice modes use drafts too.
 
 1.0.1: The header shows the ZornScience logo in place of the "Zs" tile, next to "Test Prep".
