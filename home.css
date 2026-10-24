@@ -1,0 +1,45 @@
+/* Landing page only: subject sections with a responsive grid of activity cards. Builds on shared/zsa-base.css. */
+.zsa-home {--zsa-max-width:1120px; --zsa-home-chem:#0f766e; --zsa-home-chem-bg:#ecfdf8; --zsa-home-react:#7c3aed; --zsa-home-react-bg:#f5f3ff; --zsa-home-lab:#c2410c; --zsa-home-lab-bg:#fff7ed; --zsa-home-phys:#1d4ed8; --zsa-home-phys-bg:#eef4ff; --zsa-home-prep:#be185d; --zsa-home-prep-bg:#fdf2f8;}
+.zsa-home-hero {display:flex;align-items:center;gap:20px;margin:8px 0 8px;}
+.zsa-home-hero img {width:72px;height:auto;flex:none;}
+.zsa-home-hero h1 {margin:0;}
+.zsa-home-hero .zsa-eyebrow {margin:0 0 4px;}
+.zsa-home-lede {max-width:62ch;margin:12px 0 0;}
+.zsa-home-nav {margin:24px 0 8px;}
+.zsa-home-nav ul {list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px;}
+.zsa-home-nav a {display:inline-flex;align-items:center;gap:8px;min-height:var(--zsa-tap);padding:6px 16px;border:1px solid var(--zsa-border-strong);border-radius:var(--zsa-radius-pill);color:var(--zsa-navy);text-decoration:none;font-size:var(--zsa-text-sm);font-weight:500;background:var(--zsa-white);}
+.zsa-home-nav a:hover {background:var(--zsa-sky);border-color:var(--zsa-blue);}
+.zsa-home-nav a::before {content:"";width:10px;height:10px;border-radius:50%;background:var(--zsa-home-accent);}
+.zsa-home-count {font-size:var(--zsa-text-label);font-weight:600;color:var(--zsa-slate);}
+
+.zsa-home-section {margin-top:40px;scroll-margin-top:16px;}
+.zsa-home-section > h2 {display:flex;align-items:center;gap:12px;margin:0 0 4px;}
+.zsa-home-section > h2::before {content:"";width:6px;align-self:stretch;border-radius:var(--zsa-radius-pill);background:var(--zsa-home-accent);}
+.zsa-home-section > p {margin:0 0 16px;max-width:62ch;}
+.zsa-home-chem {--zsa-home-accent:var(--zsa-home-chem);--zsa-home-tint:var(--zsa-home-chem-bg);}
+.zsa-home-react {--zsa-home-accent:var(--zsa-home-react);--zsa-home-tint:var(--zsa-home-react-bg);}
+.zsa-home-lab {--zsa-home-accent:var(--zsa-home-lab);--zsa-home-tint:var(--zsa-home-lab-bg);}
+.zsa-home-phys {--zsa-home-accent:var(--zsa-home-phys);--zsa-home-tint:var(--zsa-home-phys-bg);}
+.zsa-home-prep {--zsa-home-accent:var(--zsa-home-prep);--zsa-home-tint:var(--zsa-home-prep-bg);}
+
+.zsa-home-grid {list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px;}
+.zsa-home-card {position:relative;display:flex;flex-direction:column;background:var(--zsa-white);border:1px solid var(--zsa-border);border-top:4px solid var(--zsa-home-accent);border-radius:var(--zsa-radius-lg);padding:16px 20px 18px;transition:box-shadow .15s ease,transform .15s ease,border-color .15s ease;}
+.zsa-home-card:hover {box-shadow:var(--zsa-shadow-card);transform:translateY(-2px);border-color:var(--zsa-border-strong);border-top-color:var(--zsa-home-accent);}
+.zsa-home-card:focus-within {outline:var(--zsa-focus-ring);outline-offset:var(--zsa-focus-offset);}
+.zsa-home-card h3 {font-size:1.25rem;line-height:1.3;margin:4px 0 8px;}
+.zsa-home-card h3 a {color:var(--zsa-navy);text-decoration:none;}
+.zsa-home-card h3 a::after {content:"";position:absolute;inset:0;border-radius:var(--zsa-radius-lg);}
+.zsa-home-card h3 a:focus-visible {outline:none;}
+.zsa-home-card:hover h3 a {color:var(--zsa-blue);text-decoration:underline;}
+.zsa-home-card > p {margin:0;font-size:var(--zsa-text-sm);line-height:1.55;}
+.zsa-home-card .zsa-home-topic {font-size:var(--zsa-text-label);font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--zsa-slate);}
+.zsa-home-tags {display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:14px;}
+.zsa-home-tag {font-size:var(--zsa-text-label);font-weight:600;line-height:1;padding:6px 10px;border-radius:var(--zsa-radius-pill);background:var(--zsa-home-tint);color:var(--zsa-navy);border:1px solid var(--zsa-border);}
+
+.zsa-home-teachers {margin-top:48px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;}
+.zsa-home-teachers h2 {margin:0 0 4px;font-size:1.25rem;letter-spacing:0;text-transform:none;color:var(--zsa-navy);}
+.zsa-home-teachers p {margin:0;font-size:var(--zsa-text-sm);max-width:60ch;}
+.zsa-home-teachers .zsa-btn {display:inline-flex;align-items:center;min-height:var(--zsa-tap);text-decoration:none;font-weight:500;}
+
+@media(max-width:480px) {.zsa-home-hero img {width:56px;}.zsa-home-hero {gap:14px;}}
+.zsa-home-teachers a.zsa-btn--primary {color:var(--zsa-white);}
