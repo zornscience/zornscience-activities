@@ -25,6 +25,7 @@ ionic-reactions/           Ionic Reaction Builder, v3.4.0 (four reaction familie
 periodic-table/            Periodic Table reference, v1.2.0 (data built by periodic-table/tools/build-data.js)
 periodic-trends/           Periodic Trends Practice, v1.1.0 (questions built from the periodic table's data)
 lewis-vsepr/               Lewis Structure and VSEPR Builder, v1.1.0
+scientific-calculator/     Scientific Calculator Practice, v1.0.0 (independent scientific calculator with six guided exercises)
 act-science/               ACT Science Practice, v1.0.1 (question bank in act-science/data.js)
 gas-lab/                   Gas Laws and KMT Lab, v1.0.0 (particle simulation, graphs and investigations)
 stoichiometry-coach/       Stoichiometry Coach, v1.0.0 (conversion factor setups with unit cancellation)
