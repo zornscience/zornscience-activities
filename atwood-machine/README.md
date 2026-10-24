@@ -1,4 +1,4 @@
-# The Atwood Machine - v1.0.1
+# The Atwood Machine - v1.0.2
 
 Ideal Newton's second-law simulation. Two adjustable 50-500 g total masses (including 50 g hangers), realistic SVG brass weights, support stand, string, rotating pulley, travel ruler, signed acceleration and driving force, tension and speed. Mass swaps, equal masses, fixed-total 25 g transfer, pause/resume, reset, slow motion, optional acceleration and force arrows. Instructions and sharing use the Metals Lab header pattern. Shared local fonts, logo and embed support. No student data entry, records, tracking, dependencies or external requests.
 
@@ -6,4 +6,6 @@ Mass changes reset the system. Free motion uses a=(m2-m1)g/(m1+m2), T=2m1m2g/(m1
 
 The activity intentionally does not use the quiz engine or completion codes, because it is an exploration simulation with no data recording. Arrow colors: mint acceleration, gold gravity, blue tension, each also labeled. The SVG equipment is illustrative, with enlarged hanger geometry.
 
-Version: 1.0.1
+Version: 1.0.2
+
+Version 1.0.2 removes the introductory banner so the simulation follows the header directly.
