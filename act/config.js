@@ -22,10 +22,12 @@
     stemRank: {36: 100, 35: 99, 34: 99, 33: 98, 32: 97, 31: 96, 30: 95, 29: 94, 28: 92, 27: 90, 26: 88, 25: 85, 24: 81, 23: 77, 22: 73, 21: 69, 20: 64, 19: 58, 18: 52, 17: 45, 16: 36, 15: 27, 14: 17, 13: 10, 12: 5, 11: 2, 10: 1, 9: 1, 8: 1, 7: 1, 6: 1, 5: 1, 4: 1, 3: 1, 2: 1, 1: 1},
     avgClass: "class of 2025",
     rankYear: "2026-2027",
-    // Practice codes: scores saved under an anonymous six-character code by the ZornScience ACT Practice History
-    // WordPress plugin (wordpress/zornscience-act-history/ in this repository). Leave `enabled` false until the plugin
-    // is installed and turned on at zornscience.org; ?codes=1 in the address turns codes on for testing.
-    history: {enabled: false, api: "https://zornscience.org/wp-json/zsa-act/v1"},
+    // Practice codes: scores saved under an anonymous six-character code and PIN by the ZornScience ACT Practice History
+    // WordPress plugin (wordpress/zornscience-act-history/ in this repository), turned on 2026-10-24 after Nick checked
+    // the plugin on zornscience.org. Set `enabled` to false to hide codes again; ?codes=0 in the address hides them for
+    // one visit and ?codes=1 shows them. classMax is the
+    // most students in one class set: keep it the same as "Most students in one class set" on the plugin's admin page.
+    history: {enabled: true, api: "https://zornscience.org/wp-json/zsa-act/v1", classMax: 50},
     // Mixed practice shows an estimated range only with at least this many questions. The range is the raw score
     // equivalent plus or minus this share of the section's questions (4 of 40 in Science).
     minForEstimate: 15,

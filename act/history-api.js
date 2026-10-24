@@ -1,6 +1,6 @@
 // ACT Practice history: the only file that talks to a server. act.js asks for a new practice code and PIN, a code's
-// history (with its PIN), or saving one finished section (with the PIN) by dispatching "zsa:history" on the root with
-// {action, api, code, body, done}. Every request is a POST, so a PIN is only ever in a request body, never in an address.
+// history (with its PIN), saving one finished section (with the PIN), or a teacher's class set of codes and PINs by
+// dispatching "zsa:history" on the root with {action, api, code, body, done}. Every request is a POST, so a PIN is only ever in a request body, never in an address.
 // This file calls the ZornScience ACT Practice History plugin on zornscience.org (see wordpress/ in the repository)
 // and calls done(error, result). Requests send no cookies, and nothing is stored in the browser.
 (function () {
@@ -10,7 +10,8 @@
   var PATHS = {
     "new": function () { return "/codes"; },
     open: function (code) { return "/codes/" + encodeURIComponent(code) + "/open"; },
-    save: function (code) { return "/codes/" + encodeURIComponent(code) + "/attempts"; }
+    save: function (code) { return "/codes/" + encodeURIComponent(code) + "/attempts"; },
+    "class": function () { return "/class-lists"; }
   };
   root.addEventListener("zsa:history", function (event) {
     var d = event.detail;
@@ -28,7 +29,7 @@
       return res.json().catch(function () { return {}; }).then(function (json) {
         if (timeout) clearTimeout(timeout);
         if (res.ok) d.done(null, json);
-        else d.done({status: res.status, message: json && json.message});
+        else d.done({status: res.status, code: json && json.code, max: json && json.data && json.data.max});
       });
     }, function () {
       if (timeout) clearTimeout(timeout);

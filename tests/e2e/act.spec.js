@@ -22,7 +22,8 @@ async function go(page, seed, opts) {
   if (seed !== undefined) await page.addInitScript(seedRandom, seed);
   // A new load each time: going to the same address with only a #section would not reload the page.
   if (page.url() !== "about:blank") await page.goto("about:blank");
-  await page.goto("/act/" + ((opts && opts.query) || "") + "#science");
+  // ?codes=0: these checks are about the test itself, so practice codes stay off (act-history.spec.js covers them).
+  await page.goto("/act/?codes=0" + ((opts && opts.query) || "").replace(/^\?/, "&") + "#science");
   await expect(page.getByRole("heading", {level: 1, name: "ACT Science Practice"})).toBeVisible();
 }
 async function begin(page, mode) {
