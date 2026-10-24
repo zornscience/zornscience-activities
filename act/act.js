@@ -1730,6 +1730,28 @@
   }
   document.addEventListener("visibilitychange", function () { if (document.visibilityState === "hidden") flushProgress(); });
   window.addEventListener("pagehide", flushProgress);
+  // ---------- Leaving partway through ----------
+  // The logo goes to zornscience.org. Partway through a practice it asks first, in the page's own dialog: with a code
+  // the progress is saved (now) and can be picked up later; without one, the answers are lost.
+  var logoLink = root.querySelector(".zsa-act-logo-link"), leaving = false;
+  if (logoLink) logoLink.addEventListener("click", function (event) {
+    if (leaving || !snapshot()) return;
+    event.preventDefault();
+    dialog.replaceChildren();
+    dialog.appendChild(node("h2", null, ui.leaveTitle)).id = "zsa-act-dialog-title";
+    dialog.appendChild(node("p", null, CODE ? ui.leaveSaved : ui.leaveLost));
+    var row = dialog.appendChild(node("div", "zsa-act-row"));
+    var stay = row.appendChild(button(ui.leaveStay, "zsa-btn--primary", function () { dialog.close(); }));
+    row.appendChild(button(ui.leaveGo, "", function () {
+      flushProgress();
+      leaving = true;
+      dialog.close();
+      logoLink.click();
+    }));
+    dialog.addEventListener("close", function () { if (!leaving) logoLink.focus(); }, {once: true});
+    dialog.showModal();
+    stay.focus();
+  });
   function snapOf(st) {
     return {key: st.key, mode: st.mode, units: st.items.map(function (it) { return it.p.id; }), answers: st.answers,
       flags: Object.keys(st.flags).filter(function (n) { return st.flags[n]; }).map(Number), cur: st.cur,

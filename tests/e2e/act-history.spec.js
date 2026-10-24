@@ -569,3 +569,46 @@ test("starting over deletes the unfinished practice; progress that no longer fit
   await expect(page.getByRole("heading", {level: 1, name: "Math test directions"})).toBeFocused();
   await expect(page.getByRole("heading", {name: "Pick up where you left off?"})).toHaveCount(0);
 });
+
+test("the logo asks before leaving partway through a test: saved with a code, lost without one", async ({page, problems}) => {
+  void problems;
+  var db = await fakeApi(page, {codes: history});
+  await page.route("https://zornscience.org/", (route) => route.fulfill({status: 200, contentType: "text/html", body: "<!doctype html><title>ZornScience</title><h1>ZornScience</h1>"}));
+  var logo = page.getByRole("banner").getByRole("link", {name: "ZornScience home"});
+  // Not in a test: the logo just goes.
+  await go(page, "science", "?codes=0");
+  await logo.click();
+  await page.waitForURL("https://zornscience.org/");
+  // Without a code, partway through: asked, and Stay keeps the test going.
+  await go(page, "science", "?codes=0");
+  await page.getByRole("button", {name: /^One passage/}).click();
+  await startSection(page, "Science");
+  await page.locator("fieldset label").first().click();
+  await logo.click();
+  var dlg = page.getByRole("dialog", {name: "Leave the test?"});
+  await expect(dlg).toBeVisible();
+  await expect(dlg).toContainText("Your answers in this test are not saved. If you leave, they will be lost.");
+  await expect(dlg.getByRole("button", {name: "Stay in the test"})).toBeFocused();
+  await audit(page, "leave without a code");
+  await dlg.getByRole("button", {name: "Stay in the test"}).click();
+  await expect(dlg).toBeHidden();
+  await expect(logo).toBeFocused();
+  await expect(page.getByRole("radio").first()).toBeChecked();
+  expect(page.url()).toContain("/act/");
+  // Escape stays too.
+  await logo.click();
+  await page.keyboard.press("Escape");
+  await expect(dlg).toBeHidden();
+  expect(page.url()).toContain("/act/");
+  // With a code: the progress is saved before leaving, and can be picked up.
+  await go(page, "science", "?codes=1");
+  await page.getByRole("button", {name: /^One passage/}).click();
+  await enter(page, "M9TQ4C", "0072");
+  await startSection(page, "Science");
+  await page.getByRole("button", {name: "Next", exact: true}).click();
+  await logo.click();
+  await expect(dlg).toContainText("Your progress is saved with your practice code. To pick up where you left off, come back and enter your code and PIN.");
+  await dlg.getByRole("button", {name: "Leave"}).click();
+  await page.waitForURL("https://zornscience.org/");
+  await expect.poll(() => db.codes.M9TQ4C.progress && db.codes.M9TQ4C.progress.section.cur).toBe(1);
+});
