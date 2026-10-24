@@ -1,5 +1,5 @@
 # ACT Practice
-Version: 1.7.0
+Version: 1.8.0
 
 Free ACT practice with original questions in all four sections: English, Math, Reading and the optional Science. Students practice a few questions, one timed section, or the full ACT, and get a score report that compares them with national results and gives tips for the skills they missed. With a practice code (optional, no account), their scores are saved so they can see how they change over time. Not linked from zornscience.org yet. The live URL after approval will be https://activities.zornscience.org/act/. The old address, https://activities.zornscience.org/act-science/, redirects to the Science section.
 
@@ -48,15 +48,18 @@ A tools row sits under the top bar during a section. Every tool is a button with
 | Zoom (magnifier) | Zoom out and Zoom in set the passage to 100, 125, 150 or 200 percent: text, tables and figures all grow, and the pane scrolls both ways. Each change is announced. |
 
 ## Practice codes
-A practice code is six letters and digits (no I, O, 0 or 1), like K7M2QX. It lets a student keep a history of scores without an account. Codes are stored by the ZornScience ACT Practice History WordPress plugin on zornscience.org; the plugin, its install steps, and exactly what it stores are in `wordpress/zornscience-act-history/README.md`.
+A practice code is six letters and digits (no I, O, 0 or 1), like K7M2QX, with a four-digit PIN. Together they let a student keep a history of scores without an account. They are stored by the ZornScience ACT Practice History WordPress plugin on zornscience.org; the plugin, its install and update steps, and exactly what it stores are in `wordpress/zornscience-act-history/README.md`.
 
-- **Off until the plugin is installed.** `history.enabled` in `config.js` is `false`, so students see no codes and the page makes no requests. `?codes=1` turns codes on for testing. After installing the plugin, set `enabled: true`.
-- **When a student starts any practice** (a mode, a draft, or the full ACT), the page first asks for a code once per visit: enter a code, get a new code, or practice without saving. A new code is shown large, spelled out for screen readers, with a reminder to write it down.
-- **Saving:** each finished section is saved with its section, kind of practice, number of questions and number correct, estimated score (a full section), score range (mixed practice) or none (one passage or a few questions), and time. The full ACT saves each section and then the composite. The score report says when the save worked, or that it did not and offers Try saving again; the score is always shown either way.
-- **History:** View my history (on the home and section screens while a code is in use) shows, for each section and the composite, the first and latest estimated scores and the change; a chart of every estimated score in order, with a screen reader table of its values; and a table of every saved practice, newest first.
-- **Privacy:** the code is held only in the page while it is open (no cookies or browser storage), so it is entered again on each visit. Names, emails and schools are never asked for. Requests send no cookies and go only to the plugin, which only the ACT Practice site may call.
+- **Off until switched on.** `history.enabled` in `config.js` is `false`, so students see no codes and the page makes no requests. `?codes=1` turns codes on for testing. After the plugin is installed and checked, set `enabled: true`.
+- **Before any practice starts** (a mode, a draft, or the full ACT), the page asks once per visit: "Do you have a practice code and PIN?", with three choices:
+  - **Yes:** enter the code and PIN. The practice starts only when they match. A wrong code or PIN shows "That code and PIN do not match..." and the test does not start; the same answer is given whether the code exists or not. Formats are checked first (6 characters, 4 digits) without sending anything.
+  - **No, I need a code:** the plugin makes a random code and PIN. They are shown once, large and spelled out for screen readers, with the warning "Write these down somewhere safe or take a picture of them now. They will not be shown again." The page never shows them again (not on reports, the home screen or the history).
+  - **Practice without a code:** warned first that scores will not be saved and stay in the window only until it is closed. Nothing is sent anywhere. This visit's scores can still be seen under View this visit's scores, until the window is closed or reloaded.
+- **Saving:** each finished section is saved with its section, kind of practice, number of questions and number correct, estimated score (a full section), score range (mixed practice) or none (one passage or a few questions), and time, together with the PIN. The full ACT saves each section and then the composite. The report says when the save worked, or that it did not and offers Try saving again (with the same code and PIN); the score is always shown either way.
+- **History:** View my history shows, for each section and the composite, the first and latest estimated scores and the change; a chart of every estimated score in order, with a screen reader table of its values; and a table of every saved practice, newest first.
+- **Privacy:** the code and PIN are held only in the page while it is open (no cookies or browser storage), so a student enters them again on each visit. Names, emails and schools are never asked for. Every request is a POST that sends no cookies, so a PIN never appears in a web address. Only the ACT Practice site may call the plugin.
 - **House rules:** `act/history-api.js` is the only file that talks to a server, and `act/index.html` is the only page whose CSP allows a connection (`connect-src https://zornscience.org`). `tests/unit/static.test.js` allows exactly these two exceptions.
-- **Problems** are explained on the code screen: a code that is not 6 letters and digits, an unknown code, too many tries from one network, and codes being turned off or unreachable (students can always practice without saving).
+- **Other problems** are explained on the code screen: too many tries (10 wrong PINs lock a code for an hour), and codes being turned off or unreachable (students can always practice without a code).
 
 ## Files
 | File | What it holds |
@@ -252,6 +255,8 @@ Each question in the answer review has a Show with passage button (Show question
 - Ending the section asks on the page, never with a `confirm()` dialog.
 
 ## Changelog
+1.8.0: Practice codes now have a four-digit PIN (Nick's request). Before any practice, students are asked whether they have a code and PIN: a matching pair starts the practice, a wrong one never does (and the same answer is given for an unknown code), a new code and PIN are shown once with a warning to write them down or take a picture, and practicing without a code warns that scores stay only until the window is closed (this visit's scores can still be viewed). The code and PIN are never shown again. Every request to the plugin is now a POST, so a PIN is never in a web address. Needs the plugin's version 1.1.0, which also deletes codes inactive for a year, with their PINs and scores, and has a Delete inactive codes now button.
+
 1.7.0: Practice codes (Nick's request, approved by his district): an optional six-character code saves each finished section to the ZornScience ACT Practice History WordPress plugin (new, in `wordpress/zornscience-act-history/`), and a history screen shows score changes over time. Off until the plugin is installed (`history.enabled`), and testable with `?codes=1`. The history chart uses a fifth marker shape (a ring) for the composite.
 
 1.6.0: Percentiles for every section, the composite and STEM, from ACT's 2026-2027 national ranks (supplied by Nick). Science percentiles move from the 2024-2025 table to the 2026-2027 one (for example, a 19 is now the 54th percentile, not the 52nd). The full ACT report shows the composite's percentile, the STEM score's, and each section's.

@@ -375,7 +375,16 @@ body {background: var(--act-bg);}
   border: 2px solid var(--act-muted); border-radius: 8px; background: var(--act-bg); color: var(--act-ink);}
 .zsa-act .zsa-act-code-input[aria-invalid="true"] {border-color: var(--act-bad);}
 .zsa-act .zsa-act-code-input:focus-visible {outline: 3px solid var(--act-blue); outline-offset: 2px;}
+.zsa-act .zsa-act-code-input.zsa-act-pin-input {max-width: 8ch;}
 .zsa-act-code-msg {min-height: 1.55em; font-weight: 700;}
+.zsa-act-code-option {border-top: 1px solid var(--act-line); padding-top: 18px; display: grid; gap: 10px;}
+.zsa-act .zsa-act-code-option h2 {font-size: 22px;}
+.zsa-act-code-option .zsa-act-notice {margin: 0;}
+.zsa-act-code-warning {font-weight: 700;}
+.zsa-act-code-card {margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 14px; max-width: 560px;}
+.zsa-act-code-card > div {display: grid; gap: 6px;}
+.zsa-act-code-card dt {font-weight: 700;}
+.zsa-act-code-card dd {margin: 0;}
 .zsa-act-code-big {font: 700 clamp(36px, 10vw, 56px)/1.1 var(--act-data); letter-spacing: .18em; color: var(--act-blue); padding: 14px 18px; border: 2px dashed var(--act-blue); border-radius: 12px; justify-self: start;}
 .zsa-act-save {background: var(--act-good-soft); color: var(--act-ink); border-radius: 10px; padding: 10px 14px; margin: 0 0 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;}
 .zsa-act-save--error {background: var(--act-warn-soft);}
