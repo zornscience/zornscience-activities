@@ -20,7 +20,7 @@ No names, emails, schools, IP addresses, cookies or browser details are stored. 
 ## Installing on zornscience.org
 zornscience.org is a WordPress.com site on a plan that allows plugins (it shows as an "Atomic" site).
 
-1. Make a zip of the `zornscience-act-history` folder (the folder itself, with its two PHP files inside). A ready-made zip is attached to the pull request that added the plugin.
+1. Make a zip of the `zornscience-act-history` folder (the folder itself, with its two PHP files inside). On a Mac or Windows computer, right-click the folder and choose Compress (Mac) or Send to > Compressed folder (Windows).
 2. In WordPress, go to **Plugins > Add New Plugin > Upload Plugin**, choose the zip, and select **Install Now**, then **Activate**. Activating creates the two tables and schedules the daily cleanup.
 3. Go to **Tools > ACT Practice History**. Check that **Practice codes** is turned on and that **Allowed sites** lists `https://activities.zornscience.org`.
 4. Check that it answers: open https://zornscience.org/wp-json/zsa-act/v1/codes/AAAAAA in a browser. It should say "No history was found for that code." (a 404 is correct here).
