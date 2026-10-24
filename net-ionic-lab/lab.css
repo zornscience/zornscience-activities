@@ -5,3 +5,5 @@ body{background:#edf2f7}.ionic-lab{--zsa-max-width:1440px;background:#f6f8fb;pad
 /* Keep observations in view on typical laptop screens. */
 .ionic-lab .bench svg{height:clamp(200px,34vh,300px)}
 @media(max-width:760px){.ionic-lab .bench svg{height:auto}}
+
+.ionic-lab .logo{padding:7px;border-radius:12px}.ionic-lab .logo img{display:block;width:36px;height:auto}
