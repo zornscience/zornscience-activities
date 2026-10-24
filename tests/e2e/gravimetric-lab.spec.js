@@ -2,8 +2,8 @@ const {test, expect} = require('@playwright/test');
 test('gravimetric lab follows the procedure and reloads safely', async ({page}) => {
   await page.clock.install();
   await page.goto('/gravimetric-lab/');
-  await expect(page.locator('#sample')).toHaveText('A');
-  await expect(page.locator('.lab-top,.intro,#reset')).toHaveCount(0);
+  await expect(page.locator('#sample')).toHaveText('Unknown A');
+  await expect(page.locator('.lab-top,.intro,#reset,.unknown-row')).toHaveCount(0);
   await page.locator('#zsa-th-instructions-open').click();
   await expect(page.locator('dialog')).toBeVisible();
   await page.keyboard.press('Escape');

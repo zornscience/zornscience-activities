@@ -6,3 +6,5 @@ body{margin:0;background:#edf2f6}.grav{--zsa-max-width:1440px;max-width:1440px;p
 .unknown-row{display:flex;justify-content:flex-end;padding:16px 0}.unknown-row .sample-tag{font-size:13px;min-width:44px;text-align:center}
 
 .grav .zsa-th-brand{min-width:0;min-height:0;padding:7px;border-radius:12px}.grav .zsa-th-brand img{display:block;width:36px;height:auto}
+
+.grav .phases{margin-top:16px}.grav .bench-title{align-items:center;padding:10px 16px}.grav .bench-title .sample-tag{margin-left:auto;padding:6px 10px;font-size:11px;letter-spacing:.02em;flex-shrink:0}.grav .bench-title #bench-state{font-size:9px}@media(max-width:760px){.grav .bench-title #bench-state{display:none}.grav .bench-title .sample-tag{font-size:10px}}
