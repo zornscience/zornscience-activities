@@ -4,3 +4,5 @@ body{margin:0;background:#edf2f6}.grav{--zsa-max-width:1440px;max-width:1440px;p
 .instrument-readout{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;background:#f3f7f8;border-bottom:1px solid #dce5e9}.instrument-readout>span{font-size:10px;letter-spacing:.07em;color:#3b5266}.instrument-readout small{display:block;font-size:9px;margin-top:4px;letter-spacing:.04em}.grav .instrument-readout output{font:22px monospace;color:#d8f5d2;background:#233b39;padding:7px 12px;border-radius:4px;white-space:nowrap}
 
 .unknown-row{display:flex;justify-content:flex-end;padding:16px 0}.unknown-row .sample-tag{font-size:13px;min-width:44px;text-align:center}
+
+.grav .zsa-th-brand{min-width:0;min-height:0;padding:7px;border-radius:12px}.grav .zsa-th-brand img{display:block;width:36px;height:auto}
