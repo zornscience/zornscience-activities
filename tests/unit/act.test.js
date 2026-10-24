@@ -189,6 +189,21 @@ test("Reading passages: 9 questions, numbered paragraphs, and paragraph referenc
   });
 });
 
+test("Reading passages are full length (600 to 800 words), and every phrase an explanation quotes is in the passage", function () {
+  function norm(t) { return t.replace(/<[^>]+>/g, "").toLowerCase().replace(/[^a-z0-9' ]+/g, " ").replace(/\s+/g, " ").trim(); }
+  bank.reading.passages.forEach(function (p) {
+    var text = p.body.filter(function (b) { return b.kind === "text"; }).map(function (b) { return b.html; }).join(" ");
+    var words = text.replace(/<[^>]+>/g, "").split(/\s+/).length;
+    assert.ok(words >= 600 && words <= 800, p.id + " has " + words + " words");
+    var all = norm(text);
+    p.questions.forEach(function (q, i) {
+      (q.explanation.match(/"[^"]{12,}"/g) || []).forEach(function (quote) {
+        assert.ok(all.indexOf(norm(quote)) >= 0, p.id + " question " + (i + 1) + " quotes " + quote + ", which is not in the passage");
+      });
+    });
+  });
+});
+
 test("Math questions: numeric choices run from least to greatest", function () {
   bank.math.questions.forEach(function (q) {
     var nums = q.choices.map(function (c) { return /^[$−-]?\d+(\.\d+)?%?$/.test(c) ? Number(c.replace(/[$%]/g, "").replace("−", "-")) : null; });
