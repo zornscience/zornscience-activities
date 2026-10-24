@@ -1,5 +1,5 @@
 # ZornScience ACT Practice History (WordPress plugin)
-Version: 1.3.0
+Version: 1.4.0
 
 Saves ACT Practice scores under anonymous six-character practice codes, each with a four-digit PIN, so a student can see how their scores change over time without making an account. Teachers can make a class set of codes and PINs on the ACT Practice page. It runs on zornscience.org and is used by the ACT Practice page at https://activities.zornscience.org/act/.
 
@@ -10,6 +10,9 @@ Saves ACT Practice scores under anonymous six-character practice codes, each wit
 - **An unknown code and a wrong PIN get exactly the same answer** ("That code and PIN do not match."), so no one can find out which codes exist.
 - **After 10 wrong PINs for one code in an hour, that code locks for the rest of the hour**, even with the right PIN. Other codes are not affected.
 - **How PINs are stored:** each PIN is stored twice. A one-way hash (PHP `password_hash`, like a website password) is what the code and PIN are checked against. A copy encrypted with libsodium (included in WordPress) lets an administrator look up a forgotten PIN on the admin page. The encryption key comes from the site's secret keys in `wp-config.php`, not from the database, so a copy of the database alone does not reveal PINs. If those keys are ever changed, PINs can no longer be shown; Make a new PIN still works. Codes made before version 1.3.0 have only the hash, so their PINs cannot be shown.
+
+## Picking up an unfinished practice
+While a student with a code works, the ACT Practice page saves the practice in progress: which passages or questions it uses (by id), the answers, flags, the question on screen and the time used (and, in a full ACT, the finished sections). Logging in again with the code and PIN offers to pick it up. It is saved under the code with `POST /codes/{code}/progress` (which needs the PIN, like saving a score), returned when the code is opened, and cleared when the practice is finished or the student chooses Start over. A saved practice older than 7 days is not offered. Each save is at most 20,000 characters, is checked for its shape (`v: 1` and a `section` or `full` part, nothing else), and is never shown on the admin page.
 
 ## Class sets for teachers
 On the ACT Practice page, **For teachers > Make class codes** (https://activities.zornscience.org/act/#teachers) is open to anyone, with no login:
@@ -30,7 +33,7 @@ Making a code takes a moment of server work (hashing its PIN), so the plugin lim
 | Students in one class set | 50 | A larger number is refused. |
 | Class sets from one network address in an hour | 5 | The teacher is asked to try again in an hour. A school usually shares one address, so its teachers share these. |
 | New codes in any 24 hours, for the whole site | 2,000 | Students' own codes and class sets together. Past the limit, no new codes are made until older ones are more than 24 hours old ("Try again tomorrow"). Existing codes keep working. |
-| Requests from one network address in an hour | 100 new codes, 300 history openings, 600 saves | Generous, because a whole school shares an address. |
+| Requests from one network address in an hour | 100 new codes, 300 history openings, 600 saves, 3,000 saves of a practice in progress | Generous, because a whole school shares an address. |
 
 The first three can be changed under Settings on the admin page. With the defaults, the most work anyone can cause in a day is 2,000 codes, about two minutes of server time spread over the day. The counters never store an address: each counter's name is a salted hash of it, and it disappears after the hour. Very large floods of requests to the website itself are handled by WordPress.com, before they reach the plugin.
 
@@ -39,7 +42,7 @@ Two database tables, and nothing else:
 
 | Table | Columns |
 |---|---|
-| `wp_zsa_act_codes` | the code, when it was made, when it was last used, how many attempts it has, the PIN's hash, the encrypted PIN, and whether it came from a class set |
+| `wp_zsa_act_codes` | the code, when it was made, when it was last used, how many attempts it has, the PIN's hash, the encrypted PIN, whether it came from a class set, and the practice in progress (if any) with when it was saved |
 | `wp_zsa_act_attempts` | the code, the date, the section (English, Math, Reading, Science or Composite), the kind of practice, the number of questions, the number correct, the estimated score or score range, and the time spent |
 
 Plus the settings, and running counts of codes issued (for the admin page). No names, emails, schools, IP addresses, cookies or browser details are stored.
@@ -64,7 +67,7 @@ zornscience.org is a WordPress.com site on a plan that allows plugins.
 
 **First install:** in WordPress, go to **Plugins > Add New Plugin > Upload Plugin**, choose the zip, select **Install Now**, then **Activate**.
 
-**Updating:** upload the new zip the same way. WordPress asks whether to replace the installed version: choose **Replace current with uploaded**. On the next page load, the plugin updates its tables by itself. From 1.2.0, it also removes 1.2.0's ACT Class Codes menu and ACT Practice teacher role (class sets are now on the ACT Practice page). From 1.0.0 or 1.1.0, it also replaces the old request limits (20 new codes an hour from one address was too few for a school) and starts the count of codes issued from the codes already stored. From 1.0.0, it also adds the PIN column, and a saved setting of 400 days becomes 365; codes made by 1.0.0 have no PIN, so they cannot be opened until an administrator uses **Make a new PIN** for them.
+**Updating:** upload the new zip the same way. WordPress asks whether to replace the installed version: choose **Replace current with uploaded**. On the next page load, the plugin updates its tables by itself (1.4.0 adds the two columns for a practice in progress). From 1.2.0, it also removes 1.2.0's ACT Class Codes menu and ACT Practice teacher role (class sets are now on the ACT Practice page). From 1.0.0 or 1.1.0, it also replaces the old request limits (20 new codes an hour from one address was too few for a school) and starts the count of codes issued from the codes already stored. From 1.0.0, it also adds the PIN column, and a saved setting of 400 days becomes 365; codes made by 1.0.0 have no PIN, so they cannot be opened until an administrator uses **Make a new PIN** for them.
 
 **Making the zip:** zip the `zornscience-act-history` folder itself (with its two PHP files and the logo inside). On a Mac, right-click the folder and choose Compress; on Windows, choose Send to > Compressed (zipped) folder.
 
@@ -85,6 +88,7 @@ All under `https://zornscience.org/wp-json/zsa-act/v1`. All are POST, so a PIN o
 | `POST /codes` | Makes a new code. Returns `{code, pin}` with status 201. |
 | `POST /codes/{code}/open` with `{pin}` | Returns `{code, created, attempts: [...]}`, oldest first. Codes may be typed in small letters. |
 | `POST /codes/{code}/attempts` with `{pin, section, mode, questions, correct, score, low, high, seconds}` | Saves one finished section. Returns 201, or 400 if a value is missing or out of range, and 409 once a code has 1,000 attempts. |
+| `POST /codes/{code}/progress` with `{pin, progress}` | Saves the practice in progress (an object with `v: 1` and `section` or `full`, at most 20,000 characters), or clears it when `progress` is null. Returns `{saved}`. 400 for any other shape. The open route returns it as `progress` (with `saved`, the time it was saved), or null. |
 | `POST /class-lists` with `{count, name}` | Makes a class set. Returns `{codes: [{code, pin}], csv, pdf, file}` with status 201: the CSV file's text, the PDF in base64, and a file name without its extension. 400 (with the maximum) when the count is out of range. |
 
 For the routes with a code: 403 when the code and PIN do not match (or the code does not exist), and 429 when the code is locked by wrong PINs. Every route: 429 when a limit above is reached (error code `zsa_act_daily` for the 24-hour limit), and 503 when codes (or class sets) are turned off. Browsers may call these routes only from the allowed sites (CORS), without credentials.
@@ -93,7 +97,7 @@ For the routes with a code: 403 when the code and PIN do not match (or the code 
 Deactivating stops the daily purge but keeps the data. Deleting the plugin from the Plugins page removes both tables, every code, PIN and score, the settings and the counts of codes issued.
 
 ## Testing
-`npm run test:unit` in the activities repository checks the PHP syntax and runs `tests/php/act-history-test.php` (over 6,000 checks), which loads the plugin with stand-ins for WordPress and a SQLite database in place of MySQL. It covers code and PIN formats; that a new PIN is checked against a hash and kept encrypted, readable only with the site's keys; that a history opens and a score saves only with the matching PIN; that a wrong PIN, another student's PIN and an unknown code get the same answer and add nothing; the 10-try lock; validation; the attempt limit; rate limits; the off switches; allowed sites; class sets (working codes, the CSV file, a well-formed PDF with the logo, every code and PIN, the name columns and the ACT notice on every page); every limit, including the site-wide 24-hour limit; the counts of codes issued; the admin page (PIN lookup, Make a new PIN, settings kept in range, Delete all codes and scores); purging only codes unused for over a year, with their scores; the upgrades from 1.0.0 and 1.2.0; and that the tables have only the columns listed above. It does not run inside a real WordPress site; the steps under "After installing or updating" are the check on the real site.
+`npm run test:unit` in the activities repository checks the PHP syntax and runs `tests/php/act-history-test.php` (over 6,000 checks), which loads the plugin with stand-ins for WordPress and a SQLite database in place of MySQL. It covers code and PIN formats; that a new PIN is checked against a hash and kept encrypted, readable only with the site's keys; that a history opens and a score saves only with the matching PIN; that a wrong PIN, another student's PIN and an unknown code get the same answer and add nothing; the 10-try lock; validation; the attempt limit; rate limits; the off switches; allowed sites; class sets (working codes, the CSV file, a well-formed PDF with the logo, every code and PIN, the name columns and the ACT notice on every page); every limit, including the site-wide 24-hour limit; the counts of codes issued; the admin page (PIN lookup, Make a new PIN, settings kept in range, Delete all codes and scores); purging only codes unused for over a year, with their scores; saving, returning, clearing and refusing a practice in progress (only with the matching PIN, 7 days at most, with its own hourly limit); the upgrades from 1.0.0 and 1.2.0; and that the tables have only the columns listed above. It does not run inside a real WordPress site; the steps under "After installing or updating" are the check on the real site.
 
 ## License
 GPL-2.0-or-later, the license WordPress plugins use.

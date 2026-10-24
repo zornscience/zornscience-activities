@@ -94,6 +94,24 @@ function fullBanks() {
 }
 
 // ---------- Home and section start screens ----------
+test("the top banner: the logo goes to zornscience.org and the section name goes to the ACT Practice home page", async ({page, problems}) => {
+  void problems;
+  await go(page, "math");
+  var band = page.getByRole("banner");
+  await expect(band.getByRole("link")).toHaveCount(2);
+  await expect(band.getByRole("link", {name: "ZornScience home"})).toHaveAttribute("href", "https://zornscience.org/");
+  await expect(band.getByText("ZornScience home", {exact: true})).toHaveCount(0);
+  await band.getByRole("link", {name: "ACT Math"}).click();
+  await page.waitForURL((u) => u.pathname === "/act/" && !u.hash && !u.search);
+  await expect(page.getByRole("heading", {level: 1, name: "ACT Practice"})).toBeVisible();
+  await expect(page.getByRole("banner").getByRole("link", {name: "ACT Practice"})).toHaveAttribute("href", "./");
+  // On a phone the section name stays (Test Prep makes room), and both links can be reached.
+  await page.setViewportSize({width: 360, height: 700});
+  await expect(page.getByRole("banner").getByRole("link", {name: "ACT Practice"})).toBeVisible();
+  await expect(page.getByRole("banner").getByText("Test Prep")).toBeHidden();
+  await expect(page.getByRole("banner").getByRole("link", {name: "ZornScience home"})).toBeVisible();
+});
+
 test("home: the full ACT opens with every bank reviewed, four sections open their start screens and back", async ({page, problems}) => {
   void problems;
   await go(page);

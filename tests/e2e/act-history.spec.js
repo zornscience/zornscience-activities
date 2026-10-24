@@ -25,7 +25,7 @@ async function fakeApi(page, opts) {
     function reply(status, body) { return route.fulfill({status: status, headers: headers, body: JSON.stringify(body)}); }
     if (failure && typeof failure === "object") { await reply(failure.status, {code: failure.code, message: "fail", data: {status: failure.status, max: failure.max}}); return; }
     if (failure) { await reply(failure, {code: "x", message: "fail"}); return; }
-    var m = path.match(/^\/codes\/([A-Z0-9]{6})\/(open|attempts)$/);
+    var m = path.match(/^\/codes\/([A-Z0-9]{6})\/(open|attempts|progress)$/);
     if (req.method() === "POST" && path === "/codes") {
       var made = db.next.shift();
       db.codes[made[0]] = {pin: made[1], attempts: []};
@@ -38,8 +38,11 @@ async function fakeApi(page, opts) {
     } else if (req.method() === "POST" && m) {
       var entry = db.codes[m[1]];
       if (!entry || !call.body || call.body.pin !== entry.pin) { await reply(403, {code: "zsa_act_mismatch", message: "That code and PIN do not match."}); return; }
-      if (m[2] === "open") await reply(200, {code: m[1], created: "2026-09-01T12:00:00Z", attempts: entry.attempts});
-      else {
+      if (m[2] === "open") await reply(200, {code: m[1], created: "2026-09-01T12:00:00Z", attempts: entry.attempts, progress: entry.progress ? Object.assign({saved: "2026-10-24T15:05:00Z"}, entry.progress) : null});
+      else if (m[2] === "progress") {
+        entry.progress = call.body.progress;
+        await reply(200, {saved: !!entry.progress});
+      } else {
         var saved = Object.assign({}, call.body);
         delete saved.pin;
         entry.attempts.push(Object.assign({date: "2026-10-24T15:00:00Z"}, saved));
@@ -429,4 +432,140 @@ test("with codes off there is no class set page", async ({page, problems}) => {
   await go(page, "teachers", "?codes=0");
   await expect(page.getByRole("heading", {level: 1, name: "ACT Practice"})).toBeVisible();
   await expect(page.getByRole("region", {name: "For teachers"})).toHaveCount(0);
+});
+
+// ---------- Picking up an unfinished practice ----------
+// Hiding the page (closing the tab, switching away) saves the practice in progress at once.
+async function hidePage(page) {
+  await page.evaluate(() => {
+    Object.defineProperty(document, "visibilityState", {value: "hidden", configurable: true});
+    document.dispatchEvent(new Event("visibilitychange"));
+  });
+}
+function lastProgress(db) { var c = db.calls.filter((x) => /\/progress$/.test(x.path)); return c.length ? c[c.length - 1].body : null; }
+
+test("a practice closed partway is saved with the code and picked up where it was left", async ({page, problems}) => {
+  void problems;
+  var db = await fakeApi(page, {codes: history});
+  await go(page, "science", "?codes=1", {seed: 4});
+  await page.getByRole("button", {name: /^Mixed practice/}).click();
+  await enter(page, "M9TQ4C", "0072");
+  await startSection(page, "Science");
+  // Saved as soon as the section begins.
+  await expect.poll(() => lastProgress(db) && lastProgress(db).progress.section.cur).toBe(0);
+  var first = lastProgress(db);
+  expect(first.pin).toBe("0072");
+  expect(Object.keys(first.progress).sort()).toEqual(["section", "v"]);
+  expect(Object.keys(first.progress.section).sort()).toEqual(["answers", "cur", "elapsed", "flags", "key", "mode", "timeUp", "units", "warned"]);
+  expect(first.progress.section).toMatchObject({key: "science", mode: "mixed", answers: {}, flags: [], cur: 0});
+  var total = Number((await page.getByRole("heading", {level: 2, name: /^Question 1 of \d+$/}).textContent()).match(/of (\d+)/)[1]);
+  await page.locator("fieldset label").nth(2).click();
+  await page.getByRole("button", {name: "Next", exact: true}).click();
+  await page.getByRole("button", {name: "Flag for review"}).click();
+  await page.getByRole("button", {name: "Next", exact: true}).click();
+  await page.locator("fieldset label").nth(1).click();
+  await hidePage(page);
+  await expect.poll(() => lastProgress(db).progress.section.cur).toBe(2);
+  expect(lastProgress(db).progress.section).toMatchObject({answers: {1: 2, 3: 1}, flags: [2], cur: 2});
+  // The practice code, PIN and saved progress are all that is sent: no names.
+  expect(JSON.stringify(lastProgress(db))).not.toMatch(/name|email|school/i);
+  // A new visit: the student logs in with the code and PIN and is offered the unfinished practice.
+  await go(page, "science", "?codes=1", {seed: 9});
+  await page.getByRole("button", {name: /^One passage/}).click();
+  await enter(page, "M9TQ4C", "0072");
+  await expect(page.getByRole("heading", {level: 1, name: "Pick up where you left off?"})).toBeFocused();
+  await expect(page.getByText(new RegExp("^You have an unfinished Science practice \\(Mixed practice\\)\\. You were on question 3 of " + total + ", with \\d+:\\d\\d left\\.$"))).toBeVisible();
+  await expect(page.getByText(/^Last saved /)).toBeVisible();
+  await expect(page.getByText("Highlights and crossed-out or hidden choices are not.", {exact: false})).toBeVisible();
+  await audit(page, "resume offer");
+  await page.getByRole("button", {name: "Pick up where I left off"}).click();
+  await expect(page.getByRole("heading", {level: 2, name: new RegExp("^Question 3 of " + total + "$")})).toBeFocused();
+  await expect(page.getByRole("radio").nth(1)).toBeChecked();
+  await expect(page.getByRole("timer")).toHaveText(/^Time left \d+:\d\d$/);
+  await nav(page).getByRole("button").first().click();
+  await expect(page.getByRole("radio").nth(2)).toBeChecked();
+  await expect(nav(page).getByRole("button").nth(1)).toHaveAccessibleName(/flagged/);
+  // Finishing the section saves the score and clears the saved progress.
+  await endNow(page);
+  await expect(page.getByRole("status").filter({hasText: "Saved to your history."})).toBeVisible();
+  await expect.poll(() => lastProgress(db).progress).toBe(null);
+  expect(db.codes.M9TQ4C.progress).toBe(null);
+  var saved = db.codes.M9TQ4C.attempts;
+  expect(saved[saved.length - 1]).toMatchObject({section: "science", mode: "mixed", questions: total});
+  expect(saved[saved.length - 1].correct).toBeLessThanOrEqual(2);
+});
+
+test("the full ACT is picked up in the section under way, or at the next section after a finished one", async ({page, problems}) => {
+  test.setTimeout(90000);
+  void problems;
+  var db = await fakeApi(page, {codes: history});
+  await go(page, null, "?codes=1", {seed: 5});
+  await page.getByRole("region", {name: "Full ACT"}).getByRole("button", {name: "Start the full ACT"}).click();
+  await enter(page, "M9TQ4C", "0072");
+  await startSection(page, "English");
+  await page.locator("fieldset label").first().click();
+  await hidePage(page);
+  await expect.poll(() => lastProgress(db) && lastProgress(db).progress.full && lastProgress(db).progress.full.section && Object.keys(lastProgress(db).progress.full.section.answers).length).toBe(1);
+  var full = lastProgress(db).progress.full;
+  expect(full).toMatchObject({keys: ["english", "math", "reading", "science"], withScience: true, done: [], next: 0});
+  expect(full.sets.english.length).toBe(5);
+  expect(full.sets.math.length).toBe(45);
+  // Back in the middle of English.
+  await go(page, null, "?codes=1", {seed: 6});
+  await page.getByRole("region", {name: "Full ACT"}).getByRole("button", {name: "Start the full ACT"}).click();
+  await enter(page, "M9TQ4C", "0072");
+  await expect(page.getByText(/^You have an unfinished full ACT\. You were on question 1 of 50 in the English section, with 3[45]:\d\d left\.$/)).toBeVisible();
+  await page.getByRole("button", {name: "Pick up where I left off"}).click();
+  await expect(page.getByRole("heading", {level: 2, name: "Question 1 of 50"})).toBeFocused();
+  await expect(page.getByRole("radio").first()).toBeChecked();
+  await endNow(page);
+  // English is finished and saved; Math's directions are next.
+  await expect(page.getByRole("heading", {level: 1, name: "Math test directions"})).toBeFocused();
+  await expect.poll(() => lastProgress(db).progress.full.done.length).toBe(1);
+  expect(lastProgress(db).progress.full).toMatchObject({next: 1, section: null});
+  expect(db.codes.M9TQ4C.attempts.filter((a) => a.mode === "fullact").map((a) => a.section)).toEqual(["english"]);
+  // Back again: the full ACT goes on with Math, and English's answers are kept for the report.
+  await go(page, null, "?codes=1", {seed: 7});
+  await page.getByRole("region", {name: "Full ACT"}).getByRole("button", {name: "Start the full ACT"}).click();
+  await enter(page, "M9TQ4C", "0072");
+  await expect(page.getByText("You have an unfinished full ACT. The Math section is next.")).toBeVisible();
+  await page.getByRole("button", {name: "Pick up where I left off"}).click();
+  await expect(page.getByRole("heading", {level: 1, name: "Math test directions"})).toBeFocused();
+  await expect(page.getByText("Welcome back. Your finished sections are kept, and the next section starts when you are ready.")).toBeVisible();
+  await startSection(page, "Math");
+  await endNow(page);
+  await page.getByRole("button", {name: "End the break"}).click();
+  await startSection(page, "Reading");
+  await endNow(page);
+  await startSection(page, "Science");
+  await endNow(page);
+  await expect(page.getByRole("heading", {level: 1, name: "Full ACT score report"})).toBeFocused();
+  await expect.poll(() => lastProgress(db).progress).toBe(null);
+  // English counted with its one answer: the composite saved once, with all four sections.
+  var saved = db.codes.M9TQ4C.attempts.filter((a) => a.mode === "fullact");
+  expect(saved.map((a) => a.section)).toEqual(["english", "math", "reading", "science", "composite"]);
+  expect(saved[4].questions).toBe(131);
+});
+
+test("starting over deletes the unfinished practice; progress that no longer fits the banks is not offered", async ({page, problems}) => {
+  void problems;
+  var codes = JSON.parse(JSON.stringify(history));
+  codes.M9TQ4C.progress = {v: 1, section: {key: "math", mode: "mixed", units: ["m-linear-1", "m-powers-1"], answers: {1: 0}, flags: [], cur: 1, elapsed: 30, warned: false, timeUp: false}};
+  codes.H4RD2Q.progress = {v: 1, section: {key: "math", mode: "mixed", units: ["m-linear-1", "m-gone-99"], answers: {}, flags: [], cur: 0, elapsed: 0, warned: false, timeUp: false}};
+  var db = await fakeApi(page, {codes: codes});
+  await go(page, "math", "?codes=1", {seed: 3});
+  await page.getByRole("button", {name: /^Practice questions/}).click();
+  await enter(page, "M9TQ4C", "0072");
+  await expect(page.getByText(/^You have an unfinished Math practice \(Mixed practice\)\. You were on question 2 of 2, with \d+:\d\d left\.$/)).toBeVisible();
+  await page.getByRole("button", {name: "Start over"}).click();
+  // The practice the student chose starts, and the saved one is deleted.
+  await expect(page.getByRole("heading", {level: 1, name: "Math test directions"})).toBeFocused();
+  await expect.poll(() => db.codes.M9TQ4C.progress).toBe(null);
+  expect(lastProgress(db)).toEqual({pin: "0072", progress: null});
+  // A saved practice with a question no longer in the bank goes straight on.
+  await go(page, "math", "?codes=1", {seed: 3});
+  await page.getByRole("button", {name: /^Practice questions/}).click();
+  await enter(page, "H4RD2Q", "3814");
+  await expect(page.getByRole("heading", {level: 1, name: "Math test directions"})).toBeFocused();
+  await expect(page.getByRole("heading", {name: "Pick up where you left off?"})).toHaveCount(0);
 });

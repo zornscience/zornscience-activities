@@ -1,5 +1,5 @@
 # ACT Practice
-Version: 1.10.0
+Version: 1.11.0
 
 Free ACT practice with original questions in all four sections: English, Math, Reading and the optional Science. Students practice a few questions, one timed section, or the full ACT, and get a score report that compares them with national results and gives tips for the skills they missed. With a practice code (optional, no account), their scores are saved so they can see how they change over time. Not linked from zornscience.org yet. The live URL after approval will be https://activities.zornscience.org/act/. The old address, https://activities.zornscience.org/act-science/, redirects to the Science section.
 
@@ -61,6 +61,17 @@ A practice code is six letters and digits (no I, O, 0 or 1), like K7M2QX, with a
 - **House rules:** `act/history-api.js` is the only file that talks to a server, and `act/index.html` is the only page whose CSP allows a connection (`connect-src https://zornscience.org`). `tests/unit/static.test.js` allows exactly these two exceptions.
 - **Other problems** are explained on the code screen: too many tries (10 wrong PINs lock a code for an hour), and codes being turned off or unreachable (students can always practice without a code).
 - **Forgotten PINs:** Nick can look up any code's PIN on the plugin's admin page (Tools > ACT Practice History), or give it a new one.
+
+## Picking up an unfinished practice
+With a code and PIN in use, the practice in progress is saved to the plugin, so a student who closes the window (or whose Chromebook dies) can log in again and carry on.
+
+- **What is saved:** the section and kind of practice, which passages or questions it uses (by id), the answers, the flagged questions, the question on screen, the time used and whether the five-minute warning has shown. A full ACT also keeps its finished sections and which section is next. Nothing else: no names, and no highlights, crossed-out or hidden choices.
+- **When:** as soon as a section begins; then at most every 30 seconds while something changes, and at least once a minute while the clock runs; at once when the page is hidden or closed (sent with `keepalive`, so it finishes after the page is gone); and when a full ACT moves to the next section or the break. Finishing a section (or the whole full ACT) clears it.
+- **Picking it up:** after a matching code and PIN, "Pick up where you left off?" says what is unfinished (for example "You have an unfinished full ACT. You were on question 12 of 45 in the Math section, with 31:40 left.") and when it was last saved.
+  - **Pick up where I left off** opens the section at the question on screen, with the answers and flags, and the clock going on from the last save. In a full ACT the finished sections are kept for the report; if the student had finished a section (or was on the break), the next section's directions open with "Welcome back."
+  - **Start over** deletes the unfinished practice and goes on to whatever the student chose. Sections already finished stay in the history.
+- A saved practice is offered for 7 days, and only if every passage and question in it is still in the banks; otherwise the student goes straight on.
+- Without a code (Practice without a code), nothing is saved, as before.
 
 ## Class sets for teachers
 With codes on, the home screen has a **For teachers** section with **Make class codes**, which opens the class set screen (also at `/act/#teachers`, so it can be linked directly).
@@ -269,6 +280,7 @@ Each question in the answer review has a Show with passage button (Show question
 - Ending the section asks on the page, never with a `confirm()` dialog.
 
 ## Changelog
+1.11.0: Picking up an unfinished practice (Nick's request): with a code and PIN, the practice in progress is saved as the student works, and logging in again offers to pick it up at the same question with the same answers, flags and time, including partway through the full ACT. Needs plugin 1.4.0. The top banner no longer has a "ZornScience home" link: the ZornScience logo goes to zornscience.org, and the section name ("ACT Practice", or "ACT Math" in a section) goes to the ACT Practice home page. On a phone the section name stays and "Test Prep" makes room.
 1.10.0: Every drafted question is now reviewed and live (Nick's approval, 2026-10-24): 100 English, 90 Math, 72 Reading and 40 more Science questions. Every section now offers all its modes, and the full ACT opens from the home screen (milestone F). `?drafts=1` still shows the review list, now with every item Reviewed.
 1.9.0: Practice codes are on for everyone, and `?codes=0` turns them off for one visit. Class sets for teachers (Nick's request): a For teachers section on the home screen and a class set screen at `#teachers`, where a teacher makes 1 to 50 codes and PINs at once and downloads a ZornScience PDF to print (with blank last and first name columns) and a CSV file (code, PIN). Needs the plugin's version 1.3.0, which limits class sets per network per hour and new codes per 24 hours for the whole site, and lets Nick look up a forgotten PIN.
 1.8.0: Practice codes now have a four-digit PIN (Nick's request). Before any practice, students are asked whether they have a code and PIN: a matching pair starts the practice, a wrong one never does (and the same answer is given for an unknown code), a new code and PIN are shown once with a warning to write them down or take a picture, and practicing without a code warns that scores stay only until the window is closed (this visit's scores can still be viewed). The code and PIN are never shown again. Every request to the plugin is now a POST, so a PIN is never in a web address. Needs the plugin's version 1.1.0, which also deletes codes inactive for a year, with their PINs and scores, and has a Delete inactive codes now button.

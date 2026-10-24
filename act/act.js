@@ -549,6 +549,11 @@
 
   // ---------- The section: directions, one question at a time, navigator, timer, review ----------
   function start(passages, mode) {
+    S = makeState(passages, mode);
+    directionsScreen();
+  }
+  // A section's state, ready for its directions: the passages (or Math questions) numbered in order, no answers yet.
+  function makeState(passages, mode) {
     var n = 0, qs = [];
     var items = passages.map(function (p, pi) {
       return {p: p, qs: p.questions.map(function (q, k) {
@@ -561,9 +566,8 @@
         return item;
       })};
     });
-    S = {key: K, items: items, qs: qs, mode: mode, total: n, cur: 0, answers: {}, flags: {}, limit: mode === "one" ? null : mode === "full" ? C.minutes * 60 : limitFor(passages),
-      t0: null, elapsed: 0, hidden: false, warned: false, ended: false, timeUp: false, panes: {}, solo: !!D.solo, full: !!FULL};
-    directionsScreen();
+    return {key: K, items: items, qs: qs, mode: mode, total: n, cur: 0, answers: {}, flags: {}, limit: mode === "one" ? null : mode === "full" ? C.minutes * 60 : limitFor(passages),
+      t0: null, elapsed: 0, hidden: false, warned: false, ended: false, timeUp: false, begun: false, panes: {}, solo: !!D.solo, full: !!FULL};
   }
   function stemOf(q) { return q.stem || fill(ui.underlineStem, {n: q.n}); }
 
@@ -586,7 +590,7 @@
     var row = box.appendChild(node("div", "zsa-act-row"));
     if (!FULL) row.appendChild(button(ui.back, "", function () { intro(K, true); }));
     else if (!FULL.i) row.appendChild(button(ui.back, "", function () { home(true); }));
-    row.appendChild(button(ui.startSection, "zsa-btn--primary", beginSection));
+    row.appendChild(button(ui.startSection, "zsa-btn--primary", function () { beginSection(0); }));
     show([box], h1);
   }
   function openDirections() {
@@ -604,6 +608,8 @@
   function stopClock() { if (timer) clearInterval(timer); timer = null; }
   var timeText = null;
   function tick() {
+    // The time used is saved with the progress at least once a minute.
+    if (CODE && Date.now() - progressLast > 60000) progressChanged();
     var used = elapsed();
     if (S.limit && used >= S.limit) { endSection(true); return; }
     var shownSecs = S.limit ? S.limit - used : used;
@@ -643,7 +649,9 @@
       "zsa-act-z1", "zsa-act-z2", "zsa-act-z3");
     if (dialog.open) dialog.close();
   }
-  function beginSection() {
+  // at: the question to open (a resumed practice opens where it was left).
+  function beginSection(at) {
+    S.begun = true;
     S.t0 = Date.now();
     S.qpanes = {};
     S.pwrap = node("div", "zsa-act-pwrap");
@@ -654,7 +662,8 @@
     buildBottom();
     tick();
     timer = setInterval(tick, 250);
-    renderTest(0, "heading");
+    renderTest(typeof at === "number" ? at : 0, "heading");
+    progressChanged(true);
   }
 
   // ---------- Tools: highlighter, line reader, answer eliminator, answer masking, zoom ----------
@@ -1053,6 +1062,7 @@
     var lastLabel = S.ended ? ui.toReport : ui.toReview;
     nextBtn.querySelector(".zsa-act-step-text").textContent = last ? lastLabel : ui.next;
     nextBtn.setAttribute("aria-label", last ? lastLabel : ui.next);
+    progressChanged();
   }
 
   // ----- Review screen and ending the section
@@ -1232,6 +1242,7 @@
     if (S.full && FULL) nextInFull(timeUp);
     else {
       save(S, attemptOf(S));
+      progressChanged(true);
       results();
     }
   }
@@ -1414,7 +1425,10 @@
     FULL.note = fill(timeUp ? ui.sectionDoneTime : ui.sectionDone, {name: D.name});
     var finished = FULL.keys[FULL.i];
     S = null;
-    if (FULL.i + 1 >= FULL.keys.length) { fullReport(); return; }
+    FULL.over = FULL.i + 1 >= FULL.keys.length;
+    FULL.onBreak = !FULL.over && finished === cfg.breakAfter;
+    progressChanged(true);
+    if (FULL.over) { fullReport(); return; }
     if (finished === cfg.breakAfter) { breakScreen(); return; }
     FULL.i += 1;
     useSection(FULL.keys[FULL.i]);
@@ -1434,6 +1448,7 @@
     var time = clockBox.appendChild(node("b", "zsa-act-time"));
     function go() {
       stopClock();
+      FULL.onBreak = false;
       FULL.note = null;
       FULL.i += 1;
       useSection(FULL.keys[FULL.i]);
@@ -1511,10 +1526,10 @@
   }
 
   // ---------- Practice codes and history ----------
-  function api(action, code, body, done) {
-    root.dispatchEvent(new CustomEvent("zsa:history", {detail: {action: action, api: cfg.history.api, code: code, body: body, done: done}}));
+  function api(action, code, body, done, keepalive) {
+    root.dispatchEvent(new CustomEvent("zsa:history", {detail: {action: action, api: cfg.history.api, code: code, body: body, done: done, keepalive: !!keepalive}}));
   }
-  function forget() { CODE = null; PIN = null; HIST = null; SKIP = false; LOCAL = []; }
+  function forget() { CODE = null; PIN = null; HIST = null; SKIP = false; LOCAL = []; progressSent = null; progressDirty = false; }
   // Before a practice starts: ask once per visit for a code and PIN, unless one is in use or the student chose to
   // practice without one. A wrong code or PIN never starts the practice.
   function withCode(next) {
@@ -1602,7 +1617,8 @@
         if (!app.contains(box)) return;
         if (err) { fail(err); return; }
         CODE = res.code; PIN = pin; HIST = res; SKIP = false; LOCAL = [];
-        if (prompted) next(); else historyScreen(back);
+        var then = prompted ? next : function () { historyScreen(back); };
+        if (res.progress && resumable(res.progress)) resumeScreen(res.progress, then); else then();
       });
     }
     function make() {
@@ -1680,6 +1696,145 @@
       b.appendChild(button(ui.saveRetry, "zsa-act-open", function () { save(rec, st.attempt, {code: st.code, pin: st.pin}); }));
     }
   }
+  // ---------- Picking up an unfinished practice ----------
+  // With a code in use, the practice in progress is saved to the plugin: at most every 30 seconds while something
+  // changes (and at least once a minute while the clock runs), and at once when a section begins or ends or the page is
+  // hidden or closed. It holds only passage and question ids, answers, flags, the question on screen and the time used;
+  // a full ACT also keeps its finished sections. Logging in with the code and PIN later offers to pick it up. Tools
+  // (highlights, crossed-out and hidden choices) are not saved.
+  var PROGRESS_EVERY = 30000, progressDirty = false, progressTimer = null, progressLast = 0, progressSent = null;
+  function progressChanged(now) {
+    if (!codesOn || !CODE) return;
+    progressDirty = true;
+    if (progressTimer && !now) return;
+    if (progressTimer) clearTimeout(progressTimer);
+    progressTimer = setTimeout(function () { progressTimer = null; sendProgress(false); }, now ? 0 : Math.max(0, PROGRESS_EVERY - (Date.now() - progressLast)));
+  }
+  function sendProgress(keepalive) {
+    if (progressTimer) { clearTimeout(progressTimer); progressTimer = null; }
+    if (!progressDirty || !CODE) return;
+    progressDirty = false;
+    var snap = snapshot(), text = JSON.stringify(snap), code = CODE;
+    if (text === progressSent) return;
+    progressLast = Date.now();
+    progressSent = text;
+    api("progress", code, {pin: PIN, progress: snap}, function (err) {
+      // A failed save is tried again with the next change.
+      if (err && CODE === code && progressSent === text) { progressSent = null; progressDirty = true; }
+    }, keepalive);
+  }
+  // Hiding or closing the page always saves, so the time used is current too.
+  function flushProgress() {
+    if (CODE && S && S.begun && !S.ended) progressDirty = true;
+    sendProgress(true);
+  }
+  document.addEventListener("visibilitychange", function () { if (document.visibilityState === "hidden") flushProgress(); });
+  window.addEventListener("pagehide", flushProgress);
+  function snapOf(st) {
+    return {key: st.key, mode: st.mode, units: st.items.map(function (it) { return it.p.id; }), answers: st.answers,
+      flags: Object.keys(st.flags).filter(function (n) { return st.flags[n]; }).map(Number), cur: st.cur,
+      elapsed: st === S && !st.ended ? elapsed() : st.elapsed, warned: !!st.warned, timeUp: !!st.timeUp};
+  }
+  // What to save now: the section under way, or the full ACT with its finished sections and the next one; null when
+  // nothing is in progress (which clears the saved progress).
+  function snapshot() {
+    var current = S && S.begun && !S.ended ? snapOf(S) : null;
+    if (FULL && !FULL.over) {
+      var sets = {};
+      FULL.keys.forEach(function (k) { sets[k] = FULL.sets[k].map(function (p) { return p.id; }); });
+      return {v: 1, full: {keys: FULL.keys, withScience: !!FULL.withScience, sets: sets, done: FULL.done.map(snapOf),
+        next: S ? FULL.i : FULL.i + 1, section: current}};
+    }
+    return current ? {v: 1, section: current} : null;
+  }
+  function unitsOf(key, ids) {
+    if (!Object.prototype.hasOwnProperty.call(SECTIONS, key) || !Array.isArray(ids) || !ids.length) return null;
+    var list = ids.map(function (id) { return UNITS[key].filter(function (u) { return u.id === id; })[0]; });
+    return list.every(Boolean) ? list : null;
+  }
+  function snapOk(sn) { return !!(sn && typeof sn === "object" && ["one", "mixed", "full"].indexOf(sn.mode) >= 0 && unitsOf(sn.key, sn.units)); }
+  // Saved progress can be picked up only if every passage and question in it is still in the banks.
+  function resumable(p) {
+    if (!p || p.v !== 1) return false;
+    var f = p.full;
+    if (!f) return snapOk(p.section);
+    if (!Array.isArray(f.keys) || !f.keys.length || !f.sets || !Array.isArray(f.done) || !f.done.every(snapOk)) return false;
+    if (!f.keys.every(function (k) { return unitsOf(k, f.sets[k]); })) return false;
+    if (f.section) return snapOk(f.section) && f.keys.indexOf(f.section.key) === f.done.length;
+    return f.next === f.done.length && f.next < f.keys.length;
+  }
+  // A section's state from its saved form, with every value checked.
+  function stateFrom(sn) {
+    useSection(sn.key);
+    var st = makeState(unitsOf(sn.key, sn.units), sn.mode);
+    Object.keys(sn.answers || {}).forEach(function (n) {
+      var v = sn.answers[n];
+      if (/^\d+$/.test(n) && +n >= 1 && +n <= st.total && [0, 1, 2, 3].indexOf(v) >= 0) st.answers[+n] = v;
+    });
+    (Array.isArray(sn.flags) ? sn.flags : []).forEach(function (n) { if (n >= 1 && n <= st.total) st.flags[n] = true; });
+    st.cur = Math.min(Math.max(0, Math.floor(+sn.cur) || 0), st.total - 1);
+    st.elapsed = Math.min(Math.max(0, Math.floor(+sn.elapsed) || 0), st.limit || 86400);
+    st.warned = !!sn.warned;
+    return st;
+  }
+  function restore(p) {
+    if (p.full) {
+      var f = p.full;
+      FULL = {keys: f.keys.slice(), sets: {}, i: f.done.length, done: [], note: null, withScience: !!f.withScience, over: false, onBreak: false};
+      f.keys.forEach(function (k) { FULL.sets[k] = unitsOf(k, f.sets[k]); });
+      f.done.forEach(function (sn) {
+        var st = stateFrom(sn);
+        st.begun = true; st.ended = true; st.timeUp = !!sn.timeUp;
+        FULL.done.push(st);
+      });
+      setHash("");
+      if (f.section) {
+        S = stateFrom(f.section);
+        beginSection(S.cur);
+      } else {
+        useSection(FULL.keys[FULL.i]);
+        FULL.note = ui.resumeBack;
+        start(FULL.sets[K], "full");
+      }
+      return;
+    }
+    FULL = null;
+    S = stateFrom(p.section);
+    setHash(S.key);
+    beginSection(S.cur);
+  }
+  // Offered after a code and PIN open: pick up the saved practice, or start over (which deletes it).
+  // The section on screen stays as it is, so Start over goes on to the practice the student chose.
+  function resumeScreen(p, then) {
+    var f = p.full, sn = f ? f.section : p.section, words = "";
+    function summary(snap, template, extra) {
+      var c = cfg.sections[snap.key], units = unitsOf(snap.key, snap.units), total = questionsIn(units);
+      var limit = snap.mode === "one" ? null : snap.mode === "full" ? c.minutes * 60 : Math.ceil(total * c.minutes / c.count) * 60;
+      var left = limit ? fill(ui.resumeLeft, {time: fmt(Math.max(0, limit - Math.floor(+snap.elapsed || 0)))}) : "";
+      return fill(template, Object.assign({name: SECTIONS[snap.key].name, n: Math.min(total, (Math.floor(+snap.cur) || 0) + 1), total: total, left: left}, extra));
+    }
+    if (f && sn) words = summary(sn, ui.resumeFull, {});
+    else if (f) words = fill(ui.resumeFullNext, {name: SECTIONS[f.keys[f.next]].name});
+    else {
+      var its = Object.assign({}, data.ui, SECTIONS[sn.key].ui);
+      words = summary(sn, ui.resumeOne, {mode: {one: its.modeOne, mixed: its.modeMixed, full: its.modeFull}[sn.mode]});
+    }
+    var box = node("section", "zsa-act-dir-screen zsa-act-code-screen");
+    var h1 = box.appendChild(heading("h1", ui.resumeTitle));
+    box.appendChild(node("p", null, words));
+    if (p.saved) box.appendChild(node("p", "zsa-act-small", fill(ui.resumeSaved, {date: new Date(p.saved).toLocaleString(undefined, {month: "short", day: "numeric", hour: "numeric", minute: "2-digit"})})));
+    box.appendChild(node("p", "zsa-act-small", ui.resumeNote));
+    var row = box.appendChild(node("div", "zsa-act-row"));
+    row.appendChild(button(ui.resumeGo, "zsa-btn--primary", function () { restore(p); }));
+    row.appendChild(button(ui.resumeFresh, "", function () {
+      progressSent = "null";
+      api("progress", CODE, {pin: PIN, progress: null}, function () {});
+      then();
+    }));
+    box.appendChild(node("p", "zsa-act-small", ui.resumeFreshNote));
+    show([box], h1);
+  }
+
   // ---------- Class sets for teachers ----------
   // A teacher chooses how many students and gets that many new codes and PINs. The plugin makes a PDF to print (with
   // blank name columns) and a CSV file; they are offered only on this screen, and the codes and PINs are shown once.
