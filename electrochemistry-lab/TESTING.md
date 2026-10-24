@@ -14,4 +14,6 @@ Browser acceptance checklist (not executed in this environment):
 - Use Zn/Ag; verify balanced silver coefficient of 2 and +1.56 V. Use identical metals; Run disabled.
 - Reset clears assembly and feedback. Check quiz feedback, narrow-screen layout, reduced-motion preference, and `?embed=1` chrome hiding.
 
-Version: 1.0.0
+Version: 1.1.0
+
+Version 1.1.0 header checks: Instructions opens a modal; close button, Escape, and outside click dismiss it and restore opener focus. Share toggles the panel, focuses Copy link, dismisses on Escape/outside click, and restores focus on close. Copy failure selects the canonical URL for manual copying. Native device sharing appears only when supported. Embedded mode hides brand and Share chrome. Check the two-column lab at desktop sizes and the stacked controls at phone sizes.

@@ -1,6 +1,49 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="zsa-version" content="1.0.0"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"><meta name="description" content="Build galvanic and electrolytic cells, trace electrons and calculate standard cell potentials."><title>Electrochemistry Cell Builder | ZornScience</title><link rel="icon" href="../favicon.png"><link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0"><link rel="stylesheet" href="lab.css?v=1.0.0"><script defer src="model.js?v=1.0.0"></script><script defer src="lab.js?v=1.0.0"></script><script defer src="../shared/zsa-embed.js?v=1.0.0"></script></head><body><main class="zsa zsa-ec" data-zsa-activity="electrochemistry-lab">
-<header><a data-zsa-chrome class="zsa-back" href="../">← All activities</a><p class="zsa-eyebrow">AP Chemistry · Electrochemistry</p><h1>Electrochemistry Cell Builder</h1><p>Build a cell. Follow the electrons. Discover what drives a reaction.</p></header><noscript>This lab requires JavaScript.</noscript>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="zsa-version" content="1.1.0"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"><meta name="description" content="Build galvanic and electrolytic cells, trace electrons and calculate standard cell potentials."><title>Electrochemistry Cell Builder | ZornScience</title><link rel="icon" href="../favicon.png"><link rel="stylesheet" href="../shared/zsa-base.css?v=1.1.0"><link rel="stylesheet" href="lab.css?v=1.1.0"><script defer src="model.js?v=1.1.0"></script><script defer src="lab.js?v=1.1.0"></script><script defer src="../shared/zsa-embed.js?v=1.1.0"></script><script defer src="instructions.js?v=1.1.0"></script><script defer src="share.js?v=1.1.0"></script></head><body><main class="zsa zsa-ec" data-zsa-activity="electrochemistry-lab">
+<header class="zsa-ec-header">
+<div class="zsa-ec-topline">
+<div class="zsa-ec-identity">
+<a class="zsa-ec-brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome>
+<img src="../ionic-reactions/zornscience-logo.png?v=1.1.0" alt="" width="52" height="50">
+</a>
+<h1>Electrochemistry Cell Builder</h1>
+</div>
+<nav class="zsa-ec-header-tools" aria-label="Activity links">
+<div class="zsa-ec-header-buttons">
+<button class="zsa-btn zsa-ec-instructions-open" id="zsa-ec-instructions-open" type="button" aria-haspopup="dialog" aria-controls="zsa-ec-instructions">Instructions</button>
+<button class="zsa-btn zsa-ec-share-toggle" id="zsa-ec-share-toggle" type="button" aria-label="Share activity" aria-expanded="false" aria-controls="zsa-ec-share-panel" data-zsa-chrome>
+<svg class="zsa-ec-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg>
+<span>Share</span>
+</button>
+
+</div>
+</nav>
+</div>
+
+<section class="zsa-ec-share-panel" id="zsa-ec-share-panel" aria-labelledby="zsa-ec-share-title" data-zsa-chrome hidden>
+<div class="zsa-ec-share-heading">
+<h2 id="zsa-ec-share-title">Share this activity</h2>
+<button class="zsa-ec-icon-button" id="zsa-ec-share-close" type="button" aria-label="Close share options"><span aria-hidden="true">×</span></button>
+</div>
+<p class="zsa-ec-small">Share a fresh lab. Your cell setup and answers are not included.</p>
+<label class="zsa-ec-share-label" for="zsa-ec-share-url">Share link</label>
+<div class="zsa-ec-share-link">
+<input id="zsa-ec-share-url" type="text" readonly spellcheck="false">
+<button class="zsa-btn zsa-btn--primary" id="zsa-ec-share-copy" type="button">Copy link</button>
+</div>
+<div class="zsa-ec-share-options">
+<a id="zsa-ec-share-email" href="#"><svg class="zsa-ec-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></svg><span>Email</span></a>
+
+
+<button class="zsa-btn" id="zsa-ec-share-device" type="button" hidden>More share options</button>
+</div>
+<p class="zsa-ec-share-status" id="zsa-ec-share-status" aria-live="polite" aria-atomic="true"></p>
+</section>
+<div class="zsa-ec-intro"><div><p class="zsa-eyebrow">AP Chemistry · Electrochemistry</p><p class="zsa-ec-lede">Small particles. Powerful reactions.</p><p>Build a cell, trace the electrons, and discover what drives the chemistry.</p></div><span class="zsa-ec-labtag">INTERACTIVE LAB / 01</span></div></header><dialog class="zsa-ec-instructions" id="zsa-ec-instructions" aria-labelledby="zsa-ec-instructions-title" aria-describedby="zsa-ec-instructions-intro">
+<div class="zsa-ec-instructions-heading"><h2 id="zsa-ec-instructions-title">How to build your cell</h2><button class="zsa-ec-icon-button" id="zsa-ec-instructions-close" type="button" aria-label="Close instructions" autofocus>×</button></div>
+<p id="zsa-ec-instructions-intro">Start with a galvanic zinc/copper cell, then explore other metal pairs and reverse the reaction.</p>
+<ol class="zsa-ec-instructions-steps"><li><strong>Choose a cell type.</strong> Galvanic cells release electrical energy. Electrolytic cells need an external power supply.</li><li><strong>Place two different electrodes.</strong> Drag a metal into a beaker, or select its tile and press Place selected metal. Choose each metal’s matching ionic solution.</li><li><strong>Complete the circuit.</strong> Add the salt bridge and connect the voltmeter and wires. In electrolytic mode, apply more voltage than the magnitude of E°cell.</li><li><strong>Predict, then run.</strong> Follow electrons from anode to cathode. Compare half-reactions and calculate E°cathode − E°anode.</li></ol>
+<div class="zsa-ec-instructions-example"><strong>Try Zn + Cu</strong><p>Zn loses electrons at the anode; Cu²⁺ gains electrons at the cathode.</p><p> E°cell = 0.34 − (−0.76) = <strong>+1.10 V</strong></p></div><p>The animation shows direction, not reaction rate. Pause at any time; Reset lab clears the assembly.</p></dialog><noscript>This lab requires JavaScript.</noscript>
 <div class="zsa-ec-layout"><aside><section class="zsa-card"><p class="zsa-eyebrow">01 / Choose your cell</p><label for="mode">Cell type</label><select id="mode"><option value="galvanic">Galvanic · spontaneous</option><option value="electrolytic">Electrolytic · driven by power</option></select><p id="mode-help">Chemical energy becomes electrical energy.</p></section><section class="zsa-card"><p class="zsa-eyebrow">02 / Build the circuit</p><h2>Lab bench</h2><p class="small">Drag a metal to a beaker, or select a metal and press a beaker’s “Place” button.</p><div id="metals" class="zsa-ec-metals"></div><p id="selected" class="small" aria-live="polite"></p><div class="zsa-ec-connect"><label><input id="bridge" type="checkbox"> Add KNO₃ salt bridge</label><label><input id="meter" type="checkbox"> Connect voltmeter and wires</label><label id="power-label" hidden>Power supply / V<input id="power" type="number" min="0" max="10" step="0.1" value="2.0"></label></div><button id="reset" class="zsa-btn">Reset lab</button></section></aside>
 <div><section class="zsa-card zsa-ec-work"><div class="zsa-ec-heading"><div><p class="zsa-eyebrow">03 / Observe</p><h2>Your electrochemical cell</h2></div><button id="run" class="zsa-btn zsa-btn--primary">Run cell</button></div><p id="status" role="status"></p><div class="zsa-ec-meter"><span>STANDARD CELL POTENTIAL</span><strong id="voltage">No reading</strong><span id="meter-help">Connect the voltmeter to measure.</span></div><div id="flow" class="zsa-ec-flow"><span id="electron">e⁻ →</span></div><div id="salt" class="zsa-ec-salt">Salt bridge not connected</div><div class="zsa-ec-beakers" id="beakers"></div><p class="small" id="flow-help">Electrons travel through wires; ions move through the salt bridge.</p></section>
 <section class="zsa-card"><p class="zsa-eyebrow">04 / Explain</p><h2>Inside the reaction</h2><div id="reactions" aria-live="polite"></div><details><summary>Standard reduction potentials</summary><p>Zn²⁺ + 2e⁻ → Zn: −0.76 V<br>Cu²⁺ + 2e⁻ → Cu: +0.34 V<br>Ag⁺ + e⁻ → Ag: +0.80 V</p><p class="small">25 °C; dissolved ions at unit activity (approximately 1 M). Potentials are relative to the standard hydrogen electrode.</p></details></section>
-<section class="zsa-card"><p class="zsa-eyebrow">Try it / Check your thinking</p><h2>Predict before you run</h2><p>For a galvanic Zn/Cu cell, which electrode loses mass?</p><div class="zsa-ec-answers"><button class="zsa-btn" data-answer="Zn">Zinc</button><button class="zsa-btn" data-answer="Cu">Copper</button></div><p id="feedback" role="status"></p><ol><li>Build Zn/Cu and verify E° = +1.10 V.</li><li>Swap Cu for Ag. Explain why the voltage increases.</li><li>Switch to electrolytic mode. Find the minimum ideal driving voltage.</li></ol></section></div></div><footer class="zsa-footer">Idealized standard-state model. Animation shows direction, not reaction rate.<br>Electrolytic mode models only the selected metal/ion couples; competing water reactions, resistance and overpotential are excluded.</footer></main></body></html>
+<section class="zsa-card"><p class="zsa-eyebrow">Try it / Check your thinking</p><h2>Predict before you run</h2><p>For a galvanic Zn/Cu cell, which electrode loses mass?</p><div class="zsa-ec-answers"><button class="zsa-btn" data-answer="Zn">Zinc</button><button class="zsa-btn" data-answer="Cu">Copper</button></div><p id="feedback" role="status"></p><ol><li>Build Zn/Cu and verify E° = +1.10 V.</li><li>Swap Cu for Ag. Explain why the voltage increases.</li><li>Switch to electrolytic mode. Find the minimum ideal driving voltage.</li></ol></section></div></div><footer class="zsa-footer zsa-ec-footer">Idealized standard-state model. Animation shows direction, not reaction rate.<br>Electrolytic mode models only the selected metal/ion couples; competing water reactions, resistance and overpotential are excluded.</footer></main></body></html>

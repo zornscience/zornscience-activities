@@ -1,4 +1,4 @@
-# Electrochemistry Cell Builder · 1.0.0
+# Electrochemistry Cell Builder · 1.1.0
 
 Static AP Chemistry lab at `/electrochemistry-lab/`. No build, external requests, accounts, or saved student data. Uses the site's local font, shared styling and `?embed=1` resize support. This exploratory lab does not issue completion codes or use the scored practice engine.
 
@@ -10,4 +10,6 @@ Model assumptions: 25 °C and unit dissolved-ion activity (approximately 1 M), c
 
 Deploy with the existing static site. Link from a lesson to `https://activities.zornscience.org/electrochemistry-lab/`. For supported iframe hosting, append `?embed=1`; use the shared resize listener described in the repository README.
 
-Version: 1.0.0
+Version: 1.1.0
+
+Version 1.1.0 adds the branded header matching Ionic Reaction Builder, keyboard-accessible instructions, and a share panel with canonical link copying, email and native device sharing. The refreshed lab uses metallic electrode tiles, glass-style vessels, a digital meter and color-coded reaction panels. No simulation behavior changes.
