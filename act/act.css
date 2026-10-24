@@ -149,6 +149,12 @@ body {background: var(--act-bg);}
 .zsa-act-s2 {stroke: var(--act-s2);} .zsa-act-dot.zsa-act-s2 {fill: var(--act-s2); stroke: none;}
 .zsa-act-s3 {stroke: var(--act-s3);} .zsa-act-dot.zsa-act-s3 {fill: var(--act-s3); stroke: none;}
 .zsa-act-s4 {stroke: var(--act-ink);} .zsa-act-dot.zsa-act-s4 {fill: var(--act-ink); stroke: none;}
+.zsa-act-s5 {stroke: var(--act-flag);} .zsa-act-dot.zsa-act-s5 {fill: var(--act-flag); stroke: none;}
+/* The fifth marker is a ring, so a fifth series differs by shape as well as color. */
+.zsa-act .zsa-act-dot.zsa-act-ring {fill: var(--act-bg); stroke-width: 2.5;}
+.zsa-act .zsa-act-dot.zsa-act-ring.zsa-act-s1 {stroke: var(--act-s1);} .zsa-act .zsa-act-dot.zsa-act-ring.zsa-act-s2 {stroke: var(--act-s2);}
+.zsa-act .zsa-act-dot.zsa-act-ring.zsa-act-s3 {stroke: var(--act-s3);} .zsa-act .zsa-act-dot.zsa-act-ring.zsa-act-s4 {stroke: var(--act-ink);}
+.zsa-act .zsa-act-dot.zsa-act-ring.zsa-act-s5 {stroke: var(--act-flag);}
 .zsa-act-bar {stroke: none;}
 .zsa-act-bar.zsa-act-s1 {fill: var(--act-s1);} .zsa-act-bar.zsa-act-s2 {fill: var(--act-s2);} .zsa-act-bar.zsa-act-s3 {fill: var(--act-s3);} .zsa-act-bar.zsa-act-s4 {fill: var(--act-ink);}
 .zsa-act-hatch line {stroke: var(--act-bg); stroke-width: 2;}
@@ -360,6 +366,24 @@ body {background: var(--act-bg);}
 .zsa-act-no .zsa-act-tag {background: var(--act-bad-soft); color: var(--act-bad);}
 .zsa-act-rv p {font-size: 15px;}
 .zsa-act-small {font-size: 14px; color: var(--act-muted);}
+
+/* Practice codes and history */
+.zsa-act-codebar {background: var(--act-surface); border-radius: 12px; padding: 14px 16px; display: grid; gap: 10px; margin: -6px 0 24px;}
+.zsa-act-code-field {display: grid; gap: 8px; justify-items: start; max-width: 420px;}
+.zsa-act-code-field label {font-weight: 700;}
+.zsa-act .zsa-act-code-input {font: 700 24px/1.2 var(--act-data); letter-spacing: .2em; text-transform: uppercase; width: 100%; max-width: 12ch; min-height: 48px; padding: 6px 12px;
+  border: 2px solid var(--act-muted); border-radius: 8px; background: var(--act-bg); color: var(--act-ink);}
+.zsa-act .zsa-act-code-input[aria-invalid="true"] {border-color: var(--act-bad);}
+.zsa-act .zsa-act-code-input:focus-visible {outline: 3px solid var(--act-blue); outline-offset: 2px;}
+.zsa-act-code-msg {min-height: 1.55em; font-weight: 700;}
+.zsa-act-code-big {font: 700 clamp(36px, 10vw, 56px)/1.1 var(--act-data); letter-spacing: .18em; color: var(--act-blue); padding: 14px 18px; border: 2px dashed var(--act-blue); border-radius: 12px; justify-self: start;}
+.zsa-act-save {background: var(--act-good-soft); color: var(--act-ink); border-radius: 10px; padding: 10px 14px; margin: 0 0 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;}
+.zsa-act-save--error {background: var(--act-warn-soft);}
+.zsa-act-score-card .zsa-act-save {margin: 4px 0 0; font-size: 15px;}
+.zsa-act-history {display: grid; gap: 6px;}
+.zsa-act .zsa-act-history h1 {font-size: clamp(28px, 4vw, 36px);}
+.zsa-act-history-lines {margin: 0; padding-left: 20px; display: grid; gap: 6px;}
+.zsa-act-history .zsa-act-figure {max-width: 640px;}
 
 /* Footer: the trademark notice shows on every screen, embedded or not. */
 .zsa-act-footer {border-top: 1px solid var(--act-line); padding-top: 16px; padding-bottom: 24px; font-size: 14px; color: var(--act-muted); display: grid; gap: 4px;}

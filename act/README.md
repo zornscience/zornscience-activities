@@ -1,7 +1,7 @@
 # ACT Practice
-Version: 1.6.0
+Version: 1.7.0
 
-Free ACT practice with original questions in all four sections: English, Math, Reading and the optional Science. Students practice a few questions, one timed section, or the full ACT, and get a score report that compares them with national results and gives tips for the skills they missed. Nothing is saved or sent anywhere. Not linked from zornscience.org yet. The live URL after approval will be https://activities.zornscience.org/act/. The old address, https://activities.zornscience.org/act-science/, redirects to the Science section.
+Free ACT practice with original questions in all four sections: English, Math, Reading and the optional Science. Students practice a few questions, one timed section, or the full ACT, and get a score report that compares them with national results and gives tips for the skills they missed. With a practice code (optional, no account), their scores are saved so they can see how they change over time. Not linked from zornscience.org yet. The live URL after approval will be https://activities.zornscience.org/act/. The old address, https://activities.zornscience.org/act-science/, redirects to the Science section.
 
 ACT Science Practice was built in milestones 1 to 6 (versions 0.1.0 to 1.0.1). Version 1.1.0 (milestone A of the full ACT plan) extends the same test platform to all four sections and the full ACT. The question banks for English, Math and Reading, and a second Science section, come in milestones B to E, as drafts for Nick to review. The full ACT turns on by itself once every required section has a full set of reviewed questions (milestone F).
 
@@ -47,6 +47,17 @@ A tools row sits under the top bar during a section. Every tool is a button with
 | Answer masking | Turn it on to show a hide button beside each choice. A hidden choice keeps its letter and radio button but shows "Choice hidden". Its show button stays visible even with masking turned off, so it can always come back. |
 | Zoom (magnifier) | Zoom out and Zoom in set the passage to 100, 125, 150 or 200 percent: text, tables and figures all grow, and the pane scrolls both ways. Each change is announced. |
 
+## Practice codes
+A practice code is six letters and digits (no I, O, 0 or 1), like K7M2QX. It lets a student keep a history of scores without an account. Codes are stored by the ZornScience ACT Practice History WordPress plugin on zornscience.org; the plugin, its install steps, and exactly what it stores are in `wordpress/zornscience-act-history/README.md`.
+
+- **Off until the plugin is installed.** `history.enabled` in `config.js` is `false`, so students see no codes and the page makes no requests. `?codes=1` turns codes on for testing. After installing the plugin, set `enabled: true`.
+- **When a student starts any practice** (a mode, a draft, or the full ACT), the page first asks for a code once per visit: enter a code, get a new code, or practice without saving. A new code is shown large, spelled out for screen readers, with a reminder to write it down.
+- **Saving:** each finished section is saved with its section, kind of practice, number of questions and number correct, estimated score (a full section), score range (mixed practice) or none (one passage or a few questions), and time. The full ACT saves each section and then the composite. The score report says when the save worked, or that it did not and offers Try saving again; the score is always shown either way.
+- **History:** View my history (on the home and section screens while a code is in use) shows, for each section and the composite, the first and latest estimated scores and the change; a chart of every estimated score in order, with a screen reader table of its values; and a table of every saved practice, newest first.
+- **Privacy:** the code is held only in the page while it is open (no cookies or browser storage), so it is entered again on each visit. Names, emails and schools are never asked for. Requests send no cookies and go only to the plugin, which only the ACT Practice site may call.
+- **House rules:** `act/history-api.js` is the only file that talks to a server, and `act/index.html` is the only page whose CSP allows a connection (`connect-src https://zornscience.org`). `tests/unit/static.test.js` allows exactly these two exceptions.
+- **Problems** are explained on the code screen: a code that is not 6 letters and digits, an unknown code, too many tries from one network, and codes being turned off or unreachable (students can always practice without saving).
+
 ## Files
 | File | What it holds |
 |---|---|
@@ -54,7 +65,8 @@ A tools row sits under the top bar during a section. Every tool is a button with
 | `data.js` | Every word a student sees (`ui`), and for each section its own words, skill names and tips, and passage types (`sections`). |
 | `config.js` | For each section: question count, minutes, raw to scale conversion, national average and benchmark, the full section's mix, and practice set sizes. Also the full ACT order, the break, the composite average, and Science's national ranks. **Refresh each fall** (see the comment at the top). |
 | `bank-english.js`, `bank-math.js`, `bank-reading.js`, `bank-science.js` | The question banks, one per section. |
-| `act.js` | Home, start screens, the section, the score reports, the full ACT, and the figure drawing (graphs, tables, diagrams). |
+| `act.js` | Home, start screens, the section, the score reports, the full ACT, practice codes and history, and the figure drawing (graphs, tables, diagrams). |
+| `history-api.js` | The only network code: asks the WordPress plugin for a new code, a code's history, or to save an attempt. |
 | `act.css` | Layout, light and dark colors. |
 | `zornscience-logo.png` | The ZornScience logo for the header (the same file as the Periodic Table's), shown at 46 by 44 px. |
 | `fonts/` | Atkinson Hyperlegible, regular, bold and italic, Latin subset (SIL OFL 1.1). |
@@ -70,7 +82,8 @@ A tools row sits under the top bar during a section. Every tool is a button with
 - **Flag for review came in milestone 2, not 3.** The navigator and review screen show flags, so they could not be tested without it.
 - **The directions are original wording,** covering the same points as a test's directions (passages and questions, time, no calculator, guessing) plus how to use this interface.
 - **"Full practice set" is now "Mixed practice".** It picks one passage of each type (all three, with the current bank) and shows an estimated score range when the set has at least 15 questions. The full 40-question section stays hidden until the bank has 7 reviewed passages.
-- **No storage yet.** Recovering an attempt after a refresh (allowed by the brief) is not built. When it is, it needs an exception to the house rule and to `tests/unit/static.test.js`.
+- **Practice codes depart from the brief's "no backend" rule, at Nick's request (2026-10-24), after his district approved them.** Scores go to a WordPress plugin on zornscience.org only when a student uses a code; see Practice codes above. Nothing is stored in the browser.
+- **No recovery after a refresh.** Recovering an attempt in progress after a refresh (allowed by the brief) is not built. It would need an exception to the house rule and to `tests/unit/static.test.js`.
 - **One explanation reworded.** The prototype's catalase claim question said "Choice G has a false reason". Letters depend on where a passage lands in a set (in a mixed set that question can be number 11, lettered A to D), so it now says "The other \"Yes\" choice". A unit test stops explanations from naming a letter.
 - **Difficulty ratings are mine.** The brief's data shape has `difficulty` (1 to 3). The prototype had none, so I rated each existing question; please check them.
 - **All seven passages are `reviewed`:** the three from the prototype, and the four written in milestone 5 (approved by Nick on 2026-10-16). Change any to `draft` to hide it; the Full section mode then hides itself too, until the reviewed bank can make a 40-question section again.
@@ -239,6 +252,8 @@ Each question in the answer review has a Show with passage button (Show question
 - Ending the section asks on the page, never with a `confirm()` dialog.
 
 ## Changelog
+1.7.0: Practice codes (Nick's request, approved by his district): an optional six-character code saves each finished section to the ZornScience ACT Practice History WordPress plugin (new, in `wordpress/zornscience-act-history/`), and a history screen shows score changes over time. Off until the plugin is installed (`history.enabled`), and testable with `?codes=1`. The history chart uses a fifth marker shape (a ring) for the composite.
+
 1.6.0: Percentiles for every section, the composite and STEM, from ACT's 2026-2027 national ranks (supplied by Nick). Science percentiles move from the 2024-2025 table to the 2026-2027 one (for example, a 19 is now the 54th percentile, not the 52nd). The full ACT report shows the composite's percentile, the STEM score's, and each section's.
 
 1.5.0: A second Science section (milestone E): seven new passages, 40 questions, as drafts (Air Pressure and Boiling Water, Exercise and Heart Rate, Pendulum Swings, How Fast Sugar Dissolves, Yeast and Balloons, Keeping Water Warm, Where the Moon Came From). A unit test checks that the reviewed passages and the drafts each make a full section on their own.

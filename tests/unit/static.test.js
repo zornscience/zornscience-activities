@@ -30,22 +30,35 @@ test("site JavaScript parses and follows the house rules", function () {
   var forbidden = [/\.innerHTML\b/, /\.outerHTML\s*=/, /insertAdjacentHTML/, /document\.write/, /\beval\s*\(/, /new Function\b/,
     /localStorage|sessionStorage|indexedDB/, /document\.cookie/, /\bfetch\s*\(/, /XMLHttpRequest/, /WebSocket/, /sendBeacon/,
     /\bwindow\.\w+\s*=[^=]/, /\bglobalThis\b/, /\bsetAttribute\(\s*["']style["']/, /\.style\.\w+\s*=/];
+  // The one exception: ACT Practice's history client may call fetch, only to its WordPress plugin (see the CSP below).
+  var fetchAllowed = ["act/history-api.js"];
   siteJs.forEach(function (f) {
     var src = read(f);
     new vm.Script(src, {filename: f}); // syntax check
     assert.match(src.replace(/^(\/\/[^\n]*\n)*/, ""), /^\(function \(\) \{\n {2}"use strict";/, f + " is a strict IIFE");
-    forbidden.forEach(function (re) { assert.doesNotMatch(src, re, f + " uses " + re); });
+    forbidden.forEach(function (re) {
+      if (fetchAllowed.indexOf(f) >= 0 && String(re) === String(/\bfetch\s*\(/)) return;
+      assert.doesNotMatch(src, re, f + " uses " + re);
+    });
   });
+  fetchAllowed.forEach(function (f) { assert.match(read(f), /credentials: "omit"/, f + " sends no cookies"); });
 });
 
 test("pages have one CSP, no inline scripts or styles, and only the expected outside links", function () {
   var csp = null;
+  // ACT Practice may connect to its practice history plugin on zornscience.org and nowhere else (approved by Nick).
+  var CODES_CSP = "default-src 'self'; img-src 'self' data:; connect-src https://zornscience.org; object-src 'none'; base-uri 'none'; form-action 'none'";
+  var exceptions = {"act/index.html": CODES_CSP};
   pages.forEach(function (f) {
     var html = read(f);
     var m = html.match(/<meta http-equiv="Content-Security-Policy" content="([^"]+)">/);
     assert.ok(m, f + " CSP");
-    if (csp === null) csp = m[1];
-    assert.equal(m[1], csp, f + " CSP matches the others");
+    var exception = exceptions[f.split(path.sep).join("/")];
+    if (exception) assert.equal(m[1], exception, f + " CSP");
+    else {
+      if (csp === null) csp = m[1];
+      assert.equal(m[1], csp, f + " CSP matches the others");
+    }
     assert.doesNotMatch(html, /<script(?![^>]*\bsrc=)[^>]*>/, f + " inline script");
     assert.doesNotMatch(html, /\sstyle=|<style/, f + " inline style");
     assert.doesNotMatch(html, /\son[a-z]+=/, f + " inline event handler");
@@ -57,7 +70,7 @@ test("pages have one CSP, no inline scripts or styles, and only the expected out
   var shareLinks = new Set(["https://www.facebook.com/sharer/sharer.php?u=", "https://x.com/intent/tweet?text="]);
   var shareFiles = new Set(["ionic-reactions/share.js", "redox-coach/share.js", "polyatomic-ion-trainer/share.js", "periodic-table/data.js"]);
   pages.concat(siteJs).forEach(function (f) {
-    (read(f).match(/https?:\/\/[^\s"'<>)]+/g) || []).forEach(function (url) {
+    (read(f).match(/https?:\/\/[^\s"'<>);]+/g) || []).forEach(function (url) {
       if (shareFiles.has(f) && shareLinks.has(url)) return;
       assert.match(url, allowed, f + " links to " + url);
     });

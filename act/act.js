@@ -17,6 +17,10 @@
   // ?drafts=1 lists every passage and question, drafts included, and lets the practice modes use drafts, so a
   // teacher can try them before marking them reviewed.
   var preview = new URLSearchParams(window.location.search).get("drafts") === "1";
+  // Practice codes (config.history): on when the plugin is set up, or with ?codes=1 for testing. The code and the
+  // history loaded for it live only in this page; nothing is stored in the browser.
+  var codesOn = !!(cfg.history && (cfg.history.enabled || new URLSearchParams(window.location.search).get("codes") === "1"));
+  var CODE = null, SKIP = false, HIST = null;
   // The section on screen: K is its key, D its words and skills, C its timing and scoring. ui is the shared words
   // with the section's own words on top.
   var K = null, D = null, C = null, ui = data.ui, SKILLS = {};
@@ -138,9 +142,10 @@
   }
 
   // ---------- Figures ----------
-  var SHAPES = ["circle", "square", "triangle", "diamond"];
+  var SHAPES = ["circle", "square", "triangle", "diamond", "ring"];
   function marker(g, shape, x, y, cls) {
     if (shape === "circle") svg("circle", {cx: x, cy: y, r: 5, "class": cls}, g);
+    else if (shape === "ring") svg("circle", {cx: x, cy: y, r: 5, "class": cls + " zsa-act-ring"}, g);
     else if (shape === "square") svg("rect", {x: x - 4.5, y: y - 4.5, width: 9, height: 9, "class": cls}, g);
     else if (shape === "triangle") svg("path", {d: "M" + x + " " + (y - 6) + " L" + (x + 6) + " " + (y + 5) + " L" + (x - 6) + " " + (y + 5) + " Z", "class": cls}, g);
     else svg("path", {d: "M" + x + " " + (y - 6) + " L" + (x + 6) + " " + y + " L" + x + " " + (y + 6) + " L" + (x - 6) + " " + y + " Z", "class": cls}, g);
@@ -409,9 +414,11 @@
   // Timed practice runs at the section's ACT pace, rounded up to a whole minute.
   function limitFor(set) { return Math.ceil(questionsIn(set) * C.minutes / C.count) * 60; }
   function startMode(mode) {
-    if (mode === "full") start(fullSet(K), "full");
-    else if (mode === "mixed") start(mixedSet(K), "mixed");
-    else start(oneSet(K), "one");
+    withCode(function () {
+      if (mode === "full") start(fullSet(K), "full");
+      else if (mode === "mixed") start(mixedSet(K), "mixed");
+      else start(oneSet(K), "one");
+    });
   }
   function modeName(mode) { return {one: ui.modeOne, mixed: ui.modeMixed, full: ui.modeFull}[mode]; }
 
@@ -459,7 +466,8 @@
     var left = grid.appendChild(node("div"));
     left.appendChild(node("p", "zsa-eyebrow", ui.homeEyebrow));
     var h1 = left.appendChild(heading("h1", ui.homeTitle));
-    left.appendChild(node("p", "zsa-act-lede", ui.homeLede));
+    left.appendChild(node("p", "zsa-act-lede", ui.homeLede + " " + (codesOn ? ui.privacyOn : ui.privacyOff)));
+    codeBar(left, function () { home(true); });
     var full = left.appendChild(node("section", "zsa-act-fullcard"));
     full.setAttribute("aria-labelledby", "zsa-act-full-title");
     full.appendChild(node("h2", null, ui.fullTitle)).id = "zsa-act-full-title";
@@ -500,7 +508,8 @@
     var left = grid.appendChild(node("div"));
     left.appendChild(node("p", "zsa-eyebrow", ui.eyebrow));
     var h1 = left.appendChild(heading("h1", ui.title));
-    left.appendChild(node("p", "zsa-act-lede", ui.lede));
+    left.appendChild(node("p", "zsa-act-lede", ui.lede + " " + (codesOn ? ui.privacyOn : ui.privacyOff)));
+    codeBar(left, function () { intro(key, true); });
     var modes = left.appendChild(node("div", "zsa-act-modes"));
     var one = oneSet(K), mixed = mixedSet(K), whole = fullSet(K);
     if (one) modes.appendChild(modeButton(ui.modeOne, fill(ui.modeOneText, {count: questionsIn(one)}), function () { startMode("one"); }));
@@ -521,7 +530,7 @@
         var title = p.solo ? plain(p.questions[0].stem) : p.title;
         if (title.length > 90) title = title.slice(0, 88).replace(/\s+\S*$/, "") + "...";
         ul.appendChild(node("li")).appendChild(modeButton(title, p.solo ? fill(ui.draftLineOne, {type: p.type, status: status})
-          : fill(ui.draftLine, {type: p.type, count: p.questions.length, status: status}), function () { start([p], "one"); }));
+          : fill(ui.draftLine, {type: p.type, count: p.questions.length, status: status}), function () { withCode(function () { start([p], "one"); }); }));
       });
     }
     show([grid], focusIt ? h1 : null);
@@ -1209,7 +1218,11 @@
     S.ended = true;
     S.timeUp = timeUp;
     leaveTest();
-    if (S.full && FULL) nextInFull(timeUp); else results();
+    if (S.full && FULL) nextInFull(timeUp);
+    else {
+      save(S, attemptOf(S));
+      results();
+    }
   }
 
   function scaleSvg(lo, hi, est) {
@@ -1283,6 +1296,7 @@
     var h1 = heading("h1", ui.reportTitle);
     out.push(h1);
     if (S.timeUp) out.push(node("p", "zsa-act-notice", ui.timeUp));
+    if (S.save) out.push(saveBox(S));
     var top = node("div", "zsa-act-res-top");
     out.push(top);
     var card = top.appendChild(node("div", "zsa-act-score-card"));
@@ -1374,6 +1388,7 @@
 
   // ---------- The full ACT: English, Math, a break, Reading, then Science if chosen ----------
   function startFull(withScience) {
+    if (!CODE && !SKIP && codesOn) { withCode(function () { startFull(withScience); }); return; }
     var keys = cfg.order.filter(function (k) { return k !== "science" || withScience; }), sets = {};
     keys.forEach(function (k) { sets[k] = fullSet(k); });
     FULL = {keys: keys, sets: sets, i: 0, done: [], note: null, withScience: withScience};
@@ -1384,6 +1399,7 @@
   // After each section: straight on to the next section's directions, or the break, or the score report.
   function nextInFull(timeUp) {
     FULL.done.push(S);
+    save(S, attemptOf(S));
     FULL.note = fill(timeUp ? ui.sectionDoneTime : ui.sectionDone, {name: D.name});
     var finished = FULL.keys[FULL.i];
     S = null;
@@ -1448,6 +1464,12 @@
     box.appendChild(rich(node("p"), fill(ui.compositeText, {cmp: compare(composite, cfg.compositeAvg), avg: cfg.compositeAvg, avgClass: cfg.avgClass,
       a: aOrAn(composite), composite: composite, pr: pct(cfg.compositeRank, composite), prNum: cfg.compositeRank[composite] || 1})));
     box.appendChild(node("p", "zsa-act-small", fill(ui.fullDisclaimer, {rankYear: cfg.rankYear})));
+    if (!FULL.save) {
+      var sum = function (f) { return cfg.composite.reduce(function (n, k) { return n + f(scores[k]); }, 0); };
+      save(FULL, {section: "composite", mode: "fullact", questions: sum(function (x) { return x.st.qs.length; }), correct: sum(function (x) { return x.e.right; }),
+        score: composite, low: null, high: null, seconds: sum(function (x) { return x.st.elapsed; })});
+    }
+    if (FULL.save) card.appendChild(saveBox(FULL));
     var secs = section(ui.sectionScoresTitle);
     var list = secs.appendChild(node("ul", "zsa-act-secscores"));
     var focusBtn = null;
@@ -1475,6 +1497,192 @@
     out.push(nav);
     show(out, h1);
     if (focusBtn) { focusBtn.scrollIntoView({block: "center"}); focusBtn.focus(); }
+  }
+
+  // ---------- Practice codes and history ----------
+  function api(action, code, body, done) {
+    root.dispatchEvent(new CustomEvent("zsa:history", {detail: {action: action, api: cfg.history.api, code: code, body: body, done: done}}));
+  }
+  // Before a practice starts: ask for a code once per visit, unless one is in use or the student chose not to save.
+  function withCode(next) {
+    if (!codesOn || CODE || SKIP) next(); else codeScreen(next, true, null);
+  }
+  // A line on the home and section screens: the code in use, or an offer to use one.
+  function codeBar(parent, back) {
+    if (!codesOn) return;
+    var bar = parent.appendChild(node("div", "zsa-act-codebar"));
+    var row = node("div", "zsa-act-row");
+    if (CODE) {
+      bar.appendChild(rich(node("p"), fill(ui.codeBar, {code: "<strong>" + CODE + "</strong>"})));
+      row.appendChild(button(ui.codeHistory, "", function () { historyScreen(back); }));
+      row.appendChild(button(ui.codeStop, "", function () { CODE = null; HIST = null; SKIP = false; back(); }));
+    } else {
+      bar.appendChild(node("p", null, ui.codeBarOff));
+      row.appendChild(button(ui.codeUse, "", function () { codeScreen(null, false, back); }));
+    }
+    bar.appendChild(row);
+  }
+  function codeScreen(next, prompted, back) {
+    var box = node("section", "zsa-act-dir-screen zsa-act-code-screen");
+    var h1 = box.appendChild(heading("h1", ui.codeTitle));
+    box.appendChild(node("p", null, ui.codeIntro));
+    var field = box.appendChild(node("div", "zsa-act-code-field"));
+    var lab = field.appendChild(node("label", null, ui.codeLabel));
+    lab.htmlFor = "zsa-act-code-input";
+    var input = field.appendChild(node("input", "zsa-act-code-input"));
+    input.id = "zsa-act-code-input";
+    input.type = "text";
+    input.maxLength = 10;
+    input.autocomplete = "off";
+    input.spellcheck = false;
+    input.setAttribute("autocapitalize", "characters");
+    input.setAttribute("aria-describedby", "zsa-act-code-hint zsa-act-code-msg");
+    field.appendChild(node("p", "zsa-act-small", ui.codeHint)).id = "zsa-act-code-hint";
+    var openBtn = field.appendChild(button(ui.codeOpen, "zsa-btn--primary", open));
+    input.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); open(); } });
+    var msg = box.appendChild(node("p", "zsa-act-code-msg"));
+    msg.id = "zsa-act-code-msg";
+    msg.setAttribute("role", "status");
+    box.appendChild(node("h2", null, ui.codeNewTitle));
+    var newBtn = box.appendChild(node("div", "zsa-act-row")).appendChild(button(ui.codeNew, "", make));
+    var row = box.appendChild(node("div", "zsa-act-row zsa-act-homerow"));
+    row.appendChild(button(prompted ? ui.codeSkip : ui.back, "", function () {
+      if (prompted) { SKIP = true; next(); } else back();
+    }));
+    function busy(on, text) { openBtn.disabled = on; newBtn.disabled = on; msg.textContent = text || ""; }
+    function fail(err) {
+      busy(false, err.status === 404 ? ui.codeNotFound : err.status === 429 ? ui.codeBusy : ui.codeDown);
+      if (err.status === 404) input.setAttribute("aria-invalid", "true");
+    }
+    function open() {
+      var code = input.value.toUpperCase().replace(/[\s-]+/g, "");
+      if (!/^[A-HJ-NP-Z2-9]{6}$/.test(code)) {
+        msg.textContent = ui.codeBadFormat;
+        input.setAttribute("aria-invalid", "true");
+        input.focus();
+        return;
+      }
+      input.removeAttribute("aria-invalid");
+      busy(true, ui.codeChecking);
+      api("history", code, null, function (err, res) {
+        if (!app.contains(box)) return;
+        if (err) { fail(err); return; }
+        CODE = res.code; HIST = res; SKIP = false;
+        if (prompted) next(); else historyScreen(back);
+      });
+    }
+    function make() {
+      busy(true, ui.codeMaking);
+      api("new", null, null, function (err, res) {
+        if (!app.contains(box)) return;
+        if (err) { fail(err); return; }
+        CODE = res.code; HIST = {code: res.code, attempts: []}; SKIP = false;
+        newCodeScreen(prompted ? next : back);
+      });
+    }
+    show([box], h1);
+  }
+  function newCodeScreen(next) {
+    var box = node("section", "zsa-act-dir-screen zsa-act-code-screen");
+    var h1 = box.appendChild(heading("h1", ui.codeNewHeading));
+    var big = box.appendChild(node("p", "zsa-act-code-big"));
+    big.appendChild(node("span", null, CODE)).setAttribute("aria-hidden", "true");
+    big.appendChild(node("span", "zsa-sr-only", CODE.split("").join(" ")));
+    box.appendChild(node("p", null, ui.codeNewText));
+    box.appendChild(node("div", "zsa-act-row")).appendChild(button(ui.codeContinue, "zsa-btn--primary", next));
+    show([box], h1);
+  }
+  // What one finished section saves: no names, only the section, the kind of practice, the counts and the estimate.
+  function attemptOf(st) {
+    var e = estimate(st), single = st.mode === "full", ranged = st.mode === "mixed" && st.qs.length >= cfg.minForEstimate;
+    return {section: st.key, mode: st.full ? "fullact" : st.mode, questions: st.qs.length, correct: e.right,
+      score: single ? e.est : null, low: ranged ? e.lo : null, high: ranged ? e.hi : null, seconds: st.elapsed};
+  }
+  // rec is a finished section (or the full ACT, for its composite); rec.save holds the state shown in its report.
+  function save(rec, attempt) {
+    if (!CODE) return;
+    rec.save = {state: "saving", attempt: attempt, code: CODE};
+    paintSave(rec);
+    api("save", rec.save.code, attempt, function (err) {
+      rec.save.state = err ? "error" : "saved";
+      if (!err && HIST && HIST.code === rec.save.code) HIST.attempts.push(Object.assign({date: new Date().toISOString()}, attempt));
+      paintSave(rec);
+    });
+  }
+  function saveBox(rec) {
+    var box = node("p", "zsa-act-save");
+    box.setAttribute("role", "status");
+    rec.saveBox = box;
+    paintSave(rec);
+    return box;
+  }
+  function paintSave(rec) {
+    var b = rec.saveBox, st = rec.save;
+    if (!b || !st) return;
+    b.replaceChildren();
+    b.classList.toggle("zsa-act-save--error", st.state === "error");
+    if (st.state === "saving") b.textContent = ui.saving;
+    else if (st.state === "saved") b.textContent = fill(ui.saved, {code: st.code});
+    else {
+      b.appendChild(document.createTextNode(ui.saveFailed + " "));
+      b.appendChild(button(ui.saveRetry, "zsa-act-open", function () { save(rec, st.attempt); }));
+    }
+  }
+  function historyScreen(back) {
+    if (S) leaveTest();
+    S = null;
+    var box = node("section", "zsa-act-history");
+    var h1 = box.appendChild(heading("h1", ui.historyTitle));
+    box.appendChild(node("p", "zsa-act-kind", fill(ui.historyCode, {code: CODE})));
+    var body = box.appendChild(node("div", "zsa-act-history-body"));
+    body.appendChild(node("p", "zsa-act-small", ui.historyLoading));
+    var nav = box.appendChild(node("div", "zsa-act-nav"));
+    nav.appendChild(button(ui.back, "", back));
+    nav.appendChild(button(ui.codeStop, "", function () { CODE = null; HIST = null; SKIP = false; back(); }));
+    show([box], h1);
+    var code = CODE;
+    api("history", code, null, function (err, res) {
+      if (!app.contains(box)) return;
+      if (!err) HIST = res;
+      renderHistory(body, HIST && HIST.code === code ? HIST : {code: code, attempts: []});
+    });
+  }
+  function renderHistory(body, hist) {
+    body.replaceChildren();
+    var all = hist.attempts || [];
+    if (!all.length) { body.appendChild(node("p", null, ui.historyEmpty)); return; }
+    var keys = cfg.order.concat(["composite"]);
+    function nameOf(k) { return SECTIONS[k] ? SECTIONS[k].name : ui.compositeName; }
+    function valueOf(a) { return a.score !== null && a.score !== undefined ? a.score : a.low !== null && a.low !== undefined ? Math.round((a.low + a.high) / 2) : null; }
+    var scored = all.filter(function (a) { return valueOf(a) !== null; });
+    var sum = section(ui.historySummaryTitle);
+    if (scored.length) {
+      var ul = sum.appendChild(node("ul", "zsa-act-history-lines"));
+      keys.forEach(function (k) {
+        var mine = scored.filter(function (a) { return a.section === k; });
+        if (!mine.length) return;
+        var first = valueOf(mine[0]), latest = valueOf(mine[mine.length - 1]), d = latest - first;
+        ul.appendChild(node("li", null, mine.length === 1 ? fill(ui.historyLineOne, {name: nameOf(k), latest: latest})
+          : fill(ui.historyLine, {name: nameOf(k), n: mine.length, tries: "practices", first: first, latest: latest,
+            change: d > 0 ? fill(ui.historyUp, {d: d}) : d < 0 ? fill(ui.historyDown, {d: -d}) : ui.historySame})));
+      });
+      var n = scored.length, step = n <= 10 ? 1 : Math.ceil(n / 10);
+      var series = keys.map(function (k) {
+        return {name: nameOf(k), points: scored.map(function (a, i) { return a.section === k ? [i + 1, valueOf(a)] : null; }).filter(Boolean)};
+      }).filter(function (sr) { return sr.points.length; });
+      sum.appendChild(scatter({caption: ui.historyChart, xLabel: ui.historyChartX, yLabel: ui.historyChartY, xMin: 0, xMax: step * Math.ceil((n + 1) / step), xStep: step,
+        yMin: 0, yMax: 36, yStep: 6, series: series}));
+    }
+    sum.appendChild(node("p", "zsa-act-small", ui.historyEstimateNote));
+    body.appendChild(sum);
+    var list = section(ui.historyAllTitle);
+    list.appendChild(table({caption: fill(ui.historyCaption, {code: hist.code}), headers: ui.historyCols,
+      rows: all.slice().reverse().map(function (a) {
+        var est = a.score !== null && a.score !== undefined ? String(a.score) : a.low !== null && a.low !== undefined ? a.low + " to " + a.high : "";
+        return [new Date(a.date).toLocaleDateString(undefined, {year: "numeric", month: "short", day: "numeric"}), nameOf(a.section),
+          ui.modeNames[a.mode] || a.mode, a.correct + " / " + a.questions, est, String(Math.round(a.seconds / 60))];
+      })}));
+    body.appendChild(list);
   }
 
   var opening = window.location.hash.slice(1);
