@@ -20,7 +20,9 @@
   // Practice codes (config.history): on when the plugin is set up, or with ?codes=1 for testing. The code and the
   // history loaded for it live only in this page; nothing is stored in the browser.
   var codesOn = !!(cfg.history && (cfg.history.enabled || new URLSearchParams(window.location.search).get("codes") === "1"));
-  var CODE = null, SKIP = false, HIST = null;
+  // CODE and PIN: the practice code in use (kept only in this page, never shown after it is first given). SKIP: the
+  // student chose to practice without a code; LOCAL then holds this visit's scores until the window closes.
+  var CODE = null, PIN = null, SKIP = false, HIST = null, LOCAL = [];
   // The section on screen: K is its key, D its words and skills, C its timing and scoring. ui is the shared words
   // with the section's own words on top.
   var K = null, D = null, C = null, ui = data.ui, SKILLS = {};
@@ -1503,71 +1505,94 @@
   function api(action, code, body, done) {
     root.dispatchEvent(new CustomEvent("zsa:history", {detail: {action: action, api: cfg.history.api, code: code, body: body, done: done}}));
   }
-  // Before a practice starts: ask for a code once per visit, unless one is in use or the student chose not to save.
+  function forget() { CODE = null; PIN = null; HIST = null; SKIP = false; LOCAL = []; }
+  // Before a practice starts: ask once per visit for a code and PIN, unless one is in use or the student chose to
+  // practice without one. A wrong code or PIN never starts the practice.
   function withCode(next) {
     if (!codesOn || CODE || SKIP) next(); else codeScreen(next, true, null);
   }
-  // A line on the home and section screens: the code in use, or an offer to use one.
+  // A line on the home and section screens: a code in use (never shown again), practice without a code, or an offer.
   function codeBar(parent, back) {
     if (!codesOn) return;
     var bar = parent.appendChild(node("div", "zsa-act-codebar"));
     var row = node("div", "zsa-act-row");
     if (CODE) {
-      bar.appendChild(rich(node("p"), fill(ui.codeBar, {code: "<strong>" + CODE + "</strong>"})));
+      bar.appendChild(node("p", null, ui.codeBar));
       row.appendChild(button(ui.codeHistory, "", function () { historyScreen(back); }));
-      row.appendChild(button(ui.codeStop, "", function () { CODE = null; HIST = null; SKIP = false; back(); }));
+      row.appendChild(button(ui.codeStop, "", function () { forget(); back(); }));
+    } else if (SKIP) {
+      bar.appendChild(node("p", null, ui.codeBarSkip));
+      if (LOCAL.length) row.appendChild(button(ui.codeLocal, "", function () { historyScreen(back); }));
+      row.appendChild(button(ui.codeUse, "", function () { codeScreen(null, false, back); }));
     } else {
       bar.appendChild(node("p", null, ui.codeBarOff));
       row.appendChild(button(ui.codeUse, "", function () { codeScreen(null, false, back); }));
     }
     bar.appendChild(row);
   }
+  function textField(parent, id, label, hint, attrs) {
+    var lab = parent.appendChild(node("label", null, label));
+    lab.htmlFor = id;
+    var input = parent.appendChild(node("input", "zsa-act-code-input"));
+    input.id = id;
+    input.type = "text";
+    input.autocomplete = "off";
+    input.spellcheck = false;
+    Object.keys(attrs).forEach(function (k) { input.setAttribute(k, attrs[k]); });
+    input.setAttribute("aria-describedby", id + "-hint zsa-act-code-msg");
+    parent.appendChild(node("p", "zsa-act-small", hint)).id = id + "-hint";
+    return input;
+  }
+  // prompted: asked before a practice (next starts it). Otherwise opened from the code line (back returns there).
   function codeScreen(next, prompted, back) {
     var box = node("section", "zsa-act-dir-screen zsa-act-code-screen");
     var h1 = box.appendChild(heading("h1", ui.codeTitle));
     box.appendChild(node("p", null, ui.codeIntro));
-    var field = box.appendChild(node("div", "zsa-act-code-field"));
-    var lab = field.appendChild(node("label", null, ui.codeLabel));
-    lab.htmlFor = "zsa-act-code-input";
-    var input = field.appendChild(node("input", "zsa-act-code-input"));
-    input.id = "zsa-act-code-input";
-    input.type = "text";
-    input.maxLength = 10;
-    input.autocomplete = "off";
-    input.spellcheck = false;
-    input.setAttribute("autocapitalize", "characters");
-    input.setAttribute("aria-describedby", "zsa-act-code-hint zsa-act-code-msg");
-    field.appendChild(node("p", "zsa-act-small", ui.codeHint)).id = "zsa-act-code-hint";
-    var openBtn = field.appendChild(button(ui.codeOpen, "zsa-btn--primary", open));
-    input.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); open(); } });
-    var msg = box.appendChild(node("p", "zsa-act-code-msg"));
+    var have = box.appendChild(node("section", "zsa-act-code-option"));
+    have.setAttribute("aria-labelledby", "zsa-act-have-title");
+    have.appendChild(node("h2", null, ui.codeHaveTitle)).id = "zsa-act-have-title";
+    var field = have.appendChild(node("div", "zsa-act-code-field"));
+    var codeIn = textField(field, "zsa-act-code-input", ui.codeLabel, ui.codeHint, {maxlength: "10", autocapitalize: "characters"});
+    var pinIn = textField(field, "zsa-act-pin-input", ui.pinLabel, ui.pinHint, {maxlength: "6", inputmode: "numeric", autocapitalize: "off"});
+    pinIn.classList.add("zsa-act-pin-input");
+    var openBtn = field.appendChild(button(prompted ? ui.codeOpen : ui.codeOpenOnly, "zsa-btn--primary", open));
+    [codeIn, pinIn].forEach(function (el) { el.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); open(); } }); });
+    var msg = have.appendChild(node("p", "zsa-act-code-msg"));
     msg.id = "zsa-act-code-msg";
     msg.setAttribute("role", "status");
-    box.appendChild(node("h2", null, ui.codeNewTitle));
-    var newBtn = box.appendChild(node("div", "zsa-act-row")).appendChild(button(ui.codeNew, "", make));
-    var row = box.appendChild(node("div", "zsa-act-row zsa-act-homerow"));
-    row.appendChild(button(prompted ? ui.codeSkip : ui.back, "", function () {
-      if (prompted) { SKIP = true; next(); } else back();
-    }));
+    var need = box.appendChild(node("section", "zsa-act-code-option"));
+    need.setAttribute("aria-labelledby", "zsa-act-need-title");
+    need.appendChild(node("h2", null, ui.codeNewTitle)).id = "zsa-act-need-title";
+    need.appendChild(node("p", null, ui.codeNewText));
+    var newBtn = need.appendChild(node("div", "zsa-act-row")).appendChild(button(ui.codeNew, "", make));
+    if (prompted) {
+      var skip = box.appendChild(node("section", "zsa-act-code-option"));
+      skip.setAttribute("aria-labelledby", "zsa-act-skip-title");
+      skip.appendChild(node("h2", null, ui.codeSkipTitle)).id = "zsa-act-skip-title";
+      skip.appendChild(node("p", "zsa-act-notice", ui.codeSkipText));
+      skip.appendChild(node("div", "zsa-act-row")).appendChild(button(ui.codeSkip, "", function () { SKIP = true; next(); }));
+    } else box.appendChild(node("div", "zsa-act-row zsa-act-homerow")).appendChild(button(ui.back, "", back));
     function busy(on, text) { openBtn.disabled = on; newBtn.disabled = on; msg.textContent = text || ""; }
+    function invalid(el, text) {
+      msg.textContent = text;
+      el.setAttribute("aria-invalid", "true");
+      el.focus();
+    }
     function fail(err) {
-      busy(false, err.status === 404 ? ui.codeNotFound : err.status === 429 ? ui.codeBusy : ui.codeDown);
-      if (err.status === 404) input.setAttribute("aria-invalid", "true");
+      busy(false, err.status === 403 ? ui.codeNotFound : err.status === 429 ? ui.codeBusy : ui.codeDown);
+      if (err.status === 403) { codeIn.setAttribute("aria-invalid", "true"); pinIn.setAttribute("aria-invalid", "true"); }
     }
     function open() {
-      var code = input.value.toUpperCase().replace(/[\s-]+/g, "");
-      if (!/^[A-HJ-NP-Z2-9]{6}$/.test(code)) {
-        msg.textContent = ui.codeBadFormat;
-        input.setAttribute("aria-invalid", "true");
-        input.focus();
-        return;
-      }
-      input.removeAttribute("aria-invalid");
+      var code = codeIn.value.toUpperCase().replace(/[\s-]+/g, ""), pin = pinIn.value.replace(/\s+/g, "");
+      codeIn.removeAttribute("aria-invalid");
+      pinIn.removeAttribute("aria-invalid");
+      if (!/^[A-HJ-NP-Z2-9]{6}$/.test(code)) { invalid(codeIn, ui.codeBadFormat); return; }
+      if (!/^\d{4}$/.test(pin)) { invalid(pinIn, ui.pinBadFormat); return; }
       busy(true, ui.codeChecking);
-      api("history", code, null, function (err, res) {
+      api("open", code, {pin: pin}, function (err, res) {
         if (!app.contains(box)) return;
         if (err) { fail(err); return; }
-        CODE = res.code; HIST = res; SKIP = false;
+        CODE = res.code; PIN = pin; HIST = res; SKIP = false; LOCAL = [];
         if (prompted) next(); else historyScreen(back);
       });
     }
@@ -1576,19 +1601,26 @@
       api("new", null, null, function (err, res) {
         if (!app.contains(box)) return;
         if (err) { fail(err); return; }
-        CODE = res.code; HIST = {code: res.code, attempts: []}; SKIP = false;
-        newCodeScreen(prompted ? next : back);
+        CODE = res.code; PIN = res.pin; HIST = {code: res.code, attempts: []}; SKIP = false; LOCAL = [];
+        newCodeScreen(res.code, res.pin, prompted ? next : back);
       });
     }
     show([box], h1);
   }
-  function newCodeScreen(next) {
+  // The only time a code and PIN are shown. Afterward the page keeps them only in memory to save scores.
+  function newCodeScreen(code, pin, next) {
     var box = node("section", "zsa-act-dir-screen zsa-act-code-screen");
     var h1 = box.appendChild(heading("h1", ui.codeNewHeading));
-    var big = box.appendChild(node("p", "zsa-act-code-big"));
-    big.appendChild(node("span", null, CODE)).setAttribute("aria-hidden", "true");
-    big.appendChild(node("span", "zsa-sr-only", CODE.split("").join(" ")));
-    box.appendChild(node("p", null, ui.codeNewText));
+    box.appendChild(node("p", "zsa-act-notice zsa-act-code-warning", ui.codeNewWarning));
+    var dl = box.appendChild(node("dl", "zsa-act-code-card"));
+    [[ui.codeShown, code], [ui.pinShown, pin]].forEach(function (pair) {
+      var row = dl.appendChild(node("div"));
+      row.appendChild(node("dt", null, pair[0]));
+      var dd = row.appendChild(node("dd", "zsa-act-code-big"));
+      dd.appendChild(node("span", null, pair[1])).setAttribute("aria-hidden", "true");
+      dd.appendChild(node("span", "zsa-sr-only", pair[1].split("").join(" ")));
+    });
+    box.appendChild(node("p", null, ui.codeNewText2));
     box.appendChild(node("div", "zsa-act-row")).appendChild(button(ui.codeContinue, "zsa-btn--primary", next));
     show([box], h1);
   }
@@ -1599,11 +1631,21 @@
       score: single ? e.est : null, low: ranged ? e.lo : null, high: ranged ? e.hi : null, seconds: st.elapsed};
   }
   // rec is a finished section (or the full ACT, for its composite); rec.save holds the state shown in its report.
-  function save(rec, attempt) {
-    if (!CODE) return;
-    rec.save = {state: "saving", attempt: attempt, code: CODE};
+  // Without a code, the score goes only into this visit's list, which is gone when the window closes.
+  // creds: the code and PIN to save under (a retry reuses the ones from the first try).
+  function save(rec, attempt, creds) {
+    if (!codesOn) return;
+    creds = creds || (CODE ? {code: CODE, pin: PIN} : null);
+    if (!creds) {
+      if (!SKIP) return;
+      LOCAL.push(Object.assign({date: new Date().toISOString()}, attempt));
+      rec.save = {state: "local", attempt: attempt};
+      paintSave(rec);
+      return;
+    }
+    rec.save = {state: "saving", attempt: attempt, code: creds.code, pin: creds.pin};
     paintSave(rec);
-    api("save", rec.save.code, attempt, function (err) {
+    api("save", rec.save.code, Object.assign({pin: rec.save.pin}, attempt), function (err) {
       rec.save.state = err ? "error" : "saved";
       if (!err && HIST && HIST.code === rec.save.code) HIST.attempts.push(Object.assign({date: new Date().toISOString()}, attempt));
       paintSave(rec);
@@ -1620,31 +1662,34 @@
     var b = rec.saveBox, st = rec.save;
     if (!b || !st) return;
     b.replaceChildren();
-    b.classList.toggle("zsa-act-save--error", st.state === "error");
+    b.classList.toggle("zsa-act-save--error", st.state === "error" || st.state === "local");
     if (st.state === "saving") b.textContent = ui.saving;
-    else if (st.state === "saved") b.textContent = fill(ui.saved, {code: st.code});
+    else if (st.state === "saved") b.textContent = ui.saved;
+    else if (st.state === "local") b.textContent = ui.savedLocal;
     else {
       b.appendChild(document.createTextNode(ui.saveFailed + " "));
-      b.appendChild(button(ui.saveRetry, "zsa-act-open", function () { save(rec, st.attempt); }));
+      b.appendChild(button(ui.saveRetry, "zsa-act-open", function () { save(rec, st.attempt, {code: st.code, pin: st.pin}); }));
     }
   }
   function historyScreen(back) {
     if (S) leaveTest();
     S = null;
+    var local = !CODE;
     var box = node("section", "zsa-act-history");
-    var h1 = box.appendChild(heading("h1", ui.historyTitle));
-    box.appendChild(node("p", "zsa-act-kind", fill(ui.historyCode, {code: CODE})));
+    var h1 = box.appendChild(heading("h1", local ? ui.historyLocalTitle : ui.historyTitle));
+    if (local) box.appendChild(node("p", "zsa-act-notice", ui.historyLocalNote));
     var body = box.appendChild(node("div", "zsa-act-history-body"));
-    body.appendChild(node("p", "zsa-act-small", ui.historyLoading));
     var nav = box.appendChild(node("div", "zsa-act-nav"));
     nav.appendChild(button(ui.back, "", back));
-    nav.appendChild(button(ui.codeStop, "", function () { CODE = null; HIST = null; SKIP = false; back(); }));
+    if (!local) nav.appendChild(button(ui.codeStop, "", function () { forget(); back(); }));
     show([box], h1);
+    if (local) { renderHistory(body, {attempts: LOCAL, local: true}); return; }
+    body.appendChild(node("p", "zsa-act-small", ui.historyLoading));
     var code = CODE;
-    api("history", code, null, function (err, res) {
+    api("open", code, {pin: PIN}, function (err, res) {
       if (!app.contains(box)) return;
       if (!err) HIST = res;
-      renderHistory(body, HIST && HIST.code === code ? HIST : {code: code, attempts: []});
+      renderHistory(body, HIST && HIST.code === code ? HIST : {attempts: []});
     });
   }
   function renderHistory(body, hist) {
@@ -1675,8 +1720,8 @@
     }
     sum.appendChild(node("p", "zsa-act-small", ui.historyEstimateNote));
     body.appendChild(sum);
-    var list = section(ui.historyAllTitle);
-    list.appendChild(table({caption: fill(ui.historyCaption, {code: hist.code}), headers: ui.historyCols,
+    var list = section(hist.local ? ui.historyAllLocal : ui.historyAllTitle);
+    list.appendChild(table({caption: hist.local ? ui.historyAllLocal : ui.historyCaption, headers: ui.historyCols,
       rows: all.slice().reverse().map(function (a) {
         var est = a.score !== null && a.score !== undefined ? String(a.score) : a.low !== null && a.low !== undefined ? a.low + " to " + a.high : "";
         return [new Date(a.date).toLocaleDateString(undefined, {year: "numeric", month: "short", day: "numeric"}), nameOf(a.section),

@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: ZornScience ACT Practice History
- * Description: Saves ACT Practice scores under anonymous six-character practice codes, so students can see how their scores change over time without making an account. Stores no names, emails, or IP addresses.
- * Version: 1.0.0
+ * Description: Saves ACT Practice scores under anonymous six-character practice codes, each with a four-digit PIN, so students can see how their scores change over time without making an account. Stores no names, emails, or IP addresses.
+ * Version: 1.1.0
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Author: ZornScience
@@ -10,14 +10,16 @@
  * Text Domain: zornscience-act-history
  *
  * How it works: the ACT Practice page (activities.zornscience.org/act/) calls three REST routes under
- * /wp-json/zsa-act/v1/. A student gets a new random code, or enters one they already have; each finished section is
- * saved under that code with its date, section, mode, number correct, and estimated score. Anyone who knows a code
- * can read its scores, so codes are long enough to be hard to guess, and lookups are rate limited.
+ * /wp-json/zsa-act/v1/. A student gets a new random code and PIN, or enters a code and PIN they already have; each
+ * finished section is saved under that code with its date, section, mode, number correct, and estimated score. A
+ * history opens, and a score saves, only when the code and PIN match, so a student who mistypes a code cannot add to
+ * or see someone else's history. PINs are stored only as one-way hashes. Wrong PINs lock a code for an hour after ten
+ * tries, and every route is rate limited.
  */
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'ZSA_ACT_VERSION', '1.0.0' );
+define( 'ZSA_ACT_VERSION', '1.1.0' );
 define( 'ZSA_ACT_NS', 'zsa-act/v1' );
 // Code alphabet: capital letters and digits without look-alikes (no I, O, 0 or 1). 32 symbols, so 32^6, about a
 // billion, possible codes.
@@ -31,7 +33,10 @@ function zsa_act_settings() {
 	$defaults = array(
 		'enabled'        => 1,
 		'origins'        => 'https://activities.zornscience.org',
-		'retention_days' => 400,
+		// Codes (with their PINs and scores) not used for this many days are deleted once a day.
+		'retention_days' => 365,
+		// Wrong PINs allowed for one code in an hour before it locks for the rest of that hour.
+		'pin_tries'      => 10,
 		// Requests allowed per hour from one network address, by kind.
 		'limit_new'      => 20,
 		'limit_lookup'   => 60,
@@ -52,6 +57,7 @@ function zsa_act_tables() {
 // ---------- Install, uninstall, cleanup ----------
 
 register_activation_hook( __FILE__, 'zsa_act_activate' );
+add_action( 'plugins_loaded', 'zsa_act_maybe_upgrade' );
 register_deactivation_hook( __FILE__, 'zsa_act_deactivate' );
 add_action( 'zsa_act_cleanup', 'zsa_act_cleanup' );
 
@@ -66,6 +72,7 @@ function zsa_act_activate() {
 			created_at datetime NOT NULL,
 			last_used datetime NOT NULL,
 			attempts smallint(5) unsigned NOT NULL DEFAULT 0,
+			pin_hash varchar(255) NOT NULL DEFAULT '',
 			PRIMARY KEY  (code),
 			KEY last_used (last_used)
 		) $charset;"
@@ -93,17 +100,39 @@ function zsa_act_activate() {
 	}
 }
 
+/**
+ * Uploading a new version replaces the files without running the activation hook, so the tables are brought up to
+ * date (dbDelta adds the PIN column) on the first page load after an update. Settings saved with the old default of
+ * 400 days move to the new default of a year.
+ */
+function zsa_act_maybe_upgrade() {
+	if ( get_option( 'zsa_act_db_version' ) === ZSA_ACT_VERSION ) {
+		return;
+	}
+	zsa_act_activate();
+	$saved = get_option( 'zsa_act_settings', array() );
+	if ( is_array( $saved ) && isset( $saved['retention_days'] ) && 400 === (int) $saved['retention_days'] ) {
+		$saved['retention_days'] = 365;
+		update_option( 'zsa_act_settings', $saved );
+	}
+}
+
 function zsa_act_deactivate() {
 	wp_clear_scheduled_hook( 'zsa_act_cleanup' );
 }
 
-/** Deletes codes (and their scores) not used for the retention period. Runs once a day. */
-function zsa_act_cleanup() {
+/** Codes (with their PINs and scores) not used since the retention cutoff (a year by default). */
+function zsa_act_inactive_codes() {
 	global $wpdb;
 	$t      = zsa_act_tables();
 	$days   = max( 30, (int) zsa_act_settings()['retention_days'] );
 	$cutoff = gmdate( 'Y-m-d H:i:s', time() - $days * DAY_IN_SECONDS );
-	$old    = $wpdb->get_col( $wpdb->prepare( "SELECT code FROM {$t['codes']} WHERE last_used < %s", $cutoff ) );
+	return $wpdb->get_col( $wpdb->prepare( "SELECT code FROM {$t['codes']} WHERE last_used < %s", $cutoff ) );
+}
+
+/** Deletes inactive codes, their PINs and their scores. Runs once a day, and from Delete inactive codes now. */
+function zsa_act_cleanup() {
+	$old = zsa_act_inactive_codes();
 	foreach ( $old as $code ) {
 		zsa_act_delete_code( $code );
 	}
@@ -136,6 +165,20 @@ function zsa_act_random_code() {
 	return $code;
 }
 
+function zsa_act_random_pin() {
+	return str_pad( (string) random_int( 0, 9999 ), 4, '0', STR_PAD_LEFT );
+}
+
+function zsa_act_hash_pin( $pin ) {
+	return password_hash( $pin, PASSWORD_DEFAULT );
+}
+
+/** A PIN in canonical form (four digits), or null. */
+function zsa_act_clean_pin( $raw ) {
+	$pin = preg_replace( '/\s+/', '', (string) $raw );
+	return 1 === preg_match( '/^\d{4}$/', $pin ) ? $pin : null;
+}
+
 function zsa_act_now() {
 	return gmdate( 'Y-m-d H:i:s' );
 }
@@ -159,11 +202,12 @@ function zsa_act_routes() {
 			'permission_callback' => '__return_true',
 		)
 	);
+	// POST, not GET, so the PIN travels in the request body and never appears in a web address or a server log.
 	register_rest_route(
 		ZSA_ACT_NS,
-		'/codes/' . $code,
+		'/codes/' . $code . '/open',
 		array(
-			'methods'             => 'GET',
+			'methods'             => 'POST',
 			'callback'            => 'zsa_act_rest_history',
 			'permission_callback' => '__return_true',
 		)
@@ -223,6 +267,7 @@ function zsa_act_rest_new_code( $request ) {
 	}
 	$t   = zsa_act_tables();
 	$now = zsa_act_now();
+	$pin = zsa_act_random_pin();
 	for ( $try = 0; $try < 5; $try++ ) {
 		$code     = zsa_act_random_code();
 		$inserted = $wpdb->insert(
@@ -232,11 +277,19 @@ function zsa_act_rest_new_code( $request ) {
 				'created_at' => $now,
 				'last_used'  => $now,
 				'attempts'   => 0,
+				'pin_hash'   => zsa_act_hash_pin( $pin ),
 			),
-			array( '%s', '%s', '%s', '%d' )
+			array( '%s', '%s', '%s', '%d', '%s' )
 		);
 		if ( $inserted ) {
-			return zsa_act_response( array( 'code' => $code ), 201 );
+			// The only time the PIN is ever sent: the page shows it once for the student to write down.
+			return zsa_act_response(
+				array(
+					'code' => $code,
+					'pin'  => $pin,
+				),
+				201
+			);
 		}
 	}
 	return new WP_Error( 'zsa_act_db', 'Could not create a code. Try again.', array( 'status' => 500 ) );
@@ -245,7 +298,7 @@ function zsa_act_rest_new_code( $request ) {
 function zsa_act_find_code( $code ) {
 	global $wpdb;
 	$t = zsa_act_tables();
-	return $wpdb->get_row( $wpdb->prepare( "SELECT code, created_at, attempts FROM {$t['codes']} WHERE code = %s", $code ), ARRAY_A );
+	return $wpdb->get_row( $wpdb->prepare( "SELECT code, created_at, attempts, pin_hash FROM {$t['codes']} WHERE code = %s", $code ), ARRAY_A );
 }
 
 function zsa_act_attempts( $code ) {
@@ -277,18 +330,48 @@ function zsa_act_attempts( $code ) {
 	);
 }
 
+/**
+ * Checks a code and PIN from the page. Returns the code's row, or a WP_Error: 403 when they do not match (the same
+ * answer for an unknown code and a wrong PIN, so it never tells anyone which codes exist), or 429 when the code has
+ * had too many wrong PINs in the last hour.
+ */
+function zsa_act_unlock( $raw_code, $raw_pin ) {
+	$nope = new WP_Error( 'zsa_act_mismatch', 'That code and PIN do not match.', array( 'status' => 403 ) );
+	$code = zsa_act_clean_code( $raw_code );
+	$pin  = zsa_act_clean_pin( $raw_pin );
+	$row  = $code ? zsa_act_find_code( $code ) : null;
+	if ( ! $row ) {
+		return $nope;
+	}
+	$key   = 'zsa_act_pin_' . $code;
+	$wrong = (int) get_transient( $key );
+	if ( $wrong >= (int) zsa_act_settings()['pin_tries'] ) {
+		return new WP_Error( 'zsa_act_locked', 'Too many wrong PINs for this code. Try again in an hour.', array( 'status' => 429 ) );
+	}
+	if ( ! $pin || '' === $row['pin_hash'] || ! password_verify( $pin, $row['pin_hash'] ) ) {
+		set_transient( $key, $wrong + 1, HOUR_IN_SECONDS );
+		return $nope;
+	}
+	return $row;
+}
+
+function zsa_act_pin_of( $request ) {
+	$p = $request->get_json_params();
+	return is_array( $p ) && isset( $p['pin'] ) && is_scalar( $p['pin'] ) ? (string) $p['pin'] : '';
+}
+
 function zsa_act_rest_history( $request ) {
 	global $wpdb;
 	$ok = zsa_act_gate( 'lookup' );
 	if ( true !== $ok ) {
 		return $ok;
 	}
-	$code = zsa_act_clean_code( $request['code'] );
-	$row  = $code ? zsa_act_find_code( $code ) : null;
-	if ( ! $row ) {
-		return new WP_Error( 'zsa_act_unknown', 'No history was found for that code.', array( 'status' => 404 ) );
+	$row = zsa_act_unlock( $request['code'], zsa_act_pin_of( $request ) );
+	if ( is_wp_error( $row ) ) {
+		return $row;
 	}
-	$t = zsa_act_tables();
+	$code = $row['code'];
+	$t    = zsa_act_tables();
 	$wpdb->update( $t['codes'], array( 'last_used' => zsa_act_now() ), array( 'code' => $code ), array( '%s' ), array( '%s' ) );
 	return zsa_act_response(
 		array(
@@ -359,11 +442,11 @@ function zsa_act_rest_save( $request ) {
 	if ( true !== $ok ) {
 		return $ok;
 	}
-	$code = zsa_act_clean_code( $request['code'] );
-	$row  = $code ? zsa_act_find_code( $code ) : null;
-	if ( ! $row ) {
-		return new WP_Error( 'zsa_act_unknown', 'No history was found for that code.', array( 'status' => 404 ) );
+	$row = zsa_act_unlock( $request['code'], zsa_act_pin_of( $request ) );
+	if ( is_wp_error( $row ) ) {
+		return $row;
 	}
+	$code = $row['code'];
 	if ( (int) $row['attempts'] >= ZSA_ACT_MAX_ATTEMPTS ) {
 		return new WP_Error( 'zsa_act_full', 'This code has reached its limit of saved attempts.', array( 'status' => 409 ) );
 	}
@@ -406,7 +489,7 @@ function zsa_act_cors( $served, $result, $request, $server ) {
 	header_remove( 'Access-Control-Allow-Origin' );
 	if ( zsa_act_origin_allowed( $origin ) ) {
 		header( 'Access-Control-Allow-Origin: ' . esc_url_raw( $origin ) );
-		header( 'Access-Control-Allow-Methods: GET, POST, OPTIONS' );
+		header( 'Access-Control-Allow-Methods: POST, OPTIONS' );
 		header( 'Access-Control-Allow-Headers: Content-Type' );
 		header( 'Vary: Origin', false );
 	}
@@ -444,16 +527,25 @@ function zsa_act_admin_page() {
 		if ( 'settings' === $action ) {
 			$s['enabled']        = empty( $request['enabled'] ) ? 0 : 1;
 			$s['origins']        = sanitize_textarea_field( isset( $request['origins'] ) ? $request['origins'] : '' );
-			$s['retention_days'] = max( 30, min( 3650, absint( isset( $request['retention_days'] ) ? $request['retention_days'] : 400 ) ) );
+			$s['retention_days'] = max( 30, min( 3650, absint( isset( $request['retention_days'] ) ? $request['retention_days'] : 365 ) ) );
 			update_option( 'zsa_act_settings', $s );
 			$notice = 'Settings saved.';
-		} elseif ( 'lookup' === $action || 'delete' === $action ) {
+		} elseif ( 'purge' === $action ) {
+			$n      = zsa_act_cleanup();
+			$notice = sprintf( '%d inactive codes were deleted, with their PINs and scores.', $n );
+		} elseif ( 'lookup' === $action || 'delete' === $action || 'pin' === $action ) {
 			$code = zsa_act_clean_code( isset( $request['code'] ) ? $request['code'] : '' );
 			if ( ! $code || ! zsa_act_find_code( $code ) ) {
 				$notice = 'No history was found for that code.';
 			} elseif ( 'delete' === $action ) {
 				zsa_act_delete_code( $code );
 				$notice = 'Code ' . $code . ' and its scores were deleted.';
+			} elseif ( 'pin' === $action ) {
+				// For a student who lost their PIN: a new one replaces it, shown here once.
+				$pin = zsa_act_random_pin();
+				$wpdb->update( $t['codes'], array( 'pin_hash' => zsa_act_hash_pin( $pin ) ), array( 'code' => $code ), array( '%s' ), array( '%s' ) );
+				delete_transient( 'zsa_act_pin_' . $code );
+				$notice = 'The new PIN for code ' . $code . ' is ' . $pin . '. Give it to the student now; it will not be shown again.';
 			} else {
 				$lookup = array(
 					'code'     => $code,
@@ -466,13 +558,14 @@ function zsa_act_admin_page() {
 	$codes    = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$t['codes']}" );
 	$attempts = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$t['attempts']}" );
 	$recent   = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$t['attempts']} WHERE created_at >= %s", gmdate( 'Y-m-d H:i:s', time() - 30 * DAY_IN_SECONDS ) ) );
+	$inactive = count( zsa_act_inactive_codes() );
 	?>
 	<div class="wrap">
 		<h1>ACT Practice History</h1>
 		<?php if ( $notice ) : ?>
 			<div class="notice notice-info"><p><?php echo esc_html( $notice ); ?></p></div>
 		<?php endif; ?>
-		<p>Practice codes let students see their ACT Practice scores over time without an account. Only the code, the date, the section, the mode, the number correct, the estimated score and the time are stored. No names, emails or IP addresses are stored.</p>
+		<p>Practice codes let students see their ACT Practice scores over time without an account. Each code has a four-digit PIN, which is stored only in scrambled (hashed) form. Only the code, the date, the section, the mode, the number correct, the estimated score and the time are stored. No names, emails or IP addresses are stored.</p>
 		<p><?php echo esc_html( sprintf( '%d codes, %d saved attempts, %d in the last 30 days.', $codes, $attempts, $recent ) ); ?></p>
 
 		<h2>Look up or delete a code</h2>
@@ -482,7 +575,16 @@ function zsa_act_admin_page() {
 			<label for="zsa-act-code">Practice code</label>
 			<input id="zsa-act-code" name="code" type="text" maxlength="12" autocomplete="off" value="<?php echo esc_attr( $lookup ? $lookup['code'] : '' ); ?>">
 			<button class="button" name="zsa_act_action" value="lookup">Look up</button>
+			<button class="button" name="zsa_act_action" value="pin" onclick="return confirm('Replace this code\'s PIN with a new one? The old PIN will stop working.');">Make a new PIN</button>
 			<button class="button" name="zsa_act_action" value="delete" onclick="return confirm('Delete this code and all of its scores?');">Delete</button>
+		</form>
+		<p class="description">Make a new PIN is for a student who still has their code but lost their PIN. Codes are never shown or found by PIN.</p>
+
+		<h2>Inactive codes</h2>
+		<p><?php echo esc_html( sprintf( '%d codes have not been used in the last %d days. They are deleted automatically once a day, with their PINs and scores.', $inactive, (int) $s['retention_days'] ) ); ?></p>
+		<form method="post">
+			<?php wp_nonce_field( 'zsa_act_admin' ); ?>
+			<button class="button" name="zsa_act_action" value="purge" onclick="return confirm('Delete every inactive code, with its PIN and scores, now?');">Delete inactive codes now</button>
 		</form>
 		<?php if ( $lookup ) : ?>
 			<h3><?php echo esc_html( 'Code ' . $lookup['code'] . ': ' . count( $lookup['attempts'] ) . ' saved attempts' ); ?></h3>
