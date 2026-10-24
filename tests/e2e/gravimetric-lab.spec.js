@@ -1,7 +1,9 @@
 const {test, expect} = require('@playwright/test');
-test('gravimetric lab follows the procedure for both unknowns and resets safely', async ({page}) => {
+test('gravimetric lab follows the procedure and reloads safely', async ({page}) => {
   await page.clock.install();
   await page.goto('/gravimetric-lab/');
+  await expect(page.locator('#sample')).toHaveText('A');
+  await expect(page.locator('.lab-top,.intro,#reset')).toHaveCount(0);
   await page.locator('#zsa-th-instructions-open').click();
   await expect(page.locator('dialog')).toBeVisible();
   await page.keyboard.press('Escape');
@@ -9,7 +11,7 @@ test('gravimetric lab follows the procedure for both unknowns and resets safely'
   await page.locator('#zsa-th-share-toggle').click();
   await expect(page.locator('#zsa-th-share-url')).toHaveValue('https://activities.zornscience.org/gravimetric-lab/');
   await page.keyboard.press('Escape');
-  for (const name of ['Sodium carbonate', 'Potassium carbonate']) {
+  for (const name of ['Sodium carbonate']) {
     const readings = [];
     for (let step = 0; step < 23; step++) {
       await page.locator('#action').click();
@@ -24,10 +26,10 @@ test('gravimetric lab follows the procedure for both unknowns and resets safely'
     expect(readings[4]).toBe(readings[5]);
     await page.locator('#reveal').click();
     await expect(page.locator('#identity')).toContainText(name);
-    await page.locator('#reset').click();
+    await page.reload();
   }
   await page.locator('#action').click();
-  await page.locator('#reset').click();
+  await page.reload();
   await page.clock.fastForward(3000);
   await expect(page.locator('#step-counter')).toHaveText('STEP 01 / 23');
   await expect(page.locator('#balance-reading')).toHaveText('0.000 g');

@@ -71,7 +71,7 @@
     solid=2/carbonate.molar*100.09;
     ['oven-sample','crucible-powder','flame-shape','balance-object','solution','cloud','sediment','filtrate','filter-paper','filter-cake','balance-paper','balance-solid'].forEach(function (id) { show(id,false); });
     crucibleAt('burner'); mass(0); root.classList.remove('busy','heating','stirring','filtering','measuring');
-    el('sample').textContent='UNKNOWN '+String.fromCharCode(65+(trial-1)%26); el('identity').textContent=''; el('result').hidden=true; el('reveal').hidden=false; action.hidden=false; action.disabled=false; render();
+    el('sample').textContent=String.fromCharCode(65+(trial-1)%26); el('identity').textContent=''; el('result').hidden=true; el('reveal').hidden=false; action.hidden=false; action.disabled=false; render();
   }
-  el('reset').addEventListener('click',reset); reset();
+  reset();
 }());
