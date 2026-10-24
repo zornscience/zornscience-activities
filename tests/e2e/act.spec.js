@@ -14,7 +14,7 @@ var words = loadData(path.join(__dirname, "..", "..", "act", "data.js"));
 data.skills = words.sections.science.skills;
 data.types = words.sections.science.types;
 var byTitle = {};
-data.passages.filter((p) => p.status === "reviewed").forEach((p) => { byTitle[p.title] = p; });
+data.passages.forEach((p) => { byTitle[p.title] = p; });
 var plain = (s) => s.replace(/<\/?(sub|sup|em|strong)>/g, "");
 
 async function go(page, seed, opts) {
@@ -685,7 +685,8 @@ test("full section, real bank: 40 questions in 40 minutes, every passage once, a
   await expect(page.getByRole("timer")).toHaveText("Time left 40:00");
   await expect(nav(page).getByRole("button")).toHaveCount(40);
   var seen = await playAll(page, (q) => q.answer);
-  expect(seen.map((p) => p.title).sort()).toEqual(data.passages.map((p) => p.title).sort());
+  // Students get reviewed passages only; the second section's drafts never appear.
+  expect(seen.map((p) => p.title).sort()).toEqual(data.passages.filter((p) => p.status === "reviewed").map((p) => p.title).sort());
   await endSection(page);
   await expect(page.getByText("40 / 40", {exact: true})).toBeVisible();
   await expect(page.getByRole("heading", {name: "Estimated ACT Science score: 36"})).toBeVisible();

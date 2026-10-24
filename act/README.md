@@ -1,5 +1,5 @@
 # ACT Practice
-Version: 1.4.1
+Version: 1.5.0
 
 Free ACT practice with original questions in all four sections: English, Math, Reading and the optional Science. Students practice a few questions, one timed section, or the full ACT, and get a score report that compares them with national results and gives tips for the skills they missed. Nothing is saved or sent anywhere. Not linked from zornscience.org yet. The live URL after approval will be https://activities.zornscience.org/act/. The old address, https://activities.zornscience.org/act-science/, redirects to the Science section.
 
@@ -92,8 +92,24 @@ A tools row sits under the top bar during a section. Every tool is a button with
 | Solar Panel Output | Data Representation | Physics | 6 | bar graph, scatter plot | reviewed |
 | Carts on a Ramp | Research Summaries | Physics | 6 | 3 tables | reviewed |
 | Salt and Radish Seed Germination | Research Summaries | Biology | 5 | bar graph, table | reviewed |
+| Air Pressure and Boiling Water | Data Representation | Earth and space science | 6 | line graph, table | draft |
+| Exercise and Heart Rate | Data Representation | Biology | 6 | line graph (2 series), table | draft |
+| Pendulum Swings | Data Representation | Physics | 6 | scatter plot, table | draft |
+| How Fast Sugar Dissolves | Research Summaries | Chemistry | 6 | 3 tables | draft |
+| Yeast and Balloons | Research Summaries | Biology | 6 | table, bar graph | draft |
+| Keeping Water Warm | Research Summaries | Physics | 5 | 2 tables | draft |
+| Where the Moon Came From | Conflicting Viewpoints | Earth and space science | 5 | 3 viewpoints | draft |
 
-All seven together make the full section: 3 Data Representation (6, 6, 6), 3 Research Summaries (6, 6, 5) and 1 Conflicting Viewpoints (5), 40 questions. With today's bank every full section uses all seven passages, in a random order. Adding more reviewed passages gives the Full section mode other combinations to choose from, as long as one adds up to exactly 40 questions.
+**Second section (milestone E, drafts).** The seven draft passages make a second full section on their own: 3 Data Representation (6, 6, 6), 3 Research Summaries (6, 6, 5) and 1 Conflicting Viewpoints (5), 40 questions, with the correct answer in each of the four positions 10 times. Students see none of them until they are reviewed. Once all 14 are reviewed, the Full section mode picks any mix of 3, 3 and 1 that adds up to 40, so students get many different sections. With `?drafts=1`, the modes use all 14 now.
+
+How the milestone E data were made consistent:
+- **Air pressure:** pressures follow the standard atmosphere (101 kPa at sea level, 54 kPa at 5 km), and the boiling points drop about 3.3°C per 1,000 m, close to measured values.
+- **Heart rate:** plausible values for a fit and a less fit teenager; the fitter student has the lower resting rate and the faster recovery.
+- **Pendulum:** periods follow T = 2π√(L/g) to two decimals, mass has no effect, and release angles of 20° and 40° lengthen the period slightly (2.03 s and 2.07 s), as the exact formula predicts.
+- **Sugar, yeast and insulation:** each experiment changes one factor; the sugar and insulation experiments share a trial that appears in more than one table, and yeast production peaks at 35°C and stops at 55°C.
+- **Moon:** the introduction's facts (Moon rocks like Earth's mantle, nearly identical oxygen isotopes, a small iron core) are standard. Scientist 1 is the giant-impact idea most scientists accept today; the other two are older ideas, presented here without saying which is right.
+
+The original seven, reviewed, make the first full section: 3 Data Representation (6, 6, 6), 3 Research Summaries (6, 6, 5) and 1 Conflicting Viewpoints (5), 40 questions. With today's bank every full section uses all seven passages, in a random order. Adding more reviewed passages gives the Full section mode other combinations to choose from, as long as one adds up to exactly 40 questions.
 
 ### Reviewing a draft
 1. Open the page with `?drafts=1` (on the live site: https://activities.zornscience.org/act/?drafts=1, then pick a section). A Review drafts list under the modes shows every passage (or, in Math, every question) and its status; each button starts it on its own, untimed. While the list shows, the practice modes use drafts too, so a teacher can try a mixed set or a full section before approving anything. Students never see this list or any draft.
@@ -223,6 +239,8 @@ Each question in the answer review has a Show with passage button (Show question
 - Ending the section asks on the page, never with a `confirm()` dialog.
 
 ## Changelog
+1.5.0: A second Science section (milestone E): seven new passages, 40 questions, as drafts (Air Pressure and Boiling Water, Exercise and Heart Rate, Pendulum Swings, How Fast Sugar Dissolves, Yeast and Balloons, Keeping Water Warm, Where the Moon Came From). A unit test checks that the reviewed passages and the drafts each make a full section on their own.
+
 1.4.1: Every Reading passage lengthened to 600 to 800 words (Nick asked for full-length passages). Paragraphs, questions and answers are unchanged; each paragraph was expanded in place. New unit checks keep passages in that range and make sure quoted phrases in explanations match the passage.
 
 1.4.0: The Reading bank (milestone D): seven new passages, for 8 passages and 72 questions, as drafts, including a paired Humanities set. With `?drafts=1`, every section can now make a full section, so the full ACT can be tried from the home page. Browser tests play every Reading passage and a 36-question Reading section from the drafts.

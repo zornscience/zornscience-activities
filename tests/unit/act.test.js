@@ -213,6 +213,9 @@ test("Math questions: numeric choices run from least to greatest", function () {
 
 test("the Science bank can make a full section; every section's bank is reported", function (t) {
   assert.ok(canMakeFull("science", bank.science.passages), "science full section");
+  // Milestone E: the reviewed passages and the second section's drafts each make a full section on their own.
+  assert.ok(canMakeFull("science", bank.science.passages.filter(function (p) { return p.status === "reviewed"; })), "reviewed science section");
+  assert.ok(canMakeFull("science", bank.science.passages.filter(function (p) { return p.status === "draft"; })), "second science section (drafts)");
   // English, Math and Reading banks are being written (milestones B to D). Until they are, this only reports progress.
   ["english", "math", "reading"].forEach(function (k) {
     var n = units(k).reduce(function (a, p) { return a + p.questions.length; }, 0);
