@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<meta name="description" content="Balance redox half-reactions one step at a time in acidic or basic media with manual atom balancing, electron transfer and cancellation.">
+<title>Redox Half-Reaction Balancer Coach | ZornScience</title>
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="canonical" href="https://activities.zornscience.org/redox-coach/">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="coach.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="model.js?v=1.0.0" defer></script>
+<script src="coach.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="zsa zsa-rx" data-zsa-activity="redox-coach">
+<header class="zsa-rx-header">
+<a class="zsa-back" href="../" data-zsa-chrome>← All activities</a>
+<p class="zsa-eyebrow">Chemistry · Oxidation and Reduction</p>
+<div class="zsa-rx-brand"><img src="../favicon.png" alt="" width="48" height="48"><h1>Redox Half-Reaction Balancer Coach</h1></div>
+<p>Build the balance, one decision at a time. Each step unlocks after your work is checked.</p>
+</header>
+<noscript><p class="zsa-panel">This activity needs JavaScript. Enable it to practice.</p></noscript>
+<section class="zsa-card" aria-labelledby="zsa-rx-start-title">
+<div class="zsa-rx-topline"><h2 id="zsa-rx-start-title">Your reaction</h2><label for="zsa-rx-problem">Practice problem</label><select id="zsa-rx-problem"></select></div>
+<p id="zsa-rx-medium" class="zsa-rx-badge"></p>
+<div id="zsa-rx-net" class="zsa-rx-net"></div>
+<p class="zsa-rx-small">The starting equation is unbalanced. Changing the problem starts over.</p>
+</section>
+<ol id="zsa-rx-progress" class="zsa-rx-progress" aria-label="Progress"></ol>
+<section class="zsa-card" id="zsa-rx-work" aria-labelledby="zsa-rx-title">
+<h2 id="zsa-rx-title" tabindex="-1"></h2>
+<p id="zsa-rx-instruction"></p>
+<div id="zsa-rx-stage"></div>
+<p id="zsa-rx-feedback" class="zsa-rx-feedback" role="status" aria-live="polite" aria-atomic="true"></p>
+<div class="zsa-rx-footer"><button class="zsa-btn" id="zsa-rx-undo" type="button">Undo last action</button><div class="zsa-rx-toolbar"><button class="zsa-btn" id="zsa-rx-restart" type="button">Restart problem</button><button class="zsa-btn zsa-btn--primary" id="zsa-rx-check" type="button">Check Answer</button></div></div>
+</section>
+<details class="zsa-card"><summary>How does the half-reaction method work?</summary>
+<ol><li>Separate oxidation (electron loss) from reduction (electron gain). Reactants stay on the left and products stay on the right.</li><li>Balance elements other than oxygen and hydrogen first. This coach supplies those skeleton coefficients after you split the reaction. Balance O with H₂O, then H with H⁺.</li><li>Add electrons to balance charge. One electron has charge −1.</li><li>Multiply whole half-reactions to equalize electrons.</li><li>Add the half-reactions and cancel species shared by both sides.</li><li>For basic media, add OH⁻ to both sides to neutralize H⁺, form H₂O, and cancel excess water.</li></ol>
+<p>Use Undo for an extra addition. Earlier phases lock once checked. Click a token and its destination instead of dragging; all controls also work with Tab, Enter and Space.</p>
+</details>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Progress stays in this tab. No account needed.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+</main>
+</body>
+</html>
