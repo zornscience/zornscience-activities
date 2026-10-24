@@ -23,12 +23,18 @@ async function fakeApi(page, opts) {
     var failure = opts.fail && opts.fail(call, db);
     if (failure === "abort") { await route.abort(); return; }
     function reply(status, body) { return route.fulfill({status: status, headers: headers, body: JSON.stringify(body)}); }
+    if (failure && typeof failure === "object") { await reply(failure.status, {code: failure.code, message: "fail", data: {status: failure.status, max: failure.max}}); return; }
     if (failure) { await reply(failure, {code: "x", message: "fail"}); return; }
     var m = path.match(/^\/codes\/([A-Z0-9]{6})\/(open|attempts)$/);
     if (req.method() === "POST" && path === "/codes") {
       var made = db.next.shift();
       db.codes[made[0]] = {pin: made[1], attempts: []};
       await reply(201, {code: made[0], pin: made[1]});
+    } else if (req.method() === "POST" && path === "/class-lists") {
+      var rows = CLASS_SET.slice(0, call.body.count);
+      rows.forEach((r) => { db.codes[r.code] = {pin: r.pin, attempts: []}; });
+      await reply(201, {codes: rows, csv: "Code,PIN\r\n" + rows.map((r) => r.code + "," + r.pin + "\r\n").join(""),
+        pdf: Buffer.from("%PDF-1.4\nfake class set for " + call.body.name + "\n%%EOF\n").toString("base64"), file: "act-class-codes-period-3-chemistry-2026-10-24"});
     } else if (req.method() === "POST" && m) {
       var entry = db.codes[m[1]];
       if (!entry || !call.body || call.body.pin !== entry.pin) { await reply(403, {code: "zsa_act_mismatch", message: "That code and PIN do not match."}); return; }
@@ -43,6 +49,7 @@ async function fakeApi(page, opts) {
   });
   return db;
 }
+var CLASS_SET = [{code: "B4KQ7N", pin: "4821"}, {code: "T9HXM3", pin: "1376"}, {code: "W2RP8D", pin: "9054"}];
 // The browser logs a failed request as a console error. Tests that make requests fail on purpose remove exactly
 // those messages (and nothing else) before the fixture checks for problems.
 function allowFailedRequests(problems, statuses) {
@@ -335,4 +342,88 @@ test("the full ACT asks first, then saves each section and the composite under t
   await expect(page.getByRole("status").filter({hasText: "Saved to your history."})).toBeVisible();
   await page.getByRole("button", {name: "Back to full ACT report"}).click();
   expect(db.codes.M9TQ4C.attempts.length).toBe(5);
+});
+
+test("teachers make a class set: the codes and PINs, a PDF to print and a CSV file, shown once", async ({page, problems}) => {
+  void problems;
+  var db = await fakeApi(page);
+  await go(page, "");
+  var teach = page.getByRole("region", {name: "For teachers"});
+  await expect(teach).toContainText("Make a practice code and PIN for every student in a class");
+  await teach.getByRole("button", {name: "Make class codes"}).click();
+  await expect(page.getByRole("heading", {level: 1, name: "Class codes and PINs"})).toBeFocused();
+  expect(new URL(page.url()).hash).toBe("#teachers");
+  await audit(page, "class set form");
+  var count = page.getByLabel("Number of students"), make = page.getByRole("button", {name: "Make class codes"});
+  await expect(count).toHaveAccessibleDescription(/From 1 to 50\./);
+  await make.click();
+  await expect(page.getByRole("status").filter({hasText: "Enter a number of students from 1 to 50."})).toBeVisible();
+  await expect(count).toHaveAttribute("aria-invalid", "true");
+  await expect(count).toBeFocused();
+  for (var bad of ["0", "51", "2.5"]) {
+    await count.fill(bad);
+    await make.click();
+    await expect(page.getByText("Enter a number of students from 1 to 50.")).toBeVisible();
+  }
+  expect(db.calls).toEqual([]);
+  await count.fill("3");
+  await page.getByLabel("Class name (optional)").fill("Period 3 Chemistry");
+  await page.getByLabel("Class name (optional)").press("Enter");
+  var ready = page.getByRole("heading", {level: 2, name: "Your class set is ready: 3 codes and PINs"});
+  await expect(ready).toBeFocused();
+  expect(db.calls.map((c) => [c.method, c.path, c.query, c.body, c.cookie])).toEqual([["POST", "/class-lists", "", {count: 3, name: "Period 3 Chemistry"}, ""]]);
+  await expect(page.getByLabel("Number of students")).toBeHidden();
+  await expect(page.getByText("Download the PDF and the CSV file now. The PINs will not be shown again after you leave this page.")).toBeVisible();
+  var tbl = page.getByRole("table", {name: "Codes and PINs for this class"});
+  await expect(tbl.getByRole("row")).toHaveText([/Student\s*Practice code\s*PIN/, /1\s*B4KQ7N\s*4821/, /2\s*T9HXM3\s*1376/, /3\s*W2RP8D\s*9054/]);
+  var [pdf] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", {name: "Download PDF to print"}).click()]);
+  expect(pdf.suggestedFilename()).toBe("act-class-codes-period-3-chemistry-2026-10-24.pdf");
+  expect(fs.readFileSync(await pdf.path(), "latin1")).toBe("%PDF-1.4\nfake class set for Period 3 Chemistry\n%%EOF\n");
+  await expect(page.getByRole("status").filter({hasText: "Downloaded act-class-codes-period-3-chemistry-2026-10-24.pdf."})).toBeVisible();
+  var [csv] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", {name: "Download CSV file"}).click()]);
+  expect(csv.suggestedFilename()).toBe("act-class-codes-period-3-chemistry-2026-10-24.csv");
+  expect(fs.readFileSync(await csv.path(), "utf8")).toBe("Code,PIN\r\nB4KQ7N,4821\r\nT9HXM3,1376\r\nW2RP8D,9054\r\n");
+  await audit(page, "class set ready");
+  await page.setViewportSize({width: 400, height: 800});
+  await noSideScroll(page, "class set at 400px");
+  // A student types a code and PIN from the class set.
+  await page.getByRole("button", {name: "Back to start"}).click();
+  expect(new URL(page.url()).hash).toBe("");
+  await page.getByRole("button", {name: /^Science/}).click();
+  await page.getByRole("button", {name: /^One passage/}).click();
+  await expect(codeHeading(page)).toBeFocused();
+  await enter(page, "t9hxm3", "1376");
+  await startSection(page, "Science");
+  // Making another class set starts over with an empty form; the first set is not shown again.
+  await page.goto("about:blank");
+  await go(page, "teachers");
+  await expect(page.getByRole("heading", {level: 1, name: "Class codes and PINs"})).toBeVisible();
+  await expect(page.getByText("B4KQ7N")).toHaveCount(0);
+  await expect(page.getByLabel("Number of students")).toHaveValue("");
+});
+
+test("class set limits and failures say what to do, and nothing is offered", async ({page, problems}) => {
+  var replies = [{status: 429, code: "zsa_act_busy"}, {status: 429, code: "zsa_act_daily"}, {status: 503, code: "zsa_act_off"}, {status: 400, code: "zsa_act_count", max: 30}, "abort"];
+  await fakeApi(page, {fail: (call) => call.path === "/class-lists" ? replies.shift() : null});
+  await go(page, "teachers");
+  await page.getByLabel("Number of students").fill("40");
+  var make = page.getByRole("button", {name: "Make class codes"}), msg = page.getByRole("status");
+  for (var text of ["This network has made as many class sets as it can for now. Try again in an hour.",
+    "ZornScience has made as many new codes as it can for today. Try again tomorrow.",
+    "Class codes are turned off right now.",
+    "Enter a number of students from 1 to 30.",
+    "Class codes are not working right now. Try again later."]) {
+    await make.click();
+    await expect(msg).toHaveText(text);
+    await expect(make).toBeEnabled();
+  }
+  await expect(page.getByRole("button", {name: "Download PDF to print"})).toHaveCount(0);
+  allowFailedRequests(problems, [400, 429, 503]);
+});
+
+test("with codes off there is no class set page", async ({page, problems}) => {
+  void problems;
+  await go(page, "teachers", "");
+  await expect(page.getByRole("heading", {level: 1, name: "ACT Practice"})).toBeVisible();
+  await expect(page.getByRole("region", {name: "For teachers"})).toHaveCount(0);
 });

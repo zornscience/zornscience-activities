@@ -24,8 +24,9 @@
     rankYear: "2026-2027",
     // Practice codes: scores saved under an anonymous six-character code by the ZornScience ACT Practice History
     // WordPress plugin (wordpress/zornscience-act-history/ in this repository). Leave `enabled` false until the plugin
-    // is installed and turned on at zornscience.org; ?codes=1 in the address turns codes on for testing.
-    history: {enabled: false, api: "https://zornscience.org/wp-json/zsa-act/v1"},
+    // is installed and turned on at zornscience.org; ?codes=1 in the address turns codes on for testing. classMax is the
+    // most students in one class set: keep it the same as "Most students in one class set" on the plugin's admin page.
+    history: {enabled: false, api: "https://zornscience.org/wp-json/zsa-act/v1", classMax: 50},
     // Mixed practice shows an estimated range only with at least this many questions. The range is the raw score
     // equivalent plus or minus this share of the section's questions (4 of 40 in Science).
     minForEstimate: 15,

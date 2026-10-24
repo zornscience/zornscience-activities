@@ -495,6 +495,13 @@
       list.appendChild(modeButton(SECTIONS[k].name, fill(ui.sectionLine, {count: c.count, minutes: c.minutes}) + (SECTIONS[k].optional ? ui.sectionOptional : ""),
         function () { intro(k, true); }));
     });
+    if (codesOn) {
+      var teach = left.appendChild(node("section", "zsa-act-teachcard"));
+      teach.setAttribute("aria-labelledby", "zsa-act-teach-title");
+      teach.appendChild(node("h2", null, ui.classHomeTitle)).id = "zsa-act-teach-title";
+      teach.appendChild(node("p", null, ui.classHomeText));
+      teach.appendChild(node("div", "zsa-act-row")).appendChild(button(ui.classLink, "", function () { teacherScreen(); }));
+    }
     facts(grid, ui.homeFactsTitle, ui.homeFacts, {avg: cfg.compositeAvg, avgClass: cfg.avgClass}, ui.homeFactsNote);
     show([grid], focusIt ? h1 : null);
   }
@@ -1671,6 +1678,104 @@
       b.appendChild(button(ui.saveRetry, "zsa-act-open", function () { save(rec, st.attempt, {code: st.code, pin: st.pin}); }));
     }
   }
+  // ---------- Class sets for teachers ----------
+  // A teacher chooses how many students and gets that many new codes and PINs. The plugin makes a PDF to print (with
+  // blank name columns) and a CSV file; they are offered only on this screen, and the codes and PINs are shown once.
+  function download(data, type, name, msg) {
+    var url = URL.createObjectURL(new Blob([data], {type: type}));
+    var link = node("a");
+    link.href = url;
+    link.download = name;
+    link.hidden = true;
+    root.appendChild(link);
+    link.click();
+    root.removeChild(link);
+    window.setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    msg.textContent = fill(ui.classDownloaded, {file: name});
+  }
+  function bytesOf(base64) {
+    var text = window.atob(base64), out = new Uint8Array(text.length);
+    for (var i = 0; i < text.length; i++) out[i] = text.charCodeAt(i);
+    return out;
+  }
+  // firstLoad: opened from the address (#teachers), so focus stays where the browser put it.
+  function teacherScreen(firstLoad) {
+    if (S) leaveTest();
+    S = null;
+    FULL = null;
+    useHome();
+    setHash("teachers");
+    var max = cfg.history.classMax || 50;
+    var box = node("section", "zsa-act-dir-screen zsa-act-code-screen");
+    box.appendChild(node("p", "zsa-eyebrow", ui.homeEyebrow));
+    var h1 = box.appendChild(heading("h1", ui.classTitle));
+    ui.classIntro.forEach(function (t) { box.appendChild(node("p", null, t)); });
+    var form = box.appendChild(node("div", "zsa-act-code-field zsa-act-class-form"));
+    var countLab = form.appendChild(node("label", null, ui.classCount));
+    countLab.htmlFor = "zsa-act-class-count";
+    var countIn = form.appendChild(node("input", "zsa-act-code-input zsa-act-count-input"));
+    countIn.id = "zsa-act-class-count";
+    countIn.type = "number";
+    countIn.min = "1";
+    countIn.max = String(max);
+    countIn.setAttribute("inputmode", "numeric");
+    countIn.setAttribute("aria-describedby", "zsa-act-class-count-hint zsa-act-class-msg");
+    form.appendChild(node("p", "zsa-act-small", fill(ui.classCountHint, {max: max}))).id = "zsa-act-class-count-hint";
+    var nameLab = form.appendChild(node("label", null, ui.className));
+    nameLab.htmlFor = "zsa-act-class-name";
+    var nameIn = form.appendChild(node("input", "zsa-act-text-input"));
+    nameIn.id = "zsa-act-class-name";
+    nameIn.type = "text";
+    nameIn.maxLength = 60;
+    nameIn.autocomplete = "off";
+    nameIn.setAttribute("aria-describedby", "zsa-act-class-name-hint");
+    form.appendChild(node("p", "zsa-act-small", ui.classNameHint)).id = "zsa-act-class-name-hint";
+    var makeBtn = form.appendChild(button(ui.classMake, "zsa-btn--primary", make));
+    [countIn, nameIn].forEach(function (el) { el.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); make(); } }); });
+    var msg = box.appendChild(node("p", "zsa-act-code-msg"));
+    msg.id = "zsa-act-class-msg";
+    msg.setAttribute("role", "status");
+    var result = box.appendChild(node("div", "zsa-act-class-result"));
+    box.appendChild(node("div", "zsa-act-row zsa-act-homerow")).appendChild(button(ui.home, "", function () { home(true); }));
+    function make() {
+      var n = Number(countIn.value);
+      countIn.removeAttribute("aria-invalid");
+      if (!/^\d+$/.test(countIn.value.trim()) || n < 1 || n > max) {
+        msg.textContent = fill(ui.classBadCount, {max: max});
+        countIn.setAttribute("aria-invalid", "true");
+        countIn.focus();
+        return;
+      }
+      makeBtn.disabled = true;
+      msg.textContent = fill(ui.classMaking, {n: n});
+      api("class", null, {count: n, name: nameIn.value.trim()}, function (err, res) {
+        if (!app.contains(box)) return;
+        makeBtn.disabled = false;
+        if (err) {
+          msg.textContent = err.status === 400 ? fill(ui.classBadCount, {max: err.max || max}) : err.status === 429 ? (err.code === "zsa_act_daily" ? ui.classDaily : ui.classHourly)
+            : err.status === 503 ? ui.classOff : ui.classDown;
+          return;
+        }
+        ready(res);
+      });
+    }
+    function ready(res) {
+      form.hidden = true;
+      msg.textContent = "";
+      var h2 = result.appendChild(heading("h2", fill(ui.classReady, {n: res.codes.length})));
+      result.appendChild(node("p", "zsa-act-notice zsa-act-code-warning", ui.classWarning));
+      var row = result.appendChild(node("div", "zsa-act-row"));
+      row.appendChild(button(ui.classPdf, "zsa-btn--primary", function () { download(bytesOf(res.pdf), "application/pdf", res.file + ".pdf", msg); }));
+      row.appendChild(button(ui.classCsv, "", function () { download(res.csv, "text/csv", res.file + ".csv", msg); }));
+      result.appendChild(node("p", null, ui.classHowTo));
+      result.appendChild(table({caption: ui.classTableCaption, headers: ui.classCols,
+        rows: res.codes.map(function (c, i) { return [String(i + 1), c.code, c.pin]; })}));
+      result.appendChild(node("div", "zsa-act-row")).appendChild(button(ui.classAnother, "", function () { teacherScreen(); }));
+      h2.focus();
+    }
+    show([box], firstLoad ? null : h1);
+  }
+
   function historyScreen(back) {
     if (S) leaveTest();
     S = null;
@@ -1731,5 +1836,7 @@
   }
 
   var opening = window.location.hash.slice(1);
-  if (Object.prototype.hasOwnProperty.call(SECTIONS, opening)) intro(opening, false); else home(false);
+  if (Object.prototype.hasOwnProperty.call(SECTIONS, opening)) intro(opening, false);
+  else if (opening === "teachers" && codesOn) teacherScreen(true);
+  else home(false);
 }());

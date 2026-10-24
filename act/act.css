@@ -377,6 +377,17 @@ body {background: var(--act-bg);}
 .zsa-act .zsa-act-code-input:focus-visible {outline: 3px solid var(--act-blue); outline-offset: 2px;}
 .zsa-act .zsa-act-code-input.zsa-act-pin-input {max-width: 8ch;}
 .zsa-act-code-msg {min-height: 1.55em; font-weight: 700;}
+.zsa-act .zsa-act-code-input.zsa-act-count-input {max-width: 7ch; letter-spacing: .04em;}
+.zsa-act .zsa-act-text-input {font: inherit; width: 100%; max-width: 28ch; min-height: 44px; padding: 6px 12px; border: 2px solid var(--act-muted); border-radius: 8px;
+  background: var(--act-bg); color: var(--act-ink);}
+.zsa-act .zsa-act-text-input:focus-visible {outline: 3px solid var(--act-blue); outline-offset: 2px;}
+.zsa-act-class-form[hidden] {display: none;}
+.zsa-act-class-result {display: grid; gap: 12px;}
+.zsa-act-class-result:empty {display: none;}
+.zsa-act-class-result .zsa-act-tbl {max-width: 460px;}
+.zsa-act-teachcard {border-top: 1px solid var(--act-line); margin-top: 24px; padding-top: 18px; display: grid; gap: 8px;}
+.zsa-act .zsa-act-teachcard h2 {font-size: 22px;}
+.zsa-act-teachcard p {margin: 0;}
 .zsa-act-code-option {border-top: 1px solid var(--act-line); padding-top: 18px; display: grid; gap: 10px;}
 .zsa-act .zsa-act-code-option h2 {font-size: 22px;}
 .zsa-act-code-option .zsa-act-notice {margin: 0;}

@@ -19,10 +19,10 @@ function wp_schedule_event() { $GLOBALS['zsa_scheduled'] = true; }
 function delete_transient( $k ) { unset( $GLOBALS['zsa_transients'][ $k ] ); }
 function register_deactivation_hook() {}
 function get_option( $k, $d = false ) { return array_key_exists( $k, $GLOBALS['zsa_options'] ) ? $GLOBALS['zsa_options'][ $k ] : $d; }
-function update_option( $k, $v ) { $GLOBALS['zsa_options'][ $k ] = $v; return true; }
+function update_option( $k, $v, $autoload = null ) { $GLOBALS['zsa_options'][ $k ] = $v; return true; }
 function get_transient( $k ) { return isset( $GLOBALS['zsa_transients'][ $k ] ) ? $GLOBALS['zsa_transients'][ $k ] : false; }
 function set_transient( $k, $v ) { $GLOBALS['zsa_transients'][ $k ] = $v; return true; }
-function wp_salt() { return 'test-salt'; }
+function wp_salt() { return isset( $GLOBALS['zsa_salt'] ) ? $GLOBALS['zsa_salt'] : 'test-salt'; }
 function wp_unslash( $v ) { return $v; }
 function sanitize_text_field( $v ) { return trim( (string) $v ); }
 function register_rest_route( $ns, $route, $args ) { $GLOBALS['zsa_routes'][ $ns . $route ] = $args; }
@@ -38,10 +38,18 @@ class Fake_Role {
 	public $capabilities;
 	function __construct( $caps ) { $this->capabilities = $caps; }
 	function add_cap( $cap ) { $this->capabilities[ $cap ] = true; }
+	function remove_cap( $cap ) { unset( $this->capabilities[ $cap ] ); }
 }
+function remove_role( $name ) { unset( $GLOBALS['zsa_roles'][ $name ] ); }
+function sanitize_key( $v ) { return preg_replace( '/[^a-z0-9_\-]/', '', strtolower( (string) $v ) ); }
+function sanitize_textarea_field( $v ) { return trim( (string) $v ); }
+function checked( $on ) { if ( $on ) { echo ' checked="checked"'; } }
+function esc_textarea( $v ) { return esc_html( $v ); }
+function esc_url( $v ) { return esc_attr( $v ); }
+function delete_option( $k ) { unset( $GLOBALS['zsa_options'][ $k ] ); }
 function get_role( $name ) { return isset( $GLOBALS['zsa_roles'][ $name ] ) ? $GLOBALS['zsa_roles'][ $name ] : null; }
 function add_role( $name, $label, $caps ) { $GLOBALS['zsa_roles'][ $name ] = new Fake_Role( $caps ); $GLOBALS['zsa_role_labels'][ $name ] = $label; }
-$GLOBALS['zsa_user'] = array( 'id' => 7, 'caps' => array( 'zsa_act_class_lists' ) );
+$GLOBALS['zsa_user'] = array( 'id' => 1, 'caps' => array( 'manage_options' ) );
 function current_user_can( $cap ) { return in_array( $cap, $GLOBALS['zsa_user']['caps'], true ); }
 function get_current_user_id() { return $GLOBALS['zsa_user']['id']; }
 function wp_die( $m ) { throw new Exception( 'wp_die: ' . $m ); }
@@ -105,7 +113,7 @@ class Fake_Wpdb {
 	}
 }
 $GLOBALS['wpdb'] = new Fake_Wpdb();
-$GLOBALS['wpdb']->query( "CREATE TABLE wp_zsa_act_codes (code TEXT PRIMARY KEY, created_at TEXT NOT NULL, last_used TEXT NOT NULL, attempts INTEGER NOT NULL DEFAULT 0, pin_hash TEXT NOT NULL DEFAULT '')" );
+$GLOBALS['wpdb']->query( "CREATE TABLE wp_zsa_act_codes (code TEXT PRIMARY KEY, created_at TEXT NOT NULL, last_used TEXT NOT NULL, attempts INTEGER NOT NULL DEFAULT 0, pin_hash TEXT NOT NULL DEFAULT '', pin_box TEXT NOT NULL DEFAULT '', kind INTEGER NOT NULL DEFAULT 0)" );
 $GLOBALS['wpdb']->query( 'CREATE TABLE wp_zsa_act_attempts (id INTEGER PRIMARY KEY AUTOINCREMENT, code TEXT NOT NULL, created_at TEXT NOT NULL, section TEXT NOT NULL, mode TEXT NOT NULL, questions INTEGER NOT NULL, correct INTEGER NOT NULL, score INTEGER, score_low INTEGER, score_high INTEGER, seconds INTEGER NOT NULL DEFAULT 0)' );
 
 require dirname( __DIR__, 2 ) . '/wordpress/zornscience-act-history/zornscience-act-history.php';
@@ -127,7 +135,8 @@ zsa_act_routes();
 check( 'POST' === $GLOBALS['zsa_routes']['zsa-act/v1/codes']['methods'], 'new-code route is POST' );
 check( 'POST' === $GLOBALS['zsa_routes']['zsa-act/v1/codes/(?P<code>[A-Za-z0-9]{6})/open']['methods'], 'open route is POST' );
 check( 'POST' === $GLOBALS['zsa_routes']['zsa-act/v1/codes/(?P<code>[A-Za-z0-9]{6})/attempts']['methods'], 'save route is POST' );
-check( 3 === count( $GLOBALS['zsa_routes'] ), 'three routes only' );
+check( 'POST' === $GLOBALS['zsa_routes']['zsa-act/v1/class-lists']['methods'], 'class list route is POST' );
+check( 4 === count( $GLOBALS['zsa_routes'] ), 'four routes only' );
 
 // Code and PIN formats
 check( 'K7M2QX' === zsa_act_clean_code( 'k7m2qx' ), 'lowercase is accepted' );
@@ -158,7 +167,16 @@ $pin  = $r->data['pin'];
 check( null !== zsa_act_clean_pin( $pin ), 'new PIN is four digits' );
 check( 'no-store, private' === $r->headers['Cache-Control'], 'responses are not cached' );
 $row = zsa_act_find_code( $code );
-check( null !== $row && $row['pin_hash'] !== $pin && false === strpos( $row['pin_hash'], $pin ) && password_verify( $pin, $row['pin_hash'] ), 'PIN stored as a hash only' );
+check( null !== $row && $row['pin_hash'] !== $pin && false === strpos( $row['pin_hash'], $pin ) && password_verify( $pin, $row['pin_hash'] ), 'PIN checked against a hash' );
+check( false === strpos( $row['pin_box'], $pin ) && false === strpos( base64_decode( $row['pin_box'] ), $pin ) && $pin === zsa_act_unseal_pin( $row['pin_box'] ), 'PIN kept encrypted, and an administrator can read it' );
+check( 0 === (int) $row['kind'], "a student's own code" );
+check( $row['pin_box'] !== zsa_act_seal_pin( $pin ), 'each sealed PIN is different' );
+$GLOBALS['zsa_salt'] = 'changed';
+check( null === zsa_act_unseal_pin( $row['pin_box'] ), 'with other secret keys, a PIN cannot be read' );
+unset( $GLOBALS['zsa_salt'] );
+foreach ( array( '', 'not base64!', base64_encode( 'short' ), base64_encode( str_repeat( 'x', 60 ) ) ) as $junk ) {
+	check( null === zsa_act_unseal_pin( $junk ), 'a damaged box gives no PIN' );
+}
 $other = zsa_act_rest_new_code( new Fake_Request( array() ) )->data;
 $wrong = $pin === '0000' ? '0001' : '0000';
 while ( $wrong === $other['pin'] || $wrong === $pin ) { $wrong = str_pad( (string) ( ( (int) $wrong + 7 ) % 10000 ), 4, '0', STR_PAD_LEFT ); }
@@ -290,35 +308,97 @@ zsa_act_maybe_upgrade();
 check( 200 === zsa_act_settings()['retention_days'], 'a setting someone chose is kept' );
 update_option( 'zsa_act_settings', array() );
 
-// Upgrading also adds the ACT Practice teacher role (class lists only) and lets administrators make class lists.
-check( array( 'read' => true, 'zsa_act_class_lists' => true ) === get_role( 'zsa_act_teacher' )->capabilities, 'teacher role can read and make class lists, nothing else' );
-check( 'ACT Practice teacher' === $GLOBALS['zsa_role_labels']['zsa_act_teacher'], 'teacher role name' );
-check( ! empty( get_role( 'administrator' )->capabilities['zsa_act_class_lists'] ), 'administrators can make class lists' );
+// Upgrading from 1.2.0: its teacher role goes, request limits it saved give way to the new defaults, and the counts of
+// codes issued start from the codes already stored.
+$GLOBALS['zsa_roles']['zsa_act_teacher'] = new Fake_Role( array( 'read' => true, 'zsa_act_class_lists' => true ) );
+get_role( 'administrator' )->add_cap( 'zsa_act_class_lists' );
+update_option( 'zsa_act_db_version', '1.2.0' );
+update_option( 'zsa_act_settings', array( 'enabled' => 1, 'origins' => 'https://activities.zornscience.org', 'retention_days' => 365, 'pin_tries' => 10, 'limit_new' => 20, 'limit_lookup' => 60, 'limit_save' => 120, 'limit_class' => 500 ) );
+delete_option( 'zsa_act_stats' );
+zsa_act_maybe_upgrade();
+check( null === get_role( 'zsa_act_teacher' ) && empty( get_role( 'administrator' )->capabilities['zsa_act_class_lists'] ), 'the 1.2.0 teacher role is removed' );
+check( ! empty( get_role( 'administrator' )->capabilities['manage_options'] ), 'administrators keep their own capabilities' );
+check( array( 'enabled', 'origins', 'retention_days' ) === array_keys( get_option( 'zsa_act_settings' ) ), 'saved request limits are dropped' );
+check( 100 === zsa_act_settings()['limit_new'] && 300 === zsa_act_settings()['limit_lookup'] && 600 === zsa_act_settings()['limit_save'], 'the new request limits apply' );
+$stored = (int) $GLOBALS['wpdb']->get_var( 'SELECT COUNT(*) FROM wp_zsa_act_codes' );
+check( $stored === zsa_act_stats()['student'] && 0 === zsa_act_stats()['class'] && '' !== zsa_act_stats()['since'], 'codes issued are counted from the stored codes' );
+check( 1 === preg_match( '/KEY created_at \(created_at\)/', $GLOBALS['zsa_dbdelta'][0] ) && false !== strpos( $GLOBALS['zsa_dbdelta'][0], 'pin_box varchar(255)' ) && false !== strpos( $GLOBALS['zsa_dbdelta'][0], 'kind tinyint(1)' ), 'upgrade adds the new columns and the date index' );
+update_option( 'zsa_act_settings', array() );
 
-// Class lists: a teacher makes codes and PINs ahead of time.
+// Counts of codes issued go up with each new code.
 reset_limits();
-$before = (int) $GLOBALS['wpdb']->get_var( 'SELECT COUNT(*) FROM wp_zsa_act_codes' );
-foreach ( array( 0, -3, ZSA_ACT_CLASS_MAX + 1 ) as $n ) {
-	check( 400 === status( zsa_act_make_class_list( $n, 7 ) ), "class list of $n is refused" );
+$st = zsa_act_stats();
+zsa_act_rest_new_code( new Fake_Request( array() ) );
+check( $st['student'] + 1 === zsa_act_stats()['student'], 'a new code is counted' );
+
+// Class sets from the ACT Practice page: POST /class-lists with {count, name}.
+function class_set( $body ) { return zsa_act_rest_class_list( new Fake_Request( array(), $body ) ); }
+function code_count() { return (int) $GLOBALS['wpdb']->get_var( 'SELECT COUNT(*) FROM wp_zsa_act_codes' ); }
+reset_limits();
+$before = code_count();
+check( 50 === zsa_act_settings()['class_max'], 'class sets are up to 50 students by default' );
+foreach ( array( array(), array( 'count' => 0 ), array( 'count' => -3 ), array( 'count' => 51 ), array( 'count' => 2.5 ), array( 'count' => 'ten' ), array( 'count' => array( 5 ) ) ) as $bad ) {
+	$r = class_set( $bad );
+	check( 400 === status( $r ) && 'Choose from 1 to 50 students.' === $r->message && 50 === $r->data['max'], 'refuses a class set of ' . json_encode( $bad ) );
 }
-$list = zsa_act_make_class_list( 25, 7 );
-check( is_array( $list ) && 25 === count( $list ), 'class list of 25' );
-check( 25 === count( array_unique( array_column( $list, 'code' ) ) ), 'class list codes are all different' );
-check( $before + 25 === (int) $GLOBALS['wpdb']->get_var( 'SELECT COUNT(*) FROM wp_zsa_act_codes' ), 'class list saved 25 codes' );
+check( 400 === status( zsa_act_rest_class_list( new Fake_Request( array(), 'not an object' ) ) ), 'refuses a body that is not an object' );
+check( $before === code_count(), 'refused class sets make no codes' );
+$st = zsa_act_stats();
+$r  = class_set( array( 'count' => 25, 'name' => 'Period 3 (Room 204)' ) );
+check( 201 === status( $r ) && 'no-store, private' === $r->headers['Cache-Control'], 'class set of 25 is 201, not cached' );
+$list = $r->data['codes'];
+check( 25 === count( $list ) && 25 === count( array_unique( array_column( $list, 'code' ) ) ), '25 different codes' );
+check( $before + 25 === code_count(), 'class set saved 25 codes' );
+check( $st['class'] + 25 === zsa_act_stats()['class'] && $st['lists'] + 1 === zsa_act_stats()['lists'] && $st['student'] === zsa_act_stats()['student'], 'class set counted as 25 codes in 1 set' );
+check( 1 === preg_match( '/^act-class-codes-period-3-room-204-\d{4}-\d\d-\d\d$/', $r->data['file'] ), 'file name from the class name: ' . $r->data['file'] );
+check( zsa_act_class_csv( $list ) === $r->data['csv'], 'the CSV file is in the response' );
+$pdf = base64_decode( $r->data['pdf'], true );
+check( false !== $pdf && 0 === strpos( $pdf, '%PDF-1.4' ) && false !== strpos( $pdf, '(Period 3 \\(Room 204\\)) Tj' ), 'the PDF is in the response, with the class name' );
 update_option( 'zsa_act_settings', array( 'limit_lookup' => 1000 ) );
 foreach ( $list as $r ) {
 	check( $r['pin'] === zsa_act_clean_pin( $r['pin'] ) && '0' !== $r['pin'][0], 'class PIN is four digits, not starting with 0' );
 	$row = zsa_act_find_code( $r['code'] );
-	check( false === strpos( $row['pin_hash'], $r['pin'] ) && password_verify( $r['pin'], $row['pin_hash'] ), 'class PIN stored as a hash only' );
+	check( 1 === (int) $row['kind'] && password_verify( $r['pin'], $row['pin_hash'] ) && $r['pin'] === zsa_act_unseal_pin( $row['pin_box'] ), 'class code saved with its PIN' );
 	check( 200 === status( open_code( $r['code'], $r['pin'] ) ), 'each class code opens with its own PIN' );
 }
 check( 403 === status( open_code( $list[0]['code'], $list[1]['pin'] === $list[0]['pin'] ? $wrong : $list[1]['pin'] ) ), "a classmate's PIN does not open a code" );
-update_option( 'zsa_act_settings', array( 'limit_class' => 30 ) );
-check( 429 === status( zsa_act_make_class_list( 6, 7 ) ), 'over the hourly limit for one teacher' );
-check( $before + 25 === (int) $GLOBALS['wpdb']->get_var( 'SELECT COUNT(*) FROM wp_zsa_act_codes' ), 'nothing made over the limit' );
-check( 5 === count( zsa_act_make_class_list( 5, 7 ) ), 'up to the limit is fine' );
-check( 6 === count( zsa_act_make_class_list( 6, 8 ) ), "another teacher's limit is separate" );
 update_option( 'zsa_act_settings', array() );
+check( 201 === status( class_set( array( 'count' => '3', 'name' => array( 'x' ) ) ) ), 'a count as digits is fine, and a strange name is ignored' );
+
+// Limits, so no one can make codes without end: class sets per hour from one network address, then the site-wide
+// limit for 24 hours (for class sets and students' own codes alike). Refused requests make nothing.
+reset_limits();
+for ( $i = 0; $i < 5; $i++ ) {
+	check( 201 === status( class_set( array( 'count' => 1 ) ) ), "class set $i this hour" );
+}
+$before = code_count();
+$r = class_set( array( 'count' => 1 ) );
+check( 429 === status( $r ) && 'zsa_act_busy' === $r->code, 'the sixth class set from one network in an hour is 429' );
+check( 201 === status( zsa_act_rest_new_code( new Fake_Request( array() ) ) ), "students' own codes have their own limit" );
+reset_limits();
+$made = zsa_act_made_recently();
+check( $made === code_count(), 'every stored code was made in the last 24 hours' );
+update_option( 'zsa_act_settings', array( 'daily_codes' => $made + 10 ) );
+$r = class_set( array( 'count' => 11 ) );
+check( 429 === status( $r ) && 'zsa_act_daily' === $r->code, 'a class set past the 24-hour limit is 429' );
+check( $made === code_count(), 'and makes no codes' );
+check( 201 === status( class_set( array( 'count' => 10 ) ) ), 'a class set that just fits is made' );
+$r = zsa_act_rest_new_code( new Fake_Request( array() ) );
+check( 429 === status( $r ) && 'zsa_act_daily' === $r->code, "then even a student's own code waits" );
+check( 200 === status( open_code( $list[0]['code'], $list[0]['pin'] ) ), 'existing codes still open' );
+$old = gmdate( 'Y-m-d H:i:s', time() - DAY_IN_SECONDS - 60 );
+$GLOBALS['wpdb']->query( "UPDATE wp_zsa_act_codes SET created_at = '$old'" );
+check( 0 === zsa_act_made_recently() && 201 === status( zsa_act_rest_new_code( new Fake_Request( array() ) ) ), 'codes older than 24 hours no longer count' );
+update_option( 'zsa_act_settings', array( 'class_enabled' => 0 ) );
+reset_limits();
+check( 503 === status( class_set( array( 'count' => 1 ) ) ), 'class sets can be turned off' );
+check( 201 === status( zsa_act_rest_new_code( new Fake_Request( array() ) ) ), "students' own codes still work then" );
+update_option( 'zsa_act_settings', array( 'enabled' => 0 ) );
+check( 503 === status( class_set( array( 'count' => 1 ) ) ), 'no class sets when codes are off' );
+update_option( 'zsa_act_settings', array( 'class_max' => 30 ) );
+check( 'Choose from 1 to 30 students.' === class_set( array( 'count' => 31 ) )->message, 'the maximum can be changed' );
+update_option( 'zsa_act_settings', array() );
+reset_limits();
 
 // The CSV file: a header, then the code in the first column and the PIN in the second.
 $csv = zsa_act_class_csv( $list );
@@ -382,41 +462,59 @@ foreach ( zsa_act_pdf_wrap( str_repeat( 'Practice codes and PINs ', 40 ), 10, 50
 	check( zsa_act_pdf_width( $l, 10 ) <= 504, 'wrapped line fits' );
 }
 
-// The ACT Class Codes page: only for teachers and administrators; both downloads come from the one list.
-function class_page( $post ) {
+// The admin page (administrators only): counts of codes issued, looking up a code's PIN, a new PIN, deleting
+// everything, and the settings, each kept within its range.
+function admin_page( $post ) {
 	$_POST = $post;
 	ob_start();
-	try { zsa_act_class_page(); } finally { $html = ob_get_clean(); $_POST = array(); }
+	try { zsa_act_admin_page(); } finally { $html = ob_get_clean(); $_POST = array(); }
 	return $html;
 }
-$html = class_page( array() );
-check( false !== strpos( $html, 'name="count"' ) && false !== strpos( $html, 'max="' . ZSA_ACT_CLASS_MAX . '"' ) && false === strpos( $html, 'data:' ), 'the form, with no list yet' );
-$GLOBALS['zsa_user']['caps'] = array( 'read' );
+$GLOBALS['zsa_user'] = array( 'id' => 2, 'caps' => array( 'read' ) );
 $denied = false;
-try { class_page( array() ); } catch ( Exception $e ) { $denied = 0 === strpos( $e->getMessage(), 'wp_die' ); }
-check( $denied, 'a user without the role cannot open the page' );
-$GLOBALS['zsa_user'] = array( 'id' => 9, 'caps' => array( 'zsa_act_class_lists' ) );
-$before = (int) $GLOBALS['wpdb']->get_var( 'SELECT COUNT(*) FROM wp_zsa_act_codes' );
-$html = class_page( array( 'zsa_act_action' => 'class', 'count' => '12', 'class_name' => 'Period 3 Chemistry' ) );
-check( 'zsa_act_class' === $GLOBALS['zsa_nonce_checked'], 'the form is checked with its nonce' );
-check( $before + 12 === (int) $GLOBALS['wpdb']->get_var( 'SELECT COUNT(*) FROM wp_zsa_act_codes' ), 'the page made 12 codes' );
-check( 1 === preg_match( '/download="act-class-codes-period-3-chemistry-\d{4}-\d\d-\d\d\.csv" href="data:text\/csv;base64,([A-Za-z0-9+\/=]+)"/', $html, $c ), 'CSV download link' );
-check( 1 === preg_match( '/download="act-class-codes-period-3-chemistry-\d{4}-\d\d-\d\d\.pdf" href="data:application\/pdf;base64,([A-Za-z0-9+\/=]+)"/', $html, $p ), 'PDF download link' );
-$rows = array_map( function ( $l ) { list( $code, $pin ) = explode( ',', $l ); return array( 'code' => $code, 'pin' => $pin ); }, array_slice( array_filter( explode( "\r\n", base64_decode( $c[1] ) ) ), 1 ) );
-check( 12 === count( $rows ), 'the CSV has the 12 codes' );
-pdf_ok( base64_decode( $p[1] ), $rows, 'Period 3 Chemistry' );
-foreach ( $rows as $r ) {
-	check( 200 === status( open_code( $r['code'], $r['pin'] ) ) && false !== strpos( $html, '<code>' . $r['code'] . '</code>' ), 'the downloads and the page show the same working codes and PINs' );
-}
-$html = class_page( array( 'zsa_act_action' => 'class', 'count' => '500', 'class_name' => '' ) );
-check( false !== strpos( $html, 'notice-error' ) && false === strpos( $html, 'data:' ), 'too many students shows an error and no list' );
-update_option( 'zsa_act_settings', array( 'enabled' => 0 ) );
-check( false !== strpos( class_page( array() ), 'Practice codes are turned off' ), 'warns when codes are off' );
+try { admin_page( array() ); } catch ( Exception $e ) { $denied = 0 === strpos( $e->getMessage(), 'wp_die' ); }
+check( $denied, 'only administrators can open the admin page' );
+$GLOBALS['zsa_user'] = array( 'id' => 1, 'caps' => array( 'manage_options' ) );
+$st = zsa_act_stats();
+$html = admin_page( array() );
+check( false !== strpos( $html, number_format( $st['student'] + $st['class'] ) . ' codes issued</strong>' ), 'the page shows the codes issued' );
+check( false !== strpos( $html, number_format( $st['class'] ) . ' in ' . number_format( $st['lists'] ) . ' class sets' ), 'and how many came in class sets' );
+check( false !== strpos( $html, 'new codes in the last 24 hours, of the limit of 2,000.' ), 'and the 24-hour limit' );
+check( false !== strpos( $html, 'href="https://activities.zornscience.org/act/#teachers"' ), 'links to the class sets page' );
+$kid = $list[3];
+$html = admin_page( array( 'zsa_act_action' => 'lookup', 'code' => strtolower( $kid['code'] ) ) );
+check( 'zsa_act_admin' === $GLOBALS['zsa_nonce_checked'], 'admin forms are checked with their nonce' );
+check( false !== strpos( $html, '<strong style="font-size:1.4em;letter-spacing:.1em">' . $kid['pin'] . '</strong>' ), 'looking up a code shows its PIN' );
+check( false !== strpos( $html, ', in a class set' ), 'and where it came from' );
+check( false !== strpos( admin_page( array( 'zsa_act_action' => 'lookup', 'code' => 'ZZZZZZ' === $kid['code'] ? 'YYYYYY' : 'ZZZZZZ' ) ), 'No code like that was found.' ), 'an unknown code' );
+$html = admin_page( array( 'zsa_act_action' => 'pin', 'code' => $kid['code'] ) );
+check( 1 === preg_match( '/has a new PIN: (\d{4})\./', $html, $np ) && false !== strpos( $html, '>' . $np[1] . '</strong>' ), 'a new PIN is shown, and the lookup shows it too' );
+check( 403 === status( open_code( $kid['code'], $kid['pin'] === $np[1] ? $wrong : $kid['pin'] ) ) && 200 === status( open_code( $kid['code'], $np[1] ) ), 'the old PIN stops working; the new one opens the code' );
+reset_limits();
+$GLOBALS['wpdb']->query( "INSERT INTO wp_zsa_act_codes (code, created_at, last_used, attempts, pin_hash) VALUES ('QQQQQQ', '2026-10-01 00:00:00', '" . zsa_act_now() . "', 0, '" . zsa_act_hash_pin( '1234' ) . "')" );
+check( false !== strpos( admin_page( array( 'zsa_act_action' => 'lookup', 'code' => 'QQQQQQ' ) ), 'This PIN cannot be shown' ), 'a PIN from before 1.3.0 cannot be shown' );
+admin_page( array( 'zsa_act_action' => 'settings', 'enabled' => '1', 'origins' => 'https://activities.zornscience.org', 'retention_days' => '5', 'class_max' => '500', 'class_per_hour' => '8', 'daily_codes' => '3000', 'limit_new' => '999999' ) );
+$saved = get_option( 'zsa_act_settings' );
+check( 30 === $saved['retention_days'] && 100 === $saved['class_max'] && 8 === $saved['class_per_hour'] && 3000 === $saved['daily_codes'] && 0 === $saved['class_enabled'], 'settings are saved within their ranges (an unchecked box is off)' );
+check( ! isset( $saved['limit_new'] ) && 100 === zsa_act_settings()['limit_new'], 'the request limits cannot be changed from the form' );
 update_option( 'zsa_act_settings', array() );
+$codes_now = code_count();
+$st = zsa_act_stats();
+$html = admin_page( array( 'zsa_act_action' => 'purge_all', 'confirm' => 'delete' ) );
+check( false !== strpos( $html, 'Nothing was deleted.' ) && $codes_now === code_count(), 'deleting everything needs DELETE typed exactly' );
+$keep = array( $list[5], $list[6] );
+save_to( $keep[0]['code'], $keep[0]['pin'], $good );
+$html = admin_page( array( 'zsa_act_action' => 'purge_all', 'confirm' => ' DELETE ' ) );
+check( false !== strpos( $html, "All $codes_now codes were deleted" ), 'delete everything says how many' );
+check( 0 === code_count() && 0 === (int) $GLOBALS['wpdb']->get_var( 'SELECT COUNT(*) FROM wp_zsa_act_attempts' ), 'every code, PIN and score is gone' );
+check( 403 === status( open_code( $keep[0]['code'], $keep[0]['pin'] ) ), 'deleted codes no longer open' );
+check( $st === zsa_act_stats(), 'the count of codes issued keeps its total' );
+reset_limits();
 
 // A code from before PINs (empty hash) cannot be opened until a teacher makes it a new PIN.
 $GLOBALS['wpdb']->query( "INSERT INTO wp_zsa_act_codes (code, created_at, last_used, attempts, pin_hash) VALUES ('ABCDEF', '2026-10-01 00:00:00', '" . zsa_act_now() . "', 0, '')" );
 check( 403 === status( open_code( 'ABCDEF', '0000' ) ), 'a code without a PIN does not open' );
+$code = zsa_act_rest_new_code( new Fake_Request( array() ) )->data['code'];
 
 // Delete on request
 check( zsa_act_delete_code( $code ) && null === zsa_act_find_code( $code ) && 0 === count( zsa_act_attempts( $code ) ), 'delete removes the code and its scores' );
@@ -427,7 +525,7 @@ $src = file_get_contents( dirname( __DIR__, 2 ) . '/wordpress/zornscience-act-hi
 preg_match_all( '/CREATE TABLE \{\$t\[\'(\w+)\'\]\} \((.*?)\) \$charset/s', $src, $m, PREG_SET_ORDER );
 check( 2 === count( $m ), 'two tables are created' );
 $want = array(
-	'codes'    => array( 'code', 'created_at', 'last_used', 'attempts', 'pin_hash' ),
+	'codes'    => array( 'code', 'created_at', 'last_used', 'attempts', 'pin_hash', 'pin_box', 'kind' ),
 	'attempts' => array( 'id', 'code', 'created_at', 'section', 'mode', 'questions', 'correct', 'score', 'score_low', 'score_high', 'seconds' ),
 );
 foreach ( $m as $table ) {

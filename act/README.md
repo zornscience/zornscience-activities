@@ -1,5 +1,5 @@
 # ACT Practice
-Version: 1.8.0
+Version: 1.9.0
 
 Free ACT practice with original questions in all four sections: English, Math, Reading and the optional Science. Students practice a few questions, one timed section, or the full ACT, and get a score report that compares them with national results and gives tips for the skills they missed. With a practice code (optional, no account), their scores are saved so they can see how they change over time. Not linked from zornscience.org yet. The live URL after approval will be https://activities.zornscience.org/act/. The old address, https://activities.zornscience.org/act-science/, redirects to the Science section.
 
@@ -60,6 +60,20 @@ A practice code is six letters and digits (no I, O, 0 or 1), like K7M2QX, with a
 - **Privacy:** the code and PIN are held only in the page while it is open (no cookies or browser storage), so a student enters them again on each visit. Names, emails and schools are never asked for. Every request is a POST that sends no cookies, so a PIN never appears in a web address. Only the ACT Practice site may call the plugin.
 - **House rules:** `act/history-api.js` is the only file that talks to a server, and `act/index.html` is the only page whose CSP allows a connection (`connect-src https://zornscience.org`). `tests/unit/static.test.js` allows exactly these two exceptions.
 - **Other problems** are explained on the code screen: too many tries (10 wrong PINs lock a code for an hour), and codes being turned off or unreachable (students can always practice without a code).
+- **Forgotten PINs:** Nick can look up any code's PIN on the plugin's admin page (Tools > ACT Practice History), or give it a new one.
+
+## Class sets for teachers
+With codes on, the home screen has a **For teachers** section with **Make class codes**, which opens the class set screen (also at `/act/#teachers`, so it can be linked directly).
+
+- A teacher enters the **Number of students** (1 to `history.classMax`, 50) and, if they like, a **Class name** such as Period 3 Chemistry, and selects **Make class codes**. The page checks the number before sending anything.
+- The plugin makes that many codes and PINs and returns them with two files, which the page offers as **Download PDF to print** and **Download CSV file**:
+  - the PDF has the ZornScience logo and name, the class name and date, how students use the codes, and a row per student with their code and PIN and blank Last name and First name columns, with the ACT trademark notice and a page number on every page;
+  - the CSV file has a `Code,PIN` header, then the code in the first column and the PIN in the second.
+- The screen also lists the codes and PINs in a table, with the warning "Download the PDF and the CSV file now. The PINs will not be shown again after you leave this page." Make another class set and Back to start leave the list behind for good.
+- Students choose **Yes, I have a code and PIN** and type the code and PIN from their row. Class codes are ordinary codes.
+- **Limits, so no one can make codes without end** (all set on the plugin's admin page): at most 50 students in one set, 5 sets an hour from one network address, and 2,000 new codes in any 24 hours for the whole site, counting students' own codes too. A request over a limit is refused before any code is made, and the screen says to try again in an hour, or tomorrow. Existing codes keep working.
+- The class name is sent only so it can be printed in the PDF and used in the file names; the plugin does not save it. No student names are asked for.
+- Keep `history.classMax` in `config.js` the same as "Most students in one class set" on the admin page. If they differ, the plugin's number wins and the page says so.
 
 ## Files
 | File | What it holds |
@@ -69,7 +83,7 @@ A practice code is six letters and digits (no I, O, 0 or 1), like K7M2QX, with a
 | `config.js` | For each section: question count, minutes, raw to scale conversion, national average and benchmark, the full section's mix, and practice set sizes. Also the full ACT order, the break, the composite average, and Science's national ranks. **Refresh each fall** (see the comment at the top). |
 | `bank-english.js`, `bank-math.js`, `bank-reading.js`, `bank-science.js` | The question banks, one per section. |
 | `act.js` | Home, start screens, the section, the score reports, the full ACT, practice codes and history, and the figure drawing (graphs, tables, diagrams). |
-| `history-api.js` | The only network code: asks the WordPress plugin for a new code, a code's history, or to save an attempt. |
+| `history-api.js` | The only network code: asks the WordPress plugin for a new code, a code's history, to save an attempt, or for a class set. |
 | `act.css` | Layout, light and dark colors. |
 | `zornscience-logo.png` | The ZornScience logo for the header (the same file as the Periodic Table's), shown at 46 by 44 px. |
 | `fonts/` | Atkinson Hyperlegible, regular, bold and italic, Latin subset (SIL OFL 1.1). |
@@ -255,6 +269,7 @@ Each question in the answer review has a Show with passage button (Show question
 - Ending the section asks on the page, never with a `confirm()` dialog.
 
 ## Changelog
+1.9.0: Class sets for teachers (Nick's request): a For teachers section on the home screen and a class set screen at `#teachers`, where a teacher makes 1 to 50 codes and PINs at once and downloads a ZornScience PDF to print (with blank last and first name columns) and a CSV file (code, PIN). Needs the plugin's version 1.3.0, which limits class sets per network per hour and new codes per 24 hours for the whole site, and lets Nick look up a forgotten PIN.
 1.8.0: Practice codes now have a four-digit PIN (Nick's request). Before any practice, students are asked whether they have a code and PIN: a matching pair starts the practice, a wrong one never does (and the same answer is given for an unknown code), a new code and PIN are shown once with a warning to write them down or take a picture, and practicing without a code warns that scores stay only until the window is closed (this visit's scores can still be viewed). The code and PIN are never shown again. Every request to the plugin is now a POST, so a PIN is never in a web address. Needs the plugin's version 1.1.0, which also deletes codes inactive for a year, with their PINs and scores, and has a Delete inactive codes now button.
 
 1.7.0: Practice codes (Nick's request, approved by his district): an optional six-character code saves each finished section to the ZornScience ACT Practice History WordPress plugin (new, in `wordpress/zornscience-act-history/`), and a history screen shows score changes over time. Off until the plugin is installed (`history.enabled`), and testable with `?codes=1`. The history chart uses a fifth marker shape (a ring) for the composite.
