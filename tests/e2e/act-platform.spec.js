@@ -459,10 +459,13 @@ test("full ACT: English, Math, the break, Reading and Science, then a composite 
   await expect(page.getByRole("heading", {level: 1, name: "Full ACT score report"})).toBeFocused();
   await expect(page.getByText("13 / 36", {exact: true})).toBeVisible();
   await expect(page.getByText(/below the national average composite of 19\.4/)).toBeVisible();
-  await expect(page.getByText("STEM score (the average of Math and Science): 1")).toBeVisible();
   var scores = page.getByRole("region", {name: "Section scores"});
   await expect(scores.getByRole("heading", {level: 3})).toHaveText(["English 36", "Math 1", "Reading 1", "Science 1"]);
-  await expect(scores.getByText("50 of 50 correct. Meets the benchmark of 18.")).toBeVisible();
+  await expect(scores.getByText("50 of 50 correct. About the 100th percentile. Meets the benchmark of 18.")).toBeVisible();
+  await expect(scores.getByText("0 of 45 correct. About the 1st percentile. Benchmark 22.")).toBeVisible();
+  // ACT's 2026-2027 ranks: a composite of 13 is the 20th percentile.
+  await expect(page.getByText(/A 13 is about the 20th percentile, meaning you would score as well as or better than about 20% of students who take the ACT\./)).toBeVisible();
+  await expect(page.getByText("STEM score (the average of Math and Science): 1, about the 1st percentile")).toBeVisible();
   await auditBoth(page, "full report");
   for (var [w, h] of [[390, 664], [320, 568]]) {
     await page.setViewportSize({width: w, height: h});

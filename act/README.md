@@ -1,5 +1,5 @@
 # ACT Practice
-Version: 1.5.0
+Version: 1.6.0
 
 Free ACT practice with original questions in all four sections: English, Math, Reading and the optional Science. Students practice a few questions, one timed section, or the full ACT, and get a score report that compares them with national results and gives tips for the skills they missed. Nothing is saved or sent anywhere. Not linked from zornscience.org yet. The live URL after approval will be https://activities.zornscience.org/act/. The old address, https://activities.zornscience.org/act-science/, redirects to the Science section.
 
@@ -77,7 +77,7 @@ A tools row sits under the top bar during a section. Every tool is a button with
 - **Math notation is HTML, not MathML.** Fractions and roots are text in styled spans, with screen reader words ("over") in visually hidden text. They look the same in every browser, zoom with the page, and can be highlighted. MathML would need a new namespace allowance in the static tests and renders differently across browsers.
 - **The folder moved from `act-science/` to `act/`** (Nick's choice, 2026-10-24). `act-science/index.html` is a redirect to `act/#science`, like the retired Ionic Formula Builder.
 - **Score conversions for English, Math and Reading are approximate,** modeled on typical past ACT forms and scaled to the enhanced ACT's lengths (50, 45 and 36 questions). Each report says so.
-- **Percentiles appear for Science only.** ACT's 2024-2025 national ranks for English, Math, Reading and the composite are in a PDF this environment cannot reach. To turn them on, add a `rank` table (scale score to percent at or below) for each section in `config.js` from ACT's "National Ranks for Test Scores", and one for the composite.
+- **Percentiles use ACT's 2026-2027 national ranks** (from the "ACT Score National Ranks" PDF Nick supplied, based on graduates of 2024, 2025 and 2026) for English, Math, Reading, Science, the composite and STEM. The ELA score (English, Reading and Writing averaged) and the Writing ranks are not used, because this tool has no Writing test. The national averages shown beside each score are still the class of 2025 averages from the ACT Profile Report; the ranks PDF lists slightly different means (English 18.4, Math 19.0, Reading 20.0, Science 19.5, composite 19.1) because it covers three graduating classes.
 - **No practice history codes yet.** The 6-character code idea is on hold until Nick checks with his district. Nothing is stored.
 - **Embedded field-test questions are not included.** The real ACT adds a few unscored questions to each section; this practice scores every question.
 - No en or em dashes anywhere (also checked by `tests/unit/static.test.js`).
@@ -207,14 +207,14 @@ Facts in the nonfiction passages follow standard published accounts: Henry Ford'
 None left: every section now has its full draft bank.
 
 ## Scoring
-Percent correct is scaled to the section's raw score (50, 45, 36 or 40 questions) and converted with that section's `conv` in `config.js`. Percentiles come from a section's `rank` table, which only Science has so far (ACT's 2024-2025 national ranks).
+Percent correct is scaled to the section's raw score (50, 45, 36 or 40 questions) and converted with that section's `conv` in `config.js`. Percentiles come from each section's `rank` table, and the full ACT's composite and STEM percentiles from `compositeRank` and `stemRank` (ACT's 2026-2027 national ranks).
 
 | Mode | Estimate |
 |---|---|
 | Practice | None. Percent correct and the section's national average and benchmark (for Science, a plain-language comparison: students near the national average get about half right; at the benchmark, about two thirds). |
 | Mixed practice, 15 or more questions | A range: the conversion of the raw score minus and plus a tenth of the section's questions (4 in Science, 5 in English), the percentile of the middle where there are ranks, and the disclaimer about small samples. |
 | Full section | One estimated score, and its percentile where there are ranks, with a disclaimer that real forms are scaled differently. |
-| Full ACT | Each section's score, the composite (English, Math and Reading averaged and rounded), and the STEM score when Science was taken. |
+| Full ACT | Each section's score and percentile, the composite (English, Math and Reading averaged and rounded) and its percentile, and the STEM score and percentile when Science was taken. |
 
 Every section report shows number and percent correct, time used against ACT pace, a note if time ran out, a bar per skill seen, tips for the two weakest skills plus test-day habits, and every question with the student's answer, the correct answer and the explanation.
 
@@ -239,6 +239,8 @@ Each question in the answer review has a Show with passage button (Show question
 - Ending the section asks on the page, never with a `confirm()` dialog.
 
 ## Changelog
+1.6.0: Percentiles for every section, the composite and STEM, from ACT's 2026-2027 national ranks (supplied by Nick). Science percentiles move from the 2024-2025 table to the 2026-2027 one (for example, a 19 is now the 54th percentile, not the 52nd). The full ACT report shows the composite's percentile, the STEM score's, and each section's.
+
 1.5.0: A second Science section (milestone E): seven new passages, 40 questions, as drafts (Air Pressure and Boiling Water, Exercise and Heart Rate, Pendulum Swings, How Fast Sugar Dissolves, Yeast and Balloons, Keeping Water Warm, Where the Moon Came From). A unit test checks that the reviewed passages and the drafts each make a full section on their own.
 
 1.4.1: Every Reading passage lengthened to 600 to 800 words (Nick asked for full-length passages). Paragraphs, questions and answers are unchanged; each paragraph was expanded in place. New unit checks keep passages in that range and make sure quoted phrases in explanations match the passage.

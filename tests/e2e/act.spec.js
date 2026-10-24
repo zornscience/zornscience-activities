@@ -696,7 +696,7 @@ test("full section, real bank: 40 questions in 40 minutes, every passage once, a
   for (var k of Object.keys(data.skills)) await expect(page.getByText(data.skills[k].name, {exact: true}).first()).toBeVisible();
 });
 
-test("full section, half right: 20 of 40 is an estimated 19, the 52nd percentile", async ({page, problems}) => {
+test("full section, half right: 20 of 40 is an estimated 19, the 54th percentile (2026-2027 ranks)", async ({page, problems}) => {
   void problems;
   await go(page, 53);
   await begin(page, "Full section");
@@ -706,7 +706,7 @@ test("full section, half right: 20 of 40 is an estimated 19, the 52nd percentile
   await expect(page.getByText("20 / 40", {exact: true})).toBeVisible();
   await expect(page.getByText("50% correct")).toBeVisible();
   await expect(page.getByRole("heading", {name: "Estimated ACT Science score: 19"})).toBeVisible();
-  await expect(page.getByText(/That is below the national average of 19\.6\. A 19 is about the 52nd percentile/)).toBeVisible();
+  await expect(page.getByText(/That is below the national average of 19\.6\. A 19 is about the 54th percentile/)).toBeVisible();
   await expect(page.getByText(/ACT's college readiness benchmark is 23\./)).toBeVisible();
 });
 

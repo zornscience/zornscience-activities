@@ -234,11 +234,22 @@ test("scoring config: conversions, ranks and reference values", function () {
     if (c.mix) assert.ok(c.mixedPassages >= 2, k + " mixed practice");
     else assert.ok(c.practiceCount && c.mixedCount >= cfg.minForEstimate, k + " question counts");
   });
-  var rank = cfg.sections.science.rank;
-  for (var s = 9; s <= 36; s++) {
-    assert.ok(rank[s] >= 1 && rank[s] <= 100, "rank " + s);
-    if (s > 9) assert.ok(rank[s] >= rank[s - 1], "ranks never go down at " + s);
-  }
+  // ACT's 2026-2027 national ranks: a full table (1 to 36) for every section, the composite and STEM, never going
+  // down, 100 at 36, and matching the published table at sample scores.
+  var tables = {english: cfg.sections.english.rank, math: cfg.sections.math.rank, reading: cfg.sections.reading.rank,
+    science: cfg.sections.science.rank, composite: cfg.compositeRank, stem: cfg.stemRank};
+  Object.keys(tables).forEach(function (k) {
+    var rank = tables[k];
+    for (var s = 1; s <= 36; s++) {
+      assert.ok(rank[s] >= 1 && rank[s] <= 100, k + " rank " + s);
+      if (s > 1) assert.ok(rank[s] >= rank[s - 1], k + " ranks never go down at " + s);
+    }
+    assert.equal(rank[36], 100, k);
+  });
+  var published = {english: [[20, 64], [18, 54], [25, 84]], math: [[22, 74], [15, 33], [30, 95]], reading: [[22, 66], [19, 51], [35, 98]],
+    science: [[23, 77], [19, 54], [26, 89]], composite: [[21, 68], [13, 20], [28, 91]], stem: [[24, 81], [16, 36], [12, 5]]};
+  Object.keys(published).forEach(function (k) { published[k].forEach(function (pair) { assert.equal(tables[k][pair[0]], pair[1], k + " " + pair[0]); }); });
+  assert.equal(cfg.rankYear, "2026-2027");
   assert.equal(cfg.compositeAvg, 19.4);
   assert.equal(Math.round(cfg.sections.science.count * cfg.rangeShare), 4, "Science range is 4 raw points");
   assert.match(fs.readFileSync(path.join(DIR, "config.js"), "utf8"), /REFRESH EACH FALL/);

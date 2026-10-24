@@ -1439,10 +1439,15 @@
     var big = card.appendChild(node("p", "zsa-act-big"));
     big.appendChild(document.createTextNode(String(composite)));
     big.appendChild(node("small", null, " / 36"));
-    if (scores.science) card.appendChild(node("p", "zsa-act-small", fill(ui.stemLine, {stem: Math.round((scores.math.e.est + scores.science.e.est) / 2)})));
+    function pct(table, v) { var r = table[v] || 1; return r + ordinal(r); }
+    if (scores.science) {
+      var stem = Math.round((scores.math.e.est + scores.science.e.est) / 2);
+      card.appendChild(node("p", "zsa-act-small", fill(ui.stemLine, {stem: stem, pr: pct(cfg.stemRank, stem)})));
+    }
     var box = top.appendChild(node("div", "zsa-act-scale-box"));
-    box.appendChild(node("p", null, fill(ui.compositeText, {cmp: compare(composite, cfg.compositeAvg), avg: cfg.compositeAvg, avgClass: cfg.avgClass})));
-    box.appendChild(node("p", "zsa-act-small", ui.fullDisclaimer));
+    box.appendChild(rich(node("p"), fill(ui.compositeText, {cmp: compare(composite, cfg.compositeAvg), avg: cfg.compositeAvg, avgClass: cfg.avgClass,
+      a: aOrAn(composite), composite: composite, pr: pct(cfg.compositeRank, composite), prNum: cfg.compositeRank[composite] || 1})));
+    box.appendChild(node("p", "zsa-act-small", fill(ui.fullDisclaimer, {rankYear: cfg.rankYear})));
     var secs = section(ui.sectionScoresTitle);
     var list = secs.appendChild(node("ul", "zsa-act-secscores"));
     var focusBtn = null;
@@ -1453,7 +1458,7 @@
       h.appendChild(document.createTextNode(name + " "));
       h.appendChild(node("span", "zsa-act-secscore-num", String(sc.e.est)));
       li.appendChild(meter(sc.e.est / 36));
-      li.appendChild(node("p", "zsa-act-small", fill(ui.sectionScoreLine, {right: sc.e.right, count: sc.st.total,
+      li.appendChild(node("p", "zsa-act-small", fill(ui.sectionScoreLine, {right: sc.e.right, count: sc.st.total, pr: pct(c.rank, sc.e.est),
         bench: fill(sc.e.est >= c.benchmark ? ui.benchMet : ui.benchNotMet, {benchmark: c.benchmark})})));
       var b = li.appendChild(button(fill(ui.seeReport, {name: name}), "zsa-act-open", function () {
         S = sc.st;
