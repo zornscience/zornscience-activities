@@ -1,5 +1,5 @@
-(function(){
-'use strict';
+(function () {
+  "use strict";
 const $=id=>document.getElementById(id), ns='http://www.w3.org/2000/svg';
 const surfaces={wood:[.45,.30],felt:[.65,.48],plastic:[.25,.16]};
 let theta=20,mass=.5,s=0,v=0,t=0,moving=false,ended=false,paused=false,last=0;
