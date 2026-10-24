@@ -94,14 +94,15 @@ function fullBanks() {
 }
 
 // ---------- Home and section start screens ----------
-test("home: full ACT waits for full banks, four sections open their start screens and back", async ({page, problems}) => {
+test("home: the full ACT opens with every bank reviewed, four sections open their start screens and back", async ({page, problems}) => {
   void problems;
   await go(page);
   await expect(page).toHaveTitle("ACT Practice | ZornScience");
   await expect(page.getByRole("heading", {level: 1, name: "ACT Practice"})).toBeVisible();
   var full = page.getByRole("region", {name: "Full ACT"});
-  await expect(full.getByText(/opens when every section has a full set of reviewed questions/)).toBeVisible();
-  await expect(full.getByRole("button")).toHaveCount(0);
+  await expect(full.getByText(/opens when every section has a full set of reviewed questions/)).toHaveCount(0);
+  await expect(full.getByRole("button", {name: "Start the full ACT"})).toBeVisible();
+  await expect(full.getByRole("checkbox", {name: "Include the optional Science section"})).toBeChecked();
   var expected = {English: "50 questions in 35 minutes", Math: "45 questions in 50 minutes", Reading: "36 questions in 40 minutes", Science: "40 questions in 40 minutes (optional)"};
   for (var name of Object.keys(expected)) {
     await expect(page.getByRole("button", {name: name + " " + expected[name], exact: true})).toBeVisible();
@@ -112,12 +113,11 @@ test("home: full ACT waits for full banks, four sections open their start screen
     await expect(page.getByRole("heading", {level: 1, name: s.ui.title})).toBeFocused();
     expect(new URL(page.url()).hash).toBe("#" + key);
     await expect(page.getByRole("heading", {level: 2, name: "The ACT " + s.name + " test"})).toBeVisible();
-    // English, Math and Reading have only drafts so far, so students see a note instead of modes.
-    if (key === "science") await expect(page.getByRole("button", {name: /^Full section/})).toBeVisible();
-    else {
-      await expect(page.getByText("Questions for this section are being written and reviewed. Check back soon.")).toBeVisible();
-      await expect(page.getByRole("button", {name: /^(One passage|Practice questions|Mixed practice)/})).toHaveCount(0);
-    }
+    // Every bank is reviewed, so students get every mode and no "being written" note.
+    await expect(page.getByRole("button", {name: /^(One passage|Practice questions)/})).toBeVisible();
+    await expect(page.getByRole("button", {name: /^Mixed practice/})).toBeVisible();
+    await expect(page.getByRole("button", {name: /^Full section/})).toBeVisible();
+    await expect(page.getByText("Questions for this section are being written and reviewed. Check back soon.")).toHaveCount(0);
     await page.getByRole("button", {name: "All sections"}).click();
     await expect(page.getByRole("heading", {level: 1, name: "ACT Practice"})).toBeFocused();
     expect(new URL(page.url()).hash).toBe("");
@@ -156,7 +156,7 @@ test("English: numbered underlined parts follow the question, NO CHANGE first, a
   var p = bank.english.passages[0];
   await go(page, "english", {query: "?drafts=1", seed: 3});
   var list = page.getByRole("region", {name: "Review drafts"});
-  await expect(list.getByRole("button", {name: p.title + " Informative · 10 questions · Draft", exact: true})).toBeVisible();
+  await expect(list.getByRole("button", {name: p.title + " Informative · 10 questions · Reviewed", exact: true})).toBeVisible();
   await list.getByRole("button", {name: new RegExp("^" + p.title)}).click();
   await startSection(page, "English");
   var art = page.getByRole("article");
@@ -358,7 +358,7 @@ for (var rp of bank.reading.passages) {
       void problems;
       await go(page, "reading", {query: "?drafts=1"});
       var list = page.getByRole("region", {name: "Review drafts"});
-      await expect(list.getByRole("button", {name: p.title + " " + p.type + " · 9 questions · Draft", exact: true})).toBeVisible();
+      await expect(list.getByRole("button", {name: p.title + " " + p.type + " · 9 questions · Reviewed", exact: true})).toBeVisible();
       await list.getByRole("button", {name: new RegExp("^" + p.title.replace("?", "\\?") + " ")}).click();
       await startSection(page, "Reading");
       var art = page.getByRole("article");

@@ -379,7 +379,7 @@
       type: "Data Representation",
       title: "Air Pressure and Boiling Water",
       topic: "Earth and space science",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "Air pressure is the force of the air pressing on a surface. It decreases with <em>altitude</em> (height above sea level) because there is less air above. Figure 1 shows the average air pressure at different altitudes, in kilopascals (kPa)."},
         {kind: "lineChart", caption: "Figure 1", xLabel: "Altitude (km)", yLabel: "Air pressure (kPa)", x: [0, 1, 2, 3, 4, 5, 6], yMax: 110, yStep: 10,
@@ -422,7 +422,7 @@
       type: "Data Representation",
       title: "Exercise and Heart Rate",
       topic: "Biology",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "Two students, Student A and Student B, each wore a heart-rate monitor. Each student sat still from minute 0 to minute 2, pedaled an exercise bike at the same steady effort from minute 2 to minute 8, and then sat still again from minute 8 to minute 14. Figure 1 shows each student's heart rate in beats per minute (bpm)."},
         {kind: "lineChart", caption: "Figure 1", xLabel: "Time (min)", yLabel: "Heart rate (bpm)", x: [0, 2, 4, 6, 8, 10, 12, 14], yMax: 180, yStep: 20,
@@ -466,7 +466,7 @@
       type: "Data Representation",
       title: "Pendulum Swings",
       topic: "Physics",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "A <em>pendulum</em> is a weight, called the bob, hanging from a string so that it can swing back and forth. Its <em>period</em> is the time for one complete swing, over and back. Students timed pendulums with strings of different lengths. Each bob had a mass of 100 g and was released from an angle of 10° (Figure 1)."},
         {kind: "scatter", caption: "Figure 1", xLabel: "String length (m)", yLabel: "Period (s)", xMin: 0, xMax: 2.5, xStep: 0.5, yMin: 0, yMax: 3, yStep: 0.5,
@@ -509,7 +509,7 @@
       type: "Research Summaries",
       title: "How Fast Sugar Dissolves",
       topic: "Chemistry",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "Students studied how quickly sugar dissolves in water. In every trial, they added 5 g of sugar to 100 mL of water and recorded the <em>dissolving time</em>, the time until no sugar crystals could be seen."},
         {kind: "heading", text: "Experiment 1"},
@@ -557,7 +557,7 @@
       type: "Research Summaries",
       title: "Yeast and Balloons",
       topic: "Biology",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "Yeast are single-celled fungi that break down sugar and release carbon dioxide (CO<sub>2</sub>) gas. Students put 100 mL of water, 2 g of yeast and some sugar in a flask, stretched a balloon over the opening, and measured the distance around the balloon (its circumference) after 30 minutes. Before any gas was produced, each balloon measured 10 cm around. A larger balloon means more CO<sub>2</sub> was produced."},
         {kind: "heading", text: "Experiment 1"},
@@ -603,7 +603,7 @@
       type: "Research Summaries",
       title: "Keeping Water Warm",
       topic: "Physics",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "Students studied how well different materials slow the cooling of hot water. In every trial, 200 mL of water at 80°C was poured into a metal cup, the cup was wrapped in a material, and the water temperature was measured after 20 minutes. The room temperature was 22°C."},
         {kind: "heading", text: "Experiment 1"},
@@ -643,7 +643,7 @@
       type: "Conflicting Viewpoints",
       title: "Where the Moon Came From",
       topic: "Earth and space science",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "The Moon is about one-fourth as wide as Earth. Rock samples brought back from the Moon show that its rocks are similar to rocks from Earth's <em>mantle</em>, the thick layer of rock beneath Earth's crust, and that Moon rocks and Earth rocks contain nearly identical forms of oxygen. Compared with its size, the Moon has a much smaller iron core than Earth does. Three scientists describe how the Moon may have formed."},
         {kind: "viewpoint", label: "Scientist 1", html: "Early in Earth's history, an object about the size of Mars struck Earth a glancing blow. The impact blasted material from Earth's outer layers, along with material from the object, into orbit around Earth, where it gathered to form the Moon. Because the debris came mostly from the outer layers and not from Earth's iron core, the Moon has little iron. Its rocks resemble Earth's mantle because much of the debris came from Earth's mantle."},

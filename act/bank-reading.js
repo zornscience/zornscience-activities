@@ -12,7 +12,7 @@
       id: "hummingbird-torpor",
       type: "Natural Science",
       title: "The Hummingbird's Night Budget",
-      status: "draft",
+      status: "reviewed",
       numbered: true,
       body: [
         {kind: "note", html: "This passage was written for this practice test."},
@@ -56,7 +56,7 @@
       id: "the-tuba",
       type: "Prose Fiction",
       title: "The Tuba",
-      status: "draft",
+      status: "reviewed",
       numbered: true,
       body: [
         {kind: "note", html: "This story was written for this practice test."},
@@ -102,7 +102,7 @@
       id: "open-late",
       type: "Prose Fiction",
       title: "Open Late",
-      status: "draft",
+      status: "reviewed",
       numbered: true,
       body: [
         {kind: "note", html: "This story was written for this practice test."},
@@ -148,7 +148,7 @@
       id: "invention-weekend",
       type: "Social Science",
       title: "The Invention of the Weekend",
-      status: "draft",
+      status: "reviewed",
       numbered: true,
       body: [
         {kind: "note", html: "This passage was written for this practice test."},
@@ -193,7 +193,7 @@
       id: "waiting-lines",
       type: "Social Science",
       title: "Why Waiting Feels Long",
-      status: "draft",
+      status: "reviewed",
       numbered: true,
       body: [
         {kind: "note", html: "This passage was written for this practice test."},
@@ -238,7 +238,7 @@
       id: "museum-touch",
       type: "Humanities",
       title: "Hands Off?",
-      status: "draft",
+      status: "reviewed",
       numbered: true,
       body: [
         {kind: "note", html: "Passage A and Passage B were written for this practice test."},
@@ -285,7 +285,7 @@
       id: "slow-letters",
       type: "Humanities",
       title: "Slow Letters",
-      status: "draft",
+      status: "reviewed",
       numbered: true,
       body: [
         {kind: "note", html: "This essay was written for this practice test."},
@@ -329,7 +329,7 @@
       id: "octopus-color",
       type: "Natural Science",
       title: "Color Without Seeing It",
-      status: "draft",
+      status: "reviewed",
       numbered: true,
       body: [
         {kind: "note", html: "This passage was written for this practice test."},

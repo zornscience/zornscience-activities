@@ -662,14 +662,14 @@ async function serveBank(page, change) {
 // ---------- Full section, enabled by the reviewed bank (milestone 6) ----------
 test("full section is hidden when the reviewed bank cannot make one", async ({page, problems}) => {
   void problems;
-  // One passage back in draft: only 6 reviewed.
-  await serveBank(page, (b) => { b.passages[0].status = "draft"; });
+  // Only the first 6 passages reviewed.
+  await serveBank(page, (b) => { b.passages.forEach((p, i) => { if (i >= 6) p.status = "draft"; }); });
   await go(page, 51);
   await expect(page.getByRole("button", {name: /^Mixed practice/})).toBeVisible();
   await expect(page.getByRole("button", {name: /^Full section/})).toHaveCount(0);
-  // All reviewed, but one question removed: 39 questions, never exactly 40.
+  // Only the first section's 7 passages, all reviewed, but one question removed: 39 questions, never exactly 40.
   await page.unroute("**/act/bank-science.js*");
-  await serveBank(page, (b) => { b.passages.find((p) => p.type === "Conflicting Viewpoints").questions.pop(); });
+  await serveBank(page, (b) => { b.passages = b.passages.slice(0, 7); b.passages.find((p) => p.type === "Conflicting Viewpoints").questions.pop(); });
   await go(page, 52);
   await expect(page.getByRole("button", {name: /^Mixed practice/})).toBeVisible();
   await expect(page.getByRole("button", {name: /^Full section/})).toHaveCount(0);
@@ -686,8 +686,12 @@ test("full section, real bank: 40 questions in 40 minutes, every passage once, a
   await expect(page.getByRole("timer")).toHaveText("Time left 40:00");
   await expect(nav(page).getByRole("button")).toHaveCount(40);
   var seen = await playAll(page, (q) => q.answer);
-  // Students get reviewed passages only; the second section's drafts never appear.
-  expect(seen.map((p) => p.title).sort()).toEqual(data.passages.filter((p) => p.status === "reviewed").map((p) => p.title).sort());
+  // Seven different reviewed passages: 3 Data Representation, 3 Research Summaries and 1 Conflicting Viewpoints.
+  expect(new Set(seen.map((p) => p.title)).size).toBe(7);
+  seen.forEach((p) => expect(data.passages.find((d) => d.title === p.title).status).toBe("reviewed"));
+  var types = {};
+  seen.forEach((p) => { var t = data.passages.find((d) => d.title === p.title).type; types[t] = (types[t] || 0) + 1; });
+  expect(types).toEqual({"Data Representation": 3, "Research Summaries": 3, "Conflicting Viewpoints": 1});
   await endSection(page);
   await expect(page.getByText("40 / 40", {exact: true})).toBeVisible();
   await expect(page.getByRole("heading", {name: "Estimated ACT Science score: 36"})).toBeVisible();
@@ -770,7 +774,6 @@ test("students never see a draft passage; ?drafts=1 lists every passage with its
   var draft = bank.passages[1];
   await go(page, 41);
   await expect(page.getByRole("heading", {name: "Review drafts"})).toHaveCount(0);
-  await expect(page.getByRole("button", {name: /^Full section/})).toHaveCount(0);
   for (var i = 0; i < 8; i++) {
     await page.getByRole("button", {name: /^One passage/}).click();
     await page.getByRole("button", {name: "Start the section"}).click();

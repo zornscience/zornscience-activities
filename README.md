@@ -25,7 +25,7 @@ ionic-reactions/           Ionic Reaction Builder, v3.4.0 (four reaction familie
 periodic-table/            Periodic Table reference, v1.2.0 (data built by periodic-table/tools/build-data.js)
 periodic-trends/           Periodic Trends Practice, v1.1.0 (questions built from the periodic table's data)
 lewis-vsepr/               Lewis Structure and VSEPR Builder, v1.1.0
-act/                       ACT Practice, v1.9.0 (English, Math, Reading and Science sections and the full ACT; question banks in act/bank-*.js; optional practice codes with PINs, and class sets for teachers)
+act/                       ACT Practice, v1.10.0 (English, Math, Reading and Science sections and the full ACT; question banks in act/bank-*.js; optional practice codes with PINs, and class sets for teachers)
 act-science/               Redirect only: ACT Science Practice is now the Science section of act/
 wordpress/zornscience-act-history/  WordPress plugin for zornscience.org that stores ACT Practice scores under anonymous practice codes (not part of the static site)
 scientific-calculator/     Scientific Calculator Practice, v1.1.0 (independent scientific calculator with six guided exercises)
@@ -34,6 +34,7 @@ gas-lab/                   Gas Laws and KMT Lab, v1.0.0 (particle simulation, gr
 stoichiometry-coach/       Stoichiometry Coach, v1.0.0 (conversion factor setups with unit cancellation)
 atwood-machine/           The Atwood Machine, v1.0.1 (ideal pulley, adjustable masses and live vectors; no data recording)
 physics-graphing-lab/      Physics Graphing Lab, v1.0.0 (a cart with linked position, velocity and acceleration graphs)
+collision-carts/           Collision Carts, v1.0.2 (two carts on a track, elastic and inelastic collisions, live velocity and momentum vectors)
 titration-lab/             Virtual Titration Simulator, v1.0.0 (burette, indicators and a live pH curve for strong and weak acids and bases)
 kinetics-lab/              Kinetics and Collision Theory Sandbox, v1.0.0 (colliding particles, temperature, concentration, activation energy and a catalyst, with a live concentration graph)
 redox-coach/              Redox Half-Reaction Balancer Coach, v1.1.1 (manual phase-by-phase balancing in acidic and basic media)

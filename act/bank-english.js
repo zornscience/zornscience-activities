@@ -13,7 +13,7 @@
       id: "seed-library",
       type: "Informative",
       title: "The Library That Lends Seeds",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "Most public libraries lend books, movies, and sometimes even tools. The library in my town also <u1>lends seeds, it</u1> started the program three years ago with a single wooden cabinet near the front desk. Each small drawer <u2>are labeled</u2> with the name of a vegetable or a flower."},
         {kind: "text", html: "The idea is simple. A gardener <u3>borrows</u3> a packet of seeds in the spring, grows the plants, and lets a few of them go to seed at the end of the summer. <u4>Then, the gardener returns</u4> some of the new seeds to the library so that someone else can borrow them the next year."},
@@ -57,7 +57,7 @@
       id: "grandmother-bread",
       type: "Narrative",
       title: "Saturday Bread",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "Every Saturday morning, my grandmother baked bread in a kitchen that was barely big enough for two people. When I was eight, she finally let me <u1>help, I</u1> remember feeling as if I had been invited into a secret club. The recipe was never written <u2>down; she</u2> kept it in her head."},
         {kind: "text", html: "First, we mixed flour, water, salt, and <u3>yeast, in</u3> a chipped blue bowl. Then came the kneading, which my grandmother did with a rhythm that <u4>seemed</u4> almost musical. She pushed the dough away with the heels of her hands, folded it back, and <u5>turning</u5> it a quarter turn."},
@@ -101,7 +101,7 @@
       id: "drinking-fountains",
       type: "Argument",
       title: "Bring Back the Drinking Fountain",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "Not long ago, nearly every park, school, and train station had a drinking fountain. Today, many of them are broken, shut off, or <u1>removed. Entirely.</u1> Cities should repair the fountains they have and build new <u2>ones, clean</u2> drinking water should be free and easy to find."},
         {kind: "text", html: "The most obvious benefit is to health. People who can easily get a drink of water are less likely to buy sugary <u3>drinks; which</u3> can lead to tooth decay and other problems. <u4>For instance,</u4> fountains are especially important for people who spend long hours outdoors, such as delivery workers and runners."},
@@ -145,7 +145,7 @@
       id: "marie-tharp",
       type: "Informative",
       title: "The Woman Who Mapped the Sea Floor",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "In the 1940s, few scientists thought anything interesting lay at the bottom of the ocean. Most pictured the sea floor as a flat, muddy plain. Marie Tharp, a young geologist <u1>which</u1> had a talent for drawing, would help prove them wrong."},
         {kind: "text", html: "Tharp joined a research lab at Columbia University in 1948. At the time, women were not allowed on the lab's research <u2>ships so</u2> she stayed on shore. Her job was to turn the depth measurements that male scientists collected at sea <u3>into maps that showed the floor of the sea and what it looked like</u3>."},
@@ -190,7 +190,7 @@
       id: "bike-shop",
       type: "Narrative",
       title: "The Bike Shop on Fifth Street",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "The summer I turned fifteen, my bike's chain snapped halfway up the steepest hill in town. I walked the bike home, <u1>angry and sweaty, and embarrassed</u1>. The next morning, my neighbor told me about a community bike shop where volunteers <u2>teaches</u2> people to repair their own bikes."},
         {kind: "text", html: "The shop was in an old garage on Fifth Street. Tools hung on every wall, and the air smelled like grease and rubber. A volunteer named Rosa, <u3>who had fixed bikes for roughly about twenty years</u3>, handed me a pair of gloves."},
@@ -235,7 +235,7 @@
       id: "cooking-class",
       type: "Argument",
       title: "Cooking Belongs in High School",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "Most high school students can solve an equation for <em>x</em>, yet many cannot cook <u1>a simple meal for themselves, by themselves, on their own</u1>. Every high school should offer a basic cooking class, and every student should be required to take <u2>them</u2>."},
         {kind: "text", html: "Cooking is a life skill, like managing money or doing laundry. A student who can cook <u3>saves money, eats</u3> healthier food, and is less likely to depend on fast food after graduation. People who cook at home <u4>tends</u4> to eat more vegetables than people who rarely cook."},
@@ -280,7 +280,7 @@
       id: "monarch-relay",
       type: "Informative",
       title: "The Monarch Relay",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "Every fall, millions of monarch butterflies leave the northern United States and southern Canada and fly as far as 3,000 miles to the mountains of central Mexico. <u1>Remarkably no</u1> single butterfly makes the round trip."},
         {kind: "text", html: "In spring and summer, an adult monarch lives only two to six weeks. During that time, a female <u2>lay</u2> her eggs on milkweed, the only plant monarch caterpillars can eat. Three or four generations <u3>is</u3> born this way each summer, and each one spreads a little farther north."},
@@ -325,7 +325,7 @@
       id: "power-outage",
       type: "Narrative",
       title: "When the Lights Went Out",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "The storm knocked out our power at seven o'clock on a Tuesday night, right in the middle of <u1>dinner. My</u1> little brother shrieked, and our dog hid under the table. My father found a flashlight in the kitchen drawer, but <u2>their</u2> batteries were dead."},
         {kind: "text", html: "For a while, we sat in the dark and listened to the rain. Then my mother <u3>had an idea, she</u3> took a box of candles from the closet and lit them one by one. The kitchen <u4>glowed with a soft, warm, glowing light</u4>."},
@@ -369,7 +369,7 @@
       id: "night-skies",
       type: "Argument",
       title: "Turn Down the Lights",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "For most of human history, people could look up on a clear night and see thousands of stars. Today, most Americans live where the glow of outdoor lights hides all but the brightest stars. That loss is not <u1>permanent, towns</u1> can bring back dark skies with a few simple changes."},
         {kind: "text", html: "The first change is to aim lights downward. Many streetlights and parking lot lights send much of <u2>its</u2> light sideways and up into the sky, where it helps no one. <u3>Shielded fixtures which cover the top of the bulb</u3> direct the light onto the ground, where people need it."},
@@ -414,7 +414,7 @@
       id: "erie-canal",
       type: "Informative",
       title: "The Ditch That Changed a Nation",
-      status: "draft",
+      status: "reviewed",
       body: [
         {kind: "text", html: "In 1817, New York began digging a canal across the state, from Albany on the Hudson River to Buffalo on Lake Erie. Many people thought the project was foolish. <u1>Critics called it \"Clinton's Ditch,\" after</u1> Governor DeWitt Clinton, who had pushed for it."},
         {kind: "text", html: "The canal was about 363 miles long, and most of it was dug by hand. Workers used shovels, picks, and <u2>horses, they</u2> also invented new tools, such as a machine for pulling up tree stumps. Because the land <u3>rise</u3> more than 500 feet between the Hudson River and Lake Erie, the builders needed locks to raise and lower the boats."},

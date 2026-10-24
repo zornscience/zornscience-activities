@@ -1,9 +1,9 @@
 # ACT Practice
-Version: 1.9.0
+Version: 1.10.0
 
 Free ACT practice with original questions in all four sections: English, Math, Reading and the optional Science. Students practice a few questions, one timed section, or the full ACT, and get a score report that compares them with national results and gives tips for the skills they missed. With a practice code (optional, no account), their scores are saved so they can see how they change over time. Not linked from zornscience.org yet. The live URL after approval will be https://activities.zornscience.org/act/. The old address, https://activities.zornscience.org/act-science/, redirects to the Science section.
 
-ACT Science Practice was built in milestones 1 to 6 (versions 0.1.0 to 1.0.1). Version 1.1.0 (milestone A of the full ACT plan) extends the same test platform to all four sections and the full ACT. The question banks for English, Math and Reading, and a second Science section, come in milestones B to E, as drafts for Nick to review. The full ACT turns on by itself once every required section has a full set of reviewed questions (milestone F).
+ACT Science Practice was built in milestones 1 to 6 (versions 0.1.0 to 1.0.1). Version 1.1.0 (milestone A of the full ACT plan) extends the same test platform to all four sections and the full ACT. The question banks for English, Math and Reading, and a second Science section, came in milestones B to E, as drafts for Nick to review. Nick approved them all on 2026-10-24 (version 1.10.0), so every section is complete and the full ACT is open (milestone F).
 
 ## Screens
 - **Home** (`/act/`): the full ACT, a button for each section with its length, and facts about the test. The address of a section's start screen ends in its name (`/act/#english`, `#math`, `#reading`, `#science`), so a link can open it directly.
@@ -103,7 +103,7 @@ With codes on, the home screen has a **For teachers** section with **Make class 
 - **No recovery after a refresh.** Recovering an attempt in progress after a refresh (allowed by the brief) is not built. It would need an exception to the house rule and to `tests/unit/static.test.js`.
 - **One explanation reworded.** The prototype's catalase claim question said "Choice G has a false reason". Letters depend on where a passage lands in a set (in a mixed set that question can be number 11, lettered A to D), so it now says "The other \"Yes\" choice". A unit test stops explanations from naming a letter.
 - **Difficulty ratings are mine.** The brief's data shape has `difficulty` (1 to 3). The prototype had none, so I rated each existing question; please check them.
-- **All seven passages are `reviewed`:** the three from the prototype, and the four written in milestone 5 (approved by Nick on 2026-10-16). Change any to `draft` to hide it; the Full section mode then hides itself too, until the reviewed bank can make a 40-question section again.
+- **All fourteen passages are `reviewed`:** the seven of the first section (the three from the prototype, and the four written in milestone 5, approved by Nick on 2026-10-16) and the seven of the second section (milestone E, approved by Nick on 2026-10-24). Change any to `draft` to hide it from students; the Full section mode hides itself if the reviewed bank can no longer make a 40-question section.
 - **Math notation is HTML, not MathML.** Fractions and roots are text in styled spans, with screen reader words ("over") in visually hidden text. They look the same in every browser, zoom with the page, and can be highlighted. MathML would need a new namespace allowance in the static tests and renders differently across browsers.
 - **The folder moved from `act-science/` to `act/`** (Nick's choice, 2026-10-24). `act-science/index.html` is a redirect to `act/#science`, like the retired Ionic Formula Builder.
 - **Score conversions for English, Math and Reading are approximate,** modeled on typical past ACT forms and scaled to the enhanced ACT's lengths (50, 45 and 36 questions). Each report says so.
@@ -122,15 +122,15 @@ With codes on, the home screen has a **For teachers** section with **Make class 
 | Solar Panel Output | Data Representation | Physics | 6 | bar graph, scatter plot | reviewed |
 | Carts on a Ramp | Research Summaries | Physics | 6 | 3 tables | reviewed |
 | Salt and Radish Seed Germination | Research Summaries | Biology | 5 | bar graph, table | reviewed |
-| Air Pressure and Boiling Water | Data Representation | Earth and space science | 6 | line graph, table | draft |
-| Exercise and Heart Rate | Data Representation | Biology | 6 | line graph (2 series), table | draft |
-| Pendulum Swings | Data Representation | Physics | 6 | scatter plot, table | draft |
-| How Fast Sugar Dissolves | Research Summaries | Chemistry | 6 | 3 tables | draft |
-| Yeast and Balloons | Research Summaries | Biology | 6 | table, bar graph | draft |
-| Keeping Water Warm | Research Summaries | Physics | 5 | 2 tables | draft |
-| Where the Moon Came From | Conflicting Viewpoints | Earth and space science | 5 | 3 viewpoints | draft |
+| Air Pressure and Boiling Water | Data Representation | Earth and space science | 6 | line graph, table | reviewed |
+| Exercise and Heart Rate | Data Representation | Biology | 6 | line graph (2 series), table | reviewed |
+| Pendulum Swings | Data Representation | Physics | 6 | scatter plot, table | reviewed |
+| How Fast Sugar Dissolves | Research Summaries | Chemistry | 6 | 3 tables | reviewed |
+| Yeast and Balloons | Research Summaries | Biology | 6 | table, bar graph | reviewed |
+| Keeping Water Warm | Research Summaries | Physics | 5 | 2 tables | reviewed |
+| Where the Moon Came From | Conflicting Viewpoints | Earth and space science | 5 | 3 viewpoints | reviewed |
 
-**Second section (milestone E, drafts).** The seven draft passages make a second full section on their own: 3 Data Representation (6, 6, 6), 3 Research Summaries (6, 6, 5) and 1 Conflicting Viewpoints (5), 40 questions, with the correct answer in each of the four positions 10 times. Students see none of them until they are reviewed. Once all 14 are reviewed, the Full section mode picks any mix of 3, 3 and 1 that adds up to 40, so students get many different sections. With `?drafts=1`, the modes use all 14 now.
+**Second section (milestone E, reviewed 2026-10-24).** The seven passages make a second full section on their own: 3 Data Representation (6, 6, 6), 3 Research Summaries (6, 6, 5) and 1 Conflicting Viewpoints (5), 40 questions, with the correct answer in each of the four positions 10 times. With all 14 reviewed, the Full section mode picks any mix of 3, 3 and 1 that adds up to 40, so students get many different sections.
 
 How the milestone E data were made consistent:
 - **Air pressure:** pressures follow the standard atmosphere (101 kPa at sea level, 54 kPa at 5 km), and the boiling points drop about 3.3°C per 1,000 m, close to measured values.
@@ -182,7 +182,7 @@ Add to a bank file with `status: "draft"`. Write symbols as characters (°C, ≈
 | `diagram` | `caption`, `label` (spoken description), `viewBox: [width, height]`, `shapes`: `path` (`d`), `rect` (`x, y, w, h`), `line` (`x1, y1, x2, y2`), `circle` (`cx, cy, r`), `text` (`x, y, text`, optional `size`, `anchor`). `fill` and `stroke` are named tones (`surface`, `water`, `line`, `ink`, `blue`, `muted`) so they follow dark mode; `width` is the stroke width. |
 
 ## English passages (milestone B)
-Ten original passages, 100 questions, all drafts for Nick's review. With `?drafts=1`, the English modes use them, so a full 50-question section can be tried before any are approved. Once at least five are reviewed, students get the Full section; the full ACT also needs Math and Reading.
+Ten original passages, 100 questions, all reviewed (approved by Nick on 2026-10-24). The Full section picks any five passages that add up to 50 questions.
 
 | Passage | Type | Questions by skill |
 |---|---|---|
@@ -202,7 +202,7 @@ Across the bank: punctuation 23, grammar and usage 23, sentence structure 13, wo
 Facts in the informative passages (Marie Tharp, monarch migration, the Erie Canal) follow standard published accounts; numbers are rounded the way they usually are ("about 363 miles", "as far as 3,000 miles", shipping cost "about $100" to "about $10" a ton).
 
 ## Math questions (milestone C)
-90 original questions, all drafts for Nick's review: the 8 samples from milestone A and 82 new ones. With `?drafts=1`, the Math modes use them, so a 45-question section can be tried before any are approved. Students see Practice questions as soon as one question is reviewed (10 at a time once there are 10), Mixed practice once 15 are reviewed, and the Full section once 45 are.
+90 original questions, all reviewed (approved by Nick on 2026-10-24): the 8 samples from milestone A and 82 new ones. Practice questions uses 10 at a time, Mixed practice 15, and the Full section 45 of the 90.
 
 | Skill (ACT reporting category) | Questions | Topics |
 |---|---|---|
@@ -216,7 +216,7 @@ Facts in the informative passages (Marie Tharp, monarch migration, the Erie Cana
 That is a third essential skills and two thirds Preparing for Higher Math, close to the real test. Difficulty: 23 easy, 44 medium, 23 hard; sets put easier questions first. The correct answer is the first, second, third and fourth choice 23, 26, 19 and 22 times. Number choices run from least to greatest, as on the ACT. Every numeric answer (49 of the 82 new questions) was computed independently and checked against the marked choice while the bank was written. Figures: a triangle, parallel lines, a table of function values, a line graph, a bar graph, a two-way table and a scatter plot.
 
 ## Reading passages (milestone D)
-Eight original passages, 72 questions, all drafts for Nick's review: two of each ACT Reading type. With `?drafts=1`, the Reading modes use them, so a 36-question section (one passage of each type) can be tried before any are approved. Students get the Full section once at least one passage of each type is reviewed.
+Eight original passages, 72 questions, all reviewed (approved by Nick on 2026-10-24): two of each ACT Reading type. The Full section picks one passage of each type.
 
 | Passage | Type | Notes |
 |---|---|---|
@@ -269,6 +269,7 @@ Each question in the answer review has a Show with passage button (Show question
 - Ending the section asks on the page, never with a `confirm()` dialog.
 
 ## Changelog
+1.10.0: Every drafted question is now reviewed and live (Nick's approval, 2026-10-24): 100 English, 90 Math, 72 Reading and 40 more Science questions. Every section now offers all its modes, and the full ACT opens from the home screen (milestone F). `?drafts=1` still shows the review list, now with every item Reviewed.
 1.9.0: Practice codes are on for everyone, and `?codes=0` turns them off for one visit. Class sets for teachers (Nick's request): a For teachers section on the home screen and a class set screen at `#teachers`, where a teacher makes 1 to 50 codes and PINs at once and downloads a ZornScience PDF to print (with blank last and first name columns) and a CSV file (code, PIN). Needs the plugin's version 1.3.0, which limits class sets per network per hour and new codes per 24 hours for the whole site, and lets Nick look up a forgotten PIN.
 1.8.0: Practice codes now have a four-digit PIN (Nick's request). Before any practice, students are asked whether they have a code and PIN: a matching pair starts the practice, a wrong one never does (and the same answer is given for an unknown code), a new code and PIN are shown once with a warning to write them down or take a picture, and practicing without a code warns that scores stay only until the window is closed (this visit's scores can still be viewed). The code and PIN are never shown again. Every request to the plugin is now a POST, so a PIN is never in a web address. Needs the plugin's version 1.1.0, which also deletes codes inactive for a year, with their PINs and scores, and has a Delete inactive codes now button.
 
