@@ -353,7 +353,8 @@ test("only local files, no storage, footer notice, embed mode", async ({page, pr
   await page.evaluate(() => document.fonts.ready);
   urls.forEach((u) => expect(u.startsWith("/"), "outside request " + u).toBe(true));
   expect(urls.some((u) => /AtkinsonHyperlegible-Regular\.woff2/.test(u))).toBe(true);
-  await expect(page.getByRole("link", {name: "ZornScience home"})).toBeHidden();
+  // The logo still links to zornscience.org, in the top window like every link.
+  await expect(page.getByRole("link", {name: "ZornScience home"})).toHaveAttribute("href", "https://zornscience.org/");
   await expect(page.getByText("Practice tool by ZornScience. ACT is a registered trademark of ACT Education Corp. This tool is not affiliated with or endorsed by ACT.")).toBeVisible();
   for (var a of await page.locator("a").all()) expect(await a.getAttribute("target")).toBe("_top");
   await begin(page, "Mixed practice");

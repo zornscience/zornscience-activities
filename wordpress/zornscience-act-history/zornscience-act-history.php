@@ -2,26 +2,27 @@
 /**
  * Plugin Name: ZornScience ACT Practice History
  * Description: Saves ACT Practice scores under anonymous six-character practice codes, each with a four-digit PIN, so students can see how their scores change over time without making an account. Teachers can make a class set of codes and PINs on the ACT Practice page. Stores no names, emails, or IP addresses.
- * Version: 1.3.0
+ * Version: 1.4.0
  * Requires at least: 6.0
  * Requires PHP: 7.4
  * Author: ZornScience
  * License: GPL-2.0-or-later
  * Text Domain: zornscience-act-history
  *
- * How it works: the ACT Practice page (activities.zornscience.org/act/) calls four REST routes under
+ * How it works: the ACT Practice page (activities.zornscience.org/act/) calls five REST routes under
  * /wp-json/zsa-act/v1/. A student gets a new random code and PIN, or enters a code and PIN they already have; each
  * finished section is saved under that code with its date, section, mode, number correct, and estimated score. A
  * history opens, and a score saves, only when the code and PIN match, so a student who mistypes a code cannot add to
  * or see someone else's history. PINs are checked against one-way hashes, and also kept encrypted so an administrator
  * can look one up for a student who forgot it. Wrong PINs lock a code for an hour after ten tries. Teachers can make a
  * class set of codes and PINs on the ACT Practice page, downloaded as a CSV file and a ZornScience PDF. Every route is
- * rate limited, and new codes have a site-wide limit per 24 hours, so no one can make codes without end.
+ * rate limited, and new codes have a site-wide limit per 24 hours, so no one can make codes without end. A practice in
+ * progress is saved under its code too, so a student who closes the window can log back in and pick it up.
  */
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'ZSA_ACT_VERSION', '1.3.0' );
+define( 'ZSA_ACT_VERSION', '1.4.0' );
 define( 'ZSA_ACT_NS', 'zsa-act/v1' );
 // Code alphabet: capital letters and digits without look-alikes (no I, O, 0 or 1). 32 symbols, so 32^6, about a
 // billion, possible codes.
@@ -29,6 +30,9 @@ define( 'ZSA_ACT_ALPHABET', 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789' );
 define( 'ZSA_ACT_SECTIONS', 'english,math,reading,science,composite' );
 define( 'ZSA_ACT_MODES', 'one,mixed,full,fullact' );
 define( 'ZSA_ACT_MAX_ATTEMPTS', 1000 );
+// A saved practice in progress: its largest size (bytes of JSON), and how long it can be picked up again.
+define( 'ZSA_ACT_PROGRESS_MAX', 20000 );
+define( 'ZSA_ACT_PROGRESS_DAYS', 7 );
 // The most students the class list setting can allow in one list.
 define( 'ZSA_ACT_CLASS_MAX', 100 );
 
@@ -45,6 +49,8 @@ function zsa_act_settings() {
 		'limit_new'      => 100,
 		'limit_lookup'   => 300,
 		'limit_save'     => 600,
+		// Saves of a practice in progress: at most every 30 seconds per student while they work.
+		'limit_progress' => 3000,
 		// Class lists: on or off, the most students in one list, and lists per hour from one network address.
 		'class_enabled'  => 1,
 		'class_max'      => 50,
@@ -98,6 +104,8 @@ function zsa_act_activate() {
 			pin_hash varchar(255) NOT NULL DEFAULT '',
 			pin_box varchar(255) NOT NULL DEFAULT '',
 			kind tinyint(1) unsigned NOT NULL DEFAULT 0,
+			progress mediumtext,
+			progress_at datetime DEFAULT NULL,
 			PRIMARY KEY  (code),
 			KEY last_used (last_used),
 			KEY created_at (created_at)
@@ -350,6 +358,15 @@ function zsa_act_routes() {
 	);
 	register_rest_route(
 		ZSA_ACT_NS,
+		'/codes/' . $code . '/progress',
+		array(
+			'methods'             => 'POST',
+			'callback'            => 'zsa_act_rest_progress',
+			'permission_callback' => '__return_true',
+		)
+	);
+	register_rest_route(
+		ZSA_ACT_NS,
 		'/class-lists',
 		array(
 			'methods'             => 'POST',
@@ -442,8 +459,9 @@ function zsa_act_create_code( $pin, $kind ) {
 				'pin_hash'   => $hash,
 				'pin_box'    => $box,
 				'kind'       => (int) $kind,
+				'progress'   => '',
 			),
-			array( '%s', '%s', '%s', '%d', '%s', '%s', '%d' )
+			array( '%s', '%s', '%s', '%d', '%s', '%s', '%d', '%s' )
 		);
 		if ( $inserted ) {
 			return $code;
@@ -535,8 +553,74 @@ function zsa_act_rest_history( $request ) {
 			'code'     => $code,
 			'created'  => zsa_act_iso( $row['created_at'] ),
 			'attempts' => zsa_act_attempts( $code ),
+			'progress' => zsa_act_progress_of( $code ),
 		)
 	);
+}
+
+/**
+ * The code's saved practice in progress, with the time it was saved (as "saved"), or null if there is none or it is
+ * older than ZSA_ACT_PROGRESS_DAYS.
+ */
+function zsa_act_progress_of( $code ) {
+	global $wpdb;
+	$t   = zsa_act_tables();
+	$row = $wpdb->get_row( $wpdb->prepare( "SELECT progress, progress_at FROM {$t['codes']} WHERE code = %s", $code ), ARRAY_A );
+	if ( ! $row || '' === (string) $row['progress'] || empty( $row['progress_at'] ) || $row['progress_at'] < gmdate( 'Y-m-d H:i:s', time() - ZSA_ACT_PROGRESS_DAYS * DAY_IN_SECONDS ) ) {
+		return null;
+	}
+	$p = json_decode( $row['progress'], true );
+	if ( ! is_array( $p ) ) {
+		return null;
+	}
+	$p['saved'] = zsa_act_iso( $row['progress_at'] );
+	return $p;
+}
+
+/**
+ * POST /codes/{code}/progress with {pin, progress}: saves the practice in progress (a JSON object from the page, with
+ * "v": 1 and a "section" or "full" part), or clears it when progress is null. It holds only question and passage
+ * identifiers, answers, flags, the question on screen and the time used; it is checked for shape and size, not read.
+ */
+function zsa_act_rest_progress( $request ) {
+	global $wpdb;
+	$ok = zsa_act_gate( 'progress' );
+	if ( true !== $ok ) {
+		return $ok;
+	}
+	$row = zsa_act_unlock( $request['code'], zsa_act_pin_of( $request ) );
+	if ( is_wp_error( $row ) ) {
+		return $row;
+	}
+	$p = $request->get_json_params();
+	if ( ! is_array( $p ) || ! array_key_exists( 'progress', $p ) ) {
+		return new WP_Error( 'zsa_act_invalid', 'Expected progress.', array( 'status' => 400 ) );
+	}
+	$progress = $p['progress'];
+	$json     = '';
+	if ( null !== $progress ) {
+		$keys = is_array( $progress ) ? array_keys( $progress ) : array();
+		$ok   = is_array( $progress ) && isset( $progress['v'] ) && 1 === $progress['v'] && ! array_diff( $keys, array( 'v', 'section', 'full' ) )
+			&& ( isset( $progress['section'] ) || isset( $progress['full'] ) ) && $keys !== range( 0, count( $keys ) - 1 );
+		$json = $ok ? wp_json_encode( $progress ) : '';
+		if ( ! $ok || ! $json || strlen( $json ) > ZSA_ACT_PROGRESS_MAX ) {
+			return new WP_Error( 'zsa_act_invalid', 'That progress cannot be saved.', array( 'status' => 400 ) );
+		}
+	}
+	$t   = zsa_act_tables();
+	$now = zsa_act_now();
+	$wpdb->update(
+		$t['codes'],
+		array(
+			'progress'    => $json,
+			'progress_at' => '' === $json ? null : $now,
+			'last_used'   => $now,
+		),
+		array( 'code' => $row['code'] ),
+		array( '%s', '%s', '%s' ),
+		array( '%s' )
+	);
+	return zsa_act_response( array( 'saved' => '' !== $json ) );
 }
 
 /** Checks one saved attempt from the page. Returns the row to insert, or a WP_Error. */

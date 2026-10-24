@@ -59,6 +59,11 @@ body {background: var(--act-bg);}
 .zsa-act-clock {display: flex; gap: 16px; font-family: var(--act-data); font-size: 15px; font-variant-numeric: tabular-nums; margin: 0;}
 .zsa-act-clock b {font-weight: 700;}
 .zsa-act-band a {color: var(--act-on-navy); display: inline-flex; align-items: center; min-height: 44px; font-size: 15px;}
+/* The logo goes to zornscience.org; the section name goes to the ACT Practice home page. */
+.zsa-act-band a.zsa-act-logo-link {min-width: 44px; justify-content: center; border-radius: 8px;}
+.zsa-act-band a.zsa-act-brand-section {font-size: inherit; text-decoration: none;}
+.zsa-act-band a.zsa-act-brand-section:hover {text-decoration: underline; text-underline-offset: 4px;}
+.zsa-act-band a:focus-visible {outline: 3px solid var(--act-on-navy); outline-offset: 2px;}
 
 .zsa-act-main {padding-top: 28px; padding-bottom: 48px; display: block;}
 .zsa-act-main:focus {outline: none;}
@@ -117,7 +122,7 @@ body {background: var(--act-bg);}
 .zsa-act .zsa-act-bar-btn {border: 1px solid rgba(255,255,255,.6); background: transparent; color: var(--act-on-navy); border-radius: 8px; padding: 6px 12px; font-size: 15px;}
 .zsa-act .zsa-act-bar-btn:hover {background: rgba(255,255,255,.12);}
 .zsa-act .zsa-act-band-row :focus-visible {outline-color: #ffffff;}
-.zsa-act--testing .zsa-act-back, .zsa-act--testing .zsa-act-brand-section {display: none;}
+.zsa-act--testing .zsa-act-brand-section {display: none;}
 .zsa-act--testing .zsa-act-main {padding-top: 16px; padding-bottom: 16px;}
 .zsa-act--testing:not(.zsa-act--review) {padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));}
 .zsa-act-notice {background: var(--act-warn-soft); color: var(--act-ink); border-radius: 10px; padding: 10px 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; margin: 0 0 10px;}
@@ -423,7 +428,8 @@ body {background: var(--act-bg);}
   .zsa-act-step-text {position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap;}
   .zsa-act-bottom-row {gap: 6px;}
   .zsa-act-passage {padding: 14px;}
-  .zsa-act-brand-section {display: none;}
+  .zsa-act-brand-name {display: none;}
+  .zsa-act-brand-section {padding-left: 0; border-left: 0;}
 }
 @media (prefers-reduced-motion: no-preference) {
   .zsa-act-choice, .zsa-act .zsa-act-mode {transition: border-color .15s, background-color .15s;}

@@ -1,6 +1,8 @@
 // ACT Practice history: the only file that talks to a server. act.js asks for a new practice code and PIN, a code's
-// history (with its PIN), saving one finished section (with the PIN), or a teacher's class set of codes and PINs by
-// dispatching "zsa:history" on the root with {action, api, code, body, done}. Every request is a POST, so a PIN is only ever in a request body, never in an address.
+// history (with its PIN), saving one finished section (with the PIN), saving or clearing the practice in progress, or
+// a teacher's class set of codes and PINs by dispatching "zsa:history" on the root with {action, api, code, body,
+// done, keepalive}; keepalive lets a save sent as the page closes finish after the page is gone. Every request is a
+// POST, so a PIN is only ever in a request body, never in an address.
 // This file calls the ZornScience ACT Practice History plugin on zornscience.org (see wordpress/ in the repository)
 // and calls done(error, result). Requests send no cookies, and nothing is stored in the browser.
 (function () {
@@ -11,6 +13,7 @@
     "new": function () { return "/codes"; },
     open: function (code) { return "/codes/" + encodeURIComponent(code) + "/open"; },
     save: function (code) { return "/codes/" + encodeURIComponent(code) + "/attempts"; },
+    progress: function (code) { return "/codes/" + encodeURIComponent(code) + "/progress"; },
     "class": function () { return "/class-lists"; }
   };
   root.addEventListener("zsa:history", function (event) {
@@ -24,6 +27,7 @@
       init.headers["Content-Type"] = "application/json";
       init.body = JSON.stringify(d.body);
     }
+    if (d.keepalive) init.keepalive = true;
     if (controller) init.signal = controller.signal;
     fetch(url, init).then(function (res) {
       return res.json().catch(function () { return {}; }).then(function (json) {

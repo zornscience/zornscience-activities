@@ -24,6 +24,7 @@ function get_transient( $k ) { return isset( $GLOBALS['zsa_transients'][ $k ] ) 
 function set_transient( $k, $v ) { $GLOBALS['zsa_transients'][ $k ] = $v; return true; }
 function wp_salt() { return isset( $GLOBALS['zsa_salt'] ) ? $GLOBALS['zsa_salt'] : 'test-salt'; }
 function wp_unslash( $v ) { return $v; }
+function wp_json_encode( $v ) { return json_encode( $v ); }
 function sanitize_text_field( $v ) { return trim( (string) $v ); }
 function register_rest_route( $ns, $route, $args ) { $GLOBALS['zsa_routes'][ $ns . $route ] = $args; }
 function is_wp_error( $v ) { return $v instanceof WP_Error; }
@@ -113,7 +114,7 @@ class Fake_Wpdb {
 	}
 }
 $GLOBALS['wpdb'] = new Fake_Wpdb();
-$GLOBALS['wpdb']->query( "CREATE TABLE wp_zsa_act_codes (code TEXT PRIMARY KEY, created_at TEXT NOT NULL, last_used TEXT NOT NULL, attempts INTEGER NOT NULL DEFAULT 0, pin_hash TEXT NOT NULL DEFAULT '', pin_box TEXT NOT NULL DEFAULT '', kind INTEGER NOT NULL DEFAULT 0)" );
+$GLOBALS['wpdb']->query( "CREATE TABLE wp_zsa_act_codes (code TEXT PRIMARY KEY, created_at TEXT NOT NULL, last_used TEXT NOT NULL, attempts INTEGER NOT NULL DEFAULT 0, pin_hash TEXT NOT NULL DEFAULT '', pin_box TEXT NOT NULL DEFAULT '', kind INTEGER NOT NULL DEFAULT 0, progress TEXT, progress_at TEXT)" );
 $GLOBALS['wpdb']->query( 'CREATE TABLE wp_zsa_act_attempts (id INTEGER PRIMARY KEY AUTOINCREMENT, code TEXT NOT NULL, created_at TEXT NOT NULL, section TEXT NOT NULL, mode TEXT NOT NULL, questions INTEGER NOT NULL, correct INTEGER NOT NULL, score INTEGER, score_low INTEGER, score_high INTEGER, seconds INTEGER NOT NULL DEFAULT 0)' );
 
 require dirname( __DIR__, 2 ) . '/wordpress/zornscience-act-history/zornscience-act-history.php';
@@ -136,7 +137,8 @@ check( 'POST' === $GLOBALS['zsa_routes']['zsa-act/v1/codes']['methods'], 'new-co
 check( 'POST' === $GLOBALS['zsa_routes']['zsa-act/v1/codes/(?P<code>[A-Za-z0-9]{6})/open']['methods'], 'open route is POST' );
 check( 'POST' === $GLOBALS['zsa_routes']['zsa-act/v1/codes/(?P<code>[A-Za-z0-9]{6})/attempts']['methods'], 'save route is POST' );
 check( 'POST' === $GLOBALS['zsa_routes']['zsa-act/v1/class-lists']['methods'], 'class list route is POST' );
-check( 4 === count( $GLOBALS['zsa_routes'] ), 'four routes only' );
+check( 'POST' === $GLOBALS['zsa_routes']['zsa-act/v1/codes/(?P<code>[A-Za-z0-9]{6})/progress']['methods'], 'progress route is POST' );
+check( 5 === count( $GLOBALS['zsa_routes'] ), 'five routes only' );
 
 // Code and PIN formats
 check( 'K7M2QX' === zsa_act_clean_code( 'k7m2qx' ), 'lowercase is accepted' );
@@ -211,6 +213,53 @@ check( 15 === $h[1]['questions'] && 17 === $h[1]['low'] && 23 === $h[1]['high'],
 check( null === $h[2]['score'], 'no estimate saved as null' );
 check( 1 === preg_match( '/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$/', $h[0]['date'] ), 'dates are ISO UTC' );
 check( 3 === (int) zsa_act_find_code( $code )['attempts'], 'attempt count kept' );
+reset_limits();
+
+// A practice in progress: saved under the code with its PIN, returned when the code is opened, cleared with null.
+function progress_to( $code, $pin, $progress ) { return zsa_act_rest_progress( new Fake_Request( array( 'code' => $code ), array( 'pin' => $pin, 'progress' => $progress ) ) ); }
+reset_limits();
+check( null === open_code( $code, $pin )->data['progress'], 'no progress at first' );
+$mid = array( 'v' => 1, 'section' => array( 'key' => 'math', 'mode' => 'full', 'units' => array( 'm-linear-1', 'm-powers-1' ), 'answers' => array( '1' => 2 ), 'flags' => array( 2 ), 'cur' => 1, 'elapsed' => 640, 'warned' => false, 'timeUp' => false ) );
+$r = progress_to( strtolower( $code ), $pin, $mid );
+check( 200 === status( $r ) && true === $r->data['saved'] && 'no-store, private' === $r->headers['Cache-Control'], 'progress saves (any case)' );
+$back = open_code( $code, $pin )->data['progress'];
+check( 1 === preg_match( '/^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\dZ$/', $back['saved'] ), 'opening returns when it was saved' );
+unset( $back['saved'] );
+check( $mid === $back, 'opening returns the progress as saved' );
+check( 403 === status( progress_to( $code, $wrong, array( 'v' => 1, 'section' => array() ) ) ), 'a wrong PIN cannot save progress' );
+check( 403 === status( progress_to( $other['code'], $pin === $other['pin'] ? $wrong : $pin, $mid ) ) && null === open_code( $other['code'], $other['pin'] )->data['progress'], "another code's PIN saves nothing" );
+reset_limits();
+$bad = array(
+	'not an object' => 'text',
+	'a list'        => array( 1, 2 ),
+	'no version'    => array( 'section' => array() ),
+	'version 2'     => array( 'v' => 2, 'section' => array() ),
+	'nothing in it' => array( 'v' => 1 ),
+	'extra key'     => array( 'v' => 1, 'section' => array(), 'name' => 'Sam' ),
+	'too big'       => array( 'v' => 1, 'section' => array( 'units' => array_fill( 0, 3000, 'm-linear-12' ) ) ),
+);
+foreach ( $bad as $why => $p ) {
+	check( 400 === status( progress_to( $code, $pin, $p ) ), "refuses progress: $why" );
+}
+check( 400 === status( zsa_act_rest_progress( new Fake_Request( array( 'code' => $code ), array( 'pin' => $pin ) ) ) ), 'refuses a body with no progress' );
+$kept = open_code( $code, $pin )->data['progress'];
+unset( $kept['saved'] );
+check( $mid === $kept, 'refused saves leave the saved progress alone' );
+check( 200 === status( progress_to( $code, $pin, null ) ) && null === open_code( $code, $pin )->data['progress'], 'null clears the progress' );
+progress_to( $code, $pin, $mid );
+$GLOBALS['wpdb']->query( "UPDATE wp_zsa_act_codes SET progress_at = '" . gmdate( 'Y-m-d H:i:s', time() - 8 * DAY_IN_SECONDS ) . "' WHERE code = '$code'" );
+check( null === open_code( $code, $pin )->data['progress'], 'progress older than 7 days is not offered' );
+progress_to( $code, $pin, null );
+// Progress saves have their own hourly limit per network address, apart from saved scores.
+reset_limits();
+update_option( 'zsa_act_settings', array( 'limit_progress' => 2 ) );
+check( 200 === status( progress_to( $code, $pin, $mid ) ) && 200 === status( progress_to( $code, $pin, $mid ) ), 'two progress saves' );
+check( 429 === status( progress_to( $code, $pin, $mid ) ), 'the third in an hour is 429' );
+check( 201 === status( save_to( $code, $pin, $good ) ), 'saving a score is not affected' );
+update_option( 'zsa_act_settings', array() );
+progress_to( $code, $pin, null );
+$GLOBALS['wpdb']->query( "DELETE FROM wp_zsa_act_attempts WHERE code = '$code' AND id = (SELECT MAX(id) FROM wp_zsa_act_attempts)" );
+$GLOBALS['wpdb']->query( "UPDATE wp_zsa_act_codes SET attempts = 3 WHERE code = '$code'" );
 reset_limits();
 
 // Validation
@@ -525,11 +574,11 @@ $src = file_get_contents( dirname( __DIR__, 2 ) . '/wordpress/zornscience-act-hi
 preg_match_all( '/CREATE TABLE \{\$t\[\'(\w+)\'\]\} \((.*?)\) \$charset/s', $src, $m, PREG_SET_ORDER );
 check( 2 === count( $m ), 'two tables are created' );
 $want = array(
-	'codes'    => array( 'code', 'created_at', 'last_used', 'attempts', 'pin_hash', 'pin_box', 'kind' ),
+	'codes'    => array( 'code', 'created_at', 'last_used', 'attempts', 'pin_hash', 'pin_box', 'kind', 'progress', 'progress_at' ),
 	'attempts' => array( 'id', 'code', 'created_at', 'section', 'mode', 'questions', 'correct', 'score', 'score_low', 'score_high', 'seconds' ),
 );
 foreach ( $m as $table ) {
-	preg_match_all( '/^\s*([a-z_]+) (?:char|datetime|smallint|bigint|varchar|tinyint|mediumint)/m', $table[2], $c );
+	preg_match_all( '/^\s*([a-z_]+) (?:char|datetime|smallint|bigint|varchar|tinyint|mediumint|mediumtext)/m', $table[2], $c );
 	check( $want[ $table[1] ] === $c[1], $table[1] . ' table columns: ' . implode( ', ', $c[1] ) );
 	$test = array_column( $GLOBALS['wpdb']->get_results( 'PRAGMA table_info(wp_zsa_act_' . $table[1] . ')', ARRAY_A ), 'name' );
 	check( $want[ $table[1] ] === $test, $table[1] . ' test table matches' );
