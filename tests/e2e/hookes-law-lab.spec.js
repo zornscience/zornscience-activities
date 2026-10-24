@@ -1,0 +1,44 @@
+'use strict';
+const {test,expect}=require('@playwright/test');
+test('equilibrium obeys Hooke’s law and mass includes hanger',async({page})=>{
+ await page.goto('/hookes-law-lab/');
+ await expect(page.locator('#mass-read')).toHaveText('200 g');
+ await expect(page.locator('#extension')).toHaveText('9.81 cm');
+ await page.locator('#add').click();
+ await page.locator('#spring').selectOption('10');
+ await expect(page.locator('#extension')).toHaveText('24.53 cm');
+ await expect(page.locator('#constant')).toBeHidden();
+ await page.locator('#reveal').check();
+ await expect(page.locator('#constant')).toContainText('k = 10 N/m');
+});
+test('ideal motion repeats after its predicted period; pause and step synchronize apparatus and graph',async({page})=>{
+ await page.clock.install();
+ await page.goto('/hookes-law-lab/');
+ await page.evaluate(()=>{document.getElementById('release').click();document.getElementById('pause').click();});
+ const clock=await page.locator('#clock').textContent();
+ const trace=await page.locator('#trace').getAttribute('d');
+ await page.clock.runFor(1000);
+ await expect(page.locator('#clock')).toHaveText(clock);
+ await expect(page.locator('#trace')).toHaveAttribute('d',trace);
+ for(let i=0;i<31;i++)await page.locator('#step').click();
+ await expect(page.locator('#clock')).toHaveText('0.62');
+ expect(Number.parseFloat(await page.locator('#position').textContent())).toBeGreaterThan(3.98);
+ await page.locator('#settle').click();
+ await expect(page.locator('#position')).toHaveText('0.00 cm');
+});
+test('instructions, sharing, keyboard hanger and mobile layout',async({page})=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('/hookes-law-lab/');
+ await page.locator('#zsa-th-instructions-open').click();
+ await expect(page.locator('dialog')).toBeVisible();
+ await page.keyboard.press('Escape');
+ await expect(page.locator('#zsa-th-instructions-open')).toBeFocused();
+ await page.locator('#zsa-th-share-toggle').click();
+ await expect(page.locator('#zsa-th-share-url')).toHaveValue('https://activities.zornscience.org/hookes-law-lab/');
+ await page.keyboard.press('Escape');
+ await page.locator('#hanger').focus();await page.keyboard.press('ArrowDown');
+ await expect(page.locator('#position')).toHaveText('0.50 cm');
+ await page.setViewportSize({width:390,height:844});
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ expect(errors).toEqual([]);
+});
