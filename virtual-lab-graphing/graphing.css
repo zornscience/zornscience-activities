@@ -1,13 +1,20 @@
 .zsa-vlg {--zsa-max-width:1320px;font-size:16px;padding-top:22px;}
-.zsa-vlg-header,.zsa-vlg-brand {display:flex;align-items:center;gap:12px;}
-.zsa-vlg-header {justify-content:space-between;padding-bottom:20px;border-bottom:1px solid var(--zsa-border);font-size:14px;flex-wrap:wrap;}
-.zsa-vlg-brand {text-decoration:none;font-weight:650;color:var(--zsa-navy)!important;font-size:20px;}
-.zsa-vlg-brand span {font-size:10px;letter-spacing:.12em;font-weight:550;border-left:1px solid var(--zsa-border);padding-left:12px;}
-.zsa-vlg-intro {padding:26px 0 30px;max-width:800px;}
-.zsa-vlg-intro h1 {font-size:clamp(2rem,4vw,3.4rem);font-weight:550;letter-spacing:-.045em;margin:10px 0 12px;}
-.zsa-vlg-intro>p {margin:5px 0;}
-.zsa-vlg-intro>h1+p {font-size:18px;font-weight:600;color:var(--zsa-navy);}
-.zsa-vlg-lede {color:#526178;max-width:680px;}
+.zsa-vlg-header,.zsa-vlg-identity,.zsa-vlg-brand,.zsa-vlg-headertools {display:flex;align-items:center;gap:12px;}
+.zsa-vlg-header {justify-content:space-between;padding-bottom:20px;margin-bottom:24px;border-bottom:1px solid var(--zsa-border);font-size:14px;flex-wrap:wrap;}
+.zsa-vlg-identity {min-width:0;}
+.zsa-vlg-header h1 {font-size:clamp(19px,2vw,25px);font-weight:600;letter-spacing:-.025em;line-height:1.25;margin:0;}
+.zsa-vlg-brand {flex-shrink:0;min-height:44px;}
+.zsa-vlg-headertools {flex-wrap:wrap;}
+.zsa-vlg-headertools a {display:inline-flex;align-items:center;min-height:44px;font-size:12px;}
+.zsa-vlg-dialog {width:min(620px,calc(100% - 32px));max-height:calc(100dvh - 40px);overflow:auto;border:1px solid var(--zsa-border);border-radius:14px;padding:24px;color:var(--zsa-slate);font:inherit;box-shadow:var(--zsa-shadow-pop);}
+.zsa-vlg-dialog::backdrop {background:rgba(11,42,91,.45);}
+.zsa-vlg-dialoghead {display:flex;justify-content:space-between;align-items:center;gap:16px;}
+.zsa-vlg-dialoghead button {font-size:22px;}
+.zsa-vlg-dialog p,.zsa-vlg-dialog li {font-size:14px;}
+.zsa-vlg-dialog ol {padding-left:22px;}
+.zsa-vlg-dialog li {margin:12px 0;}
+.zsa-vlg-sharelink {display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.zsa-vlg .zsa-vlg-sharelink input {flex:1 1 250px;min-width:0;margin:5px 0;}
 .zsa-vlg-workspace {display:grid;grid-template-columns:360px minmax(0,1fr);gap:24px;align-items:start;}
 .zsa-vlg-card {border:1px solid var(--zsa-border);border-radius:14px;background:white;padding:24px;min-width:0;}
 .zsa-vlg-sectionhead {display:flex;align-items:center;gap:13px;margin-bottom:24px;}
@@ -78,6 +85,6 @@
 .zsa-vlg-guidegrid p {font-size:13px;}
 .zsa-vlg-footer {font-size:13px;}
 @media(max-width:1000px) {.zsa-vlg-workspace {grid-template-columns:310px minmax(0,1fr);gap:16px;}.zsa-vlg-card {padding:18px;}.zsa-vlg-statgrid {gap:8px;}.zsa-vlg-statgrid dd {font-size:15px;}}
-@media(max-width:760px) {.zsa-vlg-workspace {grid-template-columns:1fr;}.zsa-vlg-intro {padding:23px 0;}.zsa-vlg-card {padding:18px;}.zsa-vlg-guidegrid {grid-template-columns:1fr 1fr;}.zsa-vlg-header {gap:14px;}.zsa-vlg-header>a:last-child {font-size:12px;}.zsa-vlg-chartcard {padding:16px 10px;}.zsa-vlg-chartcard .zsa-vlg-sectionhead,.zsa-vlg-chartoptions,.zsa-vlg-export,.zsa-vlg-chartnote {margin-left:8px;margin-right:8px;}.zsa-vlg-statgrid {grid-template-columns:1fr;gap:12px;}.zsa-vlg-statgrid dd {font-size:18px;}.zsa-vlg-chartoptions {gap:12px;}}
-@media(max-width:400px) {.zsa-vlg-brand span {display:none;}.zsa-vlg-guidegrid {grid-template-columns:1fr;}}
+@media(max-width:760px) {.zsa-vlg-workspace {grid-template-columns:1fr;}.zsa-vlg-card {padding:18px;}.zsa-vlg-guidegrid {grid-template-columns:1fr 1fr;}.zsa-vlg-header {gap:14px;}.zsa-vlg-chartcard {padding:16px 10px;}.zsa-vlg-chartcard .zsa-vlg-sectionhead,.zsa-vlg-chartoptions,.zsa-vlg-export,.zsa-vlg-chartnote {margin-left:8px;margin-right:8px;}.zsa-vlg-statgrid {grid-template-columns:1fr;gap:12px;}.zsa-vlg-statgrid dd {font-size:18px;}.zsa-vlg-chartoptions {gap:12px;}}
+@media(max-width:400px) {.zsa-vlg-guidegrid {grid-template-columns:1fr;}}
 @media print {.zsa-vlg {max-width:none;padding:0;}.zsa-vlg-header,.zsa-vlg-intro,.zsa-vlg-editor,.zsa-vlg-results,.zsa-vlg-reminder,.zsa-vlg-guide,.zsa-footer,.zsa-vlg-chartoptions,.zsa-vlg-export,.zsa-vlg-chartnote,.zsa-vlg-sectionhead {display:none;}.zsa-vlg-workspace,.zsa-vlg-output {display:block;}.zsa-vlg-chartcard,.zsa-vlg-chart {padding:0;border:0;}.zsa-vlg-chart svg {width:100%;} @page {size:landscape;margin:12mm;}}

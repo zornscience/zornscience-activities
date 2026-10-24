@@ -1,6 +1,6 @@
 # Virtual Lab Graphing Tool
 
-Version: 1.0.0
+Version: 1.1.0
 
 An open-ended lab-report tool for the [Reading Graphs lesson](https://zornscience.org/science/quantitative-skills/graphs-and-change/reading-graphs/). Students enter their own x/y measurements, label variables and units, and download a graph. This tool uses the shared design tokens and embed shell; it does not use quiz rounds or issue completion codes.
 
@@ -27,8 +27,13 @@ Numbers displayed in results use five significant digits; this is display roundi
 
 Tab follows labels, data cells and actions; Enter/Space activates buttons, checkboxes and disclosure panels. Add row focuses the new x input. Removing a row moves focus to the nearest remaining row. Each input and delete button has a row-specific accessible label. Validation and updates are announced without moving focus.
 
-Open `/virtual-lab-graphing/?embed=1` to hide site header/footer and use the existing `zsa:resize` protocol, with messages sent only to `https://zornscience.org`. The supplied `wordpress-block.txt` is one editable Gutenberg group for placement before Worked Examples. Its iframe has a useful fixed height with internal scrolling, and an ordinary link opens the full tool. It is ready to insert after the PR is merged and the activity is deployed. No WordPress page is changed by committing the file.
+Open `/virtual-lab-graphing/?embed=1` to hide site logo, lesson link and footer and use the existing `zsa:resize` protocol, with messages sent only to `https://zornscience.org`. The supplied `wordpress-block.txt` is one editable Gutenberg group for placement before Worked Examples. Its iframe has a useful fixed height with internal scrolling, and an ordinary link opens the full tool. It is ready to insert after the PR is merged and the activity is deployed. No WordPress page is changed by committing the file.
+
+## Activity header
+
+The compact header names the activity beside the ZornScience logo. Instructions opens a keyboard-accessible dialog with the workflow and data-saving reminders. Share copies the canonical activity URL, without measurements or query parameters; if clipboard access fails, it selects the URL for manual copying. Both controls remain available in embedded lessons. Escape closes the dialog and focus returns to the opening button.
 
 ## Changelog
 
+- 1.1.0: Replace the intro banner with an activity header, instructions and link sharing.
 - 1.0.0: Initial student graphing tool and Reading Graphs integration block.

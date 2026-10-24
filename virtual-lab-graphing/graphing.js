@@ -141,5 +141,20 @@
     image.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svgSource());
   });
   el("print").addEventListener("click",function(){window.print();});
+  var dialog=el("dialog"), opener=null;
+  function openDialog(kind,button) {
+    opener=button;el("dialog-title").textContent=kind==="share"?"Share this activity":"Instructions";
+    el("instructions-content").hidden=kind!=="instructions";el("share-content").hidden=kind!=="share";el("share-status").textContent="";
+    dialog.showModal();
+  }
+  el("instructions").addEventListener("click",function(){openDialog("instructions",this);});
+  el("share").addEventListener("click",function(){openDialog("share",this);});
+  el("close-dialog").addEventListener("click",function(){dialog.close();});
+  dialog.addEventListener("close",function(){if(opener)opener.focus();});
+  el("copy-link").addEventListener("click",async function(){
+    var input=el("share-url");
+    try {if(!navigator.clipboard||!navigator.clipboard.writeText)throw Error("Clipboard unavailable");await navigator.clipboard.writeText(input.value);el("share-status").textContent="Link copied.";}
+    catch(error){input.focus();input.select();el("share-status").textContent="The link is selected. Press Ctrl+C, or Command+C on a Mac, to copy it.";}
+  });
   replaceRows([]);update();
 }());

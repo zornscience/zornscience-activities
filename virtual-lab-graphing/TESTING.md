@@ -1,6 +1,6 @@
 # Virtual Lab Graphing Tool checks
 
-Version: 1.0.0
+Version: 1.1.0
 
 Run `node --test tests/unit/virtual-lab-graphing.test.js tests/unit/static.test.js` and `npx playwright test tests/e2e/virtual-lab-graphing.spec.js`.
 
