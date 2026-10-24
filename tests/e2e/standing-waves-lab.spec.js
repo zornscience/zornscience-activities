@@ -1,0 +1,32 @@
+'use strict';
+const {test,expect}=require('@playwright/test');
+test('harmonics obey tension and length; synchronized strobe holds the wave',async({page})=>{
+ await page.goto('/standing-waves-lab/');
+ await page.locator('#power').click();
+ await page.locator('[data-harmonic="3"]').click();
+ await page.locator('#nodes').check();
+ await expect(page.locator('#markers circle')).toHaveCount(4);
+ await expect(page.locator('#resonance')).toHaveText('Tuned');
+ await expect(page.locator('#insight')).toContainText('wavelength is 0.800 m');
+ await page.locator('#strobe').click();
+ const frozen=await page.locator('#wave').getAttribute('d');
+ await page.waitForTimeout(120);
+ expect(await page.locator('#wave').getAttribute('d')).toBe(frozen);
+ await page.locator('#phase').fill('0');
+ expect(await page.locator('#wave').getAttribute('d')).not.toBe(frozen);
+ const f= parseFloat(await page.locator('#fundamental').innerText());
+ await page.locator('#mass').fill('500');
+ expect(parseFloat(await page.locator('#fundamental').innerText())/f).toBeCloseTo(Math.sqrt(2.5),2);
+ await page.locator('#length').fill('0.6');
+ expect(parseFloat(await page.locator('#fundamental').innerText())/f).toBeCloseTo(2*Math.sqrt(2.5),2);
+ await page.locator('#cursor-a').fill('0.1');await page.locator('#cursor-b').fill('0.4');
+ await expect(page.locator('#separation')).toHaveText('0.300 m');
+ await page.locator('#reset').click();await expect(page.locator('#power')).toHaveAttribute('aria-pressed','false');
+});
+test('header tools and narrow layout',async({page})=>{
+ await page.setViewportSize({width:390,height:844});await page.goto('/standing-waves-lab/');
+ await page.locator('#zsa-th-instructions-open').click();await expect(page.locator('dialog')).toBeVisible();await page.keyboard.press('Escape');
+ await page.locator('#zsa-th-share-toggle').click();await expect(page.locator('#zsa-th-share-url')).toHaveValue('https://activities.zornscience.org/standing-waves-lab/');
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ await expect(page.locator('.intro')).toHaveCount(0);
+});
