@@ -1,6 +1,6 @@
 # Redox Half-Reaction Balancer Coach
 
-Version: 1.0.0
+Version: 1.1.0
 
 Manual, scaffolded redox balancing at `/redox-coach/`, linked from the activities page. Vanilla JavaScript and the shared site stylesheet and embed support, with no runtime dependencies, network calls, saved state or completion code. The multi-step equation editor uses a dedicated phase controller, like the site's other custom labs, rather than the shared engine's multiple-choice rounds. The existing shared production files are unchanged.
 
@@ -31,3 +31,9 @@ Use caret charge notation for multiply charged polyatomic ions, such as `Cr2O7^2
 - Embedded: `/redox-coach/?embed=1` (also works with the problem/medium query)
 
 The standard shared embed script handles chrome and resize messages. All assets are local and follow the site's CSP. There are no accounts, analytics or requests outside the site.
+
+## Header and sharing
+
+Version 1.1.0 matches the Ionic Reaction Builder header: the ZornScience logo sits beside the title, with Instructions and Share controls on the right (wrapping on phones). Instructions opens the existing method guidance in an accessible modal, closes with Escape, the close button or the backdrop, and restores focus. Opening or closing it preserves the student's work.
+
+Share offers Copy link, email, Facebook, X, and the device share sheet when supported. Only the canonical fresh activity link is shared, without equation state or progress. Sharing services load only when selected. The logo, share controls and footer hide in embed mode; Instructions remains available. The modal and share panel use activity-local scripts and styles; shared assets are unchanged.

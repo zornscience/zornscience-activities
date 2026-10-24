@@ -110,3 +110,64 @@ test("landing link, problem deep link, mobile targets, local assets and embed mo
   await page.getByRole("button", {name: "Restart problem"}).click(); await expect(heading(page)).toContainText("Step 1");
   expect(outside).toEqual([]);
 });
+
+for (const width of [390, 1366]) {
+  test("header instructions and sharing preserve work at " + width + "px", async ({page, problems}) => {
+    void problems;
+    const requests = [];
+    page.on("request", request => requests.push(request.url()));
+    await page.setViewportSize({width, height: 900});
+    await page.goto("/redox-coach/?problem=2");
+    const logo = page.getByRole("link", {name: "ZornScience home", exact: true});
+    const title = page.getByRole("heading", {level: 1});
+    const a = await logo.boundingBox(), b = await title.boundingBox();
+    expect(a.x + a.width).toBeLessThan(b.x);
+    expect(Math.abs(a.y + a.height / 2 - b.y - b.height / 2)).toBeLessThan(1);
+    const species = page.getByRole("button", {name: "Select MnO4- reactant", exact: true});
+    await species.click();
+    const before = await page.locator("#zsa-rx-stage").textContent();
+    await page.getByRole("button", {name: "Instructions", exact: true}).click();
+    const dialog = page.getByRole("dialog", {name: "How to use Redox Balancer Coach"});
+    await expect(dialog).toBeVisible();
+    await expect(page.getByRole("button", {name: "Close instructions", exact: true})).toBeFocused();
+    await audit(page);
+    await page.keyboard.press("Escape"); await expect(dialog).toBeHidden();
+    await expect(page.getByRole("button", {name: "Instructions", exact: true})).toBeFocused();
+    await expect(species).toHaveAttribute("aria-pressed", "true");
+    expect(await page.locator("#zsa-rx-stage").textContent()).toBe(before);
+    await page.getByRole("button", {name: "Instructions", exact: true}).click();
+    await page.getByRole("button", {name: "Close instructions", exact: true}).click();
+    await expect(dialog).toBeHidden();
+    await page.getByRole("button", {name: "Share activity", exact: true}).click();
+    await expect(page.getByRole("button", {name: "Share activity", exact: true})).toHaveAttribute("aria-expanded", "true");
+    await expect(page.getByRole("button", {name: "Copy link", exact: true})).toBeFocused();
+    await expect(page.getByLabel("Share link", {exact: true})).toHaveValue("https://activities.zornscience.org/redox-coach/");
+    await expect(page.getByRole("link", {name: "Email", exact: true})).toHaveAttribute("href", /^mailto:\?subject=/);
+    await expect(page.getByRole("link", {name: /^Facebook/})).toHaveAttribute("href", "https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Factivities.zornscience.org%2Fredox-coach%2F");
+    await audit(page);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("button", {name: "Share activity", exact: true})).toBeFocused();
+    expect(await page.locator("#zsa-rx-stage").textContent()).toBe(before);
+    expect(requests.every(url => new URL(url).origin === "http://127.0.0.1:4173")).toBe(true);
+    await page.goto("/redox-coach/?embed=1");
+    await expect(logo).toBeHidden();
+    await expect(page.getByRole("button", {name: "Share activity", exact: true})).toBeHidden();
+    await expect(page.getByRole("button", {name: "Instructions", exact: true})).toBeVisible();
+  });
+}
+
+test("share copies the canonical link and offers a manual-copy fallback", async ({page, context, problems}) => {
+  void problems;
+  await context.grantPermissions(["clipboard-read", "clipboard-write"]);
+  await page.goto("/redox-coach/?media=basic");
+  await page.getByRole("button", {name: "Share activity", exact: true}).click();
+  await page.getByRole("button", {name: "Copy link", exact: true}).click();
+  await expect(page.locator("#zsa-rx-share-status")).toHaveText("Link copied.");
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe("https://activities.zornscience.org/redox-coach/");
+  await page.evaluate(() => Object.defineProperty(navigator, "clipboard", {configurable: true, value: {writeText: () => Promise.reject(new Error("Unavailable"))}}));
+  await page.getByRole("button", {name: "Copy link", exact: true}).click();
+  await expect(page.locator("#zsa-rx-share-status")).toContainText("Link selected");
+  await expect(page.getByLabel("Share link", {exact: true})).toBeFocused();
+  expect(await page.getByLabel("Share link", {exact: true}).evaluate(input => input.selectionEnd - input.selectionStart)).toBe("https://activities.zornscience.org/redox-coach/".length);
+});

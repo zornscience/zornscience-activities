@@ -1,9 +1,5 @@
 /* Redox-specific styles; shared production assets stay unchanged. */
 .zsa.zsa-rx { max-width: 1100px; color: #2c3e50; }
-.zsa-rx-header { margin-bottom: 1.3rem; }
-.zsa-rx-brand { display: flex; align-items: center; gap: .8rem; }
-.zsa-rx-brand img { flex-shrink: 0; }
-.zsa-rx h1 { font-size: clamp(1.6rem, 4vw, 2.2rem); }
 .zsa-rx h2 { font-size: 1.3rem; }
 .zsa-rx h3 { font-size: 1.05rem; margin-top: 0; }
 .zsa-rx .zsa-card { margin-bottom: 1.1rem; }
@@ -73,4 +69,54 @@ button.zsa-rx-token:hover { background: #e7f4fc; }
 @media (prefers-reduced-motion: reduce) {
   .zsa-rx-shake, .zsa-rx-cancelled { animation: none; }
   .zsa-rx-cancelled { display: none; }
+}
+
+/* Header, Instructions and Share match the Ionic Reaction Builder. */
+.zsa-rx-header {position:relative;margin-bottom:28px;}
+.zsa-rx-header-row {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding:0 0 20px;border-bottom:1px solid #dde4ed;}
+.zsa-rx-identity {display:flex;align-items:center;gap:12px;min-width:0;flex:1 1 400px;}
+.zsa-rx .zsa-rx-brand {display:inline-flex;align-items:center;flex-shrink:0;min-height:52px;min-width:52px;text-decoration:none;color:var(--zsa-navy);}
+.zsa-rx-brand img {display:block;flex-shrink:0;}
+.zsa-rx-header-tools {display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:16px;max-width:100%;margin-left:auto;}
+.zsa-rx-header-buttons {display:flex;align-items:center;gap:8px;}
+.zsa-rx .zsa-rx-share-toggle {display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:9px 12px;min-height:44px;background:white;}
+.zsa-rx-icon {width:18px;height:18px;flex-shrink:0;}
+.zsa-rx-instructions-open {flex-shrink:0;}
+.zsa-rx h1 {min-width:0;font-size:clamp(1.6rem,1.2rem + 1.2vw,2rem);letter-spacing:-.035em;line-height:1.15;margin:0;font-weight:650;}
+.zsa-rx-share-panel {margin-top:14px;padding:20px;border:1px solid #cdd9e9;border-radius:12px;background:white;box-shadow:0 7px 20px rgba(11,42,91,.06);}
+.zsa-rx-share-heading {display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:5px;}
+.zsa-rx-share-heading h2 {font-size:18px;font-weight:600;}
+.zsa-rx .zsa-rx-icon-button {display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;border:1px solid #d5deea;border-radius:8px;background:#f7f9fc;color:#425a7b;font-size:24px;padding:0;line-height:1;}
+.zsa-rx-share-label {display:block;margin:14px 0 6px;font-size:12px;font-weight:600;color:#536075;}
+.zsa-rx-share-link {display:flex;gap:8px;align-items:stretch;}
+.zsa-rx-share-link input {display:block;flex:1 1 200px;min-width:0;min-height:46px;width:100%;border:1px solid #b8c8dc;border-radius:8px;padding:9px 11px;background:#f8fafd;color:#334e72;font-size:13px;}
+.zsa-rx-share-options {display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-top:12px;}
+.zsa-rx-share-options a {display:inline-flex;align-items:center;justify-content:center;gap:7px;min-width:44px;min-height:44px;padding:8px 12px;border:1px solid #d8e1ed;border-radius:8px;color:#355579;font-size:13px;text-decoration:none;background:white;}
+.zsa-rx-share-options a:hover {background:#f0f5fd;}
+.zsa-rx-share-status {min-height:21px;margin-top:10px!important;font-size:12px;color:#38623e;}
+.zsa-rx-instructions {width:calc(100% - 32px);max-width:720px;max-height:85vh;overflow:auto;padding:24px;border:1px solid #c5d3e4;border-radius:15px;background:white;color:var(--zsa-slate);box-shadow:0 18px 60px rgba(11,42,91,.2);font-size:15px;line-height:1.6;}
+.zsa-rx-instructions::backdrop {background:rgba(11,27,51,.45);}
+.zsa-rx-instructions-heading {display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px;}
+.zsa-rx-instructions-heading h2 {font-size:23px;line-height:1.25;font-weight:600;}
+.zsa-rx-instructions-heading button {flex-shrink:0;}
+.zsa-rx-instructions-steps {margin:18px 0;padding-left:23px;}
+.zsa-rx-instructions-steps li {padding-left:4px;margin:12px 0;}
+.zsa-rx-header-row h1 {margin:0;}
+.zsa-rx-header-tools .zsa-btn {background:white;}
+.zsa-rx [data-zsa-chrome][hidden], .zsa-rx-share-panel[hidden], .zsa-rx-share-options button[hidden] {display:none;}
+.zsa-rx-instructions {box-sizing:border-box;}
+.zsa-rx-instructions-heading h2 {margin:0;}
+@media (max-width:740px) {
+  .zsa-rx-identity {gap:10px;flex-basis:100%;}
+  .zsa-rx .zsa-rx-brand {min-width:44px;min-height:44px;}
+  .zsa-rx-brand img {width:43px;height:auto;}
+  .zsa-rx-header-tools {width:100%;justify-content:flex-end;}
+  .zsa-rx .zsa-rx-instructions-open, .zsa-rx .zsa-rx-share-toggle {padding:8px 10px;}
+  .zsa-rx-share-panel {padding:15px;}
+  .zsa-rx-share-link {flex-wrap:wrap;}
+  .zsa-rx-share-link input {flex-basis:100%;}
+  .zsa-rx-share-link .zsa-btn {width:100%;}
+  .zsa-rx-share-options a {flex:1 1 95px;}
+  .zsa-rx-instructions {padding:18px 15px;font-size:14px;}
+  .zsa-rx-instructions-heading h2 {font-size:20px;}
 }

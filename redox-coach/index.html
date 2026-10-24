@@ -4,25 +4,65 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.0.0">
+<meta name="zsa-version" content="1.1.0">
 <meta name="description" content="Balance redox half-reactions one step at a time in acidic or basic media with manual atom balancing, electron transfer and cancellation.">
 <title>Redox Half-Reaction Balancer Coach | ZornScience</title>
-<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="icon" href="../ionic-reactions/zornscience-logo.png?v=1.1.0" type="image/png">
 <link rel="canonical" href="https://activities.zornscience.org/redox-coach/">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
-<link rel="stylesheet" href="coach.css?v=1.0.0">
-<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
-<script src="model.js?v=1.0.0" defer></script>
-<script src="coach.js?v=1.0.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.1.0">
+<link rel="stylesheet" href="coach.css?v=1.1.0">
+<script src="../shared/zsa-embed.js?v=1.1.0" defer></script>
+<script src="share.js?v=1.1.0" defer></script>
+<script src="instructions.js?v=1.1.0" defer></script>
+<script src="model.js?v=1.1.0" defer></script>
+<script src="coach.js?v=1.1.0" defer></script>
 </head>
 <body>
 <main class="zsa zsa-rx" data-zsa-activity="redox-coach">
 <header class="zsa-rx-header">
-<a class="zsa-back" href="../" data-zsa-chrome>← All activities</a>
-<p class="zsa-eyebrow">Chemistry · Oxidation and Reduction</p>
-<div class="zsa-rx-brand"><img src="../favicon.png" alt="" width="48" height="48"><h1>Redox Half-Reaction Balancer Coach</h1></div>
-<p>Build the balance, one decision at a time. Each step unlocks after your work is checked.</p>
+<div class="zsa-rx-header-row">
+<div class="zsa-rx-identity">
+<a class="zsa-rx-brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome>
+<img src="../ionic-reactions/zornscience-logo.png?v=1.1.0" alt="" width="52" height="50">
+</a>
+<h1>Redox Half-Reaction Balancer Coach</h1>
+</div>
+<nav class="zsa-rx-header-tools" aria-label="Activity links">
+<div class="zsa-rx-header-buttons">
+<button class="zsa-btn zsa-rx-instructions-open" id="zsa-rx-instructions-open" type="button" aria-haspopup="dialog" aria-controls="zsa-rx-instructions">Instructions</button>
+<button class="zsa-btn zsa-rx-share-toggle" id="zsa-rx-share-toggle" type="button" aria-label="Share activity" aria-expanded="false" aria-controls="zsa-rx-share-panel" data-zsa-chrome>
+<svg class="zsa-rx-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg>
+<span>Share</span>
+</button>
+</div>
+</nav>
+</div>
+<section class="zsa-rx-share-panel" id="zsa-rx-share-panel" aria-labelledby="zsa-rx-share-title" data-zsa-chrome hidden>
+<div class="zsa-rx-share-heading">
+<h2 id="zsa-rx-share-title">Share this activity</h2>
+<button class="zsa-rx-icon-button" id="zsa-rx-share-close" type="button" aria-label="Close share options"><span aria-hidden="true">×</span></button>
+</div>
+<p class="zsa-rx-small">Share the activity link. Your equation, answers and progress are not included.</p>
+<label class="zsa-rx-share-label" for="zsa-rx-share-url">Share link</label>
+<div class="zsa-rx-share-link">
+<input id="zsa-rx-share-url" type="text" readonly spellcheck="false">
+<button class="zsa-btn zsa-btn--primary" id="zsa-rx-share-copy" type="button">Copy link</button>
+</div>
+<div class="zsa-rx-share-options">
+<a id="zsa-rx-share-email" href="#"><svg class="zsa-rx-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></svg><span>Email</span></a>
+<a id="zsa-rx-share-facebook" href="#" target="_blank" rel="noopener noreferrer"><svg class="zsa-rx-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M14 22v-9h3l.5-4H14V7c0-1.2.4-2 2-2h1.7V1.4A23 23 0 0 0 15.2 1C12.4 1 10 2.7 10 6v3H7v4h3v9z"/></svg><span>Facebook</span><span class="zsa-sr-only"> (opens in a new tab)</span></a>
+<a id="zsa-rx-share-x" href="#" target="_blank" rel="noopener noreferrer"><svg class="zsa-rx-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3h4l12 18h-4zM20 3 4 21"/></svg><span>X</span><span class="zsa-sr-only"> (opens in a new tab)</span></a>
+<button class="zsa-btn" id="zsa-rx-share-device" type="button" hidden>More share options</button>
+</div>
+<p class="zsa-rx-share-status" id="zsa-rx-share-status" aria-live="polite" aria-atomic="true"></p>
+</section>
 </header>
+<dialog class="zsa-rx-instructions" id="zsa-rx-instructions" aria-labelledby="zsa-rx-instructions-title" aria-describedby="zsa-rx-instructions-intro">
+<div class="zsa-rx-instructions-heading"><h2 id="zsa-rx-instructions-title">How to use Redox Balancer Coach</h2><button class="zsa-rx-icon-button" id="zsa-rx-instructions-close" type="button" aria-label="Close instructions" autofocus><span aria-hidden="true">×</span></button></div>
+<p id="zsa-rx-instructions-intro">Build the balance one decision at a time. Check Answer unlocks each new step only after your work is correct.</p>
+<ol class="zsa-rx-instructions-steps"><li>Separate oxidation (electron loss) from reduction (electron gain). Reactants stay on the left and products stay on the right.</li><li>Balance elements other than oxygen and hydrogen first. This coach supplies those skeleton coefficients after you split the reaction. Balance O with H₂O, then H with H⁺.</li><li>Add electrons to balance charge. One electron has charge −1.</li><li>Multiply whole half-reactions to equalize electrons.</li><li>Add the half-reactions and cancel species shared by both sides.</li><li>For basic media, add OH⁻ to both sides to neutralize H⁺, form H₂O, and cancel excess water.</li></ol>
+<p>Use Undo for an extra addition. Earlier phases lock once checked. Click a token and its destination instead of dragging; all controls also work with Tab, Enter and Space.</p>
+</dialog>
 <noscript><p class="zsa-panel">This activity needs JavaScript. Enable it to practice.</p></noscript>
 <section class="zsa-card" aria-labelledby="zsa-rx-start-title">
 <div class="zsa-rx-topline"><h2 id="zsa-rx-start-title">Your reaction</h2><label for="zsa-rx-problem">Practice problem</label><select id="zsa-rx-problem"></select></div>
@@ -38,11 +78,8 @@
 <p id="zsa-rx-feedback" class="zsa-rx-feedback" role="status" aria-live="polite" aria-atomic="true"></p>
 <div class="zsa-rx-footer"><button class="zsa-btn" id="zsa-rx-undo" type="button">Undo last action</button><div class="zsa-rx-toolbar"><button class="zsa-btn" id="zsa-rx-restart" type="button">Restart problem</button><button class="zsa-btn zsa-btn--primary" id="zsa-rx-check" type="button">Check Answer</button></div></div>
 </section>
-<details class="zsa-card"><summary>How does the half-reaction method work?</summary>
-<ol><li>Separate oxidation (electron loss) from reduction (electron gain). Reactants stay on the left and products stay on the right.</li><li>Balance elements other than oxygen and hydrogen first. This coach supplies those skeleton coefficients after you split the reaction. Balance O with H₂O, then H with H⁺.</li><li>Add electrons to balance charge. One electron has charge −1.</li><li>Multiply whole half-reactions to equalize electrons.</li><li>Add the half-reactions and cancel species shared by both sides.</li><li>For basic media, add OH⁻ to both sides to neutralize H⁺, form H₂O, and cancel excess water.</li></ol>
-<p>Use Undo for an extra addition. Earlier phases lock once checked. Click a token and its destination instead of dragging; all controls also work with Tab, Enter and Space.</p>
-</details>
-<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Progress stays in this tab. No account needed.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><a href="../" data-zsa-chrome>All activities</a><span>Progress stays in this tab. No account needed.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
 </main>
 </body>
 </html>
