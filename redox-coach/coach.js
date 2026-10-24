@@ -35,7 +35,7 @@
     return node;
   }
   function formula(f) {
-    const item = s.catalog[f], node = el("span");
+    const item = s.catalog[f], node = el("span", {class: "zsa-rx-formula"});
     item.core.split(/(\d+)/).filter(Boolean).forEach(part => node.append(/^\d+$/.test(part) ? el("sub", {}, part) : part));
     if (item.charge) node.append(el("sup", {}, (Math.abs(item.charge) === 1 ? "" : Math.abs(item.charge)) + (item.charge > 0 ? "+" : "−")));
     return node;
@@ -102,9 +102,14 @@
     s = M.create(index); history = [];
     $("problem").value = String(index);
     $("medium").textContent = titleCase(s.problem.media) + " medium";
-    const left = Object.fromEntries(s.problem.reactants.map(p => [p.formula, 1]));
-    const right = Object.fromEntries(s.problem.products.map(p => [p.formula, 1]));
-    $("net").replaceChildren(terms(left, false), el("span", {"aria-label": "yields"}, " → "), terms(right, false));
+    $("net").replaceChildren();
+    [s.problem.reactants, s.problem.products].forEach((items, side) => {
+      if (side) $("net").append(el("span", {"aria-label": "yields"}, " → "));
+      items.forEach((item, i) => {
+        if (i) $("net").append(" + ");
+        $("net").append(formula(item.formula));
+      });
+    });
     render(); say("");
     if (focus) $("title").focus();
   }

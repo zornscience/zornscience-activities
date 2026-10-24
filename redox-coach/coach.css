@@ -9,6 +9,8 @@
 .zsa-rx .zsa-card { margin-bottom: 1.1rem; }
 .zsa-rx button, .zsa-rx select, .zsa-rx input { min-height: 44px; font: inherit; }
 .zsa-rx button { touch-action: manipulation; }
+.zsa-rx button:disabled { opacity: .45; cursor: default; }
+.zsa-rx-formula { white-space: nowrap; }
 .zsa-rx select, .zsa-rx input { border: 1px solid #879faf; border-radius: 8px; padding: .5rem; background: white; color: #2c3e50; }
 .zsa-rx select { max-width: 100%; min-width: 0; }
 .zsa-rx button:focus-visible, .zsa-rx select:focus-visible, .zsa-rx input:focus-visible { outline: 3px solid #ad6500; outline-offset: 3px; }
