@@ -22,7 +22,6 @@
   function acidBusy() { return station === 'acid' && acid !== 'empty' && acid !== 'disposed'; }
   function setAcidLocks() {
     root.querySelectorAll('[data-sample],[data-station]').forEach(function (b) { b.disabled = acidBusy(); });
-    el('reset').disabled = acidBusy();
   }
   function updateAcid() {
     el('add-acid').disabled = acid !== 'empty';
@@ -100,7 +99,6 @@
   root.querySelectorAll('[data-sample]').forEach(function (btn) { btn.addEventListener('click',function () { if (acidBusy()) return; sample = btn.dataset.sample; restore(); }); });
   root.querySelectorAll('[data-station]').forEach(function (btn) { btn.addEventListener('click',function () { if (acidBusy()) return; station = btn.dataset.station; restore(); }); });
   el('light-angle').addEventListener('input',light);
-  el('reset').addEventListener('click',function () { if (acidBusy()) return; sample = 'A'; station = 'appearance'; restore(); });
   el('fresh-mortar').addEventListener('click',restore);
   el('press').addEventListener('click',function () {
     strikes++; root.classList.add('pressing'); el('press').disabled = true; el('fresh-mortar').disabled = true;

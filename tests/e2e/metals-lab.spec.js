@@ -24,7 +24,6 @@ for (var sample of ['A','B','C']) {
     await page.locator('#add-acid').click();
     await expect(page.locator('#add-solid')).toBeEnabled();
     await expect(page.locator('[data-sample=A]')).toBeDisabled();
-    await expect(page.locator('#reset')).toBeDisabled();
     await page.locator('#add-solid').click();
     await expect(page.locator('#pause')).toBeVisible();
     await page.locator('#pause').click();
@@ -65,7 +64,7 @@ test('instructions, sharing, mobile sizing and accessibility', async function ({
   await expect(page.locator('#observation')).toContainText('fresh portion of Unknown C');
   await page.waitForTimeout(200);
   await expect(page.locator('#observation')).toContainText('fresh portion of Unknown C');
-  await page.locator('#reset').click();
+  await page.goto('/metals-lab/');
   await page.screenshot({path:test.info().outputPath('metals-desktop.png'),fullPage:true});
   await page.evaluate(require('node:fs').readFileSync(path.join(__dirname,'../../node_modules/axe-core/axe.min.js'),'utf8'));
   var results = await page.evaluate(async function () { return (await axe.run(document.querySelector('main'),{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations.map(function (v) { return {id:v.id,nodes:v.nodes.map(function (n) { return n.target; })}; }); });
