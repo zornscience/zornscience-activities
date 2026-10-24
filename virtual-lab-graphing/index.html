@@ -4,29 +4,32 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.0.0">
+<meta name="zsa-version" content="1.1.0">
 <meta name="description" content="Turn your lab data into a scatter plot with a line of best fit. Label axes, explore slope, and download a graph for your lab write-up.">
 <title>Virtual Lab Graphing Tool | ZornScience</title>
 <link rel="canonical" href="https://activities.zornscience.org/virtual-lab-graphing/">
-<link rel="icon" href="../favicon.png?v=1.0.0" type="image/png">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
-<link rel="stylesheet" href="graphing.css?v=1.0.0">
-<script src="model.js?v=1.0.0" defer></script>
-<script src="graphing.js?v=1.0.0" defer></script>
-<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<link rel="icon" href="../favicon.png?v=1.1.0" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.1.0">
+<link rel="stylesheet" href="graphing.css?v=1.1.0">
+<script src="model.js?v=1.1.0" defer></script>
+<script src="graphing.js?v=1.1.0" defer></script>
+<script src="../shared/zsa-embed.js?v=1.1.0" defer></script>
 </head>
 <body>
 <main class="zsa zsa-vlg" data-zsa-activity="virtual-lab-graphing">
-<header class="zsa-vlg-header" data-zsa-chrome>
-<a class="zsa-vlg-brand" href="https://zornscience.org/"><img src="../favicon.png" width="38" height="37" alt="">ZornScience<span>LAB TOOLS</span></a>
-<a href="https://zornscience.org/science/quantitative-skills/graphs-and-change/reading-graphs/">← Reading Graphs lesson</a>
+<header class="zsa-vlg-header">
+<div class="zsa-vlg-identity"><a class="zsa-vlg-brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png" width="38" height="37" alt=""></a><h1>Virtual Lab Graphing Tool</h1></div>
+<nav class="zsa-vlg-headertools" aria-label="Activity tools"><button class="zsa-btn" id="zsa-vlg-instructions" aria-haspopup="dialog" aria-controls="zsa-vlg-dialog">Instructions</button><button class="zsa-btn" id="zsa-vlg-share" aria-haspopup="dialog" aria-controls="zsa-vlg-dialog">Share</button><a href="https://zornscience.org/science/quantitative-skills/graphs-and-change/reading-graphs/" data-zsa-chrome>← Reading Graphs lesson</a></nav>
 </header>
-<section class="zsa-vlg-intro">
-<p class="zsa-eyebrow">Quantitative skills / Graphs and change</p>
-<h1>Your data. A clearer picture.</h1>
-<p>Virtual Lab Graphing Tool</p>
-<p class="zsa-vlg-lede">Enter your measurements, look for a relationship, and take a graph straight into your lab write-up.</p>
-</section>
+<dialog class="zsa-vlg-dialog" id="zsa-vlg-dialog" aria-labelledby="zsa-vlg-dialog-title">
+<div class="zsa-vlg-dialoghead"><h2 id="zsa-vlg-dialog-title">Instructions</h2><button class="zsa-btn" id="zsa-vlg-close-dialog" aria-label="Close dialog">×</button></div>
+<div id="zsa-vlg-instructions-content">
+<p>Turn your lab measurements into a scatter plot and download a graph for your write-up.</p>
+<ol><li><strong>Label your graph.</strong> Add a title, the independent variable on x, the dependent variable on y, and their units. Remember DRY MIX.</li><li><strong>Enter measurements.</strong> Type one x/y pair per row, add rows as needed, or paste/import a two-column CSV. You can also load a lesson example.</li><li><strong>Look for the pattern.</strong> Turn on Linear best fit when the points follow an approximately straight trend. Read the slope, y-intercept and R² below the graph. A straight line does not describe every relationship.</li><li><strong>Read the line.</strong> Enter an x value to estimate y from the fit. Estimates outside your measured range are extrapolations.</li><li><strong>Save your work.</strong> Download PNG or SVG for your lab report, CSV to keep the data, or print the graph.</li></ol>
+<p><strong>Your data stays in this tab.</strong> Closing or reloading clears it. Download CSV before leaving. Sharing sends a fresh tool link; your measurements are not included.</p>
+</div>
+<div id="zsa-vlg-share-content" hidden><p>Share a fresh graphing tool with your students or classmates. Your measurements are not included.</p><label for="zsa-vlg-share-url">Activity link</label><div class="zsa-vlg-sharelink"><input id="zsa-vlg-share-url" type="text" readonly spellcheck="false" value="https://activities.zornscience.org/virtual-lab-graphing/"><button class="zsa-btn zsa-btn--primary" id="zsa-vlg-copy-link">Copy link</button></div><p id="zsa-vlg-share-status" role="status" aria-live="polite"></p></div>
+</dialog>
 <noscript><p class="zsa-panel">Enable JavaScript to enter data and plot your graph. Your data is processed only in your browser.</p></noscript>
 <div class="zsa-vlg-workspace">
 <section class="zsa-vlg-editor zsa-vlg-card" aria-labelledby="zsa-vlg-data-title">

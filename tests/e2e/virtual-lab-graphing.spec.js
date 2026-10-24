@@ -57,6 +57,28 @@ for(const width of [360,390,768,1366]) test("layout and accessibility at "+width
  const results=await page.evaluate(async()=>{return (await axe.run(document.querySelector("main"),{runOnly:{type:"tag",values:["wcag2a","wcag2aa","wcag21aa"]}})).violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)}));});expect(results).toEqual([]);
 });
 test("embed mode hides chrome and keeps the tool usable",async({page})=>{
- await page.goto("/virtual-lab-graphing/?embed=1");await expect(page.locator("main")).toHaveClass(/zsa--embedded/);await expect(page.locator("header")).toBeHidden();await expect(page.locator("footer")).toBeHidden();
+ await page.goto("/virtual-lab-graphing/?embed=1");await expect(page.locator("main")).toHaveClass(/zsa--embedded/);await expect(page.getByRole("link",{name:"ZornScience home"})).toBeHidden();await expect(page.locator("footer")).toBeHidden();
+ await page.getByRole("button",{name:"Instructions",exact:true}).click();await expect(page.getByRole("dialog")).toBeVisible();await page.keyboard.press("Escape");
  await expect(page.locator(id("load"))).toBeVisible();
+});
+test("compact activity header has instructions with keyboard close and focus restoration",async({page})=>{
+ await page.goto("/virtual-lab-graphing/");
+ await expect(page.getByRole("heading",{level:1})).toHaveText("Virtual Lab Graphing Tool");
+ await expect(page.locator(".zsa-vlg-intro")).toHaveCount(0);
+ await page.getByRole("button",{name:"Instructions",exact:true}).click();
+ await expect(page.getByRole("dialog")).toContainText("Download CSV before leaving");
+ await page.keyboard.press("Escape");await expect(page.getByRole("dialog")).not.toBeVisible();
+ await expect(page.getByRole("button",{name:"Instructions",exact:true})).toBeFocused();
+});
+test("share copies only the fresh activity link and supports clipboard denial",async({page})=>{
+ await page.goto("/virtual-lab-graphing/?embed=1&data=private");await example(page);
+ await page.evaluate(()=>Object.defineProperty(navigator,"clipboard",{configurable:true,value:{writeText:async text=>{document.documentElement.dataset.copied=text;}}}));
+ await page.getByRole("button",{name:"Share",exact:true}).click();await page.getByRole("button",{name:"Copy link",exact:true}).click();
+ await expect(page.locator(id("share-status"))).toHaveText("Link copied.");
+ expect(await page.locator("html").getAttribute("data-copied")).toBe("https://activities.zornscience.org/virtual-lab-graphing/");
+ await page.evaluate(()=>Object.defineProperty(navigator,"clipboard",{configurable:true,value:{writeText:async()=>{throw Error("Denied");}}}));
+ await page.getByRole("button",{name:"Copy link",exact:true}).click();await expect(page.locator(id("share-status"))).toContainText("Ctrl+C");
+ expect(await page.locator(id("share-url")).evaluate(input=>input.selectionEnd-input.selectionStart)).toBe("https://activities.zornscience.org/virtual-lab-graphing/".length);
+ await page.getByRole("button",{name:"Close dialog",exact:true}).click();await expect(page.getByRole("button",{name:"Share",exact:true})).toBeFocused();
+ await expect(page.locator(id("pointcount"))).toHaveText("6 points");
 });

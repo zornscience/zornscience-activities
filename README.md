@@ -29,7 +29,7 @@ act/                       ACT Practice, v1.8.0 (English, Math, Reading and Scie
 act-science/               Redirect only: ACT Science Practice is now the Science section of act/
 wordpress/zornscience-act-history/  WordPress plugin for zornscience.org that stores ACT Practice scores under anonymous practice codes (not part of the static site)
 scientific-calculator/     Scientific Calculator Practice, v1.1.0 (independent scientific calculator with six guided exercises)
-virtual-lab-graphing/      Virtual Lab Graphing Tool, v1.0.0 (student data, scatter plots, linear best fit and graph downloads)
+virtual-lab-graphing/      Virtual Lab Graphing Tool, v1.1.0 (student data, scatter plots, linear best fit and graph downloads)
 gas-lab/                   Gas Laws and KMT Lab, v1.0.0 (particle simulation, graphs and investigations)
 stoichiometry-coach/       Stoichiometry Coach, v1.0.0 (conversion factor setups with unit cancellation)
 physics-graphing-lab/      Physics Graphing Lab, v1.0.0 (a cart with linked position, velocity and acceleration graphs)
