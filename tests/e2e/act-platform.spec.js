@@ -18,7 +18,7 @@ var bank = {};
 // The accessible name of rich text: tags dropped, a fraction read as "top over bottom" (with a part of more than
 // one term in parentheses), a root as the √ sign.
 function spoken(s) {
-  var g = (x) => /^[\w.,]+$/.test(x) ? x : "(" + x + ")";
+  var g = (x) => /^[\w.,]+$/.test(x) ? x : "( " + x + " )";
   return s.replace(/<frac>([\s\S]*?)<\/frac>/g, (m, f) => {
     var parts = f.replace(/<\/?\w+>/g, "").split("|");
     return " " + g(parts[0]) + " over " + g(parts[1]) + " ";
@@ -253,8 +253,8 @@ test("Math: one question at a time with no passage or line reader; fractions, ro
   await startSection(page, "Math");
   await expect(page.getByRole("article")).toHaveCount(0);
   await expect(page.getByRole("group", {name: "Tools"}).getByRole("button", {name: "Line reader"})).toHaveCount(0);
-  // Easier questions first; every question in the set once.
-  var seen = [], total = qs.length;
+  // 10 questions from the bank, each once, easier ones first.
+  var seen = [], total = 10;
   for (var n = 1; n <= total; n++) {
     var stemText = await page.locator("legend").textContent();
     var q = qs.find((x) => spoken(x.stem) === stemText.replace(/\s+/g, " ").trim());
@@ -266,7 +266,7 @@ test("Math: one question at a time with no passage or line reader; fractions, ro
     if (n < total) await next(page).click();
   }
   seen.forEach((q, i) => { if (i) expect(q.difficulty).toBeGreaterThanOrEqual(seen[i - 1].difficulty); });
-  expect(seen.map((q) => q.id).sort()).toEqual(qs.map((q) => q.id).sort());
+  expect(new Set(seen.map((q) => q.id)).size).toBe(total);
   await page.getByRole("button", {name: "Review", exact: true}).click();
   await expect(page.getByRole("heading", {level: 3})).toHaveCount(0);
   await page.getByRole("button", {name: "End section"}).click();
@@ -282,7 +282,7 @@ test("Math: one question at a time with no passage or line reader; fractions, ro
 test("Math: the fraction question is read aloud as fractions, and zoom enlarges the whole question", async ({page, problems}) => {
   void problems;
   await go(page, "math", {query: "?drafts=1"});
-  await page.getByRole("region", {name: "Review drafts"}).getByRole("button", {name: /^Which of the following expressions/}).click();
+  await page.getByRole("region", {name: "Review drafts"}).getByRole("button", {name: /^Which of the following expressions is equivalent to x\/2/}).click();
   await startSection(page, "Math");
   await expect(page.getByRole("group", {name: "Which of the following expressions is equivalent to x over 2 + x over 3 ?"})).toBeVisible();
   await expect(page.getByRole("radio").nth(3)).toHaveAccessibleName("D. 5x over 6");
@@ -297,6 +297,55 @@ test("Math: the fraction question is read aloud as fractions, and zoom enlarges 
     await noSideScroll(page, "math zoom " + w);
     await auditBoth(page, "math question " + w);
   }
+});
+
+// Every Math question, started on its own from the drafts list: its stem and choices read correctly (fractions as
+// "over"), its figure is there, and the marked answer scores 1 / 1. axe-core checks every question with a figure.
+test("every Math question plays from the drafts list, reads well, and its marked answer is scored correct", async ({page, problems}) => {
+  test.setTimeout(300000);
+  void problems;
+  var qs = bank.math.questions;
+  for (var i = 0; i < qs.length; i++) {
+    var q = qs[i];
+    await go(page, "math", {query: "?drafts=1"});
+    await page.getByRole("region", {name: "Review drafts"}).getByRole("button").nth(i).click();
+    await startSection(page, "Math");
+    await expect(page.getByRole("group", {name: spoken(q.stem)}), q.id).toBeVisible();
+    for (var k = 0; k < 4; k++) await expect(page.getByRole("radio").nth(k), q.id).toHaveAccessibleName("ABCD"[k] + ". " + spoken(q.choices[k]));
+    if (q.figure && q.figure.kind === "diagram") await expect(page.getByRole("img", {name: q.figure.label})).toBeVisible();
+    if (q.figure && q.figure.kind === "table") await expect(page.getByRole("table", {name: q.figure.caption})).toBeVisible();
+    if (q.figure && /Chart|scatter/.test(q.figure.kind)) await expect(page.getByRole("table", {name: "Data in " + q.figure.caption, includeHidden: true})).toHaveCount(1);
+    if (q.figure) {
+      await auditBoth(page, q.id);
+      await noSideScroll(page, q.id);
+    }
+    await page.locator("fieldset label").nth(q.answer).click();
+    await page.getByRole("button", {name: "Review", exact: true}).click();
+    await page.getByRole("button", {name: "End section"}).click();
+    await page.getByRole("button", {name: "Yes, end the section"}).click();
+    await expect(page.getByText("100% correct"), q.id).toBeVisible();
+  }
+});
+
+test("Math with the drafts: mixed practice is 15 questions in 17 minutes, the full section 45 in 50 minutes, easier first", async ({page, problems}) => {
+  void problems;
+  await go(page, "math", {query: "?drafts=1", clock: true, seed: 12});
+  await expect(page.getByRole("button", {name: /^Mixed practice 15 questions timed at ACT pace \(17 minutes\)/})).toBeVisible();
+  await page.getByRole("button", {name: /^Full section 45 questions in 50 minutes/}).click();
+  await startSection(page, "Math");
+  await expect(page.getByRole("timer")).toHaveText("Time left 50:00");
+  await expect(nav(page).getByRole("button")).toHaveCount(45);
+  var diffs = [];
+  for (var n = 1; n <= 45; n += 4) {
+    await nav(page).getByRole("button", {name: new RegExp("^Question " + n + ",")}).click();
+    var stemText = (await page.locator("legend").textContent()).replace(/\s+/g, " ").trim();
+    var q = bank.math.questions.find((x) => spoken(x.stem) === stemText);
+    expect(q, stemText).toBeTruthy();
+    diffs.push(q.difficulty);
+  }
+  diffs.forEach((d, i) => { if (i) expect(d).toBeGreaterThanOrEqual(diffs[i - 1]); });
+  expect(diffs[0]).toBe(1);
+  expect(diffs[diffs.length - 1]).toBe(3);
 });
 
 // ---------- Reading ----------

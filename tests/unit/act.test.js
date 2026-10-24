@@ -19,7 +19,9 @@ function checkMarkup(s, where, section, passage) {
   s = String(s);
   var tags = TAGS[section], stripped = s.replace(new RegExp("</?(" + tags.join("|") + ")>", "g"), "");
   if (passage && section === "english") stripped = stripped.replace(/<\/?u\d+>|<b\d+\/>/g, "");
-  assert.doesNotMatch(stripped, /[<>]/, where + " has markup other than " + tags.join(", "));
+  // A lone < or > (as in "x < 5") is text; anything shaped like a tag is not allowed.
+  assert.doesNotMatch(stripped, /<\/?[a-z][^<>]*\/?>/i, where + " has markup other than " + tags.join(", "));
+  assert.doesNotMatch(stripped, /<\S|\S>/, where + " has a < or > that is not set off by spaces");
   assert.doesNotMatch(s, /&[a-z#0-9]+;/i, where + " uses an HTML entity; write the character");
   assert.doesNotMatch(s, /[–—]/, where + " has an en or em dash");
   tags.forEach(function (t) {

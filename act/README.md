@@ -1,5 +1,5 @@
 # ACT Practice
-Version: 1.2.0
+Version: 1.3.0
 
 Free ACT practice with original questions in all four sections: English, Math, Reading and the optional Science. Students practice a few questions, one timed section, or the full ACT, and get a score report that compares them with national results and gives tips for the skills they missed. Nothing is saved or sent anywhere. Not linked from zornscience.org yet. The live URL after approval will be https://activities.zornscience.org/act/. The old address, https://activities.zornscience.org/act-science/, redirects to the Science section.
 
@@ -155,12 +155,25 @@ Across the bank: punctuation 23, grammar and usage 23, sentence structure 13, wo
 
 Facts in the informative passages (Marie Tharp, monarch migration, the Erie Canal) follow standard published accounts; numbers are rounded the way they usually are ("about 363 miles", "as far as 3,000 miles", shipping cost "about $100" to "about $10" a ton).
 
+## Math questions (milestone C)
+90 original questions, all drafts for Nick's review: the 8 samples from milestone A and 82 new ones. With `?drafts=1`, the Math modes use them, so a 45-question section can be tried before any are approved. Students see Practice questions as soon as one question is reviewed (10 at a time once there are 10), Mixed practice once 15 are reviewed, and the Full section once 45 are.
+
+| Skill (ACT reporting category) | Questions | Topics |
+|---|---|---|
+| Integrating essential skills | 30 | rates and unit rates, percents (of, change, discount and tax, repeated change), ratios and proportions, unit conversion, averages, scale, simple interest, mixtures, work rates, perimeter and area in context, estimation |
+| Algebra | 14 | linear equations and inequalities, slope and lines, systems (including no solution), expanding and factoring, quadratic equations, rational equations, solving formulas |
+| Geometry | 14 | angles, triangles and the Pythagorean theorem, parallel lines (with a figure), area and volume, circles, distance and midpoint, circle equations, right-triangle trigonometry |
+| Functions | 13 | evaluating and composing functions, a table of values, intercepts, vertex form, domain, exponential growth, a graph of change over time, maximum height, inverses, logarithms, what a model's numbers mean |
+| Statistics and probability | 10 | mean, median and range, probability, counting, a bar graph, a two-way table, a scatter plot with a line of fit |
+| Number and quantity | 9 | absolute value, exponent rules, scientific notation, simplifying roots, complex numbers, rational exponents, irrational numbers, least common multiple |
+
+That is a third essential skills and two thirds Preparing for Higher Math, close to the real test. Difficulty: 23 easy, 44 medium, 23 hard; sets put easier questions first. The correct answer is the first, second, third and fourth choice 23, 26, 19 and 22 times. Number choices run from least to greatest, as on the ACT. Every numeric answer (49 of the 82 new questions) was computed independently and checked against the marked choice while the bank was written. Figures: a triangle, parallel lines, a table of function values, a line graph, a bar graph, a two-way table and a scatter plot.
+
 ## Other draft samples (milestone A)
-Small samples so Math and Reading can be tried with `?drafts=1`. All are drafts and need Nick's review.
+A small sample so Reading can be tried with `?drafts=1`. It is a draft and needs Nick's review.
 
 | Section | Sample | Questions |
 |---|---|---|
-| Math | 8 questions: a linear equation, powers, a median, the Pythagorean theorem (with a figure), a function value, a percent, adding fractions, and sine | 8 |
 | Reading | The Hummingbird's Night Budget (Natural Science) | 9 |
 
 ## Scoring
@@ -196,6 +209,8 @@ Each question in the answer review has a Show with passage button (Show question
 - Ending the section asks on the page, never with a `confirm()` dialog.
 
 ## Changelog
+1.3.0: The Math bank (milestone C): 82 new questions, for 90 in all, as drafts. Comparison signs (as in "x < 5") are allowed in question text. Browser tests play every Math question on its own and check a 45-question Math section from the drafts.
+
 1.2.0: The English bank (milestone B): nine new passages, for 10 passages and 100 questions, all drafts. The sample passage's first question now has its answer in a different position. Browser tests play every English passage and a 50-question English section.
 
 1.1.0: ACT Practice (milestone A of the full ACT). The folder moved from `act-science/` to `act/`, with a redirect from the old address. A home screen with the full ACT and the four sections; English (numbered underlined parts that follow the question), Math (one question at a time, fractions, roots and figures), and Reading (numbered paragraphs) on the same test platform; per-section words, skills, tips, timing, conversions, averages and benchmarks; the full ACT with a 10-minute break, optional Science, a composite and STEM score, and links to each section's report. The Science bank moved to `bank-science.js` unchanged. Draft samples for English, Math and Reading. `?drafts=1` now lets the practice modes use drafts too.
