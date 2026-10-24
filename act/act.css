@@ -1,4 +1,4 @@
-/* ACT Science Practice. Atkinson Hyperlegible (SIL OFL 1.1, see fonts/AtkinsonHyperlegible-OFL.txt), Latin subset. */
+/* ACT Practice. Atkinson Hyperlegible (SIL OFL 1.1, see fonts/AtkinsonHyperlegible-OFL.txt), Latin subset. */
 @font-face {font-family: "Atkinson Hyperlegible"; src: url("fonts/AtkinsonHyperlegible-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap;}
 @font-face {font-family: "Atkinson Hyperlegible"; src: url("fonts/AtkinsonHyperlegible-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap;}
 @font-face {font-family: "Atkinson Hyperlegible"; src: url("fonts/AtkinsonHyperlegible-Italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap;}
@@ -83,6 +83,19 @@ body {background: var(--act-bg);}
 .zsa-act-fact dt {font-family: var(--act-data); font-weight: 700; font-size: 22px; color: var(--act-blue); font-variant-numeric: tabular-nums;}
 .zsa-act-fact dd {margin: 0; font-size: 15px;}
 .zsa-act-note {font-size: 14px; color: var(--act-muted);}
+.zsa-act-fullcard {border: 2px solid var(--act-blue); border-radius: 14px; padding: 18px 20px; display: grid; gap: 12px; margin-bottom: 28px;}
+.zsa-act .zsa-act-fullcard h2, .zsa-act .zsa-act-seclist h2 {font-size: 22px;}
+.zsa-act-check {display: flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer;}
+.zsa-act-check input {width: 22px; height: 22px; margin: 0; accent-color: var(--act-blue); flex: none;}
+.zsa-act-seclist {display: grid; gap: 12px;}
+.zsa-act-homerow {margin-top: 18px;}
+.zsa-act-panel-note {background: var(--act-surface); border-radius: 12px; padding: 16px 18px; color: var(--act-ink);}
+.zsa-act-break {font-size: 17px; display: flex; align-items: baseline; gap: 8px;}
+.zsa-act-break .zsa-act-time {font-size: 28px;}
+.zsa-act-secscores {list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 14px;}
+.zsa-act-secscore {border: 1px solid var(--act-line); border-radius: 12px; padding: 16px; display: grid; gap: 10px; align-content: start;}
+.zsa-act .zsa-act-secscore h3 {font-size: 18px; display: flex; justify-content: space-between; align-items: baseline; gap: 8px;}
+.zsa-act-secscore-num {font-size: 30px; color: var(--act-blue); font-variant-numeric: tabular-nums;}
 
 /* The section: passage pane on the left (its own scroll), one question on the right, fixed bottom bar. */
 .zsa-act-kind {font-family: var(--act-data); font-size: 13px; text-transform: uppercase; letter-spacing: .08em; color: var(--act-muted);}
@@ -189,15 +202,42 @@ body {background: var(--act-bg);}
 .zsa-act-reader-handle:focus-visible .zsa-act-reader-frame {stroke-width: 4; stroke-dasharray: 8 4;}
 
 /* Passage zoom: text, tables and figures grow; the pane scrolls both ways. */
-.zsa-act-pwrap.zsa-act-z1 .zsa-act-passage {font-size: 21px;}
-.zsa-act-pwrap.zsa-act-z2 .zsa-act-passage {font-size: 25.5px;}
-.zsa-act-pwrap.zsa-act-z3 .zsa-act-passage {font-size: 34px;}
-.zsa-act-pwrap.zsa-act-z1 .zsa-act-figure {width: 125%;}
-.zsa-act-pwrap.zsa-act-z2 .zsa-act-figure {width: 150%;}
-.zsa-act-pwrap.zsa-act-z3 .zsa-act-figure {width: 200%;}
-.zsa-act-pwrap.zsa-act-z1 .zsa-act-diagram {max-width: 425px;}
-.zsa-act-pwrap.zsa-act-z2 .zsa-act-diagram {max-width: 510px;}
-.zsa-act-pwrap.zsa-act-z3 .zsa-act-diagram {max-width: 680px;}
+.zsa-act-z1 .zsa-act-pwrap .zsa-act-passage {font-size: 21px;}
+.zsa-act-z2 .zsa-act-pwrap .zsa-act-passage {font-size: 25.5px;}
+.zsa-act-z3 .zsa-act-pwrap .zsa-act-passage {font-size: 34px;}
+.zsa-act-z1 .zsa-act-pwrap .zsa-act-figure {width: 125%;}
+.zsa-act-z2 .zsa-act-pwrap .zsa-act-figure {width: 150%;}
+.zsa-act-z3 .zsa-act-pwrap .zsa-act-figure {width: 200%;}
+.zsa-act-z1 .zsa-act-pwrap .zsa-act-diagram {max-width: 425px;}
+.zsa-act-z2 .zsa-act-pwrap .zsa-act-diagram {max-width: 510px;}
+.zsa-act-z3 .zsa-act-pwrap .zsa-act-diagram {max-width: 680px;}
+
+/* Math: one question at a time, full width, no passage. Zoom scales the whole question. */
+.zsa-act-split--solo {grid-template-columns: minmax(0, 1fr); max-width: 860px;}
+.zsa-act-z1 .zsa-act-split--solo .zsa-act-qpane {zoom: 1.25;}
+.zsa-act-z2 .zsa-act-split--solo .zsa-act-qpane {zoom: 1.5;}
+.zsa-act-z3 .zsa-act-split--solo .zsa-act-qpane {zoom: 2;}
+.zsa-act-q .zsa-act-figure {margin-bottom: 14px;}
+
+/* Math notation: stacked fractions and square roots, built from text so they zoom and highlight like text. */
+.zsa-act-frac {position: relative; display: inline-flex; flex-direction: column; align-items: center; vertical-align: middle; margin: 0 .15em; font-size: .92em; line-height: 1.15;}
+.zsa-act-num-part {padding: 0 .2em;}
+.zsa-act-den-part {padding: 0 .2em; border-top: 1.5px solid currentColor;}
+.zsa-act-sqrt {position: relative; white-space: nowrap;}
+.zsa-act-rad {border-top: 1.5px solid currentColor; padding: 0 .1em; margin-left: .05em;}
+
+/* English: numbered underlined parts. The current question's part is boxed in the passage. */
+.zsa-act-u {position: relative;}
+.zsa-act-u u {text-decoration-thickness: 2px; text-underline-offset: 3px;}
+.zsa-act-qbox {position: relative; display: inline-block; min-width: 1.6em; padding: 0 .3em; margin-right: .2em; border: 1.5px solid var(--act-muted); border-radius: 4px;
+  font-family: var(--act-data); font-size: .78em; line-height: 1.35; text-align: center; vertical-align: .1em; color: var(--act-ink);}
+.zsa-act-u--current u {background: var(--act-blue-soft); outline: 2px solid var(--act-blue); outline-offset: 1px; border-radius: 2px;}
+.zsa-act-u--current .zsa-act-qbox, .zsa-act-qbox.zsa-act-u--current {background: var(--act-blue); border-color: var(--act-blue); color: var(--act-on-blue); font-weight: 700;}
+
+/* Reading: numbered paragraphs and the note above a passage. */
+.zsa-act-para {position: relative; padding-left: 2.2em;}
+.zsa-act-pnum {position: absolute; left: 0; top: .1em; font-family: var(--act-data); font-size: .8em; font-weight: 700; color: var(--act-muted);}
+.zsa-act-pnote {font-style: italic; color: var(--act-muted); font-size: .9em;}
 
 /* Question */
 .zsa-act-qhead {display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;}
@@ -331,7 +371,7 @@ body {background: var(--act-bg);}
   .zsa-act-intro, .zsa-act-split, .zsa-act-res-top {grid-template-columns: minmax(0, 1fr);}
   .zsa-act-split {height: auto;}
   .zsa-act-passage, .zsa-act-qpane {overflow: visible;}
-  .zsa-act-pwrap[class*="zsa-act-z"] .zsa-act-passage {overflow-x: auto;}
+  .zsa-act-z1 .zsa-act-pwrap .zsa-act-passage, .zsa-act-z2 .zsa-act-pwrap .zsa-act-passage, .zsa-act-z3 .zsa-act-pwrap .zsa-act-passage {overflow-x: auto;}
   .zsa-act-skill {grid-template-columns: minmax(0, 1fr) 64px;}
   .zsa-act-meter {grid-column: 1 / -1; grid-row: 2;}
 }

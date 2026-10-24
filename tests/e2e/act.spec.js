@@ -1,4 +1,4 @@
-// ACT Science Practice (act-science/): the section shell (directions, one question at a time, Previous and Next across
+// ACT Practice (act/), Science section: the section shell (directions, one question at a time, Previous and Next across
 // passages, the numbered navigator, flags, the review screen and ending the section), the countdown and count-up
 // timers with page.clock, the score report, keyboard, layout, axe-core in light and dark mode, embed mode and network.
 // Selects by role, tag and text only, and fails on console errors or CSP violations.
@@ -9,7 +9,10 @@ var {test, expect, seedRandom} = require("./fixtures");
 var {loadData} = require("../support/load-data");
 
 var AXE = fs.readFileSync(require.resolve("axe-core/axe.min.js"), "utf8");
-var data = loadData(path.join(__dirname, "..", "..", "act-science", "data.js"));
+var data = loadData(path.join(__dirname, "..", "..", "act", "bank-science.js"));
+var words = loadData(path.join(__dirname, "..", "..", "act", "data.js"));
+data.skills = words.sections.science.skills;
+data.types = words.sections.science.types;
 var byTitle = {};
 data.passages.filter((p) => p.status === "reviewed").forEach((p) => { byTitle[p.title] = p; });
 var plain = (s) => s.replace(/<\/?(sub|sup|em|strong)>/g, "");
@@ -17,7 +20,9 @@ var plain = (s) => s.replace(/<\/?(sub|sup|em|strong)>/g, "");
 async function go(page, seed, opts) {
   if (opts && opts.clock) await page.clock.install();
   if (seed !== undefined) await page.addInitScript(seedRandom, seed);
-  await page.goto("/act-science/" + ((opts && opts.query) || ""));
+  // A new load each time: going to the same address with only a #section would not reload the page.
+  if (page.url() !== "about:blank") await page.goto("about:blank");
+  await page.goto("/act/" + ((opts && opts.query) || "") + "#science");
   await expect(page.getByRole("heading", {level: 1, name: "ACT Science Practice"})).toBeVisible();
 }
 async function begin(page, mode) {
@@ -640,13 +645,16 @@ for (var [aw, ah] of [[1366, 657], [390, 664]]) {
   })(aw, ah);
 }
 
-// Serves a changed copy of the question bank in place of data.js. change(bank) edits the parsed copy.
+// A bank file's source for a bank object, served in place of the real file.
+function bankScript(bank) {
+  return "(function () {\n  \"use strict\";\n  var root = document.querySelector('[data-zsa-activity=\"act\"]');\n  if (!root) return;\n  var bank = " + JSON.stringify(bank) +
+    ";\n  root.addEventListener(\"zsa:request-bank\", function (event) { event.detail.receive(bank); }, {once: true});\n}());\n";
+}
+// Serves a changed copy of the Science bank in place of bank-science.js. change(bank) edits the parsed copy.
 async function serveBank(page, change) {
-  var bank = JSON.parse(JSON.stringify(data));
+  var bank = JSON.parse(JSON.stringify({section: "science", passages: data.passages}));
   change(bank);
-  var js = "(function () {\n  \"use strict\";\n  var root = document.querySelector('[data-zsa-activity=\"act-science\"]');\n  if (!root) return;\n  var data = " + JSON.stringify(bank) +
-    ";\n  root.addEventListener(\"zsa:request-data\", function (event) { event.detail.receive(data); }, {once: true});\n}());\n";
-  await page.route("**/act-science/data.js*", (route) => route.fulfill({status: 200, contentType: "text/javascript", body: js}));
+  await page.route("**/act/bank-science.js*", (route) => route.fulfill({status: 200, contentType: "text/javascript", body: bankScript(bank)}));
   return bank;
 }
 
@@ -659,9 +667,9 @@ test("full section is hidden when the reviewed bank cannot make one", async ({pa
   await expect(page.getByRole("button", {name: /^Mixed practice/})).toBeVisible();
   await expect(page.getByRole("button", {name: /^Full section/})).toHaveCount(0);
   // All reviewed, but one question removed: 39 questions, never exactly 40.
-  await page.unroute("**/act-science/data.js*");
+  await page.unroute("**/act/bank-science.js*");
   await serveBank(page, (b) => { b.passages.find((p) => p.type === "Conflicting Viewpoints").questions.pop(); });
-  await page.reload();
+  await go(page, 52);
   await expect(page.getByRole("button", {name: /^Mixed practice/})).toBeVisible();
   await expect(page.getByRole("button", {name: /^Full section/})).toHaveCount(0);
 });
@@ -759,7 +767,7 @@ test("students never see a draft passage; ?drafts=1 lists every passage with its
   var bank = await serveBank(page, (b) => { b.passages[1].status = "draft"; });
   var draft = bank.passages[1];
   await go(page, 41);
-  await expect(page.getByRole("heading", {name: "Review passages"})).toHaveCount(0);
+  await expect(page.getByRole("heading", {name: "Review drafts"})).toHaveCount(0);
   await expect(page.getByRole("button", {name: /^Full section/})).toHaveCount(0);
   for (var i = 0; i < 8; i++) {
     await page.getByRole("button", {name: /^One passage/}).click();
@@ -773,7 +781,7 @@ test("students never see a draft passage; ?drafts=1 lists every passage with its
     await page.getByRole("button", {name: "Back to start"}).click();
   }
   await go(page, 42, {query: "?drafts=1"});
-  var list = page.getByRole("region", {name: "Review passages"});
+  var list = page.getByRole("region", {name: "Review drafts"});
   for (var p of bank.passages) {
     await expect(list.getByRole("button", {name: new RegExp("^" + p.title.replace(/[()]/g, "\\$&") + " " + p.type + " · " + p.questions.length + " questions · " + (p.status === "draft" ? "Draft" : "Reviewed") + "$")})).toBeVisible();
   }
@@ -789,7 +797,7 @@ for (var dp of data.passages) {
     test("every passage plays through all correct, with readable figures: " + p.title, async ({page, problems}) => {
       void problems;
       await go(page, 43, {query: "?drafts=1"});
-      await page.getByRole("region", {name: "Review passages"}).getByRole("button", {name: new RegExp("^" + p.title)}).click();
+      await page.getByRole("region", {name: "Review drafts"}).getByRole("button", {name: new RegExp("^" + p.title)}).click();
       await page.getByRole("button", {name: "Start the section"}).click();
       // Every graph has a screen reader data table with the same values.
       var graphs = p.body.filter((b) => /Chart|scatter/.test(b.kind));
