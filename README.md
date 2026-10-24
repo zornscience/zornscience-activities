@@ -34,6 +34,7 @@ gas-lab/                   Gas Laws and KMT Lab, v1.0.0 (particle simulation, gr
 stoichiometry-coach/       Stoichiometry Coach, v1.0.0 (conversion factor setups with unit cancellation)
 atwood-machine/           The Atwood Machine, v1.0.1 (ideal pulley, adjustable masses and live vectors; no data recording)
 physics-graphing-lab/      Physics Graphing Lab, v1.0.0 (a cart with linked position, velocity and acceleration graphs)
+collision-carts/           Collision Carts, v1.0.2 (two carts on a track, elastic and inelastic collisions, live velocity and momentum vectors)
 titration-lab/             Virtual Titration Simulator, v1.0.0 (burette, indicators and a live pH curve for strong and weak acids and bases)
 kinetics-lab/              Kinetics and Collision Theory Sandbox, v1.0.0 (colliding particles, temperature, concentration, activation energy and a catalyst, with a live concentration graph)
 redox-coach/              Redox Half-Reaction Balancer Coach, v1.1.1 (manual phase-by-phase balancing in acidic and basic media)
