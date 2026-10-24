@@ -1,0 +1,3 @@
+const {test}=require('node:test');const assert=require('node:assert/strict');const M=require('../../electrochemistry-lab/model.js');
+test('standard potentials and orientation for all metal pairs',()=>{for(const [a,b,e] of [['Zn','Cu',1.10],['Zn','Ag',1.56],['Cu','Ag',0.46]])for(const [l,r] of [[a,b],[b,a]]){const g=M.cell(l,r,'galvanic'),v=M.cell(l,r,'electrolytic');assert.equal(g.e,e);assert.equal(g.anode,a);assert.equal(v.e,-e);assert.equal(v.anode,b);}});
+test('silver reactions balance atoms and charge',()=>{const c=M.cell('Zn','Ag','galvanic');assert.equal(c.n,2);assert.equal(c.reaction,'Zn(s) + 2Ag⁺(aq) → Zn²⁺(aq) + 2Ag(s)');assert.equal(M.cell('Zn','Zn','galvanic'),null);});
