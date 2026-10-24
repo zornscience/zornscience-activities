@@ -30,7 +30,27 @@ function is_wp_error( $v ) { return $v instanceof WP_Error; }
 class WP_Error {
 	public $code; public $message; public $data;
 	function __construct( $code, $message, $data ) { $this->code = $code; $this->message = $message; $this->data = $data; }
+	function get_error_message() { return $this->message; }
 }
+// Roles, and what the admin pages need.
+$GLOBALS['zsa_roles'] = array( 'administrator' => new Fake_Role( array( 'manage_options' => true ) ) );
+class Fake_Role {
+	public $capabilities;
+	function __construct( $caps ) { $this->capabilities = $caps; }
+	function add_cap( $cap ) { $this->capabilities[ $cap ] = true; }
+}
+function get_role( $name ) { return isset( $GLOBALS['zsa_roles'][ $name ] ) ? $GLOBALS['zsa_roles'][ $name ] : null; }
+function add_role( $name, $label, $caps ) { $GLOBALS['zsa_roles'][ $name ] = new Fake_Role( $caps ); $GLOBALS['zsa_role_labels'][ $name ] = $label; }
+$GLOBALS['zsa_user'] = array( 'id' => 7, 'caps' => array( 'zsa_act_class_lists' ) );
+function current_user_can( $cap ) { return in_array( $cap, $GLOBALS['zsa_user']['caps'], true ); }
+function get_current_user_id() { return $GLOBALS['zsa_user']['id']; }
+function wp_die( $m ) { throw new Exception( 'wp_die: ' . $m ); }
+function check_admin_referer( $action ) { $GLOBALS['zsa_nonce_checked'] = $action; return 1; }
+function wp_nonce_field( $action ) { echo '<input type="hidden" name="_wpnonce" value="nonce-' . $action . '">'; }
+function esc_html( $v ) { return htmlspecialchars( (string) $v, ENT_QUOTES ); }
+function esc_attr( $v ) { return htmlspecialchars( (string) $v, ENT_QUOTES ); }
+function esc_html__( $v ) { return esc_html( $v ); }
+function absint( $v ) { return abs( (int) $v ); }
 class WP_REST_Response {
 	public $data; public $status; public $headers = array();
 	function __construct( $data, $status ) { $this->data = $data; $this->status = $status; }
@@ -123,8 +143,9 @@ $pins = array();
 for ( $i = 0; $i < 2000; $i++ ) {
 	$c = zsa_act_random_code();
 	check( $c === zsa_act_clean_code( $c ), "random code $c is valid" );
+	check( 1 !== preg_match( '/^\d+E\d+$/', $c ), "random code $c cannot be read as a number" );
 	$p = zsa_act_random_pin();
-	check( $p === zsa_act_clean_pin( $p ), "random PIN $p is valid" );
+	check( $p === zsa_act_clean_pin( $p ) && '0' !== $p[0], "random PIN $p is valid and does not start with 0" );
 	$pins[ $p ] = true;
 }
 check( count( $pins ) > 1000, 'PINs vary' );
@@ -259,7 +280,7 @@ update_option( 'zsa_act_settings', array( 'retention_days' => 400, 'origins' => 
 $GLOBALS['zsa_dbdelta'] = array();
 zsa_act_maybe_upgrade();
 check( 2 === count( $GLOBALS['zsa_dbdelta'] ) && false !== strpos( $GLOBALS['zsa_dbdelta'][0], 'pin_hash varchar(255)' ), 'upgrade runs dbDelta with the PIN column' );
-check( '1.1.0' === get_option( 'zsa_act_db_version' ) && 365 === zsa_act_settings()['retention_days'], 'upgrade records the version and moves 400 days to a year' );
+check( ZSA_ACT_VERSION === get_option( 'zsa_act_db_version' ) && 365 === zsa_act_settings()['retention_days'], 'upgrade records the version and moves 400 days to a year' );
 $GLOBALS['zsa_dbdelta'] = array();
 zsa_act_maybe_upgrade();
 check( array() === $GLOBALS['zsa_dbdelta'], 'no second upgrade' );
@@ -267,6 +288,130 @@ update_option( 'zsa_act_settings', array( 'retention_days' => 200 ) );
 update_option( 'zsa_act_db_version', '1.0.0' );
 zsa_act_maybe_upgrade();
 check( 200 === zsa_act_settings()['retention_days'], 'a setting someone chose is kept' );
+update_option( 'zsa_act_settings', array() );
+
+// Upgrading also adds the ACT Practice teacher role (class lists only) and lets administrators make class lists.
+check( array( 'read' => true, 'zsa_act_class_lists' => true ) === get_role( 'zsa_act_teacher' )->capabilities, 'teacher role can read and make class lists, nothing else' );
+check( 'ACT Practice teacher' === $GLOBALS['zsa_role_labels']['zsa_act_teacher'], 'teacher role name' );
+check( ! empty( get_role( 'administrator' )->capabilities['zsa_act_class_lists'] ), 'administrators can make class lists' );
+
+// Class lists: a teacher makes codes and PINs ahead of time.
+reset_limits();
+$before = (int) $GLOBALS['wpdb']->get_var( 'SELECT COUNT(*) FROM wp_zsa_act_codes' );
+foreach ( array( 0, -3, ZSA_ACT_CLASS_MAX + 1 ) as $n ) {
+	check( 400 === status( zsa_act_make_class_list( $n, 7 ) ), "class list of $n is refused" );
+}
+$list = zsa_act_make_class_list( 25, 7 );
+check( is_array( $list ) && 25 === count( $list ), 'class list of 25' );
+check( 25 === count( array_unique( array_column( $list, 'code' ) ) ), 'class list codes are all different' );
+check( $before + 25 === (int) $GLOBALS['wpdb']->get_var( 'SELECT COUNT(*) FROM wp_zsa_act_codes' ), 'class list saved 25 codes' );
+update_option( 'zsa_act_settings', array( 'limit_lookup' => 1000 ) );
+foreach ( $list as $r ) {
+	check( $r['pin'] === zsa_act_clean_pin( $r['pin'] ) && '0' !== $r['pin'][0], 'class PIN is four digits, not starting with 0' );
+	$row = zsa_act_find_code( $r['code'] );
+	check( false === strpos( $row['pin_hash'], $r['pin'] ) && password_verify( $r['pin'], $row['pin_hash'] ), 'class PIN stored as a hash only' );
+	check( 200 === status( open_code( $r['code'], $r['pin'] ) ), 'each class code opens with its own PIN' );
+}
+check( 403 === status( open_code( $list[0]['code'], $list[1]['pin'] === $list[0]['pin'] ? $wrong : $list[1]['pin'] ) ), "a classmate's PIN does not open a code" );
+update_option( 'zsa_act_settings', array( 'limit_class' => 30 ) );
+check( 429 === status( zsa_act_make_class_list( 6, 7 ) ), 'over the hourly limit for one teacher' );
+check( $before + 25 === (int) $GLOBALS['wpdb']->get_var( 'SELECT COUNT(*) FROM wp_zsa_act_codes' ), 'nothing made over the limit' );
+check( 5 === count( zsa_act_make_class_list( 5, 7 ) ), 'up to the limit is fine' );
+check( 6 === count( zsa_act_make_class_list( 6, 8 ) ), "another teacher's limit is separate" );
+update_option( 'zsa_act_settings', array() );
+
+// The CSV file: a header, then the code in the first column and the PIN in the second.
+$csv = zsa_act_class_csv( $list );
+$lines = explode( "\r\n", $csv );
+check( 'Code,PIN' === $lines[0] && 27 === count( $lines ) && '' === $lines[26], 'CSV has a header and 25 rows' );
+foreach ( $list as $i => $r ) {
+	check( $r['code'] . ',' . $r['pin'] === $lines[ $i + 1 ], 'CSV row ' . ( $i + 1 ) );
+}
+
+// The PDF: well formed (every cross-reference offset points at its object), the ZornScience logo and name, every
+// code and PIN, the name columns, and the ACT notice and a page number on every page.
+function pdf_ok( $pdf, $rows, $class ) {
+	check( 0 === strpos( $pdf, '%PDF-1.4' ) && "%%EOF\n" === substr( $pdf, -6 ), 'PDF header and end' );
+	preg_match( '/startxref\n(\d+)\n/', $pdf, $sx );
+	check( 0 === strpos( substr( $pdf, (int) $sx[1] ), "xref\n0 " ), 'startxref points at the table' );
+	preg_match_all( '/^(\d{10}) 00000 n $/m', $pdf, $offs );
+	foreach ( $offs[1] as $i => $off ) {
+		check( 0 === strpos( substr( $pdf, (int) $off ), ( $i + 1 ) . ' 0 obj' ), 'xref offset for object ' . ( $i + 1 ) );
+	}
+	preg_match( '/\/Size (\d+)/', $pdf, $size );
+	check( count( $offs[1] ) + 1 === (int) $size[1], 'trailer size' );
+	preg_match_all( '/<< \/Length (\d+) >>\nstream\n/', $pdf, $streams, PREG_OFFSET_CAPTURE );
+	foreach ( $streams[1] as $i => $len ) {
+		$start = $streams[0][ $i ][1] + strlen( $streams[0][ $i ][0] );
+		check( "\nendstream" === substr( $pdf, $start + (int) $len[0], 10 ), 'stream length ' . $i );
+	}
+	$logo = file_get_contents( dirname( __DIR__, 2 ) . '/wordpress/zornscience-act-history/zornscience-logo.jpg' );
+	check( false !== strpos( $pdf, "/Filter /DCTDecode /Length " . strlen( $logo ) . " >>\nstream\n" . $logo . "\nendstream" ), 'the logo is embedded' );
+	preg_match( '/\/Type \/Pages \/Kids \[[^\]]*\] \/Count (\d+)/', $pdf, $count );
+	$pages = (int) $count[1];
+	check( $pages === substr_count( $pdf, '/Im1 Do' ), 'logo on every page' );
+	check( $pages === substr_count( $pdf, '(ZornScience) Tj' ), 'ZornScience on every page' );
+	check( $pages === substr_count( $pdf, '(Practice tool by ZornScience. ACT is a registered trademark of ACT Education Corp. This tool is not' ), 'ACT notice on every page' );
+	check( $pages === substr_count( $pdf, '(Last name) Tj' ) && $pages === substr_count( $pdf, '(First name) Tj' ), 'name columns on every page' );
+	for ( $p = 1; $p <= $pages; $p++ ) {
+		check( false !== strpos( $pdf, "(Page $p of $pages) Tj" ), "page $p of $pages" );
+	}
+	foreach ( $rows as $i => $r ) {
+		check( 1 === substr_count( $pdf, '(' . $r['code'] . ') Tj' ) && false !== strpos( $pdf, '(' . $r['pin'] . ') Tj' ) && false !== strpos( $pdf, '(' . ( $i + 1 ) . ') Tj' ), 'row ' . ( $i + 1 ) . ' in the PDF' );
+	}
+	if ( '' !== $class ) {
+		check( false !== strpos( $pdf, '(' . zsa_act_pdf_text( $class ) . ') Tj' ), 'class name in the PDF' );
+	}
+	return $pages;
+}
+$pdf = zsa_act_class_pdf( $list, 'Period 3 (Room 204) \\ Chem', 'October 24, 2026', 365 );
+check( 2 === pdf_ok( $pdf, $list, 'Period 3 (Room 204) \\ Chem' ), '25 students fit on 2 pages' );
+check( false !== strpos( $pdf, '(Period 3 \\(Room 204\\) \\\\ Chem) Tj' ), 'parentheses and backslashes are escaped' );
+check( false !== strpos( $pdf, '(October 24, 2026) Tj' ), 'the date' );
+check( false !== strpos( $pdf, 'not used for a year is' ), 'says codes last a year' );
+check( 1 === pdf_ok( zsa_act_class_pdf( array_slice( $list, 0, 1 ), '', 'October 24, 2026', 200 ), array_slice( $list, 0, 1 ), '' ), 'one student, one page' );
+check( false !== strpos( zsa_act_class_pdf( array_slice( $list, 0, 1 ), '', 'x', 200 ), '200 days' ), 'another retention length is spelled out' );
+$hundred = array();
+for ( $i = 0; $i < ZSA_ACT_CLASS_MAX; $i++ ) {
+	$hundred[] = array( 'code' => zsa_act_random_code(), 'pin' => zsa_act_random_pin() );
+}
+$hundred = array_values( array_intersect_key( $hundred, array_unique( array_column( $hundred, 'code' ) ) ) );
+check( pdf_ok( zsa_act_class_pdf( $hundred, 'Señora Pérez’s class', 'x', 365 ), $hundred, 'Señora Pérez’s class' ) >= 4, 'a long list fills several pages' );
+check( false !== strpos( zsa_act_pdf_text( 'Señora Pérez’s class' ), "Se\xF1ora P\xE9rez\x92s" ), 'accented letters and curly quotes use the fonts\' encoding' );
+foreach ( zsa_act_pdf_wrap( str_repeat( 'Practice codes and PINs ', 40 ), 10, 504 ) as $l ) {
+	check( zsa_act_pdf_width( $l, 10 ) <= 504, 'wrapped line fits' );
+}
+
+// The ACT Class Codes page: only for teachers and administrators; both downloads come from the one list.
+function class_page( $post ) {
+	$_POST = $post;
+	ob_start();
+	try { zsa_act_class_page(); } finally { $html = ob_get_clean(); $_POST = array(); }
+	return $html;
+}
+$html = class_page( array() );
+check( false !== strpos( $html, 'name="count"' ) && false !== strpos( $html, 'max="' . ZSA_ACT_CLASS_MAX . '"' ) && false === strpos( $html, 'data:' ), 'the form, with no list yet' );
+$GLOBALS['zsa_user']['caps'] = array( 'read' );
+$denied = false;
+try { class_page( array() ); } catch ( Exception $e ) { $denied = 0 === strpos( $e->getMessage(), 'wp_die' ); }
+check( $denied, 'a user without the role cannot open the page' );
+$GLOBALS['zsa_user'] = array( 'id' => 9, 'caps' => array( 'zsa_act_class_lists' ) );
+$before = (int) $GLOBALS['wpdb']->get_var( 'SELECT COUNT(*) FROM wp_zsa_act_codes' );
+$html = class_page( array( 'zsa_act_action' => 'class', 'count' => '12', 'class_name' => 'Period 3 Chemistry' ) );
+check( 'zsa_act_class' === $GLOBALS['zsa_nonce_checked'], 'the form is checked with its nonce' );
+check( $before + 12 === (int) $GLOBALS['wpdb']->get_var( 'SELECT COUNT(*) FROM wp_zsa_act_codes' ), 'the page made 12 codes' );
+check( 1 === preg_match( '/download="act-class-codes-period-3-chemistry-\d{4}-\d\d-\d\d\.csv" href="data:text\/csv;base64,([A-Za-z0-9+\/=]+)"/', $html, $c ), 'CSV download link' );
+check( 1 === preg_match( '/download="act-class-codes-period-3-chemistry-\d{4}-\d\d-\d\d\.pdf" href="data:application\/pdf;base64,([A-Za-z0-9+\/=]+)"/', $html, $p ), 'PDF download link' );
+$rows = array_map( function ( $l ) { list( $code, $pin ) = explode( ',', $l ); return array( 'code' => $code, 'pin' => $pin ); }, array_slice( array_filter( explode( "\r\n", base64_decode( $c[1] ) ) ), 1 ) );
+check( 12 === count( $rows ), 'the CSV has the 12 codes' );
+pdf_ok( base64_decode( $p[1] ), $rows, 'Period 3 Chemistry' );
+foreach ( $rows as $r ) {
+	check( 200 === status( open_code( $r['code'], $r['pin'] ) ) && false !== strpos( $html, '<code>' . $r['code'] . '</code>' ), 'the downloads and the page show the same working codes and PINs' );
+}
+$html = class_page( array( 'zsa_act_action' => 'class', 'count' => '500', 'class_name' => '' ) );
+check( false !== strpos( $html, 'notice-error' ) && false === strpos( $html, 'data:' ), 'too many students shows an error and no list' );
+update_option( 'zsa_act_settings', array( 'enabled' => 0 ) );
+check( false !== strpos( class_page( array() ), 'Practice codes are turned off' ), 'warns when codes are off' );
 update_option( 'zsa_act_settings', array() );
 
 // A code from before PINs (empty hash) cannot be opened until a teacher makes it a new PIN.
