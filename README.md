@@ -28,6 +28,7 @@ lewis-vsepr/               Lewis Structure and VSEPR Builder, v1.1.0
 act/                       ACT Practice, v1.7.0 (English, Math, Reading and Science sections and the full ACT; question banks in act/bank-*.js; optional practice codes)
 act-science/               Redirect only: ACT Science Practice is now the Science section of act/
 wordpress/zornscience-act-history/  WordPress plugin for zornscience.org that stores ACT Practice scores under anonymous practice codes (not part of the static site)
+scientific-calculator/     Scientific Calculator Practice, v1.1.0 (independent scientific calculator with six guided exercises)
 gas-lab/                   Gas Laws and KMT Lab, v1.0.0 (particle simulation, graphs and investigations)
 stoichiometry-coach/       Stoichiometry Coach, v1.0.0 (conversion factor setups with unit cancellation)
 physics-graphing-lab/      Physics Graphing Lab, v1.0.0 (a cart with linked position, velocity and acceleration graphs)
