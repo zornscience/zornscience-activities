@@ -1,6 +1,6 @@
 // ACT Practice codes and PINs (act/history-api.js and the code screens in act/act.js), with a fake ACT Practice
-// History plugin served by page.route in place of https://zornscience.org/wp-json/zsa-act/v1/. Codes are on only
-// with ?codes=1 until they are switched on in config.js. Selects by role and text only, and fails on console errors or
+// History plugin served by page.route in place of https://zornscience.org/wp-json/zsa-act/v1/. Codes are on in
+// config.js; these tests also pass ?codes=1, and ?codes=0 turns them off. Selects by role and text only, and fails on console errors or
 // CSP violations.
 "use strict";
 var fs = require("fs");
@@ -106,11 +106,14 @@ var history = {
   M9TQ4C: {pin: "0072", attempts: []}
 };
 
-test("codes are off until they are switched on: no prompt, no code line, no requests to zornscience.org", async ({page, problems}) => {
+test("codes are on by default; with ?codes=0 there is no prompt, no code line and no request to zornscience.org", async ({page, problems}) => {
   void problems;
   var outside = [];
   page.on("request", (r) => { if (/zornscience\.org/.test(r.url())) outside.push(r.url()); });
-  await go(page, "science", "");
+  await go(page, "", "");
+  await expect(page.getByText("Scores are saved only if you use a practice code and PIN")).toBeVisible();
+  await expect(page.getByRole("region", {name: "For teachers"})).toBeVisible();
+  await go(page, "science", "?codes=0");
   await expect(page.getByText("Nothing is saved or sent anywhere.")).toBeVisible();
   await expect(page.getByRole("button", {name: "Use a practice code"})).toHaveCount(0);
   await page.getByRole("button", {name: /^One passage/}).click();
@@ -423,7 +426,7 @@ test("class set limits and failures say what to do, and nothing is offered", asy
 
 test("with codes off there is no class set page", async ({page, problems}) => {
   void problems;
-  await go(page, "teachers", "");
+  await go(page, "teachers", "?codes=0");
   await expect(page.getByRole("heading", {level: 1, name: "ACT Practice"})).toBeVisible();
   await expect(page.getByRole("region", {name: "For teachers"})).toHaveCount(0);
 });

@@ -17,9 +17,11 @@
   // ?drafts=1 lists every passage and question, drafts included, and lets the practice modes use drafts, so a
   // teacher can try them before marking them reviewed.
   var preview = new URLSearchParams(window.location.search).get("drafts") === "1";
-  // Practice codes (config.history): on when the plugin is set up, or with ?codes=1 for testing. The code and the
-  // history loaded for it live only in this page; nothing is stored in the browser.
-  var codesOn = !!(cfg.history && (cfg.history.enabled || new URLSearchParams(window.location.search).get("codes") === "1"));
+  // Practice codes (config.history): on when config.history.enabled is true. ?codes=1 turns them on and ?codes=0 off
+  // for this visit (for testing, or a class that should practice without codes). The code and the history loaded for
+  // it live only in this page; nothing is stored in the browser.
+  var codesParam = new URLSearchParams(window.location.search).get("codes");
+  var codesOn = !!(cfg.history && codesParam !== "0" && (cfg.history.enabled || codesParam === "1"));
   // CODE and PIN: the practice code in use (kept only in this page, never shown after it is first given). SKIP: the
   // student chose to practice without a code; LOCAL then holds this visit's scores until the window closes.
   var CODE = null, PIN = null, SKIP = false, HIST = null, LOCAL = [];

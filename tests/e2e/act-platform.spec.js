@@ -30,7 +30,8 @@ async function go(page, hash, opts) {
   if (opts.clock) await page.clock.install();
   if (opts.seed !== undefined) await page.addInitScript(seedRandom, opts.seed);
   if (page.url() !== "about:blank") await page.goto("about:blank");
-  await page.goto("/act/" + (opts.query || "") + (hash ? "#" + hash : ""));
+  // ?codes=0: practice codes stay off here (act-history.spec.js covers them).
+  await page.goto("/act/?codes=0" + (opts.query || "").replace(/^\?/, "&") + (hash ? "#" + hash : ""));
 }
 async function audit(page, label) {
   await page.evaluate(AXE);

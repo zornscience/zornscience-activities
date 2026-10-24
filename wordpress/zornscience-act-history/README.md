@@ -73,7 +73,7 @@ zornscience.org is a WordPress.com site on a plan that allows plugins.
 2. Open https://activities.zornscience.org/act/?codes=1, choose a practice, select **Give me a code and PIN**, write them down, finish a short practice, and open **View my history**. Then try a wrong PIN: the test must not start.
 3. Open https://activities.zornscience.org/act/?codes=1#teachers, make a class set of 2, download the PDF and the CSV file, and start a practice with one of its codes and PINs.
 4. Look up one of the codes under **Tools > ACT Practice History**: its PIN should show.
-5. Turn codes on for everyone: in `act/config.js` in the activities repository, change `history: {enabled: false, ...}` to `enabled: true`, bump the version, and publish. (Or ask Claude to do it.)
+5. Codes are on for everyone since ACT Practice 1.9.0 (`history: {enabled: true, ...}` in `act/config.js` in the activities repository). To hide them on the page, set it to `false`, bump the version, and publish (or ask Claude to).
 
 To turn codes off quickly, uncheck **Practice codes** on the admin page: the page then tells students codes are not working and lets them practice without a code. To stop only class sets, uncheck **Class sets for teachers**.
 
