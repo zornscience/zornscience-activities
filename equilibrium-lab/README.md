@@ -1,6 +1,6 @@
 # Equilibrium Sandbox
 
-Version: 1.0.0
+Version: 1.1.0
 
 Standalone static lab at `equilibrium-lab/`. No runtime dependencies, accounts, tracking, storage or outside requests. Supports `?embed=1` via the existing embed helper.
 
@@ -11,3 +11,5 @@ N₂O₄(g) ⇌ 2 NO₂(g), ΔH° = +57.2 kJ/mol. Initial amounts: 1 mol N₂O�
 The branded header provides a keyboard-accessible Instructions dialog and Share panel (copy, email, and native sharing when supported). Share links always open this lab with default conditions, without student data. CSV export and print retain their original behavior.
 
 Open investigations do not issue completion codes.
+
+Visual presentation: an instrument bench, labeled apparatus, numeric readout tiles and responsive controls. Illustrations are schematic; chemistry calculations and accelerated timing are unchanged.

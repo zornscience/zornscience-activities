@@ -36,8 +36,8 @@ limiting-reactant/         Limiting Reactant Visualizer, v1.0.0 (molecules pair 
 projectile-lab/             Projectile Motion Vector Lab, v1.0.0 (a cannon with live velocity, component and acceleration vectors, snapshots and a velocity components graph)
 circuit-builder/           Circuit Builder, v1.0.0 (drag batteries, wires, resistors, switches and bulbs onto a board; a multimeter probes voltage and current, and bulbs glow by their power)
 beers-law-lab/             Beer's Law Spectrophotometer Lab, v1.0.0 (zero with a blank, measure standards for a calibration curve, then calculate the concentration of a random unknown)
-equilibrium-lab/          Equilibrium Sandbox, v1.0.0 (Le Chatelier stresses, Kc/Qc and live concentration graphs)
-calorimetry-lab/          Calorimetry & Enthalpy Lab, v1.0.0 (heated-metal and neutralization calorimetry)
+equilibrium-lab/          Equilibrium Sandbox, v1.1.0 (Le Chatelier stresses, Kc/Qc and live concentration graphs)
+calorimetry-lab/          Calorimetry & Enthalpy Lab, v1.1.0 (heated-metal and neutralization calorimetry)
 equilibrium-thermo-lab/   Compatibility chooser linking to the two standalone labs
 check/                     completion code checker for teachers, v1.2.0 (linked under "For teachers")
 TEACHERS.md                assigning activities in Google Classroom and checking completion codes
