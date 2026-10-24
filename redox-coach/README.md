@@ -1,6 +1,6 @@
 # Redox Half-Reaction Balancer Coach
 
-Version: 1.1.0
+Version: 1.1.1
 
 Manual, scaffolded redox balancing at `/redox-coach/`, linked from the activities page. Vanilla JavaScript and the shared site stylesheet and embed support, with no runtime dependencies, network calls, saved state or completion code. The multi-step equation editor uses a dedicated phase controller, like the site's other custom labs, rather than the shared engine's multiple-choice rounds. The existing shared production files are unchanged.
 
@@ -31,6 +31,10 @@ Use caret charge notation for multiply charged polyatomic ions, such as `Cr2O7^2
 - Embedded: `/redox-coach/?embed=1` (also works with the problem/medium query)
 
 The standard shared embed script handles chrome and resize messages. All assets are local and follow the site's CSP. There are no accounts, analytics or requests outside the site.
+
+## Changes
+
+Version 1.1.1 keeps the Check Answer button's text dark on hover, so it stays readable (about 7:1 contrast) instead of white on light blue.
 
 ## Header and sharing
 

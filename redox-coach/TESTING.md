@@ -1,6 +1,6 @@
 # Redox coach checks
 
-Version: 1.1.0
+Version: 1.1.1
 
 Run `node --test tests/unit/redox-coach.test.js tests/unit/static.test.js` and `npx playwright test tests/e2e/redox-coach.spec.js`.
 
