@@ -77,3 +77,16 @@ body{background:#edf2f7}.flame-lab{--zsa-navy:#102d4f;--zsa-blue:#2457d6;max-wid
 .flame-lab .scene-caption{color:#d0dfe7;font-size:10px}
 .flame-lab .scene-caption small{color:#bdcfdb;font-size:12px}
 .flame-lab footer{color:#516579;font-size:11px}
+
+/* A plain white surround with the original light sample tray. */
+body{background:#fff}
+.flame-lab{background:#fff}
+.flame-lab .zsa-th-header{margin-bottom:24px}
+.flame-lab .workbench,.flame-lab .samples-panel{background:#fff;border-color:#dce2e7}
+.flame-lab .bench-top,.flame-lab .readout{background:#fff}
+.flame-lab .sample:hover{background:#f1f7f6;border-color:#93afbd}
+.flame-lab .sample.selected{background:#eaf4f3;border-color:#8bb9b1}
+.flame-lab .unknown-row .sample{background:#f5f3ee;border-color:transparent}
+.flame-lab .unknown-row .sample:hover{background:#f1f7f6;border-color:#93afbd}
+.flame-lab .unknown-row .sample.selected{background:#eaf4f3;border-color:#8bb9b1}
+.flame-lab #progress{background:#eff4f6}
