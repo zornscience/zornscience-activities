@@ -1,0 +1,48 @@
+.thermo{--zsa-max-width:1200px}.thermo header{max-width:860px}.thermo header p{font-size:20px}.tabs,.actions,.intro,.heading{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.tabs{padding:20px 0;border-bottom:1px solid #d6e2f5}.intro{justify-content:space-between;margin-top:22px}.intro h2{margin:5px 0}.layout{display:grid;grid-template-columns:290px minmax(0,1fr);gap:22px}.layout aside{align-self:start;background:#f7faff}.thermo h3{margin:6px 0 20px}.thermo label{display:block;font-size:15px;font-weight:600;margin-top:19px}.thermo output{float:right;font-weight:500}.thermo input,.thermo select{width:100%;accent-color:#1d4ed8}.thermo input:not([type=range]),.thermo select{padding:10px;border:1px solid #a9bad2;border-radius:6px;background:white;color:#0b2a5b}.thermo aside button{margin-top:14px}.actions{gap:8px}.actions button{padding:10px;font-size:14px;flex:1}.small{font-size:14px;line-height:1.6}.pill{display:inline-block;padding:4px 10px;background:#eef4ff;border-radius:20px;font-size:13px;color:#0b2a5b}.heading{justify-content:space-between}.heading h3{margin:0}.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.metrics strong{display:block;color:#0b2a5b;font-size:21px}.metrics span{font-size:13px}.thermo svg{display:block;width:100%;height:auto;margin:15px 0}.blue{color:#1d4ed8}.brown{color:#964a20}.temperature{font-size:26px;color:#964a20}.cup{width:110px;height:80px;border:4px solid #9aabc0;border-top:0;border-radius:0 0 20px 20px;margin:24px auto 4px;display:flex;align-items:end;overflow:hidden}.cup div{background:#d8eaff;width:100%;height:70%;text-align:center;font-size:13px;padding-top:16px}.thermo details{font-size:16px}.thermo summary{cursor:pointer;font-weight:600}.thermo hr{border:0;border-top:1px solid #d6e2f5;margin-top:24px}.thermo button:disabled{opacity:.6}.thermo #cal-result{font-size:16px}.thermo #cal-error{color:#b91c1c}@media(max-width:760px){.layout{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.tabs button{flex:1;font-size:14px}.thermo h1{font-size:34px}}@media print{.tabs,button,[data-zsa-chrome]{display:none!important}.layout{grid-template-columns:1fr}aside{break-inside:avoid}.zsa-card{box-shadow:none}.thermo{max-width:100%}}
+
+
+.zsa-th-header {position:relative;margin-bottom:28px;}
+.zsa-th-topline {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding:0 0 20px;border-bottom:1px solid #dde4ed;}
+.zsa-th-identity {display:flex;align-items:center;gap:12px;min-width:0;flex:1 1 400px;}
+.thermo .zsa-th-brand {display:inline-flex;align-items:center;flex-shrink:0;min-height:52px;min-width:52px;text-decoration:none;color:var(--zsa-navy);}
+.zsa-th-brand img {display:block;flex-shrink:0;}
+.zsa-th-header-tools {display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:16px;max-width:100%;margin-left:auto;}
+.zsa-th-header-buttons {display:flex;align-items:center;gap:8px;}
+.thermo .zsa-th-share-toggle {display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:9px 12px;min-height:44px;background:white;}
+.zsa-th-icon {width:18px;height:18px;flex-shrink:0;}
+.zsa-th-instructions-open {flex-shrink:0;}
+.thermo h1 {min-width:0;font-size:clamp(1.6rem,1.2rem + 1.2vw,2rem);letter-spacing:-.035em;line-height:1.15;margin:0;font-weight:650;}
+.zsa-th-lede {color:var(--zsa-navy);font-size:clamp(1.05rem,1rem + .3vw,1.2rem);font-weight:500;}
+.zsa-th-share-panel {margin-top:14px;padding:20px;border:1px solid #cdd9e9;border-radius:12px;background:white;box-shadow:0 7px 20px rgba(11,42,91,.06);}
+.zsa-th-share-heading {display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:5px;}
+.zsa-th-share-heading h2 {font-size:18px;font-weight:600;}
+.thermo .zsa-th-icon-button {display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;border:1px solid #d5deea;border-radius:8px;background:#f7f9fc;color:#425a7b;font-size:24px;padding:0;line-height:1;}
+.thermo .zsa-th-fullscreen-toggle {width:46px;min-width:46px;height:46px;min-height:46px;flex-shrink:0;background:white;}
+.thermo .zsa-th-fullscreen-toggle[hidden] {display:none;}
+.zsa-th-fullscreen-toggle[aria-pressed="true"] {background:#edf4ff;border-color:#194d9d;}
+.thermo .zsa-th-fullscreen-status {margin-top:12px;}
+.zsa-th-share-label {display:block;margin:14px 0 6px;font-size:12px;font-weight:600;color:#536075;}
+.zsa-th-share-link {display:flex;gap:8px;align-items:stretch;}
+.zsa-th-share-link input {display:block;flex:1 1 200px;min-width:0;min-height:46px;width:100%;border:1px solid #b8c8dc;border-radius:8px;padding:9px 11px;background:#f8fafd;color:#334e72;font-size:13px;}
+.zsa-th-share-options {display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-top:12px;}
+.zsa-th-share-options a {display:inline-flex;align-items:center;justify-content:center;gap:7px;min-width:44px;min-height:44px;padding:8px 12px;border:1px solid #d8e1ed;border-radius:8px;color:#355579;font-size:13px;text-decoration:none;background:white;}
+.zsa-th-share-options a:hover {background:#f0f5fd;}
+.zsa-th-share-status {min-height:21px;margin-top:10px!important;font-size:12px;color:#38623e;}
+.zsa-th-instructions {width:calc(100% - 32px);max-width:720px;max-height:85vh;overflow:auto;padding:24px;border:1px solid #c5d3e4;border-radius:15px;background:white;color:var(--zsa-slate);box-shadow:0 18px 60px rgba(11,42,91,.2);font-size:15px;line-height:1.6;}
+.zsa-th-instructions::backdrop {background:rgba(11,27,51,.45);}
+.zsa-th-instructions-heading {display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:14px;}
+.zsa-th-instructions-heading h2 {font-size:23px;line-height:1.25;font-weight:600;}
+.zsa-th-instructions-heading button {flex-shrink:0;}
+.zsa-th-instructions-steps {margin:18px 0;padding-left:23px;}
+.zsa-th-instructions-steps li {padding-left:4px;margin:12px 0;}
+.zsa-th-instructions-example {padding:15px 17px;border:1px solid #d6e2f2;border-radius:10px;background:#f5f8fd;}
+.zsa-th-instructions-example-label {font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;color:#536782;}
+.zsa-th-instructions-equation {margin:6px 0 13px!important;color:var(--zsa-navy);font-size:22px;line-height:1.5;}
+.zsa-th-instructions-equation:last-child {margin-bottom:0!important;}
+.zsa-th-instructions-equation sub,.zsa-th-instructions-steps sub {font-size:.7em;line-height:0;vertical-align:-.2em;}
+.zsa-th-instructions-equation sup,.zsa-th-instructions-steps sup {font-size:.7em;line-height:0;vertical-align:.4em;}
+.zsa-th-instructions-note {margin-top:16px!important;font-size:13px;color:#536075;}
+
+/* Branded notebook header, matching the other ZornScience labs. */
+.thermo{background:#f7f9fd;max-width:1280px;padding:30px 32px 40px}.thermo .zsa-card{background:white;border-color:#dce5ef;box-shadow:0 4px 18px #193d6510;padding:22px;border-radius:16px}.thermo header{max-width:none}.thermo .zsa-th-topline{padding-bottom:18px}.thermo .brand-name{font-size:12px;margin:0 0 5px;letter-spacing:.12em}.thermo .zsa-th-identity h1{font-size:clamp(1.5rem,1.2rem + 1vw,2rem);margin:0;line-height:1.2}.thermo .zsa-th-header-buttons .zsa-btn{font-size:14px;padding:9px 13px}.thermo .zsa-th-icon{width:18px;height:18px;margin:0}.thermo .zsa-th-brand img{width:58px;height:auto}.thermo .zsa-th-share-panel h2{font-size:21px;margin:0}.thermo .zsa-th-share-panel p{font-size:14px}.thermo .zsa-th-share-panel label{margin-top:14px;font-size:13px}.thermo .zsa-th-instructions h2{font-size:25px;margin:0}.thermo .zsa-th-instructions p{font-size:16px}.thermo .intro{margin-top:20px}.thermo .intro h2{font-size:28px;font-weight:600;letter-spacing:-.025em}.thermo .intro p{font-size:16px}.thermo .layout aside{border-top:4px solid #0e766e;background:#fff}.thermo .reactor{border-top:4px solid #1d4ed8}.thermo .zsa-th-share-link input{font-size:13px}.thermo .zsa-th-share-options{font-size:14px}.thermo .zsa-th-share-status{font-size:13px}.lab-links{display:flex;flex-wrap:wrap;gap:10px 24px;padding-top:18px;font-size:14px}.lab-links a[aria-current=page]{font-weight:650;color:#0b2a5b}.thermo .zsa-th-instructions-open{white-space:nowrap}
+@media(max-width:740px){.thermo{padding:20px 16px}.thermo .zsa-th-identity{flex-basis:100%}.thermo .zsa-th-header-tools{margin-left:0}.thermo .zsa-th-share-link{flex-wrap:wrap}.thermo .zsa-th-brand img{width:48px}.thermo .zsa-th-identity h1{font-size:25px}.thermo .zsa-card{padding:17px}}@media print{.zsa-th-header-tools,.zsa-th-share-panel,.lab-links,dialog{display:none!important}.thermo{background:white}.thermo .zsa-card{box-shadow:none}}

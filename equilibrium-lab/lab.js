@@ -1,10 +1,9 @@
 (function () {
   "use strict";
 const $=id=>document.getElementById(id);
-let M;document.querySelector('.thermo').dispatchEvent(new CustomEvent('thermo-model',{detail:{receive:api=>{M=api;}}}));
+let M;document.querySelector('.thermo').dispatchEvent(new CustomEvent('equilibrium-lab-model',{detail:{receive:api=>{M=api;}}}));
 // All markup is generated from fixed templates and numeric model values.
 function put(el,markup){let svg=el.namespaceURI==='http://www.w3.org/2000/svg';let doc=new DOMParser().parseFromString(svg?'<svg xmlns="http://www.w3.org/2000/svg">'+markup+'</svg>':'<body>'+markup+'</body>','text/html');let source=svg?doc.querySelector('svg'):doc.body;el.replaceChildren(...Array.from(source.childNodes).map(n=>document.importNode(n,true)));}
-let tab='eq',e,eh,marks=[],playing=true,c=null,ch=[],timer=0;
 function metric(value,label){return '<div><strong>'+value+'</strong><span>'+label+'</span></div>';}
 function graph(id,rows,keys,labels){
  const svg=$(id), W=640,H=260,L=62,R=18,T=20,B=42;
@@ -17,6 +16,7 @@ function graph(id,rows,keys,labels){
  keys.forEach((k,i)=>{out+='<path fill="none" stroke="'+(i?'#964a20':'#1d4ed8')+'" stroke-width="3" '+(i?'stroke-dasharray="8 4"':'')+' d="'+rows.map((r,j)=>(j?'L':'M')+x(r[0]).toFixed(2)+' '+y(r[k]).toFixed(2)).join(' ')+'"/>';});
  put(svg,'<title>'+labels+'</title>'+out+'<text x="350" y="258" text-anchor="middle" font-size="12" fill="#334155">Simulated time (s)</text>');
 }
+let e,eh,marks=[],playing=true;
 function record(){eh.push([e.time,e.a/e.v,e.b/e.v]);}
 function renderEq(){
  $('temp-out').textContent=e.t+' K';$('volume-out').textContent=e.v.toFixed(1)+' L';
@@ -34,22 +34,7 @@ $('temp').oninput=()=>{let t=+$('temp').value,up=t>e.t;e.t=t;disturb(up?'Heating
 $('volume').oninput=()=>{let v=+$('volume').value,compress=v<e.v;e.v=v;disturb(compress?'Compression instantly raises both concentrations. The reaction then shifts left toward fewer gas molecules. Kc stays constant.':'Expansion instantly lowers both concentrations. The reaction then shifts right toward more gas molecules. Kc stays constant.');};
 function substance(sign){let key=$('species').value,before=e[key];e[key]=Math.max(0,e[key]+sign*.1);if(before===e[key])return;let right=(key==='a')===(sign>0);disturb((sign>0?'Added ':'Removed ')+(Math.abs(e[key]-before)).toFixed(2)+' mol '+(key==='a'?'N₂O₄':'NO₂')+'. The reaction shifts '+(right?'right toward products.':'left toward reactants.')+' Kc stays constant.');}
 $('add').onclick=()=>substance(1);$('remove').onclick=()=>substance(-1);$('reset-eq').onclick=resetEq;$('pause').onclick=()=>{playing=!playing;$('pause').textContent=playing?'Pause':'Resume';};
-function selectTab(value){tab=value;$('eq').hidden=value!=='eq';$('cal').hidden=value!=='cal';['eq','cal'].forEach(v=>{$(v+'-tab').setAttribute('aria-pressed',String(v===value));$(v+'-tab').classList.toggle('zsa-btn--primary',v===value);});}
-$('eq-tab').onclick=()=>selectTab('eq');$('cal-tab').onclick=()=>selectTab('cal');
-function resetCal(){c=null;ch=[];$('thermometer').textContent=(+$('initial').value).toFixed(2)+' °C';$('cal-result').textContent='The measured result and calculation appear when the temperatures stabilize.';$('cal-status').textContent='Set up an experiment, then start the run.';$('start-cal').disabled=false;$('cal-error').textContent='';graph('cal-graph',[[0,+$('initial').value]],[1],'Temperature (°C) versus time.');}
-$('experiment').onchange=()=>{let metal=$('experiment').value==='metal';$('metal-fields').hidden=!metal;$('acid-fields').hidden=metal;$('start-cal').textContent=metal?'Drop metal & start':'Mix solutions & start';resetCal();};
-$('cal').querySelectorAll('input,select').forEach(el=>{if(el.id!=='experiment')el.addEventListener('change',resetCal);});
-$('start-cal').onclick=()=>{
- const ids=['initial',...($('experiment').value==='metal'?['mass','hot','water']:['av','ac','bv','bc'])];
- if(ids.some(id=>!$(id).checkValidity()||$(id).value==='')){$('cal-error').textContent='Enter valid values within the indicated input limits.';ids.find(id=>!$(id).checkValidity()||$(id).value==='')&&$(ids.find(id=>!$(id).checkValidity()||$(id).value==='')).reportValidity();return;}
- let tw=+$('initial').value; c={time:0,initial:tw,temp:tw,type:$('experiment').value};
- if(c.type==='metal'){Object.assign(c,{m:+$('mass').value,cm:+$('metal').value,tm:+$('hot').value,w:+$('water').value});c.final=M.metal(c.m,c.cm,c.tm,c.w,tw);}else{Object.assign(c,M.neutral(+$('av').value,+$('ac').value,+$('bv').value,+$('bc').value,tw));c.w=+$('av').value+(+$('bv').value);}
- ch=[[0,tw]];$('start-cal').disabled=true;$('cal-result').textContent='Collecting temperature data…';$('cal-error').textContent='';
-};
-$('reset-cal').onclick=resetCal;
-function renderCal(){let done=c.time>=40;c.temp=done?c.final:c.initial+(c.final-c.initial)*(1-Math.exp(-c.time/5));ch.push([c.time,c.temp]);$('thermometer').textContent=c.temp.toFixed(2)+' °C';$('cal-status').textContent=done?'Thermal equilibrium reached. Change a condition to compare another run.':'Transferring heat · '+c.time.toFixed(1)+' simulated seconds';graph('cal-graph',ch,[1],'Temperature (°C) versus time.');if(done){let q=c.w*4.184*(c.final-c.initial);put($('cal-result'),'<p>ΔT = '+(c.final-c.initial).toFixed(3)+' °C · q'+(c.type==='metal'?'water':'solution')+' = '+q.toFixed(1)+' J</p>'+(c.type==='metal'?'<p>cmetal = '+c.w+' × 4.184 × '+(c.final-c.initial).toFixed(3)+' / ['+c.m+' × ('+c.tm+' − '+c.final.toFixed(3)+')]</p><strong>Specific heat = '+c.cm.toFixed(3)+' J/(g·°C)</strong>':'<p>H₂O formed = '+c.n.toFixed(4)+' mol (limiting reactant).</p><strong>ΔH = −'+q.toFixed(1)+' / '+c.n.toFixed(4)+' = −57.3 kJ/mol</strong>')); $('start-cal').disabled=false;}}
-$('csv').onclick=()=>{let rows=tab==='eq'?eh:ch;if(!rows.length){$('cal-error').textContent='Run an experiment before downloading data.';return;}let text=(tab==='eq'?'time_s,N2O4_M,NO2_M':'time_s,temperature_C')+'\n'+rows.map(r=>r.join(',')).join('\n');let url=URL.createObjectURL(new Blob([text],{type:'text/csv'})),a=document.createElement('a');a.href=url;a.download=tab+'-lab.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+$('csv').onclick=()=>{let rows=eh;let text='time_s,N2O4_M,NO2_M'+'\n'+rows.map(r=>r.join(',')).join('\n');let url=URL.createObjectURL(new Blob([text],{type:'text/csv'})),a=document.createElement('a');a.href=url;a.download='equilibrium-lab.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
 $('print').onclick=()=>window.print();
-resetEq();resetCal();setInterval(()=>{if(document.hidden)return;if(tab==='eq'&&playing&&eh.length<3600){let target=M.equilibrium(e.a,e.b,e.v,e.t),f=1-Math.exp(-.25/3);e.a+=(target.a-e.a)*f;e.b+=(target.b-e.b)*f;e.time+=.25;record();renderEq();}if(tab==='cal'&&c&&c.time<40){c.time+=.25;renderCal();}},250);
-
+resetEq();setInterval(()=>{if(document.hidden||!playing||eh.length>=3600)return;let target=M.equilibrium(e.a,e.b,e.v,e.t),f=1-Math.exp(-.25/3);e.a+=(target.a-e.a)*f;e.b+=(target.b-e.b)*f;e.time+=.25;record();renderEq();},250);
 }());
