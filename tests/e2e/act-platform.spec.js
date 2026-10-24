@@ -349,20 +349,73 @@ test("Math with the drafts: mixed practice is 15 questions in 17 minutes, the fu
 });
 
 // ---------- Reading ----------
-test("Reading: numbered paragraphs, a note above the passage, all correct scores 9 / 9", async ({page, problems}) => {
+// Every Reading passage: its note and numbered paragraphs (straight through Passage A and Passage B in a paired set),
+// every question and choice read correctly, axe-core in light and dark mode, and all correct scores 9 / 9.
+for (var rp of bank.reading.passages) {
+  (function (p) {
+    test("every Reading passage plays through all correct: " + p.title, async ({page, problems}) => {
+      void problems;
+      await go(page, "reading", {query: "?drafts=1"});
+      var list = page.getByRole("region", {name: "Review drafts"});
+      await expect(list.getByRole("button", {name: p.title + " " + p.type + " · 9 questions · Draft", exact: true})).toBeVisible();
+      await list.getByRole("button", {name: new RegExp("^" + p.title.replace("?", "\\?") + " ")}).click();
+      await startSection(page, "Reading");
+      var art = page.getByRole("article");
+      await expect(art.getByRole("heading", {level: 1})).toHaveText(p.title);
+      var note = p.body.find((b) => b.kind === "note");
+      await expect(art.getByText(note.html)).toBeVisible();
+      var paras = p.body.filter((b) => b.kind === "text").length;
+      for (var i = 1; i <= paras; i++) await expect(art.locator("p").filter({hasText: new RegExp("^Paragraph " + i + "\\s*\\S")})).toHaveCount(1);
+      await expect(art.locator("p").filter({hasText: new RegExp("^Paragraph " + (paras + 1) + "\\D")})).toHaveCount(0);
+      for (var h of p.body.filter((b) => b.kind === "heading")) await expect(art.getByRole("heading", {level: 2, name: h.text})).toBeVisible();
+      await auditBoth(page, p.id);
+      for (var n = 1; n <= 9; n++) {
+        var q = p.questions[n - 1];
+        await expect(page.getByRole("group", {name: spoken(q.stem)})).toBeVisible();
+        var letters = n % 2 ? ["A", "B", "C", "D"] : ["F", "G", "H", "J"];
+        for (var k = 0; k < 4; k++) await expect(page.getByRole("radio").nth(k)).toHaveAccessibleName(letters[k] + ". " + spoken(q.choices[k]));
+        await page.locator("fieldset label").nth(q.answer).click();
+        if (n < 9) await next(page).click();
+      }
+      await page.getByRole("button", {name: "Review", exact: true}).click();
+      await page.getByRole("button", {name: "End section"}).click();
+      await page.getByRole("button", {name: "Yes, end the section"}).click();
+      await expect(page.getByRole("heading", {level: 1, name: "Score report"})).toBeFocused();
+      await expect(page.getByText("100% correct")).toBeVisible();
+    });
+  })(rp);
+}
+
+test("Reading with the drafts: the full section has one passage of each type, 36 questions in 40 minutes", async ({page, problems}) => {
   void problems;
-  var p = bank.reading.passages[0];
-  await go(page, "reading", {query: "?drafts=1"});
-  await page.getByRole("button", {name: /^One passage/}).click();
+  await go(page, "reading", {query: "?drafts=1", clock: true, seed: 4});
+  await expect(page.getByRole("button", {name: /^Mixed practice 2 passages timed at ACT pace \(20 minutes\)/})).toBeVisible();
+  await page.getByRole("button", {name: /^Full section 36 questions in 40 minutes/}).click();
+  await expect(page.getByText("This section has 4 passages and 36 questions.", {exact: false})).toBeVisible();
   await startSection(page, "Reading");
-  var art = page.getByRole("article");
-  await expect(art.getByText("This passage was written for this practice test.")).toBeVisible();
-  var paras = p.body.filter((b) => b.kind === "text").length;
-  for (var i = 1; i <= paras; i++) await expect(art.locator("p").filter({hasText: new RegExp("^Paragraph " + i + "\\s*\\S")})).toHaveCount(1);
-  await auditBoth(page, "reading question");
-  await playAll(page, 9, (n) => p.questions[n - 1].answer);
-  await expect(page.getByRole("heading", {level: 1, name: "Score report"})).toBeFocused();
-  await expect(page.getByText("9 / 9", {exact: true})).toBeVisible();
+  await expect(page.getByRole("timer")).toHaveText("Time left 40:00");
+  await expect(nav(page).getByRole("button")).toHaveCount(36);
+  var types = [];
+  for (var n of [1, 10, 19, 28]) {
+    await nav(page).getByRole("button", {name: new RegExp("^Question " + n + ",")}).click();
+    var kind = await page.getByRole("article").getByText(/^Passage [IV]+ · /).textContent();
+    types.push(kind.replace(/^Passage [IV]+ · /, ""));
+  }
+  expect(types.slice().sort()).toEqual(words.sections.reading.types.slice().sort());
+  for (var [w, h] of [[1366, 657], [390, 664], [320, 568]]) {
+    await page.setViewportSize({width: w, height: h});
+    await noSideScroll(page, "reading full " + w);
+  }
+});
+
+test("with every section's drafts, the full ACT can be tried from the home page", async ({page, problems}) => {
+  void problems;
+  await go(page, null, {query: "?drafts=1"});
+  var full = page.getByRole("region", {name: "Full ACT"});
+  await expect(full.getByRole("checkbox", {name: "Include the optional Science section"})).toBeChecked();
+  await full.getByRole("button", {name: "Start the full ACT"}).click();
+  await expect(page.getByText("Full ACT · Section 1 of 4")).toBeVisible();
+  await expect(page.getByText("This section has 5 passages and 50 questions.", {exact: false})).toBeVisible();
 });
 
 // ---------- The full ACT ----------

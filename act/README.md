@@ -1,5 +1,5 @@
 # ACT Practice
-Version: 1.3.0
+Version: 1.4.0
 
 Free ACT practice with original questions in all four sections: English, Math, Reading and the optional Science. Students practice a few questions, one timed section, or the full ACT, and get a score report that compares them with national results and gives tips for the skills they missed. Nothing is saved or sent anywhere. Not linked from zornscience.org yet. The live URL after approval will be https://activities.zornscience.org/act/. The old address, https://activities.zornscience.org/act-science/, redirects to the Science section.
 
@@ -169,12 +169,26 @@ Facts in the informative passages (Marie Tharp, monarch migration, the Erie Cana
 
 That is a third essential skills and two thirds Preparing for Higher Math, close to the real test. Difficulty: 23 easy, 44 medium, 23 hard; sets put easier questions first. The correct answer is the first, second, third and fourth choice 23, 26, 19 and 22 times. Number choices run from least to greatest, as on the ACT. Every numeric answer (49 of the 82 new questions) was computed independently and checked against the marked choice while the bank was written. Figures: a triangle, parallel lines, a table of function values, a line graph, a bar graph, a two-way table and a scatter plot.
 
-## Other draft samples (milestone A)
-A small sample so Reading can be tried with `?drafts=1`. It is a draft and needs Nick's review.
+## Reading passages (milestone D)
+Eight original passages, 72 questions, all drafts for Nick's review: two of each ACT Reading type. With `?drafts=1`, the Reading modes use them, so a 36-question section (one passage of each type) can be tried before any are approved. Students get the Full section once at least one passage of each type is reviewed.
 
-| Section | Sample | Questions |
+| Passage | Type | Notes |
 |---|---|---|
-| Reading | The Hummingbird's Night Budget (Natural Science) | 9 |
+| The Tuba | Prose Fiction | A new student and an old tuba |
+| Open Late | Prose Fiction | A night shift at a diner that never closes |
+| The Invention of the Weekend | Social Science | Saint Monday, the Saturday half-holiday, Ford's five-day week, the Fair Labor Standards Act |
+| Why Waiting Feels Long | Social Science | The psychology of waiting in line |
+| Hands Off? | Humanities | A paired set: Passage A argues for letting visitors touch some objects, Passage B for protecting originals and using replicas. Paragraphs are numbered straight through both. |
+| Slow Letters | Humanities | A personal essay about learning calligraphy |
+| The Hummingbird's Night Budget | Natural Science | Torpor in hummingbirds (the milestone A sample) |
+| Color Without Seeing It | Natural Science | How octopuses change color, and how they match colors they may not see |
+
+Each passage has 9 questions. Across the bank: details 16, inferences 15, author's purpose and point of view 14, structure and comparing texts 10, main ideas 9, words in context 8. Difficulty: 16 easy, 33 medium, 23 hard. The correct answer is each of the four choices exactly 18 times. Passages run about 340 to 420 words. Real ACT Reading passages are usually longer (roughly 600 to 800 words), so a timed section here leaves more time per question than the real test. The passages can be lengthened if Nick wants full-length practice.
+
+Facts in the nonfiction passages follow standard published accounts: Henry Ford's five-day, forty-hour week (1926) and the Fair Labor Standards Act (1938; overtime after 44 hours, then 40 by 1940); octopus chromatophores, the colorblindness experiments with cuttlefish, and the 2015 finding of light-sensitive proteins in octopus skin; hummingbird torpor. The airport baggage story in "Why Waiting Feels Long" is presented as "one often-told story," as it is usually told.
+
+## Other draft samples (milestone A)
+None left: every section now has its full draft bank.
 
 ## Scoring
 Percent correct is scaled to the section's raw score (50, 45, 36 or 40 questions) and converted with that section's `conv` in `config.js`. Percentiles come from a section's `rank` table, which only Science has so far (ACT's 2024-2025 national ranks).
@@ -209,6 +223,8 @@ Each question in the answer review has a Show with passage button (Show question
 - Ending the section asks on the page, never with a `confirm()` dialog.
 
 ## Changelog
+1.4.0: The Reading bank (milestone D): seven new passages, for 8 passages and 72 questions, as drafts, including a paired Humanities set. With `?drafts=1`, every section can now make a full section, so the full ACT can be tried from the home page. Browser tests play every Reading passage and a 36-question Reading section from the drafts.
+
 1.3.0: The Math bank (milestone C): 82 new questions, for 90 in all, as drafts. Comparison signs (as in "x < 5") are allowed in question text. Browser tests play every Math question on its own and check a 45-question Math section from the drafts.
 
 1.2.0: The English bank (milestone B): nine new passages, for 10 passages and 100 questions, all drafts. The sample passage's first question now has its answer in a different position. Browser tests play every English passage and a 50-question English section.
