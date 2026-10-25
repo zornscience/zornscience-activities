@@ -71,7 +71,7 @@ test("compact activity header has instructions with keyboard close and focus res
  await expect(page.getByRole("button",{name:"Instructions",exact:true})).toBeFocused();
 });
 test("share copies only the fresh activity link and supports clipboard denial",async({page})=>{
- await page.goto("/virtual-lab-graphing/?embed=1&data=private");await example(page);
+ await page.goto("/virtual-lab-graphing/?data=private");await example(page);
  await page.evaluate(()=>Object.defineProperty(navigator,"clipboard",{configurable:true,value:{writeText:async text=>{document.documentElement.dataset.copied=text;}}}));
  await page.getByRole("button",{name:"Share",exact:true}).click();await page.getByRole("button",{name:"Copy link",exact:true}).click();
  await expect(page.locator(id("share-status"))).toHaveText("Link copied.");
