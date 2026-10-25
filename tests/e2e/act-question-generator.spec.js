@@ -106,3 +106,19 @@ test('sharing provides a manual copy fallback when clipboard access is blocked',
   await expect(page.getByRole('textbox',{name:'Share link'})).toBeFocused();
   await expect(page.locator('#zsa-th-share-status')).toContainText('Link selected');
 });
+
+test('compact layout omits intro, subtitle, and steps at narrow mobile widths', async ({page}) => {
+  for (const width of [320,375,768]) {
+    await page.setViewportSize({width,height:812});
+    await page.goto('/act-question-generator/');
+    await expect(page.locator('.intro, .intro-meta, .steps, .activity-subtitle')).toHaveCount(0);
+    await expect(page.getByRole('heading',{name:'ACT Question Generator',exact:true})).toBeVisible();
+    await expect(page.getByRole('button',{name:'Instructions',exact:true})).toBeVisible();
+    await expect(page.getByRole('button',{name:'Share activity'})).toBeVisible();
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+    await page.locator('[data-subject="english"]').click();
+    await page.locator('#reveal').click();
+    await expect(page.locator('#answer')).toBeVisible();
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  }
+});
