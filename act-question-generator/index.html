@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Practice one ACT-style question at a time. Choose English, Math, or Science from 600 original questions, with answers and explanations.">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<title>ACT Question Generator | ZornScience</title>
+<link rel="icon" href="../favicon.png">
+<link rel="stylesheet" href="generator.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.1.0" defer></script>
+<script src="bank.js?v=1.0.0" defer></script>
+<script src="deck.js?v=1.0.0" defer></script>
+<script src="generator.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="generator" data-zsa-activity="act-question-generator">
+<header data-zsa-chrome class="site-header"><a class="brand" href="../"><span class="brand-mark" aria-hidden="true">Z</span>ZornScience</a><span class="header-note">A little practice. A lot of progress.</span></header>
+<section class="intro" aria-labelledby="title"><p class="eyebrow">YOUR NEXT QUESTION STARTS HERE</p><h1 id="title">Build confidence.<br><span>One question at a time.</span></h1><p class="lede">Choose a subject, try an ACT-style question, and learn from the explanation. Go at your own pace.</p><div class="intro-meta"><span><b>600</b> original questions</span><span>No timer</span><span>No sign-in</span></div></section>
+<section class="subjects" aria-labelledby="subjects-title"><div class="section-heading"><h2 id="subjects-title">Choose your subject</h2><span>200 questions in each bank</span></div><div class="subject-grid">
+<button class="subject english" data-subject="english" aria-pressed="false" aria-controls="practice"><span class="subject-icon" aria-hidden="true">Aa</span><span class="subject-text"><strong>English</strong><span>Grammar, clarity &amp; organization</span></span><span class="subject-arrow" aria-hidden="true">↗</span></button>
+<button class="subject math" data-subject="math" aria-pressed="false" aria-controls="practice"><span class="subject-icon" aria-hidden="true">x²</span><span class="subject-text"><strong>Math</strong><span>Algebra, geometry &amp; data</span></span><span class="subject-arrow" aria-hidden="true">↗</span></button>
+<button class="subject science" data-subject="science" aria-pressed="false" aria-controls="practice"><span class="subject-icon" aria-hidden="true">◉</span><span class="subject-text"><strong>Science</strong><span>Evidence, experiments &amp; reasoning</span></span><span class="subject-arrow" aria-hidden="true">↗</span></button>
+</div></section>
+<p id="session-status" class="session-status" role="status"></p>
+<section id="practice" class="practice" aria-label="Practice question"><div id="welcome" class="welcome"><div class="welcome-symbol" aria-hidden="true">✦</div><h2>Make room for a small win.</h2><p>Select a subject above to get your first random question.</p><div class="steps"><span>01 &nbsp; Choose</span><span>02 &nbsp; Try</span><span>03 &nbsp; Understand</span></div></div>
+<div id="question-view" hidden><div class="question-topline"><span id="subject-label" class="pill"></span><span id="progress"></span></div><div class="question-heading"><h2 id="question-title" tabindex="-1">Practice question</h2><span id="question-id"></span></div><p id="skill" class="skill"></p><p id="context" class="context" hidden></p><div id="table-wrap" class="table-wrap" hidden></div><fieldset id="choices"><legend id="prompt"></legend><div id="choice-list"></div></fieldset><div class="actions"><button id="check" class="primary" disabled>Check answer</button><button id="reveal" class="secondary" aria-controls="answer" aria-expanded="false">Show answer</button><button id="next" class="next">Next question <span aria-hidden="true">→</span></button></div><div id="answer" class="answer" role="status" hidden></div><p class="practice-note">A fresh random order for each subject. No repeats until you’ve seen all 200.</p></div></section>
+<aside class="tip"><span class="tip-label">A GOOD PRACTICE HABIT</span><p>Try the question first. If you get stuck, show the answer and focus on <em>why</em> it works.</p></aside>
+<footer data-zsa-chrome><p>Original ACT-style practice by ZornScience. Not affiliated with or endorsed by ACT, Inc.</p><p>This question generator is separate from the ACT testing platform. It does not record scores or estimate ACT results.</p></footer>
+<noscript><p class="noscript">Enable JavaScript to select a subject and practice questions.</p></noscript>
+</main>
+</body>
+</html>
