@@ -1,0 +1,28 @@
+'use strict';
+const {test,expect}=require('@playwright/test');
+test('magnet drop runs, pauses, compares insulator and shares the activity',async({page})=>{
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.goto('/faraday-lab/');
+  await page.getByRole('button',{name:'Instructions',exact:true}).click();
+  await expect(page.locator('dialog')).toBeVisible();
+  await page.getByRole('button',{name:'Close instructions'}).click();
+  await page.getByRole('button',{name:'Share activity'}).click();
+  await expect(page.locator('#zsa-th-share-url')).toHaveValue('https://activities.zornscience.org/faraday-lab/');
+  await page.keyboard.press('Escape');
+  await page.locator('#release').click();
+  await page.waitForTimeout(700);
+  await expect(page.locator('#state')).toHaveText('MAGNETS FALLING');
+  await page.locator('#pause').click();
+  await expect(page.locator('#pause')).toHaveText('Resume');
+  await page.locator('#pause').click();
+  await expect(page.locator('#state')).toHaveText('BOTH MAGNETS CAUGHT',{timeout:7000});
+  await page.locator('#material').selectOption('plastic');
+  await page.locator('#release').click();
+  await expect(page.locator('#state')).toHaveText('BOTH MAGNETS CAUGHT',{timeout:1800});
+  await expect(page.locator('#observation')).toContainText('Both magnets fell together');
+  await page.locator('#flip').click();
+  await expect(page.locator('#flip')).toContainText('S down');
+  await page.setViewportSize({width:390,height:844});
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  expect(errors).toEqual([]);
+});

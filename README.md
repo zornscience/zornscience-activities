@@ -52,6 +52,8 @@ tests/                     automated tests (development only; see TESTING.md)
 package.json               test tooling only; the site has no dependencies
 ```
 
+faraday-lab/               Faraday’s Law · Magnet Drop, v1.0.0 (realistic tube apparatus, free-fall comparison, eddy currents, induced fields, pause and slow motion; no data recording)
+
 ## Publishing (GitHub Pages)
 
 1. Repository settings, Pages: deploy from branch `main`, folder `/ (root)`.
