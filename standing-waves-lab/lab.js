@@ -1,5 +1,5 @@
-(function(){
-'use strict';
+(function () {
+  "use strict";
 const $=id=>document.getElementById(id), ns='http://www.w3.org/2000/svg';
 const ids=['frequency','amplitude','mass','length','density','phase','cursor-a','cursor-b'];
 let running=false,locked=false,time=0,last=0,drag=null;
@@ -13,7 +13,7 @@ function draw(){const m=model(),phase=locked?(+$('phase').value*Math.PI/180+Math
 $('wave').setAttribute('d',shape(m,phase));
 // Envelope uses quadrature components of the complete complex response.
 let env='';for(let sign of [-1,1]){for(let i=0;i<=180;i++){const x=i/180,a=response(m,x,0),b=response(m,x,Math.PI/2),h=running?Math.hypot(a,b)*72*(+$('amplitude').value/100):0;env+=(i?'L':'M')+(326+514*x).toFixed(2)+' '+(180+sign*h).toFixed(2);}}
-$('envelope').setAttribute('d',env);$('envelope').style.display=$('ghost').checked?'':'none';
+$('envelope').setAttribute('d',env);$('envelope').setAttribute('display',$('ghost').checked?'inline':'none');
 $('markers').replaceChildren();if($('nodes').checked&&m.resonant&&running&&+$('amplitude').value>0){for(let i=0;i<=m.n;i++){const x=326+514*i/m.n;svg('circle',{cx:x,cy:180,r:5,fill:'#79d8e0',stroke:'#112c3c'},$('markers'));svg('text',{x,y:145,fill:'#a2e9ef','text-anchor':'middle','font-size':11},$('markers'),'N');}for(let i=0;i<m.n;i++){const x=326+514*(i+.5)/m.n;svg('path',{d:`M${x} 165v30`,stroke:'#e6b473','stroke-dasharray':'3 3'},$('markers'));svg('text',{x,y:115,fill:'#f4cd95','text-anchor':'middle','font-size':11},$('markers'),'A');}}
 }
 function ruler(){const m=model();$('ruler').replaceChildren();svg('rect',{x:326,y:230,width:514,height:40,rx:3,fill:'#dbd5b6',stroke:'#857e60'},$('ruler'));const cm=Math.round(m.L*100);for(let i=0;i<=cm;i++){const x=326+514*i/cm;svg('path',{d:`M${x} 230v${i%10===0?17:i%5===0?12:6}`,stroke:'#4e5146','stroke-width':.8},$('ruler'));if(i%10===0)svg('text',{x,y:262,'text-anchor':i===0?'start':i===cm?'end':'middle',fill:'#343e39','font-size':10},$('ruler'),i);}svg('text',{x:845,y:263,fill:'#c0d4de','font-size':10},$('ruler'),'cm');}
