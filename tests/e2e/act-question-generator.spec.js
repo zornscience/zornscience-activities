@@ -1,5 +1,6 @@
 'use strict';
 const {test, expect} = require('@playwright/test');
+const bank = require('../../act-question-generator/bank.js');
 test('select subjects, reveal without answering, check choices, and reset feedback', async ({page}) => {
   const errors = []; page.on('pageerror', error => errors.push(error.message));
   await page.goto('/act-question-generator/');
@@ -17,17 +18,16 @@ test('select subjects, reveal without answering, check choices, and reset feedba
     await page.locator('#next').click();
     await expect(page.locator('#answer')).toBeHidden();
     await expect(page.locator('#progress')).toHaveText('2 of 200 seen');
-    const correct = await page.evaluate(() => {
-      const q = window.ZSA_GENERATOR_BANK[document.querySelector('[aria-pressed="true"]').dataset.subject].find(q => q.id.toUpperCase() === document.querySelector('#question-id').textContent);
-      return q.answer;
-    });
+    const id = (await page.locator('#question-id').textContent()).toLowerCase();
+    const correct = bank[subject].find(q => q.id === id).answer;
     await page.getByRole('radio').nth((correct+1)%4).check();
     await page.locator('#check').click();
     await expect(page.locator('#answer')).toContainText('Keep going');
     await expect(page.locator('.choice.incorrect')).toHaveCount(1);
     await expect(page.locator('.choice.correct')).toHaveCount(1);
     await page.locator('#next').click();
-    const nextCorrect = await page.evaluate(() => window.ZSA_GENERATOR_BANK[document.querySelector('[aria-pressed="true"]').dataset.subject].find(q => q.id.toUpperCase() === document.querySelector('#question-id').textContent).answer);
+    const nextId = (await page.locator('#question-id').textContent()).toLowerCase();
+    const nextCorrect = bank[subject].find(q => q.id === nextId).answer;
     await page.getByRole('radio').nth(nextCorrect).check();
     await page.locator('#check').click();
     await expect(page.locator('#answer')).toContainText('Correct');

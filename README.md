@@ -23,14 +23,14 @@ ion-charge-trainer/        Predicting Ion Charge Trainer, v1.4.0
 ionic-formula-builder/     Redirect only: the retired Ionic Formula Builder now sends visitors to ionic-reactions/
 ionic-reactions/           Ionic Reaction Builder, v3.4.0 (four reaction families, ionic product formulas, automatic balance checks and fullscreen practice)
 periodic-table/            Periodic Table reference, v1.2.0 (data built by periodic-table/tools/build-data.js)
-periodic-trends/           Periodic Trends Practice, v1.1.0 (questions built from the periodic table's data)
-lewis-vsepr/               Lewis Structure and VSEPR Builder, v1.1.0
+periodic-trends/           Periodic Trends Practice, v1.1.1 (questions built from the periodic table's data)
+lewis-vsepr/               Lewis Structure and VSEPR Builder, v1.1.1
 act/                       ACT Practice, v1.11.0 (English, Math, Reading and Science sections and the full ACT; question banks in act/bank-*.js; optional practice codes with PINs, and class sets for teachers)
-act-question-generator/    Standalone ACT question generator, v1.1.0 (200 questions each for English, Math, Science; random order, answer reveal, no scores or accounts)
+act-question-generator/    Standalone ACT question generator, v1.1.1 (200 questions each for English, Math, Science; random order, answer reveal, no scores or accounts)
 act-science/               Redirect only: ACT Science Practice is now the Science section of act/
 wordpress/zornscience-act-history/  WordPress plugin for zornscience.org that stores ACT Practice scores under anonymous practice codes (not part of the static site)
-scientific-calculator/     Scientific Calculator Practice, v1.1.0 (independent scientific calculator with six guided exercises)
-virtual-lab-graphing/      Virtual Lab Graphing Tool, v1.1.0 (student data, scatter plots, linear best fit and graph downloads)
+scientific-calculator/     Scientific Calculator Practice, v1.1.1 (independent scientific calculator with six guided exercises)
+virtual-lab-graphing/      Virtual Lab Graphing Tool, v1.1.1 (student data, scatter plots, linear best fit and graph downloads)
 gas-lab/                   Gas Laws and KMT Lab, v1.0.0 (particle simulation, graphs and investigations)
 stoichiometry-coach/       Stoichiometry Coach, v1.0.0 (conversion factor setups with unit cancellation)
 atwood-machine/           The Atwood Machine, v1.0.1 (ideal pulley, adjustable masses and live vectors; no data recording)
@@ -43,8 +43,8 @@ limiting-reactant/         Limiting Reactant Visualizer, v1.0.0 (molecules pair 
 projectile-lab/             Projectile Motion Vector Lab, v1.0.0 (a cannon with live velocity, component and acceleration vectors, snapshots and a velocity components graph)
 circuit-builder/           Circuit Builder, v1.0.0 (drag batteries, wires, resistors, switches and bulbs onto a board; a multimeter probes voltage and current, and bulbs glow by their power)
 beers-law-lab/             Beer's Law Spectrophotometer Lab, v1.0.0 (zero with a blank, measure standards for a calibration curve, then calculate the concentration of a random unknown)
-equilibrium-lab/          Equilibrium Sandbox, v1.1.0 (Le Chatelier stresses, Kc/Qc and live concentration graphs)
-calorimetry-lab/          Calorimetry & Enthalpy Lab, v1.1.0 (heated-metal and neutralization calorimetry)
+equilibrium-lab/          Equilibrium Sandbox, v1.1.1 (Le Chatelier stresses, Kc/Qc and live concentration graphs)
+calorimetry-lab/          Calorimetry & Enthalpy Lab, v1.1.1 (heated-metal and neutralization calorimetry)
 equilibrium-thermo-lab/   Compatibility chooser linking to the two standalone labs
 check/                     completion code checker for teachers, v1.2.0 (linked under "For teachers")
 TEACHERS.md                assigning activities in Google Classroom and checking completion codes

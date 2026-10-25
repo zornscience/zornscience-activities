@@ -1,4 +1,6 @@
-# ACT Question Generator · v1.1.0
+# ACT Question Generator
+
+Version: 1.1.1
 
 A standalone, untimed practice tool for ZornScience. Choose English, Math, or Science; answer one random multiple-choice question at a time; check a choice or reveal the answer without attempting it. Every answer includes an explanation.
 

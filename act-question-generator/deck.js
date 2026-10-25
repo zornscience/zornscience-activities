@@ -1,6 +1,6 @@
-/* Separate shuffled queues: every question appears once before its subject restarts. */
-(function (root) {
-  'use strict';
+// Separate shuffled queues: every question appears once before its subject restarts.
+(function () {
+  "use strict";
   function createDeck(bank, random) {
     random = random || Math.random;
     var states = {};
@@ -29,5 +29,8 @@
     }};
   }
   if (typeof module === 'object' && module.exports) module.exports = createDeck;
-  else root.ZSA_GENERATOR_DECK = createDeck;
-})(typeof window !== 'undefined' ? window : globalThis);
+  else {
+    var root = document.querySelector('[data-zsa-activity="act-question-generator"]');
+    if (root) root.addEventListener("zsa-generator-deck", function (event) { event.detail.receive(createDeck); });
+  }
+})();

@@ -1,7 +1,10 @@
 (function () {
-  'use strict';
-  var bank = window.ZSA_GENERATOR_BANK;
-  var deck = window.ZSA_GENERATOR_DECK(bank);
+  "use strict";
+  var root = document.querySelector('[data-zsa-activity="act-question-generator"]');
+  var bank, createDeck;
+  root.dispatchEvent(new CustomEvent("zsa-generator-bank", {detail: {receive: function (data) { bank = data; }}}));
+  root.dispatchEvent(new CustomEvent("zsa-generator-deck", {detail: {receive: function (factory) { createDeck = factory; }}}));
+  var deck = createDeck(bank);
   var subject = null, current = null, selected = null, revealed = false;
   var names = {english: 'English', math: 'Math', science: 'Science'};
   function el(id) { return document.getElementById(id); }
@@ -49,7 +52,7 @@
   function showAnswer(checked) {
     if (!current || revealed || (checked && selected === null)) return;
     revealed = true;
-    var title = checked ? (selected === current.answer ? 'Correct — nicely done.' : 'Keep going — here’s how it works.') : 'Here’s the answer';
+    var title = checked ? (selected === current.answer ? 'Correct: nicely done.' : 'Keep going: here’s how it works.') : 'Here’s the answer';
     var heading = node('h3', title);
     var answer = node('p'); answer.append(node('strong', 'Answer ' + 'ABCD'[current.answer] + ': ' + current.choices[current.answer]));
     el('answer').replaceChildren(heading, answer, node('p', current.explanation)); el('answer').hidden = false;
