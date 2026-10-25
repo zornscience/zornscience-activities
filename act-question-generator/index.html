@@ -5,19 +5,72 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Practice one ACT-style question at a time. Choose English, Math, or Science from 600 original questions, with answers and explanations.">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.0.0">
+<meta name="zsa-version" content="1.1.0">
 <title>ACT Question Generator | ZornScience</title>
 <link rel="icon" href="../favicon.png">
-<link rel="stylesheet" href="generator.css?v=1.0.0">
+<link rel="canonical" href="https://activities.zornscience.org/act-question-generator/">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.1.0">
+<link rel="stylesheet" href="generator.css?v=1.1.0">
 <script src="../shared/zsa-embed.js?v=1.1.0" defer></script>
-<script src="bank.js?v=1.0.0" defer></script>
-<script src="deck.js?v=1.0.0" defer></script>
-<script src="generator.js?v=1.0.0" defer></script>
+<script src="bank.js?v=1.1.0" defer></script>
+<script src="deck.js?v=1.1.0" defer></script>
+<script src="generator.js?v=1.1.0" defer></script>
+<script src="instructions.js?v=1.1.0" defer></script>
+<script src="share.js?v=1.1.0" defer></script>
 </head>
 <body>
-<main class="generator" data-zsa-activity="act-question-generator">
-<header data-zsa-chrome class="site-header"><a class="brand" href="../"><span class="brand-mark" aria-hidden="true">Z</span>ZornScience</a><span class="header-note">A little practice. A lot of progress.</span></header>
-<section class="intro" aria-labelledby="title"><p class="eyebrow">YOUR NEXT QUESTION STARTS HERE</p><h1 id="title">Build confidence.<br><span>One question at a time.</span></h1><p class="lede">Choose a subject, try an ACT-style question, and learn from the explanation. Go at your own pace.</p><div class="intro-meta"><span><b>600</b> original questions</span><span>No timer</span><span>No sign-in</span></div></section>
+<main class="zsa generator" data-zsa-activity="act-question-generator">
+<header class="zsa-th-header">
+<div class="zsa-th-topline">
+<div class="zsa-th-identity">
+<a class="zsa-th-brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome>
+<img src="../ionic-reactions/zornscience-logo.png?v=1.0.0" alt="" width="52" height="50">
+</a>
+<div><h1 id="title">ACT Question Generator</h1><p class="activity-subtitle">English · Math · Science</p></div>
+</div>
+<nav class="zsa-th-header-tools" aria-label="Activity links">
+<div class="zsa-th-header-buttons">
+<button class="zsa-btn zsa-th-instructions-open" id="zsa-th-instructions-open" type="button" aria-haspopup="dialog" aria-controls="zsa-th-instructions">Instructions</button>
+<button class="zsa-btn zsa-th-share-toggle" id="zsa-th-share-toggle" type="button" aria-label="Share activity" aria-expanded="false" aria-controls="zsa-th-share-panel" data-zsa-chrome>
+<svg class="zsa-th-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg>
+<span>Share</span>
+</button>
+
+</div>
+</nav>
+</div>
+
+<section class="zsa-th-share-panel" id="zsa-th-share-panel" aria-labelledby="zsa-th-share-title" data-zsa-chrome hidden>
+<div class="zsa-th-share-heading">
+<h2 id="zsa-th-share-title">Share this activity</h2>
+<button class="zsa-th-icon-button" id="zsa-th-share-close" type="button" aria-label="Close share options"><span aria-hidden="true">×</span></button>
+</div>
+<p class="zsa-th-small">Share this generator with students or classmates. Links open a fresh practice session.</p>
+<label class="zsa-th-share-label" for="zsa-th-share-url">Share link</label>
+<div class="zsa-th-share-link">
+<input id="zsa-th-share-url" type="text" readonly spellcheck="false">
+<button class="zsa-btn zsa-btn--primary" id="zsa-th-share-copy" type="button">Copy link</button>
+</div>
+<div class="zsa-th-share-options">
+<a id="zsa-th-share-email" href="#"><svg class="zsa-th-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></svg><span>Email</span></a>
+
+
+<button class="zsa-btn" id="zsa-th-share-device" type="button" hidden>More share options</button>
+</div>
+<p class="zsa-th-share-status" id="zsa-th-share-status" aria-live="polite" aria-atomic="true"></p>
+</section>
+</header><dialog class="zsa-th-instructions" id="zsa-th-instructions" aria-labelledby="zsa-th-instructions-title">
+<div class="zsa-th-instructions-heading"><h2 id="zsa-th-instructions-title">How to practice</h2><button class="zsa-th-icon-button" id="zsa-th-instructions-close" type="button" aria-label="Close instructions" autofocus>×</button></div>
+<ol class="zsa-th-instructions-steps">
+<li>Choose <strong>English</strong>, <strong>Math</strong>, or <strong>Science</strong>. Each subject has 200 ACT-style questions.</li>
+<li>Read the question and any passage or data table. Select an answer, then press <strong>Check answer</strong> to see how you did.</li>
+<li>If you’re stuck, press <strong>Show answer</strong> at any time. Read the explanation to understand the reasoning.</li>
+<li>Press <strong>Next question</strong> for another random question. You can switch subjects whenever you like.</li>
+</ol>
+<p class="zsa-th-instructions-example">Questions do not repeat within a subject until you’ve seen all 200. Switching subjects keeps your place in each bank during this visit. Reloading the page or opening a shared link starts a new session.</p>
+<p class="zsa-th-instructions-note">Practice is untimed. No sign-in is required, and scores are not saved. These original skill exercises are separate from the ACT testing platform and are not official ACT questions.</p>
+</dialog>
+<section class="intro" aria-label="About this practice"><p class="lede">Choose a subject, try an ACT-style question, and learn from the explanation. Go at your own pace.</p><div class="intro-meta"><span><b>600</b> original questions</span><span>No timer</span><span>No sign-in</span></div></section>
 <section class="subjects" aria-labelledby="subjects-title"><div class="section-heading"><h2 id="subjects-title">Choose your subject</h2><span>200 questions in each bank</span></div><div class="subject-grid">
 <button class="subject english" data-subject="english" aria-pressed="false" aria-controls="practice"><span class="subject-icon" aria-hidden="true">Aa</span><span class="subject-text"><strong>English</strong><span>Grammar, clarity &amp; organization</span></span><span class="subject-arrow" aria-hidden="true">↗</span></button>
 <button class="subject math" data-subject="math" aria-pressed="false" aria-controls="practice"><span class="subject-icon" aria-hidden="true">x²</span><span class="subject-text"><strong>Math</strong><span>Algebra, geometry &amp; data</span></span><span class="subject-arrow" aria-hidden="true">↗</span></button>

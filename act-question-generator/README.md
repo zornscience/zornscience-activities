@@ -1,10 +1,12 @@
-# ACT Question Generator · v1.0.0
+# ACT Question Generator · v1.1.0
 
 A standalone, untimed practice tool for ZornScience. Choose English, Math, or Science; answer one random multiple-choice question at a time; check a choice or reveal the answer without attempting it. Every answer includes an explanation.
 
+The header uses the ZornScience logo and shared navy/blue palette. **Instructions** opens a keyboard-accessible dialog. **Share** offers a canonical public link, Copy link, Email, and device sharing when supported; it never shares answers or session state.
+
 ## Independence
 
-This activity has its own bank, shuffle logic, interface, and styles. It does not load, change, or share state with `act/`, its testing engine, scoring, practice codes, WordPress history plugin, or question banks. It uses only the shared font and optional iframe resize helper. There are no API calls, accounts, scores, timers, or runtime dependencies.
+This activity has its own bank, shuffle logic, interface, and styles. It does not load, change, or share state with `act/`, its testing engine, scoring, practice codes, WordPress history plugin, or question banks. It uses the shared base stylesheet, font, ZornScience logo, and optional iframe resize helper. There are no API calls, accounts, scores, timers, or runtime dependencies.
 
 Each subject has a separate shuffled queue of 200 questions. Switching subjects preserves each queue during the page session. Each queue reshuffles after all 200 questions are drawn; the first question in a new pass cannot repeat the last question of the previous pass. Reloading starts a new session.
 
@@ -41,7 +43,7 @@ In a WordPress Custom HTML block, use:
 </iframe>
 ```
 
-`?embed=1` hides the outer header and footer. The existing shared embed helper sends `zsa:resize` messages to `https://zornscience.org`; a parent resize listener may use them. Without a listener, the fixed-height iframe remains scrollable. WordPress must permit iframe markup for the editor adding it.
+`?embed=1` hides the logo link, Share controls, and footer while leaving the activity title and Instructions button available. The existing shared embed helper sends `zsa:resize` messages to `https://zornscience.org`; a parent resize listener may use them. Without a listener, the fixed-height iframe remains scrollable. WordPress must permit iframe markup for the editor adding it.
 
 ## Verification
 

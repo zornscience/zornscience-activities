@@ -40,7 +40,9 @@ test('select subjects, reveal without answering, check choices, and reset feedba
 test('keyboard, mobile layout, iframe mode, and accessibility', async ({page}) => {
   await page.setViewportSize({width: 375, height: 812});
   await page.goto('/act-question-generator/?embed=1');
-  await expect(page.locator('.site-header')).toBeHidden();
+  await expect(page.locator('.zsa-th-brand')).toBeHidden();
+  await expect(page.getByRole('button', {name: 'Instructions', exact: true})).toBeVisible();
+  await expect(page.getByRole('button', {name: 'Share activity'})).toBeHidden();
   await page.locator('[data-subject="science"]').focus();
   await page.keyboard.press('Enter');
   await expect(page.locator('#question-title')).toBeFocused();
@@ -53,4 +55,54 @@ test('keyboard, mobile layout, iframe mode, and accessibility', async ({page}) =
   await page.addScriptTag({url: '/node_modules/axe-core/axe.min.js'});
   const violations = await page.evaluate(async () => (await window.axe.run(document.querySelector('main'), {runOnly: {type: 'tag', values: ['wcag2a','wcag2aa','wcag21aa']}})).violations.map(v => ({id: v.id, nodes: v.nodes.map(n => n.target)})));
   expect(violations).toEqual([]);
+});
+test('branded instructions and sharing work by keyboard without losing practice', async ({page}) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(navigator, 'clipboard', {configurable:true, value:{writeText: async text => {window.copiedActivityLink=text;}}});
+    Object.defineProperty(navigator, 'share', {configurable:true, value:async data => {window.sharedActivity=data;}});
+  });
+  await page.setViewportSize({width:375,height:812});
+  await page.goto('/act-question-generator/?unrelated=discard');
+  await expect(page.locator('.zsa-th-brand img')).toBeVisible();
+  await page.locator('[data-subject="math"]').click();
+  const question = await page.locator('#question-id').textContent();
+  const instructions = page.getByRole('button', {name:'Instructions',exact:true});
+  await instructions.click();
+  await expect(page.getByRole('dialog')).toBeVisible();
+  await expect(page.getByRole('dialog')).toContainText('Show answer');
+  await expect(page.getByRole('button',{name:'Close instructions',exact:true})).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(page.getByRole('dialog')).toBeHidden();
+  await expect(instructions).toBeFocused();
+  await expect(page.locator('#question-id')).toHaveText(question);
+  const share=page.getByRole('button',{name:'Share activity'});
+  await share.click();
+  await expect(share).toHaveAttribute('aria-expanded','true');
+  const url='https://activities.zornscience.org/act-question-generator/';
+  await expect(page.getByRole('textbox',{name:'Share link'})).toHaveValue(url);
+  await page.getByRole('button',{name:'Copy link',exact:true}).click();
+  expect(await page.evaluate(()=>window.copiedActivityLink)).toBe(url);
+  await expect(page.locator('#zsa-th-share-status')).toHaveText('Link copied.');
+  await expect(page.getByRole('link',{name:'Email',exact:true})).toHaveAttribute('href',/mailto:.*act-question-generator/);
+  await page.getByRole('button',{name:'More share options'}).click();
+  expect(await page.evaluate(()=>window.sharedActivity.url)).toBe(url);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  await page.addScriptTag({url:'/node_modules/axe-core/axe.min.js'});
+  const violations = await page.evaluate(async ()=>(await axe.run(document.querySelector('main'),{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations.map(v=>v.id));
+  expect(violations).toEqual([]);
+  await page.keyboard.press('Escape');
+  await expect(share).toBeFocused();
+  await expect(share).toHaveAttribute('aria-expanded','false');
+  await instructions.click();
+  const dialogViolations = await page.evaluate(async ()=>(await axe.run(document.querySelector('dialog'),{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}})).violations.map(v=>v.id));
+  expect(dialogViolations).toEqual([]);
+  await page.getByRole('button',{name:'Close instructions',exact:true}).click();
+});
+test('sharing provides a manual copy fallback when clipboard access is blocked', async ({page}) => {
+  await page.addInitScript(()=>Object.defineProperty(navigator,'clipboard',{configurable:true,value:{writeText:async()=>{throw new Error('Permission denied');}}}));
+  await page.goto('/act-question-generator/');
+  await page.getByRole('button',{name:'Share activity'}).click();
+  await page.getByRole('button',{name:'Copy link',exact:true}).click();
+  await expect(page.getByRole('textbox',{name:'Share link'})).toBeFocused();
+  await expect(page.locator('#zsa-th-share-status')).toContainText('Link selected');
 });

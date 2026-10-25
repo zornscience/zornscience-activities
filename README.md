@@ -26,7 +26,7 @@ periodic-table/            Periodic Table reference, v1.2.0 (data built by perio
 periodic-trends/           Periodic Trends Practice, v1.1.0 (questions built from the periodic table's data)
 lewis-vsepr/               Lewis Structure and VSEPR Builder, v1.1.0
 act/                       ACT Practice, v1.11.0 (English, Math, Reading and Science sections and the full ACT; question banks in act/bank-*.js; optional practice codes with PINs, and class sets for teachers)
-act-question-generator/    Standalone ACT question generator, v1.0.0 (200 questions each for English, Math, Science; random order, answer reveal, no scores or accounts)
+act-question-generator/    Standalone ACT question generator, v1.1.0 (200 questions each for English, Math, Science; random order, answer reveal, no scores or accounts)
 act-science/               Redirect only: ACT Science Practice is now the Science section of act/
 wordpress/zornscience-act-history/  WordPress plugin for zornscience.org that stores ACT Practice scores under anonymous practice codes (not part of the static site)
 scientific-calculator/     Scientific Calculator Practice, v1.1.0 (independent scientific calculator with six guided exercises)
