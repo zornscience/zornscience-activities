@@ -6,6 +6,6 @@ Mass changes reset the system. Free motion uses a=(m2-m1)g/(m1+m2), T=2m1m2g/(m1
 
 The activity intentionally does not use the quiz engine or completion codes, because it is an exploration simulation with no data recording. Arrow colors: mint acceleration, gold gravity, blue tension, each also labeled. The SVG equipment is illustrative, with enlarged hanger geometry.
 
-Version: 1.0.2
+Version: 1.0.3
 
 Version 1.0.2 removes the introductory banner so the simulation follows the header directly.

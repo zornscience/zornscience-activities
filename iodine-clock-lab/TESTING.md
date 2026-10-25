@@ -6,4 +6,4 @@ Manual review: inspect desktop and narrow-screen glassware; open/close Instructi
 
 Timing is illustrative, as disclosed in Instructions and model details. Chemical rate constants are not calibrated to real measurements.
 
-Version: 1.0.1
+Version: 1.0.2

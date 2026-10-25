@@ -4,26 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.0.0">
+<meta name="zsa-version" content="1.0.1">
 <meta name="description" content="Measure standards with a virtual spectrophotometer, build a Beer's law calibration curve, and find the concentration of a random unknown, from ZornScience.">
 <title>Beer's Law Spectrophotometer Lab | ZornScience</title>
-<link rel="icon" href="data:,">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
-<link rel="stylesheet" href="lab.css?v=1.0.0">
-<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
-<script src="model.js?v=1.0.0" defer></script>
-<script src="lab.js?v=1.0.0" defer></script>
-</head>
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.1">
+<link rel="stylesheet" href="lab.css?v=1.0.1">
+<script src="../shared/zsa-embed.js?v=1.0.1" defer></script>
+<script src="model.js?v=1.0.1" defer></script>
+<script src="lab.js?v=1.0.1" defer></script>
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.1"><script src="../shared/zsa-header.js?v=1.0.1" defer></script></head>
 <body>
 <main class="zsa zsa-bl" data-zsa-activity="beers-law-lab">
-<header class="zsa-bl-header">
-<div class="zsa-bl-topline" data-zsa-chrome>
-<a class="zsa-back" id="zsa-bl-back" href="https://zornscience.org/science/ap-chemistry/">← Back to the lesson</a>
-<p class="zsa-eyebrow">Chemistry · Beer's Law</p>
+<header data-zsa-header class="zsa-bl-header">
+<div data-zsa-header-row>
+<div data-zsa-header-identity><a data-zsa-header-brand href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png" width="34" height="33" alt=""></a><h1>Beer's Law Spectrophotometer Lab</h1></div>
+<nav data-zsa-header-tools aria-label="Activity tools"><div><button class="zsa-btn" type="button" data-zsa-dialog-open="zsa-header-instructions" aria-haspopup="dialog" aria-controls="zsa-header-instructions">Instructions</button><button class="zsa-btn" type="button" data-zsa-chrome data-zsa-dialog-open="zsa-header-share" aria-label="Share activity" aria-haspopup="dialog" aria-controls="zsa-header-share"><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button></div></nav>
 </div>
-<h1>Beer's Law Spectrophotometer Lab</h1>
-<p class="zsa-bl-lede">Zero the spectrophotometer, measure standards of known concentration to build a calibration curve, then measure an unknown and calculate its concentration.</p>
-</header>
+</header><dialog class="zsa-header-dialog" id="zsa-header-instructions" aria-labelledby="zsa-header-instructions-title"><div class="zsa-header-dialog-heading"><h2 id="zsa-header-instructions-title">Instructions</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close instructions" autofocus>Close</button></div><p class="zsa-bl-lede">Zero the spectrophotometer, measure standards of known concentration to build a calibration curve, then measure an unknown and calculate its concentration.</p><ol><li>Zero the instrument with a blank, then measure standards with known concentrations.</li><li>Use the calibration curve to find the concentration of the unknown sample.</li><li>Record your measurements and explain the relationship between concentration and absorbance.</li></ol></dialog><dialog class="zsa-header-dialog" id="zsa-header-share" aria-labelledby="zsa-header-share-title"><div class="zsa-header-dialog-heading"><h2 id="zsa-header-share-title">Share this activity</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close share options" autofocus>Close</button></div><p>Share a fresh activity. Your answers and experiment data are not included.</p><label for="zsa-header-share-url">Share link</label><div class="zsa-header-share-link"><input id="zsa-header-share-url" type="text" readonly spellcheck="false"><button class="zsa-btn" type="button" data-zsa-share-copy>Copy link</button></div><a data-zsa-share-email href="#">Email</a><p data-zsa-share-status role="status" aria-live="polite"></p></dialog>
 <noscript><p class="zsa-panel">This lab needs JavaScript. Enable it to use the spectrophotometer and draw the calibration curve.</p></noscript>
 <div class="zsa-bl-toolbar">
 <p class="zsa-bl-small zsa-bl-toolbar-note">1.00 cm cuvettes. Readings have a little noise, like a real instrument.</p>
@@ -139,7 +137,7 @@
 </div>
 </div>
 <p class="zsa-sr-only" id="zsa-bl-live" aria-live="polite" aria-atomic="true"></p>
-<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Measure. Graph. Calculate. Nothing you enter leaves this tab.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Measure. Graph. Calculate. Nothing you enter leaves this tab.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><a data-zsa-chrome class="zsa-back" id="zsa-bl-back" href="https://zornscience.org/science/ap-chemistry/">← Back to the lesson</a></footer>
 </main>
 </body>
 </html>

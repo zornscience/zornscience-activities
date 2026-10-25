@@ -1,6 +1,6 @@
 # Equipotential & Electric Field Mapping
 
-Version: 1.0.0
+Version: 1.0.1
 
 An offline-capable, buildless point-charge sandbox with ZornScience branding. Open `index.html` through a static server. Published at https://activities.zornscience.org/equipotential-lab/.
 

@@ -1,6 +1,6 @@
 # Redox Half-Reaction Balancer Coach
 
-Version: 1.1.1
+Version: 1.1.2
 
 Manual, scaffolded redox balancing at `/redox-coach/`, linked from the activities page. Vanilla JavaScript and the shared site stylesheet and embed support, with no runtime dependencies, network calls, saved state or completion code. The multi-step equation editor uses a dedicated phase controller, like the site's other custom labs, rather than the shared engine's multiple-choice rounds. The existing shared production files are unchanged.
 

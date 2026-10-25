@@ -1,5 +1,5 @@
 # Gas Laws and KMT Lab
-Version: 1.0.0
+Version: 1.0.1
 
 A particle simulation of a gas in a container with a movable piston, linked to a live pressure gauge, readouts, graphs of the gas laws, Maxwell-Boltzmann speed distributions, gas mixtures and a real gas mode. An Investigations tab adds guided predict, test and explain tasks with a completion code.
 

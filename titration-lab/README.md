@@ -1,5 +1,5 @@
 # Virtual Titration Simulator
-Version: 1.0.0
+Version: 1.0.1
 
 A titration lab for AP Chemistry (Unit 8, Acids and Bases). Students choose an analyte, a titrant and an indicator, add titrant with a stopcock (closed, drop by drop, slow or fast stream) or one drop at a time, and watch the flask's color, the pH meter and a live pH curve. They record the endpoint, read the equivalence volume and the pKa (or the equivalence pH) from their own curve, check those answers, and then show the key points to connect the steep slope to the equivalence point and the half-equivalence point to the pKa.
 

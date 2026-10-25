@@ -1,23 +1,18 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.0.1"><meta name="description" content="A five-minute polyatomic ion quiz with adaptive review, from ZornScience."><title>Polyatomic Ion Trainer | ZornScience</title><link rel="icon" href="../favicon.png?v=1.0.1"><link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.1"><link rel="stylesheet" href="../ionic-reactions/activity.css?v=1.0.1"><link rel="stylesheet" href="trainer.css?v=1.0.1"><script src="../shared/zsa-embed.js?v=1.0.1" defer></script><script src="model.js?v=1.0.1" defer></script><script src="share.js?v=1.0.1" defer></script><script src="trainer.js?v=1.0.1" defer></script></head><body><main class="zsa zsa-ir" data-zsa-activity="polyatomic-ion-trainer"><header class="zsa-ir-header">
-<div class="zsa-ir-topline">
-<div class="zsa-ir-identity">
-<a class="zsa-ir-brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome>
-<img src="../ionic-reactions/zornscience-logo.png?v=1.0.1" alt="" width="52" height="50">
-</a>
-<h1>Polyatomic Ion Trainer</h1>
-</div>
-<nav class="zsa-ir-header-tools" aria-label="Activity links">
-<div class="zsa-ir-header-buttons">
+<meta name="zsa-version" content="1.0.2"><meta name="description" content="A five-minute polyatomic ion quiz with adaptive review, from ZornScience."><title>Polyatomic Ion Trainer | ZornScience</title><link rel="icon" href="../favicon.png" type="image/png"><link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.2"><link rel="stylesheet" href="../ionic-reactions/activity.css?v=1.0.2"><link rel="stylesheet" href="trainer.css?v=1.0.2"><script src="../shared/zsa-embed.js?v=1.0.2" defer></script><script src="model.js?v=1.0.2" defer></script><script src="share.js?v=1.0.2" defer></script><script src="trainer.js?v=1.0.2" defer></script><link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.2"><script src="../shared/zsa-header.js?v=1.0.2" defer></script></head><body><main class="zsa zsa-ir" data-zsa-activity="polyatomic-ion-trainer"><header data-zsa-header class="zsa-ir-header">
+<div data-zsa-header-row class="zsa-ir-topline">
+<div data-zsa-header-identity class="zsa-ir-identity"><a data-zsa-header-brand class="zsa-ir-brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome>
+<img src="../ionic-reactions/zornscience-logo.png?v=1.0.2" alt="" width="52" height="50">
+</a><h1>Polyatomic Ion Trainer</h1></div>
+<nav data-zsa-header-tools class="zsa-ir-header-tools" aria-label="Activity links">
+<div class="zsa-ir-header-buttons"><button class="zsa-btn" type="button" data-zsa-dialog-open="zsa-header-instructions" aria-haspopup="dialog" aria-controls="zsa-header-instructions">Instructions</button>
 
-<button class="zsa-btn zsa-ir-share-toggle" id="zsa-ir-share-toggle" type="button" aria-label="Share activity" aria-expanded="false" aria-controls="zsa-ir-share-panel" data-zsa-chrome>
-<svg class="zsa-ir-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg>
-<span>Share</span>
-</button>
+<button class="zsa-btn zsa-ir-share-toggle" id="zsa-ir-share-toggle" type="button" aria-label="Share activity" aria-expanded="false" aria-controls="zsa-ir-share-panel" data-zsa-chrome><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button>
 
 </div>
 </nav>
 </div>
+
 
 <section class="zsa-ir-share-panel" id="zsa-ir-share-panel" aria-labelledby="zsa-ir-share-title" data-zsa-chrome hidden>
 <div class="zsa-ir-share-heading">
@@ -38,9 +33,9 @@
 </div>
 <p class="zsa-ir-share-status" id="zsa-ir-share-status" aria-live="polite" aria-atomic="true"></p>
 </section>
-</header>
+</header><dialog class="zsa-header-dialog" id="zsa-header-instructions" aria-labelledby="zsa-header-instructions-title"><div class="zsa-header-dialog-heading"><h2 id="zsa-header-instructions-title">Instructions</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close instructions" autofocus>Close</button></div><ol><li>Choose the correct name, formula, or charge from four answers. You can also use keys 1-4.</li><li>The timer starts when you begin and keeps running during feedback. Missed ions return for more practice.</li><li>Every incorrect answer counts, including repeat attempts. Your summary appears automatically after five minutes.</li></ol></dialog>
 <noscript><p>This quiz needs JavaScript enabled.</p></noscript>
-<section id="setup" class="zsa-ir-workspace"><p class="zsa-eyebrow">The five-minute challenge</p><h2>How well do you know your ions?</h2><p class="intro">Choose from four answers. Practice the names, formulas, and charges of 23 common polyatomic ions.</p><div class="features"><span><strong>05:00</strong> on the clock</span><span><strong>4 choices</strong> every question</span><span><strong>Missed it?</strong> Try it again later</span></div><p class="zsa-ir-small">The timer starts when you begin and keeps running during feedback. Every incorrect answer counts, including repeat attempts. Your summary appears automatically at five minutes.</p><button class="zsa-btn zsa-btn--primary" id="start">Start quiz →</button><details><summary>View the 23 ions included</summary><div id="reference"></div><p class="zsa-ir-small">Includes the four handwritten additions. No metalloids or selected metal-ion charge table.</p></details></section>
+<section id="setup" class="zsa-ir-workspace"><p>Five-minute quiz · 23 ions · Four choices per question</p><button class="zsa-btn zsa-btn--primary" id="start">Start quiz →</button><details><summary>View the 23 ions included</summary><div id="reference"></div></details></section>
 <section id="play" hidden><div class="session"><span id="number"></span><div class="timer" role="timer" aria-label="Time remaining"><span aria-hidden="true">◷</span> <span id="time">5:00</span></div><span id="score"></span></div><progress id="meter" max="300" value="300" aria-label="Time remaining"></progress><div class="zsa-ir-workspace question"><p class="zsa-eyebrow" id="kind"></p><h2 id="prompt" tabindex="-1"></h2><div id="choices" class="choices"></div><div id="feedback" role="status" aria-live="polite"></div><div class="next-row"><span class="zsa-ir-small">Choose an answer or use keys 1-4.</span><button id="next" class="zsa-btn zsa-btn--primary" hidden>Next question →</button></div></div></section>
 <section id="results" class="zsa-ir-workspace" hidden><p class="zsa-eyebrow">Five minutes complete</p><h2 id="result-title" tabindex="-1">Here’s how you did</h2><div id="totals" class="totals"></div><p class="zsa-ir-small">Each answer is one attempt. Repeated incorrect answers count again. Unanswered questions do not count.</p><h3 class="review-title">Your most-missed ions</h3><div id="misses"></div><button id="restart" class="zsa-btn zsa-btn--primary">Try another five minutes →</button></section>
 <footer class="zsa-footer" data-zsa-chrome><strong>ZornScience</strong><span>Practice with purpose. Your answers stay in this tab.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer></main></body></html>

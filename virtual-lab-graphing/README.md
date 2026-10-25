@@ -1,6 +1,6 @@
 # Virtual Lab Graphing Tool
 
-Version: 1.1.0
+Version: 1.1.1
 
 An open-ended lab-report tool for the [Reading Graphs lesson](https://zornscience.org/science/quantitative-skills/graphs-and-change/reading-graphs/). Students enter their own x/y measurements, label variables and units, and download a graph. This tool uses the shared design tokens and embed shell; it does not use quiz rounds or issue completion codes.
 

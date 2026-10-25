@@ -1,6 +1,6 @@
 # Polyatomic Ion Trainer checks
 
-Version: 1.0.1
+Version: 1.0.2
 
 Run `node --test tests/unit/polyatomic-ion-trainer.test.js` and `npx playwright test tests/e2e/polyatomic-ion-trainer.spec.js`.
 

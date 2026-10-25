@@ -1,23 +1,18 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"><meta name="description" content="Explore the flame colors of eight metal salts and a mystery sample in the ZornScience virtual flame test lab."><title>Flame Test Lab • ZornScience</title><meta name="zsa-version" content="1.0.4"><link rel="icon" href="../favicon.png"><link rel="canonical" href="https://activities.zornscience.org/flame-test-lab/"><link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.4"><link rel="stylesheet" href="lab.css?v=1.0.4"><script src="../shared/zsa-embed.js?v=1.0.4" defer></script><script src="lab.js?v=1.0.4" defer></script><script src="instructions.js?v=1.0.4" defer></script><script src="share.js?v=1.0.4" defer></script></head><body>
-<main class="zsa flame-lab" data-zsa-activity="flame-test-lab"><header class="zsa-th-header">
-<div class="zsa-th-topline">
-<div class="zsa-th-identity">
-<a class="zsa-th-brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome>
-<img src="../ionic-reactions/zornscience-logo.png?v=1.0.4" alt="" width="52" height="50">
-</a>
-<div><p class="zsa-eyebrow brand-name">ZornScience</p><h1>Virtual Flame Test Lab</h1></div>
-</div>
-<nav class="zsa-th-header-tools" aria-label="Activity links">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"><meta name="description" content="Explore the flame colors of eight metal salts and a mystery sample in the ZornScience virtual flame test lab."><title>Virtual Flame Test Lab | ZornScience</title><meta name="zsa-version" content="1.0.5"><link rel="icon" href="../favicon.png" type="image/png"><link rel="canonical" href="https://activities.zornscience.org/flame-test-lab/"><link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.5"><link rel="stylesheet" href="lab.css?v=1.0.5"><script src="../shared/zsa-embed.js?v=1.0.5" defer></script><script src="lab.js?v=1.0.5" defer></script><script src="instructions.js?v=1.0.5" defer></script><script src="share.js?v=1.0.5" defer></script><link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.5"></head><body>
+<main class="zsa flame-lab" data-zsa-activity="flame-test-lab"><header data-zsa-header class="zsa-th-header">
+<div data-zsa-header-row class="zsa-th-topline">
+<div data-zsa-header-identity class="zsa-th-identity"><a data-zsa-header-brand class="zsa-th-brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome>
+<img src="../ionic-reactions/zornscience-logo.png?v=1.0.5" alt="" width="52" height="50">
+</a><h1>Virtual Flame Test Lab</h1></div>
+<nav data-zsa-header-tools class="zsa-th-header-tools" aria-label="Activity links">
 <div class="zsa-th-header-buttons">
 <button class="zsa-btn zsa-th-instructions-open" id="zsa-th-instructions-open" type="button" aria-haspopup="dialog" aria-controls="zsa-th-instructions">Instructions</button>
-<button class="zsa-btn zsa-th-share-toggle" id="zsa-th-share-toggle" type="button" aria-label="Share activity" aria-expanded="false" aria-controls="zsa-th-share-panel" data-zsa-chrome>
-<svg class="zsa-th-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg>
-<span>Share</span>
-</button>
+<button class="zsa-btn zsa-th-share-toggle" id="zsa-th-share-toggle" type="button" aria-label="Share activity" aria-expanded="false" aria-controls="zsa-th-share-panel" data-zsa-chrome><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button>
 
 </div>
 </nav>
 </div>
+
 
 <section class="zsa-th-share-panel" id="zsa-th-share-panel" aria-labelledby="zsa-th-share-title" data-zsa-chrome hidden>
 <div class="zsa-th-share-heading">
@@ -41,7 +36,7 @@
 </header>
 <div class="layout"><section class="workbench" aria-label="Virtual laboratory"><div class="bench-top"><span><i></i> LIVE EXPERIMENT</span><button id="clear">↺ Clear flame</button></div><div class="scene" id="dropzone" role="img" aria-label="Bunsen burner showing the flame color of the selected sample"><div class="tiles"></div><div class="scene-caption">THE OBSERVATION CHAMBER<small>Look closely. What do you notice?</small></div><div class="burner"><div class="glow"></div><div class="flame"><div class="flame-core"></div></div><div class="rim"></div><div class="tube"></div><div class="collar"></div><div class="valve"></div><div class="stem"></div><div class="base"></div></div><div class="loop" id="loop"><div></div></div><svg class="hose" viewBox="0 0 600 130" aria-hidden="true"><path d="M300 15 C390 10 360 110 480 95 S560 35 610 60" fill="none" stroke="#191d24" stroke-width="17"/><path d="M300 12 C390 7 360 107 480 92 S560 32 610 57" fill="none" stroke="#444650" stroke-width="3"/></svg><div class="bench-surface"></div></div><div class="readout" aria-live="polite"><span class="status-dot"></span><div><small id="sample-label">BUNSEN BURNER · READY</small><strong id="observation">A clean blue flame. Ready to explore?</strong></div><span id="color-chip"></span></div></section>
 <aside><section class="samples-panel"><div class="panel-heading"><div><h2>Your sample tray</h2></div><span id="progress">0 / 8 tested</span></div><p class="hint">Click or tap a sample to test it in the flame.</p><div id="samples" class="samples"></div><div class="unknown-row" id="unknown-row"></div><button id="new" class="text-button">↻ New investigation</button></section></aside></div>
-<footer><span>zornscience <b>•</b> Chemistry, brought to life.</span><span>Idealized flame colors · Real observations can vary</span></footer>
+<footer><span>ZornScience <b>•</b> Chemistry, brought to life.</span><span>Idealized flame colors · Real observations can vary</span></footer>
 <dialog class="zsa-th-instructions" id="zsa-th-instructions" aria-labelledby="zsa-th-instructions-title" aria-describedby="zsa-th-instructions-intro"><div class="zsa-th-instructions-heading"><h2 id="zsa-th-instructions-title">How to use this lab</h2><button class="zsa-th-icon-button" id="zsa-th-instructions-close" type="button" aria-label="Close instructions" autofocus>×</button></div><p id="zsa-th-instructions-intro">Click a sample to compare the characteristic flame colors of eight known metal salts and one unknown.</p><ol class="zsa-th-instructions-steps"><li><strong>Explore the known samples.</strong> Click or tap a sample bottle to place its sample in the flame. With a keyboard, focus a bottle and press Enter or Space.</li><li><strong>Observe and compare.</strong> Watch how the flame color changes. Click different samples to compare them. The virtual wire loop is automatically cleaned between tests.</li><li><strong>Investigate the unknown.</strong> Its identity is one of the eight known salts. Compare its flame color with the known samples. Use New investigation to start again with a randomly selected unknown.</li></ol><p>Heating excites atoms and ions in the sample. As electrons return to lower energy levels, they emit characteristic wavelengths of light. Flame tests provide clues; similar colors may need another method to confirm an identity.</p><p class="hint">This simulation uses separate, pure samples and idealized colors. Sodium contamination can mask other colors in a real lab. Follow your teacher’s safety instructions for physical experiments.</p></dialog>
 <div class="toast" id="toast" role="status"></div>
 </main></body></html>

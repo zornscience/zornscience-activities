@@ -1,5 +1,5 @@
 # Verification record
-Version: 1.4.0
+Version: 1.4.1
 Date: 2026-10-16
 Reviewer: Claude (integration review of ChatGPT's 1.0.0 package, then the 1.1.0 to 1.3.1 updates)
 

@@ -354,8 +354,8 @@ test("periodic trends: embed mode and local files only", async ({page, problems}
   await page.evaluate(() => document.fonts.ready);
   urls.forEach((u) => expect(u.startsWith("/"), "outside request " + u).toBe(true));
   var version = await page.locator('meta[name="zsa-version"]').getAttribute("content");
-  expect(version).toBe("1.1.0");
-  urls.filter((u) => /\.(css|js)/.test(u)).forEach((u) => expect(u).toMatch(/\?v=1\.1\.0$/));
+  expect(version).toMatch(/^\d+\.\d+\.\d+$/);
+  urls.filter((u) => /\.(css|js)/.test(u)).forEach((u) => expect(u).toMatch(new RegExp("\\?v=" + version.replace(/\./g, "\\.") + "$")));
   await expect(page.locator("main")).toHaveClass(/zsa--embedded/);
   for (var x of await page.locator("[data-zsa-chrome]").all()) await expect(x).toBeHidden();
   await expect(page.getByRole("heading", {level: 1})).toBeVisible();

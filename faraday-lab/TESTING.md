@@ -1,6 +1,6 @@
 # Verification
 
-Version: 1.0.0
+Version: 1.0.1
 
 Automated browser coverage: `tests/e2e/faraday-lab.spec.js`. Checks Instructions, sharing URL, pause/resume, copper drop completion, faster plastic completion, pole reversal, mobile overflow and runtime errors.
 

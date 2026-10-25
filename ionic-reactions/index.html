@@ -4,43 +4,38 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="3.4.0">
+<meta name="zsa-version" content="3.4.1">
 <meta name="description" content="Choose synthesis, decomposition, single replacement or double replacement practice, then predict products and balance equations, from ZornScience.">
 <title>Ionic Reaction Builder | ZornScience</title>
-<link rel="icon" href="zornscience-logo.png?v=3.4.0" type="image/png">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=3.4.0">
-<link rel="stylesheet" href="activity.css?v=3.4.0">
-<script src="../shared/zsa-embed.js?v=3.4.0" defer></script>
-<script src="data.js?v=3.4.0" defer></script>
-<script src="model.js?v=3.4.0" defer></script>
-<script src="share.js?v=3.4.0" defer></script>
-<script src="instructions.js?v=3.4.0" defer></script>
-<script src="fullscreen.js?v=3.4.0" defer></script>
-<script src="activity.js?v=3.4.0" defer></script>
-</head>
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=3.4.1">
+<link rel="stylesheet" href="activity.css?v=3.4.1">
+<script src="../shared/zsa-embed.js?v=3.4.1" defer></script>
+<script src="data.js?v=3.4.1" defer></script>
+<script src="model.js?v=3.4.1" defer></script>
+<script src="share.js?v=3.4.1" defer></script>
+<script src="instructions.js?v=3.4.1" defer></script>
+<script src="fullscreen.js?v=3.4.1" defer></script>
+<script src="activity.js?v=3.4.1" defer></script>
+<link rel="stylesheet" href="../shared/zsa-header.css?v=3.4.1"></head>
 <body>
 <main class="zsa zsa-ir" data-zsa-activity="ionic-reactions">
-<header class="zsa-ir-header">
-<div class="zsa-ir-topline">
-<div class="zsa-ir-identity">
-<a class="zsa-ir-brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome>
-<img src="zornscience-logo.png?v=3.4.0" alt="" width="52" height="50">
-</a>
-<h1>Ionic Reaction Builder</h1>
-</div>
-<nav class="zsa-ir-header-tools" aria-label="Activity links">
+<header data-zsa-header class="zsa-ir-header">
+<div data-zsa-header-row class="zsa-ir-topline">
+<div data-zsa-header-identity class="zsa-ir-identity"><a data-zsa-header-brand class="zsa-ir-brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome>
+<img src="zornscience-logo.png?v=3.4.1" alt="" width="52" height="50">
+</a><h1>Ionic Reaction Builder</h1></div>
+<nav data-zsa-header-tools class="zsa-ir-header-tools" aria-label="Activity links">
 <div class="zsa-ir-header-buttons">
 <button class="zsa-btn zsa-ir-instructions-open" id="zsa-ir-instructions-open" type="button" aria-haspopup="dialog" aria-controls="zsa-ir-instructions">Instructions</button>
-<button class="zsa-btn zsa-ir-share-toggle" id="zsa-ir-share-toggle" type="button" aria-label="Share activity" aria-expanded="false" aria-controls="zsa-ir-share-panel" data-zsa-chrome>
-<svg class="zsa-ir-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg>
-<span>Share</span>
-</button>
+<button class="zsa-btn zsa-ir-share-toggle" id="zsa-ir-share-toggle" type="button" aria-label="Share activity" aria-expanded="false" aria-controls="zsa-ir-share-panel" data-zsa-chrome><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button>
 <button class="zsa-ir-icon-button zsa-ir-fullscreen-toggle" id="zsa-ir-fullscreen-toggle" type="button" aria-label="Enter fullscreen" title="Enter fullscreen" aria-pressed="false" hidden>
 <svg class="zsa-ir-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path id="zsa-ir-fullscreen-icon" d="M8 3H3v5m13-5h5v5M3 16v5h5m8 0h5v-5"/></svg>
 </button>
 </div>
 </nav>
 </div>
+
 <p class="zsa-ir-small zsa-ir-fullscreen-status" id="zsa-ir-fullscreen-status" role="status" aria-live="polite" aria-atomic="true" hidden></p>
 <section class="zsa-ir-share-panel" id="zsa-ir-share-panel" aria-labelledby="zsa-ir-share-title" data-zsa-chrome hidden>
 <div class="zsa-ir-share-heading">
@@ -177,7 +172,7 @@
 </section>
 <p class="zsa-sr-only" id="zsa-ir-live" aria-live="polite" aria-atomic="true"></p>
 <footer class="zsa-footer" data-zsa-chrome>
-<span class="zsa-ir-footer-brand"><img src="zornscience-logo.png?v=3.4.0" alt="" width="27" height="26"><strong>ZornScience</strong></span>
+<span class="zsa-ir-footer-brand"><img src="zornscience-logo.png?v=3.4.1" alt="" width="27" height="26"><strong>ZornScience</strong></span>
 <span>Practice with purpose. Nothing you enter leaves this tab.</span>
 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
 </footer>

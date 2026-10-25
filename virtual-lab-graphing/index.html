@@ -4,22 +4,25 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.1.0">
+<meta name="zsa-version" content="1.1.1">
 <meta name="description" content="Turn your lab data into a scatter plot with a line of best fit. Label axes, explore slope, and download a graph for your lab write-up.">
 <title>Virtual Lab Graphing Tool | ZornScience</title>
 <link rel="canonical" href="https://activities.zornscience.org/virtual-lab-graphing/">
-<link rel="icon" href="../favicon.png?v=1.1.0" type="image/png">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.1.0">
-<link rel="stylesheet" href="graphing.css?v=1.1.0">
-<script src="model.js?v=1.1.0" defer></script>
-<script src="graphing.js?v=1.1.0" defer></script>
-<script src="../shared/zsa-embed.js?v=1.1.0" defer></script>
-</head>
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.1.1">
+<link rel="stylesheet" href="graphing.css?v=1.1.1">
+<script src="model.js?v=1.1.1" defer></script>
+<script src="graphing.js?v=1.1.1" defer></script>
+<script src="../shared/zsa-embed.js?v=1.1.1" defer></script>
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.1.1"></head>
 <body>
 <main class="zsa zsa-vlg" data-zsa-activity="virtual-lab-graphing">
-<header class="zsa-vlg-header">
-<div class="zsa-vlg-identity"><a class="zsa-vlg-brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png" width="38" height="37" alt=""></a><h1>Virtual Lab Graphing Tool</h1></div>
-<nav class="zsa-vlg-headertools" aria-label="Activity tools"><button class="zsa-btn" id="zsa-vlg-instructions" aria-haspopup="dialog" aria-controls="zsa-vlg-dialog">Instructions</button><button class="zsa-btn" id="zsa-vlg-share" aria-haspopup="dialog" aria-controls="zsa-vlg-dialog">Share</button><a href="https://zornscience.org/science/quantitative-skills/graphs-and-change/reading-graphs/" data-zsa-chrome>← Reading Graphs lesson</a></nav>
+<header data-zsa-header class="zsa-vlg-header">
+<div data-zsa-header-row>
+<div data-zsa-header-identity class="zsa-vlg-identity"><a data-zsa-header-brand class="zsa-vlg-brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png" width="38" height="37" alt=""></a><h1>Virtual Lab Graphing Tool</h1></div>
+<nav data-zsa-header-tools class="zsa-vlg-headertools" aria-label="Activity tools"><button class="zsa-btn" id="zsa-vlg-instructions" aria-haspopup="dialog" aria-controls="zsa-vlg-dialog">Instructions</button><button class="zsa-btn" id="zsa-vlg-share" aria-haspopup="dialog" aria-controls="zsa-vlg-dialog" data-zsa-chrome><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button></nav>
+</div>
+
 </header>
 <dialog class="zsa-vlg-dialog" id="zsa-vlg-dialog" aria-labelledby="zsa-vlg-dialog-title">
 <div class="zsa-vlg-dialoghead"><h2 id="zsa-vlg-dialog-title">Instructions</h2><button class="zsa-btn" id="zsa-vlg-close-dialog" aria-label="Close dialog">×</button></div>
@@ -64,7 +67,7 @@
 </div>
 <details class="zsa-vlg-guide"><summary>A little graphing help</summary><div class="zsa-vlg-guidegrid"><div><h3>Remember DRY MIX</h3><p>Dependent, Responding, Y-axis. Manipulated, Independent, X-axis. Put what you change on x and what you measure on y.</p></div><div><h3>Read the scale</h3><p>Each axis uses evenly spaced steps. The axes can use different step sizes. Including zero shows the origin; turning it off zooms in on the measured range.</p></div><div><h3>Explain the slope</h3><p>The slope is the change in y for one unit of x. Its units are y-units per x-unit. A negative slope means y tends to decrease as x increases.</p></div><div><h3>Take it with you</h3><p>PNG works in Google Docs and most lab reports. SVG stays sharp at any size. CSV saves your table for later. Downloads include only valid, complete data pairs.</p></div></div></details>
 <p class="zsa-sr-only" id="zsa-vlg-live" role="status" aria-live="polite"></p>
-<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><a href="../">All activities</a><a href="https://zornscience.org/science/quantitative-skills/graphs-and-change/reading-graphs/">Reading Graphs</a><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><a href="../">All activities</a><a href="https://zornscience.org/science/quantitative-skills/graphs-and-change/reading-graphs/">Reading Graphs</a><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><a href="https://zornscience.org/science/quantitative-skills/graphs-and-change/reading-graphs/" data-zsa-chrome>← Reading Graphs lesson</a></footer>
 </main>
 </body>
 </html>

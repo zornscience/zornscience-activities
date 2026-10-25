@@ -1,5 +1,5 @@
 # Stoichiometry Coach
-Version: 1.0.0
+Version: 1.0.1
 
 Practice for stoichiometry with dimensional analysis. Students read a problem, build a conversion setup from a bank of conversion factors (some with errors), watch the units cancel, then calculate and check a three significant figure answer. Guided practice gives feedback after each step; independent practice waits until the student checks.
 

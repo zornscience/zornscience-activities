@@ -1,5 +1,5 @@
 # Lewis Structure and VSEPR Builder
-Version: 1.1.0
+Version: 1.1.1
 
 ## Assumptions and departures
 - Claude hosts these static files and the lesson link is added on WordPress separately. This package makes no hosting or WordPress changes.

@@ -1,6 +1,6 @@
 # Calorimetry & Enthalpy Lab
 
-Version: 1.1.0
+Version: 1.1.1
 
 Standalone static lab at `calorimetry-lab/`. No runtime dependencies, accounts, tracking, storage or outside requests. Supports `?embed=1` via the existing embed helper.
 

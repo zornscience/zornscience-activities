@@ -4,26 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.0.0">
+<meta name="zsa-version" content="1.0.1">
 <meta name="description" content="Titrate strong and weak acids and bases with a virtual burette, pH meter and indicators, and connect the pH curve to the equivalence point and pKa, from ZornScience.">
 <title>Virtual Titration Simulator | ZornScience</title>
-<link rel="icon" href="data:,">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
-<link rel="stylesheet" href="lab.css?v=1.0.0">
-<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
-<script src="chem.js?v=1.0.0" defer></script>
-<script src="lab.js?v=1.0.0" defer></script>
-</head>
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.1">
+<link rel="stylesheet" href="lab.css?v=1.0.1">
+<script src="../shared/zsa-embed.js?v=1.0.1" defer></script>
+<script src="chem.js?v=1.0.1" defer></script>
+<script src="lab.js?v=1.0.1" defer></script>
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.1"><script src="../shared/zsa-header.js?v=1.0.1" defer></script></head>
 <body>
 <main class="zsa zsa-ti" data-zsa-activity="titration-lab">
-<header class="zsa-ti-header">
-<div class="zsa-ti-topline" data-zsa-chrome>
-<a class="zsa-back" id="zsa-ti-back" href="https://zornscience.org/science/ap-chemistry/">← Back to the lesson</a>
-<p class="zsa-eyebrow">AP Chemistry · Acids and Bases</p>
+<header data-zsa-header class="zsa-ti-header">
+<div data-zsa-header-row>
+<div data-zsa-header-identity><a data-zsa-header-brand href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png" width="34" height="33" alt=""></a><h1>Virtual Titration Simulator</h1></div>
+<nav data-zsa-header-tools aria-label="Activity tools"><div><button class="zsa-btn" type="button" data-zsa-dialog-open="zsa-header-instructions" aria-haspopup="dialog" aria-controls="zsa-header-instructions">Instructions</button><button class="zsa-btn" type="button" data-zsa-chrome data-zsa-dialog-open="zsa-header-share" aria-label="Share activity" aria-haspopup="dialog" aria-controls="zsa-header-share"><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button></div></nav>
 </div>
-<h1>Virtual Titration Simulator</h1>
-<p class="zsa-ti-lede">Choose an analyte, a titrant and an indicator. Open the stopcock, watch the pH curve grow, and find the equivalence point and the pKa from your own data.</p>
-</header>
+</header><dialog class="zsa-header-dialog" id="zsa-header-instructions" aria-labelledby="zsa-header-instructions-title"><div class="zsa-header-dialog-heading"><h2 id="zsa-header-instructions-title">Instructions</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close instructions" autofocus>Close</button></div><p class="zsa-ti-lede">Choose an analyte, a titrant and an indicator. Open the stopcock, watch the pH curve grow, and find the equivalence point and the pKa from your own data.</p><ol><li>Choose an analyte, titrant, and indicator.</li><li>Add titrant with the stopcock while watching the solution and pH curve.</li><li>Find the equivalence point and, for a weak acid or base, use the curve to investigate pKa.</li></ol></dialog><dialog class="zsa-header-dialog" id="zsa-header-share" aria-labelledby="zsa-header-share-title"><div class="zsa-header-dialog-heading"><h2 id="zsa-header-share-title">Share this activity</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close share options" autofocus>Close</button></div><p>Share a fresh activity. Your answers and experiment data are not included.</p><label for="zsa-header-share-url">Share link</label><div class="zsa-header-share-link"><input id="zsa-header-share-url" type="text" readonly spellcheck="false"><button class="zsa-btn" type="button" data-zsa-share-copy>Copy link</button></div><a data-zsa-share-email href="#">Email</a><p data-zsa-share-status role="status" aria-live="polite"></p></dialog>
 <noscript><p class="zsa-panel">This simulator needs JavaScript. Enable it to run the titration and draw the curve.</p></noscript>
 <div class="zsa-ti-toolbar">
 <p class="zsa-ti-small zsa-ti-toolbar-note">25 °C, monoprotic acids and bases. One drop is 0.05 mL.</p>
@@ -131,7 +129,7 @@
 </div>
 </div>
 <p class="zsa-sr-only" id="zsa-ti-live" aria-live="polite" aria-atomic="true"></p>
-<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Titrate. Graph. Explain. Nothing you enter leaves this tab.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Titrate. Graph. Explain. Nothing you enter leaves this tab.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><a data-zsa-chrome class="zsa-back" id="zsa-ti-back" href="https://zornscience.org/science/ap-chemistry/">← Back to the lesson</a></footer>
 </main>
 </body>
 </html>

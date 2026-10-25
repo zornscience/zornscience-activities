@@ -1,5 +1,5 @@
 # Physics Graphing Lab
-Version: 1.0.0
+Version: 1.0.1
 
 A lab for one-dimensional motion with constant acceleration. A cart moves along a labeled track for 10 seconds while its position, velocity and acceleration graphs grow together. Students explore the model, or sketch their own predictions first and then reveal and compare. The page ends with an explanation prompt that prints with the graphs.
 

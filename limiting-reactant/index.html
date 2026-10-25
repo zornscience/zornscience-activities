@@ -4,26 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.0.0">
+<meta name="zsa-version" content="1.0.1">
 <meta name="description" content="Pick starting moles of two reactants, watch the molecules pair up into products, and see the excess reactant left stranded when the limiting reactant runs out, from ZornScience.">
 <title>Limiting Reactant Visualizer | ZornScience</title>
-<link rel="icon" href="data:,">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
-<link rel="stylesheet" href="lab.css?v=1.0.0">
-<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
-<script src="model.js?v=1.0.0" defer></script>
-<script src="lab.js?v=1.0.0" defer></script>
-</head>
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.1">
+<link rel="stylesheet" href="lab.css?v=1.0.1">
+<script src="../shared/zsa-embed.js?v=1.0.1" defer></script>
+<script src="model.js?v=1.0.1" defer></script>
+<script src="lab.js?v=1.0.1" defer></script>
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.1"><script src="../shared/zsa-header.js?v=1.0.1" defer></script></head>
 <body>
 <main class="zsa zsa-lr" data-zsa-activity="limiting-reactant">
-<header class="zsa-lr-header">
-<div class="zsa-lr-topline" data-zsa-chrome>
-<a class="zsa-back" id="zsa-lr-back" href="https://zornscience.org/science/chemistry/unit-6-stoichiometry/">← Back to the lesson</a>
-<p class="zsa-eyebrow">Chemistry · Stoichiometry</p>
+<header data-zsa-header class="zsa-lr-header">
+<div data-zsa-header-row>
+<div data-zsa-header-identity><a data-zsa-header-brand href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png" width="34" height="33" alt=""></a><h1>Limiting Reactant Visualizer</h1></div>
+<nav data-zsa-header-tools aria-label="Activity tools"><div><button class="zsa-btn" type="button" data-zsa-dialog-open="zsa-header-instructions" aria-haspopup="dialog" aria-controls="zsa-header-instructions">Instructions</button><button class="zsa-btn" type="button" data-zsa-chrome data-zsa-dialog-open="zsa-header-share" aria-label="Share activity" aria-haspopup="dialog" aria-controls="zsa-header-share"><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button></div></nav>
 </div>
-<h1>Limiting Reactant Visualizer</h1>
-<p class="zsa-lr-lede">Choose how many moles of each reactant to start with, predict which one runs out, then watch the molecules pair up into products. Whatever is left over has nothing to react with.</p>
-</header>
+</header><dialog class="zsa-header-dialog" id="zsa-header-instructions" aria-labelledby="zsa-header-instructions-title"><div class="zsa-header-dialog-heading"><h2 id="zsa-header-instructions-title">Instructions</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close instructions" autofocus>Close</button></div><p class="zsa-lr-lede">Choose how many moles of each reactant to start with, predict which one runs out, then watch the molecules pair up into products. Whatever is left over has nothing to react with.</p><ol><li>Choose the reaction and starting amounts, then predict the limiting reactant.</li><li>Run the reaction and compare the particles with the before, change, and after table.</li><li>Identify the excess reactant and explain what limits the amount of product.</li></ol></dialog><dialog class="zsa-header-dialog" id="zsa-header-share" aria-labelledby="zsa-header-share-title"><div class="zsa-header-dialog-heading"><h2 id="zsa-header-share-title">Share this activity</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close share options" autofocus>Close</button></div><p>Share a fresh activity. Your answers and experiment data are not included.</p><label for="zsa-header-share-url">Share link</label><div class="zsa-header-share-link"><input id="zsa-header-share-url" type="text" readonly spellcheck="false"><button class="zsa-btn" type="button" data-zsa-share-copy>Copy link</button></div><a data-zsa-share-email href="#">Email</a><p data-zsa-share-status role="status" aria-live="polite"></p></dialog>
 <noscript><p class="zsa-panel">This visualizer needs JavaScript. Enable it to see the molecules react.</p></noscript>
 <div class="zsa-lr-toolbar">
 <p class="zsa-lr-small zsa-lr-toolbar-note" id="zsa-lr-scale"></p>
@@ -129,7 +127,7 @@
 </div>
 </div>
 <p class="zsa-sr-only" id="zsa-lr-live" aria-live="polite" aria-atomic="true"></p>
-<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Predict. React. Explain. Nothing you enter leaves this tab.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></footer>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Predict. React. Explain. Nothing you enter leaves this tab.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><a data-zsa-chrome class="zsa-back" id="zsa-lr-back" href="https://zornscience.org/science/chemistry/unit-6-stoichiometry/">← Back to the lesson</a></footer>
 </main>
 </body>
 </html>

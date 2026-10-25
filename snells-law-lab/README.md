@@ -1,5 +1,5 @@
 # Snell’s Law & Refraction
-Version: 1.0.0
+Version: 1.0.1
 
 A buildless, browser-local optical bench using the same ZornScience branding and header controls as Metals Lab. Published at https://activities.zornscience.org/snells-law-lab/.
 

@@ -1,5 +1,5 @@
 # Predicting Ion Charge Trainer
-Version: 1.4.0
+Version: 1.4.1
 
 ## Assumptions and departures
 - Claude will host these static files and add the WordPress link. This package makes no hosting or WordPress changes.

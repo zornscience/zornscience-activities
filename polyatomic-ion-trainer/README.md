@@ -1,6 +1,6 @@
 # Polyatomic Ion Trainer
 
-Version: 1.0.1
+Version: 1.0.2
 
 Five minutes of randomized four-choice questions about names, complete ionic formulas and charges. Includes the 19 printed common polyatomic ions plus handwritten borate, dichromate, perchlorate and phosphite. Excludes the metalloids and selected metal charge table. The sheet's dimercury(I) is Hg2 with a total 2+ charge; phosphite follows the provided classroom sheet as PO3 3−.
 

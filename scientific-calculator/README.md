@@ -1,6 +1,6 @@
 # Scientific Calculator Practice
 
-Version: 1.1.0
+Version: 1.1.1
 Independent browser-local scientific calculator practice tool. Files are served directly from this folder by GitHub Pages. No accounts, analytics, server calculations, or external runtime dependencies.
 
 Includes reference keypad placement, arithmetic with precedence and implicit multiplication, mixed fractions, powers and roots, logs, inverse and hyperbolic trigonometry, angle units and DMS, probability, 5 memory variables, scientific and engineering notation, fixed decimals, statistics and linear regression, coordinate conversion, history, keyboard input and six guided lessons.

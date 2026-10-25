@@ -1,3 +1,3 @@
-Version: 1.0.3
+Version: 1.0.4
 
 Validation: all 22 existing unit-test files pass, including site-wide static checks. The dedicated gravimetric-lab browser test covers the full 23-step sequence for the unknown, precipitation and filtration states, constant mass, Instructions focus and Escape, Share URL, reload during heating, and 390 px mobile overflow. The balance readings are 18.642 g empty crucible, 20.642 g crucible + dry sample, and 0.598 g dry paper. Sodium paper + solid: 2.519, 2.487, 2.487 g; potassium: 2.078, 2.046, 2.046 g. No editable data inputs. Chromium visual checks and axe accessibility scan are also performed. Full existing browser suite was not rerun because shared code and existing activities are unchanged.

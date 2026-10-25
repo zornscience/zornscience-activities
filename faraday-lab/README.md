@@ -1,6 +1,6 @@
 # Faraday’s Law · Magnet Drop
 
-Version: 1.0.0
+Version: 1.0.1
 
 Version 1.0.0. Static HTML, CSS and Canvas; all assets are local. No accounts, network requests, storage, or student data entry.
 

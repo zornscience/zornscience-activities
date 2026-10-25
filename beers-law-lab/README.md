@@ -1,5 +1,5 @@
 # Beer's Law Spectrophotometer Lab
-Version: 1.0.0
+Version: 1.0.1
 
 A spectrophotometry lab for Chemistry and AP Chemistry (Beer's law, Beer-Lambert law). Students zero a spectrophotometer with a blank, choose the concentrations of their own standards and measure each one to build a calibration curve, then measure an unknown of the same solution and calculate its concentration. They check their answer, or show it, and can take a new unknown, which has a different random concentration each time. The page shows a mock-up of the spectrophotometer, with a cutaway of the light path (lamp, grating, the selected wavelength, the cuvette and the light that gets through to the detector), a calibration curve with every standard, the best-fit line and the unknown's absorbance, and a data table.
 

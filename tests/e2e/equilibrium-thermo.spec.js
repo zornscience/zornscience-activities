@@ -4,7 +4,7 @@ const fs=require('node:fs/promises');
 
 async function checkHeader(page,slug,title){
   await expect(page.getByRole('heading',{level:1,name:title})).toBeVisible();
-  await expect(page.locator('.brand-name')).toHaveText('ZornScience');
+  await expect(page.locator('[data-zsa-header-brand]')).toHaveAttribute('aria-label','ZornScience home');
   await expect(page.getByRole('link',{name:'ZornScience home'})).toBeVisible();
   expect(await page.locator('.zsa-th-brand img').evaluate(img=>img.complete&&img.naturalWidth>0)).toBeTruthy();
   const instructions=page.getByRole('button',{name:'Instructions',exact:true});

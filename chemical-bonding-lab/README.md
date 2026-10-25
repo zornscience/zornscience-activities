@@ -1,6 +1,6 @@
 # Chemical Bonding Lab
 
-Version: 1.0.0
+Version: 1.0.1
 
 A static, browser-local simulation of the six tests in the supplied U3 & U4 Summative Lab: Chemical Bonding. Students operate equipment and compare four anonymous solids. There are no student response fields, data tables, scores, saved observations, accounts, storage, or network requests. The only text field is a read-only activity sharing link.
 

@@ -1,5 +1,5 @@
 # Collision Carts
-Version: 1.0.2
+Version: 1.0.3
 
 Ideal one-dimensional two-cart simulation. Adjustable total masses and signed initial velocities; elastic magnetic bumpers or perfectly inelastic hook-and-loop coupling. Live velocity and momentum overlays, pause, frame stepping, slow motion, four presets, instructions and sharing. No student data recording or storage.
 

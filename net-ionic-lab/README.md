@@ -8,7 +8,7 @@ Solutions use the concentrations specified in the source lab: 1 M sodium chlorid
 
 Validation: JavaScript syntax check; Chromium interaction checks for all ten mixtures, resets, five settling states, dialogs and mobile overflow. Existing shared code is unchanged.
 
-Version: 1.0.5
+Version: 1.0.6
 
 The beaker starts empty. Both solutions pour sequentially in 10 mL portions, with volume-driven liquid height, mouth-connected streams, bottle tilt and horizontal liquid surfaces. The zinc trial adds 10 mL lead nitrate before lowering the metal strip. Reduced motion uses static sequential additions. Reset and switching trials cancel pending frames.
 

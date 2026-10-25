@@ -71,6 +71,8 @@ test("gas lab: the container, every control and the pressure readout fit without
   for (var [w, h] of [[1366, 657], [390, 664]]) {
     await page.setViewportSize({width: w, height: h});
     await go(page);
+    // Include the pressure sampling note rather than only the initial readout.
+    await expect(page.locator('#zsa-gl-p-note')).toContainText('wall hits');
     var boxes = await page.evaluate(() => ["zsa-gl-canvas", "zsa-gl-gauge", "zsa-gl-p-atm", "zsa-gl-mode", "zsa-gl-mix", "zsa-gl-gas0", "zsa-gl-n0", "zsa-gl-n0-num",
       "zsa-gl-V", "zsa-gl-V-num", "zsa-gl-T", "zsa-gl-T-num", "zsa-gl-hold", "zsa-gl-playpause", "zsa-gl-step"].map(function (id) {
       var r = document.getElementById(id).getBoundingClientRect();

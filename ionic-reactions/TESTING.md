@@ -1,6 +1,6 @@
 # Ionic Reaction Builder checks
 
-Version: 3.4.0
+Version: 3.4.1
 
 `node --test tests/unit/ionic-reactions.test.js` verifies all 40 independently pinned reaction equations, elemental counts, smallest coefficients, ionic and elemental species, product-order permutations, invalid coefficients and round sampling. It checks all 15 nonempty combinations of the four allowed reaction types, unique questions and fair distribution, and the polyatomic-ion restrictions for each family. Chemistry checks require ionic compounds, valid ion charges, conserved polyatomic anions in single replacement, and a coefficient change in every equation. They also check product-subscript variety and reduced nitrate repetition.
 

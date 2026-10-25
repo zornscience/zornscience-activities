@@ -3,6 +3,8 @@
 ```
 shared/
   zsa-base.css        design tokens and base components (scoped to .zsa)
+  zsa-header.css      opt-in compact activity headers; excludes ACT and Periodic Table
+  zsa-header.js       accessible Instructions and Share dialogs for activities without their own
   zsa-activity.css    activity layout and every engine component (load after zsa-base.css)
   zsa-embed.js        ?embed=1 mode and zsa:resize messages
   zsa-engine.js       the activity engine
@@ -11,6 +13,12 @@ shared/
 ```
 
 The engine runs everything the activities have in common. A new activity is mostly a data file plus a small script with its steps and misconception rules. The Ion Charge Trainer runs on it (the retired Ionic Formula Builder did too). A working example is in [`templates/starter/`](../templates/starter/).
+
+## Activity headers
+
+Non-ACT activities other than Periodic Table load `zsa-header.css` after their activity styles. Use `data-zsa-header` on the header, `data-zsa-header-row` on its flex row, `data-zsa-header-identity` on the logo/title group, `data-zsa-header-brand` on the home link, and `data-zsa-header-tools` on the controls. The shared styles set a 44px logo frame, 34px logo image, Inter title, and 44px Instructions and Share buttons. Phone layouts wrap the controls beneath the title. Keep activity-specific IDs and classes for existing event handlers and fullscreen behavior.
+
+Keep explanations inside Instructions, lesson links in the footer, and functional controls and equations in the workspace. Do not add an intro banner or a second brand-name line above the title. Activities without existing dialog handlers can load `zsa-header.js` and use `data-zsa-dialog-open` with a dialog ID and `data-zsa-dialog-close` on its close button. Native dialogs support Escape, contain keyboard focus, and return focus to the opener. The shared Share dialog copies a clean activity URL and provides an email link without including student state.
 
 ## What the engine does
 

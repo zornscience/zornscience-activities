@@ -8,4 +8,4 @@ Use the controls or drag the hanger. Keyboard: focus hanger, arrow keys displace
 
 Version 1.0.1. Shared branding and top controls adapted from Metals Lab.
 
-Version: 1.0.1
+Version: 1.0.2

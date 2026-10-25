@@ -1,6 +1,6 @@
 # Metals, Nonmetals & Metalloids Lab
 
-Version: 1.0.1
+Version: 1.0.2
 
 Standalone, buildless simulation of the four tests in the supplied Unit 1 lab. The PDF's pre-lab questions, graded prompts, data tables, and post-lab response fields are deliberately excluded. Header branding, Instructions dialog, canonical Share link, email, device sharing, clipboard fallback, and embed behavior follow the Equilibrium Sandbox. Homepage route: `/metals-lab/`.
 

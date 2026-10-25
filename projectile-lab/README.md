@@ -1,5 +1,5 @@
 # Projectile Motion Vector Lab
-Version: 1.0.0
+Version: 1.0.1
 
 A 2D dynamics lab for Physics. A cannon fires a ball from a launch height, angle and speed that students choose. The key feature is the vectors: students turn on live velocity, velocity component (vx and vy) and acceleration arrows on the ball, and can leave snapshots along the path. As the ball arcs, the vx arrow stays the same while the vy arrow shrinks, flips at the top and grows, and the acceleration arrow points down the whole time. A velocity components graph draws itself during the flight, results appear on landing, five questions check the main ideas, and a reflection prints with the lab.
 

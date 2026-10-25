@@ -1,5 +1,5 @@
 # Kinetics and Collision Theory Sandbox
-Version: 1.0.0
+Version: 1.0.1
 
 A collision theory lab for AP Chemistry (Unit 5, Kinetics). A 2D box holds reactant particles A and B that bounce off each other and the walls. When an A hits a B hard enough, they react: A + B → C + D. Students change the temperature (how fast the particles move), the concentration (how many start in the box) and the activation energy, and can add a catalyst. They watch the collisions per second, the successful collisions per second and the success rate, a live concentration vs. time graph, and two energy charts (an energy profile and the distribution of collision energies with the share above Ea shaded). Earlier runs stay on the graph for comparison, four questions check the main ideas, and a reflection prints with the lab.
 

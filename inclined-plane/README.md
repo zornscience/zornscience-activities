@@ -1,6 +1,6 @@
 # Inclined Plane & Friction
 
-Version: 1.0.0
+Version: 1.0.1
 
  Buildless, browser-local ramp simulation. Open index.html through a static server. Uses the shared ZornScience font, branding and embed behavior. No storage or data recording.
 

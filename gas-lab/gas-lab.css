@@ -160,3 +160,17 @@
   .zsa-gl-gauge-value {font-size:17px;}
   .zsa-gl-row {grid-template-columns:56px minmax(0,1fr) 64px 24px;}
 }
+
+/* Keep the container and controls on screen with the compact branded header.
+   The gauge leaves room for Pause and Step beside the container on phones. */
+@media(max-width:599px) {
+  .zsa-gl-stage {display:grid;grid-template-columns:minmax(0,1fr) 136px;column-gap:6px;align-items:start;}
+  .zsa-gl-stage .zsa-gl-box {display:contents;}
+  .zsa-gl-stage .zsa-gl-canvas {grid-column:1;grid-row:1 / span 2;}
+  .zsa-gl-stage .zsa-gl-gauge {grid-column:2;grid-row:1;}
+  .zsa-gl-stage .zsa-gl-play {grid-column:2;grid-row:2;align-self:start;gap:4px;margin-top:4px;}
+  .zsa-gl-stage .zsa-gl-play .zsa-btn {min-width:44px;min-height:44px;padding:8px 6px;font-size:13px;line-height:1.35;}
+  .zsa-gl-stage .zsa-gl-play-note {flex-basis:100%;font-size:12px;}
+  .zsa-gl-stage .zsa-gl-play-note:empty {display:none;}
+}
+@media(max-width:359px) {.zsa-gl-stage {grid-template-columns:minmax(0,1fr) 104px;}}
