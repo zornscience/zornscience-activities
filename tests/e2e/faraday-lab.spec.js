@@ -26,3 +26,37 @@ test('magnet drop runs, pauses, compares insulator and shares the activity',asyn
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   expect(errors).toEqual([]);
 });
+
+test('replay connects flux, current reversal and unchanged fall time after pole reversal',async({page})=>{
+  await page.goto('/faraday-lab/');
+  await expect(page.locator('#currents')).not.toBeChecked();
+  await expect(page.locator('#replay')).toBeDisabled();
+  await page.locator('#explain-view').click();
+  await expect(page.locator('#currents')).toBeChecked();
+  await expect(page.locator('#flux-description')).toContainText('held still');
+  await page.locator('#release').click();
+  await page.locator('#replay').fill('450');
+  await expect(page.locator('#state')).toContainText('PAUSED');
+  await expect(page.locator('#flux-description')).toContainText('increasing');
+  await expect(page.locator('#flux-description')).toContainText('counterclockwise');
+  const original=await page.locator('#replay-time').textContent();
+  await page.locator('#replay').fill('750');
+  await expect(page.locator('#flux-description')).toContainText('decreasing');
+  await expect(page.locator('#flux-description')).toContainText('clockwise');
+  await page.locator('#try-poles').click();
+  await page.locator('#release').click();
+  await page.locator('#replay').fill('450');
+  await expect(page.locator('#replay-time')).toHaveText(original);
+  await expect(page.locator('#flux-description')).toContainText('current is clockwise');
+  await page.locator('#material').selectOption('plastic');
+  await page.locator('#release').click();
+  await page.locator('#replay').fill('500');
+  await expect(page.locator('#flux-description')).toContainText('no eddy current');
+  await page.locator('#try-slot').click();
+  await page.locator('#release').click();
+  await page.locator('#replay').fill('500');
+  await expect(page.locator('#flux-description')).toContainText('slot interrupts');
+  await page.locator('#observe-view').click();
+  await expect(page.locator('#flux-panel')).toBeHidden();
+  await expect(page.locator('#forces')).not.toBeChecked();
+});
