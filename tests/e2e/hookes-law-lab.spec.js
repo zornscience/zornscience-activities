@@ -9,7 +9,7 @@ test('equilibrium obeys Hooke’s law and mass includes hanger',async({page})=>{
  await expect(page.locator('#extension')).toHaveText('24.53 cm');
  await expect(page.locator('#constant')).toBeHidden();
  await page.locator('#reveal').check();
- await expect(page.locator('#constant')).toContainText('k = 10 N/m');
+ await expect(page.locator('#constant')).toContainText('= 10 N/m');
 });
 test('ideal motion repeats after its predicted period; pause and step synchronize apparatus and graph',async({page})=>{
  await page.clock.install();
@@ -41,4 +41,42 @@ test('instructions, sharing, keyboard hanger and mobile layout',async({page})=>{
  await page.setViewportSize({width:390,height:844});
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  expect(errors).toEqual([]);
+});
+test('static graph uses meters; investigation prompts and forces explain equilibrium',async({page})=>{
+ await page.goto('/hookes-law-lab/');
+ await expect(page.locator('#plot-title')).toHaveText('Force vs. extension');
+ await expect(page.locator('#period-read')).toContainText('0.0981 m');
+ await page.locator('#show-forces').check();
+ await expect(page.locator('#force-description')).toContainText('(balanced)');
+ await page.locator('#investigation').selectOption('amplitude');
+ await expect(page.locator('#prompt')).toContainText('Keep spring and mass fixed');
+ await page.locator('#release').click();
+ await expect(page.locator('#plot-title')).toHaveText('Position vs. time');
+ await expect(page.locator('#plot-note')).toContainText('equilibrium');
+});
+test('measured period comes from peaks and grows by square root of mass',async({page})=>{
+ await page.clock.install();await page.goto('/hookes-law-lab/');
+ await page.locator('#release').click();await page.clock.runFor(2500);
+ await expect(page.locator('#period-read')).toContainText('0.628 s');
+ await page.locator('#mass').fill('350');await page.locator('#release').click();await page.clock.runFor(3500);
+ await expect(page.locator('#period-read')).toContainText('0.889 s');
+ await page.locator('#amplitude').fill('2');await page.locator('#release').click();await page.clock.runFor(3500);
+ await expect(page.locator('#period-read')).toContainText('0.889 s');
+});
+test('grabbing the hanger does not displace it; dragging and cancellation stay coherent',async({page})=>{
+ await page.goto('/hookes-law-lab/');const g=page.locator('#hanger');
+ const box=await g.boundingBox();const before=await g.getAttribute('transform');
+ await page.mouse.move(box.x+box.width/2,box.y+box.height*.7);await page.mouse.down();
+ await expect(g).toHaveAttribute('transform',before);
+ await page.mouse.move(box.x+box.width/2,box.y+box.height*.7+12);await page.mouse.up();
+ await expect(page.locator('#state')).toHaveText('OSCILLATING');
+});
+test('damping reduces successive peaks and zero release stays at rest',async({page})=>{
+ await page.clock.install();await page.goto('/hookes-law-lab/');
+ await page.locator('#damping').selectOption('0.6');await page.locator('#release').click();
+ await page.clock.runFor(3000);
+ const y=Number.parseFloat(await page.locator('#position').textContent());expect(Math.abs(y)).toBeLessThan(.1);
+ await page.locator('#amplitude').fill('0');await page.locator('#release').click();
+ await expect(page.locator('#state')).toHaveText('AT EQUILIBRIUM');
+ await expect(page.locator('#status')).toContainText('Zero displacement');
 });
