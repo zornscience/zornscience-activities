@@ -1,0 +1,13 @@
+'use strict';
+const {test,expect}=require('@playwright/test');
+test('guided explorations reveal the two zero misconceptions accurately',async({page})=>{
+ await page.goto('/equipotential-lab/');await page.locator('#investigation').selectOption('dipole');await expect(page.locator('#explanation')).toBeHidden();await expect(page.locator('#local-vector')).not.toBeChecked();await expect(page.locator('#voltage')).toHaveText('0.00');await expect(page.locator('#field-value')).toContainText('179.8');await page.locator('#reveal').click();await expect(page.locator('#explanation')).toContainText('V = 0 does not imply E = 0');await expect(page.locator('#local-vector')).toBeChecked();
+ await page.locator('#investigation').selectOption('like');await expect(page.locator('#voltage')).toHaveText('17.98');await expect(page.locator('#field-value')).toContainText('0.0 V/m');await page.locator('#reveal').click();await expect(page.locator('#explanation')).toContainText('E = 0 does not imply V = 0');
+});
+test('distance and equipotential tasks remain explorable and custom edits clear guidance',async({page})=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.goto('/equipotential-lab/');await page.locator('#investigation').selectOption('distance');await expect(page.locator('#voltage')).toHaveText('5.99');await page.locator('#reveal').click();await expect(page.locator('#explanation')).toContainText('quadruples');
+ await page.locator('#investigation').selectOption('along');await page.locator('#reveal').click();await expect(page.locator('#probe-contour')).toBeChecked();await page.locator('#probe').focus();await page.keyboard.press('ArrowUp');await expect(page.locator('#investigation')).toHaveValue('along');await page.locator('.field-charge').first().focus();await page.keyboard.press('ArrowLeft');await expect(page.locator('#investigation')).toHaveValue('free');await expect(page.locator('#inquiry-content')).toBeHidden();expect(errors).toEqual([]);
+});
+test('exploration controls precede apparatus on phones and overlays run without errors',async({page})=>{
+ await page.setViewportSize({width:390,height:844});await page.goto('/equipotential-lab/');const inquiry=await page.locator('.inquiry').boundingBox(),bench=await page.locator('.field-bench').boundingBox();expect(inquiry.y).toBeLessThan(bench.y);await page.locator('#investigation').selectOption('along');await page.locator('#reveal').click();await page.locator('#probe').focus();await page.keyboard.press('ArrowRight');expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+});
