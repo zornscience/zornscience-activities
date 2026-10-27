@@ -8,3 +8,11 @@ Choose a rectangular block for two-interface refraction or a semicircular block 
 Materials: air, water, acrylic, glass, diamond, and custom indices from 1 to 3. A fixed red laser uses approximate refractive indices; water represents an ideal cell with negligible walls. See the page’s model note for assumptions. No student records, persistence, data submission or network requests.
 
 Run `node --test tests/unit/snells-law.test.js` and `npx playwright test tests/e2e/snells-law.spec.js` from the repository root. No build step or new runtime dependencies.
+
+## Learning design (v1.1)
+
+- Measure incidence and refraction from the normal; contrast this with measuring from the surface.
+- Predict refraction when changing only refractive index, and use matching indices as a counterexample to "every boundary bends light".
+- Explain the two conditions for total internal reflection: decreasing refractive index and incidence beyond the critical angle.
+
+Optional investigations set controlled starting points and use prediction/observation prompts without grading, forced completion or student response fields. Show measurements can hide calculated refraction and critical angles while retaining the protractor. Numerical Snell’s-law substitution is disclosed on demand. Direction arrows, dashed reflection, explicit n₁/n₂ labels and a ray key connect the visual and mathematical representations. Below/above-critical controls hold materials fixed. A mobile-first bench order, adjacent aiming controls and entry-point zoom make the apparatus usable on phones. Free exploration remains available throughout.
