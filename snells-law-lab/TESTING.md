@@ -5,3 +5,5 @@ Version: 1.0.1
 - Browser tests exercise geometry changes, materials, custom indices, the exact critical-angle preset, power and reset, keyboard aiming, laser dragging, protractor snapping and visibility, normal visibility, Instructions/Escape/focus return, Share URL, and 390/320 px page fit.
 - An axe scan checks for serious and critical accessibility issues.
 - Manual visual review checks the optical breadboard, machined laser housing, transparent block and degree markings. SVG scales to the available width and pointer positions use SVG coordinate transforms.
+
+Version 1.1 adds browser checks for investigation presets, withheld numerical answers (including the SVG accessible description), live Snell’s-law substitution, fixed-angle material comparisons, below/above-critical transitions, reset, entry-point zoom, and bench-before-settings mobile order. Existing physics and accessibility checks remain in place.
