@@ -30,3 +30,27 @@ test('header tools and narrow layout',async({page})=>{
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
  await expect(page.locator('.intro')).toHaveCount(0);
 });
+test('guided exploration distinguishes transverse motion and valid wavelength measurements',async({page})=>{
+ await page.goto('/standing-waves-lab/');
+ await page.locator('[data-task="measure"]').click();await expect(page.locator('#task-prompt')).toContainText('half');
+ await expect(page.locator('#snap-nodes')).toBeDisabled();
+ await page.locator('#power').click();await page.locator('[data-harmonic="3"]').click();
+ await page.locator('#strobe').click();await page.locator('#track').check();
+ const point=page.locator('#particle-dot'),x=await point.getAttribute('cx'),y=await point.getAttribute('cy');
+ await page.locator('#phase').fill('0');expect(await point.getAttribute('cx')).toBe(x);expect(await point.getAttribute('cy')).not.toBe(y);
+ await page.locator('#snap-nodes').click();await expect(page.locator('#measurement-feedback')).toContainText('0.800 m');
+ await page.locator('#cursor-b').fill('0.3');await expect(page.locator('#measurement-feedback')).not.toContainText('Your measured wavelength');
+ await page.locator('#frequency-up').click();await expect(page.locator('#frequency-value')).toHaveText('39.25 Hz');
+ await page.locator('#amplitude').fill('0');await expect(page.locator('#snap-nodes')).toBeDisabled();await expect(page.locator('#tuning-label')).toContainText('No drive');
+ await page.locator('#reset').click();await expect(page.locator('[data-task="harmonics"]')).toHaveAttribute('aria-pressed','true');await expect(page.locator('#track')).not.toBeChecked();
+});
+test('node locations remain fixed across strobe phases and apparatus stays usable on phones',async({page})=>{
+ await page.goto('/standing-waves-lab/');await page.locator('#power').click();await page.locator('[data-harmonic="2"]').click();await page.locator('#strobe').click();
+ for(const phase of ['0','90','180','270']){await page.locator('#phase').fill(phase);const d=await page.locator('#wave').getAttribute('d');const midpoint=d.match(/(?:M|L)([\d.]+) ([\d.-]+)/g)[200];expect(midpoint).toBe('L583.00 180.00');}
+ await page.setViewportSize({width:390,height:844});
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+ expect(await page.locator('#apparatus').evaluate(e=>e.getBoundingClientRect().width)).toBeGreaterThanOrEqual(520);
+ await page.locator('#mobile-setup>summary').click();await expect(page.locator('#frequency')).toBeVisible();expect(await page.locator('#mobile-controls .controls').count()).toBe(1);
+});
+
+test('fundamental preset remains tuned for the lightest tension and heaviest string',async({page})=>{await page.goto('/standing-waves-lab/');await page.locator('#mass').fill('50');await page.locator('#length').fill('1.5');await page.locator('#density').selectOption('0.004');await page.locator('[data-harmonic="1"]').click();await expect(page.locator('#resonance')).toHaveText('Tuned');});
