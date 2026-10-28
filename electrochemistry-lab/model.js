@@ -11,7 +11,21 @@ function cell(left,right,mode){
  const n=metals[anode].n*metals[cathode].n/gcd(metals[anode].n,metals[cathode].n);
  const a=n/metals[anode].n,c=n/metals[cathode].n;
  const term=(k,s)=> (k===1?'':k)+s;
- return {anode,cathode,n,e:Number((metals[cathode].e-metals[anode].e).toFixed(2)),oxidation:ion(anode),reduction:ion(cathode),reaction:term(a,anode+'(s)')+' + '+term(c,ion(cathode)+'(aq)')+' → '+term(a,ion(anode)+'(aq)')+' + '+term(c,cathode+'(s)')};
+ return {anode,cathode,n,anodeAtoms:a,cathodeAtoms:c,e:Number((metals[cathode].e-metals[anode].e).toFixed(2)),oxidation:ion(anode),reduction:ion(cathode),reaction:term(a,anode+'(s)')+' + '+term(c,ion(cathode)+'(aq)')+' → '+term(a,ion(anode)+'(aq)')+' + '+term(c,cathode+'(s)')};
 }
-const api={metals,ion,cell}; if(typeof module!=='undefined')module.exports=api; else Object.defineProperty(window,'Electrochem',{value:api});
+function assess(state){
+ const c=cell(state.left,state.right,state.mode);
+ if(!state.left||!state.right)return {ready:false,code:'electrodes',cell:c};
+ if(state.left===state.right)return {ready:false,code:'identical',cell:null};
+ if(state.leftSolution!==state.left||state.rightSolution!==state.right)return {ready:false,code:'solutions',cell:c};
+ if(!state.bridge)return {ready:false,code:'bridge',cell:c};
+ if(!state.meter)return {ready:false,code:'circuit',cell:c};
+ if(state.mode==='electrolytic'&&(!Number.isFinite(state.power)||state.power<=Math.abs(c.e)||state.power>10))return {ready:false,code:'power',cell:c};
+ return {ready:true,code:'ready',cell:c};
+}
+function sample(c,events){
+ const k=Math.max(0,Math.min(12,Math.floor(events)||0));
+ return {events:k,dissolved:k*c.anodeAtoms,deposited:k*c.cathodeAtoms,electrons:k*c.n,bridgeCations:k*c.n,bridgeAnions:k*c.n};
+}
+const api={metals,ion,cell,assess,sample}; if(typeof module!=='undefined')module.exports=api; else Object.defineProperty(window,'Electrochem',{value:api});
 }());

@@ -1,21 +1,14 @@
-# Verification
+# Electrochemistry verification
 
-`node --check electrochemistry-lab/lab.js`
-`node --test tests/unit/electrochemistry.test.js`
+Version: 1.3.0
 
-Unit checks cover Zn/Cu (+1.10 V), Zn/Ag (+1.56 V), Cu/Ag (+0.46 V), both spatial orientations, reverse cell potentials, silver stoichiometry, and identical-electrode rejection.
+`npm run test:unit`
+`npx playwright test tests/e2e/electrochemistry.spec.js`
 
-Browser acceptance checklist (not executed in this environment):
-- Tab through metal selection, place buttons, solution selects, connections and Run. Repeat on a touch-sized viewport using tap controls.
-- Drag Zn left and Cu right; pick Zn²⁺ and Cu²⁺ solutions. Connect bridge and meter; verify +1.10 V, zinc anode and copper cathode. Run and pause.
-- Remove either connection; animation must stop. Mismatch a solution; Run must disable with feedback.
-- Reverse electrode positions; electrons must still travel from zinc to copper.
-- Switch to electrolytic mode; verify −1.10 V and reversed roles/polarities. Supply 1.0 V or 1.1 V: disabled; 1.2 V: enabled. Electrons route via supply.
-- Use Zn/Ag; verify balanced silver coefficient of 2 and +1.56 V. Use identical metals; Run disabled.
-- Reset clears assembly and feedback. Check quiz feedback, narrow-screen layout, reduced-motion preference, and `?embed=1` chrome hiding.
+Unit tests verify all three metal-pair potentials in both orientations and modes, balanced silver reactions, event-level atom/charge conservation for every pair and mode, finite sample bounds, and readiness for missing components, mismatched/identical half-cells and driving-voltage thresholds.
 
-Version: 1.2.1
+Browser tests verify ready initial setup, step/run/pause/restart, silver atom ratios, swapped orientation, powered threshold feedback, disconnected-bridge feedback, keyboard placement and focus retention, dialog focus, narrow-screen overflow, reduced motion, sample completion, and display switches.
 
-Version 1.2.0 header checks: Instructions opens a modal; close button, Escape, and outside click dismiss it and restore opener focus. Share toggles the panel, focuses Copy link, dismisses on Escape/outside click, and restores focus on close. Copy failure selects the canonical URL for manual copying. Native device sharing appears only when supported. Embedded mode hides brand and Share chrome. Check the two-column lab at desktop sizes and the stacked controls at phone sizes.
+Visual/teaching review: ensure electrons follow the load/source leads rather than the dashed meter branch; K⁺ goes toward the cathode and NO₃⁻ toward the anode; no electron crosses the bridge; charged solution markers are distinct from neutral electrode deposits; supply voltage and calculated E° are separate. Verify the removed banner, standalone reaction section and prediction section remain absent. At 390 px, controls stack without horizontal page scrolling.
 
-Version 1.2.0 acceptance: confirm removed intro and lower panels are absent. Drop metals on SVG beakers, match solutions and connect both components. Run should show electrons along both leads, K⁺ toward cathode, anion markers toward anode, metal ions moving toward cathode and neutral deposits growing on its edges. Pause must freeze movement and deposition. Swap spatial orientation and use electrolytic mode: cathode side and motion must reverse appropriately. Reset clears deposits. Confirm reduced-motion prevents traveling particles. Browser verification remains pending in this environment.
+Verification completed for 1.3.0: all 20 repository unit-test files passed; all four activity browser scenarios passed in Chromium. Electron marker positions were confirmed to change during playback. Desktop and 390 px screenshots were inspected; no horizontal page overflow was detected. The optional custom builder follows the apparatus on narrow screens and opens automatically for powered mode. Live GitHub Pages deployment verification is separate from these local browser checks.
