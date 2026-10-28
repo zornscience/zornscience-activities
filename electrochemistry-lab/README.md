@@ -1,17 +1,27 @@
-# Electrochemistry Cell Builder · 1.2.0
+# Electrochemistry Cell Builder
 
-Static AP Chemistry lab at `/electrochemistry-lab/`. No build, external requests, accounts, or saved student data. Uses the site's local font, shared styling and `?embed=1` resize support. This exploratory lab does not issue completion codes or use the scored practice engine.
+Version: 1.3.0
 
-Students drag or select Zn, Cu and Ag electrodes, independently choose matching 1 M ionic solutions, and connect a KNO₃ salt bridge and voltmeter. Run animates electron direction; pause freezes the teaching animation. Reconfiguration stops the animation. Both electrodes must differ, and matching solutions and both connections are required.
+Static, private-data-free AP Chemistry lab at `/electrochemistry-lab/`. No runtime dependencies, network requests, storage, accounts or completion codes. Shared font, embedding helper and branded Instructions/Share header are retained. The promotional banner, standalone reaction panel and prediction section remain removed.
 
-Galvanic mode assigns the more positive reduction potential to the cathode. Electrolytic mode reverses the metal/ion reaction and requires applied voltage strictly greater than the magnitude of its negative standard cell potential. Anode is always oxidation and cathode always reduction; polarities change by mode. The display reports the reaction's E° rather than the supply voltage. Balanced equations use the least common multiple of transferred electrons; potentials are never scaled.
+## Learning outcomes
 
-Model assumptions: 25 °C and unit dissolved-ion activity (approximately 1 M), constant standard conditions, ideal power source, no resistance or overpotential. The electrolytic teaching model excludes competing aqueous reactions. The animation conveys direction, not speed, concentration change, or depletion. A connected voltmeter displays open-circuit E° even if the bridge is absent; sustained operation requires the bridge. Wires represent an ideal external circuit with voltage sensing; current is not calculated.
+Students identify oxidation at the anode and reduction at the cathode, connect microscopic electron/ion transfer to electrode mass changes, calculate standard potentials from reduction potentials, explain why a bridge maintains electrical neutrality, and distinguish spontaneous galvanic reactions from power-driven reverse reactions. Swapping the half-cells changes spatial orientation without changing chemistry.
 
-Deploy with the existing static site. Link from a lesson to `https://activities.zornscience.org/electrochemistry-lab/`. For supported iframe hosting, append `?embed=1`; use the shared resize listener described in the repository README.
+## Design decisions
 
-Version: 1.2.1
+The initial Zn/Cu example is assembled and paused. Example choices change one metal at a time; students can also clear the bench and build using drag/drop or keyboard/touch Place buttons. Focus is preserved when solution/placement controls redraw. Actionable messages explain incomplete circuits and mismatched solutions. Slow playback, ion/explanation switches and Step once reduce visual load. Instructions offer short observation/comparison prompts rather than a compulsory quiz. The optional calculation drawer connects E° to reduction potentials beside the instrument.
 
-Version 1.2.0 adds the branded header matching Ionic Reaction Builder, keyboard-accessible instructions, and a share panel with canonical link copying, email and native device sharing. The refreshed lab uses metallic electrode tiles, glass-style vessels, a digital meter and color-coded reaction panels. No simulation behavior changes.
+The meter is a separate negligible-current branch across the electrodes. Electron markers follow the main load or DC-supply circuit, not the meter branch. The display gives calculated standard reaction potential (including its negative sign in powered mode), not a solved terminal voltage under load. The supply voltage is shown separately. Resistor and source symbols are schematic; resistance/current are not calculated.
 
-Version 1.2.0 removes the promotional intro, reaction explanation panel, and prediction section. The apparatus is one responsive SVG with curved insulated leads, a digital meter, glass vessels, and a gel-filled salt bridge with porous plugs. Running animates electrons along leads, salt-bridge ions toward the appropriate half-cell, and metal-ion exchange. Neutral atoms accumulate on the cathode (up to 36 visual markers). These are illustrative markers, not quantitative particle inventories or reaction rates. Pause freezes motion and deposition; reset clears both. Reduced-motion preference stops travel animation while retaining deposition markers. Electrodes can be dropped directly on SVG beakers or placed using keyboard-accessible buttons. Conditions remain fixed at standard state; water reactions remain excluded.
+## Particle model
+
+Each Step once advances one balanced reaction event. The least common multiple of electron counts determines atoms dissolved/deposited. Zn/Ag transfers 2 electrons while losing 1 Zn atom and depositing 2 Ag atoms. Twelve events form a finite illustrative sample; run stops at its end. The tracked cathode-ion pool begins with enough ions for the sample; dissolution adds tracked ions at the anode. Neutral atoms build up along the cathode; notches mark anode atom loss. These tracked particles are a small window into standard-state reservoirs, not the entire solution or its concentration. Moving markers show pathways, not particle inventories, reaction rate or elapsed chemical time.
+
+K⁺ moves toward the cathode and NO₃⁻ toward the anode; neither electrons nor metal ions are shown crossing the salt bridge. The motion and count views are complementary: motion is qualitative, while event counts conserve charge and metal atoms. The model exports corresponding ion-transfer counts for verification. Animation speed changes presentation only. Pause freezes motion/events; Step once works without animation. Hidden tabs pause automatically. Reduced-motion preference freezes traveling markers while retaining explicit stepping and event counts.
+
+## Assumptions and publication
+
+25 °C, unit ion activities (approximately 1 M), fixed standard potential and ideal external power source. Only selected metal/metal-ion couples are included; competing aqueous reactions, resistance and overpotential are excluded. Electrolytic mode reverses the selected reaction and runs only with applied voltage strictly above |E°|, up to 10 V. Standard-state identical half-cells read 0 V but cannot run. Mismatched solutions are not simulated.
+
+Publish with the existing GitHub Pages site. Canonical URL: `https://activities.zornscience.org/electrochemistry-lab/`. Append `?embed=1` for supported embedding; the shared resize helper handles layout. No external libraries are requested by the activity.

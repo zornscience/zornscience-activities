@@ -1,0 +1,58 @@
+const {test,expect}=require('@playwright/test');
+test.setTimeout(20000);
+test('cell starts ready; balanced sample steps, pauses and resets',async({page})=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('/electrochemistry-lab/');
+ await expect(page.locator('#run')).toBeEnabled();
+ await expect(page.locator('#voltage')).toHaveText('+1.10 V');
+ await page.locator('#step').click();
+ await expect(page.locator('#sample-counts')).toContainText('2 e⁻ transferred');
+ await expect(page.locator('#deposited-atoms circle')).toHaveCount(1);
+ await expect(page.locator('#anode-loss rect')).toHaveCount(1);
+ await page.locator('#example').selectOption('Zn,Ag');
+ await page.locator('#step').click();
+ await expect(page.locator('#deposited-atoms circle')).toHaveCount(2);
+ await expect(page.locator('#anode-loss rect')).toHaveCount(1);
+ await page.locator('#run').click();
+ const marker=page.locator('.electron-dot').first();
+ const x=await marker.evaluate(el=>el.getCTM().e);
+ await page.waitForTimeout(300);
+ expect(await marker.evaluate(el=>el.getCTM().e)).not.toBeCloseTo(x,1);
+ await page.waitForTimeout(1700);await page.locator('#run').click();
+ const count=await page.locator('#sample-counts').textContent();await page.waitForTimeout(2000);
+ expect(await page.locator('#sample-counts').textContent()).toBe(count);
+ await page.locator('#restart').click();await expect(page.locator('#deposited-atoms circle')).toHaveCount(0);
+ expect(errors).toEqual([]);
+});
+test('orientation, powered threshold and broken circuit give meaningful feedback',async({page})=>{
+ await page.goto('/electrochemistry-lab/');await page.locator('#swap').click();
+ await expect(page.locator('[data-side="right"] .zsa-ec-role')).toContainText('Anode');
+ await expect(page.locator('#voltage')).toHaveText('+1.10 V');
+ await page.locator('#mode').selectOption('electrolytic');
+ await expect(page.locator('[data-side="left"] .zsa-ec-role')).toContainText('Anode');
+ await expect(page.locator('#voltage')).toHaveText('−1.10 V');
+ await page.locator('#power').fill('1.1');await page.locator('#power').blur();
+ await expect(page.locator('#run')).toBeDisabled();await expect(page.locator('#status')).toContainText('above 1.10 V');
+ await page.locator('#power').fill('1.2');await page.locator('#power').blur();await expect(page.locator('#run')).toBeEnabled();
+ await page.locator('#bridge').uncheck();await expect(page.locator('#step')).toBeDisabled();await expect(page.locator('#status')).toContainText('charge would build up');
+});
+test('keyboard placement, focus retention, instructions and narrow screens',async({page})=>{
+ await page.setViewportSize({width:390,height:844});await page.goto('/electrochemistry-lab/');
+ await page.locator('#builder>summary').click();await page.locator('#reset').click();await page.locator('[data-metal="Cu"]').click();
+ await page.locator('#place-left').focus();await page.keyboard.press('Enter');
+ await expect(page.locator('#place-left')).toBeFocused();
+ await expect(page.locator('#plate-left')).toBeVisible();
+ await page.locator('#solution-left').focus();await page.locator('#solution-left').selectOption('Cu');await expect(page.locator('#solution-left')).toBeFocused();
+ await page.locator('#zsa-ec-instructions-open').click();await expect(page.locator('#zsa-ec-instructions')).toBeVisible();
+ await page.keyboard.press('Escape');await expect(page.locator('#zsa-ec-instructions-open')).toBeFocused();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
+});
+test('reduced motion still supports a complete step sample and view switches',async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/electrochemistry-lab/');
+ for(let i=0;i<12;i++)await page.locator('#step').click();
+ await expect(page.locator('#deposited-atoms circle')).toHaveCount(12);
+ await expect(page.locator('#step')).toBeDisabled();await expect(page.locator('#run')).toBeDisabled();
+ expect(await page.locator('#cell-scene').evaluate(s=>s.animationsPaused())).toBe(true);
+ await page.locator('#show-ions').uncheck();await expect(page.locator('.solution-ion').first()).toBeHidden();
+ await page.locator('#show-labels').uncheck();await expect(page.locator('#flow-help')).toBeHidden();
+});
