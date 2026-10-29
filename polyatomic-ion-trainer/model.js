@@ -1,26 +1,13 @@
 (function () {
   "use strict";
-const root=typeof document!=="undefined"?document.querySelector('[data-zsa-activity="polyatomic-ion-trainer"]'):null;
-const ions=[['ammonium','NH4',1],['dimercury(I)','Hg2',2],['hydronium','H3O',1],['acetate','C2H3O2',-1],['bicarbonate','HCO3',-1],['carbonate','CO3',-2],['chlorate','ClO3',-1],['chlorite','ClO2',-1],['chromate','CrO4',-2],['cyanide','CN',-1],['hydroxide','OH',-1],['hypochlorite','ClO',-1],['nitrate','NO3',-1],['nitrite','NO2',-1],['oxalate','C2O4',-2],['permanganate','MnO4',-1],['phosphate','PO4',-3],['sulfate','SO4',-2],['sulfite','SO3',-2],['borate','BO3',-3],['dichromate','Cr2O7',-2],['perchlorate','ClO4',-1],['phosphite','PO3',-3]].map(([name,formula,charge],id)=>({id,name,formula,charge}));
+const ions=[['Ammonium','NH4',1,''],['Acetate','CH3COO',-1,'Also written C₂H₃O₂⁻.'],['Chlorate','ClO3',-1,''],['Chlorite','ClO2',-1,'One fewer oxygen than chlorate; the same charge.'],['Cyanide','CN',-1,''],['Hydrogen carbonate','HCO3',-1,'Also called bicarbonate.'],['Hydroxide','OH',-1,''],['Hypochlorite','ClO',-1,''],['Nitrate','NO3',-1,''],['Nitrite','NO2',-1,'One fewer oxygen than nitrate; the same charge.'],['Perchlorate','ClO4',-1,''],['Carbonate','CO3',-2,''],['Chromate','CrO4',-2,''],['Dichromate','Cr2O7',-2,''],['Sulfate','SO4',-2,''],['Sulfite','SO3',-2,'One fewer oxygen than sulfate; the same charge.'],['Phosphate','PO4',-3,'']].map(([name,formula,charge,note],id)=>({id,name,formula,charge,note}));
 const shuffle=(a,rng=Math.random)=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rng()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 const charge=n=>(Math.abs(n)===1?'':Math.abs(n))+(n>0?'+':'−');
 const formula=i=>i.formula.replace(/(\d+)/g,'<sub>$1</sub>')+'<sup>'+charge(i.charge)+'</sup>';
-function question(ion,type){
-let prompt,answer,pool;
-if(type==='name'){prompt='What is the name of '+formula(ion)+'?';answer=ion.name+' ion';pool=ions.filter(i=>i.id!==ion.id).map(i=>i.name+' ion');}
-else if(type==='formula'){prompt='Which formula represents the '+ion.name+' ion?';answer=formula(ion);pool=ions.filter(i=>i.id!==ion.id).map(formula);}
-else{prompt='What is the charge of the '+ion.name+' ion?';answer=charge(ion.charge);pool=[-3,-2,-1,1,2,3].filter(n=>n!==ion.charge).map(charge);}
-return {ion,type,prompt,answer,choices:shuffle([answer,...shuffle(pool).slice(0,3)])};
-}
-class Session{
-constructor(){this.correct=0;this.incorrect=0;this.attempts=0;this.pending=[];this.misses={};this.history=[];this.current=null;this.answered=false;this.last=-1;}
-next(){const due=this.pending.findIndex(p=>p.due<=this.attempts);let q;
-if(due>=0){const p=this.pending.splice(due,1)[0];q=question(ions[p.id],p.type);}
-else{const ion=shuffle(ions.filter(i=>i.id!==this.last))[0];q=question(ion,shuffle(['name','formula','charge'])[0]);}
-this.last=q.ion.id;this.current=q;this.answered=false;return q;}
-answer(value){if(this.answered||!this.current)return null;this.answered=true;const q=this.current,ok=value===q.answer;this.attempts++;if(ok)this.correct++;else{this.incorrect++;this.misses[q.ion.id]=(this.misses[q.ion.id]||0)+1;this.pending.push({id:q.ion.id,type:q.type,due:this.attempts+3});}this.history.push({id:q.ion.id,type:q.type,ok});return ok;}
-}
-const api={ions,charge,formula,question,Session};
-if(root)root.addEventListener('zsa:request-pi-model',e=>e.detail.receive(api));
-if(typeof module==='object'&&module.exports)module.exports=api;
-}());
+const select=key=>ions.filter(i=>key==='all'||(key==='ends'&&(i.charge===1||i.charge===-3))||(key==='chlorine'&&/^ClO/.test(i.formula))||i.charge===Number(key));
+function question(ion,type){let answer=type==='name'?ion.name:formula(ion);let pool=shuffle(ions.filter(i=>i.id!==ion.id));pool.sort((a,b)=>Number(b.charge===ion.charge)-Number(a.charge===ion.charge));return {ion,type,prompt:type==='name'?formula(ion):ion.name,answer,choices:shuffle([answer,...pool.slice(0,3).map(i=>type==='name'?i.name:formula(i))])};}
+class Session{constructor(list=ions,direction='mixed'){this.queue=shuffle(list).map(ion=>({ion,type:direction==='mixed'?(Math.random()<.5?'name':'formula'):direction}));this.total=this.queue.length;this.attempts=0;this.correct=0;this.incorrect=0;this.misses={};this.current=null;this.answered=false;}
+next(){const item=this.queue.shift();this.current=item?question(item.ion,item.type):null;this.answered=false;return this.current;}
+answer(value){if(this.answered||!this.current)return null;this.answered=true;this.attempts++;const ok=value===this.current.answer;if(ok)this.correct++;else{this.incorrect++;const id=this.current.ion.id;this.misses[id]=(this.misses[id]||0)+1;}return ok;}}
+const api={ions,charge,formula,shuffle,select,question,Session};const root=typeof document!=='undefined'?document.querySelector('[data-zsa-activity="polyatomic-ion-trainer"]'):null;if(root)root.addEventListener('zsa:request-pi-model',e=>e.detail.receive(api));if(typeof module==='object'&&module.exports)module.exports=api;
+})();
