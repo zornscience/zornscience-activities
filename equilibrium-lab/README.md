@@ -1,6 +1,6 @@
 # Equilibrium Sandbox
 
-Version: 1.2.0
+Version: 1.2.1
 
 Standalone static lab at `equilibrium-lab/`. No runtime dependencies, accounts, tracking, storage or outside requests. Supports `?embed=1` via the existing embed helper.
 
@@ -16,6 +16,8 @@ Visual presentation: an instrument bench, labeled apparatus, numeric readout til
 
 ## Learning design
 - Outcomes: distinguish immediate concentration changes from reaction shifts; use Qc/Kc; distinguish changes in Kc from composition changes; explain equal, ongoing reaction rates.
-- Three optional prediction trials use a common baseline and capture before / immediate / settled measurements. Manual changes cancel the controlled comparison. Free exploration and one-second stepping remain available.
+- Students use their worksheet for predictions and explanations. The activity provides free exploration, one-second stepping, a concentration graph and dynamic reaction rates; it contains no guided investigation, answer fields or guided evidence table.
 - Illustrative rates: forward = 0.25 Kc [N₂O₄], reverse = 0.25 [NO₂]², expressed in mol/(L·simulated s). The chosen constants are not experimental; the elementary-step assumption is explicit. Adaptive, amount-limited substeps conserve atoms and avoid negative amounts.
-- CSV includes temperature, volume, Kc, Qc and both rates. Text notes print but are not transmitted or saved.
+- CSV includes temperature, volume, Kc, Qc and both rates.
+
+The activity opens directly into the experiment, without an introductory banner or a direct link to the other chemistry lab. The common All activities link remains available.

@@ -1,6 +1,6 @@
 # Calorimetry & Enthalpy Lab
 
-Version: 1.2.0
+Version: 1.2.1
 
 Standalone static lab at `calorimetry-lab/`. No runtime dependencies, accounts, tracking, storage or outside requests. Supports `?embed=1` via the existing embed helper.
 
@@ -19,3 +19,5 @@ Visual presentation: an instrument bench, labeled apparatus, numeric readout til
 - Final measurements precede the worked answer. Optional answer checking accepts 2% rounding tolerance and targets sign and unit misconceptions. Students can reveal the solution without a lockout.
 - Metal temperature is limited to 5 to 95 °C in this liquid-water model. A cooler sample reverses heat flow. Equal starting temperatures provide no information for determining specific heat; this case is explained instead of dividing by zero.
 - Four completed trials remain in a comparison table for one-variable investigations. Notes and trials clear on reload, with no storage or outside requests. Live screen-reader messages announce run phases, not every animation frame.
+
+The activity opens directly into the experiment, without an introductory banner or a direct link to the other chemistry lab. The common All activities link remains available.
