@@ -58,17 +58,18 @@ test('homepage and previous combined URL link to both standalone labs',async({pa
 });
 
 
-test('guided equilibrium trials capture before, immediate and settled evidence without revealing a prediction first',async({page})=>{
- const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.clock.install();await page.goto('/equilibrium-lab/');await page.locator('.investigation summary').click();
- await page.locator('#try-investigation').click();await expect(page.locator('#investigation-feedback')).toContainText('Choose a prediction');
- for(const [kind,prediction] of [['compress','left'],['heat','right'],['add','right']]){
-  await page.locator('#investigation').selectOption(kind);await page.locator('#prediction').selectOption(prediction);await page.locator('#try-investigation').click();
-  await expect(page.locator('#evidence-body tr')).toHaveCount(2);await page.clock.runFor(40000);
-  await expect(page.locator('#investigation-feedback')).toContainText('prediction is supported');await expect(page.locator('#evidence-body tr')).toHaveCount(3);
+test('standalone labs have no cross-links, intro banners or equilibrium worksheet prompts',async({page})=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.clock.install();
+ for(const slug of ['equilibrium-lab','calorimetry-lab']){
+  await page.goto('/'+slug+'/');const other=slug==='equilibrium-lab'?'calorimetry-lab':'equilibrium-lab';
+  await expect(page.locator('a[href*="'+other+'"]')).toHaveCount(0);
+  await expect(page.locator('.learning-goal,.intro,.lab-links')).toHaveCount(0);
+  await expect(page.locator('.zsa-back')).toHaveAttribute('href','../');
  }
+ await page.goto('/equilibrium-lab/');await expect(page.locator('.investigation,#prediction,#eq-reasoning,#evidence')).toHaveCount(0);
  await page.locator('#eq-step').click();await expect(page.locator('#pause')).toHaveText('Resume');
  const forward=+(await page.locator('#forward-value').textContent()),reverse=+(await page.locator('#reverse-value').textContent());expect(forward).toBeGreaterThan(0);expect(Math.abs(forward-reverse)).toBeLessThan(.0001);
- await page.locator('#investigation').selectOption('compress');await page.locator('#prediction').selectOption('right');await page.locator('#try-investigation').click();await page.locator('#add').click();await expect(page.locator('#investigation-feedback')).toContainText('free exploration');await expect(page.locator('#evidence')).not.toBeVisible();
+ await page.locator('#reset-eq').click();await page.locator('#temp').evaluate(el=>{el.value='320';el.dispatchEvent(new Event('input'));});await page.clock.runFor(30000);await expect(page.locator('#state')).toHaveText('At equilibrium');
  await checkMobile(page);expect(errors).toEqual([]);
 });
 
