@@ -5,9 +5,9 @@
   function el(id) { return root.querySelector("#zsa-ir-share-" + id); }
   var toggle = el("toggle"), panel = el("panel");
   if (!toggle || !panel) return;
-  var url = "https://activities.zornscience.org/polyatomic-ion-trainer/";
+  var url = location.protocol === "file:" ? "https://activities.zornscience.org/polyatomic-ion-trainer/" : location.origin + location.pathname;
   var title = "Polyatomic Ion Trainer | ZornScience";
-  var description = "Practice polyatomic ion names, formulas, and charges in a five-minute ZornScience quiz.";
+  var description = "Study 17 shaded polyatomic ions with flip flashcards or a ZornScience quiz game.";
   el("url").value = url;
   el("email").href = "mailto:?subject=" + encodeURIComponent(title) + "&body=" + encodeURIComponent(description + "\n\n" + url);
   el("facebook").href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);
