@@ -1,6 +1,6 @@
 # ACT Question Generator
 
-Version: 1.1.2
+Version: 1.2.0
 
 A standalone, untimed practice tool for ZornScience. Choose English, Math, or Science; answer one random multiple-choice question at a time; check a choice or reveal the answer without attempting it. Every answer includes an explanation.
 
@@ -10,13 +10,15 @@ The header uses the ZornScience logo and shared navy/blue palette. **Instruction
 
 This activity has its own bank, shuffle logic, interface, and styles. It does not load, change, or share state with `act/`, its testing engine, scoring, practice codes, WordPress history plugin, or question banks. It uses the shared base stylesheet, font, ZornScience logo, and optional iframe resize helper. There are no API calls, accounts, scores, timers, or runtime dependencies.
 
-Each subject has a separate shuffled queue of 200 questions. Switching subjects preserves each queue during the page session. Each queue reshuffles after all 200 questions are drawn; the first question in a new pass cannot repeat the last question of the previous pass. Reloading starts a new session.
+Each subject has a separate shuffled queue of 400 questions. Switching subjects preserves each queue during the page session. Each queue reshuffles after all 400 questions are drawn; the first question in a new pass cannot repeat the last question of the previous pass. Reloading starts a new session.
 
 ## Question bank
 
-`bank.js` contains 600 original ACT-style practice items, not licensed or official ACT items. Each item has four choices, a zero-based answer index, a skill, and an explanation. English uses short editing and rhetorical tasks. Math covers 20 skills. Science uses 10 data-table studies and 10 competing-model studies, with 10 questions per study. No external passage or figure is needed.
+`bank.js` contains 1,200 original ACT-style practice items, not licensed or official ACT items. Each item has four choices, a zero-based answer index, a skill, and an explanation. English uses short editing and rhetorical tasks. Math covers 40 skill families. Science uses 10 original trend studies, 10 competing-model studies, and 10 new factorial studies with questions about isolated effects, interaction, controls, and uncertainty. No external passage or figure is needed.
 
-The bank intentionally includes structured variants: English has 20 tasks across 10 settings; Math has 20 numerical families with 10 variants each. These are focused skill exercises, rather than 200 unrelated passages or a calibrated full ACT simulation. Science model questions state the candidate models explicitly, so students can reason from the supplied evidence. Teachers can edit the bank and its authoring source as needed.
+The original 200 questions in each subject are preserved. The October expansion adds 100 standard and 100 harder questions per subject. Harder questions carry an internal difficulty tag and display “Challenge” beside the skill. Difficulty is an editorial judgment, not a calibrated ACT score level. Structured variants of skill families and questions sharing original passages or datasets are included; these are not 400 unrelated full passages per subject.
+
+The added scenarios, datasets, wording, and explanations were authored for ZornScience without importing published question banks. Automated checks reject duplicate context/prompt pairs and duplicate answer choices within this bank. Global exclusivity cannot be established: common mathematical structures and grammar rules may resemble material published independently elsewhere. These questions are publicly accessible once deployed, so third-party copying cannot be prevented by this generator.
 
 Rebuild with Python 3, from any directory:
 

@@ -2802,6 +2802,3206 @@ var bank = {
       "answer": 0,
       "explanation": "The check occurs after preparation but before opening day, so placing it between sentences 1 and 2 preserves the chronology.",
       "context": "[1] Nina prepared the presentation at the conservatory. [2] Visitors tested it on opening day. [3] Their feedback led to several improvements. The writer wants to add: “Before the opening, staff members checked that every part worked.”"
+    },
+    {
+      "id": "english-201",
+      "skill": "Contractions",
+      "prompt": "Which choice correctly completes the sentence?",
+      "choices": [
+        "its",
+        "its’",
+        "it’s",
+        "it"
+      ],
+      "answer": 2,
+      "explanation": "“It’s” means “it is,” which supplies the subject and verb needed before “ready.”",
+      "context": "Rhea coordinates a neighborhood repair fair. The team is certain that ___ ready for opening day.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-202",
+      "skill": "Relative clauses",
+      "prompt": "Which choice makes a complete, grammatical sentence?",
+      "choices": [
+        "whom",
+        "which",
+        "whoever",
+        "whose"
+      ],
+      "answer": 0,
+      "explanation": "“Whom” is the object of “trained”: the coordinator trained the volunteers. The clause modifies “volunteers.”",
+      "context": "The volunteers ___ Rhea trained will lead the demonstration.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-203",
+      "skill": "Count and comparison",
+      "prompt": "Which choice is correct in formal written English?",
+      "choices": [
+        "least",
+        "fewer",
+        "fewest",
+        "less"
+      ],
+      "answer": 1,
+      "explanation": "Use “fewer” with a countable plural noun such as “people”; “than” calls for a comparative form.",
+      "context": "Because a neighborhood repair fair used a reservation system, ___ people waited outside than expected.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-204",
+      "skill": "Colon usage",
+      "prompt": "Which punctuation best introduces the list?",
+      "choices": [
+        ",",
+        ";",
+        "no punctuation",
+        ":"
+      ],
+      "answer": 3,
+      "explanation": "A colon can introduce a list after the complete clause “Rhea requested two supplies for the project.”",
+      "context": "Rhea requested two supplies for the project___ paper and pencils.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-205",
+      "skill": "Restrictive clauses",
+      "prompt": "Which choice preserves the intended restriction?",
+      "choices": [
+        "broken lamps that",
+        "broken lamps; that",
+        "broken lamps, which",
+        "broken lamps, that"
+      ],
+      "answer": 0,
+      "explanation": "The clause identifies only the damaged items, so it is essential and begins without a separating comma.",
+      "context": "Only some broken lamps were damaged. Rhea set aside the ___ needed repairs.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-206",
+      "skill": "Comparative form",
+      "prompt": "Which choice avoids a faulty comparison?",
+      "choices": [
+        "clearer",
+        "more clearer",
+        "clearest",
+        "most clearest"
+      ],
+      "answer": 0,
+      "explanation": "Use the single comparative “clearer” before “than.” Adding “more” creates a double comparative.",
+      "context": "After a trial run of a neighborhood repair fair, the revised instructions were ___ than the first draft.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-207",
+      "skill": "Past participles",
+      "prompt": "Which verb form is correct?",
+      "choices": [
+        "writing",
+        "written",
+        "write",
+        "wrote"
+      ],
+      "answer": 1,
+      "explanation": "“Had” forms the past perfect with the past participle “written,” not the simple past “wrote.”",
+      "context": "Rhea had ___ the final report about a neighborhood repair fair before the meeting began.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-208",
+      "skill": "Pronoun clarity",
+      "prompt": "Which revision of the second sentence is clearest?",
+      "choices": [
+        "It asked whether the assistant could be enlarged.",
+        "The assistant asked whether the diagram could be enlarged.",
+        "They asked whether they could be enlarged.",
+        "The assistant asked whether this could enlarge them."
+      ],
+      "answer": 1,
+      "explanation": "Repeating the specific noun “diagram” removes uncertainty about what is to be enlarged.",
+      "context": "Rhea showed the new assistant a diagram. The assistant asked whether the diagram could be enlarged.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-209",
+      "skill": "Relevant detail",
+      "prompt": "Which detail best develops that focus?",
+      "choices": [
+        "Volunteers taught visitors to replace damaged cords.",
+        "Rhea prefers to work in the morning.",
+        "The meeting room has two windows.",
+        "Several volunteers enjoy playing board games."
+      ],
+      "answer": 0,
+      "explanation": "The correct detail describes a concrete project procedure rather than an unrelated personal fact.",
+      "context": "A paragraph about a neighborhood repair fair focuses on the specific procedures used to carry out the project.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-210",
+      "skill": "Paragraph summary",
+      "prompt": "Which title best reflects the whole report?",
+      "choices": [
+        "From First Design to Tested Revision",
+        "A Complete History of the Neighborhood",
+        "The Personal Hobbies of Volunteers",
+        "Why Every Trial Must Succeed"
+      ],
+      "answer": 0,
+      "explanation": "The title covers design, testing, and revision without claiming the report addresses unrelated history or universal success.",
+      "context": "A report on a neighborhood repair fair describes the initial design, a trial with volunteers, and changes made in response to feedback.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-211",
+      "skill": "Scope of conclusions",
+      "prompt": "Which concluding sentence stays within the evidence?",
+      "choices": [
+        "The project will produce the same result in every neighborhood.",
+        "The pilot proves that all alternative approaches are ineffective.",
+        "The outcome establishes that no additional data are necessary.",
+        "The pilot produced a promising result that merits further testing."
+      ],
+      "answer": 3,
+      "explanation": "One limited pilot supports cautious further testing, not universal effectiveness or claims about every alternative.",
+      "context": "In a pilot of a neighborhood repair fair, forty lamps were repaired instead of discarded. The report describes only this trial, without random assignment or long-term follow-up.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-212",
+      "skill": "Concession and argument",
+      "prompt": "Which transition preserves both the limitation and the qualified positive claim?",
+      "choices": [
+        "Even so",
+        "In other words",
+        "For the same reason",
+        "As a result of its small size"
+      ],
+      "answer": 0,
+      "explanation": "“Even so” concedes the small sample while introducing a benefit that remains despite that limitation.",
+      "context": "Rhea writes: “The trial of a neighborhood repair fair was small. ___, its consistent records provide a useful starting point for a larger study.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-213",
+      "skill": "Paired punctuation",
+      "prompt": "Which pair correctly sets off the interruption?",
+      "choices": [
+        "no punctuation; semicolon",
+        "semicolon; comma",
+        "colon; semicolon",
+        "comma; comma"
+      ],
+      "answer": 3,
+      "explanation": "The dependent interruption “although preliminary” is nonessential and can be enclosed by paired commas. A semicolon cannot isolate this fragment.",
+      "context": "Rhea’s report contains an interrupting phrase: “The results of a neighborhood repair fair ___ although preliminary ___ justify a second trial.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-214",
+      "skill": "Agreement across clauses",
+      "prompt": "Which pair agrees with both subjects?",
+      "choices": [
+        "is; needs",
+        "are; needs",
+        "is; need",
+        "are; need"
+      ],
+      "answer": 2,
+      "explanation": "“Set” is singular and takes “is”; “entries” is plural and takes “need.” Neither intervening plural “records” nor “volunteers” changes the first subject.",
+      "context": "The set of records that the volunteers collected during a neighborhood repair fair ___ available, but several entries still ___ review.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-215",
+      "skill": "Tense sequence",
+      "prompt": "Which pair best expresses the stated chronology?",
+      "choices": [
+        "has completed; discussed",
+        "will complete; had discussed",
+        "will have completed; will discuss",
+        "had completed; discusses"
+      ],
+      "answer": 2,
+      "explanation": "The future perfect marks completion before a specified future deadline; the later discussion is also in the future.",
+      "context": "By next Friday, Rhea ___ the comparison report, which the committee ___ at its meeting the following Monday.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-216",
+      "skill": "Logical comparison",
+      "prompt": "Which completion makes a parallel comparison?",
+      "choices": [
+        "that of the second team",
+        "the second team keeps",
+        "those of the second team",
+        "the second team"
+      ],
+      "answer": 2,
+      "explanation": "Records must be compared with records. “Those” refers to the plural records of the second team, avoiding a comparison between records and people.",
+      "context": "Rhea compares a pilot team with a second team. Both teams kept records about a neighborhood repair fair. “The pilot team’s records are more detailed than ___.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-217",
+      "skill": "Sentence placement",
+      "prompt": "Where does the new sentence best explain both the problem and the reason for the revision?",
+      "choices": [
+        "Between sentences 2 and 3",
+        "Between sentences 3 and 4",
+        "Before sentence 1",
+        "After sentence 4"
+      ],
+      "answer": 0,
+      "explanation": "The sentence specifies the gap just mentioned and gives the reason for rewriting the section before the revision is described.",
+      "context": "[1] Rhea launched a neighborhood repair fair. [2] The first trial exposed a gap in the instructions. [3] The team rewrote that section. [4] A second trial produced fewer requests for help. New sentence: “Several volunteers had interpreted the same step in two different ways.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-218",
+      "skill": "Function of evidence",
+      "prompt": "What is the most likely function of the quoted detail?",
+      "choices": [
+        "To show that measurements can replace all practical judgment",
+        "To establish that the design works under every condition",
+        "To provide a concrete outcome that can inform a later revision",
+        "To introduce an unrelated historical digression"
+      ],
+      "answer": 2,
+      "explanation": "The concrete observed outcome supports using evidence in subsequent decisions; it does not prove universal effectiveness.",
+      "context": "In a discussion of a neighborhood repair fair, the writer states, “Forty lamps were repaired instead of discarded.” The surrounding paragraph argues that observations should guide later design decisions.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-219",
+      "skill": "Subordination and emphasis",
+      "prompt": "Which sentence best gives the recommendation main-clause emphasis?",
+      "choices": [
+        "Although the first trial was limited, the project should continue.",
+        "The project should continue, the first trial was limited.",
+        "The first trial was limited because every project should continue.",
+        "Although the project should continue, the first trial was limited."
+      ],
+      "answer": 0,
+      "explanation": "Placing the limitation in an “although” clause subordinates it. The independent clause gives the recommendation the main emphasis; the last choice is a comma splice.",
+      "context": "A writer wants to emphasize that a neighborhood repair fair should continue while acknowledging that the first trial was limited.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-220",
+      "skill": "Precision and uncertainty",
+      "prompt": "Which revision most accurately states the status of a proposed explanation?",
+      "choices": [
+        "The mechanism has been verified because it sounds plausible.",
+        "The observation proves the proposed mechanism is the only possible explanation.",
+        "The proposed explanation is consistent with the observation but remains untested.",
+        "The observation is impossible unless the proposed mechanism is correct."
+      ],
+      "answer": 2,
+      "explanation": "Compatibility with one observation does not establish a causal mechanism or rule out other explanations.",
+      "context": "The report on a neighborhood repair fair finds that forty lamps were repaired instead of discarded. No causal mechanism has been tested.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-221",
+      "skill": "Contractions",
+      "prompt": "Which choice correctly completes the sentence?",
+      "choices": [
+        "its’",
+        "it",
+        "it’s",
+        "its"
+      ],
+      "answer": 2,
+      "explanation": "“It’s” means “it is,” which supplies the subject and verb needed before “ready.”",
+      "context": "Cal coordinates a school rain garden. The team is certain that ___ ready for opening day.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-222",
+      "skill": "Relative clauses",
+      "prompt": "Which choice makes a complete, grammatical sentence?",
+      "choices": [
+        "whoever",
+        "which",
+        "whom",
+        "whose"
+      ],
+      "answer": 2,
+      "explanation": "“Whom” is the object of “trained”: the coordinator trained the volunteers. The clause modifies “volunteers.”",
+      "context": "The volunteers ___ Cal trained will lead the demonstration.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-223",
+      "skill": "Count and comparison",
+      "prompt": "Which choice is correct in formal written English?",
+      "choices": [
+        "less",
+        "least",
+        "fewer",
+        "fewest"
+      ],
+      "answer": 2,
+      "explanation": "Use “fewer” with a countable plural noun such as “people”; “than” calls for a comparative form.",
+      "context": "Because a school rain garden used a reservation system, ___ people waited outside than expected.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-224",
+      "skill": "Colon usage",
+      "prompt": "Which punctuation best introduces the list?",
+      "choices": [
+        "no punctuation",
+        ",",
+        ";",
+        ":"
+      ],
+      "answer": 3,
+      "explanation": "A colon can introduce a list after the complete clause “Cal requested two supplies for the project.”",
+      "context": "Cal requested two supplies for the project___ paper and pencils.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-225",
+      "skill": "Restrictive clauses",
+      "prompt": "Which choice preserves the intended restriction?",
+      "choices": [
+        "storm drains that",
+        "storm drains, which",
+        "storm drains, that",
+        "storm drains; that"
+      ],
+      "answer": 0,
+      "explanation": "The clause identifies only the damaged items, so it is essential and begins without a separating comma.",
+      "context": "Only some storm drains were damaged. Cal set aside the ___ needed repairs.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-226",
+      "skill": "Comparative form",
+      "prompt": "Which choice avoids a faulty comparison?",
+      "choices": [
+        "more clearer",
+        "most clearest",
+        "clearer",
+        "clearest"
+      ],
+      "answer": 2,
+      "explanation": "Use the single comparative “clearer” before “than.” Adding “more” creates a double comparative.",
+      "context": "After a trial run of a school rain garden, the revised instructions were ___ than the first draft.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-227",
+      "skill": "Past participles",
+      "prompt": "Which verb form is correct?",
+      "choices": [
+        "wrote",
+        "writing",
+        "written",
+        "write"
+      ],
+      "answer": 2,
+      "explanation": "“Had” forms the past perfect with the past participle “written,” not the simple past “wrote.”",
+      "context": "Cal had ___ the final report about a school rain garden before the meeting began.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-228",
+      "skill": "Pronoun clarity",
+      "prompt": "Which revision of the second sentence is clearest?",
+      "choices": [
+        "They asked whether they could be enlarged.",
+        "It asked whether the assistant could be enlarged.",
+        "The assistant asked whether this could enlarge them.",
+        "The assistant asked whether the diagram could be enlarged."
+      ],
+      "answer": 3,
+      "explanation": "Repeating the specific noun “diagram” removes uncertainty about what is to be enlarged.",
+      "context": "Cal showed the new assistant a diagram. The assistant asked whether the diagram could be enlarged.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-229",
+      "skill": "Relevant detail",
+      "prompt": "Which detail best develops that focus?",
+      "choices": [
+        "Students measured water flow before and after planting.",
+        "The meeting room has two windows.",
+        "Cal prefers to work in the morning.",
+        "Several volunteers enjoy playing board games."
+      ],
+      "answer": 0,
+      "explanation": "The correct detail describes a concrete project procedure rather than an unrelated personal fact.",
+      "context": "A paragraph about a school rain garden focuses on the specific procedures used to carry out the project.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-230",
+      "skill": "Paragraph summary",
+      "prompt": "Which title best reflects the whole report?",
+      "choices": [
+        "Why Every Trial Must Succeed",
+        "The Personal Hobbies of Volunteers",
+        "A Complete History of the Neighborhood",
+        "From First Design to Tested Revision"
+      ],
+      "answer": 3,
+      "explanation": "The title covers design, testing, and revision without claiming the report addresses unrelated history or universal success.",
+      "context": "A report on a school rain garden describes the initial design, a trial with volunteers, and changes made in response to feedback.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-231",
+      "skill": "Scope of conclusions",
+      "prompt": "Which concluding sentence stays within the evidence?",
+      "choices": [
+        "The outcome establishes that no additional data are necessary.",
+        "The project will produce the same result in every neighborhood.",
+        "The pilot proves that all alternative approaches are ineffective.",
+        "The pilot produced a promising result that merits further testing."
+      ],
+      "answer": 3,
+      "explanation": "One limited pilot supports cautious further testing, not universal effectiveness or claims about every alternative.",
+      "context": "In a pilot of a school rain garden, runoff reached the drain six minutes later after planting. The report describes only this trial, without random assignment or long-term follow-up.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-232",
+      "skill": "Concession and argument",
+      "prompt": "Which transition preserves both the limitation and the qualified positive claim?",
+      "choices": [
+        "As a result of its small size",
+        "In other words",
+        "For the same reason",
+        "Even so"
+      ],
+      "answer": 3,
+      "explanation": "“Even so” concedes the small sample while introducing a benefit that remains despite that limitation.",
+      "context": "Cal writes: “The trial of a school rain garden was small. ___, its consistent records provide a useful starting point for a larger study.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-233",
+      "skill": "Paired punctuation",
+      "prompt": "Which pair correctly sets off the interruption?",
+      "choices": [
+        "comma; comma",
+        "no punctuation; semicolon",
+        "colon; semicolon",
+        "semicolon; comma"
+      ],
+      "answer": 0,
+      "explanation": "The dependent interruption “although preliminary” is nonessential and can be enclosed by paired commas. A semicolon cannot isolate this fragment.",
+      "context": "Cal’s report contains an interrupting phrase: “The results of a school rain garden ___ although preliminary ___ justify a second trial.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-234",
+      "skill": "Agreement across clauses",
+      "prompt": "Which pair agrees with both subjects?",
+      "choices": [
+        "are; need",
+        "are; needs",
+        "is; needs",
+        "is; need"
+      ],
+      "answer": 3,
+      "explanation": "“Set” is singular and takes “is”; “entries” is plural and takes “need.” Neither intervening plural “records” nor “volunteers” changes the first subject.",
+      "context": "The set of records that the volunteers collected during a school rain garden ___ available, but several entries still ___ review.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-235",
+      "skill": "Tense sequence",
+      "prompt": "Which pair best expresses the stated chronology?",
+      "choices": [
+        "will have completed; will discuss",
+        "will complete; had discussed",
+        "has completed; discussed",
+        "had completed; discusses"
+      ],
+      "answer": 0,
+      "explanation": "The future perfect marks completion before a specified future deadline; the later discussion is also in the future.",
+      "context": "By next Friday, Cal ___ the comparison report, which the committee ___ at its meeting the following Monday.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-236",
+      "skill": "Logical comparison",
+      "prompt": "Which completion makes a parallel comparison?",
+      "choices": [
+        "those of the second team",
+        "the second team",
+        "the second team keeps",
+        "that of the second team"
+      ],
+      "answer": 0,
+      "explanation": "Records must be compared with records. “Those” refers to the plural records of the second team, avoiding a comparison between records and people.",
+      "context": "Cal compares a pilot team with a second team. Both teams kept records about a school rain garden. “The pilot team’s records are more detailed than ___.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-237",
+      "skill": "Sentence placement",
+      "prompt": "Where does the new sentence best explain both the problem and the reason for the revision?",
+      "choices": [
+        "Between sentences 2 and 3",
+        "After sentence 4",
+        "Between sentences 3 and 4",
+        "Before sentence 1"
+      ],
+      "answer": 0,
+      "explanation": "The sentence specifies the gap just mentioned and gives the reason for rewriting the section before the revision is described.",
+      "context": "[1] Cal launched a school rain garden. [2] The first trial exposed a gap in the instructions. [3] The team rewrote that section. [4] A second trial produced fewer requests for help. New sentence: “Several volunteers had interpreted the same step in two different ways.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-238",
+      "skill": "Function of evidence",
+      "prompt": "What is the most likely function of the quoted detail?",
+      "choices": [
+        "To show that measurements can replace all practical judgment",
+        "To provide a concrete outcome that can inform a later revision",
+        "To introduce an unrelated historical digression",
+        "To establish that the design works under every condition"
+      ],
+      "answer": 1,
+      "explanation": "The concrete observed outcome supports using evidence in subsequent decisions; it does not prove universal effectiveness.",
+      "context": "In a discussion of a school rain garden, the writer states, “Runoff reached the drain six minutes later after planting.” The surrounding paragraph argues that observations should guide later design decisions.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-239",
+      "skill": "Subordination and emphasis",
+      "prompt": "Which sentence best gives the recommendation main-clause emphasis?",
+      "choices": [
+        "The first trial was limited because every project should continue.",
+        "Although the project should continue, the first trial was limited.",
+        "Although the first trial was limited, the project should continue.",
+        "The project should continue, the first trial was limited."
+      ],
+      "answer": 2,
+      "explanation": "Placing the limitation in an “although” clause subordinates it. The independent clause gives the recommendation the main emphasis; the last choice is a comma splice.",
+      "context": "A writer wants to emphasize that a school rain garden should continue while acknowledging that the first trial was limited.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-240",
+      "skill": "Precision and uncertainty",
+      "prompt": "Which revision most accurately states the status of a proposed explanation?",
+      "choices": [
+        "The proposed explanation is consistent with the observation but remains untested.",
+        "The observation proves the proposed mechanism is the only possible explanation.",
+        "The mechanism has been verified because it sounds plausible.",
+        "The observation is impossible unless the proposed mechanism is correct."
+      ],
+      "answer": 0,
+      "explanation": "Compatibility with one observation does not establish a causal mechanism or rule out other explanations.",
+      "context": "The report on a school rain garden finds that runoff reached the drain six minutes later after planting. No causal mechanism has been tested.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-241",
+      "skill": "Contractions",
+      "prompt": "Which choice correctly completes the sentence?",
+      "choices": [
+        "it’s",
+        "its’",
+        "it",
+        "its"
+      ],
+      "answer": 0,
+      "explanation": "“It’s” means “it is,” which supplies the subject and verb needed before “ready.”",
+      "context": "Suri coordinates a traveling sound exhibit. The team is certain that ___ ready for opening day.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-242",
+      "skill": "Relative clauses",
+      "prompt": "Which choice makes a complete, grammatical sentence?",
+      "choices": [
+        "whoever",
+        "which",
+        "whose",
+        "whom"
+      ],
+      "answer": 3,
+      "explanation": "“Whom” is the object of “trained”: the coordinator trained the volunteers. The clause modifies “volunteers.”",
+      "context": "The volunteers ___ Suri trained will lead the demonstration.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-243",
+      "skill": "Count and comparison",
+      "prompt": "Which choice is correct in formal written English?",
+      "choices": [
+        "fewer",
+        "fewest",
+        "least",
+        "less"
+      ],
+      "answer": 0,
+      "explanation": "Use “fewer” with a countable plural noun such as “people”; “than” calls for a comparative form.",
+      "context": "Because a traveling sound exhibit used a reservation system, ___ people waited outside than expected.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-244",
+      "skill": "Colon usage",
+      "prompt": "Which punctuation best introduces the list?",
+      "choices": [
+        ":",
+        "no punctuation",
+        ";",
+        ","
+      ],
+      "answer": 0,
+      "explanation": "A colon can introduce a list after the complete clause “Suri requested two supplies for the project.”",
+      "context": "Suri requested two supplies for the project___ paper and pencils.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-245",
+      "skill": "Restrictive clauses",
+      "prompt": "Which choice preserves the intended restriction?",
+      "choices": [
+        "recordings, that",
+        "recordings; that",
+        "recordings that",
+        "recordings, which"
+      ],
+      "answer": 2,
+      "explanation": "The clause identifies only the damaged items, so it is essential and begins without a separating comma.",
+      "context": "Only some recordings were damaged. Suri set aside the ___ needed repairs.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-246",
+      "skill": "Comparative form",
+      "prompt": "Which choice avoids a faulty comparison?",
+      "choices": [
+        "more clearer",
+        "clearer",
+        "clearest",
+        "most clearest"
+      ],
+      "answer": 1,
+      "explanation": "Use the single comparative “clearer” before “than.” Adding “more” creates a double comparative.",
+      "context": "After a trial run of a traveling sound exhibit, the revised instructions were ___ than the first draft.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-247",
+      "skill": "Past participles",
+      "prompt": "Which verb form is correct?",
+      "choices": [
+        "written",
+        "write",
+        "writing",
+        "wrote"
+      ],
+      "answer": 0,
+      "explanation": "“Had” forms the past perfect with the past participle “written,” not the simple past “wrote.”",
+      "context": "Suri had ___ the final report about a traveling sound exhibit before the meeting began.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-248",
+      "skill": "Pronoun clarity",
+      "prompt": "Which revision of the second sentence is clearest?",
+      "choices": [
+        "It asked whether the assistant could be enlarged.",
+        "The assistant asked whether the diagram could be enlarged.",
+        "They asked whether they could be enlarged.",
+        "The assistant asked whether this could enlarge them."
+      ],
+      "answer": 1,
+      "explanation": "Repeating the specific noun “diagram” removes uncertainty about what is to be enlarged.",
+      "context": "Suri showed the new assistant a diagram. The assistant asked whether the diagram could be enlarged.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-249",
+      "skill": "Relevant detail",
+      "prompt": "Which detail best develops that focus?",
+      "choices": [
+        "Suri prefers to work in the morning.",
+        "Several volunteers enjoy playing board games.",
+        "The meeting room has two windows.",
+        "Recordists labeled each clip with its time and location."
+      ],
+      "answer": 3,
+      "explanation": "The correct detail describes a concrete project procedure rather than an unrelated personal fact.",
+      "context": "A paragraph about a traveling sound exhibit focuses on the specific procedures used to carry out the project.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-250",
+      "skill": "Paragraph summary",
+      "prompt": "Which title best reflects the whole report?",
+      "choices": [
+        "Why Every Trial Must Succeed",
+        "From First Design to Tested Revision",
+        "A Complete History of the Neighborhood",
+        "The Personal Hobbies of Volunteers"
+      ],
+      "answer": 1,
+      "explanation": "The title covers design, testing, and revision without claiming the report addresses unrelated history or universal success.",
+      "context": "A report on a traveling sound exhibit describes the initial design, a trial with volunteers, and changes made in response to feedback.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-251",
+      "skill": "Scope of conclusions",
+      "prompt": "Which concluding sentence stays within the evidence?",
+      "choices": [
+        "The project will produce the same result in every neighborhood.",
+        "The pilot proves that all alternative approaches are ineffective.",
+        "The outcome establishes that no additional data are necessary.",
+        "The pilot produced a promising result that merits further testing."
+      ],
+      "answer": 3,
+      "explanation": "One limited pilot supports cautious further testing, not universal effectiveness or claims about every alternative.",
+      "context": "In a pilot of a traveling sound exhibit, visitors could compare the same street at dawn and dusk. The report describes only this trial, without random assignment or long-term follow-up.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-252",
+      "skill": "Concession and argument",
+      "prompt": "Which transition preserves both the limitation and the qualified positive claim?",
+      "choices": [
+        "In other words",
+        "As a result of its small size",
+        "For the same reason",
+        "Even so"
+      ],
+      "answer": 3,
+      "explanation": "“Even so” concedes the small sample while introducing a benefit that remains despite that limitation.",
+      "context": "Suri writes: “The trial of a traveling sound exhibit was small. ___, its consistent records provide a useful starting point for a larger study.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-253",
+      "skill": "Paired punctuation",
+      "prompt": "Which pair correctly sets off the interruption?",
+      "choices": [
+        "colon; semicolon",
+        "semicolon; comma",
+        "no punctuation; semicolon",
+        "comma; comma"
+      ],
+      "answer": 3,
+      "explanation": "The dependent interruption “although preliminary” is nonessential and can be enclosed by paired commas. A semicolon cannot isolate this fragment.",
+      "context": "Suri’s report contains an interrupting phrase: “The results of a traveling sound exhibit ___ although preliminary ___ justify a second trial.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-254",
+      "skill": "Agreement across clauses",
+      "prompt": "Which pair agrees with both subjects?",
+      "choices": [
+        "is; needs",
+        "are; needs",
+        "is; need",
+        "are; need"
+      ],
+      "answer": 2,
+      "explanation": "“Set” is singular and takes “is”; “entries” is plural and takes “need.” Neither intervening plural “records” nor “volunteers” changes the first subject.",
+      "context": "The set of records that the volunteers collected during a traveling sound exhibit ___ available, but several entries still ___ review.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-255",
+      "skill": "Tense sequence",
+      "prompt": "Which pair best expresses the stated chronology?",
+      "choices": [
+        "had completed; discusses",
+        "has completed; discussed",
+        "will complete; had discussed",
+        "will have completed; will discuss"
+      ],
+      "answer": 3,
+      "explanation": "The future perfect marks completion before a specified future deadline; the later discussion is also in the future.",
+      "context": "By next Friday, Suri ___ the comparison report, which the committee ___ at its meeting the following Monday.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-256",
+      "skill": "Logical comparison",
+      "prompt": "Which completion makes a parallel comparison?",
+      "choices": [
+        "those of the second team",
+        "the second team keeps",
+        "the second team",
+        "that of the second team"
+      ],
+      "answer": 0,
+      "explanation": "Records must be compared with records. “Those” refers to the plural records of the second team, avoiding a comparison between records and people.",
+      "context": "Suri compares a pilot team with a second team. Both teams kept records about a traveling sound exhibit. “The pilot team’s records are more detailed than ___.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-257",
+      "skill": "Sentence placement",
+      "prompt": "Where does the new sentence best explain both the problem and the reason for the revision?",
+      "choices": [
+        "After sentence 4",
+        "Between sentences 3 and 4",
+        "Before sentence 1",
+        "Between sentences 2 and 3"
+      ],
+      "answer": 3,
+      "explanation": "The sentence specifies the gap just mentioned and gives the reason for rewriting the section before the revision is described.",
+      "context": "[1] Suri launched a traveling sound exhibit. [2] The first trial exposed a gap in the instructions. [3] The team rewrote that section. [4] A second trial produced fewer requests for help. New sentence: “Several volunteers had interpreted the same step in two different ways.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-258",
+      "skill": "Function of evidence",
+      "prompt": "What is the most likely function of the quoted detail?",
+      "choices": [
+        "To introduce an unrelated historical digression",
+        "To establish that the design works under every condition",
+        "To provide a concrete outcome that can inform a later revision",
+        "To show that measurements can replace all practical judgment"
+      ],
+      "answer": 2,
+      "explanation": "The concrete observed outcome supports using evidence in subsequent decisions; it does not prove universal effectiveness.",
+      "context": "In a discussion of a traveling sound exhibit, the writer states, “Visitors could compare the same street at dawn and dusk.” The surrounding paragraph argues that observations should guide later design decisions.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-259",
+      "skill": "Subordination and emphasis",
+      "prompt": "Which sentence best gives the recommendation main-clause emphasis?",
+      "choices": [
+        "Although the first trial was limited, the project should continue.",
+        "The project should continue, the first trial was limited.",
+        "Although the project should continue, the first trial was limited.",
+        "The first trial was limited because every project should continue."
+      ],
+      "answer": 0,
+      "explanation": "Placing the limitation in an “although” clause subordinates it. The independent clause gives the recommendation the main emphasis; the last choice is a comma splice.",
+      "context": "A writer wants to emphasize that a traveling sound exhibit should continue while acknowledging that the first trial was limited.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-260",
+      "skill": "Precision and uncertainty",
+      "prompt": "Which revision most accurately states the status of a proposed explanation?",
+      "choices": [
+        "The observation proves the proposed mechanism is the only possible explanation.",
+        "The proposed explanation is consistent with the observation but remains untested.",
+        "The observation is impossible unless the proposed mechanism is correct.",
+        "The mechanism has been verified because it sounds plausible."
+      ],
+      "answer": 1,
+      "explanation": "Compatibility with one observation does not establish a causal mechanism or rule out other explanations.",
+      "context": "The report on a traveling sound exhibit finds that visitors could compare the same street at dawn and dusk. No causal mechanism has been tested.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-261",
+      "skill": "Contractions",
+      "prompt": "Which choice correctly completes the sentence?",
+      "choices": [
+        "it",
+        "its",
+        "it’s",
+        "its’"
+      ],
+      "answer": 2,
+      "explanation": "“It’s” means “it is,” which supplies the subject and verb needed before “ready.”",
+      "context": "Jonah coordinates a community seed exchange. The team is certain that ___ ready for opening day.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-262",
+      "skill": "Relative clauses",
+      "prompt": "Which choice makes a complete, grammatical sentence?",
+      "choices": [
+        "whose",
+        "which",
+        "whoever",
+        "whom"
+      ],
+      "answer": 3,
+      "explanation": "“Whom” is the object of “trained”: the coordinator trained the volunteers. The clause modifies “volunteers.”",
+      "context": "The volunteers ___ Jonah trained will lead the demonstration.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-263",
+      "skill": "Count and comparison",
+      "prompt": "Which choice is correct in formal written English?",
+      "choices": [
+        "fewest",
+        "fewer",
+        "least",
+        "less"
+      ],
+      "answer": 1,
+      "explanation": "Use “fewer” with a countable plural noun such as “people”; “than” calls for a comparative form.",
+      "context": "Because a community seed exchange used a reservation system, ___ people waited outside than expected.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-264",
+      "skill": "Colon usage",
+      "prompt": "Which punctuation best introduces the list?",
+      "choices": [
+        ":",
+        "no punctuation",
+        ",",
+        ";"
+      ],
+      "answer": 0,
+      "explanation": "A colon can introduce a list after the complete clause “Jonah requested two supplies for the project.”",
+      "context": "Jonah requested two supplies for the project___ paper and pencils.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-265",
+      "skill": "Restrictive clauses",
+      "prompt": "Which choice preserves the intended restriction?",
+      "choices": [
+        "seed packets that",
+        "seed packets, that",
+        "seed packets; that",
+        "seed packets, which"
+      ],
+      "answer": 0,
+      "explanation": "The clause identifies only the damaged items, so it is essential and begins without a separating comma.",
+      "context": "Only some seed packets were damaged. Jonah set aside the ___ needed repairs.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-266",
+      "skill": "Comparative form",
+      "prompt": "Which choice avoids a faulty comparison?",
+      "choices": [
+        "clearest",
+        "more clearer",
+        "clearer",
+        "most clearest"
+      ],
+      "answer": 2,
+      "explanation": "Use the single comparative “clearer” before “than.” Adding “more” creates a double comparative.",
+      "context": "After a trial run of a community seed exchange, the revised instructions were ___ than the first draft.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-267",
+      "skill": "Past participles",
+      "prompt": "Which verb form is correct?",
+      "choices": [
+        "written",
+        "wrote",
+        "write",
+        "writing"
+      ],
+      "answer": 0,
+      "explanation": "“Had” forms the past perfect with the past participle “written,” not the simple past “wrote.”",
+      "context": "Jonah had ___ the final report about a community seed exchange before the meeting began.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-268",
+      "skill": "Pronoun clarity",
+      "prompt": "Which revision of the second sentence is clearest?",
+      "choices": [
+        "The assistant asked whether this could enlarge them.",
+        "They asked whether they could be enlarged.",
+        "The assistant asked whether the diagram could be enlarged.",
+        "It asked whether the assistant could be enlarged."
+      ],
+      "answer": 2,
+      "explanation": "Repeating the specific noun “diagram” removes uncertainty about what is to be enlarged.",
+      "context": "Jonah showed the new assistant a diagram. The assistant asked whether the diagram could be enlarged.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-269",
+      "skill": "Relevant detail",
+      "prompt": "Which detail best develops that focus?",
+      "choices": [
+        "Jonah prefers to work in the morning.",
+        "Gardeners recorded the source of each seed variety.",
+        "The meeting room has two windows.",
+        "Several volunteers enjoy playing board games."
+      ],
+      "answer": 1,
+      "explanation": "The correct detail describes a concrete project procedure rather than an unrelated personal fact.",
+      "context": "A paragraph about a community seed exchange focuses on the specific procedures used to carry out the project.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-270",
+      "skill": "Paragraph summary",
+      "prompt": "Which title best reflects the whole report?",
+      "choices": [
+        "Why Every Trial Must Succeed",
+        "A Complete History of the Neighborhood",
+        "From First Design to Tested Revision",
+        "The Personal Hobbies of Volunteers"
+      ],
+      "answer": 2,
+      "explanation": "The title covers design, testing, and revision without claiming the report addresses unrelated history or universal success.",
+      "context": "A report on a community seed exchange describes the initial design, a trial with volunteers, and changes made in response to feedback.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-271",
+      "skill": "Scope of conclusions",
+      "prompt": "Which concluding sentence stays within the evidence?",
+      "choices": [
+        "The project will produce the same result in every neighborhood.",
+        "The outcome establishes that no additional data are necessary.",
+        "The pilot produced a promising result that merits further testing.",
+        "The pilot proves that all alternative approaches are ineffective."
+      ],
+      "answer": 2,
+      "explanation": "One limited pilot supports cautious further testing, not universal effectiveness or claims about every alternative.",
+      "context": "In a pilot of a community seed exchange, seventy households exchanged seeds during the first weekend. The report describes only this trial, without random assignment or long-term follow-up.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-272",
+      "skill": "Concession and argument",
+      "prompt": "Which transition preserves both the limitation and the qualified positive claim?",
+      "choices": [
+        "As a result of its small size",
+        "Even so",
+        "For the same reason",
+        "In other words"
+      ],
+      "answer": 1,
+      "explanation": "“Even so” concedes the small sample while introducing a benefit that remains despite that limitation.",
+      "context": "Jonah writes: “The trial of a community seed exchange was small. ___, its consistent records provide a useful starting point for a larger study.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-273",
+      "skill": "Paired punctuation",
+      "prompt": "Which pair correctly sets off the interruption?",
+      "choices": [
+        "semicolon; comma",
+        "colon; semicolon",
+        "comma; comma",
+        "no punctuation; semicolon"
+      ],
+      "answer": 2,
+      "explanation": "The dependent interruption “although preliminary” is nonessential and can be enclosed by paired commas. A semicolon cannot isolate this fragment.",
+      "context": "Jonah’s report contains an interrupting phrase: “The results of a community seed exchange ___ although preliminary ___ justify a second trial.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-274",
+      "skill": "Agreement across clauses",
+      "prompt": "Which pair agrees with both subjects?",
+      "choices": [
+        "are; needs",
+        "are; need",
+        "is; need",
+        "is; needs"
+      ],
+      "answer": 2,
+      "explanation": "“Set” is singular and takes “is”; “entries” is plural and takes “need.” Neither intervening plural “records” nor “volunteers” changes the first subject.",
+      "context": "The set of records that the volunteers collected during a community seed exchange ___ available, but several entries still ___ review.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-275",
+      "skill": "Tense sequence",
+      "prompt": "Which pair best expresses the stated chronology?",
+      "choices": [
+        "will have completed; will discuss",
+        "will complete; had discussed",
+        "has completed; discussed",
+        "had completed; discusses"
+      ],
+      "answer": 0,
+      "explanation": "The future perfect marks completion before a specified future deadline; the later discussion is also in the future.",
+      "context": "By next Friday, Jonah ___ the comparison report, which the committee ___ at its meeting the following Monday.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-276",
+      "skill": "Logical comparison",
+      "prompt": "Which completion makes a parallel comparison?",
+      "choices": [
+        "that of the second team",
+        "the second team",
+        "the second team keeps",
+        "those of the second team"
+      ],
+      "answer": 3,
+      "explanation": "Records must be compared with records. “Those” refers to the plural records of the second team, avoiding a comparison between records and people.",
+      "context": "Jonah compares a pilot team with a second team. Both teams kept records about a community seed exchange. “The pilot team’s records are more detailed than ___.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-277",
+      "skill": "Sentence placement",
+      "prompt": "Where does the new sentence best explain both the problem and the reason for the revision?",
+      "choices": [
+        "Before sentence 1",
+        "After sentence 4",
+        "Between sentences 3 and 4",
+        "Between sentences 2 and 3"
+      ],
+      "answer": 3,
+      "explanation": "The sentence specifies the gap just mentioned and gives the reason for rewriting the section before the revision is described.",
+      "context": "[1] Jonah launched a community seed exchange. [2] The first trial exposed a gap in the instructions. [3] The team rewrote that section. [4] A second trial produced fewer requests for help. New sentence: “Several volunteers had interpreted the same step in two different ways.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-278",
+      "skill": "Function of evidence",
+      "prompt": "What is the most likely function of the quoted detail?",
+      "choices": [
+        "To establish that the design works under every condition",
+        "To show that measurements can replace all practical judgment",
+        "To provide a concrete outcome that can inform a later revision",
+        "To introduce an unrelated historical digression"
+      ],
+      "answer": 2,
+      "explanation": "The concrete observed outcome supports using evidence in subsequent decisions; it does not prove universal effectiveness.",
+      "context": "In a discussion of a community seed exchange, the writer states, “Seventy households exchanged seeds during the first weekend.” The surrounding paragraph argues that observations should guide later design decisions.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-279",
+      "skill": "Subordination and emphasis",
+      "prompt": "Which sentence best gives the recommendation main-clause emphasis?",
+      "choices": [
+        "The project should continue, the first trial was limited.",
+        "The first trial was limited because every project should continue.",
+        "Although the project should continue, the first trial was limited.",
+        "Although the first trial was limited, the project should continue."
+      ],
+      "answer": 3,
+      "explanation": "Placing the limitation in an “although” clause subordinates it. The independent clause gives the recommendation the main emphasis; the last choice is a comma splice.",
+      "context": "A writer wants to emphasize that a community seed exchange should continue while acknowledging that the first trial was limited.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-280",
+      "skill": "Precision and uncertainty",
+      "prompt": "Which revision most accurately states the status of a proposed explanation?",
+      "choices": [
+        "The observation is impossible unless the proposed mechanism is correct.",
+        "The mechanism has been verified because it sounds plausible.",
+        "The observation proves the proposed mechanism is the only possible explanation.",
+        "The proposed explanation is consistent with the observation but remains untested."
+      ],
+      "answer": 3,
+      "explanation": "Compatibility with one observation does not establish a causal mechanism or rule out other explanations.",
+      "context": "The report on a community seed exchange finds that seventy households exchanged seeds during the first weekend. No causal mechanism has been tested.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-281",
+      "skill": "Contractions",
+      "prompt": "Which choice correctly completes the sentence?",
+      "choices": [
+        "its’",
+        "its",
+        "it",
+        "it’s"
+      ],
+      "answer": 3,
+      "explanation": "“It’s” means “it is,” which supplies the subject and verb needed before “ready.”",
+      "context": "Esme coordinates a tactile map project. The team is certain that ___ ready for opening day.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-282",
+      "skill": "Relative clauses",
+      "prompt": "Which choice makes a complete, grammatical sentence?",
+      "choices": [
+        "which",
+        "whom",
+        "whose",
+        "whoever"
+      ],
+      "answer": 1,
+      "explanation": "“Whom” is the object of “trained”: the coordinator trained the volunteers. The clause modifies “volunteers.”",
+      "context": "The volunteers ___ Esme trained will lead the demonstration.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-283",
+      "skill": "Count and comparison",
+      "prompt": "Which choice is correct in formal written English?",
+      "choices": [
+        "fewest",
+        "least",
+        "fewer",
+        "less"
+      ],
+      "answer": 2,
+      "explanation": "Use “fewer” with a countable plural noun such as “people”; “than” calls for a comparative form.",
+      "context": "Because a tactile map project used a reservation system, ___ people waited outside than expected.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-284",
+      "skill": "Colon usage",
+      "prompt": "Which punctuation best introduces the list?",
+      "choices": [
+        "no punctuation",
+        ";",
+        ":",
+        ","
+      ],
+      "answer": 2,
+      "explanation": "A colon can introduce a list after the complete clause “Esme requested two supplies for the project.”",
+      "context": "Esme requested two supplies for the project___ paper and pencils.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-285",
+      "skill": "Restrictive clauses",
+      "prompt": "Which choice preserves the intended restriction?",
+      "choices": [
+        "raised maps, which",
+        "raised maps; that",
+        "raised maps, that",
+        "raised maps that"
+      ],
+      "answer": 3,
+      "explanation": "The clause identifies only the damaged items, so it is essential and begins without a separating comma.",
+      "context": "Only some raised maps were damaged. Esme set aside the ___ needed repairs.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-286",
+      "skill": "Comparative form",
+      "prompt": "Which choice avoids a faulty comparison?",
+      "choices": [
+        "clearer",
+        "clearest",
+        "more clearer",
+        "most clearest"
+      ],
+      "answer": 0,
+      "explanation": "Use the single comparative “clearer” before “than.” Adding “more” creates a double comparative.",
+      "context": "After a trial run of a tactile map project, the revised instructions were ___ than the first draft.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-287",
+      "skill": "Past participles",
+      "prompt": "Which verb form is correct?",
+      "choices": [
+        "wrote",
+        "write",
+        "writing",
+        "written"
+      ],
+      "answer": 3,
+      "explanation": "“Had” forms the past perfect with the past participle “written,” not the simple past “wrote.”",
+      "context": "Esme had ___ the final report about a tactile map project before the meeting began.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-288",
+      "skill": "Pronoun clarity",
+      "prompt": "Which revision of the second sentence is clearest?",
+      "choices": [
+        "The assistant asked whether the diagram could be enlarged.",
+        "The assistant asked whether this could enlarge them.",
+        "It asked whether the assistant could be enlarged.",
+        "They asked whether they could be enlarged."
+      ],
+      "answer": 0,
+      "explanation": "Repeating the specific noun “diagram” removes uncertainty about what is to be enlarged.",
+      "context": "Esme showed the new assistant a diagram. The assistant asked whether the diagram could be enlarged.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-289",
+      "skill": "Relevant detail",
+      "prompt": "Which detail best develops that focus?",
+      "choices": [
+        "Several volunteers enjoy playing board games.",
+        "The meeting room has two windows.",
+        "Designers tested different textures with volunteers.",
+        "Esme prefers to work in the morning."
+      ],
+      "answer": 2,
+      "explanation": "The correct detail describes a concrete project procedure rather than an unrelated personal fact.",
+      "context": "A paragraph about a tactile map project focuses on the specific procedures used to carry out the project.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-290",
+      "skill": "Paragraph summary",
+      "prompt": "Which title best reflects the whole report?",
+      "choices": [
+        "The Personal Hobbies of Volunteers",
+        "A Complete History of the Neighborhood",
+        "Why Every Trial Must Succeed",
+        "From First Design to Tested Revision"
+      ],
+      "answer": 3,
+      "explanation": "The title covers design, testing, and revision without claiming the report addresses unrelated history or universal success.",
+      "context": "A report on a tactile map project describes the initial design, a trial with volunteers, and changes made in response to feedback.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-291",
+      "skill": "Scope of conclusions",
+      "prompt": "Which concluding sentence stays within the evidence?",
+      "choices": [
+        "The pilot proves that all alternative approaches are ineffective.",
+        "The pilot produced a promising result that merits further testing.",
+        "The outcome establishes that no additional data are necessary.",
+        "The project will produce the same result in every neighborhood."
+      ],
+      "answer": 1,
+      "explanation": "One limited pilot supports cautious further testing, not universal effectiveness or claims about every alternative.",
+      "context": "In a pilot of a tactile map project, three visitors navigated the route without spoken directions. The report describes only this trial, without random assignment or long-term follow-up.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-292",
+      "skill": "Concession and argument",
+      "prompt": "Which transition preserves both the limitation and the qualified positive claim?",
+      "choices": [
+        "For the same reason",
+        "As a result of its small size",
+        "In other words",
+        "Even so"
+      ],
+      "answer": 3,
+      "explanation": "“Even so” concedes the small sample while introducing a benefit that remains despite that limitation.",
+      "context": "Esme writes: “The trial of a tactile map project was small. ___, its consistent records provide a useful starting point for a larger study.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-293",
+      "skill": "Paired punctuation",
+      "prompt": "Which pair correctly sets off the interruption?",
+      "choices": [
+        "comma; comma",
+        "colon; semicolon",
+        "semicolon; comma",
+        "no punctuation; semicolon"
+      ],
+      "answer": 0,
+      "explanation": "The dependent interruption “although preliminary” is nonessential and can be enclosed by paired commas. A semicolon cannot isolate this fragment.",
+      "context": "Esme’s report contains an interrupting phrase: “The results of a tactile map project ___ although preliminary ___ justify a second trial.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-294",
+      "skill": "Agreement across clauses",
+      "prompt": "Which pair agrees with both subjects?",
+      "choices": [
+        "are; needs",
+        "is; need",
+        "is; needs",
+        "are; need"
+      ],
+      "answer": 1,
+      "explanation": "“Set” is singular and takes “is”; “entries” is plural and takes “need.” Neither intervening plural “records” nor “volunteers” changes the first subject.",
+      "context": "The set of records that the volunteers collected during a tactile map project ___ available, but several entries still ___ review.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-295",
+      "skill": "Tense sequence",
+      "prompt": "Which pair best expresses the stated chronology?",
+      "choices": [
+        "has completed; discussed",
+        "will complete; had discussed",
+        "will have completed; will discuss",
+        "had completed; discusses"
+      ],
+      "answer": 2,
+      "explanation": "The future perfect marks completion before a specified future deadline; the later discussion is also in the future.",
+      "context": "By next Friday, Esme ___ the comparison report, which the committee ___ at its meeting the following Monday.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-296",
+      "skill": "Logical comparison",
+      "prompt": "Which completion makes a parallel comparison?",
+      "choices": [
+        "that of the second team",
+        "the second team",
+        "the second team keeps",
+        "those of the second team"
+      ],
+      "answer": 3,
+      "explanation": "Records must be compared with records. “Those” refers to the plural records of the second team, avoiding a comparison between records and people.",
+      "context": "Esme compares a pilot team with a second team. Both teams kept records about a tactile map project. “The pilot team’s records are more detailed than ___.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-297",
+      "skill": "Sentence placement",
+      "prompt": "Where does the new sentence best explain both the problem and the reason for the revision?",
+      "choices": [
+        "Between sentences 2 and 3",
+        "Between sentences 3 and 4",
+        "After sentence 4",
+        "Before sentence 1"
+      ],
+      "answer": 0,
+      "explanation": "The sentence specifies the gap just mentioned and gives the reason for rewriting the section before the revision is described.",
+      "context": "[1] Esme launched a tactile map project. [2] The first trial exposed a gap in the instructions. [3] The team rewrote that section. [4] A second trial produced fewer requests for help. New sentence: “Several volunteers had interpreted the same step in two different ways.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-298",
+      "skill": "Function of evidence",
+      "prompt": "What is the most likely function of the quoted detail?",
+      "choices": [
+        "To provide a concrete outcome that can inform a later revision",
+        "To show that measurements can replace all practical judgment",
+        "To establish that the design works under every condition",
+        "To introduce an unrelated historical digression"
+      ],
+      "answer": 0,
+      "explanation": "The concrete observed outcome supports using evidence in subsequent decisions; it does not prove universal effectiveness.",
+      "context": "In a discussion of a tactile map project, the writer states, “Three visitors navigated the route without spoken directions.” The surrounding paragraph argues that observations should guide later design decisions.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-299",
+      "skill": "Subordination and emphasis",
+      "prompt": "Which sentence best gives the recommendation main-clause emphasis?",
+      "choices": [
+        "Although the project should continue, the first trial was limited.",
+        "The first trial was limited because every project should continue.",
+        "Although the first trial was limited, the project should continue.",
+        "The project should continue, the first trial was limited."
+      ],
+      "answer": 2,
+      "explanation": "Placing the limitation in an “although” clause subordinates it. The independent clause gives the recommendation the main emphasis; the last choice is a comma splice.",
+      "context": "A writer wants to emphasize that a tactile map project should continue while acknowledging that the first trial was limited.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-300",
+      "skill": "Precision and uncertainty",
+      "prompt": "Which revision most accurately states the status of a proposed explanation?",
+      "choices": [
+        "The proposed explanation is consistent with the observation but remains untested.",
+        "The observation proves the proposed mechanism is the only possible explanation.",
+        "The mechanism has been verified because it sounds plausible.",
+        "The observation is impossible unless the proposed mechanism is correct."
+      ],
+      "answer": 0,
+      "explanation": "Compatibility with one observation does not establish a causal mechanism or rule out other explanations.",
+      "context": "The report on a tactile map project finds that three visitors navigated the route without spoken directions. No causal mechanism has been tested.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-301",
+      "skill": "Contractions",
+      "prompt": "Which choice correctly completes the sentence?",
+      "choices": [
+        "its",
+        "it’s",
+        "its’",
+        "it"
+      ],
+      "answer": 1,
+      "explanation": "“It’s” means “it is,” which supplies the subject and verb needed before “ready.”",
+      "context": "Pavel coordinates a school bicycle workshop. The team is certain that ___ ready for opening day.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-302",
+      "skill": "Relative clauses",
+      "prompt": "Which choice makes a complete, grammatical sentence?",
+      "choices": [
+        "whose",
+        "whom",
+        "whoever",
+        "which"
+      ],
+      "answer": 1,
+      "explanation": "“Whom” is the object of “trained”: the coordinator trained the volunteers. The clause modifies “volunteers.”",
+      "context": "The volunteers ___ Pavel trained will lead the demonstration.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-303",
+      "skill": "Count and comparison",
+      "prompt": "Which choice is correct in formal written English?",
+      "choices": [
+        "fewer",
+        "least",
+        "less",
+        "fewest"
+      ],
+      "answer": 0,
+      "explanation": "Use “fewer” with a countable plural noun such as “people”; “than” calls for a comparative form.",
+      "context": "Because a school bicycle workshop used a reservation system, ___ people waited outside than expected.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-304",
+      "skill": "Colon usage",
+      "prompt": "Which punctuation best introduces the list?",
+      "choices": [
+        ";",
+        ",",
+        ":",
+        "no punctuation"
+      ],
+      "answer": 2,
+      "explanation": "A colon can introduce a list after the complete clause “Pavel requested two supplies for the project.”",
+      "context": "Pavel requested two supplies for the project___ paper and pencils.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-305",
+      "skill": "Restrictive clauses",
+      "prompt": "Which choice preserves the intended restriction?",
+      "choices": [
+        "bicycles; that",
+        "bicycles, that",
+        "bicycles, which",
+        "bicycles that"
+      ],
+      "answer": 3,
+      "explanation": "The clause identifies only the damaged items, so it is essential and begins without a separating comma.",
+      "context": "Only some bicycles were damaged. Pavel set aside the ___ needed repairs.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-306",
+      "skill": "Comparative form",
+      "prompt": "Which choice avoids a faulty comparison?",
+      "choices": [
+        "clearest",
+        "more clearer",
+        "most clearest",
+        "clearer"
+      ],
+      "answer": 3,
+      "explanation": "Use the single comparative “clearer” before “than.” Adding “more” creates a double comparative.",
+      "context": "After a trial run of a school bicycle workshop, the revised instructions were ___ than the first draft.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-307",
+      "skill": "Past participles",
+      "prompt": "Which verb form is correct?",
+      "choices": [
+        "writing",
+        "written",
+        "write",
+        "wrote"
+      ],
+      "answer": 1,
+      "explanation": "“Had” forms the past perfect with the past participle “written,” not the simple past “wrote.”",
+      "context": "Pavel had ___ the final report about a school bicycle workshop before the meeting began.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-308",
+      "skill": "Pronoun clarity",
+      "prompt": "Which revision of the second sentence is clearest?",
+      "choices": [
+        "The assistant asked whether the diagram could be enlarged.",
+        "They asked whether they could be enlarged.",
+        "It asked whether the assistant could be enlarged.",
+        "The assistant asked whether this could enlarge them."
+      ],
+      "answer": 0,
+      "explanation": "Repeating the specific noun “diagram” removes uncertainty about what is to be enlarged.",
+      "context": "Pavel showed the new assistant a diagram. The assistant asked whether the diagram could be enlarged.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-309",
+      "skill": "Relevant detail",
+      "prompt": "Which detail best develops that focus?",
+      "choices": [
+        "Experienced mechanics paired with first-time volunteers.",
+        "Several volunteers enjoy playing board games.",
+        "Pavel prefers to work in the morning.",
+        "The meeting room has two windows."
+      ],
+      "answer": 0,
+      "explanation": "The correct detail describes a concrete project procedure rather than an unrelated personal fact.",
+      "context": "A paragraph about a school bicycle workshop focuses on the specific procedures used to carry out the project.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-310",
+      "skill": "Paragraph summary",
+      "prompt": "Which title best reflects the whole report?",
+      "choices": [
+        "A Complete History of the Neighborhood",
+        "Why Every Trial Must Succeed",
+        "The Personal Hobbies of Volunteers",
+        "From First Design to Tested Revision"
+      ],
+      "answer": 3,
+      "explanation": "The title covers design, testing, and revision without claiming the report addresses unrelated history or universal success.",
+      "context": "A report on a school bicycle workshop describes the initial design, a trial with volunteers, and changes made in response to feedback.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-311",
+      "skill": "Scope of conclusions",
+      "prompt": "Which concluding sentence stays within the evidence?",
+      "choices": [
+        "The pilot proves that all alternative approaches are ineffective.",
+        "The outcome establishes that no additional data are necessary.",
+        "The project will produce the same result in every neighborhood.",
+        "The pilot produced a promising result that merits further testing."
+      ],
+      "answer": 3,
+      "explanation": "One limited pilot supports cautious further testing, not universal effectiveness or claims about every alternative.",
+      "context": "In a pilot of a school bicycle workshop, the average repair time fell from fifty minutes to thirty. The report describes only this trial, without random assignment or long-term follow-up.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-312",
+      "skill": "Concession and argument",
+      "prompt": "Which transition preserves both the limitation and the qualified positive claim?",
+      "choices": [
+        "In other words",
+        "Even so",
+        "For the same reason",
+        "As a result of its small size"
+      ],
+      "answer": 1,
+      "explanation": "“Even so” concedes the small sample while introducing a benefit that remains despite that limitation.",
+      "context": "Pavel writes: “The trial of a school bicycle workshop was small. ___, its consistent records provide a useful starting point for a larger study.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-313",
+      "skill": "Paired punctuation",
+      "prompt": "Which pair correctly sets off the interruption?",
+      "choices": [
+        "no punctuation; semicolon",
+        "comma; comma",
+        "colon; semicolon",
+        "semicolon; comma"
+      ],
+      "answer": 1,
+      "explanation": "The dependent interruption “although preliminary” is nonessential and can be enclosed by paired commas. A semicolon cannot isolate this fragment.",
+      "context": "Pavel’s report contains an interrupting phrase: “The results of a school bicycle workshop ___ although preliminary ___ justify a second trial.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-314",
+      "skill": "Agreement across clauses",
+      "prompt": "Which pair agrees with both subjects?",
+      "choices": [
+        "are; need",
+        "is; needs",
+        "are; needs",
+        "is; need"
+      ],
+      "answer": 3,
+      "explanation": "“Set” is singular and takes “is”; “entries” is plural and takes “need.” Neither intervening plural “records” nor “volunteers” changes the first subject.",
+      "context": "The set of records that the volunteers collected during a school bicycle workshop ___ available, but several entries still ___ review.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-315",
+      "skill": "Tense sequence",
+      "prompt": "Which pair best expresses the stated chronology?",
+      "choices": [
+        "has completed; discussed",
+        "will have completed; will discuss",
+        "will complete; had discussed",
+        "had completed; discusses"
+      ],
+      "answer": 1,
+      "explanation": "The future perfect marks completion before a specified future deadline; the later discussion is also in the future.",
+      "context": "By next Friday, Pavel ___ the comparison report, which the committee ___ at its meeting the following Monday.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-316",
+      "skill": "Logical comparison",
+      "prompt": "Which completion makes a parallel comparison?",
+      "choices": [
+        "that of the second team",
+        "the second team",
+        "the second team keeps",
+        "those of the second team"
+      ],
+      "answer": 3,
+      "explanation": "Records must be compared with records. “Those” refers to the plural records of the second team, avoiding a comparison between records and people.",
+      "context": "Pavel compares a pilot team with a second team. Both teams kept records about a school bicycle workshop. “The pilot team’s records are more detailed than ___.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-317",
+      "skill": "Sentence placement",
+      "prompt": "Where does the new sentence best explain both the problem and the reason for the revision?",
+      "choices": [
+        "Between sentences 3 and 4",
+        "Between sentences 2 and 3",
+        "After sentence 4",
+        "Before sentence 1"
+      ],
+      "answer": 1,
+      "explanation": "The sentence specifies the gap just mentioned and gives the reason for rewriting the section before the revision is described.",
+      "context": "[1] Pavel launched a school bicycle workshop. [2] The first trial exposed a gap in the instructions. [3] The team rewrote that section. [4] A second trial produced fewer requests for help. New sentence: “Several volunteers had interpreted the same step in two different ways.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-318",
+      "skill": "Function of evidence",
+      "prompt": "What is the most likely function of the quoted detail?",
+      "choices": [
+        "To provide a concrete outcome that can inform a later revision",
+        "To introduce an unrelated historical digression",
+        "To establish that the design works under every condition",
+        "To show that measurements can replace all practical judgment"
+      ],
+      "answer": 0,
+      "explanation": "The concrete observed outcome supports using evidence in subsequent decisions; it does not prove universal effectiveness.",
+      "context": "In a discussion of a school bicycle workshop, the writer states, “The average repair time fell from fifty minutes to thirty.” The surrounding paragraph argues that observations should guide later design decisions.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-319",
+      "skill": "Subordination and emphasis",
+      "prompt": "Which sentence best gives the recommendation main-clause emphasis?",
+      "choices": [
+        "Although the project should continue, the first trial was limited.",
+        "The project should continue, the first trial was limited.",
+        "Although the first trial was limited, the project should continue.",
+        "The first trial was limited because every project should continue."
+      ],
+      "answer": 2,
+      "explanation": "Placing the limitation in an “although” clause subordinates it. The independent clause gives the recommendation the main emphasis; the last choice is a comma splice.",
+      "context": "A writer wants to emphasize that a school bicycle workshop should continue while acknowledging that the first trial was limited.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-320",
+      "skill": "Precision and uncertainty",
+      "prompt": "Which revision most accurately states the status of a proposed explanation?",
+      "choices": [
+        "The observation proves the proposed mechanism is the only possible explanation.",
+        "The observation is impossible unless the proposed mechanism is correct.",
+        "The proposed explanation is consistent with the observation but remains untested.",
+        "The mechanism has been verified because it sounds plausible."
+      ],
+      "answer": 2,
+      "explanation": "Compatibility with one observation does not establish a causal mechanism or rule out other explanations.",
+      "context": "The report on a school bicycle workshop finds that the average repair time fell from fifty minutes to thirty. No causal mechanism has been tested.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-321",
+      "skill": "Contractions",
+      "prompt": "Which choice correctly completes the sentence?",
+      "choices": [
+        "it’s",
+        "its’",
+        "it",
+        "its"
+      ],
+      "answer": 0,
+      "explanation": "“It’s” means “it is,” which supplies the subject and verb needed before “ready.”",
+      "context": "Tala coordinates a night-sky survey. The team is certain that ___ ready for opening day.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-322",
+      "skill": "Relative clauses",
+      "prompt": "Which choice makes a complete, grammatical sentence?",
+      "choices": [
+        "whose",
+        "which",
+        "whom",
+        "whoever"
+      ],
+      "answer": 2,
+      "explanation": "“Whom” is the object of “trained”: the coordinator trained the volunteers. The clause modifies “volunteers.”",
+      "context": "The volunteers ___ Tala trained will lead the demonstration.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-323",
+      "skill": "Count and comparison",
+      "prompt": "Which choice is correct in formal written English?",
+      "choices": [
+        "less",
+        "fewest",
+        "least",
+        "fewer"
+      ],
+      "answer": 3,
+      "explanation": "Use “fewer” with a countable plural noun such as “people”; “than” calls for a comparative form.",
+      "context": "Because a night-sky survey used a reservation system, ___ people waited outside than expected.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-324",
+      "skill": "Colon usage",
+      "prompt": "Which punctuation best introduces the list?",
+      "choices": [
+        "no punctuation",
+        ":",
+        ",",
+        ";"
+      ],
+      "answer": 1,
+      "explanation": "A colon can introduce a list after the complete clause “Tala requested two supplies for the project.”",
+      "context": "Tala requested two supplies for the project___ paper and pencils.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-325",
+      "skill": "Restrictive clauses",
+      "prompt": "Which choice preserves the intended restriction?",
+      "choices": [
+        "observations that",
+        "observations, that",
+        "observations, which",
+        "observations; that"
+      ],
+      "answer": 0,
+      "explanation": "The clause identifies only the damaged items, so it is essential and begins without a separating comma.",
+      "context": "Only some observations were damaged. Tala set aside the ___ needed repairs.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-326",
+      "skill": "Comparative form",
+      "prompt": "Which choice avoids a faulty comparison?",
+      "choices": [
+        "most clearest",
+        "clearer",
+        "clearest",
+        "more clearer"
+      ],
+      "answer": 1,
+      "explanation": "Use the single comparative “clearer” before “than.” Adding “more” creates a double comparative.",
+      "context": "After a trial run of a night-sky survey, the revised instructions were ___ than the first draft.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-327",
+      "skill": "Past participles",
+      "prompt": "Which verb form is correct?",
+      "choices": [
+        "write",
+        "wrote",
+        "writing",
+        "written"
+      ],
+      "answer": 3,
+      "explanation": "“Had” forms the past perfect with the past participle “written,” not the simple past “wrote.”",
+      "context": "Tala had ___ the final report about a night-sky survey before the meeting began.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-328",
+      "skill": "Pronoun clarity",
+      "prompt": "Which revision of the second sentence is clearest?",
+      "choices": [
+        "The assistant asked whether this could enlarge them.",
+        "They asked whether they could be enlarged.",
+        "It asked whether the assistant could be enlarged.",
+        "The assistant asked whether the diagram could be enlarged."
+      ],
+      "answer": 3,
+      "explanation": "Repeating the specific noun “diagram” removes uncertainty about what is to be enlarged.",
+      "context": "Tala showed the new assistant a diagram. The assistant asked whether the diagram could be enlarged.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-329",
+      "skill": "Relevant detail",
+      "prompt": "Which detail best develops that focus?",
+      "choices": [
+        "Several volunteers enjoy playing board games.",
+        "Observers compared the same sky region on clear nights.",
+        "Tala prefers to work in the morning.",
+        "The meeting room has two windows."
+      ],
+      "answer": 1,
+      "explanation": "The correct detail describes a concrete project procedure rather than an unrelated personal fact.",
+      "context": "A paragraph about a night-sky survey focuses on the specific procedures used to carry out the project.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-330",
+      "skill": "Paragraph summary",
+      "prompt": "Which title best reflects the whole report?",
+      "choices": [
+        "Why Every Trial Must Succeed",
+        "From First Design to Tested Revision",
+        "The Personal Hobbies of Volunteers",
+        "A Complete History of the Neighborhood"
+      ],
+      "answer": 1,
+      "explanation": "The title covers design, testing, and revision without claiming the report addresses unrelated history or universal success.",
+      "context": "A report on a night-sky survey describes the initial design, a trial with volunteers, and changes made in response to feedback.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-331",
+      "skill": "Scope of conclusions",
+      "prompt": "Which concluding sentence stays within the evidence?",
+      "choices": [
+        "The project will produce the same result in every neighborhood.",
+        "The outcome establishes that no additional data are necessary.",
+        "The pilot proves that all alternative approaches are ineffective.",
+        "The pilot produced a promising result that merits further testing."
+      ],
+      "answer": 3,
+      "explanation": "One limited pilot supports cautious further testing, not universal effectiveness or claims about every alternative.",
+      "context": "In a pilot of a night-sky survey, fainter stars became visible when the nearby lights were shielded. The report describes only this trial, without random assignment or long-term follow-up.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-332",
+      "skill": "Concession and argument",
+      "prompt": "Which transition preserves both the limitation and the qualified positive claim?",
+      "choices": [
+        "As a result of its small size",
+        "For the same reason",
+        "In other words",
+        "Even so"
+      ],
+      "answer": 3,
+      "explanation": "“Even so” concedes the small sample while introducing a benefit that remains despite that limitation.",
+      "context": "Tala writes: “The trial of a night-sky survey was small. ___, its consistent records provide a useful starting point for a larger study.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-333",
+      "skill": "Paired punctuation",
+      "prompt": "Which pair correctly sets off the interruption?",
+      "choices": [
+        "no punctuation; semicolon",
+        "comma; comma",
+        "colon; semicolon",
+        "semicolon; comma"
+      ],
+      "answer": 1,
+      "explanation": "The dependent interruption “although preliminary” is nonessential and can be enclosed by paired commas. A semicolon cannot isolate this fragment.",
+      "context": "Tala’s report contains an interrupting phrase: “The results of a night-sky survey ___ although preliminary ___ justify a second trial.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-334",
+      "skill": "Agreement across clauses",
+      "prompt": "Which pair agrees with both subjects?",
+      "choices": [
+        "are; need",
+        "are; needs",
+        "is; needs",
+        "is; need"
+      ],
+      "answer": 3,
+      "explanation": "“Set” is singular and takes “is”; “entries” is plural and takes “need.” Neither intervening plural “records” nor “volunteers” changes the first subject.",
+      "context": "The set of records that the volunteers collected during a night-sky survey ___ available, but several entries still ___ review.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-335",
+      "skill": "Tense sequence",
+      "prompt": "Which pair best expresses the stated chronology?",
+      "choices": [
+        "will have completed; will discuss",
+        "will complete; had discussed",
+        "had completed; discusses",
+        "has completed; discussed"
+      ],
+      "answer": 0,
+      "explanation": "The future perfect marks completion before a specified future deadline; the later discussion is also in the future.",
+      "context": "By next Friday, Tala ___ the comparison report, which the committee ___ at its meeting the following Monday.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-336",
+      "skill": "Logical comparison",
+      "prompt": "Which completion makes a parallel comparison?",
+      "choices": [
+        "the second team keeps",
+        "that of the second team",
+        "those of the second team",
+        "the second team"
+      ],
+      "answer": 2,
+      "explanation": "Records must be compared with records. “Those” refers to the plural records of the second team, avoiding a comparison between records and people.",
+      "context": "Tala compares a pilot team with a second team. Both teams kept records about a night-sky survey. “The pilot team’s records are more detailed than ___.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-337",
+      "skill": "Sentence placement",
+      "prompt": "Where does the new sentence best explain both the problem and the reason for the revision?",
+      "choices": [
+        "Between sentences 3 and 4",
+        "After sentence 4",
+        "Before sentence 1",
+        "Between sentences 2 and 3"
+      ],
+      "answer": 3,
+      "explanation": "The sentence specifies the gap just mentioned and gives the reason for rewriting the section before the revision is described.",
+      "context": "[1] Tala launched a night-sky survey. [2] The first trial exposed a gap in the instructions. [3] The team rewrote that section. [4] A second trial produced fewer requests for help. New sentence: “Several volunteers had interpreted the same step in two different ways.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-338",
+      "skill": "Function of evidence",
+      "prompt": "What is the most likely function of the quoted detail?",
+      "choices": [
+        "To provide a concrete outcome that can inform a later revision",
+        "To establish that the design works under every condition",
+        "To show that measurements can replace all practical judgment",
+        "To introduce an unrelated historical digression"
+      ],
+      "answer": 0,
+      "explanation": "The concrete observed outcome supports using evidence in subsequent decisions; it does not prove universal effectiveness.",
+      "context": "In a discussion of a night-sky survey, the writer states, “Fainter stars became visible when the nearby lights were shielded.” The surrounding paragraph argues that observations should guide later design decisions.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-339",
+      "skill": "Subordination and emphasis",
+      "prompt": "Which sentence best gives the recommendation main-clause emphasis?",
+      "choices": [
+        "The project should continue, the first trial was limited.",
+        "The first trial was limited because every project should continue.",
+        "Although the project should continue, the first trial was limited.",
+        "Although the first trial was limited, the project should continue."
+      ],
+      "answer": 3,
+      "explanation": "Placing the limitation in an “although” clause subordinates it. The independent clause gives the recommendation the main emphasis; the last choice is a comma splice.",
+      "context": "A writer wants to emphasize that a night-sky survey should continue while acknowledging that the first trial was limited.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-340",
+      "skill": "Precision and uncertainty",
+      "prompt": "Which revision most accurately states the status of a proposed explanation?",
+      "choices": [
+        "The proposed explanation is consistent with the observation but remains untested.",
+        "The mechanism has been verified because it sounds plausible.",
+        "The observation proves the proposed mechanism is the only possible explanation.",
+        "The observation is impossible unless the proposed mechanism is correct."
+      ],
+      "answer": 0,
+      "explanation": "Compatibility with one observation does not establish a causal mechanism or rule out other explanations.",
+      "context": "The report on a night-sky survey finds that fainter stars became visible when the nearby lights were shielded. No causal mechanism has been tested.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-341",
+      "skill": "Contractions",
+      "prompt": "Which choice correctly completes the sentence?",
+      "choices": [
+        "it’s",
+        "it",
+        "its",
+        "its’"
+      ],
+      "answer": 0,
+      "explanation": "“It’s” means “it is,” which supplies the subject and verb needed before “ready.”",
+      "context": "Ren coordinates a neighborhood oral-history project. The team is certain that ___ ready for opening day.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-342",
+      "skill": "Relative clauses",
+      "prompt": "Which choice makes a complete, grammatical sentence?",
+      "choices": [
+        "whoever",
+        "whose",
+        "whom",
+        "which"
+      ],
+      "answer": 2,
+      "explanation": "“Whom” is the object of “trained”: the coordinator trained the volunteers. The clause modifies “volunteers.”",
+      "context": "The volunteers ___ Ren trained will lead the demonstration.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-343",
+      "skill": "Count and comparison",
+      "prompt": "Which choice is correct in formal written English?",
+      "choices": [
+        "least",
+        "fewest",
+        "less",
+        "fewer"
+      ],
+      "answer": 3,
+      "explanation": "Use “fewer” with a countable plural noun such as “people”; “than” calls for a comparative form.",
+      "context": "Because a neighborhood oral-history project used a reservation system, ___ people waited outside than expected.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-344",
+      "skill": "Colon usage",
+      "prompt": "Which punctuation best introduces the list?",
+      "choices": [
+        ",",
+        "no punctuation",
+        ";",
+        ":"
+      ],
+      "answer": 3,
+      "explanation": "A colon can introduce a list after the complete clause “Ren requested two supplies for the project.”",
+      "context": "Ren requested two supplies for the project___ paper and pencils.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-345",
+      "skill": "Restrictive clauses",
+      "prompt": "Which choice preserves the intended restriction?",
+      "choices": [
+        "interviews, which",
+        "interviews, that",
+        "interviews; that",
+        "interviews that"
+      ],
+      "answer": 3,
+      "explanation": "The clause identifies only the damaged items, so it is essential and begins without a separating comma.",
+      "context": "Only some interviews were damaged. Ren set aside the ___ needed repairs.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-346",
+      "skill": "Comparative form",
+      "prompt": "Which choice avoids a faulty comparison?",
+      "choices": [
+        "clearest",
+        "most clearest",
+        "more clearer",
+        "clearer"
+      ],
+      "answer": 3,
+      "explanation": "Use the single comparative “clearer” before “than.” Adding “more” creates a double comparative.",
+      "context": "After a trial run of a neighborhood oral-history project, the revised instructions were ___ than the first draft.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-347",
+      "skill": "Past participles",
+      "prompt": "Which verb form is correct?",
+      "choices": [
+        "write",
+        "wrote",
+        "written",
+        "writing"
+      ],
+      "answer": 2,
+      "explanation": "“Had” forms the past perfect with the past participle “written,” not the simple past “wrote.”",
+      "context": "Ren had ___ the final report about a neighborhood oral-history project before the meeting began.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-348",
+      "skill": "Pronoun clarity",
+      "prompt": "Which revision of the second sentence is clearest?",
+      "choices": [
+        "The assistant asked whether the diagram could be enlarged.",
+        "It asked whether the assistant could be enlarged.",
+        "The assistant asked whether this could enlarge them.",
+        "They asked whether they could be enlarged."
+      ],
+      "answer": 0,
+      "explanation": "Repeating the specific noun “diagram” removes uncertainty about what is to be enlarged.",
+      "context": "Ren showed the new assistant a diagram. The assistant asked whether the diagram could be enlarged.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-349",
+      "skill": "Relevant detail",
+      "prompt": "Which detail best develops that focus?",
+      "choices": [
+        "Several volunteers enjoy playing board games.",
+        "Interviewers compared memories with dated city records.",
+        "Ren prefers to work in the morning.",
+        "The meeting room has two windows."
+      ],
+      "answer": 1,
+      "explanation": "The correct detail describes a concrete project procedure rather than an unrelated personal fact.",
+      "context": "A paragraph about a neighborhood oral-history project focuses on the specific procedures used to carry out the project.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-350",
+      "skill": "Paragraph summary",
+      "prompt": "Which title best reflects the whole report?",
+      "choices": [
+        "From First Design to Tested Revision",
+        "Why Every Trial Must Succeed",
+        "A Complete History of the Neighborhood",
+        "The Personal Hobbies of Volunteers"
+      ],
+      "answer": 0,
+      "explanation": "The title covers design, testing, and revision without claiming the report addresses unrelated history or universal success.",
+      "context": "A report on a neighborhood oral-history project describes the initial design, a trial with volunteers, and changes made in response to feedback.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-351",
+      "skill": "Scope of conclusions",
+      "prompt": "Which concluding sentence stays within the evidence?",
+      "choices": [
+        "The outcome establishes that no additional data are necessary.",
+        "The project will produce the same result in every neighborhood.",
+        "The pilot proves that all alternative approaches are ineffective.",
+        "The pilot produced a promising result that merits further testing."
+      ],
+      "answer": 3,
+      "explanation": "One limited pilot supports cautious further testing, not universal effectiveness or claims about every alternative.",
+      "context": "In a pilot of a neighborhood oral-history project, residents described four former uses of the same building. The report describes only this trial, without random assignment or long-term follow-up.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-352",
+      "skill": "Concession and argument",
+      "prompt": "Which transition preserves both the limitation and the qualified positive claim?",
+      "choices": [
+        "As a result of its small size",
+        "In other words",
+        "Even so",
+        "For the same reason"
+      ],
+      "answer": 2,
+      "explanation": "“Even so” concedes the small sample while introducing a benefit that remains despite that limitation.",
+      "context": "Ren writes: “The trial of a neighborhood oral-history project was small. ___, its consistent records provide a useful starting point for a larger study.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-353",
+      "skill": "Paired punctuation",
+      "prompt": "Which pair correctly sets off the interruption?",
+      "choices": [
+        "comma; comma",
+        "no punctuation; semicolon",
+        "colon; semicolon",
+        "semicolon; comma"
+      ],
+      "answer": 0,
+      "explanation": "The dependent interruption “although preliminary” is nonessential and can be enclosed by paired commas. A semicolon cannot isolate this fragment.",
+      "context": "Ren’s report contains an interrupting phrase: “The results of a neighborhood oral-history project ___ although preliminary ___ justify a second trial.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-354",
+      "skill": "Agreement across clauses",
+      "prompt": "Which pair agrees with both subjects?",
+      "choices": [
+        "is; need",
+        "is; needs",
+        "are; needs",
+        "are; need"
+      ],
+      "answer": 0,
+      "explanation": "“Set” is singular and takes “is”; “entries” is plural and takes “need.” Neither intervening plural “records” nor “volunteers” changes the first subject.",
+      "context": "The set of records that the volunteers collected during a neighborhood oral-history project ___ available, but several entries still ___ review.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-355",
+      "skill": "Tense sequence",
+      "prompt": "Which pair best expresses the stated chronology?",
+      "choices": [
+        "had completed; discusses",
+        "has completed; discussed",
+        "will complete; had discussed",
+        "will have completed; will discuss"
+      ],
+      "answer": 3,
+      "explanation": "The future perfect marks completion before a specified future deadline; the later discussion is also in the future.",
+      "context": "By next Friday, Ren ___ the comparison report, which the committee ___ at its meeting the following Monday.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-356",
+      "skill": "Logical comparison",
+      "prompt": "Which completion makes a parallel comparison?",
+      "choices": [
+        "that of the second team",
+        "the second team keeps",
+        "those of the second team",
+        "the second team"
+      ],
+      "answer": 2,
+      "explanation": "Records must be compared with records. “Those” refers to the plural records of the second team, avoiding a comparison between records and people.",
+      "context": "Ren compares a pilot team with a second team. Both teams kept records about a neighborhood oral-history project. “The pilot team’s records are more detailed than ___.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-357",
+      "skill": "Sentence placement",
+      "prompt": "Where does the new sentence best explain both the problem and the reason for the revision?",
+      "choices": [
+        "Before sentence 1",
+        "After sentence 4",
+        "Between sentences 3 and 4",
+        "Between sentences 2 and 3"
+      ],
+      "answer": 3,
+      "explanation": "The sentence specifies the gap just mentioned and gives the reason for rewriting the section before the revision is described.",
+      "context": "[1] Ren launched a neighborhood oral-history project. [2] The first trial exposed a gap in the instructions. [3] The team rewrote that section. [4] A second trial produced fewer requests for help. New sentence: “Several volunteers had interpreted the same step in two different ways.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-358",
+      "skill": "Function of evidence",
+      "prompt": "What is the most likely function of the quoted detail?",
+      "choices": [
+        "To establish that the design works under every condition",
+        "To introduce an unrelated historical digression",
+        "To provide a concrete outcome that can inform a later revision",
+        "To show that measurements can replace all practical judgment"
+      ],
+      "answer": 2,
+      "explanation": "The concrete observed outcome supports using evidence in subsequent decisions; it does not prove universal effectiveness.",
+      "context": "In a discussion of a neighborhood oral-history project, the writer states, “Residents described four former uses of the same building.” The surrounding paragraph argues that observations should guide later design decisions.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-359",
+      "skill": "Subordination and emphasis",
+      "prompt": "Which sentence best gives the recommendation main-clause emphasis?",
+      "choices": [
+        "Although the first trial was limited, the project should continue.",
+        "Although the project should continue, the first trial was limited.",
+        "The first trial was limited because every project should continue.",
+        "The project should continue, the first trial was limited."
+      ],
+      "answer": 0,
+      "explanation": "Placing the limitation in an “although” clause subordinates it. The independent clause gives the recommendation the main emphasis; the last choice is a comma splice.",
+      "context": "A writer wants to emphasize that a neighborhood oral-history project should continue while acknowledging that the first trial was limited.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-360",
+      "skill": "Precision and uncertainty",
+      "prompt": "Which revision most accurately states the status of a proposed explanation?",
+      "choices": [
+        "The observation proves the proposed mechanism is the only possible explanation.",
+        "The proposed explanation is consistent with the observation but remains untested.",
+        "The observation is impossible unless the proposed mechanism is correct.",
+        "The mechanism has been verified because it sounds plausible."
+      ],
+      "answer": 1,
+      "explanation": "Compatibility with one observation does not establish a causal mechanism or rule out other explanations.",
+      "context": "The report on a neighborhood oral-history project finds that residents described four former uses of the same building. No causal mechanism has been tested.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-361",
+      "skill": "Contractions",
+      "prompt": "Which choice correctly completes the sentence?",
+      "choices": [
+        "it",
+        "its’",
+        "its",
+        "it’s"
+      ],
+      "answer": 3,
+      "explanation": "“It’s” means “it is,” which supplies the subject and verb needed before “ready.”",
+      "context": "Amina coordinates a river litter study. The team is certain that ___ ready for opening day.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-362",
+      "skill": "Relative clauses",
+      "prompt": "Which choice makes a complete, grammatical sentence?",
+      "choices": [
+        "which",
+        "whom",
+        "whose",
+        "whoever"
+      ],
+      "answer": 1,
+      "explanation": "“Whom” is the object of “trained”: the coordinator trained the volunteers. The clause modifies “volunteers.”",
+      "context": "The volunteers ___ Amina trained will lead the demonstration.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-363",
+      "skill": "Count and comparison",
+      "prompt": "Which choice is correct in formal written English?",
+      "choices": [
+        "fewest",
+        "less",
+        "fewer",
+        "least"
+      ],
+      "answer": 2,
+      "explanation": "Use “fewer” with a countable plural noun such as “people”; “than” calls for a comparative form.",
+      "context": "Because a river litter study used a reservation system, ___ people waited outside than expected.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-364",
+      "skill": "Colon usage",
+      "prompt": "Which punctuation best introduces the list?",
+      "choices": [
+        "no punctuation",
+        ";",
+        ",",
+        ":"
+      ],
+      "answer": 3,
+      "explanation": "A colon can introduce a list after the complete clause “Amina requested two supplies for the project.”",
+      "context": "Amina requested two supplies for the project___ paper and pencils.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-365",
+      "skill": "Restrictive clauses",
+      "prompt": "Which choice preserves the intended restriction?",
+      "choices": [
+        "collection bags, that",
+        "collection bags that",
+        "collection bags; that",
+        "collection bags, which"
+      ],
+      "answer": 1,
+      "explanation": "The clause identifies only the damaged items, so it is essential and begins without a separating comma.",
+      "context": "Only some collection bags were damaged. Amina set aside the ___ needed repairs.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-366",
+      "skill": "Comparative form",
+      "prompt": "Which choice avoids a faulty comparison?",
+      "choices": [
+        "most clearest",
+        "more clearer",
+        "clearer",
+        "clearest"
+      ],
+      "answer": 2,
+      "explanation": "Use the single comparative “clearer” before “than.” Adding “more” creates a double comparative.",
+      "context": "After a trial run of a river litter study, the revised instructions were ___ than the first draft.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-367",
+      "skill": "Past participles",
+      "prompt": "Which verb form is correct?",
+      "choices": [
+        "write",
+        "wrote",
+        "written",
+        "writing"
+      ],
+      "answer": 2,
+      "explanation": "“Had” forms the past perfect with the past participle “written,” not the simple past “wrote.”",
+      "context": "Amina had ___ the final report about a river litter study before the meeting began.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-368",
+      "skill": "Pronoun clarity",
+      "prompt": "Which revision of the second sentence is clearest?",
+      "choices": [
+        "The assistant asked whether this could enlarge them.",
+        "It asked whether the assistant could be enlarged.",
+        "The assistant asked whether the diagram could be enlarged.",
+        "They asked whether they could be enlarged."
+      ],
+      "answer": 2,
+      "explanation": "Repeating the specific noun “diagram” removes uncertainty about what is to be enlarged.",
+      "context": "Amina showed the new assistant a diagram. The assistant asked whether the diagram could be enlarged.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-369",
+      "skill": "Relevant detail",
+      "prompt": "Which detail best develops that focus?",
+      "choices": [
+        "Surveyors walked the same route every Friday.",
+        "The meeting room has two windows.",
+        "Amina prefers to work in the morning.",
+        "Several volunteers enjoy playing board games."
+      ],
+      "answer": 0,
+      "explanation": "The correct detail describes a concrete project procedure rather than an unrelated personal fact.",
+      "context": "A paragraph about a river litter study focuses on the specific procedures used to carry out the project.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-370",
+      "skill": "Paragraph summary",
+      "prompt": "Which title best reflects the whole report?",
+      "choices": [
+        "From First Design to Tested Revision",
+        "The Personal Hobbies of Volunteers",
+        "Why Every Trial Must Succeed",
+        "A Complete History of the Neighborhood"
+      ],
+      "answer": 0,
+      "explanation": "The title covers design, testing, and revision without claiming the report addresses unrelated history or universal success.",
+      "context": "A report on a river litter study describes the initial design, a trial with volunteers, and changes made in response to feedback.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-371",
+      "skill": "Scope of conclusions",
+      "prompt": "Which concluding sentence stays within the evidence?",
+      "choices": [
+        "The pilot proves that all alternative approaches are ineffective.",
+        "The pilot produced a promising result that merits further testing.",
+        "The outcome establishes that no additional data are necessary.",
+        "The project will produce the same result in every neighborhood."
+      ],
+      "answer": 1,
+      "explanation": "One limited pilot supports cautious further testing, not universal effectiveness or claims about every alternative.",
+      "context": "In a pilot of a river litter study, the team counted fewer plastic wrappers after bins were installed. The report describes only this trial, without random assignment or long-term follow-up.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-372",
+      "skill": "Concession and argument",
+      "prompt": "Which transition preserves both the limitation and the qualified positive claim?",
+      "choices": [
+        "As a result of its small size",
+        "In other words",
+        "Even so",
+        "For the same reason"
+      ],
+      "answer": 2,
+      "explanation": "“Even so” concedes the small sample while introducing a benefit that remains despite that limitation.",
+      "context": "Amina writes: “The trial of a river litter study was small. ___, its consistent records provide a useful starting point for a larger study.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-373",
+      "skill": "Paired punctuation",
+      "prompt": "Which pair correctly sets off the interruption?",
+      "choices": [
+        "no punctuation; semicolon",
+        "colon; semicolon",
+        "comma; comma",
+        "semicolon; comma"
+      ],
+      "answer": 2,
+      "explanation": "The dependent interruption “although preliminary” is nonessential and can be enclosed by paired commas. A semicolon cannot isolate this fragment.",
+      "context": "Amina’s report contains an interrupting phrase: “The results of a river litter study ___ although preliminary ___ justify a second trial.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-374",
+      "skill": "Agreement across clauses",
+      "prompt": "Which pair agrees with both subjects?",
+      "choices": [
+        "are; need",
+        "are; needs",
+        "is; need",
+        "is; needs"
+      ],
+      "answer": 2,
+      "explanation": "“Set” is singular and takes “is”; “entries” is plural and takes “need.” Neither intervening plural “records” nor “volunteers” changes the first subject.",
+      "context": "The set of records that the volunteers collected during a river litter study ___ available, but several entries still ___ review.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-375",
+      "skill": "Tense sequence",
+      "prompt": "Which pair best expresses the stated chronology?",
+      "choices": [
+        "will have completed; will discuss",
+        "will complete; had discussed",
+        "has completed; discussed",
+        "had completed; discusses"
+      ],
+      "answer": 0,
+      "explanation": "The future perfect marks completion before a specified future deadline; the later discussion is also in the future.",
+      "context": "By next Friday, Amina ___ the comparison report, which the committee ___ at its meeting the following Monday.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-376",
+      "skill": "Logical comparison",
+      "prompt": "Which completion makes a parallel comparison?",
+      "choices": [
+        "the second team",
+        "those of the second team",
+        "that of the second team",
+        "the second team keeps"
+      ],
+      "answer": 1,
+      "explanation": "Records must be compared with records. “Those” refers to the plural records of the second team, avoiding a comparison between records and people.",
+      "context": "Amina compares a pilot team with a second team. Both teams kept records about a river litter study. “The pilot team’s records are more detailed than ___.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-377",
+      "skill": "Sentence placement",
+      "prompt": "Where does the new sentence best explain both the problem and the reason for the revision?",
+      "choices": [
+        "Between sentences 3 and 4",
+        "Before sentence 1",
+        "Between sentences 2 and 3",
+        "After sentence 4"
+      ],
+      "answer": 2,
+      "explanation": "The sentence specifies the gap just mentioned and gives the reason for rewriting the section before the revision is described.",
+      "context": "[1] Amina launched a river litter study. [2] The first trial exposed a gap in the instructions. [3] The team rewrote that section. [4] A second trial produced fewer requests for help. New sentence: “Several volunteers had interpreted the same step in two different ways.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-378",
+      "skill": "Function of evidence",
+      "prompt": "What is the most likely function of the quoted detail?",
+      "choices": [
+        "To show that measurements can replace all practical judgment",
+        "To provide a concrete outcome that can inform a later revision",
+        "To establish that the design works under every condition",
+        "To introduce an unrelated historical digression"
+      ],
+      "answer": 1,
+      "explanation": "The concrete observed outcome supports using evidence in subsequent decisions; it does not prove universal effectiveness.",
+      "context": "In a discussion of a river litter study, the writer states, “The team counted fewer plastic wrappers after bins were installed.” The surrounding paragraph argues that observations should guide later design decisions.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-379",
+      "skill": "Subordination and emphasis",
+      "prompt": "Which sentence best gives the recommendation main-clause emphasis?",
+      "choices": [
+        "The first trial was limited because every project should continue.",
+        "The project should continue, the first trial was limited.",
+        "Although the first trial was limited, the project should continue.",
+        "Although the project should continue, the first trial was limited."
+      ],
+      "answer": 2,
+      "explanation": "Placing the limitation in an “although” clause subordinates it. The independent clause gives the recommendation the main emphasis; the last choice is a comma splice.",
+      "context": "A writer wants to emphasize that a river litter study should continue while acknowledging that the first trial was limited.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-380",
+      "skill": "Precision and uncertainty",
+      "prompt": "Which revision most accurately states the status of a proposed explanation?",
+      "choices": [
+        "The observation is impossible unless the proposed mechanism is correct.",
+        "The observation proves the proposed mechanism is the only possible explanation.",
+        "The mechanism has been verified because it sounds plausible.",
+        "The proposed explanation is consistent with the observation but remains untested."
+      ],
+      "answer": 3,
+      "explanation": "Compatibility with one observation does not establish a causal mechanism or rule out other explanations.",
+      "context": "The report on a river litter study finds that the team counted fewer plastic wrappers after bins were installed. No causal mechanism has been tested.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-381",
+      "skill": "Contractions",
+      "prompt": "Which choice correctly completes the sentence?",
+      "choices": [
+        "its’",
+        "its",
+        "it’s",
+        "it"
+      ],
+      "answer": 2,
+      "explanation": "“It’s” means “it is,” which supplies the subject and verb needed before “ready.”",
+      "context": "Dario coordinates a low-cost cooling project. The team is certain that ___ ready for opening day.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-382",
+      "skill": "Relative clauses",
+      "prompt": "Which choice makes a complete, grammatical sentence?",
+      "choices": [
+        "which",
+        "whom",
+        "whose",
+        "whoever"
+      ],
+      "answer": 1,
+      "explanation": "“Whom” is the object of “trained”: the coordinator trained the volunteers. The clause modifies “volunteers.”",
+      "context": "The volunteers ___ Dario trained will lead the demonstration.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-383",
+      "skill": "Count and comparison",
+      "prompt": "Which choice is correct in formal written English?",
+      "choices": [
+        "fewer",
+        "fewest",
+        "less",
+        "least"
+      ],
+      "answer": 0,
+      "explanation": "Use “fewer” with a countable plural noun such as “people”; “than” calls for a comparative form.",
+      "context": "Because a low-cost cooling project used a reservation system, ___ people waited outside than expected.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-384",
+      "skill": "Colon usage",
+      "prompt": "Which punctuation best introduces the list?",
+      "choices": [
+        ":",
+        ",",
+        ";",
+        "no punctuation"
+      ],
+      "answer": 0,
+      "explanation": "A colon can introduce a list after the complete clause “Dario requested two supplies for the project.”",
+      "context": "Dario requested two supplies for the project___ paper and pencils.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-385",
+      "skill": "Restrictive clauses",
+      "prompt": "Which choice preserves the intended restriction?",
+      "choices": [
+        "test panels, that",
+        "test panels, which",
+        "test panels; that",
+        "test panels that"
+      ],
+      "answer": 3,
+      "explanation": "The clause identifies only the damaged items, so it is essential and begins without a separating comma.",
+      "context": "Only some test panels were damaged. Dario set aside the ___ needed repairs.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-386",
+      "skill": "Comparative form",
+      "prompt": "Which choice avoids a faulty comparison?",
+      "choices": [
+        "most clearest",
+        "clearer",
+        "clearest",
+        "more clearer"
+      ],
+      "answer": 1,
+      "explanation": "Use the single comparative “clearer” before “than.” Adding “more” creates a double comparative.",
+      "context": "After a trial run of a low-cost cooling project, the revised instructions were ___ than the first draft.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-387",
+      "skill": "Past participles",
+      "prompt": "Which verb form is correct?",
+      "choices": [
+        "writing",
+        "write",
+        "wrote",
+        "written"
+      ],
+      "answer": 3,
+      "explanation": "“Had” forms the past perfect with the past participle “written,” not the simple past “wrote.”",
+      "context": "Dario had ___ the final report about a low-cost cooling project before the meeting began.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-388",
+      "skill": "Pronoun clarity",
+      "prompt": "Which revision of the second sentence is clearest?",
+      "choices": [
+        "The assistant asked whether this could enlarge them.",
+        "It asked whether the assistant could be enlarged.",
+        "The assistant asked whether the diagram could be enlarged.",
+        "They asked whether they could be enlarged."
+      ],
+      "answer": 2,
+      "explanation": "Repeating the specific noun “diagram” removes uncertainty about what is to be enlarged.",
+      "context": "Dario showed the new assistant a diagram. The assistant asked whether the diagram could be enlarged.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-389",
+      "skill": "Relevant detail",
+      "prompt": "Which detail best develops that focus?",
+      "choices": [
+        "Several volunteers enjoy playing board games.",
+        "Dario prefers to work in the morning.",
+        "Builders logged surface temperatures at fixed intervals.",
+        "The meeting room has two windows."
+      ],
+      "answer": 2,
+      "explanation": "The correct detail describes a concrete project procedure rather than an unrelated personal fact.",
+      "context": "A paragraph about a low-cost cooling project focuses on the specific procedures used to carry out the project.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-390",
+      "skill": "Paragraph summary",
+      "prompt": "Which title best reflects the whole report?",
+      "choices": [
+        "Why Every Trial Must Succeed",
+        "From First Design to Tested Revision",
+        "The Personal Hobbies of Volunteers",
+        "A Complete History of the Neighborhood"
+      ],
+      "answer": 1,
+      "explanation": "The title covers design, testing, and revision without claiming the report addresses unrelated history or universal success.",
+      "context": "A report on a low-cost cooling project describes the initial design, a trial with volunteers, and changes made in response to feedback.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-391",
+      "skill": "Scope of conclusions",
+      "prompt": "Which concluding sentence stays within the evidence?",
+      "choices": [
+        "The pilot proves that all alternative approaches are ineffective.",
+        "The outcome establishes that no additional data are necessary.",
+        "The pilot produced a promising result that merits further testing.",
+        "The project will produce the same result in every neighborhood."
+      ],
+      "answer": 2,
+      "explanation": "One limited pilot supports cautious further testing, not universal effectiveness or claims about every alternative.",
+      "context": "In a pilot of a low-cost cooling project, the shaded panel remained five degrees cooler at noon. The report describes only this trial, without random assignment or long-term follow-up.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-392",
+      "skill": "Concession and argument",
+      "prompt": "Which transition preserves both the limitation and the qualified positive claim?",
+      "choices": [
+        "In other words",
+        "For the same reason",
+        "As a result of its small size",
+        "Even so"
+      ],
+      "answer": 3,
+      "explanation": "“Even so” concedes the small sample while introducing a benefit that remains despite that limitation.",
+      "context": "Dario writes: “The trial of a low-cost cooling project was small. ___, its consistent records provide a useful starting point for a larger study.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-393",
+      "skill": "Paired punctuation",
+      "prompt": "Which pair correctly sets off the interruption?",
+      "choices": [
+        "no punctuation; semicolon",
+        "colon; semicolon",
+        "semicolon; comma",
+        "comma; comma"
+      ],
+      "answer": 3,
+      "explanation": "The dependent interruption “although preliminary” is nonessential and can be enclosed by paired commas. A semicolon cannot isolate this fragment.",
+      "context": "Dario’s report contains an interrupting phrase: “The results of a low-cost cooling project ___ although preliminary ___ justify a second trial.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-394",
+      "skill": "Agreement across clauses",
+      "prompt": "Which pair agrees with both subjects?",
+      "choices": [
+        "are; need",
+        "is; need",
+        "is; needs",
+        "are; needs"
+      ],
+      "answer": 1,
+      "explanation": "“Set” is singular and takes “is”; “entries” is plural and takes “need.” Neither intervening plural “records” nor “volunteers” changes the first subject.",
+      "context": "The set of records that the volunteers collected during a low-cost cooling project ___ available, but several entries still ___ review.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-395",
+      "skill": "Tense sequence",
+      "prompt": "Which pair best expresses the stated chronology?",
+      "choices": [
+        "will have completed; will discuss",
+        "has completed; discussed",
+        "will complete; had discussed",
+        "had completed; discusses"
+      ],
+      "answer": 0,
+      "explanation": "The future perfect marks completion before a specified future deadline; the later discussion is also in the future.",
+      "context": "By next Friday, Dario ___ the comparison report, which the committee ___ at its meeting the following Monday.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-396",
+      "skill": "Logical comparison",
+      "prompt": "Which completion makes a parallel comparison?",
+      "choices": [
+        "that of the second team",
+        "those of the second team",
+        "the second team keeps",
+        "the second team"
+      ],
+      "answer": 1,
+      "explanation": "Records must be compared with records. “Those” refers to the plural records of the second team, avoiding a comparison between records and people.",
+      "context": "Dario compares a pilot team with a second team. Both teams kept records about a low-cost cooling project. “The pilot team’s records are more detailed than ___.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-397",
+      "skill": "Sentence placement",
+      "prompt": "Where does the new sentence best explain both the problem and the reason for the revision?",
+      "choices": [
+        "After sentence 4",
+        "Before sentence 1",
+        "Between sentences 3 and 4",
+        "Between sentences 2 and 3"
+      ],
+      "answer": 3,
+      "explanation": "The sentence specifies the gap just mentioned and gives the reason for rewriting the section before the revision is described.",
+      "context": "[1] Dario launched a low-cost cooling project. [2] The first trial exposed a gap in the instructions. [3] The team rewrote that section. [4] A second trial produced fewer requests for help. New sentence: “Several volunteers had interpreted the same step in two different ways.”",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-398",
+      "skill": "Function of evidence",
+      "prompt": "What is the most likely function of the quoted detail?",
+      "choices": [
+        "To establish that the design works under every condition",
+        "To provide a concrete outcome that can inform a later revision",
+        "To introduce an unrelated historical digression",
+        "To show that measurements can replace all practical judgment"
+      ],
+      "answer": 1,
+      "explanation": "The concrete observed outcome supports using evidence in subsequent decisions; it does not prove universal effectiveness.",
+      "context": "In a discussion of a low-cost cooling project, the writer states, “The shaded panel remained five degrees cooler at noon.” The surrounding paragraph argues that observations should guide later design decisions.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-399",
+      "skill": "Subordination and emphasis",
+      "prompt": "Which sentence best gives the recommendation main-clause emphasis?",
+      "choices": [
+        "The project should continue, the first trial was limited.",
+        "The first trial was limited because every project should continue.",
+        "Although the project should continue, the first trial was limited.",
+        "Although the first trial was limited, the project should continue."
+      ],
+      "answer": 3,
+      "explanation": "Placing the limitation in an “although” clause subordinates it. The independent clause gives the recommendation the main emphasis; the last choice is a comma splice.",
+      "context": "A writer wants to emphasize that a low-cost cooling project should continue while acknowledging that the first trial was limited.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "english-400",
+      "skill": "Precision and uncertainty",
+      "prompt": "Which revision most accurately states the status of a proposed explanation?",
+      "choices": [
+        "The proposed explanation is consistent with the observation but remains untested.",
+        "The observation proves the proposed mechanism is the only possible explanation.",
+        "The observation is impossible unless the proposed mechanism is correct.",
+        "The mechanism has been verified because it sounds plausible."
+      ],
+      "answer": 0,
+      "explanation": "Compatibility with one observation does not establish a causal mechanism or rule out other explanations.",
+      "context": "The report on a low-cost cooling project finds that the shaded panel remained five degrees cooler at noon. No causal mechanism has been tested.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
     }
   ],
   "math": [
@@ -5404,6 +8604,3006 @@ var bank = {
       ],
       "answer": 0,
       "explanation": "Average the x-coordinates and y-coordinates: ((10 + 16)/2, (12 + 20)/2) = (13, 16)."
+    },
+    {
+      "id": "math-201",
+      "skill": "Absolute-value equations",
+      "prompt": "A sensor’s offset x satisfies |x - 5| = 3. What is the sum of the two possible offsets?",
+      "choices": [
+        "5",
+        "13",
+        "10",
+        "9"
+      ],
+      "answer": 2,
+      "explanation": "The offsets are 2 and 8; their sum is 10.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-202",
+      "skill": "Weighted mean",
+      "prompt": "A club has 5 students with a mean of 12 service hours and 10 students with a mean of 18 hours. What is the combined mean?",
+      "choices": [
+        "16",
+        "18",
+        "30",
+        "15"
+      ],
+      "answer": 0,
+      "explanation": "Total hours = 5×12 + 10×18 = 240. Divide by 15 students to obtain 16 hours.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-203",
+      "skill": "Compound probability",
+      "prompt": "A box holds 5 white tokens and 7 black tokens. A token is drawn, replaced, and then another is drawn. What is the probability both are white?",
+      "choices": [
+        "49/144",
+        "25/144",
+        "20/132",
+        "5/12"
+      ],
+      "answer": 1,
+      "explanation": "Replacement keeps each draw independent. Multiply the white-token probability by itself.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-204",
+      "skill": "Unit conversion",
+      "prompt": "A pipe releases 5 liters per minute for 150 seconds. How many liters does it release?",
+      "choices": [
+        "300",
+        "750",
+        "7.5",
+        "12.5"
+      ],
+      "answer": 3,
+      "explanation": "150 seconds is 2.5 minutes; 5 × 2.5 = 12.5 liters.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-205",
+      "skill": "Exponential growth",
+      "prompt": "A culture begins with 5 cells and doubles every hour. In this model, how many cells are present after 4 hours?",
+      "choices": [
+        "80",
+        "13",
+        "40",
+        "20"
+      ],
+      "answer": 0,
+      "explanation": "Four doublings multiply the starting count by 2⁴ = 16, giving 80.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-206",
+      "skill": "Triangle angle sums",
+      "prompt": "A triangle has angles x°, (x + 5)°, and (x + 10)°. What is its smallest angle?",
+      "choices": [
+        "55",
+        "60",
+        "165",
+        "65"
+      ],
+      "answer": 0,
+      "explanation": "The angle sum is 3x + 15 = 180, so x = 55. The other angles are larger.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-207",
+      "skill": "Volume scaling",
+      "prompt": "A solid cube has side length 5 cm. A second cube has sides twice as long. What is the ratio of the second cube’s volume to the first cube’s volume?",
+      "choices": [
+        "16:1",
+        "8:1",
+        "4:1",
+        "2:1"
+      ],
+      "answer": 1,
+      "explanation": "Doubling all three dimensions multiplies volume by 2³ = 8; the original side length cancels.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-208",
+      "skill": "Function composition",
+      "prompt": "For f(x) = 2x + 5 and g(x) = x - 3, what is f(g(10))?",
+      "choices": [
+        "25",
+        "19",
+        "22",
+        "14"
+      ],
+      "answer": 1,
+      "explanation": "g(10) = 7, then f(7) = 2(7) + 5 = 19.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-209",
+      "skill": "Median with an unknown",
+      "prompt": "The ordered list 2, 5, x, 15, 25 has median 8. What is x?",
+      "choices": [
+        "8",
+        "5",
+        "15",
+        "25"
+      ],
+      "answer": 0,
+      "explanation": "In an ordered list of five values, the third value is the median. Therefore x equals the stated median.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-210",
+      "skill": "Coordinate transformations",
+      "prompt": "The point (5, -7) is reflected across the y-axis and then translated up 3 units. What are its final coordinates?",
+      "choices": [
+        "(-5, -4)",
+        "(5, -4)",
+        "(5, 7)",
+        "(-5, 10)"
+      ],
+      "answer": 0,
+      "explanation": "Reflection across the y-axis reverses the x-coordinate only. Adding 3 to the y-coordinate gives the final point.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-211",
+      "skill": "Rational equations and domain",
+      "prompt": "For x ≠ 5, the equation (x² - 25)/(x - 5) = 15 has what solution?",
+      "choices": [
+        "5",
+        "15",
+        "-10",
+        "10"
+      ],
+      "answer": 3,
+      "explanation": "Factor the numerator and cancel x - 5 only when x ≠ 5. Then x + 5 = 15, so x = 10, which is allowed.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-212",
+      "skill": "Quadratic discriminant",
+      "prompt": "The equation x² - 10x + k = 0 has exactly one distinct real solution. What is k?",
+      "choices": [
+        "25",
+        "100",
+        "24",
+        "10"
+      ],
+      "answer": 0,
+      "explanation": "The discriminant must be zero: (10)² - 4k = 0. Therefore k = 25.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-213",
+      "skill": "Inverse functions",
+      "prompt": "The function f(x) = (3x - 5)/2 is invertible. What is f⁻¹(8)?",
+      "choices": [
+        "5",
+        "8",
+        "21",
+        "7"
+      ],
+      "answer": 3,
+      "explanation": "Solve y = (3x - 5)/2 for x: x = (2y + 5)/3. At y = 8, this is 7.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-214",
+      "skill": "Conditional probability",
+      "prompt": "Of 20 students, 5 study both art and music, 6 study only art, 4 study only music, and 5 study neither. Given that a randomly chosen student studies music, what is the probability that student also studies art?",
+      "choices": [
+        "5/11",
+        "9/20",
+        "5/9",
+        "5/20"
+      ],
+      "answer": 2,
+      "explanation": "Restrict the sample space to the 9 music students; 5 of them also study art.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-215",
+      "skill": "Mixture equations",
+      "prompt": "How many liters of a 60% solution must be mixed with 5 liters of a 20% solution to obtain a 40% solution?",
+      "choices": [
+        "15",
+        "2.5",
+        "5",
+        "10"
+      ],
+      "answer": 2,
+      "explanation": "Let v be the added volume. Solute balance gives 0.60v + 0.20(5) = 0.40(v + 5); hence 0.20v = 1, so v = 5.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-216",
+      "skill": "Combined work rates",
+      "prompt": "Pump A fills a tank in 15 minutes; pump B fills it in 30 minutes. Starting empty, how many minutes do the pumps need together?",
+      "choices": [
+        "45",
+        "20",
+        "10",
+        "15"
+      ],
+      "answer": 2,
+      "explanation": "Combined rate is 1/15 + 1/30 = 1/10 tank per minute, so the required time is 10 minutes.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-217",
+      "skill": "Geometric series",
+      "prompt": "A grant pays $500 in its first year and half the preceding year’s amount in each following year. What is the total paid in the first four years?",
+      "choices": [
+        "937.5",
+        "1000",
+        "875",
+        "750"
+      ],
+      "answer": 0,
+      "explanation": "The four multipliers sum to 1 + 1/2 + 1/4 + 1/8 = 15/8. Multiply $500 by 15/8 to obtain $937.5.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-218",
+      "skill": "Logarithmic equations",
+      "prompt": "If log₂(x - 5) + log₂(4) = 5, what is x?",
+      "choices": [
+        "-3",
+        "8",
+        "13",
+        "37"
+      ],
+      "answer": 2,
+      "explanation": "log₂(4) = 2, so log₂(x - 5) = 3. Thus x - 5 = 8 and x = 13; the logarithm’s argument is positive.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-219",
+      "skill": "Quadratic optimization",
+      "prompt": "An open rectangular pen uses 20 meters of fence for three sides, with a wall forming the fourth side. What is the maximum possible enclosed area in square meters?",
+      "choices": [
+        "50",
+        "200",
+        "100",
+        "25"
+      ],
+      "answer": 0,
+      "explanation": "For width w, length is 20 - 2w and area is -2w² + 20w. The vertex occurs at w = 5, giving length 10 and area 50.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-220",
+      "skill": "Parameter constraints",
+      "prompt": "The system 2x + 3y = 5 and 4x + ky = 11 has no solution. What is k?",
+      "choices": [
+        "4",
+        "3",
+        "6",
+        "8"
+      ],
+      "answer": 2,
+      "explanation": "For parallel distinct lines, the x- and y-coefficient ratios must match: k/3 = 4/2, so k = 6. The constants differ from exact doubling by 1, preventing coincident lines.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-221",
+      "skill": "Absolute-value equations",
+      "prompt": "A sensor’s offset x satisfies |x - 6| = 3. What is the sum of the two possible offsets?",
+      "choices": [
+        "15",
+        "11",
+        "12",
+        "6"
+      ],
+      "answer": 2,
+      "explanation": "The offsets are 3 and 9; their sum is 12.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-222",
+      "skill": "Weighted mean",
+      "prompt": "A club has 6 students with a mean of 12 service hours and 12 students with a mean of 18 hours. What is the combined mean?",
+      "choices": [
+        "30",
+        "18",
+        "16",
+        "15"
+      ],
+      "answer": 2,
+      "explanation": "Total hours = 6×12 + 12×18 = 288. Divide by 18 students to obtain 16 hours.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-223",
+      "skill": "Compound probability",
+      "prompt": "A box holds 6 white tokens and 8 black tokens. A token is drawn, replaced, and then another is drawn. What is the probability both are white?",
+      "choices": [
+        "6/14",
+        "64/196",
+        "36/196",
+        "30/182"
+      ],
+      "answer": 2,
+      "explanation": "Replacement keeps each draw independent. Multiply the white-token probability by itself.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-224",
+      "skill": "Unit conversion",
+      "prompt": "A pipe releases 6 liters per minute for 150 seconds. How many liters does it release?",
+      "choices": [
+        "9.0",
+        "360",
+        "900",
+        "15.0"
+      ],
+      "answer": 3,
+      "explanation": "150 seconds is 2.5 minutes; 6 × 2.5 = 15 liters.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-225",
+      "skill": "Exponential growth",
+      "prompt": "A culture begins with 6 cells and doubles every hour. In this model, how many cells are present after 4 hours?",
+      "choices": [
+        "96",
+        "48",
+        "24",
+        "14"
+      ],
+      "answer": 0,
+      "explanation": "Four doublings multiply the starting count by 2⁴ = 16, giving 96.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-226",
+      "skill": "Triangle angle sums",
+      "prompt": "A triangle has angles x°, (x + 6)°, and (x + 12)°. What is its smallest angle?",
+      "choices": [
+        "60",
+        "66",
+        "54",
+        "162"
+      ],
+      "answer": 2,
+      "explanation": "The angle sum is 3x + 18 = 180, so x = 54. The other angles are larger.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-227",
+      "skill": "Volume scaling",
+      "prompt": "A solid cube has side length 6 cm. A second cube has sides twice as long. What is the ratio of the second cube’s volume to the first cube’s volume?",
+      "choices": [
+        "2:1",
+        "16:1",
+        "8:1",
+        "4:1"
+      ],
+      "answer": 2,
+      "explanation": "Doubling all three dimensions multiplies volume by 2³ = 8; the original side length cancels.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-228",
+      "skill": "Function composition",
+      "prompt": "For f(x) = 2x + 6 and g(x) = x - 3, what is f(g(11))?",
+      "choices": [
+        "25",
+        "28",
+        "16",
+        "22"
+      ],
+      "answer": 3,
+      "explanation": "g(11) = 8, then f(8) = 2(8) + 6 = 22.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-229",
+      "skill": "Median with an unknown",
+      "prompt": "The ordered list 2, 5, x, 16, 26 has median 9. What is x?",
+      "choices": [
+        "9",
+        "16",
+        "5",
+        "26"
+      ],
+      "answer": 0,
+      "explanation": "In an ordered list of five values, the third value is the median. Therefore x equals the stated median.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-230",
+      "skill": "Coordinate transformations",
+      "prompt": "The point (6, -8) is reflected across the y-axis and then translated up 3 units. What are its final coordinates?",
+      "choices": [
+        "(-6, 11)",
+        "(6, 8)",
+        "(6, -5)",
+        "(-6, -5)"
+      ],
+      "answer": 3,
+      "explanation": "Reflection across the y-axis reverses the x-coordinate only. Adding 3 to the y-coordinate gives the final point.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-231",
+      "skill": "Rational equations and domain",
+      "prompt": "For x ≠ 6, the equation (x² - 36)/(x - 6) = 18 has what solution?",
+      "choices": [
+        "-12",
+        "6",
+        "18",
+        "12"
+      ],
+      "answer": 3,
+      "explanation": "Factor the numerator and cancel x - 6 only when x ≠ 6. Then x + 6 = 18, so x = 12, which is allowed.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-232",
+      "skill": "Quadratic discriminant",
+      "prompt": "The equation x² - 12x + k = 0 has exactly one distinct real solution. What is k?",
+      "choices": [
+        "12",
+        "144",
+        "35",
+        "36"
+      ],
+      "answer": 3,
+      "explanation": "The discriminant must be zero: (12)² - 4k = 0. Therefore k = 36.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-233",
+      "skill": "Inverse functions",
+      "prompt": "The function f(x) = (3x - 6)/2 is invertible. What is f⁻¹(9)?",
+      "choices": [
+        "8",
+        "6",
+        "24",
+        "9"
+      ],
+      "answer": 0,
+      "explanation": "Solve y = (3x - 6)/2 for x: x = (2y + 6)/3. At y = 9, this is 8.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-234",
+      "skill": "Conditional probability",
+      "prompt": "Of 24 students, 6 study both art and music, 7 study only art, 5 study only music, and 6 study neither. Given that a randomly chosen student studies music, what is the probability that student also studies art?",
+      "choices": [
+        "6/24",
+        "11/24",
+        "6/13",
+        "6/11"
+      ],
+      "answer": 3,
+      "explanation": "Restrict the sample space to the 11 music students; 6 of them also study art.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-235",
+      "skill": "Mixture equations",
+      "prompt": "How many liters of a 60% solution must be mixed with 6 liters of a 20% solution to obtain a 40% solution?",
+      "choices": [
+        "6",
+        "3.0",
+        "18",
+        "12"
+      ],
+      "answer": 0,
+      "explanation": "Let v be the added volume. Solute balance gives 0.60v + 0.20(6) = 0.40(v + 6); hence 0.20v = 1.2, so v = 6.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-236",
+      "skill": "Combined work rates",
+      "prompt": "Pump A fills a tank in 18 minutes; pump B fills it in 36 minutes. Starting empty, how many minutes do the pumps need together?",
+      "choices": [
+        "12",
+        "18",
+        "24",
+        "54"
+      ],
+      "answer": 0,
+      "explanation": "Combined rate is 1/18 + 1/36 = 1/12 tank per minute, so the required time is 12 minutes.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-237",
+      "skill": "Geometric series",
+      "prompt": "A grant pays $600 in its first year and half the preceding year’s amount in each following year. What is the total paid in the first four years?",
+      "choices": [
+        "1125.0",
+        "900",
+        "1200",
+        "1050"
+      ],
+      "answer": 0,
+      "explanation": "The four multipliers sum to 1 + 1/2 + 1/4 + 1/8 = 15/8. Multiply $600 by 15/8 to obtain $1125.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-238",
+      "skill": "Logarithmic equations",
+      "prompt": "If log₂(x - 6) + log₂(4) = 5, what is x?",
+      "choices": [
+        "-2",
+        "14",
+        "38",
+        "9"
+      ],
+      "answer": 1,
+      "explanation": "log₂(4) = 2, so log₂(x - 6) = 3. Thus x - 6 = 8 and x = 14; the logarithm’s argument is positive.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-239",
+      "skill": "Quadratic optimization",
+      "prompt": "An open rectangular pen uses 24 meters of fence for three sides, with a wall forming the fourth side. What is the maximum possible enclosed area in square meters?",
+      "choices": [
+        "144",
+        "36",
+        "72",
+        "288"
+      ],
+      "answer": 2,
+      "explanation": "For width w, length is 24 - 2w and area is -2w² + 24w. The vertex occurs at w = 6, giving length 12 and area 72.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-240",
+      "skill": "Parameter constraints",
+      "prompt": "The system 2x + 3y = 6 and 4x + ky = 13 has no solution. What is k?",
+      "choices": [
+        "6",
+        "3",
+        "4",
+        "8"
+      ],
+      "answer": 0,
+      "explanation": "For parallel distinct lines, the x- and y-coefficient ratios must match: k/3 = 4/2, so k = 6. The constants differ from exact doubling by 1, preventing coincident lines.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-241",
+      "skill": "Absolute-value equations",
+      "prompt": "A sensor’s offset x satisfies |x - 7| = 3. What is the sum of the two possible offsets?",
+      "choices": [
+        "14",
+        "17",
+        "13",
+        "7"
+      ],
+      "answer": 0,
+      "explanation": "The offsets are 4 and 10; their sum is 14.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-242",
+      "skill": "Weighted mean",
+      "prompt": "A club has 7 students with a mean of 12 service hours and 14 students with a mean of 18 hours. What is the combined mean?",
+      "choices": [
+        "30",
+        "18",
+        "15",
+        "16"
+      ],
+      "answer": 3,
+      "explanation": "Total hours = 7×12 + 14×18 = 336. Divide by 21 students to obtain 16 hours.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-243",
+      "skill": "Compound probability",
+      "prompt": "A box holds 7 white tokens and 9 black tokens. A token is drawn, replaced, and then another is drawn. What is the probability both are white?",
+      "choices": [
+        "49/256",
+        "42/240",
+        "81/256",
+        "7/16"
+      ],
+      "answer": 0,
+      "explanation": "Replacement keeps each draw independent. Multiply the white-token probability by itself.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-244",
+      "skill": "Unit conversion",
+      "prompt": "A pipe releases 7 liters per minute for 150 seconds. How many liters does it release?",
+      "choices": [
+        "17.5",
+        "10.5",
+        "1050",
+        "420"
+      ],
+      "answer": 0,
+      "explanation": "150 seconds is 2.5 minutes; 7 × 2.5 = 17.5 liters.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-245",
+      "skill": "Exponential growth",
+      "prompt": "A culture begins with 7 cells and doubles every hour. In this model, how many cells are present after 4 hours?",
+      "choices": [
+        "28",
+        "15",
+        "112",
+        "56"
+      ],
+      "answer": 2,
+      "explanation": "Four doublings multiply the starting count by 2⁴ = 16, giving 112.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-246",
+      "skill": "Triangle angle sums",
+      "prompt": "A triangle has angles x°, (x + 7)°, and (x + 14)°. What is its smallest angle?",
+      "choices": [
+        "60",
+        "53",
+        "159",
+        "67"
+      ],
+      "answer": 1,
+      "explanation": "The angle sum is 3x + 21 = 180, so x = 53. The other angles are larger.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-247",
+      "skill": "Volume scaling",
+      "prompt": "A solid cube has side length 7 cm. A second cube has sides twice as long. What is the ratio of the second cube’s volume to the first cube’s volume?",
+      "choices": [
+        "8:1",
+        "4:1",
+        "16:1",
+        "2:1"
+      ],
+      "answer": 0,
+      "explanation": "Doubling all three dimensions multiplies volume by 2³ = 8; the original side length cancels.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-248",
+      "skill": "Function composition",
+      "prompt": "For f(x) = 2x + 7 and g(x) = x - 3, what is f(g(12))?",
+      "choices": [
+        "31",
+        "25",
+        "28",
+        "18"
+      ],
+      "answer": 1,
+      "explanation": "g(12) = 9, then f(9) = 2(9) + 7 = 25.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-249",
+      "skill": "Median with an unknown",
+      "prompt": "The ordered list 2, 5, x, 17, 27 has median 10. What is x?",
+      "choices": [
+        "5",
+        "27",
+        "17",
+        "10"
+      ],
+      "answer": 3,
+      "explanation": "In an ordered list of five values, the third value is the median. Therefore x equals the stated median.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-250",
+      "skill": "Coordinate transformations",
+      "prompt": "The point (7, -9) is reflected across the y-axis and then translated up 3 units. What are its final coordinates?",
+      "choices": [
+        "(-7, 12)",
+        "(-7, -6)",
+        "(7, -6)",
+        "(7, 9)"
+      ],
+      "answer": 1,
+      "explanation": "Reflection across the y-axis reverses the x-coordinate only. Adding 3 to the y-coordinate gives the final point.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-251",
+      "skill": "Rational equations and domain",
+      "prompt": "For x ≠ 7, the equation (x² - 49)/(x - 7) = 21 has what solution?",
+      "choices": [
+        "7",
+        "21",
+        "-14",
+        "14"
+      ],
+      "answer": 3,
+      "explanation": "Factor the numerator and cancel x - 7 only when x ≠ 7. Then x + 7 = 21, so x = 14, which is allowed.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-252",
+      "skill": "Quadratic discriminant",
+      "prompt": "The equation x² - 14x + k = 0 has exactly one distinct real solution. What is k?",
+      "choices": [
+        "196",
+        "14",
+        "48",
+        "49"
+      ],
+      "answer": 3,
+      "explanation": "The discriminant must be zero: (14)² - 4k = 0. Therefore k = 49.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-253",
+      "skill": "Inverse functions",
+      "prompt": "The function f(x) = (3x - 7)/2 is invertible. What is f⁻¹(10)?",
+      "choices": [
+        "27",
+        "10",
+        "7",
+        "9"
+      ],
+      "answer": 3,
+      "explanation": "Solve y = (3x - 7)/2 for x: x = (2y + 7)/3. At y = 10, this is 9.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-254",
+      "skill": "Conditional probability",
+      "prompt": "Of 28 students, 7 study both art and music, 8 study only art, 6 study only music, and 7 study neither. Given that a randomly chosen student studies music, what is the probability that student also studies art?",
+      "choices": [
+        "7/15",
+        "13/28",
+        "7/13",
+        "7/28"
+      ],
+      "answer": 2,
+      "explanation": "Restrict the sample space to the 13 music students; 7 of them also study art.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-255",
+      "skill": "Mixture equations",
+      "prompt": "How many liters of a 60% solution must be mixed with 7 liters of a 20% solution to obtain a 40% solution?",
+      "choices": [
+        "14",
+        "21",
+        "3.5",
+        "7"
+      ],
+      "answer": 3,
+      "explanation": "Let v be the added volume. Solute balance gives 0.60v + 0.20(7) = 0.40(v + 7); hence 0.20v = 1.4, so v = 7.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-256",
+      "skill": "Combined work rates",
+      "prompt": "Pump A fills a tank in 21 minutes; pump B fills it in 42 minutes. Starting empty, how many minutes do the pumps need together?",
+      "choices": [
+        "14",
+        "28",
+        "21",
+        "63"
+      ],
+      "answer": 0,
+      "explanation": "Combined rate is 1/21 + 1/42 = 1/14 tank per minute, so the required time is 14 minutes.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-257",
+      "skill": "Geometric series",
+      "prompt": "A grant pays $700 in its first year and half the preceding year’s amount in each following year. What is the total paid in the first four years?",
+      "choices": [
+        "1050",
+        "1400",
+        "1225",
+        "1312.5"
+      ],
+      "answer": 3,
+      "explanation": "The four multipliers sum to 1 + 1/2 + 1/4 + 1/8 = 15/8. Multiply $700 by 15/8 to obtain $1312.5.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-258",
+      "skill": "Logarithmic equations",
+      "prompt": "If log₂(x - 7) + log₂(4) = 5, what is x?",
+      "choices": [
+        "39",
+        "10",
+        "15",
+        "-1"
+      ],
+      "answer": 2,
+      "explanation": "log₂(4) = 2, so log₂(x - 7) = 3. Thus x - 7 = 8 and x = 15; the logarithm’s argument is positive.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-259",
+      "skill": "Quadratic optimization",
+      "prompt": "An open rectangular pen uses 28 meters of fence for three sides, with a wall forming the fourth side. What is the maximum possible enclosed area in square meters?",
+      "choices": [
+        "98",
+        "392",
+        "49",
+        "196"
+      ],
+      "answer": 0,
+      "explanation": "For width w, length is 28 - 2w and area is -2w² + 28w. The vertex occurs at w = 7, giving length 14 and area 98.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-260",
+      "skill": "Parameter constraints",
+      "prompt": "The system 2x + 3y = 7 and 4x + ky = 15 has no solution. What is k?",
+      "choices": [
+        "3",
+        "6",
+        "8",
+        "4"
+      ],
+      "answer": 1,
+      "explanation": "For parallel distinct lines, the x- and y-coefficient ratios must match: k/3 = 4/2, so k = 6. The constants differ from exact doubling by 1, preventing coincident lines.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-261",
+      "skill": "Absolute-value equations",
+      "prompt": "A sensor’s offset x satisfies |x - 8| = 3. What is the sum of the two possible offsets?",
+      "choices": [
+        "15",
+        "8",
+        "16",
+        "19"
+      ],
+      "answer": 2,
+      "explanation": "The offsets are 5 and 11; their sum is 16.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-262",
+      "skill": "Weighted mean",
+      "prompt": "A club has 8 students with a mean of 12 service hours and 16 students with a mean of 18 hours. What is the combined mean?",
+      "choices": [
+        "15",
+        "18",
+        "30",
+        "16"
+      ],
+      "answer": 3,
+      "explanation": "Total hours = 8×12 + 16×18 = 384. Divide by 24 students to obtain 16 hours.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-263",
+      "skill": "Compound probability",
+      "prompt": "A box holds 8 white tokens and 10 black tokens. A token is drawn, replaced, and then another is drawn. What is the probability both are white?",
+      "choices": [
+        "56/306",
+        "64/324",
+        "100/324",
+        "8/18"
+      ],
+      "answer": 1,
+      "explanation": "Replacement keeps each draw independent. Multiply the white-token probability by itself.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-264",
+      "skill": "Unit conversion",
+      "prompt": "A pipe releases 8 liters per minute for 150 seconds. How many liters does it release?",
+      "choices": [
+        "20.0",
+        "12.0",
+        "480",
+        "1200"
+      ],
+      "answer": 0,
+      "explanation": "150 seconds is 2.5 minutes; 8 × 2.5 = 20 liters.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-265",
+      "skill": "Exponential growth",
+      "prompt": "A culture begins with 8 cells and doubles every hour. In this model, how many cells are present after 4 hours?",
+      "choices": [
+        "128",
+        "32",
+        "16",
+        "64"
+      ],
+      "answer": 0,
+      "explanation": "Four doublings multiply the starting count by 2⁴ = 16, giving 128.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-266",
+      "skill": "Triangle angle sums",
+      "prompt": "A triangle has angles x°, (x + 8)°, and (x + 16)°. What is its smallest angle?",
+      "choices": [
+        "156",
+        "60",
+        "52",
+        "68"
+      ],
+      "answer": 2,
+      "explanation": "The angle sum is 3x + 24 = 180, so x = 52. The other angles are larger.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-267",
+      "skill": "Volume scaling",
+      "prompt": "A solid cube has side length 8 cm. A second cube has sides twice as long. What is the ratio of the second cube’s volume to the first cube’s volume?",
+      "choices": [
+        "8:1",
+        "2:1",
+        "4:1",
+        "16:1"
+      ],
+      "answer": 0,
+      "explanation": "Doubling all three dimensions multiplies volume by 2³ = 8; the original side length cancels.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-268",
+      "skill": "Function composition",
+      "prompt": "For f(x) = 2x + 8 and g(x) = x - 3, what is f(g(13))?",
+      "choices": [
+        "20",
+        "31",
+        "28",
+        "34"
+      ],
+      "answer": 2,
+      "explanation": "g(13) = 10, then f(10) = 2(10) + 8 = 28.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-269",
+      "skill": "Median with an unknown",
+      "prompt": "The ordered list 2, 5, x, 18, 28 has median 11. What is x?",
+      "choices": [
+        "5",
+        "11",
+        "18",
+        "28"
+      ],
+      "answer": 1,
+      "explanation": "In an ordered list of five values, the third value is the median. Therefore x equals the stated median.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-270",
+      "skill": "Coordinate transformations",
+      "prompt": "The point (8, -10) is reflected across the y-axis and then translated up 3 units. What are its final coordinates?",
+      "choices": [
+        "(-8, 13)",
+        "(8, -7)",
+        "(-8, -7)",
+        "(8, 10)"
+      ],
+      "answer": 2,
+      "explanation": "Reflection across the y-axis reverses the x-coordinate only. Adding 3 to the y-coordinate gives the final point.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-271",
+      "skill": "Rational equations and domain",
+      "prompt": "For x ≠ 8, the equation (x² - 64)/(x - 8) = 24 has what solution?",
+      "choices": [
+        "8",
+        "-16",
+        "16",
+        "24"
+      ],
+      "answer": 2,
+      "explanation": "Factor the numerator and cancel x - 8 only when x ≠ 8. Then x + 8 = 24, so x = 16, which is allowed.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-272",
+      "skill": "Quadratic discriminant",
+      "prompt": "The equation x² - 16x + k = 0 has exactly one distinct real solution. What is k?",
+      "choices": [
+        "16",
+        "64",
+        "63",
+        "256"
+      ],
+      "answer": 1,
+      "explanation": "The discriminant must be zero: (16)² - 4k = 0. Therefore k = 64.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-273",
+      "skill": "Inverse functions",
+      "prompt": "The function f(x) = (3x - 8)/2 is invertible. What is f⁻¹(11)?",
+      "choices": [
+        "11",
+        "30",
+        "10",
+        "8"
+      ],
+      "answer": 2,
+      "explanation": "Solve y = (3x - 8)/2 for x: x = (2y + 8)/3. At y = 11, this is 10.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-274",
+      "skill": "Conditional probability",
+      "prompt": "Of 32 students, 8 study both art and music, 9 study only art, 7 study only music, and 8 study neither. Given that a randomly chosen student studies music, what is the probability that student also studies art?",
+      "choices": [
+        "15/32",
+        "8/32",
+        "8/15",
+        "8/17"
+      ],
+      "answer": 2,
+      "explanation": "Restrict the sample space to the 15 music students; 8 of them also study art.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-275",
+      "skill": "Mixture equations",
+      "prompt": "How many liters of a 60% solution must be mixed with 8 liters of a 20% solution to obtain a 40% solution?",
+      "choices": [
+        "8",
+        "4.0",
+        "24",
+        "16"
+      ],
+      "answer": 0,
+      "explanation": "Let v be the added volume. Solute balance gives 0.60v + 0.20(8) = 0.40(v + 8); hence 0.20v = 1.6, so v = 8.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-276",
+      "skill": "Combined work rates",
+      "prompt": "Pump A fills a tank in 24 minutes; pump B fills it in 48 minutes. Starting empty, how many minutes do the pumps need together?",
+      "choices": [
+        "72",
+        "24",
+        "32",
+        "16"
+      ],
+      "answer": 3,
+      "explanation": "Combined rate is 1/24 + 1/48 = 1/16 tank per minute, so the required time is 16 minutes.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-277",
+      "skill": "Geometric series",
+      "prompt": "A grant pays $800 in its first year and half the preceding year’s amount in each following year. What is the total paid in the first four years?",
+      "choices": [
+        "1400",
+        "1200",
+        "1600",
+        "1500.0"
+      ],
+      "answer": 3,
+      "explanation": "The four multipliers sum to 1 + 1/2 + 1/4 + 1/8 = 15/8. Multiply $800 by 15/8 to obtain $1500.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-278",
+      "skill": "Logarithmic equations",
+      "prompt": "If log₂(x - 8) + log₂(4) = 5, what is x?",
+      "choices": [
+        "11",
+        "0",
+        "16",
+        "40"
+      ],
+      "answer": 2,
+      "explanation": "log₂(4) = 2, so log₂(x - 8) = 3. Thus x - 8 = 8 and x = 16; the logarithm’s argument is positive.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-279",
+      "skill": "Quadratic optimization",
+      "prompt": "An open rectangular pen uses 32 meters of fence for three sides, with a wall forming the fourth side. What is the maximum possible enclosed area in square meters?",
+      "choices": [
+        "512",
+        "256",
+        "64",
+        "128"
+      ],
+      "answer": 3,
+      "explanation": "For width w, length is 32 - 2w and area is -2w² + 32w. The vertex occurs at w = 8, giving length 16 and area 128.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-280",
+      "skill": "Parameter constraints",
+      "prompt": "The system 2x + 3y = 8 and 4x + ky = 17 has no solution. What is k?",
+      "choices": [
+        "8",
+        "4",
+        "3",
+        "6"
+      ],
+      "answer": 3,
+      "explanation": "For parallel distinct lines, the x- and y-coefficient ratios must match: k/3 = 4/2, so k = 6. The constants differ from exact doubling by 1, preventing coincident lines.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-281",
+      "skill": "Absolute-value equations",
+      "prompt": "A sensor’s offset x satisfies |x - 9| = 3. What is the sum of the two possible offsets?",
+      "choices": [
+        "21",
+        "9",
+        "17",
+        "18"
+      ],
+      "answer": 3,
+      "explanation": "The offsets are 6 and 12; their sum is 18.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-282",
+      "skill": "Weighted mean",
+      "prompt": "A club has 9 students with a mean of 12 service hours and 18 students with a mean of 18 hours. What is the combined mean?",
+      "choices": [
+        "18",
+        "16",
+        "15",
+        "30"
+      ],
+      "answer": 1,
+      "explanation": "Total hours = 9×12 + 18×18 = 432. Divide by 27 students to obtain 16 hours.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-283",
+      "skill": "Compound probability",
+      "prompt": "A box holds 9 white tokens and 11 black tokens. A token is drawn, replaced, and then another is drawn. What is the probability both are white?",
+      "choices": [
+        "72/380",
+        "121/400",
+        "81/400",
+        "9/20"
+      ],
+      "answer": 2,
+      "explanation": "Replacement keeps each draw independent. Multiply the white-token probability by itself.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-284",
+      "skill": "Unit conversion",
+      "prompt": "A pipe releases 9 liters per minute for 150 seconds. How many liters does it release?",
+      "choices": [
+        "13.5",
+        "1350",
+        "22.5",
+        "540"
+      ],
+      "answer": 2,
+      "explanation": "150 seconds is 2.5 minutes; 9 × 2.5 = 22.5 liters.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-285",
+      "skill": "Exponential growth",
+      "prompt": "A culture begins with 9 cells and doubles every hour. In this model, how many cells are present after 4 hours?",
+      "choices": [
+        "72",
+        "17",
+        "36",
+        "144"
+      ],
+      "answer": 3,
+      "explanation": "Four doublings multiply the starting count by 2⁴ = 16, giving 144.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-286",
+      "skill": "Triangle angle sums",
+      "prompt": "A triangle has angles x°, (x + 9)°, and (x + 18)°. What is its smallest angle?",
+      "choices": [
+        "51",
+        "153",
+        "60",
+        "69"
+      ],
+      "answer": 0,
+      "explanation": "The angle sum is 3x + 27 = 180, so x = 51. The other angles are larger.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-287",
+      "skill": "Volume scaling",
+      "prompt": "A solid cube has side length 9 cm. A second cube has sides twice as long. What is the ratio of the second cube’s volume to the first cube’s volume?",
+      "choices": [
+        "2:1",
+        "4:1",
+        "16:1",
+        "8:1"
+      ],
+      "answer": 3,
+      "explanation": "Doubling all three dimensions multiplies volume by 2³ = 8; the original side length cancels.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-288",
+      "skill": "Function composition",
+      "prompt": "For f(x) = 2x + 9 and g(x) = x - 3, what is f(g(14))?",
+      "choices": [
+        "31",
+        "22",
+        "37",
+        "34"
+      ],
+      "answer": 0,
+      "explanation": "g(14) = 11, then f(11) = 2(11) + 9 = 31.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-289",
+      "skill": "Median with an unknown",
+      "prompt": "The ordered list 2, 5, x, 19, 29 has median 12. What is x?",
+      "choices": [
+        "29",
+        "19",
+        "12",
+        "5"
+      ],
+      "answer": 2,
+      "explanation": "In an ordered list of five values, the third value is the median. Therefore x equals the stated median.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-290",
+      "skill": "Coordinate transformations",
+      "prompt": "The point (9, -11) is reflected across the y-axis and then translated up 3 units. What are its final coordinates?",
+      "choices": [
+        "(9, 11)",
+        "(9, -8)",
+        "(-9, 14)",
+        "(-9, -8)"
+      ],
+      "answer": 3,
+      "explanation": "Reflection across the y-axis reverses the x-coordinate only. Adding 3 to the y-coordinate gives the final point.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-291",
+      "skill": "Rational equations and domain",
+      "prompt": "For x ≠ 9, the equation (x² - 81)/(x - 9) = 27 has what solution?",
+      "choices": [
+        "27",
+        "18",
+        "-18",
+        "9"
+      ],
+      "answer": 1,
+      "explanation": "Factor the numerator and cancel x - 9 only when x ≠ 9. Then x + 9 = 27, so x = 18, which is allowed.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-292",
+      "skill": "Quadratic discriminant",
+      "prompt": "The equation x² - 18x + k = 0 has exactly one distinct real solution. What is k?",
+      "choices": [
+        "80",
+        "18",
+        "324",
+        "81"
+      ],
+      "answer": 3,
+      "explanation": "The discriminant must be zero: (18)² - 4k = 0. Therefore k = 81.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-293",
+      "skill": "Inverse functions",
+      "prompt": "The function f(x) = (3x - 9)/2 is invertible. What is f⁻¹(12)?",
+      "choices": [
+        "11",
+        "33",
+        "12",
+        "9"
+      ],
+      "answer": 0,
+      "explanation": "Solve y = (3x - 9)/2 for x: x = (2y + 9)/3. At y = 12, this is 11.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-294",
+      "skill": "Conditional probability",
+      "prompt": "Of 36 students, 9 study both art and music, 10 study only art, 8 study only music, and 9 study neither. Given that a randomly chosen student studies music, what is the probability that student also studies art?",
+      "choices": [
+        "17/36",
+        "9/17",
+        "9/19",
+        "9/36"
+      ],
+      "answer": 1,
+      "explanation": "Restrict the sample space to the 17 music students; 9 of them also study art.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-295",
+      "skill": "Mixture equations",
+      "prompt": "How many liters of a 60% solution must be mixed with 9 liters of a 20% solution to obtain a 40% solution?",
+      "choices": [
+        "27",
+        "4.5",
+        "9",
+        "18"
+      ],
+      "answer": 2,
+      "explanation": "Let v be the added volume. Solute balance gives 0.60v + 0.20(9) = 0.40(v + 9); hence 0.20v = 1.8, so v = 9.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-296",
+      "skill": "Combined work rates",
+      "prompt": "Pump A fills a tank in 27 minutes; pump B fills it in 54 minutes. Starting empty, how many minutes do the pumps need together?",
+      "choices": [
+        "81",
+        "27",
+        "36",
+        "18"
+      ],
+      "answer": 3,
+      "explanation": "Combined rate is 1/27 + 1/54 = 1/18 tank per minute, so the required time is 18 minutes.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-297",
+      "skill": "Geometric series",
+      "prompt": "A grant pays $900 in its first year and half the preceding year’s amount in each following year. What is the total paid in the first four years?",
+      "choices": [
+        "1687.5",
+        "1800",
+        "1350",
+        "1575"
+      ],
+      "answer": 0,
+      "explanation": "The four multipliers sum to 1 + 1/2 + 1/4 + 1/8 = 15/8. Multiply $900 by 15/8 to obtain $1687.5.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-298",
+      "skill": "Logarithmic equations",
+      "prompt": "If log₂(x - 9) + log₂(4) = 5, what is x?",
+      "choices": [
+        "17",
+        "1",
+        "12",
+        "41"
+      ],
+      "answer": 0,
+      "explanation": "log₂(4) = 2, so log₂(x - 9) = 3. Thus x - 9 = 8 and x = 17; the logarithm’s argument is positive.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-299",
+      "skill": "Quadratic optimization",
+      "prompt": "An open rectangular pen uses 36 meters of fence for three sides, with a wall forming the fourth side. What is the maximum possible enclosed area in square meters?",
+      "choices": [
+        "81",
+        "324",
+        "162",
+        "648"
+      ],
+      "answer": 2,
+      "explanation": "For width w, length is 36 - 2w and area is -2w² + 36w. The vertex occurs at w = 9, giving length 18 and area 162.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-300",
+      "skill": "Parameter constraints",
+      "prompt": "The system 2x + 3y = 9 and 4x + ky = 19 has no solution. What is k?",
+      "choices": [
+        "6",
+        "3",
+        "4",
+        "8"
+      ],
+      "answer": 0,
+      "explanation": "For parallel distinct lines, the x- and y-coefficient ratios must match: k/3 = 4/2, so k = 6. The constants differ from exact doubling by 1, preventing coincident lines.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-301",
+      "skill": "Absolute-value equations",
+      "prompt": "A sensor’s offset x satisfies |x - 10| = 3. What is the sum of the two possible offsets?",
+      "choices": [
+        "10",
+        "20",
+        "23",
+        "19"
+      ],
+      "answer": 1,
+      "explanation": "The offsets are 7 and 13; their sum is 20.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-302",
+      "skill": "Weighted mean",
+      "prompt": "A club has 10 students with a mean of 12 service hours and 20 students with a mean of 18 hours. What is the combined mean?",
+      "choices": [
+        "15",
+        "16",
+        "30",
+        "18"
+      ],
+      "answer": 1,
+      "explanation": "Total hours = 10×12 + 20×18 = 480. Divide by 30 students to obtain 16 hours.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-303",
+      "skill": "Compound probability",
+      "prompt": "A box holds 10 white tokens and 12 black tokens. A token is drawn, replaced, and then another is drawn. What is the probability both are white?",
+      "choices": [
+        "100/484",
+        "144/484",
+        "10/22",
+        "90/462"
+      ],
+      "answer": 0,
+      "explanation": "Replacement keeps each draw independent. Multiply the white-token probability by itself.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-304",
+      "skill": "Unit conversion",
+      "prompt": "A pipe releases 10 liters per minute for 150 seconds. How many liters does it release?",
+      "choices": [
+        "1500",
+        "600",
+        "25.0",
+        "15.0"
+      ],
+      "answer": 2,
+      "explanation": "150 seconds is 2.5 minutes; 10 × 2.5 = 25 liters.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-305",
+      "skill": "Exponential growth",
+      "prompt": "A culture begins with 10 cells and doubles every hour. In this model, how many cells are present after 4 hours?",
+      "choices": [
+        "18",
+        "40",
+        "80",
+        "160"
+      ],
+      "answer": 3,
+      "explanation": "Four doublings multiply the starting count by 2⁴ = 16, giving 160.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-306",
+      "skill": "Triangle angle sums",
+      "prompt": "A triangle has angles x°, (x + 10)°, and (x + 20)°. What is its smallest angle?",
+      "choices": [
+        "150",
+        "60",
+        "70",
+        "50"
+      ],
+      "answer": 3,
+      "explanation": "The angle sum is 3x + 30 = 180, so x = 50. The other angles are larger.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-307",
+      "skill": "Volume scaling",
+      "prompt": "A solid cube has side length 10 cm. A second cube has sides twice as long. What is the ratio of the second cube’s volume to the first cube’s volume?",
+      "choices": [
+        "16:1",
+        "8:1",
+        "4:1",
+        "2:1"
+      ],
+      "answer": 1,
+      "explanation": "Doubling all three dimensions multiplies volume by 2³ = 8; the original side length cancels.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-308",
+      "skill": "Function composition",
+      "prompt": "For f(x) = 2x + 10 and g(x) = x - 3, what is f(g(15))?",
+      "choices": [
+        "34",
+        "37",
+        "40",
+        "24"
+      ],
+      "answer": 0,
+      "explanation": "g(15) = 12, then f(12) = 2(12) + 10 = 34.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-309",
+      "skill": "Median with an unknown",
+      "prompt": "The ordered list 2, 5, x, 20, 30 has median 13. What is x?",
+      "choices": [
+        "13",
+        "30",
+        "5",
+        "20"
+      ],
+      "answer": 0,
+      "explanation": "In an ordered list of five values, the third value is the median. Therefore x equals the stated median.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-310",
+      "skill": "Coordinate transformations",
+      "prompt": "The point (10, -12) is reflected across the y-axis and then translated up 3 units. What are its final coordinates?",
+      "choices": [
+        "(10, -9)",
+        "(-10, 15)",
+        "(10, 12)",
+        "(-10, -9)"
+      ],
+      "answer": 3,
+      "explanation": "Reflection across the y-axis reverses the x-coordinate only. Adding 3 to the y-coordinate gives the final point.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-311",
+      "skill": "Rational equations and domain",
+      "prompt": "For x ≠ 10, the equation (x² - 100)/(x - 10) = 30 has what solution?",
+      "choices": [
+        "30",
+        "-20",
+        "10",
+        "20"
+      ],
+      "answer": 3,
+      "explanation": "Factor the numerator and cancel x - 10 only when x ≠ 10. Then x + 10 = 30, so x = 20, which is allowed.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-312",
+      "skill": "Quadratic discriminant",
+      "prompt": "The equation x² - 20x + k = 0 has exactly one distinct real solution. What is k?",
+      "choices": [
+        "400",
+        "100",
+        "99",
+        "20"
+      ],
+      "answer": 1,
+      "explanation": "The discriminant must be zero: (20)² - 4k = 0. Therefore k = 100.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-313",
+      "skill": "Inverse functions",
+      "prompt": "The function f(x) = (3x - 10)/2 is invertible. What is f⁻¹(13)?",
+      "choices": [
+        "10",
+        "12",
+        "36",
+        "13"
+      ],
+      "answer": 1,
+      "explanation": "Solve y = (3x - 10)/2 for x: x = (2y + 10)/3. At y = 13, this is 12.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-314",
+      "skill": "Conditional probability",
+      "prompt": "Of 40 students, 10 study both art and music, 11 study only art, 9 study only music, and 10 study neither. Given that a randomly chosen student studies music, what is the probability that student also studies art?",
+      "choices": [
+        "10/40",
+        "10/21",
+        "19/40",
+        "10/19"
+      ],
+      "answer": 3,
+      "explanation": "Restrict the sample space to the 19 music students; 10 of them also study art.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-315",
+      "skill": "Mixture equations",
+      "prompt": "How many liters of a 60% solution must be mixed with 10 liters of a 20% solution to obtain a 40% solution?",
+      "choices": [
+        "30",
+        "10",
+        "5.0",
+        "20"
+      ],
+      "answer": 1,
+      "explanation": "Let v be the added volume. Solute balance gives 0.60v + 0.20(10) = 0.40(v + 10); hence 0.20v = 2, so v = 10.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-316",
+      "skill": "Combined work rates",
+      "prompt": "Pump A fills a tank in 30 minutes; pump B fills it in 60 minutes. Starting empty, how many minutes do the pumps need together?",
+      "choices": [
+        "90",
+        "30",
+        "40",
+        "20"
+      ],
+      "answer": 3,
+      "explanation": "Combined rate is 1/30 + 1/60 = 1/20 tank per minute, so the required time is 20 minutes.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-317",
+      "skill": "Geometric series",
+      "prompt": "A grant pays $1000 in its first year and half the preceding year’s amount in each following year. What is the total paid in the first four years?",
+      "choices": [
+        "2000",
+        "1875.0",
+        "1500",
+        "1750"
+      ],
+      "answer": 1,
+      "explanation": "The four multipliers sum to 1 + 1/2 + 1/4 + 1/8 = 15/8. Multiply $1000 by 15/8 to obtain $1875.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-318",
+      "skill": "Logarithmic equations",
+      "prompt": "If log₂(x - 10) + log₂(4) = 5, what is x?",
+      "choices": [
+        "18",
+        "42",
+        "13",
+        "2"
+      ],
+      "answer": 0,
+      "explanation": "log₂(4) = 2, so log₂(x - 10) = 3. Thus x - 10 = 8 and x = 18; the logarithm’s argument is positive.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-319",
+      "skill": "Quadratic optimization",
+      "prompt": "An open rectangular pen uses 40 meters of fence for three sides, with a wall forming the fourth side. What is the maximum possible enclosed area in square meters?",
+      "choices": [
+        "100",
+        "800",
+        "200",
+        "400"
+      ],
+      "answer": 2,
+      "explanation": "For width w, length is 40 - 2w and area is -2w² + 40w. The vertex occurs at w = 10, giving length 20 and area 200.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-320",
+      "skill": "Parameter constraints",
+      "prompt": "The system 2x + 3y = 10 and 4x + ky = 21 has no solution. What is k?",
+      "choices": [
+        "3",
+        "8",
+        "6",
+        "4"
+      ],
+      "answer": 2,
+      "explanation": "For parallel distinct lines, the x- and y-coefficient ratios must match: k/3 = 4/2, so k = 6. The constants differ from exact doubling by 1, preventing coincident lines.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-321",
+      "skill": "Absolute-value equations",
+      "prompt": "A sensor’s offset x satisfies |x - 11| = 3. What is the sum of the two possible offsets?",
+      "choices": [
+        "22",
+        "25",
+        "21",
+        "11"
+      ],
+      "answer": 0,
+      "explanation": "The offsets are 8 and 14; their sum is 22.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-322",
+      "skill": "Weighted mean",
+      "prompt": "A club has 11 students with a mean of 12 service hours and 22 students with a mean of 18 hours. What is the combined mean?",
+      "choices": [
+        "15",
+        "18",
+        "16",
+        "30"
+      ],
+      "answer": 2,
+      "explanation": "Total hours = 11×12 + 22×18 = 528. Divide by 33 students to obtain 16 hours.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-323",
+      "skill": "Compound probability",
+      "prompt": "A box holds 11 white tokens and 13 black tokens. A token is drawn, replaced, and then another is drawn. What is the probability both are white?",
+      "choices": [
+        "11/24",
+        "110/552",
+        "169/576",
+        "121/576"
+      ],
+      "answer": 3,
+      "explanation": "Replacement keeps each draw independent. Multiply the white-token probability by itself.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-324",
+      "skill": "Unit conversion",
+      "prompt": "A pipe releases 11 liters per minute for 150 seconds. How many liters does it release?",
+      "choices": [
+        "16.5",
+        "27.5",
+        "660",
+        "1650"
+      ],
+      "answer": 1,
+      "explanation": "150 seconds is 2.5 minutes; 11 × 2.5 = 27.5 liters.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-325",
+      "skill": "Exponential growth",
+      "prompt": "A culture begins with 11 cells and doubles every hour. In this model, how many cells are present after 4 hours?",
+      "choices": [
+        "176",
+        "44",
+        "88",
+        "19"
+      ],
+      "answer": 0,
+      "explanation": "Four doublings multiply the starting count by 2⁴ = 16, giving 176.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-326",
+      "skill": "Triangle angle sums",
+      "prompt": "A triangle has angles x°, (x + 11)°, and (x + 22)°. What is its smallest angle?",
+      "choices": [
+        "71",
+        "49",
+        "147",
+        "60"
+      ],
+      "answer": 1,
+      "explanation": "The angle sum is 3x + 33 = 180, so x = 49. The other angles are larger.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-327",
+      "skill": "Volume scaling",
+      "prompt": "A solid cube has side length 11 cm. A second cube has sides twice as long. What is the ratio of the second cube’s volume to the first cube’s volume?",
+      "choices": [
+        "4:1",
+        "2:1",
+        "16:1",
+        "8:1"
+      ],
+      "answer": 3,
+      "explanation": "Doubling all three dimensions multiplies volume by 2³ = 8; the original side length cancels.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-328",
+      "skill": "Function composition",
+      "prompt": "For f(x) = 2x + 11 and g(x) = x - 3, what is f(g(16))?",
+      "choices": [
+        "26",
+        "40",
+        "43",
+        "37"
+      ],
+      "answer": 3,
+      "explanation": "g(16) = 13, then f(13) = 2(13) + 11 = 37.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-329",
+      "skill": "Median with an unknown",
+      "prompt": "The ordered list 2, 5, x, 21, 31 has median 14. What is x?",
+      "choices": [
+        "31",
+        "14",
+        "5",
+        "21"
+      ],
+      "answer": 1,
+      "explanation": "In an ordered list of five values, the third value is the median. Therefore x equals the stated median.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-330",
+      "skill": "Coordinate transformations",
+      "prompt": "The point (11, -13) is reflected across the y-axis and then translated up 3 units. What are its final coordinates?",
+      "choices": [
+        "(-11, 16)",
+        "(-11, -10)",
+        "(11, 13)",
+        "(11, -10)"
+      ],
+      "answer": 1,
+      "explanation": "Reflection across the y-axis reverses the x-coordinate only. Adding 3 to the y-coordinate gives the final point.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-331",
+      "skill": "Rational equations and domain",
+      "prompt": "For x ≠ 11, the equation (x² - 121)/(x - 11) = 33 has what solution?",
+      "choices": [
+        "11",
+        "-22",
+        "33",
+        "22"
+      ],
+      "answer": 3,
+      "explanation": "Factor the numerator and cancel x - 11 only when x ≠ 11. Then x + 11 = 33, so x = 22, which is allowed.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-332",
+      "skill": "Quadratic discriminant",
+      "prompt": "The equation x² - 22x + k = 0 has exactly one distinct real solution. What is k?",
+      "choices": [
+        "22",
+        "120",
+        "484",
+        "121"
+      ],
+      "answer": 3,
+      "explanation": "The discriminant must be zero: (22)² - 4k = 0. Therefore k = 121.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-333",
+      "skill": "Inverse functions",
+      "prompt": "The function f(x) = (3x - 11)/2 is invertible. What is f⁻¹(14)?",
+      "choices": [
+        "11",
+        "13",
+        "39",
+        "14"
+      ],
+      "answer": 1,
+      "explanation": "Solve y = (3x - 11)/2 for x: x = (2y + 11)/3. At y = 14, this is 13.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-334",
+      "skill": "Conditional probability",
+      "prompt": "Of 44 students, 11 study both art and music, 12 study only art, 10 study only music, and 11 study neither. Given that a randomly chosen student studies music, what is the probability that student also studies art?",
+      "choices": [
+        "11/44",
+        "21/44",
+        "11/23",
+        "11/21"
+      ],
+      "answer": 3,
+      "explanation": "Restrict the sample space to the 21 music students; 11 of them also study art.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-335",
+      "skill": "Mixture equations",
+      "prompt": "How many liters of a 60% solution must be mixed with 11 liters of a 20% solution to obtain a 40% solution?",
+      "choices": [
+        "11",
+        "5.5",
+        "22",
+        "33"
+      ],
+      "answer": 0,
+      "explanation": "Let v be the added volume. Solute balance gives 0.60v + 0.20(11) = 0.40(v + 11); hence 0.20v = 2.2, so v = 11.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-336",
+      "skill": "Combined work rates",
+      "prompt": "Pump A fills a tank in 33 minutes; pump B fills it in 66 minutes. Starting empty, how many minutes do the pumps need together?",
+      "choices": [
+        "44",
+        "99",
+        "22",
+        "33"
+      ],
+      "answer": 2,
+      "explanation": "Combined rate is 1/33 + 1/66 = 1/22 tank per minute, so the required time is 22 minutes.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-337",
+      "skill": "Geometric series",
+      "prompt": "A grant pays $1100 in its first year and half the preceding year’s amount in each following year. What is the total paid in the first four years?",
+      "choices": [
+        "2200",
+        "1650",
+        "1925",
+        "2062.5"
+      ],
+      "answer": 3,
+      "explanation": "The four multipliers sum to 1 + 1/2 + 1/4 + 1/8 = 15/8. Multiply $1100 by 15/8 to obtain $2062.5.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-338",
+      "skill": "Logarithmic equations",
+      "prompt": "If log₂(x - 11) + log₂(4) = 5, what is x?",
+      "choices": [
+        "19",
+        "14",
+        "3",
+        "43"
+      ],
+      "answer": 0,
+      "explanation": "log₂(4) = 2, so log₂(x - 11) = 3. Thus x - 11 = 8 and x = 19; the logarithm’s argument is positive.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-339",
+      "skill": "Quadratic optimization",
+      "prompt": "An open rectangular pen uses 44 meters of fence for three sides, with a wall forming the fourth side. What is the maximum possible enclosed area in square meters?",
+      "choices": [
+        "968",
+        "484",
+        "121",
+        "242"
+      ],
+      "answer": 3,
+      "explanation": "For width w, length is 44 - 2w and area is -2w² + 44w. The vertex occurs at w = 11, giving length 22 and area 242.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-340",
+      "skill": "Parameter constraints",
+      "prompt": "The system 2x + 3y = 11 and 4x + ky = 23 has no solution. What is k?",
+      "choices": [
+        "6",
+        "4",
+        "3",
+        "8"
+      ],
+      "answer": 0,
+      "explanation": "For parallel distinct lines, the x- and y-coefficient ratios must match: k/3 = 4/2, so k = 6. The constants differ from exact doubling by 1, preventing coincident lines.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-341",
+      "skill": "Absolute-value equations",
+      "prompt": "A sensor’s offset x satisfies |x - 12| = 3. What is the sum of the two possible offsets?",
+      "choices": [
+        "24",
+        "23",
+        "12",
+        "27"
+      ],
+      "answer": 0,
+      "explanation": "The offsets are 9 and 15; their sum is 24.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-342",
+      "skill": "Weighted mean",
+      "prompt": "A club has 12 students with a mean of 12 service hours and 24 students with a mean of 18 hours. What is the combined mean?",
+      "choices": [
+        "30",
+        "15",
+        "16",
+        "18"
+      ],
+      "answer": 2,
+      "explanation": "Total hours = 12×12 + 24×18 = 576. Divide by 36 students to obtain 16 hours.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-343",
+      "skill": "Compound probability",
+      "prompt": "A box holds 12 white tokens and 14 black tokens. A token is drawn, replaced, and then another is drawn. What is the probability both are white?",
+      "choices": [
+        "196/676",
+        "132/650",
+        "12/26",
+        "144/676"
+      ],
+      "answer": 3,
+      "explanation": "Replacement keeps each draw independent. Multiply the white-token probability by itself.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-344",
+      "skill": "Unit conversion",
+      "prompt": "A pipe releases 12 liters per minute for 150 seconds. How many liters does it release?",
+      "choices": [
+        "720",
+        "18.0",
+        "1800",
+        "30.0"
+      ],
+      "answer": 3,
+      "explanation": "150 seconds is 2.5 minutes; 12 × 2.5 = 30 liters.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-345",
+      "skill": "Exponential growth",
+      "prompt": "A culture begins with 12 cells and doubles every hour. In this model, how many cells are present after 4 hours?",
+      "choices": [
+        "96",
+        "48",
+        "20",
+        "192"
+      ],
+      "answer": 3,
+      "explanation": "Four doublings multiply the starting count by 2⁴ = 16, giving 192.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-346",
+      "skill": "Triangle angle sums",
+      "prompt": "A triangle has angles x°, (x + 12)°, and (x + 24)°. What is its smallest angle?",
+      "choices": [
+        "144",
+        "72",
+        "60",
+        "48"
+      ],
+      "answer": 3,
+      "explanation": "The angle sum is 3x + 36 = 180, so x = 48. The other angles are larger.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-347",
+      "skill": "Volume scaling",
+      "prompt": "A solid cube has side length 12 cm. A second cube has sides twice as long. What is the ratio of the second cube’s volume to the first cube’s volume?",
+      "choices": [
+        "4:1",
+        "2:1",
+        "8:1",
+        "16:1"
+      ],
+      "answer": 2,
+      "explanation": "Doubling all three dimensions multiplies volume by 2³ = 8; the original side length cancels.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-348",
+      "skill": "Function composition",
+      "prompt": "For f(x) = 2x + 12 and g(x) = x - 3, what is f(g(17))?",
+      "choices": [
+        "40",
+        "46",
+        "28",
+        "43"
+      ],
+      "answer": 0,
+      "explanation": "g(17) = 14, then f(14) = 2(14) + 12 = 40.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-349",
+      "skill": "Median with an unknown",
+      "prompt": "The ordered list 2, 5, x, 22, 32 has median 15. What is x?",
+      "choices": [
+        "32",
+        "15",
+        "5",
+        "22"
+      ],
+      "answer": 1,
+      "explanation": "In an ordered list of five values, the third value is the median. Therefore x equals the stated median.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-350",
+      "skill": "Coordinate transformations",
+      "prompt": "The point (12, -14) is reflected across the y-axis and then translated up 3 units. What are its final coordinates?",
+      "choices": [
+        "(-12, -11)",
+        "(-12, 17)",
+        "(12, -11)",
+        "(12, 14)"
+      ],
+      "answer": 0,
+      "explanation": "Reflection across the y-axis reverses the x-coordinate only. Adding 3 to the y-coordinate gives the final point.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-351",
+      "skill": "Rational equations and domain",
+      "prompt": "For x ≠ 12, the equation (x² - 144)/(x - 12) = 36 has what solution?",
+      "choices": [
+        "-24",
+        "12",
+        "36",
+        "24"
+      ],
+      "answer": 3,
+      "explanation": "Factor the numerator and cancel x - 12 only when x ≠ 12. Then x + 12 = 36, so x = 24, which is allowed.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-352",
+      "skill": "Quadratic discriminant",
+      "prompt": "The equation x² - 24x + k = 0 has exactly one distinct real solution. What is k?",
+      "choices": [
+        "24",
+        "576",
+        "144",
+        "143"
+      ],
+      "answer": 2,
+      "explanation": "The discriminant must be zero: (24)² - 4k = 0. Therefore k = 144.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-353",
+      "skill": "Inverse functions",
+      "prompt": "The function f(x) = (3x - 12)/2 is invertible. What is f⁻¹(15)?",
+      "choices": [
+        "14",
+        "12",
+        "42",
+        "15"
+      ],
+      "answer": 0,
+      "explanation": "Solve y = (3x - 12)/2 for x: x = (2y + 12)/3. At y = 15, this is 14.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-354",
+      "skill": "Conditional probability",
+      "prompt": "Of 48 students, 12 study both art and music, 13 study only art, 11 study only music, and 12 study neither. Given that a randomly chosen student studies music, what is the probability that student also studies art?",
+      "choices": [
+        "12/23",
+        "12/25",
+        "23/48",
+        "12/48"
+      ],
+      "answer": 0,
+      "explanation": "Restrict the sample space to the 23 music students; 12 of them also study art.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-355",
+      "skill": "Mixture equations",
+      "prompt": "How many liters of a 60% solution must be mixed with 12 liters of a 20% solution to obtain a 40% solution?",
+      "choices": [
+        "24",
+        "36",
+        "6.0",
+        "12"
+      ],
+      "answer": 3,
+      "explanation": "Let v be the added volume. Solute balance gives 0.60v + 0.20(12) = 0.40(v + 12); hence 0.20v = 2.4, so v = 12.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-356",
+      "skill": "Combined work rates",
+      "prompt": "Pump A fills a tank in 36 minutes; pump B fills it in 72 minutes. Starting empty, how many minutes do the pumps need together?",
+      "choices": [
+        "108",
+        "48",
+        "24",
+        "36"
+      ],
+      "answer": 2,
+      "explanation": "Combined rate is 1/36 + 1/72 = 1/24 tank per minute, so the required time is 24 minutes.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-357",
+      "skill": "Geometric series",
+      "prompt": "A grant pays $1200 in its first year and half the preceding year’s amount in each following year. What is the total paid in the first four years?",
+      "choices": [
+        "2100",
+        "1800",
+        "2400",
+        "2250.0"
+      ],
+      "answer": 3,
+      "explanation": "The four multipliers sum to 1 + 1/2 + 1/4 + 1/8 = 15/8. Multiply $1200 by 15/8 to obtain $2250.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-358",
+      "skill": "Logarithmic equations",
+      "prompt": "If log₂(x - 12) + log₂(4) = 5, what is x?",
+      "choices": [
+        "15",
+        "44",
+        "20",
+        "4"
+      ],
+      "answer": 2,
+      "explanation": "log₂(4) = 2, so log₂(x - 12) = 3. Thus x - 12 = 8 and x = 20; the logarithm’s argument is positive.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-359",
+      "skill": "Quadratic optimization",
+      "prompt": "An open rectangular pen uses 48 meters of fence for three sides, with a wall forming the fourth side. What is the maximum possible enclosed area in square meters?",
+      "choices": [
+        "288",
+        "144",
+        "576",
+        "1152"
+      ],
+      "answer": 0,
+      "explanation": "For width w, length is 48 - 2w and area is -2w² + 48w. The vertex occurs at w = 12, giving length 24 and area 288.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-360",
+      "skill": "Parameter constraints",
+      "prompt": "The system 2x + 3y = 12 and 4x + ky = 25 has no solution. What is k?",
+      "choices": [
+        "3",
+        "6",
+        "8",
+        "4"
+      ],
+      "answer": 1,
+      "explanation": "For parallel distinct lines, the x- and y-coefficient ratios must match: k/3 = 4/2, so k = 6. The constants differ from exact doubling by 1, preventing coincident lines.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-361",
+      "skill": "Absolute-value equations",
+      "prompt": "A sensor’s offset x satisfies |x - 13| = 3. What is the sum of the two possible offsets?",
+      "choices": [
+        "25",
+        "29",
+        "13",
+        "26"
+      ],
+      "answer": 3,
+      "explanation": "The offsets are 10 and 16; their sum is 26.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-362",
+      "skill": "Weighted mean",
+      "prompt": "A club has 13 students with a mean of 12 service hours and 26 students with a mean of 18 hours. What is the combined mean?",
+      "choices": [
+        "18",
+        "16",
+        "15",
+        "30"
+      ],
+      "answer": 1,
+      "explanation": "Total hours = 13×12 + 26×18 = 624. Divide by 39 students to obtain 16 hours.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-363",
+      "skill": "Compound probability",
+      "prompt": "A box holds 13 white tokens and 15 black tokens. A token is drawn, replaced, and then another is drawn. What is the probability both are white?",
+      "choices": [
+        "156/756",
+        "13/28",
+        "169/784",
+        "225/784"
+      ],
+      "answer": 2,
+      "explanation": "Replacement keeps each draw independent. Multiply the white-token probability by itself.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-364",
+      "skill": "Unit conversion",
+      "prompt": "A pipe releases 13 liters per minute for 150 seconds. How many liters does it release?",
+      "choices": [
+        "19.5",
+        "1950",
+        "780",
+        "32.5"
+      ],
+      "answer": 3,
+      "explanation": "150 seconds is 2.5 minutes; 13 × 2.5 = 32.5 liters.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-365",
+      "skill": "Exponential growth",
+      "prompt": "A culture begins with 13 cells and doubles every hour. In this model, how many cells are present after 4 hours?",
+      "choices": [
+        "52",
+        "208",
+        "21",
+        "104"
+      ],
+      "answer": 1,
+      "explanation": "Four doublings multiply the starting count by 2⁴ = 16, giving 208.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-366",
+      "skill": "Triangle angle sums",
+      "prompt": "A triangle has angles x°, (x + 13)°, and (x + 26)°. What is its smallest angle?",
+      "choices": [
+        "73",
+        "60",
+        "47",
+        "141"
+      ],
+      "answer": 2,
+      "explanation": "The angle sum is 3x + 39 = 180, so x = 47. The other angles are larger.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-367",
+      "skill": "Volume scaling",
+      "prompt": "A solid cube has side length 13 cm. A second cube has sides twice as long. What is the ratio of the second cube’s volume to the first cube’s volume?",
+      "choices": [
+        "4:1",
+        "2:1",
+        "8:1",
+        "16:1"
+      ],
+      "answer": 2,
+      "explanation": "Doubling all three dimensions multiplies volume by 2³ = 8; the original side length cancels.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-368",
+      "skill": "Function composition",
+      "prompt": "For f(x) = 2x + 13 and g(x) = x - 3, what is f(g(18))?",
+      "choices": [
+        "30",
+        "49",
+        "43",
+        "46"
+      ],
+      "answer": 2,
+      "explanation": "g(18) = 15, then f(15) = 2(15) + 13 = 43.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-369",
+      "skill": "Median with an unknown",
+      "prompt": "The ordered list 2, 5, x, 23, 33 has median 16. What is x?",
+      "choices": [
+        "16",
+        "23",
+        "5",
+        "33"
+      ],
+      "answer": 0,
+      "explanation": "In an ordered list of five values, the third value is the median. Therefore x equals the stated median.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-370",
+      "skill": "Coordinate transformations",
+      "prompt": "The point (13, -15) is reflected across the y-axis and then translated up 3 units. What are its final coordinates?",
+      "choices": [
+        "(-13, -12)",
+        "(13, 15)",
+        "(-13, 18)",
+        "(13, -12)"
+      ],
+      "answer": 0,
+      "explanation": "Reflection across the y-axis reverses the x-coordinate only. Adding 3 to the y-coordinate gives the final point.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-371",
+      "skill": "Rational equations and domain",
+      "prompt": "For x ≠ 13, the equation (x² - 169)/(x - 13) = 39 has what solution?",
+      "choices": [
+        "39",
+        "26",
+        "-26",
+        "13"
+      ],
+      "answer": 1,
+      "explanation": "Factor the numerator and cancel x - 13 only when x ≠ 13. Then x + 13 = 39, so x = 26, which is allowed.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-372",
+      "skill": "Quadratic discriminant",
+      "prompt": "The equation x² - 26x + k = 0 has exactly one distinct real solution. What is k?",
+      "choices": [
+        "26",
+        "676",
+        "169",
+        "168"
+      ],
+      "answer": 2,
+      "explanation": "The discriminant must be zero: (26)² - 4k = 0. Therefore k = 169.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-373",
+      "skill": "Inverse functions",
+      "prompt": "The function f(x) = (3x - 13)/2 is invertible. What is f⁻¹(16)?",
+      "choices": [
+        "13",
+        "45",
+        "15",
+        "16"
+      ],
+      "answer": 2,
+      "explanation": "Solve y = (3x - 13)/2 for x: x = (2y + 13)/3. At y = 16, this is 15.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-374",
+      "skill": "Conditional probability",
+      "prompt": "Of 52 students, 13 study both art and music, 14 study only art, 12 study only music, and 13 study neither. Given that a randomly chosen student studies music, what is the probability that student also studies art?",
+      "choices": [
+        "13/52",
+        "25/52",
+        "13/25",
+        "13/27"
+      ],
+      "answer": 2,
+      "explanation": "Restrict the sample space to the 25 music students; 13 of them also study art.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-375",
+      "skill": "Mixture equations",
+      "prompt": "How many liters of a 60% solution must be mixed with 13 liters of a 20% solution to obtain a 40% solution?",
+      "choices": [
+        "13",
+        "6.5",
+        "39",
+        "26"
+      ],
+      "answer": 0,
+      "explanation": "Let v be the added volume. Solute balance gives 0.60v + 0.20(13) = 0.40(v + 13); hence 0.20v = 2.6, so v = 13.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-376",
+      "skill": "Combined work rates",
+      "prompt": "Pump A fills a tank in 39 minutes; pump B fills it in 78 minutes. Starting empty, how many minutes do the pumps need together?",
+      "choices": [
+        "39",
+        "26",
+        "117",
+        "52"
+      ],
+      "answer": 1,
+      "explanation": "Combined rate is 1/39 + 1/78 = 1/26 tank per minute, so the required time is 26 minutes.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-377",
+      "skill": "Geometric series",
+      "prompt": "A grant pays $1300 in its first year and half the preceding year’s amount in each following year. What is the total paid in the first four years?",
+      "choices": [
+        "2600",
+        "2275",
+        "2437.5",
+        "1950"
+      ],
+      "answer": 2,
+      "explanation": "The four multipliers sum to 1 + 1/2 + 1/4 + 1/8 = 15/8. Multiply $1300 by 15/8 to obtain $2437.5.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-378",
+      "skill": "Logarithmic equations",
+      "prompt": "If log₂(x - 13) + log₂(4) = 5, what is x?",
+      "choices": [
+        "5",
+        "21",
+        "16",
+        "45"
+      ],
+      "answer": 1,
+      "explanation": "log₂(4) = 2, so log₂(x - 13) = 3. Thus x - 13 = 8 and x = 21; the logarithm’s argument is positive.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-379",
+      "skill": "Quadratic optimization",
+      "prompt": "An open rectangular pen uses 52 meters of fence for three sides, with a wall forming the fourth side. What is the maximum possible enclosed area in square meters?",
+      "choices": [
+        "676",
+        "1352",
+        "338",
+        "169"
+      ],
+      "answer": 2,
+      "explanation": "For width w, length is 52 - 2w and area is -2w² + 52w. The vertex occurs at w = 13, giving length 26 and area 338.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-380",
+      "skill": "Parameter constraints",
+      "prompt": "The system 2x + 3y = 13 and 4x + ky = 27 has no solution. What is k?",
+      "choices": [
+        "8",
+        "3",
+        "4",
+        "6"
+      ],
+      "answer": 3,
+      "explanation": "For parallel distinct lines, the x- and y-coefficient ratios must match: k/3 = 4/2, so k = 6. The constants differ from exact doubling by 1, preventing coincident lines.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-381",
+      "skill": "Absolute-value equations",
+      "prompt": "A sensor’s offset x satisfies |x - 14| = 3. What is the sum of the two possible offsets?",
+      "choices": [
+        "31",
+        "14",
+        "28",
+        "27"
+      ],
+      "answer": 2,
+      "explanation": "The offsets are 11 and 17; their sum is 28.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-382",
+      "skill": "Weighted mean",
+      "prompt": "A club has 14 students with a mean of 12 service hours and 28 students with a mean of 18 hours. What is the combined mean?",
+      "choices": [
+        "18",
+        "16",
+        "15",
+        "30"
+      ],
+      "answer": 1,
+      "explanation": "Total hours = 14×12 + 28×18 = 672. Divide by 42 students to obtain 16 hours.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-383",
+      "skill": "Compound probability",
+      "prompt": "A box holds 14 white tokens and 16 black tokens. A token is drawn, replaced, and then another is drawn. What is the probability both are white?",
+      "choices": [
+        "196/900",
+        "182/870",
+        "14/30",
+        "256/900"
+      ],
+      "answer": 0,
+      "explanation": "Replacement keeps each draw independent. Multiply the white-token probability by itself.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-384",
+      "skill": "Unit conversion",
+      "prompt": "A pipe releases 14 liters per minute for 150 seconds. How many liters does it release?",
+      "choices": [
+        "35.0",
+        "840",
+        "2100",
+        "21.0"
+      ],
+      "answer": 0,
+      "explanation": "150 seconds is 2.5 minutes; 14 × 2.5 = 35 liters.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-385",
+      "skill": "Exponential growth",
+      "prompt": "A culture begins with 14 cells and doubles every hour. In this model, how many cells are present after 4 hours?",
+      "choices": [
+        "56",
+        "112",
+        "22",
+        "224"
+      ],
+      "answer": 3,
+      "explanation": "Four doublings multiply the starting count by 2⁴ = 16, giving 224.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-386",
+      "skill": "Triangle angle sums",
+      "prompt": "A triangle has angles x°, (x + 14)°, and (x + 28)°. What is its smallest angle?",
+      "choices": [
+        "74",
+        "46",
+        "138",
+        "60"
+      ],
+      "answer": 1,
+      "explanation": "The angle sum is 3x + 42 = 180, so x = 46. The other angles are larger.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-387",
+      "skill": "Volume scaling",
+      "prompt": "A solid cube has side length 14 cm. A second cube has sides twice as long. What is the ratio of the second cube’s volume to the first cube’s volume?",
+      "choices": [
+        "16:1",
+        "4:1",
+        "2:1",
+        "8:1"
+      ],
+      "answer": 3,
+      "explanation": "Doubling all three dimensions multiplies volume by 2³ = 8; the original side length cancels.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-388",
+      "skill": "Function composition",
+      "prompt": "For f(x) = 2x + 14 and g(x) = x - 3, what is f(g(19))?",
+      "choices": [
+        "32",
+        "52",
+        "46",
+        "49"
+      ],
+      "answer": 2,
+      "explanation": "g(19) = 16, then f(16) = 2(16) + 14 = 46.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-389",
+      "skill": "Median with an unknown",
+      "prompt": "The ordered list 2, 5, x, 24, 34 has median 17. What is x?",
+      "choices": [
+        "34",
+        "5",
+        "17",
+        "24"
+      ],
+      "answer": 2,
+      "explanation": "In an ordered list of five values, the third value is the median. Therefore x equals the stated median.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-390",
+      "skill": "Coordinate transformations",
+      "prompt": "The point (14, -16) is reflected across the y-axis and then translated up 3 units. What are its final coordinates?",
+      "choices": [
+        "(-14, 19)",
+        "(-14, -13)",
+        "(14, 16)",
+        "(14, -13)"
+      ],
+      "answer": 1,
+      "explanation": "Reflection across the y-axis reverses the x-coordinate only. Adding 3 to the y-coordinate gives the final point.",
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-391",
+      "skill": "Rational equations and domain",
+      "prompt": "For x ≠ 14, the equation (x² - 196)/(x - 14) = 42 has what solution?",
+      "choices": [
+        "42",
+        "-28",
+        "28",
+        "14"
+      ],
+      "answer": 2,
+      "explanation": "Factor the numerator and cancel x - 14 only when x ≠ 14. Then x + 14 = 42, so x = 28, which is allowed.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-392",
+      "skill": "Quadratic discriminant",
+      "prompt": "The equation x² - 28x + k = 0 has exactly one distinct real solution. What is k?",
+      "choices": [
+        "784",
+        "195",
+        "28",
+        "196"
+      ],
+      "answer": 3,
+      "explanation": "The discriminant must be zero: (28)² - 4k = 0. Therefore k = 196.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-393",
+      "skill": "Inverse functions",
+      "prompt": "The function f(x) = (3x - 14)/2 is invertible. What is f⁻¹(17)?",
+      "choices": [
+        "14",
+        "48",
+        "17",
+        "16"
+      ],
+      "answer": 3,
+      "explanation": "Solve y = (3x - 14)/2 for x: x = (2y + 14)/3. At y = 17, this is 16.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-394",
+      "skill": "Conditional probability",
+      "prompt": "Of 56 students, 14 study both art and music, 15 study only art, 13 study only music, and 14 study neither. Given that a randomly chosen student studies music, what is the probability that student also studies art?",
+      "choices": [
+        "14/56",
+        "14/27",
+        "14/29",
+        "27/56"
+      ],
+      "answer": 1,
+      "explanation": "Restrict the sample space to the 27 music students; 14 of them also study art.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-395",
+      "skill": "Mixture equations",
+      "prompt": "How many liters of a 60% solution must be mixed with 14 liters of a 20% solution to obtain a 40% solution?",
+      "choices": [
+        "14",
+        "42",
+        "7.0",
+        "28"
+      ],
+      "answer": 0,
+      "explanation": "Let v be the added volume. Solute balance gives 0.60v + 0.20(14) = 0.40(v + 14); hence 0.20v = 2.8, so v = 14.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-396",
+      "skill": "Combined work rates",
+      "prompt": "Pump A fills a tank in 42 minutes; pump B fills it in 84 minutes. Starting empty, how many minutes do the pumps need together?",
+      "choices": [
+        "126",
+        "28",
+        "56",
+        "42"
+      ],
+      "answer": 1,
+      "explanation": "Combined rate is 1/42 + 1/84 = 1/28 tank per minute, so the required time is 28 minutes.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-397",
+      "skill": "Geometric series",
+      "prompt": "A grant pays $1400 in its first year and half the preceding year’s amount in each following year. What is the total paid in the first four years?",
+      "choices": [
+        "2100",
+        "2450",
+        "2800",
+        "2625.0"
+      ],
+      "answer": 3,
+      "explanation": "The four multipliers sum to 1 + 1/2 + 1/4 + 1/8 = 15/8. Multiply $1400 by 15/8 to obtain $2625.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-398",
+      "skill": "Logarithmic equations",
+      "prompt": "If log₂(x - 14) + log₂(4) = 5, what is x?",
+      "choices": [
+        "17",
+        "22",
+        "46",
+        "6"
+      ],
+      "answer": 1,
+      "explanation": "log₂(4) = 2, so log₂(x - 14) = 3. Thus x - 14 = 8 and x = 22; the logarithm’s argument is positive.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-399",
+      "skill": "Quadratic optimization",
+      "prompt": "An open rectangular pen uses 56 meters of fence for three sides, with a wall forming the fourth side. What is the maximum possible enclosed area in square meters?",
+      "choices": [
+        "1568",
+        "784",
+        "196",
+        "392"
+      ],
+      "answer": 3,
+      "explanation": "For width w, length is 56 - 2w and area is -2w² + 56w. The vertex occurs at w = 14, giving length 28 and area 392.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "math-400",
+      "skill": "Parameter constraints",
+      "prompt": "The system 2x + 3y = 14 and 4x + ky = 29 has no solution. What is k?",
+      "choices": [
+        "6",
+        "3",
+        "8",
+        "4"
+      ],
+      "answer": 0,
+      "explanation": "For parallel distinct lines, the x- and y-coefficient ratios must match: k/3 = 4/2, so k = 6. The constants differ from exact doubling by 1, preventing coincident lines.",
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
     }
   ],
   "science": [
@@ -10606,6 +16806,8006 @@ var bank = {
       "answer": 0,
       "explanation": "Holding other potentially influential factors constant helps isolate the variable being tested; it does not predetermine which model is correct.",
       "context": "Sediment transport. Two researchers propose models for mass of sediment transported over a specified, moderate range of conditions. Model A: increasing water speed increases mass of sediment transported; changing water volume has no effect. Model B: increasing water volume increases mass of sediment transported; changing water speed has no effect. All predictions apply only within this range; all other conditions are held constant."
+    },
+    {
+      "id": "science-201",
+      "skill": "Factorial table reading",
+      "prompt": "In film drying, what response was measured with B alone?",
+      "choices": [
+        "22",
+        "27",
+        "25",
+        "37"
+      ],
+      "answer": 2,
+      "explanation": "The B-only row reports 25.",
+      "context": "Film drying. Investigators tested airflow (factor A) and heater (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of dry film mass (g) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "dry film mass (g)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            22
+          ],
+          [
+            "A only",
+            27
+          ],
+          [
+            "B only",
+            25
+          ],
+          [
+            "A and B",
+            37
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-202",
+      "skill": "Reference groups",
+      "prompt": "Which group is the baseline for measuring the effect of adding A when B is absent?",
+      "choices": [
+        "Neither factor",
+        "B only",
+        "A and B",
+        "A only"
+      ],
+      "answer": 0,
+      "explanation": "The neither-factor group lacks both A and B. Comparing it with A only changes just A.",
+      "context": "Film drying. Investigators tested airflow (factor A) and heater (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of dry film mass (g) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "dry film mass (g)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            22
+          ],
+          [
+            "A only",
+            27
+          ],
+          [
+            "B only",
+            25
+          ],
+          [
+            "A and B",
+            37
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-203",
+      "skill": "Single-factor differences",
+      "prompt": "How much does adding A increase the response when B is absent?",
+      "choices": [
+        "8",
+        "5",
+        "7",
+        "3"
+      ],
+      "answer": 1,
+      "explanation": "Subtract the neither-factor value from A only: 27 - 22 = 5.",
+      "context": "Film drying. Investigators tested airflow (factor A) and heater (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of dry film mass (g) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "dry film mass (g)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            22
+          ],
+          [
+            "A only",
+            27
+          ],
+          [
+            "B only",
+            25
+          ],
+          [
+            "A and B",
+            37
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-204",
+      "skill": "Single-factor differences",
+      "prompt": "How much does adding B increase the response when A is absent?",
+      "choices": [
+        "7",
+        "5",
+        "8",
+        "3"
+      ],
+      "answer": 3,
+      "explanation": "Subtract the neither-factor value from B only: 25 - 22 = 3.",
+      "context": "Film drying. Investigators tested airflow (factor A) and heater (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of dry film mass (g) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "dry film mass (g)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            22
+          ],
+          [
+            "A only",
+            27
+          ],
+          [
+            "B only",
+            25
+          ],
+          [
+            "A and B",
+            37
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-205",
+      "skill": "Ranking outcomes",
+      "prompt": "Which tested condition gives the largest mean response?",
+      "choices": [
+        "A and B",
+        "B only",
+        "Neither",
+        "A only"
+      ],
+      "answer": 0,
+      "explanation": "The combined treatment has the largest value, 37.",
+      "context": "Film drying. Investigators tested airflow (factor A) and heater (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of dry film mass (g) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "dry film mass (g)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            22
+          ],
+          [
+            "A only",
+            27
+          ],
+          [
+            "B only",
+            25
+          ],
+          [
+            "A and B",
+            37
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-206",
+      "skill": "Controlled comparisons",
+      "prompt": "Which pair isolates B’s effect when A is already present?",
+      "choices": [
+        "A only versus A and B",
+        "Neither versus A and B",
+        "Neither versus A only",
+        "A only versus B only"
+      ],
+      "answer": 0,
+      "explanation": "Both selected groups contain A, and only the combined group contains B. Thus the comparison changes only B.",
+      "context": "Film drying. Investigators tested airflow (factor A) and heater (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of dry film mass (g) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "dry film mass (g)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            22
+          ],
+          [
+            "A only",
+            27
+          ],
+          [
+            "B only",
+            25
+          ],
+          [
+            "A and B",
+            37
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-207",
+      "skill": "Replication units",
+      "prompt": "How many individual trials contributed to the entire four-group table?",
+      "choices": [
+        "10",
+        "20",
+        "5",
+        "4"
+      ],
+      "answer": 1,
+      "explanation": "Four groups were each tested five times: 4 × 5 = 20 trials.",
+      "context": "Film drying. Investigators tested airflow (factor A) and heater (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of dry film mass (g) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "dry film mass (g)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            22
+          ],
+          [
+            "A only",
+            27
+          ],
+          [
+            "B only",
+            25
+          ],
+          [
+            "A and B",
+            37
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-208",
+      "skill": "Outcome range",
+      "prompt": "What is the range of the four reported group means?",
+      "choices": [
+        "5",
+        "15",
+        "10",
+        "59"
+      ],
+      "answer": 1,
+      "explanation": "The range is largest minus smallest: 37 - 22 = 15.",
+      "context": "Film drying. Investigators tested airflow (factor A) and heater (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of dry film mass (g) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "dry film mass (g)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            22
+          ],
+          [
+            "A only",
+            27
+          ],
+          [
+            "B only",
+            25
+          ],
+          [
+            "A and B",
+            37
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-209",
+      "skill": "Fair comparisons",
+      "prompt": "Why were starting sample amounts equal in every group?",
+      "choices": [
+        "To prevent sample amount from confounding treatment comparisons.",
+        "To force the combined treatment to have the largest response.",
+        "To ensure that every individual trial has the same value.",
+        "To make a baseline group unnecessary."
+      ],
+      "answer": 0,
+      "explanation": "An additional changing variable could explain response differences; equal sample amounts keep that variable controlled.",
+      "context": "Film drying. Investigators tested airflow (factor A) and heater (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of dry film mass (g) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "dry film mass (g)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            22
+          ],
+          [
+            "A only",
+            27
+          ],
+          [
+            "B only",
+            25
+          ],
+          [
+            "A and B",
+            37
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-210",
+      "skill": "Evidence and magnitude",
+      "prompt": "Which single factor gives the larger increase over baseline when tested alone?",
+      "choices": [
+        "A",
+        "B",
+        "Neither changes the response.",
+        "They give equal increases."
+      ],
+      "answer": 0,
+      "explanation": "A increases the response by 5, compared with 3 for B. Therefore A has the larger isolated increase.",
+      "context": "Film drying. Investigators tested airflow (factor A) and heater (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of dry film mass (g) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "dry film mass (g)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            22
+          ],
+          [
+            "A only",
+            27
+          ],
+          [
+            "B only",
+            25
+          ],
+          [
+            "A and B",
+            37
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-211",
+      "skill": "Interactions",
+      "prompt": "How large is A’s effect when B is present?",
+      "choices": [
+        "5",
+        "3",
+        "15",
+        "12"
+      ],
+      "answer": 3,
+      "explanation": "Compare the combined group with B only: 37 - 25 = 12. This is conditional on B being present.",
+      "context": "Film drying. Investigators tested airflow (factor A) and heater (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of dry film mass (g) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "dry film mass (g)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            22
+          ],
+          [
+            "A only",
+            27
+          ],
+          [
+            "B only",
+            25
+          ],
+          [
+            "A and B",
+            37
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-212",
+      "skill": "Interactions",
+      "prompt": "By how much is A’s effect larger with B present than with B absent?",
+      "choices": [
+        "7",
+        "12",
+        "3",
+        "5"
+      ],
+      "answer": 0,
+      "explanation": "A’s effect with B is 37-25=12; without B it is 27-22=5. Their difference is 7.",
+      "context": "Film drying. Investigators tested airflow (factor A) and heater (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of dry film mass (g) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "dry film mass (g)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            22
+          ],
+          [
+            "A only",
+            27
+          ],
+          [
+            "B only",
+            25
+          ],
+          [
+            "A and B",
+            37
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-213",
+      "skill": "Additive model predictions",
+      "prompt": "A model predicts that the two isolated increases simply add. What combined mean does that model predict?",
+      "choices": [
+        "45",
+        "37",
+        "52",
+        "30"
+      ],
+      "answer": 3,
+      "explanation": "Add the isolated gains to baseline: 22 + (27-22) + (25-22) = 30. Do not count baseline twice.",
+      "context": "Film drying. Investigators tested airflow (factor A) and heater (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of dry film mass (g) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "dry film mass (g)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            22
+          ],
+          [
+            "A only",
+            27
+          ],
+          [
+            "B only",
+            25
+          ],
+          [
+            "A and B",
+            37
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-214",
+      "skill": "Model residuals",
+      "prompt": "Observed combined response minus the additive-model prediction equals what?",
+      "choices": [
+        "3",
+        "12",
+        "7",
+        "5"
+      ],
+      "answer": 2,
+      "explanation": "The additive prediction is 30; the observed combined response is 37. The residual is 7.",
+      "context": "Film drying. Investigators tested airflow (factor A) and heater (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of dry film mass (g) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "dry film mass (g)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            22
+          ],
+          [
+            "A only",
+            27
+          ],
+          [
+            "B only",
+            25
+          ],
+          [
+            "A and B",
+            37
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-215",
+      "skill": "Comparative ratios",
+      "prompt": "What is the ratio of A’s effect with B present to A’s effect with B absent?",
+      "choices": [
+        "12/3",
+        "37/27",
+        "12/5",
+        "5/12"
+      ],
+      "answer": 2,
+      "explanation": "The conditional effect is 12 and the isolated effect is 5, giving (12)/(5). The response ratio is not the effect ratio.",
+      "context": "Film drying. Investigators tested airflow (factor A) and heater (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of dry film mass (g) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "dry film mass (g)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            22
+          ],
+          [
+            "A only",
+            27
+          ],
+          [
+            "B only",
+            25
+          ],
+          [
+            "A and B",
+            37
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-216",
+      "skill": "Necessary assumptions",
+      "prompt": "Which assumption is needed to predict the response with both factors at twice their tested settings?",
+      "choices": [
+        "That the largest listed mean is the combined group.",
+        "That the table contains exactly four means.",
+        "A response model connecting factor settings to the outcome.",
+        "That five trials were performed per group."
+      ],
+      "answer": 2,
+      "explanation": "The study tested only absence and one fixed setting for each factor. A dose-response relationship is needed to predict untested settings.",
+      "context": "Film drying. Investigators tested airflow (factor A) and heater (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of dry film mass (g) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "dry film mass (g)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            22
+          ],
+          [
+            "A only",
+            27
+          ],
+          [
+            "B only",
+            25
+          ],
+          [
+            "A and B",
+            37
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-217",
+      "skill": "Error and inference",
+      "prompt": "The table does not report trial variability. Which statement is therefore most justified?",
+      "choices": [
+        "The means show a pattern, but statistical uncertainty in the differences cannot be quantified from this table alone.",
+        "All five trial values in each group must equal its mean.",
+        "Every pair of groups must differ significantly.",
+        "Any interaction must be a measurement error."
+      ],
+      "answer": 0,
+      "explanation": "Means alone do not give the spread of trials. The pattern is descriptive; variability is needed to quantify its statistical uncertainty.",
+      "context": "Film drying. Investigators tested airflow (factor A) and heater (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of dry film mass (g) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "dry film mass (g)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            22
+          ],
+          [
+            "A only",
+            27
+          ],
+          [
+            "B only",
+            25
+          ],
+          [
+            "A and B",
+            37
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-218",
+      "skill": "Confounding and redesign",
+      "prompt": "Suppose the combined group accidentally ran twice as long. What is the best next step before attributing its extra response to an interaction?",
+      "choices": [
+        "Declare an interaction because the combined mean is largest.",
+        "Delete the baseline and keep the combined measurement.",
+        "Repeat the combined condition at the same duration as the other groups.",
+        "Double the response values for all other groups without testing."
+      ],
+      "answer": 2,
+      "explanation": "Unequal duration creates a competing explanation. A repeat with matched duration directly addresses that confound.",
+      "context": "Film drying. Investigators tested airflow (factor A) and heater (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of dry film mass (g) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "dry film mass (g)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            22
+          ],
+          [
+            "A only",
+            27
+          ],
+          [
+            "B only",
+            25
+          ],
+          [
+            "A and B",
+            37
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-219",
+      "skill": "Symmetry of interactions",
+      "prompt": "How does the change in B’s effect caused by A compare with the change in A’s effect caused by B?",
+      "choices": [
+        "The two changes are equal.",
+        "Their signs must be opposite.",
+        "The first is zero and the second is positive.",
+        "The first is twice the second."
+      ],
+      "answer": 0,
+      "explanation": "Both difference-in-differences equal combined - A only - B only + baseline = 7. This equality follows algebraically from the same four values.",
+      "context": "Film drying. Investigators tested airflow (factor A) and heater (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of dry film mass (g) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "dry film mass (g)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            22
+          ],
+          [
+            "A only",
+            27
+          ],
+          [
+            "B only",
+            25
+          ],
+          [
+            "A and B",
+            37
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-220",
+      "skill": "Synthesis of evidence",
+      "prompt": "Which interpretation best matches all four group means?",
+      "choices": [
+        "Both factors work alone, but their combination returns the response to baseline.",
+        "Neither factor works alone; only the combination changes the response.",
+        "Both factors increase the response alone, and the combined gain exceeds the sum of the isolated gains.",
+        "A raises the response while B lowers it, regardless of the other factor."
+      ],
+      "answer": 2,
+      "explanation": "Isolated gains are 5 and 3; their sum is 8. The combined gain is 15, which exceeds that sum by 7.",
+      "context": "Film drying. Investigators tested airflow (factor A) and heater (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of dry film mass (g) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "dry film mass (g)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            22
+          ],
+          [
+            "A only",
+            27
+          ],
+          [
+            "B only",
+            25
+          ],
+          [
+            "A and B",
+            37
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-221",
+      "skill": "Factorial table reading",
+      "prompt": "In water filtration, what response was measured with B alone?",
+      "choices": [
+        "30",
+        "43",
+        "28",
+        "24"
+      ],
+      "answer": 2,
+      "explanation": "The B-only row reports 28.",
+      "context": "Water filtration. Investigators tested fine mesh (factor A) and charcoal (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of particles removed (count) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "particles removed (count)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            24
+          ],
+          [
+            "A only",
+            30
+          ],
+          [
+            "B only",
+            28
+          ],
+          [
+            "A and B",
+            43
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-222",
+      "skill": "Reference groups",
+      "prompt": "Which group is the baseline for measuring the effect of adding A when B is absent?",
+      "choices": [
+        "A and B",
+        "B only",
+        "Neither factor",
+        "A only"
+      ],
+      "answer": 2,
+      "explanation": "The neither-factor group lacks both A and B. Comparing it with A only changes just A.",
+      "context": "Water filtration. Investigators tested fine mesh (factor A) and charcoal (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of particles removed (count) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "particles removed (count)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            24
+          ],
+          [
+            "A only",
+            30
+          ],
+          [
+            "B only",
+            28
+          ],
+          [
+            "A and B",
+            43
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-223",
+      "skill": "Single-factor differences",
+      "prompt": "How much does adding A increase the response when B is absent?",
+      "choices": [
+        "4",
+        "10",
+        "6",
+        "9"
+      ],
+      "answer": 2,
+      "explanation": "Subtract the neither-factor value from A only: 30 - 24 = 6.",
+      "context": "Water filtration. Investigators tested fine mesh (factor A) and charcoal (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of particles removed (count) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "particles removed (count)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            24
+          ],
+          [
+            "A only",
+            30
+          ],
+          [
+            "B only",
+            28
+          ],
+          [
+            "A and B",
+            43
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-224",
+      "skill": "Single-factor differences",
+      "prompt": "How much does adding B increase the response when A is absent?",
+      "choices": [
+        "10",
+        "9",
+        "6",
+        "4"
+      ],
+      "answer": 3,
+      "explanation": "Subtract the neither-factor value from B only: 28 - 24 = 4.",
+      "context": "Water filtration. Investigators tested fine mesh (factor A) and charcoal (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of particles removed (count) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "particles removed (count)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            24
+          ],
+          [
+            "A only",
+            30
+          ],
+          [
+            "B only",
+            28
+          ],
+          [
+            "A and B",
+            43
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-225",
+      "skill": "Ranking outcomes",
+      "prompt": "Which tested condition gives the largest mean response?",
+      "choices": [
+        "A and B",
+        "Neither",
+        "A only",
+        "B only"
+      ],
+      "answer": 0,
+      "explanation": "The combined treatment has the largest value, 43.",
+      "context": "Water filtration. Investigators tested fine mesh (factor A) and charcoal (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of particles removed (count) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "particles removed (count)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            24
+          ],
+          [
+            "A only",
+            30
+          ],
+          [
+            "B only",
+            28
+          ],
+          [
+            "A and B",
+            43
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-226",
+      "skill": "Controlled comparisons",
+      "prompt": "Which pair isolates B’s effect when A is already present?",
+      "choices": [
+        "Neither versus A and B",
+        "A only versus B only",
+        "A only versus A and B",
+        "Neither versus A only"
+      ],
+      "answer": 2,
+      "explanation": "Both selected groups contain A, and only the combined group contains B. Thus the comparison changes only B.",
+      "context": "Water filtration. Investigators tested fine mesh (factor A) and charcoal (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of particles removed (count) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "particles removed (count)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            24
+          ],
+          [
+            "A only",
+            30
+          ],
+          [
+            "B only",
+            28
+          ],
+          [
+            "A and B",
+            43
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-227",
+      "skill": "Replication units",
+      "prompt": "How many individual trials contributed to the entire four-group table?",
+      "choices": [
+        "4",
+        "10",
+        "20",
+        "5"
+      ],
+      "answer": 2,
+      "explanation": "Four groups were each tested five times: 4 × 5 = 20 trials.",
+      "context": "Water filtration. Investigators tested fine mesh (factor A) and charcoal (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of particles removed (count) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "particles removed (count)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            24
+          ],
+          [
+            "A only",
+            30
+          ],
+          [
+            "B only",
+            28
+          ],
+          [
+            "A and B",
+            43
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-228",
+      "skill": "Outcome range",
+      "prompt": "What is the range of the four reported group means?",
+      "choices": [
+        "13",
+        "6",
+        "67",
+        "19"
+      ],
+      "answer": 3,
+      "explanation": "The range is largest minus smallest: 43 - 24 = 19.",
+      "context": "Water filtration. Investigators tested fine mesh (factor A) and charcoal (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of particles removed (count) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "particles removed (count)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            24
+          ],
+          [
+            "A only",
+            30
+          ],
+          [
+            "B only",
+            28
+          ],
+          [
+            "A and B",
+            43
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-229",
+      "skill": "Fair comparisons",
+      "prompt": "Why were starting sample amounts equal in every group?",
+      "choices": [
+        "To prevent sample amount from confounding treatment comparisons.",
+        "To ensure that every individual trial has the same value.",
+        "To force the combined treatment to have the largest response.",
+        "To make a baseline group unnecessary."
+      ],
+      "answer": 0,
+      "explanation": "An additional changing variable could explain response differences; equal sample amounts keep that variable controlled.",
+      "context": "Water filtration. Investigators tested fine mesh (factor A) and charcoal (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of particles removed (count) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "particles removed (count)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            24
+          ],
+          [
+            "A only",
+            30
+          ],
+          [
+            "B only",
+            28
+          ],
+          [
+            "A and B",
+            43
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-230",
+      "skill": "Evidence and magnitude",
+      "prompt": "Which single factor gives the larger increase over baseline when tested alone?",
+      "choices": [
+        "They give equal increases.",
+        "Neither changes the response.",
+        "B",
+        "A"
+      ],
+      "answer": 3,
+      "explanation": "A increases the response by 6, compared with 4 for B. Therefore A has the larger isolated increase.",
+      "context": "Water filtration. Investigators tested fine mesh (factor A) and charcoal (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of particles removed (count) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "particles removed (count)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            24
+          ],
+          [
+            "A only",
+            30
+          ],
+          [
+            "B only",
+            28
+          ],
+          [
+            "A and B",
+            43
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-231",
+      "skill": "Interactions",
+      "prompt": "How large is A’s effect when B is present?",
+      "choices": [
+        "19",
+        "6",
+        "4",
+        "15"
+      ],
+      "answer": 3,
+      "explanation": "Compare the combined group with B only: 43 - 28 = 15. This is conditional on B being present.",
+      "context": "Water filtration. Investigators tested fine mesh (factor A) and charcoal (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of particles removed (count) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "particles removed (count)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            24
+          ],
+          [
+            "A only",
+            30
+          ],
+          [
+            "B only",
+            28
+          ],
+          [
+            "A and B",
+            43
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-232",
+      "skill": "Interactions",
+      "prompt": "By how much is A’s effect larger with B present than with B absent?",
+      "choices": [
+        "6",
+        "15",
+        "4",
+        "9"
+      ],
+      "answer": 3,
+      "explanation": "A’s effect with B is 43-28=15; without B it is 30-24=6. Their difference is 9.",
+      "context": "Water filtration. Investigators tested fine mesh (factor A) and charcoal (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of particles removed (count) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "particles removed (count)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            24
+          ],
+          [
+            "A only",
+            30
+          ],
+          [
+            "B only",
+            28
+          ],
+          [
+            "A and B",
+            43
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-233",
+      "skill": "Additive model predictions",
+      "prompt": "A model predicts that the two isolated increases simply add. What combined mean does that model predict?",
+      "choices": [
+        "34",
+        "53",
+        "58",
+        "43"
+      ],
+      "answer": 0,
+      "explanation": "Add the isolated gains to baseline: 24 + (30-24) + (28-24) = 34. Do not count baseline twice.",
+      "context": "Water filtration. Investigators tested fine mesh (factor A) and charcoal (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of particles removed (count) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "particles removed (count)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            24
+          ],
+          [
+            "A only",
+            30
+          ],
+          [
+            "B only",
+            28
+          ],
+          [
+            "A and B",
+            43
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-234",
+      "skill": "Model residuals",
+      "prompt": "Observed combined response minus the additive-model prediction equals what?",
+      "choices": [
+        "6",
+        "15",
+        "4",
+        "9"
+      ],
+      "answer": 3,
+      "explanation": "The additive prediction is 34; the observed combined response is 43. The residual is 9.",
+      "context": "Water filtration. Investigators tested fine mesh (factor A) and charcoal (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of particles removed (count) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "particles removed (count)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            24
+          ],
+          [
+            "A only",
+            30
+          ],
+          [
+            "B only",
+            28
+          ],
+          [
+            "A and B",
+            43
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-235",
+      "skill": "Comparative ratios",
+      "prompt": "What is the ratio of A’s effect with B present to A’s effect with B absent?",
+      "choices": [
+        "15/6",
+        "43/30",
+        "15/4",
+        "6/15"
+      ],
+      "answer": 0,
+      "explanation": "The conditional effect is 15 and the isolated effect is 6, giving (15)/(6). The response ratio is not the effect ratio.",
+      "context": "Water filtration. Investigators tested fine mesh (factor A) and charcoal (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of particles removed (count) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "particles removed (count)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            24
+          ],
+          [
+            "A only",
+            30
+          ],
+          [
+            "B only",
+            28
+          ],
+          [
+            "A and B",
+            43
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-236",
+      "skill": "Necessary assumptions",
+      "prompt": "Which assumption is needed to predict the response with both factors at twice their tested settings?",
+      "choices": [
+        "A response model connecting factor settings to the outcome.",
+        "That five trials were performed per group.",
+        "That the table contains exactly four means.",
+        "That the largest listed mean is the combined group."
+      ],
+      "answer": 0,
+      "explanation": "The study tested only absence and one fixed setting for each factor. A dose-response relationship is needed to predict untested settings.",
+      "context": "Water filtration. Investigators tested fine mesh (factor A) and charcoal (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of particles removed (count) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "particles removed (count)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            24
+          ],
+          [
+            "A only",
+            30
+          ],
+          [
+            "B only",
+            28
+          ],
+          [
+            "A and B",
+            43
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-237",
+      "skill": "Error and inference",
+      "prompt": "The table does not report trial variability. Which statement is therefore most justified?",
+      "choices": [
+        "The means show a pattern, but statistical uncertainty in the differences cannot be quantified from this table alone.",
+        "Any interaction must be a measurement error.",
+        "All five trial values in each group must equal its mean.",
+        "Every pair of groups must differ significantly."
+      ],
+      "answer": 0,
+      "explanation": "Means alone do not give the spread of trials. The pattern is descriptive; variability is needed to quantify its statistical uncertainty.",
+      "context": "Water filtration. Investigators tested fine mesh (factor A) and charcoal (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of particles removed (count) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "particles removed (count)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            24
+          ],
+          [
+            "A only",
+            30
+          ],
+          [
+            "B only",
+            28
+          ],
+          [
+            "A and B",
+            43
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-238",
+      "skill": "Confounding and redesign",
+      "prompt": "Suppose the combined group accidentally ran twice as long. What is the best next step before attributing its extra response to an interaction?",
+      "choices": [
+        "Declare an interaction because the combined mean is largest.",
+        "Repeat the combined condition at the same duration as the other groups.",
+        "Double the response values for all other groups without testing.",
+        "Delete the baseline and keep the combined measurement."
+      ],
+      "answer": 1,
+      "explanation": "Unequal duration creates a competing explanation. A repeat with matched duration directly addresses that confound.",
+      "context": "Water filtration. Investigators tested fine mesh (factor A) and charcoal (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of particles removed (count) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "particles removed (count)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            24
+          ],
+          [
+            "A only",
+            30
+          ],
+          [
+            "B only",
+            28
+          ],
+          [
+            "A and B",
+            43
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-239",
+      "skill": "Symmetry of interactions",
+      "prompt": "How does the change in B’s effect caused by A compare with the change in A’s effect caused by B?",
+      "choices": [
+        "The first is zero and the second is positive.",
+        "The first is twice the second.",
+        "The two changes are equal.",
+        "Their signs must be opposite."
+      ],
+      "answer": 2,
+      "explanation": "Both difference-in-differences equal combined - A only - B only + baseline = 9. This equality follows algebraically from the same four values.",
+      "context": "Water filtration. Investigators tested fine mesh (factor A) and charcoal (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of particles removed (count) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "particles removed (count)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            24
+          ],
+          [
+            "A only",
+            30
+          ],
+          [
+            "B only",
+            28
+          ],
+          [
+            "A and B",
+            43
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-240",
+      "skill": "Synthesis of evidence",
+      "prompt": "Which interpretation best matches all four group means?",
+      "choices": [
+        "Both factors increase the response alone, and the combined gain exceeds the sum of the isolated gains.",
+        "Neither factor works alone; only the combination changes the response.",
+        "Both factors work alone, but their combination returns the response to baseline.",
+        "A raises the response while B lowers it, regardless of the other factor."
+      ],
+      "answer": 0,
+      "explanation": "Isolated gains are 6 and 4; their sum is 10. The combined gain is 19, which exceeds that sum by 9.",
+      "context": "Water filtration. Investigators tested fine mesh (factor A) and charcoal (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of particles removed (count) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "particles removed (count)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            24
+          ],
+          [
+            "A only",
+            30
+          ],
+          [
+            "B only",
+            28
+          ],
+          [
+            "A and B",
+            43
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-241",
+      "skill": "Factorial table reading",
+      "prompt": "In compost trial, what response was measured with B alone?",
+      "choices": [
+        "31",
+        "33",
+        "49",
+        "26"
+      ],
+      "answer": 0,
+      "explanation": "The B-only row reports 31.",
+      "context": "Compost trial. Investigators tested aeration (factor A) and added leaves (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of gas collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "gas collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            26
+          ],
+          [
+            "A only",
+            33
+          ],
+          [
+            "B only",
+            31
+          ],
+          [
+            "A and B",
+            49
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-242",
+      "skill": "Reference groups",
+      "prompt": "Which group is the baseline for measuring the effect of adding A when B is absent?",
+      "choices": [
+        "A and B",
+        "B only",
+        "A only",
+        "Neither factor"
+      ],
+      "answer": 3,
+      "explanation": "The neither-factor group lacks both A and B. Comparing it with A only changes just A.",
+      "context": "Compost trial. Investigators tested aeration (factor A) and added leaves (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of gas collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "gas collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            26
+          ],
+          [
+            "A only",
+            33
+          ],
+          [
+            "B only",
+            31
+          ],
+          [
+            "A and B",
+            49
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-243",
+      "skill": "Single-factor differences",
+      "prompt": "How much does adding A increase the response when B is absent?",
+      "choices": [
+        "7",
+        "11",
+        "12",
+        "5"
+      ],
+      "answer": 0,
+      "explanation": "Subtract the neither-factor value from A only: 33 - 26 = 7.",
+      "context": "Compost trial. Investigators tested aeration (factor A) and added leaves (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of gas collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "gas collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            26
+          ],
+          [
+            "A only",
+            33
+          ],
+          [
+            "B only",
+            31
+          ],
+          [
+            "A and B",
+            49
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-244",
+      "skill": "Single-factor differences",
+      "prompt": "How much does adding B increase the response when A is absent?",
+      "choices": [
+        "5",
+        "12",
+        "7",
+        "11"
+      ],
+      "answer": 0,
+      "explanation": "Subtract the neither-factor value from B only: 31 - 26 = 5.",
+      "context": "Compost trial. Investigators tested aeration (factor A) and added leaves (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of gas collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "gas collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            26
+          ],
+          [
+            "A only",
+            33
+          ],
+          [
+            "B only",
+            31
+          ],
+          [
+            "A and B",
+            49
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-245",
+      "skill": "Ranking outcomes",
+      "prompt": "Which tested condition gives the largest mean response?",
+      "choices": [
+        "A only",
+        "B only",
+        "A and B",
+        "Neither"
+      ],
+      "answer": 2,
+      "explanation": "The combined treatment has the largest value, 49.",
+      "context": "Compost trial. Investigators tested aeration (factor A) and added leaves (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of gas collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "gas collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            26
+          ],
+          [
+            "A only",
+            33
+          ],
+          [
+            "B only",
+            31
+          ],
+          [
+            "A and B",
+            49
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-246",
+      "skill": "Controlled comparisons",
+      "prompt": "Which pair isolates B’s effect when A is already present?",
+      "choices": [
+        "Neither versus A and B",
+        "A only versus A and B",
+        "Neither versus A only",
+        "A only versus B only"
+      ],
+      "answer": 1,
+      "explanation": "Both selected groups contain A, and only the combined group contains B. Thus the comparison changes only B.",
+      "context": "Compost trial. Investigators tested aeration (factor A) and added leaves (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of gas collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "gas collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            26
+          ],
+          [
+            "A only",
+            33
+          ],
+          [
+            "B only",
+            31
+          ],
+          [
+            "A and B",
+            49
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-247",
+      "skill": "Replication units",
+      "prompt": "How many individual trials contributed to the entire four-group table?",
+      "choices": [
+        "20",
+        "5",
+        "10",
+        "4"
+      ],
+      "answer": 0,
+      "explanation": "Four groups were each tested five times: 4 × 5 = 20 trials.",
+      "context": "Compost trial. Investigators tested aeration (factor A) and added leaves (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of gas collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "gas collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            26
+          ],
+          [
+            "A only",
+            33
+          ],
+          [
+            "B only",
+            31
+          ],
+          [
+            "A and B",
+            49
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-248",
+      "skill": "Outcome range",
+      "prompt": "What is the range of the four reported group means?",
+      "choices": [
+        "7",
+        "23",
+        "16",
+        "75"
+      ],
+      "answer": 1,
+      "explanation": "The range is largest minus smallest: 49 - 26 = 23.",
+      "context": "Compost trial. Investigators tested aeration (factor A) and added leaves (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of gas collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "gas collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            26
+          ],
+          [
+            "A only",
+            33
+          ],
+          [
+            "B only",
+            31
+          ],
+          [
+            "A and B",
+            49
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-249",
+      "skill": "Fair comparisons",
+      "prompt": "Why were starting sample amounts equal in every group?",
+      "choices": [
+        "To force the combined treatment to have the largest response.",
+        "To make a baseline group unnecessary.",
+        "To ensure that every individual trial has the same value.",
+        "To prevent sample amount from confounding treatment comparisons."
+      ],
+      "answer": 3,
+      "explanation": "An additional changing variable could explain response differences; equal sample amounts keep that variable controlled.",
+      "context": "Compost trial. Investigators tested aeration (factor A) and added leaves (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of gas collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "gas collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            26
+          ],
+          [
+            "A only",
+            33
+          ],
+          [
+            "B only",
+            31
+          ],
+          [
+            "A and B",
+            49
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-250",
+      "skill": "Evidence and magnitude",
+      "prompt": "Which single factor gives the larger increase over baseline when tested alone?",
+      "choices": [
+        "They give equal increases.",
+        "A",
+        "B",
+        "Neither changes the response."
+      ],
+      "answer": 1,
+      "explanation": "A increases the response by 7, compared with 5 for B. Therefore A has the larger isolated increase.",
+      "context": "Compost trial. Investigators tested aeration (factor A) and added leaves (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of gas collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "gas collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            26
+          ],
+          [
+            "A only",
+            33
+          ],
+          [
+            "B only",
+            31
+          ],
+          [
+            "A and B",
+            49
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-251",
+      "skill": "Interactions",
+      "prompt": "How large is A’s effect when B is present?",
+      "choices": [
+        "7",
+        "5",
+        "23",
+        "18"
+      ],
+      "answer": 3,
+      "explanation": "Compare the combined group with B only: 49 - 31 = 18. This is conditional on B being present.",
+      "context": "Compost trial. Investigators tested aeration (factor A) and added leaves (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of gas collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "gas collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            26
+          ],
+          [
+            "A only",
+            33
+          ],
+          [
+            "B only",
+            31
+          ],
+          [
+            "A and B",
+            49
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-252",
+      "skill": "Interactions",
+      "prompt": "By how much is A’s effect larger with B present than with B absent?",
+      "choices": [
+        "18",
+        "7",
+        "5",
+        "11"
+      ],
+      "answer": 3,
+      "explanation": "A’s effect with B is 49-31=18; without B it is 33-26=7. Their difference is 11.",
+      "context": "Compost trial. Investigators tested aeration (factor A) and added leaves (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of gas collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "gas collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            26
+          ],
+          [
+            "A only",
+            33
+          ],
+          [
+            "B only",
+            31
+          ],
+          [
+            "A and B",
+            49
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-253",
+      "skill": "Additive model predictions",
+      "prompt": "A model predicts that the two isolated increases simply add. What combined mean does that model predict?",
+      "choices": [
+        "64",
+        "49",
+        "61",
+        "38"
+      ],
+      "answer": 3,
+      "explanation": "Add the isolated gains to baseline: 26 + (33-26) + (31-26) = 38. Do not count baseline twice.",
+      "context": "Compost trial. Investigators tested aeration (factor A) and added leaves (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of gas collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "gas collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            26
+          ],
+          [
+            "A only",
+            33
+          ],
+          [
+            "B only",
+            31
+          ],
+          [
+            "A and B",
+            49
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-254",
+      "skill": "Model residuals",
+      "prompt": "Observed combined response minus the additive-model prediction equals what?",
+      "choices": [
+        "5",
+        "18",
+        "11",
+        "7"
+      ],
+      "answer": 2,
+      "explanation": "The additive prediction is 38; the observed combined response is 49. The residual is 11.",
+      "context": "Compost trial. Investigators tested aeration (factor A) and added leaves (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of gas collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "gas collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            26
+          ],
+          [
+            "A only",
+            33
+          ],
+          [
+            "B only",
+            31
+          ],
+          [
+            "A and B",
+            49
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-255",
+      "skill": "Comparative ratios",
+      "prompt": "What is the ratio of A’s effect with B present to A’s effect with B absent?",
+      "choices": [
+        "7/18",
+        "18/5",
+        "49/33",
+        "18/7"
+      ],
+      "answer": 3,
+      "explanation": "The conditional effect is 18 and the isolated effect is 7, giving (18)/(7). The response ratio is not the effect ratio.",
+      "context": "Compost trial. Investigators tested aeration (factor A) and added leaves (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of gas collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "gas collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            26
+          ],
+          [
+            "A only",
+            33
+          ],
+          [
+            "B only",
+            31
+          ],
+          [
+            "A and B",
+            49
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-256",
+      "skill": "Necessary assumptions",
+      "prompt": "Which assumption is needed to predict the response with both factors at twice their tested settings?",
+      "choices": [
+        "A response model connecting factor settings to the outcome.",
+        "That the table contains exactly four means.",
+        "That five trials were performed per group.",
+        "That the largest listed mean is the combined group."
+      ],
+      "answer": 0,
+      "explanation": "The study tested only absence and one fixed setting for each factor. A dose-response relationship is needed to predict untested settings.",
+      "context": "Compost trial. Investigators tested aeration (factor A) and added leaves (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of gas collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "gas collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            26
+          ],
+          [
+            "A only",
+            33
+          ],
+          [
+            "B only",
+            31
+          ],
+          [
+            "A and B",
+            49
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-257",
+      "skill": "Error and inference",
+      "prompt": "The table does not report trial variability. Which statement is therefore most justified?",
+      "choices": [
+        "Any interaction must be a measurement error.",
+        "All five trial values in each group must equal its mean.",
+        "Every pair of groups must differ significantly.",
+        "The means show a pattern, but statistical uncertainty in the differences cannot be quantified from this table alone."
+      ],
+      "answer": 3,
+      "explanation": "Means alone do not give the spread of trials. The pattern is descriptive; variability is needed to quantify its statistical uncertainty.",
+      "context": "Compost trial. Investigators tested aeration (factor A) and added leaves (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of gas collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "gas collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            26
+          ],
+          [
+            "A only",
+            33
+          ],
+          [
+            "B only",
+            31
+          ],
+          [
+            "A and B",
+            49
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-258",
+      "skill": "Confounding and redesign",
+      "prompt": "Suppose the combined group accidentally ran twice as long. What is the best next step before attributing its extra response to an interaction?",
+      "choices": [
+        "Double the response values for all other groups without testing.",
+        "Delete the baseline and keep the combined measurement.",
+        "Repeat the combined condition at the same duration as the other groups.",
+        "Declare an interaction because the combined mean is largest."
+      ],
+      "answer": 2,
+      "explanation": "Unequal duration creates a competing explanation. A repeat with matched duration directly addresses that confound.",
+      "context": "Compost trial. Investigators tested aeration (factor A) and added leaves (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of gas collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "gas collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            26
+          ],
+          [
+            "A only",
+            33
+          ],
+          [
+            "B only",
+            31
+          ],
+          [
+            "A and B",
+            49
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-259",
+      "skill": "Symmetry of interactions",
+      "prompt": "How does the change in B’s effect caused by A compare with the change in A’s effect caused by B?",
+      "choices": [
+        "The two changes are equal.",
+        "Their signs must be opposite.",
+        "The first is twice the second.",
+        "The first is zero and the second is positive."
+      ],
+      "answer": 0,
+      "explanation": "Both difference-in-differences equal combined - A only - B only + baseline = 11. This equality follows algebraically from the same four values.",
+      "context": "Compost trial. Investigators tested aeration (factor A) and added leaves (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of gas collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "gas collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            26
+          ],
+          [
+            "A only",
+            33
+          ],
+          [
+            "B only",
+            31
+          ],
+          [
+            "A and B",
+            49
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-260",
+      "skill": "Synthesis of evidence",
+      "prompt": "Which interpretation best matches all four group means?",
+      "choices": [
+        "Neither factor works alone; only the combination changes the response.",
+        "Both factors increase the response alone, and the combined gain exceeds the sum of the isolated gains.",
+        "A raises the response while B lowers it, regardless of the other factor.",
+        "Both factors work alone, but their combination returns the response to baseline."
+      ],
+      "answer": 1,
+      "explanation": "Isolated gains are 7 and 5; their sum is 12. The combined gain is 23, which exceeds that sum by 11.",
+      "context": "Compost trial. Investigators tested aeration (factor A) and added leaves (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of gas collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "gas collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            26
+          ],
+          [
+            "A only",
+            33
+          ],
+          [
+            "B only",
+            31
+          ],
+          [
+            "A and B",
+            49
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-261",
+      "skill": "Factorial table reading",
+      "prompt": "In surface coating, what response was measured with B alone?",
+      "choices": [
+        "55",
+        "28",
+        "34",
+        "36"
+      ],
+      "answer": 2,
+      "explanation": "The B-only row reports 34.",
+      "context": "Surface coating. Investigators tested primer (factor A) and sealant (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of load before peeling (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "load before peeling (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            28
+          ],
+          [
+            "A only",
+            36
+          ],
+          [
+            "B only",
+            34
+          ],
+          [
+            "A and B",
+            55
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-262",
+      "skill": "Reference groups",
+      "prompt": "Which group is the baseline for measuring the effect of adding A when B is absent?",
+      "choices": [
+        "A only",
+        "B only",
+        "A and B",
+        "Neither factor"
+      ],
+      "answer": 3,
+      "explanation": "The neither-factor group lacks both A and B. Comparing it with A only changes just A.",
+      "context": "Surface coating. Investigators tested primer (factor A) and sealant (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of load before peeling (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "load before peeling (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            28
+          ],
+          [
+            "A only",
+            36
+          ],
+          [
+            "B only",
+            34
+          ],
+          [
+            "A and B",
+            55
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-263",
+      "skill": "Single-factor differences",
+      "prompt": "How much does adding A increase the response when B is absent?",
+      "choices": [
+        "13",
+        "8",
+        "14",
+        "6"
+      ],
+      "answer": 1,
+      "explanation": "Subtract the neither-factor value from A only: 36 - 28 = 8.",
+      "context": "Surface coating. Investigators tested primer (factor A) and sealant (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of load before peeling (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "load before peeling (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            28
+          ],
+          [
+            "A only",
+            36
+          ],
+          [
+            "B only",
+            34
+          ],
+          [
+            "A and B",
+            55
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-264",
+      "skill": "Single-factor differences",
+      "prompt": "How much does adding B increase the response when A is absent?",
+      "choices": [
+        "6",
+        "14",
+        "13",
+        "8"
+      ],
+      "answer": 0,
+      "explanation": "Subtract the neither-factor value from B only: 34 - 28 = 6.",
+      "context": "Surface coating. Investigators tested primer (factor A) and sealant (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of load before peeling (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "load before peeling (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            28
+          ],
+          [
+            "A only",
+            36
+          ],
+          [
+            "B only",
+            34
+          ],
+          [
+            "A and B",
+            55
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-265",
+      "skill": "Ranking outcomes",
+      "prompt": "Which tested condition gives the largest mean response?",
+      "choices": [
+        "A and B",
+        "A only",
+        "B only",
+        "Neither"
+      ],
+      "answer": 0,
+      "explanation": "The combined treatment has the largest value, 55.",
+      "context": "Surface coating. Investigators tested primer (factor A) and sealant (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of load before peeling (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "load before peeling (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            28
+          ],
+          [
+            "A only",
+            36
+          ],
+          [
+            "B only",
+            34
+          ],
+          [
+            "A and B",
+            55
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-266",
+      "skill": "Controlled comparisons",
+      "prompt": "Which pair isolates B’s effect when A is already present?",
+      "choices": [
+        "Neither versus A only",
+        "Neither versus A and B",
+        "A only versus A and B",
+        "A only versus B only"
+      ],
+      "answer": 2,
+      "explanation": "Both selected groups contain A, and only the combined group contains B. Thus the comparison changes only B.",
+      "context": "Surface coating. Investigators tested primer (factor A) and sealant (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of load before peeling (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "load before peeling (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            28
+          ],
+          [
+            "A only",
+            36
+          ],
+          [
+            "B only",
+            34
+          ],
+          [
+            "A and B",
+            55
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-267",
+      "skill": "Replication units",
+      "prompt": "How many individual trials contributed to the entire four-group table?",
+      "choices": [
+        "20",
+        "4",
+        "5",
+        "10"
+      ],
+      "answer": 0,
+      "explanation": "Four groups were each tested five times: 4 × 5 = 20 trials.",
+      "context": "Surface coating. Investigators tested primer (factor A) and sealant (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of load before peeling (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "load before peeling (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            28
+          ],
+          [
+            "A only",
+            36
+          ],
+          [
+            "B only",
+            34
+          ],
+          [
+            "A and B",
+            55
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-268",
+      "skill": "Outcome range",
+      "prompt": "What is the range of the four reported group means?",
+      "choices": [
+        "83",
+        "19",
+        "27",
+        "8"
+      ],
+      "answer": 2,
+      "explanation": "The range is largest minus smallest: 55 - 28 = 27.",
+      "context": "Surface coating. Investigators tested primer (factor A) and sealant (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of load before peeling (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "load before peeling (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            28
+          ],
+          [
+            "A only",
+            36
+          ],
+          [
+            "B only",
+            34
+          ],
+          [
+            "A and B",
+            55
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-269",
+      "skill": "Fair comparisons",
+      "prompt": "Why were starting sample amounts equal in every group?",
+      "choices": [
+        "To force the combined treatment to have the largest response.",
+        "To prevent sample amount from confounding treatment comparisons.",
+        "To ensure that every individual trial has the same value.",
+        "To make a baseline group unnecessary."
+      ],
+      "answer": 1,
+      "explanation": "An additional changing variable could explain response differences; equal sample amounts keep that variable controlled.",
+      "context": "Surface coating. Investigators tested primer (factor A) and sealant (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of load before peeling (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "load before peeling (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            28
+          ],
+          [
+            "A only",
+            36
+          ],
+          [
+            "B only",
+            34
+          ],
+          [
+            "A and B",
+            55
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-270",
+      "skill": "Evidence and magnitude",
+      "prompt": "Which single factor gives the larger increase over baseline when tested alone?",
+      "choices": [
+        "They give equal increases.",
+        "B",
+        "A",
+        "Neither changes the response."
+      ],
+      "answer": 2,
+      "explanation": "A increases the response by 8, compared with 6 for B. Therefore A has the larger isolated increase.",
+      "context": "Surface coating. Investigators tested primer (factor A) and sealant (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of load before peeling (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "load before peeling (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            28
+          ],
+          [
+            "A only",
+            36
+          ],
+          [
+            "B only",
+            34
+          ],
+          [
+            "A and B",
+            55
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-271",
+      "skill": "Interactions",
+      "prompt": "How large is A’s effect when B is present?",
+      "choices": [
+        "8",
+        "27",
+        "21",
+        "6"
+      ],
+      "answer": 2,
+      "explanation": "Compare the combined group with B only: 55 - 34 = 21. This is conditional on B being present.",
+      "context": "Surface coating. Investigators tested primer (factor A) and sealant (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of load before peeling (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "load before peeling (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            28
+          ],
+          [
+            "A only",
+            36
+          ],
+          [
+            "B only",
+            34
+          ],
+          [
+            "A and B",
+            55
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-272",
+      "skill": "Interactions",
+      "prompt": "By how much is A’s effect larger with B present than with B absent?",
+      "choices": [
+        "8",
+        "13",
+        "6",
+        "21"
+      ],
+      "answer": 1,
+      "explanation": "A’s effect with B is 55-34=21; without B it is 36-28=8. Their difference is 13.",
+      "context": "Surface coating. Investigators tested primer (factor A) and sealant (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of load before peeling (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "load before peeling (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            28
+          ],
+          [
+            "A only",
+            36
+          ],
+          [
+            "B only",
+            34
+          ],
+          [
+            "A and B",
+            55
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-273",
+      "skill": "Additive model predictions",
+      "prompt": "A model predicts that the two isolated increases simply add. What combined mean does that model predict?",
+      "choices": [
+        "55",
+        "70",
+        "42",
+        "69"
+      ],
+      "answer": 2,
+      "explanation": "Add the isolated gains to baseline: 28 + (36-28) + (34-28) = 42. Do not count baseline twice.",
+      "context": "Surface coating. Investigators tested primer (factor A) and sealant (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of load before peeling (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "load before peeling (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            28
+          ],
+          [
+            "A only",
+            36
+          ],
+          [
+            "B only",
+            34
+          ],
+          [
+            "A and B",
+            55
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-274",
+      "skill": "Model residuals",
+      "prompt": "Observed combined response minus the additive-model prediction equals what?",
+      "choices": [
+        "21",
+        "8",
+        "13",
+        "6"
+      ],
+      "answer": 2,
+      "explanation": "The additive prediction is 42; the observed combined response is 55. The residual is 13.",
+      "context": "Surface coating. Investigators tested primer (factor A) and sealant (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of load before peeling (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "load before peeling (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            28
+          ],
+          [
+            "A only",
+            36
+          ],
+          [
+            "B only",
+            34
+          ],
+          [
+            "A and B",
+            55
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-275",
+      "skill": "Comparative ratios",
+      "prompt": "What is the ratio of A’s effect with B present to A’s effect with B absent?",
+      "choices": [
+        "21/8",
+        "55/36",
+        "21/6",
+        "8/21"
+      ],
+      "answer": 0,
+      "explanation": "The conditional effect is 21 and the isolated effect is 8, giving (21)/(8). The response ratio is not the effect ratio.",
+      "context": "Surface coating. Investigators tested primer (factor A) and sealant (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of load before peeling (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "load before peeling (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            28
+          ],
+          [
+            "A only",
+            36
+          ],
+          [
+            "B only",
+            34
+          ],
+          [
+            "A and B",
+            55
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-276",
+      "skill": "Necessary assumptions",
+      "prompt": "Which assumption is needed to predict the response with both factors at twice their tested settings?",
+      "choices": [
+        "That the largest listed mean is the combined group.",
+        "That five trials were performed per group.",
+        "That the table contains exactly four means.",
+        "A response model connecting factor settings to the outcome."
+      ],
+      "answer": 3,
+      "explanation": "The study tested only absence and one fixed setting for each factor. A dose-response relationship is needed to predict untested settings.",
+      "context": "Surface coating. Investigators tested primer (factor A) and sealant (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of load before peeling (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "load before peeling (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            28
+          ],
+          [
+            "A only",
+            36
+          ],
+          [
+            "B only",
+            34
+          ],
+          [
+            "A and B",
+            55
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-277",
+      "skill": "Error and inference",
+      "prompt": "The table does not report trial variability. Which statement is therefore most justified?",
+      "choices": [
+        "Every pair of groups must differ significantly.",
+        "Any interaction must be a measurement error.",
+        "All five trial values in each group must equal its mean.",
+        "The means show a pattern, but statistical uncertainty in the differences cannot be quantified from this table alone."
+      ],
+      "answer": 3,
+      "explanation": "Means alone do not give the spread of trials. The pattern is descriptive; variability is needed to quantify its statistical uncertainty.",
+      "context": "Surface coating. Investigators tested primer (factor A) and sealant (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of load before peeling (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "load before peeling (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            28
+          ],
+          [
+            "A only",
+            36
+          ],
+          [
+            "B only",
+            34
+          ],
+          [
+            "A and B",
+            55
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-278",
+      "skill": "Confounding and redesign",
+      "prompt": "Suppose the combined group accidentally ran twice as long. What is the best next step before attributing its extra response to an interaction?",
+      "choices": [
+        "Delete the baseline and keep the combined measurement.",
+        "Declare an interaction because the combined mean is largest.",
+        "Repeat the combined condition at the same duration as the other groups.",
+        "Double the response values for all other groups without testing."
+      ],
+      "answer": 2,
+      "explanation": "Unequal duration creates a competing explanation. A repeat with matched duration directly addresses that confound.",
+      "context": "Surface coating. Investigators tested primer (factor A) and sealant (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of load before peeling (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "load before peeling (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            28
+          ],
+          [
+            "A only",
+            36
+          ],
+          [
+            "B only",
+            34
+          ],
+          [
+            "A and B",
+            55
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-279",
+      "skill": "Symmetry of interactions",
+      "prompt": "How does the change in B’s effect caused by A compare with the change in A’s effect caused by B?",
+      "choices": [
+        "Their signs must be opposite.",
+        "The first is zero and the second is positive.",
+        "The first is twice the second.",
+        "The two changes are equal."
+      ],
+      "answer": 3,
+      "explanation": "Both difference-in-differences equal combined - A only - B only + baseline = 13. This equality follows algebraically from the same four values.",
+      "context": "Surface coating. Investigators tested primer (factor A) and sealant (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of load before peeling (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "load before peeling (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            28
+          ],
+          [
+            "A only",
+            36
+          ],
+          [
+            "B only",
+            34
+          ],
+          [
+            "A and B",
+            55
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-280",
+      "skill": "Synthesis of evidence",
+      "prompt": "Which interpretation best matches all four group means?",
+      "choices": [
+        "A raises the response while B lowers it, regardless of the other factor.",
+        "Both factors work alone, but their combination returns the response to baseline.",
+        "Neither factor works alone; only the combination changes the response.",
+        "Both factors increase the response alone, and the combined gain exceeds the sum of the isolated gains."
+      ],
+      "answer": 3,
+      "explanation": "Isolated gains are 8 and 6; their sum is 14. The combined gain is 27, which exceeds that sum by 13.",
+      "context": "Surface coating. Investigators tested primer (factor A) and sealant (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of load before peeling (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "load before peeling (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            28
+          ],
+          [
+            "A only",
+            36
+          ],
+          [
+            "B only",
+            34
+          ],
+          [
+            "A and B",
+            55
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-281",
+      "skill": "Factorial table reading",
+      "prompt": "In root culture, what response was measured with B alone?",
+      "choices": [
+        "39",
+        "30",
+        "61",
+        "37"
+      ],
+      "answer": 3,
+      "explanation": "The B-only row reports 37.",
+      "context": "Root culture. Investigators tested nutrient P (factor A) and nutrient Q (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of root length (mm) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "root length (mm)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            30
+          ],
+          [
+            "A only",
+            39
+          ],
+          [
+            "B only",
+            37
+          ],
+          [
+            "A and B",
+            61
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-282",
+      "skill": "Reference groups",
+      "prompt": "Which group is the baseline for measuring the effect of adding A when B is absent?",
+      "choices": [
+        "B only",
+        "Neither factor",
+        "A only",
+        "A and B"
+      ],
+      "answer": 1,
+      "explanation": "The neither-factor group lacks both A and B. Comparing it with A only changes just A.",
+      "context": "Root culture. Investigators tested nutrient P (factor A) and nutrient Q (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of root length (mm) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "root length (mm)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            30
+          ],
+          [
+            "A only",
+            39
+          ],
+          [
+            "B only",
+            37
+          ],
+          [
+            "A and B",
+            61
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-283",
+      "skill": "Single-factor differences",
+      "prompt": "How much does adding A increase the response when B is absent?",
+      "choices": [
+        "15",
+        "16",
+        "9",
+        "7"
+      ],
+      "answer": 2,
+      "explanation": "Subtract the neither-factor value from A only: 39 - 30 = 9.",
+      "context": "Root culture. Investigators tested nutrient P (factor A) and nutrient Q (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of root length (mm) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "root length (mm)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            30
+          ],
+          [
+            "A only",
+            39
+          ],
+          [
+            "B only",
+            37
+          ],
+          [
+            "A and B",
+            61
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-284",
+      "skill": "Single-factor differences",
+      "prompt": "How much does adding B increase the response when A is absent?",
+      "choices": [
+        "16",
+        "9",
+        "7",
+        "15"
+      ],
+      "answer": 2,
+      "explanation": "Subtract the neither-factor value from B only: 37 - 30 = 7.",
+      "context": "Root culture. Investigators tested nutrient P (factor A) and nutrient Q (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of root length (mm) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "root length (mm)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            30
+          ],
+          [
+            "A only",
+            39
+          ],
+          [
+            "B only",
+            37
+          ],
+          [
+            "A and B",
+            61
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-285",
+      "skill": "Ranking outcomes",
+      "prompt": "Which tested condition gives the largest mean response?",
+      "choices": [
+        "Neither",
+        "B only",
+        "A only",
+        "A and B"
+      ],
+      "answer": 3,
+      "explanation": "The combined treatment has the largest value, 61.",
+      "context": "Root culture. Investigators tested nutrient P (factor A) and nutrient Q (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of root length (mm) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "root length (mm)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            30
+          ],
+          [
+            "A only",
+            39
+          ],
+          [
+            "B only",
+            37
+          ],
+          [
+            "A and B",
+            61
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-286",
+      "skill": "Controlled comparisons",
+      "prompt": "Which pair isolates B’s effect when A is already present?",
+      "choices": [
+        "A only versus A and B",
+        "Neither versus A only",
+        "Neither versus A and B",
+        "A only versus B only"
+      ],
+      "answer": 0,
+      "explanation": "Both selected groups contain A, and only the combined group contains B. Thus the comparison changes only B.",
+      "context": "Root culture. Investigators tested nutrient P (factor A) and nutrient Q (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of root length (mm) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "root length (mm)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            30
+          ],
+          [
+            "A only",
+            39
+          ],
+          [
+            "B only",
+            37
+          ],
+          [
+            "A and B",
+            61
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-287",
+      "skill": "Replication units",
+      "prompt": "How many individual trials contributed to the entire four-group table?",
+      "choices": [
+        "4",
+        "5",
+        "10",
+        "20"
+      ],
+      "answer": 3,
+      "explanation": "Four groups were each tested five times: 4 × 5 = 20 trials.",
+      "context": "Root culture. Investigators tested nutrient P (factor A) and nutrient Q (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of root length (mm) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "root length (mm)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            30
+          ],
+          [
+            "A only",
+            39
+          ],
+          [
+            "B only",
+            37
+          ],
+          [
+            "A and B",
+            61
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-288",
+      "skill": "Outcome range",
+      "prompt": "What is the range of the four reported group means?",
+      "choices": [
+        "31",
+        "91",
+        "9",
+        "22"
+      ],
+      "answer": 0,
+      "explanation": "The range is largest minus smallest: 61 - 30 = 31.",
+      "context": "Root culture. Investigators tested nutrient P (factor A) and nutrient Q (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of root length (mm) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "root length (mm)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            30
+          ],
+          [
+            "A only",
+            39
+          ],
+          [
+            "B only",
+            37
+          ],
+          [
+            "A and B",
+            61
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-289",
+      "skill": "Fair comparisons",
+      "prompt": "Why were starting sample amounts equal in every group?",
+      "choices": [
+        "To make a baseline group unnecessary.",
+        "To ensure that every individual trial has the same value.",
+        "To prevent sample amount from confounding treatment comparisons.",
+        "To force the combined treatment to have the largest response."
+      ],
+      "answer": 2,
+      "explanation": "An additional changing variable could explain response differences; equal sample amounts keep that variable controlled.",
+      "context": "Root culture. Investigators tested nutrient P (factor A) and nutrient Q (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of root length (mm) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "root length (mm)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            30
+          ],
+          [
+            "A only",
+            39
+          ],
+          [
+            "B only",
+            37
+          ],
+          [
+            "A and B",
+            61
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-290",
+      "skill": "Evidence and magnitude",
+      "prompt": "Which single factor gives the larger increase over baseline when tested alone?",
+      "choices": [
+        "Neither changes the response.",
+        "B",
+        "They give equal increases.",
+        "A"
+      ],
+      "answer": 3,
+      "explanation": "A increases the response by 9, compared with 7 for B. Therefore A has the larger isolated increase.",
+      "context": "Root culture. Investigators tested nutrient P (factor A) and nutrient Q (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of root length (mm) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "root length (mm)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            30
+          ],
+          [
+            "A only",
+            39
+          ],
+          [
+            "B only",
+            37
+          ],
+          [
+            "A and B",
+            61
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-291",
+      "skill": "Interactions",
+      "prompt": "How large is A’s effect when B is present?",
+      "choices": [
+        "7",
+        "24",
+        "31",
+        "9"
+      ],
+      "answer": 1,
+      "explanation": "Compare the combined group with B only: 61 - 37 = 24. This is conditional on B being present.",
+      "context": "Root culture. Investigators tested nutrient P (factor A) and nutrient Q (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of root length (mm) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "root length (mm)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            30
+          ],
+          [
+            "A only",
+            39
+          ],
+          [
+            "B only",
+            37
+          ],
+          [
+            "A and B",
+            61
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-292",
+      "skill": "Interactions",
+      "prompt": "By how much is A’s effect larger with B present than with B absent?",
+      "choices": [
+        "7",
+        "9",
+        "24",
+        "15"
+      ],
+      "answer": 3,
+      "explanation": "A’s effect with B is 61-37=24; without B it is 39-30=9. Their difference is 15.",
+      "context": "Root culture. Investigators tested nutrient P (factor A) and nutrient Q (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of root length (mm) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "root length (mm)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            30
+          ],
+          [
+            "A only",
+            39
+          ],
+          [
+            "B only",
+            37
+          ],
+          [
+            "A and B",
+            61
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-293",
+      "skill": "Additive model predictions",
+      "prompt": "A model predicts that the two isolated increases simply add. What combined mean does that model predict?",
+      "choices": [
+        "46",
+        "76",
+        "61",
+        "77"
+      ],
+      "answer": 0,
+      "explanation": "Add the isolated gains to baseline: 30 + (39-30) + (37-30) = 46. Do not count baseline twice.",
+      "context": "Root culture. Investigators tested nutrient P (factor A) and nutrient Q (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of root length (mm) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "root length (mm)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            30
+          ],
+          [
+            "A only",
+            39
+          ],
+          [
+            "B only",
+            37
+          ],
+          [
+            "A and B",
+            61
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-294",
+      "skill": "Model residuals",
+      "prompt": "Observed combined response minus the additive-model prediction equals what?",
+      "choices": [
+        "24",
+        "15",
+        "7",
+        "9"
+      ],
+      "answer": 1,
+      "explanation": "The additive prediction is 46; the observed combined response is 61. The residual is 15.",
+      "context": "Root culture. Investigators tested nutrient P (factor A) and nutrient Q (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of root length (mm) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "root length (mm)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            30
+          ],
+          [
+            "A only",
+            39
+          ],
+          [
+            "B only",
+            37
+          ],
+          [
+            "A and B",
+            61
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-295",
+      "skill": "Comparative ratios",
+      "prompt": "What is the ratio of A’s effect with B present to A’s effect with B absent?",
+      "choices": [
+        "24/7",
+        "61/39",
+        "24/9",
+        "9/24"
+      ],
+      "answer": 2,
+      "explanation": "The conditional effect is 24 and the isolated effect is 9, giving (24)/(9). The response ratio is not the effect ratio.",
+      "context": "Root culture. Investigators tested nutrient P (factor A) and nutrient Q (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of root length (mm) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "root length (mm)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            30
+          ],
+          [
+            "A only",
+            39
+          ],
+          [
+            "B only",
+            37
+          ],
+          [
+            "A and B",
+            61
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-296",
+      "skill": "Necessary assumptions",
+      "prompt": "Which assumption is needed to predict the response with both factors at twice their tested settings?",
+      "choices": [
+        "That the largest listed mean is the combined group.",
+        "That five trials were performed per group.",
+        "That the table contains exactly four means.",
+        "A response model connecting factor settings to the outcome."
+      ],
+      "answer": 3,
+      "explanation": "The study tested only absence and one fixed setting for each factor. A dose-response relationship is needed to predict untested settings.",
+      "context": "Root culture. Investigators tested nutrient P (factor A) and nutrient Q (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of root length (mm) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "root length (mm)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            30
+          ],
+          [
+            "A only",
+            39
+          ],
+          [
+            "B only",
+            37
+          ],
+          [
+            "A and B",
+            61
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-297",
+      "skill": "Error and inference",
+      "prompt": "The table does not report trial variability. Which statement is therefore most justified?",
+      "choices": [
+        "The means show a pattern, but statistical uncertainty in the differences cannot be quantified from this table alone.",
+        "All five trial values in each group must equal its mean.",
+        "Any interaction must be a measurement error.",
+        "Every pair of groups must differ significantly."
+      ],
+      "answer": 0,
+      "explanation": "Means alone do not give the spread of trials. The pattern is descriptive; variability is needed to quantify its statistical uncertainty.",
+      "context": "Root culture. Investigators tested nutrient P (factor A) and nutrient Q (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of root length (mm) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "root length (mm)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            30
+          ],
+          [
+            "A only",
+            39
+          ],
+          [
+            "B only",
+            37
+          ],
+          [
+            "A and B",
+            61
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-298",
+      "skill": "Confounding and redesign",
+      "prompt": "Suppose the combined group accidentally ran twice as long. What is the best next step before attributing its extra response to an interaction?",
+      "choices": [
+        "Repeat the combined condition at the same duration as the other groups.",
+        "Declare an interaction because the combined mean is largest.",
+        "Delete the baseline and keep the combined measurement.",
+        "Double the response values for all other groups without testing."
+      ],
+      "answer": 0,
+      "explanation": "Unequal duration creates a competing explanation. A repeat with matched duration directly addresses that confound.",
+      "context": "Root culture. Investigators tested nutrient P (factor A) and nutrient Q (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of root length (mm) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "root length (mm)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            30
+          ],
+          [
+            "A only",
+            39
+          ],
+          [
+            "B only",
+            37
+          ],
+          [
+            "A and B",
+            61
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-299",
+      "skill": "Symmetry of interactions",
+      "prompt": "How does the change in B’s effect caused by A compare with the change in A’s effect caused by B?",
+      "choices": [
+        "The first is twice the second.",
+        "The first is zero and the second is positive.",
+        "The two changes are equal.",
+        "Their signs must be opposite."
+      ],
+      "answer": 2,
+      "explanation": "Both difference-in-differences equal combined - A only - B only + baseline = 15. This equality follows algebraically from the same four values.",
+      "context": "Root culture. Investigators tested nutrient P (factor A) and nutrient Q (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of root length (mm) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "root length (mm)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            30
+          ],
+          [
+            "A only",
+            39
+          ],
+          [
+            "B only",
+            37
+          ],
+          [
+            "A and B",
+            61
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-300",
+      "skill": "Synthesis of evidence",
+      "prompt": "Which interpretation best matches all four group means?",
+      "choices": [
+        "Both factors increase the response alone, and the combined gain exceeds the sum of the isolated gains.",
+        "Neither factor works alone; only the combination changes the response.",
+        "Both factors work alone, but their combination returns the response to baseline.",
+        "A raises the response while B lowers it, regardless of the other factor."
+      ],
+      "answer": 0,
+      "explanation": "Isolated gains are 9 and 7; their sum is 16. The combined gain is 31, which exceeds that sum by 15.",
+      "context": "Root culture. Investigators tested nutrient P (factor A) and nutrient Q (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of root length (mm) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "root length (mm)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            30
+          ],
+          [
+            "A only",
+            39
+          ],
+          [
+            "B only",
+            37
+          ],
+          [
+            "A and B",
+            61
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-301",
+      "skill": "Factorial table reading",
+      "prompt": "In sound barrier, what response was measured with B alone?",
+      "choices": [
+        "32",
+        "40",
+        "42",
+        "67"
+      ],
+      "answer": 1,
+      "explanation": "The B-only row reports 40.",
+      "context": "Sound barrier. Investigators tested foam (factor A) and air gap (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of sound reduction (relative units) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "sound reduction (relative units)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            32
+          ],
+          [
+            "A only",
+            42
+          ],
+          [
+            "B only",
+            40
+          ],
+          [
+            "A and B",
+            67
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-302",
+      "skill": "Reference groups",
+      "prompt": "Which group is the baseline for measuring the effect of adding A when B is absent?",
+      "choices": [
+        "A only",
+        "Neither factor",
+        "A and B",
+        "B only"
+      ],
+      "answer": 1,
+      "explanation": "The neither-factor group lacks both A and B. Comparing it with A only changes just A.",
+      "context": "Sound barrier. Investigators tested foam (factor A) and air gap (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of sound reduction (relative units) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "sound reduction (relative units)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            32
+          ],
+          [
+            "A only",
+            42
+          ],
+          [
+            "B only",
+            40
+          ],
+          [
+            "A and B",
+            67
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-303",
+      "skill": "Single-factor differences",
+      "prompt": "How much does adding A increase the response when B is absent?",
+      "choices": [
+        "10",
+        "18",
+        "8",
+        "17"
+      ],
+      "answer": 0,
+      "explanation": "Subtract the neither-factor value from A only: 42 - 32 = 10.",
+      "context": "Sound barrier. Investigators tested foam (factor A) and air gap (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of sound reduction (relative units) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "sound reduction (relative units)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            32
+          ],
+          [
+            "A only",
+            42
+          ],
+          [
+            "B only",
+            40
+          ],
+          [
+            "A and B",
+            67
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-304",
+      "skill": "Single-factor differences",
+      "prompt": "How much does adding B increase the response when A is absent?",
+      "choices": [
+        "10",
+        "17",
+        "8",
+        "18"
+      ],
+      "answer": 2,
+      "explanation": "Subtract the neither-factor value from B only: 40 - 32 = 8.",
+      "context": "Sound barrier. Investigators tested foam (factor A) and air gap (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of sound reduction (relative units) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "sound reduction (relative units)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            32
+          ],
+          [
+            "A only",
+            42
+          ],
+          [
+            "B only",
+            40
+          ],
+          [
+            "A and B",
+            67
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-305",
+      "skill": "Ranking outcomes",
+      "prompt": "Which tested condition gives the largest mean response?",
+      "choices": [
+        "B only",
+        "A only",
+        "Neither",
+        "A and B"
+      ],
+      "answer": 3,
+      "explanation": "The combined treatment has the largest value, 67.",
+      "context": "Sound barrier. Investigators tested foam (factor A) and air gap (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of sound reduction (relative units) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "sound reduction (relative units)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            32
+          ],
+          [
+            "A only",
+            42
+          ],
+          [
+            "B only",
+            40
+          ],
+          [
+            "A and B",
+            67
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-306",
+      "skill": "Controlled comparisons",
+      "prompt": "Which pair isolates B’s effect when A is already present?",
+      "choices": [
+        "Neither versus A only",
+        "Neither versus A and B",
+        "A only versus B only",
+        "A only versus A and B"
+      ],
+      "answer": 3,
+      "explanation": "Both selected groups contain A, and only the combined group contains B. Thus the comparison changes only B.",
+      "context": "Sound barrier. Investigators tested foam (factor A) and air gap (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of sound reduction (relative units) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "sound reduction (relative units)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            32
+          ],
+          [
+            "A only",
+            42
+          ],
+          [
+            "B only",
+            40
+          ],
+          [
+            "A and B",
+            67
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-307",
+      "skill": "Replication units",
+      "prompt": "How many individual trials contributed to the entire four-group table?",
+      "choices": [
+        "10",
+        "20",
+        "5",
+        "4"
+      ],
+      "answer": 1,
+      "explanation": "Four groups were each tested five times: 4 × 5 = 20 trials.",
+      "context": "Sound barrier. Investigators tested foam (factor A) and air gap (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of sound reduction (relative units) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "sound reduction (relative units)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            32
+          ],
+          [
+            "A only",
+            42
+          ],
+          [
+            "B only",
+            40
+          ],
+          [
+            "A and B",
+            67
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-308",
+      "skill": "Outcome range",
+      "prompt": "What is the range of the four reported group means?",
+      "choices": [
+        "35",
+        "25",
+        "10",
+        "99"
+      ],
+      "answer": 0,
+      "explanation": "The range is largest minus smallest: 67 - 32 = 35.",
+      "context": "Sound barrier. Investigators tested foam (factor A) and air gap (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of sound reduction (relative units) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "sound reduction (relative units)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            32
+          ],
+          [
+            "A only",
+            42
+          ],
+          [
+            "B only",
+            40
+          ],
+          [
+            "A and B",
+            67
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-309",
+      "skill": "Fair comparisons",
+      "prompt": "Why were starting sample amounts equal in every group?",
+      "choices": [
+        "To prevent sample amount from confounding treatment comparisons.",
+        "To make a baseline group unnecessary.",
+        "To force the combined treatment to have the largest response.",
+        "To ensure that every individual trial has the same value."
+      ],
+      "answer": 0,
+      "explanation": "An additional changing variable could explain response differences; equal sample amounts keep that variable controlled.",
+      "context": "Sound barrier. Investigators tested foam (factor A) and air gap (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of sound reduction (relative units) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "sound reduction (relative units)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            32
+          ],
+          [
+            "A only",
+            42
+          ],
+          [
+            "B only",
+            40
+          ],
+          [
+            "A and B",
+            67
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-310",
+      "skill": "Evidence and magnitude",
+      "prompt": "Which single factor gives the larger increase over baseline when tested alone?",
+      "choices": [
+        "B",
+        "They give equal increases.",
+        "Neither changes the response.",
+        "A"
+      ],
+      "answer": 3,
+      "explanation": "A increases the response by 10, compared with 8 for B. Therefore A has the larger isolated increase.",
+      "context": "Sound barrier. Investigators tested foam (factor A) and air gap (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of sound reduction (relative units) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "sound reduction (relative units)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            32
+          ],
+          [
+            "A only",
+            42
+          ],
+          [
+            "B only",
+            40
+          ],
+          [
+            "A and B",
+            67
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-311",
+      "skill": "Interactions",
+      "prompt": "How large is A’s effect when B is present?",
+      "choices": [
+        "8",
+        "35",
+        "10",
+        "27"
+      ],
+      "answer": 3,
+      "explanation": "Compare the combined group with B only: 67 - 40 = 27. This is conditional on B being present.",
+      "context": "Sound barrier. Investigators tested foam (factor A) and air gap (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of sound reduction (relative units) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "sound reduction (relative units)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            32
+          ],
+          [
+            "A only",
+            42
+          ],
+          [
+            "B only",
+            40
+          ],
+          [
+            "A and B",
+            67
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-312",
+      "skill": "Interactions",
+      "prompt": "By how much is A’s effect larger with B present than with B absent?",
+      "choices": [
+        "27",
+        "17",
+        "8",
+        "10"
+      ],
+      "answer": 1,
+      "explanation": "A’s effect with B is 67-40=27; without B it is 42-32=10. Their difference is 17.",
+      "context": "Sound barrier. Investigators tested foam (factor A) and air gap (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of sound reduction (relative units) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "sound reduction (relative units)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            32
+          ],
+          [
+            "A only",
+            42
+          ],
+          [
+            "B only",
+            40
+          ],
+          [
+            "A and B",
+            67
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-313",
+      "skill": "Additive model predictions",
+      "prompt": "A model predicts that the two isolated increases simply add. What combined mean does that model predict?",
+      "choices": [
+        "85",
+        "50",
+        "82",
+        "67"
+      ],
+      "answer": 1,
+      "explanation": "Add the isolated gains to baseline: 32 + (42-32) + (40-32) = 50. Do not count baseline twice.",
+      "context": "Sound barrier. Investigators tested foam (factor A) and air gap (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of sound reduction (relative units) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "sound reduction (relative units)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            32
+          ],
+          [
+            "A only",
+            42
+          ],
+          [
+            "B only",
+            40
+          ],
+          [
+            "A and B",
+            67
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-314",
+      "skill": "Model residuals",
+      "prompt": "Observed combined response minus the additive-model prediction equals what?",
+      "choices": [
+        "10",
+        "8",
+        "27",
+        "17"
+      ],
+      "answer": 3,
+      "explanation": "The additive prediction is 50; the observed combined response is 67. The residual is 17.",
+      "context": "Sound barrier. Investigators tested foam (factor A) and air gap (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of sound reduction (relative units) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "sound reduction (relative units)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            32
+          ],
+          [
+            "A only",
+            42
+          ],
+          [
+            "B only",
+            40
+          ],
+          [
+            "A and B",
+            67
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-315",
+      "skill": "Comparative ratios",
+      "prompt": "What is the ratio of A’s effect with B present to A’s effect with B absent?",
+      "choices": [
+        "27/8",
+        "27/10",
+        "67/42",
+        "10/27"
+      ],
+      "answer": 1,
+      "explanation": "The conditional effect is 27 and the isolated effect is 10, giving (27)/(10). The response ratio is not the effect ratio.",
+      "context": "Sound barrier. Investigators tested foam (factor A) and air gap (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of sound reduction (relative units) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "sound reduction (relative units)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            32
+          ],
+          [
+            "A only",
+            42
+          ],
+          [
+            "B only",
+            40
+          ],
+          [
+            "A and B",
+            67
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-316",
+      "skill": "Necessary assumptions",
+      "prompt": "Which assumption is needed to predict the response with both factors at twice their tested settings?",
+      "choices": [
+        "That the largest listed mean is the combined group.",
+        "That five trials were performed per group.",
+        "That the table contains exactly four means.",
+        "A response model connecting factor settings to the outcome."
+      ],
+      "answer": 3,
+      "explanation": "The study tested only absence and one fixed setting for each factor. A dose-response relationship is needed to predict untested settings.",
+      "context": "Sound barrier. Investigators tested foam (factor A) and air gap (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of sound reduction (relative units) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "sound reduction (relative units)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            32
+          ],
+          [
+            "A only",
+            42
+          ],
+          [
+            "B only",
+            40
+          ],
+          [
+            "A and B",
+            67
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-317",
+      "skill": "Error and inference",
+      "prompt": "The table does not report trial variability. Which statement is therefore most justified?",
+      "choices": [
+        "All five trial values in each group must equal its mean.",
+        "The means show a pattern, but statistical uncertainty in the differences cannot be quantified from this table alone.",
+        "Any interaction must be a measurement error.",
+        "Every pair of groups must differ significantly."
+      ],
+      "answer": 1,
+      "explanation": "Means alone do not give the spread of trials. The pattern is descriptive; variability is needed to quantify its statistical uncertainty.",
+      "context": "Sound barrier. Investigators tested foam (factor A) and air gap (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of sound reduction (relative units) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "sound reduction (relative units)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            32
+          ],
+          [
+            "A only",
+            42
+          ],
+          [
+            "B only",
+            40
+          ],
+          [
+            "A and B",
+            67
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-318",
+      "skill": "Confounding and redesign",
+      "prompt": "Suppose the combined group accidentally ran twice as long. What is the best next step before attributing its extra response to an interaction?",
+      "choices": [
+        "Repeat the combined condition at the same duration as the other groups.",
+        "Double the response values for all other groups without testing.",
+        "Delete the baseline and keep the combined measurement.",
+        "Declare an interaction because the combined mean is largest."
+      ],
+      "answer": 0,
+      "explanation": "Unequal duration creates a competing explanation. A repeat with matched duration directly addresses that confound.",
+      "context": "Sound barrier. Investigators tested foam (factor A) and air gap (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of sound reduction (relative units) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "sound reduction (relative units)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            32
+          ],
+          [
+            "A only",
+            42
+          ],
+          [
+            "B only",
+            40
+          ],
+          [
+            "A and B",
+            67
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-319",
+      "skill": "Symmetry of interactions",
+      "prompt": "How does the change in B’s effect caused by A compare with the change in A’s effect caused by B?",
+      "choices": [
+        "The first is twice the second.",
+        "Their signs must be opposite.",
+        "The two changes are equal.",
+        "The first is zero and the second is positive."
+      ],
+      "answer": 2,
+      "explanation": "Both difference-in-differences equal combined - A only - B only + baseline = 17. This equality follows algebraically from the same four values.",
+      "context": "Sound barrier. Investigators tested foam (factor A) and air gap (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of sound reduction (relative units) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "sound reduction (relative units)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            32
+          ],
+          [
+            "A only",
+            42
+          ],
+          [
+            "B only",
+            40
+          ],
+          [
+            "A and B",
+            67
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-320",
+      "skill": "Synthesis of evidence",
+      "prompt": "Which interpretation best matches all four group means?",
+      "choices": [
+        "Neither factor works alone; only the combination changes the response.",
+        "A raises the response while B lowers it, regardless of the other factor.",
+        "Both factors increase the response alone, and the combined gain exceeds the sum of the isolated gains.",
+        "Both factors work alone, but their combination returns the response to baseline."
+      ],
+      "answer": 2,
+      "explanation": "Isolated gains are 10 and 8; their sum is 18. The combined gain is 35, which exceeds that sum by 17.",
+      "context": "Sound barrier. Investigators tested foam (factor A) and air gap (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of sound reduction (relative units) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "sound reduction (relative units)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            32
+          ],
+          [
+            "A only",
+            42
+          ],
+          [
+            "B only",
+            40
+          ],
+          [
+            "A and B",
+            67
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-321",
+      "skill": "Factorial table reading",
+      "prompt": "In solar collector, what response was measured with B alone?",
+      "choices": [
+        "43",
+        "45",
+        "73",
+        "34"
+      ],
+      "answer": 0,
+      "explanation": "The B-only row reports 43.",
+      "context": "Solar collector. Investigators tested reflector (factor A) and dark backing (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of temperature rise (°C) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "temperature rise (°C)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            34
+          ],
+          [
+            "A only",
+            45
+          ],
+          [
+            "B only",
+            43
+          ],
+          [
+            "A and B",
+            73
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-322",
+      "skill": "Reference groups",
+      "prompt": "Which group is the baseline for measuring the effect of adding A when B is absent?",
+      "choices": [
+        "A only",
+        "B only",
+        "Neither factor",
+        "A and B"
+      ],
+      "answer": 2,
+      "explanation": "The neither-factor group lacks both A and B. Comparing it with A only changes just A.",
+      "context": "Solar collector. Investigators tested reflector (factor A) and dark backing (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of temperature rise (°C) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "temperature rise (°C)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            34
+          ],
+          [
+            "A only",
+            45
+          ],
+          [
+            "B only",
+            43
+          ],
+          [
+            "A and B",
+            73
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-323",
+      "skill": "Single-factor differences",
+      "prompt": "How much does adding A increase the response when B is absent?",
+      "choices": [
+        "9",
+        "19",
+        "20",
+        "11"
+      ],
+      "answer": 3,
+      "explanation": "Subtract the neither-factor value from A only: 45 - 34 = 11.",
+      "context": "Solar collector. Investigators tested reflector (factor A) and dark backing (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of temperature rise (°C) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "temperature rise (°C)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            34
+          ],
+          [
+            "A only",
+            45
+          ],
+          [
+            "B only",
+            43
+          ],
+          [
+            "A and B",
+            73
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-324",
+      "skill": "Single-factor differences",
+      "prompt": "How much does adding B increase the response when A is absent?",
+      "choices": [
+        "20",
+        "9",
+        "19",
+        "11"
+      ],
+      "answer": 1,
+      "explanation": "Subtract the neither-factor value from B only: 43 - 34 = 9.",
+      "context": "Solar collector. Investigators tested reflector (factor A) and dark backing (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of temperature rise (°C) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "temperature rise (°C)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            34
+          ],
+          [
+            "A only",
+            45
+          ],
+          [
+            "B only",
+            43
+          ],
+          [
+            "A and B",
+            73
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-325",
+      "skill": "Ranking outcomes",
+      "prompt": "Which tested condition gives the largest mean response?",
+      "choices": [
+        "A and B",
+        "A only",
+        "Neither",
+        "B only"
+      ],
+      "answer": 0,
+      "explanation": "The combined treatment has the largest value, 73.",
+      "context": "Solar collector. Investigators tested reflector (factor A) and dark backing (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of temperature rise (°C) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "temperature rise (°C)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            34
+          ],
+          [
+            "A only",
+            45
+          ],
+          [
+            "B only",
+            43
+          ],
+          [
+            "A and B",
+            73
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-326",
+      "skill": "Controlled comparisons",
+      "prompt": "Which pair isolates B’s effect when A is already present?",
+      "choices": [
+        "A only versus B only",
+        "A only versus A and B",
+        "Neither versus A only",
+        "Neither versus A and B"
+      ],
+      "answer": 1,
+      "explanation": "Both selected groups contain A, and only the combined group contains B. Thus the comparison changes only B.",
+      "context": "Solar collector. Investigators tested reflector (factor A) and dark backing (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of temperature rise (°C) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "temperature rise (°C)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            34
+          ],
+          [
+            "A only",
+            45
+          ],
+          [
+            "B only",
+            43
+          ],
+          [
+            "A and B",
+            73
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-327",
+      "skill": "Replication units",
+      "prompt": "How many individual trials contributed to the entire four-group table?",
+      "choices": [
+        "5",
+        "4",
+        "10",
+        "20"
+      ],
+      "answer": 3,
+      "explanation": "Four groups were each tested five times: 4 × 5 = 20 trials.",
+      "context": "Solar collector. Investigators tested reflector (factor A) and dark backing (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of temperature rise (°C) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "temperature rise (°C)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            34
+          ],
+          [
+            "A only",
+            45
+          ],
+          [
+            "B only",
+            43
+          ],
+          [
+            "A and B",
+            73
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-328",
+      "skill": "Outcome range",
+      "prompt": "What is the range of the four reported group means?",
+      "choices": [
+        "107",
+        "28",
+        "11",
+        "39"
+      ],
+      "answer": 3,
+      "explanation": "The range is largest minus smallest: 73 - 34 = 39.",
+      "context": "Solar collector. Investigators tested reflector (factor A) and dark backing (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of temperature rise (°C) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "temperature rise (°C)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            34
+          ],
+          [
+            "A only",
+            45
+          ],
+          [
+            "B only",
+            43
+          ],
+          [
+            "A and B",
+            73
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-329",
+      "skill": "Fair comparisons",
+      "prompt": "Why were starting sample amounts equal in every group?",
+      "choices": [
+        "To make a baseline group unnecessary.",
+        "To prevent sample amount from confounding treatment comparisons.",
+        "To force the combined treatment to have the largest response.",
+        "To ensure that every individual trial has the same value."
+      ],
+      "answer": 1,
+      "explanation": "An additional changing variable could explain response differences; equal sample amounts keep that variable controlled.",
+      "context": "Solar collector. Investigators tested reflector (factor A) and dark backing (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of temperature rise (°C) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "temperature rise (°C)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            34
+          ],
+          [
+            "A only",
+            45
+          ],
+          [
+            "B only",
+            43
+          ],
+          [
+            "A and B",
+            73
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-330",
+      "skill": "Evidence and magnitude",
+      "prompt": "Which single factor gives the larger increase over baseline when tested alone?",
+      "choices": [
+        "They give equal increases.",
+        "A",
+        "Neither changes the response.",
+        "B"
+      ],
+      "answer": 1,
+      "explanation": "A increases the response by 11, compared with 9 for B. Therefore A has the larger isolated increase.",
+      "context": "Solar collector. Investigators tested reflector (factor A) and dark backing (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of temperature rise (°C) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "temperature rise (°C)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            34
+          ],
+          [
+            "A only",
+            45
+          ],
+          [
+            "B only",
+            43
+          ],
+          [
+            "A and B",
+            73
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-331",
+      "skill": "Interactions",
+      "prompt": "How large is A’s effect when B is present?",
+      "choices": [
+        "11",
+        "39",
+        "9",
+        "30"
+      ],
+      "answer": 3,
+      "explanation": "Compare the combined group with B only: 73 - 43 = 30. This is conditional on B being present.",
+      "context": "Solar collector. Investigators tested reflector (factor A) and dark backing (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of temperature rise (°C) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "temperature rise (°C)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            34
+          ],
+          [
+            "A only",
+            45
+          ],
+          [
+            "B only",
+            43
+          ],
+          [
+            "A and B",
+            73
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-332",
+      "skill": "Interactions",
+      "prompt": "By how much is A’s effect larger with B present than with B absent?",
+      "choices": [
+        "11",
+        "9",
+        "30",
+        "19"
+      ],
+      "answer": 3,
+      "explanation": "A’s effect with B is 73-43=30; without B it is 45-34=11. Their difference is 19.",
+      "context": "Solar collector. Investigators tested reflector (factor A) and dark backing (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of temperature rise (°C) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "temperature rise (°C)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            34
+          ],
+          [
+            "A only",
+            45
+          ],
+          [
+            "B only",
+            43
+          ],
+          [
+            "A and B",
+            73
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-333",
+      "skill": "Additive model predictions",
+      "prompt": "A model predicts that the two isolated increases simply add. What combined mean does that model predict?",
+      "choices": [
+        "93",
+        "54",
+        "88",
+        "73"
+      ],
+      "answer": 1,
+      "explanation": "Add the isolated gains to baseline: 34 + (45-34) + (43-34) = 54. Do not count baseline twice.",
+      "context": "Solar collector. Investigators tested reflector (factor A) and dark backing (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of temperature rise (°C) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "temperature rise (°C)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            34
+          ],
+          [
+            "A only",
+            45
+          ],
+          [
+            "B only",
+            43
+          ],
+          [
+            "A and B",
+            73
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-334",
+      "skill": "Model residuals",
+      "prompt": "Observed combined response minus the additive-model prediction equals what?",
+      "choices": [
+        "11",
+        "30",
+        "9",
+        "19"
+      ],
+      "answer": 3,
+      "explanation": "The additive prediction is 54; the observed combined response is 73. The residual is 19.",
+      "context": "Solar collector. Investigators tested reflector (factor A) and dark backing (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of temperature rise (°C) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "temperature rise (°C)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            34
+          ],
+          [
+            "A only",
+            45
+          ],
+          [
+            "B only",
+            43
+          ],
+          [
+            "A and B",
+            73
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-335",
+      "skill": "Comparative ratios",
+      "prompt": "What is the ratio of A’s effect with B present to A’s effect with B absent?",
+      "choices": [
+        "30/11",
+        "73/45",
+        "11/30",
+        "30/9"
+      ],
+      "answer": 0,
+      "explanation": "The conditional effect is 30 and the isolated effect is 11, giving (30)/(11). The response ratio is not the effect ratio.",
+      "context": "Solar collector. Investigators tested reflector (factor A) and dark backing (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of temperature rise (°C) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "temperature rise (°C)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            34
+          ],
+          [
+            "A only",
+            45
+          ],
+          [
+            "B only",
+            43
+          ],
+          [
+            "A and B",
+            73
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-336",
+      "skill": "Necessary assumptions",
+      "prompt": "Which assumption is needed to predict the response with both factors at twice their tested settings?",
+      "choices": [
+        "That the table contains exactly four means.",
+        "That the largest listed mean is the combined group.",
+        "A response model connecting factor settings to the outcome.",
+        "That five trials were performed per group."
+      ],
+      "answer": 2,
+      "explanation": "The study tested only absence and one fixed setting for each factor. A dose-response relationship is needed to predict untested settings.",
+      "context": "Solar collector. Investigators tested reflector (factor A) and dark backing (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of temperature rise (°C) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "temperature rise (°C)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            34
+          ],
+          [
+            "A only",
+            45
+          ],
+          [
+            "B only",
+            43
+          ],
+          [
+            "A and B",
+            73
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-337",
+      "skill": "Error and inference",
+      "prompt": "The table does not report trial variability. Which statement is therefore most justified?",
+      "choices": [
+        "All five trial values in each group must equal its mean.",
+        "Any interaction must be a measurement error.",
+        "Every pair of groups must differ significantly.",
+        "The means show a pattern, but statistical uncertainty in the differences cannot be quantified from this table alone."
+      ],
+      "answer": 3,
+      "explanation": "Means alone do not give the spread of trials. The pattern is descriptive; variability is needed to quantify its statistical uncertainty.",
+      "context": "Solar collector. Investigators tested reflector (factor A) and dark backing (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of temperature rise (°C) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "temperature rise (°C)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            34
+          ],
+          [
+            "A only",
+            45
+          ],
+          [
+            "B only",
+            43
+          ],
+          [
+            "A and B",
+            73
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-338",
+      "skill": "Confounding and redesign",
+      "prompt": "Suppose the combined group accidentally ran twice as long. What is the best next step before attributing its extra response to an interaction?",
+      "choices": [
+        "Repeat the combined condition at the same duration as the other groups.",
+        "Delete the baseline and keep the combined measurement.",
+        "Declare an interaction because the combined mean is largest.",
+        "Double the response values for all other groups without testing."
+      ],
+      "answer": 0,
+      "explanation": "Unequal duration creates a competing explanation. A repeat with matched duration directly addresses that confound.",
+      "context": "Solar collector. Investigators tested reflector (factor A) and dark backing (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of temperature rise (°C) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "temperature rise (°C)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            34
+          ],
+          [
+            "A only",
+            45
+          ],
+          [
+            "B only",
+            43
+          ],
+          [
+            "A and B",
+            73
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-339",
+      "skill": "Symmetry of interactions",
+      "prompt": "How does the change in B’s effect caused by A compare with the change in A’s effect caused by B?",
+      "choices": [
+        "Their signs must be opposite.",
+        "The first is zero and the second is positive.",
+        "The first is twice the second.",
+        "The two changes are equal."
+      ],
+      "answer": 3,
+      "explanation": "Both difference-in-differences equal combined - A only - B only + baseline = 19. This equality follows algebraically from the same four values.",
+      "context": "Solar collector. Investigators tested reflector (factor A) and dark backing (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of temperature rise (°C) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "temperature rise (°C)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            34
+          ],
+          [
+            "A only",
+            45
+          ],
+          [
+            "B only",
+            43
+          ],
+          [
+            "A and B",
+            73
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-340",
+      "skill": "Synthesis of evidence",
+      "prompt": "Which interpretation best matches all four group means?",
+      "choices": [
+        "Both factors increase the response alone, and the combined gain exceeds the sum of the isolated gains.",
+        "Both factors work alone, but their combination returns the response to baseline.",
+        "Neither factor works alone; only the combination changes the response.",
+        "A raises the response while B lowers it, regardless of the other factor."
+      ],
+      "answer": 0,
+      "explanation": "Isolated gains are 11 and 9; their sum is 20. The combined gain is 39, which exceeds that sum by 19.",
+      "context": "Solar collector. Investigators tested reflector (factor A) and dark backing (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of temperature rise (°C) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "temperature rise (°C)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            34
+          ],
+          [
+            "A only",
+            45
+          ],
+          [
+            "B only",
+            43
+          ],
+          [
+            "A and B",
+            73
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-341",
+      "skill": "Factorial table reading",
+      "prompt": "In electrode trial, what response was measured with B alone?",
+      "choices": [
+        "46",
+        "79",
+        "36",
+        "48"
+      ],
+      "answer": 0,
+      "explanation": "The B-only row reports 46.",
+      "context": "Electrode trial. Investigators tested surface polish (factor A) and electrolyte additive (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of current (mA) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "current (mA)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            36
+          ],
+          [
+            "A only",
+            48
+          ],
+          [
+            "B only",
+            46
+          ],
+          [
+            "A and B",
+            79
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-342",
+      "skill": "Reference groups",
+      "prompt": "Which group is the baseline for measuring the effect of adding A when B is absent?",
+      "choices": [
+        "A and B",
+        "A only",
+        "Neither factor",
+        "B only"
+      ],
+      "answer": 2,
+      "explanation": "The neither-factor group lacks both A and B. Comparing it with A only changes just A.",
+      "context": "Electrode trial. Investigators tested surface polish (factor A) and electrolyte additive (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of current (mA) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "current (mA)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            36
+          ],
+          [
+            "A only",
+            48
+          ],
+          [
+            "B only",
+            46
+          ],
+          [
+            "A and B",
+            79
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-343",
+      "skill": "Single-factor differences",
+      "prompt": "How much does adding A increase the response when B is absent?",
+      "choices": [
+        "22",
+        "21",
+        "10",
+        "12"
+      ],
+      "answer": 3,
+      "explanation": "Subtract the neither-factor value from A only: 48 - 36 = 12.",
+      "context": "Electrode trial. Investigators tested surface polish (factor A) and electrolyte additive (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of current (mA) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "current (mA)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            36
+          ],
+          [
+            "A only",
+            48
+          ],
+          [
+            "B only",
+            46
+          ],
+          [
+            "A and B",
+            79
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-344",
+      "skill": "Single-factor differences",
+      "prompt": "How much does adding B increase the response when A is absent?",
+      "choices": [
+        "21",
+        "22",
+        "12",
+        "10"
+      ],
+      "answer": 3,
+      "explanation": "Subtract the neither-factor value from B only: 46 - 36 = 10.",
+      "context": "Electrode trial. Investigators tested surface polish (factor A) and electrolyte additive (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of current (mA) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "current (mA)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            36
+          ],
+          [
+            "A only",
+            48
+          ],
+          [
+            "B only",
+            46
+          ],
+          [
+            "A and B",
+            79
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-345",
+      "skill": "Ranking outcomes",
+      "prompt": "Which tested condition gives the largest mean response?",
+      "choices": [
+        "Neither",
+        "A only",
+        "B only",
+        "A and B"
+      ],
+      "answer": 3,
+      "explanation": "The combined treatment has the largest value, 79.",
+      "context": "Electrode trial. Investigators tested surface polish (factor A) and electrolyte additive (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of current (mA) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "current (mA)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            36
+          ],
+          [
+            "A only",
+            48
+          ],
+          [
+            "B only",
+            46
+          ],
+          [
+            "A and B",
+            79
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-346",
+      "skill": "Controlled comparisons",
+      "prompt": "Which pair isolates B’s effect when A is already present?",
+      "choices": [
+        "Neither versus A only",
+        "A only versus B only",
+        "Neither versus A and B",
+        "A only versus A and B"
+      ],
+      "answer": 3,
+      "explanation": "Both selected groups contain A, and only the combined group contains B. Thus the comparison changes only B.",
+      "context": "Electrode trial. Investigators tested surface polish (factor A) and electrolyte additive (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of current (mA) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "current (mA)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            36
+          ],
+          [
+            "A only",
+            48
+          ],
+          [
+            "B only",
+            46
+          ],
+          [
+            "A and B",
+            79
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-347",
+      "skill": "Replication units",
+      "prompt": "How many individual trials contributed to the entire four-group table?",
+      "choices": [
+        "5",
+        "4",
+        "20",
+        "10"
+      ],
+      "answer": 2,
+      "explanation": "Four groups were each tested five times: 4 × 5 = 20 trials.",
+      "context": "Electrode trial. Investigators tested surface polish (factor A) and electrolyte additive (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of current (mA) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "current (mA)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            36
+          ],
+          [
+            "A only",
+            48
+          ],
+          [
+            "B only",
+            46
+          ],
+          [
+            "A and B",
+            79
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-348",
+      "skill": "Outcome range",
+      "prompt": "What is the range of the four reported group means?",
+      "choices": [
+        "43",
+        "12",
+        "115",
+        "31"
+      ],
+      "answer": 0,
+      "explanation": "The range is largest minus smallest: 79 - 36 = 43.",
+      "context": "Electrode trial. Investigators tested surface polish (factor A) and electrolyte additive (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of current (mA) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "current (mA)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            36
+          ],
+          [
+            "A only",
+            48
+          ],
+          [
+            "B only",
+            46
+          ],
+          [
+            "A and B",
+            79
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-349",
+      "skill": "Fair comparisons",
+      "prompt": "Why were starting sample amounts equal in every group?",
+      "choices": [
+        "To make a baseline group unnecessary.",
+        "To prevent sample amount from confounding treatment comparisons.",
+        "To force the combined treatment to have the largest response.",
+        "To ensure that every individual trial has the same value."
+      ],
+      "answer": 1,
+      "explanation": "An additional changing variable could explain response differences; equal sample amounts keep that variable controlled.",
+      "context": "Electrode trial. Investigators tested surface polish (factor A) and electrolyte additive (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of current (mA) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "current (mA)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            36
+          ],
+          [
+            "A only",
+            48
+          ],
+          [
+            "B only",
+            46
+          ],
+          [
+            "A and B",
+            79
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-350",
+      "skill": "Evidence and magnitude",
+      "prompt": "Which single factor gives the larger increase over baseline when tested alone?",
+      "choices": [
+        "A",
+        "They give equal increases.",
+        "B",
+        "Neither changes the response."
+      ],
+      "answer": 0,
+      "explanation": "A increases the response by 12, compared with 10 for B. Therefore A has the larger isolated increase.",
+      "context": "Electrode trial. Investigators tested surface polish (factor A) and electrolyte additive (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of current (mA) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "current (mA)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            36
+          ],
+          [
+            "A only",
+            48
+          ],
+          [
+            "B only",
+            46
+          ],
+          [
+            "A and B",
+            79
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-351",
+      "skill": "Interactions",
+      "prompt": "How large is A’s effect when B is present?",
+      "choices": [
+        "43",
+        "12",
+        "10",
+        "33"
+      ],
+      "answer": 3,
+      "explanation": "Compare the combined group with B only: 79 - 46 = 33. This is conditional on B being present.",
+      "context": "Electrode trial. Investigators tested surface polish (factor A) and electrolyte additive (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of current (mA) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "current (mA)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            36
+          ],
+          [
+            "A only",
+            48
+          ],
+          [
+            "B only",
+            46
+          ],
+          [
+            "A and B",
+            79
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-352",
+      "skill": "Interactions",
+      "prompt": "By how much is A’s effect larger with B present than with B absent?",
+      "choices": [
+        "12",
+        "33",
+        "21",
+        "10"
+      ],
+      "answer": 2,
+      "explanation": "A’s effect with B is 79-46=33; without B it is 48-36=12. Their difference is 21.",
+      "context": "Electrode trial. Investigators tested surface polish (factor A) and electrolyte additive (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of current (mA) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "current (mA)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            36
+          ],
+          [
+            "A only",
+            48
+          ],
+          [
+            "B only",
+            46
+          ],
+          [
+            "A and B",
+            79
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-353",
+      "skill": "Additive model predictions",
+      "prompt": "A model predicts that the two isolated increases simply add. What combined mean does that model predict?",
+      "choices": [
+        "58",
+        "101",
+        "94",
+        "79"
+      ],
+      "answer": 0,
+      "explanation": "Add the isolated gains to baseline: 36 + (48-36) + (46-36) = 58. Do not count baseline twice.",
+      "context": "Electrode trial. Investigators tested surface polish (factor A) and electrolyte additive (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of current (mA) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "current (mA)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            36
+          ],
+          [
+            "A only",
+            48
+          ],
+          [
+            "B only",
+            46
+          ],
+          [
+            "A and B",
+            79
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-354",
+      "skill": "Model residuals",
+      "prompt": "Observed combined response minus the additive-model prediction equals what?",
+      "choices": [
+        "21",
+        "10",
+        "33",
+        "12"
+      ],
+      "answer": 0,
+      "explanation": "The additive prediction is 58; the observed combined response is 79. The residual is 21.",
+      "context": "Electrode trial. Investigators tested surface polish (factor A) and electrolyte additive (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of current (mA) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "current (mA)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            36
+          ],
+          [
+            "A only",
+            48
+          ],
+          [
+            "B only",
+            46
+          ],
+          [
+            "A and B",
+            79
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-355",
+      "skill": "Comparative ratios",
+      "prompt": "What is the ratio of A’s effect with B present to A’s effect with B absent?",
+      "choices": [
+        "12/33",
+        "33/10",
+        "79/48",
+        "33/12"
+      ],
+      "answer": 3,
+      "explanation": "The conditional effect is 33 and the isolated effect is 12, giving (33)/(12). The response ratio is not the effect ratio.",
+      "context": "Electrode trial. Investigators tested surface polish (factor A) and electrolyte additive (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of current (mA) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "current (mA)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            36
+          ],
+          [
+            "A only",
+            48
+          ],
+          [
+            "B only",
+            46
+          ],
+          [
+            "A and B",
+            79
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-356",
+      "skill": "Necessary assumptions",
+      "prompt": "Which assumption is needed to predict the response with both factors at twice their tested settings?",
+      "choices": [
+        "That the largest listed mean is the combined group.",
+        "That the table contains exactly four means.",
+        "A response model connecting factor settings to the outcome.",
+        "That five trials were performed per group."
+      ],
+      "answer": 2,
+      "explanation": "The study tested only absence and one fixed setting for each factor. A dose-response relationship is needed to predict untested settings.",
+      "context": "Electrode trial. Investigators tested surface polish (factor A) and electrolyte additive (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of current (mA) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "current (mA)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            36
+          ],
+          [
+            "A only",
+            48
+          ],
+          [
+            "B only",
+            46
+          ],
+          [
+            "A and B",
+            79
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-357",
+      "skill": "Error and inference",
+      "prompt": "The table does not report trial variability. Which statement is therefore most justified?",
+      "choices": [
+        "Every pair of groups must differ significantly.",
+        "Any interaction must be a measurement error.",
+        "All five trial values in each group must equal its mean.",
+        "The means show a pattern, but statistical uncertainty in the differences cannot be quantified from this table alone."
+      ],
+      "answer": 3,
+      "explanation": "Means alone do not give the spread of trials. The pattern is descriptive; variability is needed to quantify its statistical uncertainty.",
+      "context": "Electrode trial. Investigators tested surface polish (factor A) and electrolyte additive (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of current (mA) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "current (mA)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            36
+          ],
+          [
+            "A only",
+            48
+          ],
+          [
+            "B only",
+            46
+          ],
+          [
+            "A and B",
+            79
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-358",
+      "skill": "Confounding and redesign",
+      "prompt": "Suppose the combined group accidentally ran twice as long. What is the best next step before attributing its extra response to an interaction?",
+      "choices": [
+        "Delete the baseline and keep the combined measurement.",
+        "Double the response values for all other groups without testing.",
+        "Repeat the combined condition at the same duration as the other groups.",
+        "Declare an interaction because the combined mean is largest."
+      ],
+      "answer": 2,
+      "explanation": "Unequal duration creates a competing explanation. A repeat with matched duration directly addresses that confound.",
+      "context": "Electrode trial. Investigators tested surface polish (factor A) and electrolyte additive (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of current (mA) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "current (mA)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            36
+          ],
+          [
+            "A only",
+            48
+          ],
+          [
+            "B only",
+            46
+          ],
+          [
+            "A and B",
+            79
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-359",
+      "skill": "Symmetry of interactions",
+      "prompt": "How does the change in B’s effect caused by A compare with the change in A’s effect caused by B?",
+      "choices": [
+        "The two changes are equal.",
+        "The first is twice the second.",
+        "The first is zero and the second is positive.",
+        "Their signs must be opposite."
+      ],
+      "answer": 0,
+      "explanation": "Both difference-in-differences equal combined - A only - B only + baseline = 21. This equality follows algebraically from the same four values.",
+      "context": "Electrode trial. Investigators tested surface polish (factor A) and electrolyte additive (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of current (mA) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "current (mA)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            36
+          ],
+          [
+            "A only",
+            48
+          ],
+          [
+            "B only",
+            46
+          ],
+          [
+            "A and B",
+            79
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-360",
+      "skill": "Synthesis of evidence",
+      "prompt": "Which interpretation best matches all four group means?",
+      "choices": [
+        "Neither factor works alone; only the combination changes the response.",
+        "Both factors increase the response alone, and the combined gain exceeds the sum of the isolated gains.",
+        "A raises the response while B lowers it, regardless of the other factor.",
+        "Both factors work alone, but their combination returns the response to baseline."
+      ],
+      "answer": 1,
+      "explanation": "Isolated gains are 12 and 10; their sum is 22. The combined gain is 43, which exceeds that sum by 21.",
+      "context": "Electrode trial. Investigators tested surface polish (factor A) and electrolyte additive (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of current (mA) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "current (mA)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            36
+          ],
+          [
+            "A only",
+            48
+          ],
+          [
+            "B only",
+            46
+          ],
+          [
+            "A and B",
+            79
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-361",
+      "skill": "Factorial table reading",
+      "prompt": "In adhesive study, what response was measured with B alone?",
+      "choices": [
+        "85",
+        "51",
+        "38",
+        "49"
+      ],
+      "answer": 3,
+      "explanation": "The B-only row reports 49.",
+      "context": "Adhesive study. Investigators tested surface cleaning (factor A) and curing lamp (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of joint strength (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "joint strength (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            38
+          ],
+          [
+            "A only",
+            51
+          ],
+          [
+            "B only",
+            49
+          ],
+          [
+            "A and B",
+            85
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-362",
+      "skill": "Reference groups",
+      "prompt": "Which group is the baseline for measuring the effect of adding A when B is absent?",
+      "choices": [
+        "B only",
+        "Neither factor",
+        "A only",
+        "A and B"
+      ],
+      "answer": 1,
+      "explanation": "The neither-factor group lacks both A and B. Comparing it with A only changes just A.",
+      "context": "Adhesive study. Investigators tested surface cleaning (factor A) and curing lamp (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of joint strength (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "joint strength (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            38
+          ],
+          [
+            "A only",
+            51
+          ],
+          [
+            "B only",
+            49
+          ],
+          [
+            "A and B",
+            85
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-363",
+      "skill": "Single-factor differences",
+      "prompt": "How much does adding A increase the response when B is absent?",
+      "choices": [
+        "23",
+        "11",
+        "13",
+        "24"
+      ],
+      "answer": 2,
+      "explanation": "Subtract the neither-factor value from A only: 51 - 38 = 13.",
+      "context": "Adhesive study. Investigators tested surface cleaning (factor A) and curing lamp (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of joint strength (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "joint strength (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            38
+          ],
+          [
+            "A only",
+            51
+          ],
+          [
+            "B only",
+            49
+          ],
+          [
+            "A and B",
+            85
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-364",
+      "skill": "Single-factor differences",
+      "prompt": "How much does adding B increase the response when A is absent?",
+      "choices": [
+        "24",
+        "13",
+        "23",
+        "11"
+      ],
+      "answer": 3,
+      "explanation": "Subtract the neither-factor value from B only: 49 - 38 = 11.",
+      "context": "Adhesive study. Investigators tested surface cleaning (factor A) and curing lamp (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of joint strength (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "joint strength (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            38
+          ],
+          [
+            "A only",
+            51
+          ],
+          [
+            "B only",
+            49
+          ],
+          [
+            "A and B",
+            85
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-365",
+      "skill": "Ranking outcomes",
+      "prompt": "Which tested condition gives the largest mean response?",
+      "choices": [
+        "A only",
+        "A and B",
+        "B only",
+        "Neither"
+      ],
+      "answer": 1,
+      "explanation": "The combined treatment has the largest value, 85.",
+      "context": "Adhesive study. Investigators tested surface cleaning (factor A) and curing lamp (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of joint strength (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "joint strength (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            38
+          ],
+          [
+            "A only",
+            51
+          ],
+          [
+            "B only",
+            49
+          ],
+          [
+            "A and B",
+            85
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-366",
+      "skill": "Controlled comparisons",
+      "prompt": "Which pair isolates B’s effect when A is already present?",
+      "choices": [
+        "A only versus B only",
+        "Neither versus A and B",
+        "A only versus A and B",
+        "Neither versus A only"
+      ],
+      "answer": 2,
+      "explanation": "Both selected groups contain A, and only the combined group contains B. Thus the comparison changes only B.",
+      "context": "Adhesive study. Investigators tested surface cleaning (factor A) and curing lamp (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of joint strength (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "joint strength (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            38
+          ],
+          [
+            "A only",
+            51
+          ],
+          [
+            "B only",
+            49
+          ],
+          [
+            "A and B",
+            85
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-367",
+      "skill": "Replication units",
+      "prompt": "How many individual trials contributed to the entire four-group table?",
+      "choices": [
+        "5",
+        "4",
+        "20",
+        "10"
+      ],
+      "answer": 2,
+      "explanation": "Four groups were each tested five times: 4 × 5 = 20 trials.",
+      "context": "Adhesive study. Investigators tested surface cleaning (factor A) and curing lamp (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of joint strength (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "joint strength (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            38
+          ],
+          [
+            "A only",
+            51
+          ],
+          [
+            "B only",
+            49
+          ],
+          [
+            "A and B",
+            85
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-368",
+      "skill": "Outcome range",
+      "prompt": "What is the range of the four reported group means?",
+      "choices": [
+        "123",
+        "13",
+        "47",
+        "34"
+      ],
+      "answer": 2,
+      "explanation": "The range is largest minus smallest: 85 - 38 = 47.",
+      "context": "Adhesive study. Investigators tested surface cleaning (factor A) and curing lamp (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of joint strength (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "joint strength (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            38
+          ],
+          [
+            "A only",
+            51
+          ],
+          [
+            "B only",
+            49
+          ],
+          [
+            "A and B",
+            85
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-369",
+      "skill": "Fair comparisons",
+      "prompt": "Why were starting sample amounts equal in every group?",
+      "choices": [
+        "To prevent sample amount from confounding treatment comparisons.",
+        "To ensure that every individual trial has the same value.",
+        "To force the combined treatment to have the largest response.",
+        "To make a baseline group unnecessary."
+      ],
+      "answer": 0,
+      "explanation": "An additional changing variable could explain response differences; equal sample amounts keep that variable controlled.",
+      "context": "Adhesive study. Investigators tested surface cleaning (factor A) and curing lamp (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of joint strength (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "joint strength (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            38
+          ],
+          [
+            "A only",
+            51
+          ],
+          [
+            "B only",
+            49
+          ],
+          [
+            "A and B",
+            85
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-370",
+      "skill": "Evidence and magnitude",
+      "prompt": "Which single factor gives the larger increase over baseline when tested alone?",
+      "choices": [
+        "A",
+        "Neither changes the response.",
+        "They give equal increases.",
+        "B"
+      ],
+      "answer": 0,
+      "explanation": "A increases the response by 13, compared with 11 for B. Therefore A has the larger isolated increase.",
+      "context": "Adhesive study. Investigators tested surface cleaning (factor A) and curing lamp (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of joint strength (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "joint strength (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            38
+          ],
+          [
+            "A only",
+            51
+          ],
+          [
+            "B only",
+            49
+          ],
+          [
+            "A and B",
+            85
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-371",
+      "skill": "Interactions",
+      "prompt": "How large is A’s effect when B is present?",
+      "choices": [
+        "11",
+        "36",
+        "47",
+        "13"
+      ],
+      "answer": 1,
+      "explanation": "Compare the combined group with B only: 85 - 49 = 36. This is conditional on B being present.",
+      "context": "Adhesive study. Investigators tested surface cleaning (factor A) and curing lamp (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of joint strength (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "joint strength (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            38
+          ],
+          [
+            "A only",
+            51
+          ],
+          [
+            "B only",
+            49
+          ],
+          [
+            "A and B",
+            85
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-372",
+      "skill": "Interactions",
+      "prompt": "By how much is A’s effect larger with B present than with B absent?",
+      "choices": [
+        "13",
+        "36",
+        "23",
+        "11"
+      ],
+      "answer": 2,
+      "explanation": "A’s effect with B is 85-49=36; without B it is 51-38=13. Their difference is 23.",
+      "context": "Adhesive study. Investigators tested surface cleaning (factor A) and curing lamp (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of joint strength (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "joint strength (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            38
+          ],
+          [
+            "A only",
+            51
+          ],
+          [
+            "B only",
+            49
+          ],
+          [
+            "A and B",
+            85
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-373",
+      "skill": "Additive model predictions",
+      "prompt": "A model predicts that the two isolated increases simply add. What combined mean does that model predict?",
+      "choices": [
+        "109",
+        "100",
+        "62",
+        "85"
+      ],
+      "answer": 2,
+      "explanation": "Add the isolated gains to baseline: 38 + (51-38) + (49-38) = 62. Do not count baseline twice.",
+      "context": "Adhesive study. Investigators tested surface cleaning (factor A) and curing lamp (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of joint strength (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "joint strength (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            38
+          ],
+          [
+            "A only",
+            51
+          ],
+          [
+            "B only",
+            49
+          ],
+          [
+            "A and B",
+            85
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-374",
+      "skill": "Model residuals",
+      "prompt": "Observed combined response minus the additive-model prediction equals what?",
+      "choices": [
+        "13",
+        "36",
+        "23",
+        "11"
+      ],
+      "answer": 2,
+      "explanation": "The additive prediction is 62; the observed combined response is 85. The residual is 23.",
+      "context": "Adhesive study. Investigators tested surface cleaning (factor A) and curing lamp (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of joint strength (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "joint strength (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            38
+          ],
+          [
+            "A only",
+            51
+          ],
+          [
+            "B only",
+            49
+          ],
+          [
+            "A and B",
+            85
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-375",
+      "skill": "Comparative ratios",
+      "prompt": "What is the ratio of A’s effect with B present to A’s effect with B absent?",
+      "choices": [
+        "36/13",
+        "85/51",
+        "36/11",
+        "13/36"
+      ],
+      "answer": 0,
+      "explanation": "The conditional effect is 36 and the isolated effect is 13, giving (36)/(13). The response ratio is not the effect ratio.",
+      "context": "Adhesive study. Investigators tested surface cleaning (factor A) and curing lamp (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of joint strength (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "joint strength (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            38
+          ],
+          [
+            "A only",
+            51
+          ],
+          [
+            "B only",
+            49
+          ],
+          [
+            "A and B",
+            85
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-376",
+      "skill": "Necessary assumptions",
+      "prompt": "Which assumption is needed to predict the response with both factors at twice their tested settings?",
+      "choices": [
+        "That five trials were performed per group.",
+        "A response model connecting factor settings to the outcome.",
+        "That the largest listed mean is the combined group.",
+        "That the table contains exactly four means."
+      ],
+      "answer": 1,
+      "explanation": "The study tested only absence and one fixed setting for each factor. A dose-response relationship is needed to predict untested settings.",
+      "context": "Adhesive study. Investigators tested surface cleaning (factor A) and curing lamp (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of joint strength (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "joint strength (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            38
+          ],
+          [
+            "A only",
+            51
+          ],
+          [
+            "B only",
+            49
+          ],
+          [
+            "A and B",
+            85
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-377",
+      "skill": "Error and inference",
+      "prompt": "The table does not report trial variability. Which statement is therefore most justified?",
+      "choices": [
+        "All five trial values in each group must equal its mean.",
+        "Every pair of groups must differ significantly.",
+        "The means show a pattern, but statistical uncertainty in the differences cannot be quantified from this table alone.",
+        "Any interaction must be a measurement error."
+      ],
+      "answer": 2,
+      "explanation": "Means alone do not give the spread of trials. The pattern is descriptive; variability is needed to quantify its statistical uncertainty.",
+      "context": "Adhesive study. Investigators tested surface cleaning (factor A) and curing lamp (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of joint strength (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "joint strength (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            38
+          ],
+          [
+            "A only",
+            51
+          ],
+          [
+            "B only",
+            49
+          ],
+          [
+            "A and B",
+            85
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-378",
+      "skill": "Confounding and redesign",
+      "prompt": "Suppose the combined group accidentally ran twice as long. What is the best next step before attributing its extra response to an interaction?",
+      "choices": [
+        "Declare an interaction because the combined mean is largest.",
+        "Repeat the combined condition at the same duration as the other groups.",
+        "Delete the baseline and keep the combined measurement.",
+        "Double the response values for all other groups without testing."
+      ],
+      "answer": 1,
+      "explanation": "Unequal duration creates a competing explanation. A repeat with matched duration directly addresses that confound.",
+      "context": "Adhesive study. Investigators tested surface cleaning (factor A) and curing lamp (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of joint strength (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "joint strength (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            38
+          ],
+          [
+            "A only",
+            51
+          ],
+          [
+            "B only",
+            49
+          ],
+          [
+            "A and B",
+            85
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-379",
+      "skill": "Symmetry of interactions",
+      "prompt": "How does the change in B’s effect caused by A compare with the change in A’s effect caused by B?",
+      "choices": [
+        "The first is zero and the second is positive.",
+        "Their signs must be opposite.",
+        "The two changes are equal.",
+        "The first is twice the second."
+      ],
+      "answer": 2,
+      "explanation": "Both difference-in-differences equal combined - A only - B only + baseline = 23. This equality follows algebraically from the same four values.",
+      "context": "Adhesive study. Investigators tested surface cleaning (factor A) and curing lamp (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of joint strength (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "joint strength (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            38
+          ],
+          [
+            "A only",
+            51
+          ],
+          [
+            "B only",
+            49
+          ],
+          [
+            "A and B",
+            85
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-380",
+      "skill": "Synthesis of evidence",
+      "prompt": "Which interpretation best matches all four group means?",
+      "choices": [
+        "A raises the response while B lowers it, regardless of the other factor.",
+        "Neither factor works alone; only the combination changes the response.",
+        "Both factors work alone, but their combination returns the response to baseline.",
+        "Both factors increase the response alone, and the combined gain exceeds the sum of the isolated gains."
+      ],
+      "answer": 3,
+      "explanation": "Isolated gains are 13 and 11; their sum is 24. The combined gain is 47, which exceeds that sum by 23.",
+      "context": "Adhesive study. Investigators tested surface cleaning (factor A) and curing lamp (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of joint strength (N) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "joint strength (N)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            38
+          ],
+          [
+            "A only",
+            51
+          ],
+          [
+            "B only",
+            49
+          ],
+          [
+            "A and B",
+            85
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-381",
+      "skill": "Factorial table reading",
+      "prompt": "In water recovery, what response was measured with B alone?",
+      "choices": [
+        "54",
+        "40",
+        "52",
+        "91"
+      ],
+      "answer": 2,
+      "explanation": "The B-only row reports 52.",
+      "context": "Water recovery. Investigators tested drainage layer (factor A) and wick (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of water collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "water collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            40
+          ],
+          [
+            "A only",
+            54
+          ],
+          [
+            "B only",
+            52
+          ],
+          [
+            "A and B",
+            91
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-382",
+      "skill": "Reference groups",
+      "prompt": "Which group is the baseline for measuring the effect of adding A when B is absent?",
+      "choices": [
+        "B only",
+        "Neither factor",
+        "A only",
+        "A and B"
+      ],
+      "answer": 1,
+      "explanation": "The neither-factor group lacks both A and B. Comparing it with A only changes just A.",
+      "context": "Water recovery. Investigators tested drainage layer (factor A) and wick (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of water collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "water collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            40
+          ],
+          [
+            "A only",
+            54
+          ],
+          [
+            "B only",
+            52
+          ],
+          [
+            "A and B",
+            91
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-383",
+      "skill": "Single-factor differences",
+      "prompt": "How much does adding A increase the response when B is absent?",
+      "choices": [
+        "14",
+        "25",
+        "12",
+        "26"
+      ],
+      "answer": 0,
+      "explanation": "Subtract the neither-factor value from A only: 54 - 40 = 14.",
+      "context": "Water recovery. Investigators tested drainage layer (factor A) and wick (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of water collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "water collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            40
+          ],
+          [
+            "A only",
+            54
+          ],
+          [
+            "B only",
+            52
+          ],
+          [
+            "A and B",
+            91
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-384",
+      "skill": "Single-factor differences",
+      "prompt": "How much does adding B increase the response when A is absent?",
+      "choices": [
+        "12",
+        "25",
+        "14",
+        "26"
+      ],
+      "answer": 0,
+      "explanation": "Subtract the neither-factor value from B only: 52 - 40 = 12.",
+      "context": "Water recovery. Investigators tested drainage layer (factor A) and wick (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of water collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "water collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            40
+          ],
+          [
+            "A only",
+            54
+          ],
+          [
+            "B only",
+            52
+          ],
+          [
+            "A and B",
+            91
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-385",
+      "skill": "Ranking outcomes",
+      "prompt": "Which tested condition gives the largest mean response?",
+      "choices": [
+        "A only",
+        "Neither",
+        "B only",
+        "A and B"
+      ],
+      "answer": 3,
+      "explanation": "The combined treatment has the largest value, 91.",
+      "context": "Water recovery. Investigators tested drainage layer (factor A) and wick (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of water collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "water collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            40
+          ],
+          [
+            "A only",
+            54
+          ],
+          [
+            "B only",
+            52
+          ],
+          [
+            "A and B",
+            91
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-386",
+      "skill": "Controlled comparisons",
+      "prompt": "Which pair isolates B’s effect when A is already present?",
+      "choices": [
+        "A only versus B only",
+        "A only versus A and B",
+        "Neither versus A only",
+        "Neither versus A and B"
+      ],
+      "answer": 1,
+      "explanation": "Both selected groups contain A, and only the combined group contains B. Thus the comparison changes only B.",
+      "context": "Water recovery. Investigators tested drainage layer (factor A) and wick (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of water collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "water collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            40
+          ],
+          [
+            "A only",
+            54
+          ],
+          [
+            "B only",
+            52
+          ],
+          [
+            "A and B",
+            91
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-387",
+      "skill": "Replication units",
+      "prompt": "How many individual trials contributed to the entire four-group table?",
+      "choices": [
+        "10",
+        "5",
+        "4",
+        "20"
+      ],
+      "answer": 3,
+      "explanation": "Four groups were each tested five times: 4 × 5 = 20 trials.",
+      "context": "Water recovery. Investigators tested drainage layer (factor A) and wick (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of water collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "water collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            40
+          ],
+          [
+            "A only",
+            54
+          ],
+          [
+            "B only",
+            52
+          ],
+          [
+            "A and B",
+            91
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-388",
+      "skill": "Outcome range",
+      "prompt": "What is the range of the four reported group means?",
+      "choices": [
+        "131",
+        "14",
+        "51",
+        "37"
+      ],
+      "answer": 2,
+      "explanation": "The range is largest minus smallest: 91 - 40 = 51.",
+      "context": "Water recovery. Investigators tested drainage layer (factor A) and wick (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of water collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "water collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            40
+          ],
+          [
+            "A only",
+            54
+          ],
+          [
+            "B only",
+            52
+          ],
+          [
+            "A and B",
+            91
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-389",
+      "skill": "Fair comparisons",
+      "prompt": "Why were starting sample amounts equal in every group?",
+      "choices": [
+        "To make a baseline group unnecessary.",
+        "To force the combined treatment to have the largest response.",
+        "To prevent sample amount from confounding treatment comparisons.",
+        "To ensure that every individual trial has the same value."
+      ],
+      "answer": 2,
+      "explanation": "An additional changing variable could explain response differences; equal sample amounts keep that variable controlled.",
+      "context": "Water recovery. Investigators tested drainage layer (factor A) and wick (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of water collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "water collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            40
+          ],
+          [
+            "A only",
+            54
+          ],
+          [
+            "B only",
+            52
+          ],
+          [
+            "A and B",
+            91
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-390",
+      "skill": "Evidence and magnitude",
+      "prompt": "Which single factor gives the larger increase over baseline when tested alone?",
+      "choices": [
+        "They give equal increases.",
+        "A",
+        "Neither changes the response.",
+        "B"
+      ],
+      "answer": 1,
+      "explanation": "A increases the response by 14, compared with 12 for B. Therefore A has the larger isolated increase.",
+      "context": "Water recovery. Investigators tested drainage layer (factor A) and wick (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of water collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "water collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            40
+          ],
+          [
+            "A only",
+            54
+          ],
+          [
+            "B only",
+            52
+          ],
+          [
+            "A and B",
+            91
+          ]
+        ]
+      },
+      "difficulty": "standard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-391",
+      "skill": "Interactions",
+      "prompt": "How large is A’s effect when B is present?",
+      "choices": [
+        "12",
+        "51",
+        "39",
+        "14"
+      ],
+      "answer": 2,
+      "explanation": "Compare the combined group with B only: 91 - 52 = 39. This is conditional on B being present.",
+      "context": "Water recovery. Investigators tested drainage layer (factor A) and wick (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of water collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "water collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            40
+          ],
+          [
+            "A only",
+            54
+          ],
+          [
+            "B only",
+            52
+          ],
+          [
+            "A and B",
+            91
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-392",
+      "skill": "Interactions",
+      "prompt": "By how much is A’s effect larger with B present than with B absent?",
+      "choices": [
+        "39",
+        "12",
+        "14",
+        "25"
+      ],
+      "answer": 3,
+      "explanation": "A’s effect with B is 91-52=39; without B it is 54-40=14. Their difference is 25.",
+      "context": "Water recovery. Investigators tested drainage layer (factor A) and wick (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of water collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "water collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            40
+          ],
+          [
+            "A only",
+            54
+          ],
+          [
+            "B only",
+            52
+          ],
+          [
+            "A and B",
+            91
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-393",
+      "skill": "Additive model predictions",
+      "prompt": "A model predicts that the two isolated increases simply add. What combined mean does that model predict?",
+      "choices": [
+        "117",
+        "106",
+        "91",
+        "66"
+      ],
+      "answer": 3,
+      "explanation": "Add the isolated gains to baseline: 40 + (54-40) + (52-40) = 66. Do not count baseline twice.",
+      "context": "Water recovery. Investigators tested drainage layer (factor A) and wick (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of water collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "water collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            40
+          ],
+          [
+            "A only",
+            54
+          ],
+          [
+            "B only",
+            52
+          ],
+          [
+            "A and B",
+            91
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-394",
+      "skill": "Model residuals",
+      "prompt": "Observed combined response minus the additive-model prediction equals what?",
+      "choices": [
+        "14",
+        "25",
+        "12",
+        "39"
+      ],
+      "answer": 1,
+      "explanation": "The additive prediction is 66; the observed combined response is 91. The residual is 25.",
+      "context": "Water recovery. Investigators tested drainage layer (factor A) and wick (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of water collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "water collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            40
+          ],
+          [
+            "A only",
+            54
+          ],
+          [
+            "B only",
+            52
+          ],
+          [
+            "A and B",
+            91
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-395",
+      "skill": "Comparative ratios",
+      "prompt": "What is the ratio of A’s effect with B present to A’s effect with B absent?",
+      "choices": [
+        "39/14",
+        "39/12",
+        "91/54",
+        "14/39"
+      ],
+      "answer": 0,
+      "explanation": "The conditional effect is 39 and the isolated effect is 14, giving (39)/(14). The response ratio is not the effect ratio.",
+      "context": "Water recovery. Investigators tested drainage layer (factor A) and wick (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of water collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "water collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            40
+          ],
+          [
+            "A only",
+            54
+          ],
+          [
+            "B only",
+            52
+          ],
+          [
+            "A and B",
+            91
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-396",
+      "skill": "Necessary assumptions",
+      "prompt": "Which assumption is needed to predict the response with both factors at twice their tested settings?",
+      "choices": [
+        "That the largest listed mean is the combined group.",
+        "A response model connecting factor settings to the outcome.",
+        "That the table contains exactly four means.",
+        "That five trials were performed per group."
+      ],
+      "answer": 1,
+      "explanation": "The study tested only absence and one fixed setting for each factor. A dose-response relationship is needed to predict untested settings.",
+      "context": "Water recovery. Investigators tested drainage layer (factor A) and wick (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of water collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "water collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            40
+          ],
+          [
+            "A only",
+            54
+          ],
+          [
+            "B only",
+            52
+          ],
+          [
+            "A and B",
+            91
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-397",
+      "skill": "Error and inference",
+      "prompt": "The table does not report trial variability. Which statement is therefore most justified?",
+      "choices": [
+        "Any interaction must be a measurement error.",
+        "Every pair of groups must differ significantly.",
+        "All five trial values in each group must equal its mean.",
+        "The means show a pattern, but statistical uncertainty in the differences cannot be quantified from this table alone."
+      ],
+      "answer": 3,
+      "explanation": "Means alone do not give the spread of trials. The pattern is descriptive; variability is needed to quantify its statistical uncertainty.",
+      "context": "Water recovery. Investigators tested drainage layer (factor A) and wick (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of water collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "water collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            40
+          ],
+          [
+            "A only",
+            54
+          ],
+          [
+            "B only",
+            52
+          ],
+          [
+            "A and B",
+            91
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-398",
+      "skill": "Confounding and redesign",
+      "prompt": "Suppose the combined group accidentally ran twice as long. What is the best next step before attributing its extra response to an interaction?",
+      "choices": [
+        "Delete the baseline and keep the combined measurement.",
+        "Repeat the combined condition at the same duration as the other groups.",
+        "Double the response values for all other groups without testing.",
+        "Declare an interaction because the combined mean is largest."
+      ],
+      "answer": 1,
+      "explanation": "Unequal duration creates a competing explanation. A repeat with matched duration directly addresses that confound.",
+      "context": "Water recovery. Investigators tested drainage layer (factor A) and wick (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of water collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "water collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            40
+          ],
+          [
+            "A only",
+            54
+          ],
+          [
+            "B only",
+            52
+          ],
+          [
+            "A and B",
+            91
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-399",
+      "skill": "Symmetry of interactions",
+      "prompt": "How does the change in B’s effect caused by A compare with the change in A’s effect caused by B?",
+      "choices": [
+        "Their signs must be opposite.",
+        "The first is zero and the second is positive.",
+        "The first is twice the second.",
+        "The two changes are equal."
+      ],
+      "answer": 3,
+      "explanation": "Both difference-in-differences equal combined - A only - B only + baseline = 25. This equality follows algebraically from the same four values.",
+      "context": "Water recovery. Investigators tested drainage layer (factor A) and wick (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of water collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "water collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            40
+          ],
+          [
+            "A only",
+            54
+          ],
+          [
+            "B only",
+            52
+          ],
+          [
+            "A and B",
+            91
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
+    },
+    {
+      "id": "science-400",
+      "skill": "Synthesis of evidence",
+      "prompt": "Which interpretation best matches all four group means?",
+      "choices": [
+        "Both factors increase the response alone, and the combined gain exceeds the sum of the isolated gains.",
+        "Neither factor works alone; only the combination changes the response.",
+        "A raises the response while B lowers it, regardless of the other factor.",
+        "Both factors work alone, but their combination returns the response to baseline."
+      ],
+      "answer": 0,
+      "explanation": "Isolated gains are 14 and 12; their sum is 26. The combined gain is 51, which exceeds that sum by 25.",
+      "context": "Water recovery. Investigators tested drainage layer (factor A) and wick (factor B). The factors were either absent or present at a fixed setting. All four groups used equal starting samples and the same duration; all other conditions were held constant. Each entry is the mean of five independent trials. Larger values of water collected (mL) indicate a larger response. No model for other settings has been established.",
+      "table": {
+        "headers": [
+          "Factors present",
+          "water collected (mL)"
+        ],
+        "rows": [
+          [
+            "Neither",
+            40
+          ],
+          [
+            "A only",
+            54
+          ],
+          [
+            "B only",
+            52
+          ],
+          [
+            "A and B",
+            91
+          ]
+        ]
+      },
+      "difficulty": "hard",
+      "edition": "expansion-2026-10"
     }
   ]
 };

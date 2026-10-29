@@ -7,7 +7,7 @@ test('select subjects, reveal without answering, check choices, and reset feedba
   await expect(page.locator('#welcome')).toBeVisible();
   for (const subject of ['english', 'math', 'science']) {
     await page.locator(`[data-subject="${subject}"]`).click();
-    await expect(page.locator('#progress')).toHaveText('1 of 200 seen');
+    await expect(page.locator('#progress')).toHaveText('1 of 400 seen');
     await expect(page.locator('#answer')).toBeHidden();
     await expect(page.locator('#check')).toBeDisabled();
     await expect(page.getByRole('radio')).toHaveCount(4);
@@ -17,7 +17,7 @@ test('select subjects, reveal without answering, check choices, and reset feedba
     await expect(page.locator('#reveal')).toHaveAttribute('aria-expanded', 'true');
     await page.locator('#next').click();
     await expect(page.locator('#answer')).toBeHidden();
-    await expect(page.locator('#progress')).toHaveText('2 of 200 seen');
+    await expect(page.locator('#progress')).toHaveText('2 of 400 seen');
     const id = (await page.locator('#question-id').textContent()).toLowerCase();
     const correct = bank[subject].find(q => q.id === id).answer;
     await page.getByRole('radio').nth((correct+1)%4).check();
@@ -33,7 +33,7 @@ test('select subjects, reveal without answering, check choices, and reset feedba
     await expect(page.locator('#answer')).toContainText('Correct');
   }
   await page.locator('[data-subject="english"]').click();
-  await expect(page.locator('#progress')).toHaveText('4 of 200 seen');
+  await expect(page.locator('#progress')).toHaveText('4 of 400 seen');
   await expect(page.locator('#answer')).toBeHidden();
   expect(errors).toEqual([]);
 });
@@ -119,6 +119,19 @@ test('compact layout omits intro, subtitle, and steps at narrow mobile widths', 
     await page.locator('[data-subject="english"]').click();
     await page.locator('#reveal').click();
     await expect(page.locator('#answer')).toBeVisible();
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
+  }
+});
+test('new challenge questions render and reveal correctly on a narrow screen', async ({page}) => {
+  const samples=Object.fromEntries(Object.entries(bank).map(([s,qs])=>[s,[qs.find(q=>q.difficulty==='hard')]]));
+  await page.route('**/bank.js*',route=>route.fulfill({contentType:'application/javascript',body:`(function(){var b=${JSON.stringify(samples)};document.querySelector('[data-zsa-activity="act-question-generator"]').addEventListener('zsa-generator-bank',e=>e.detail.receive(b));})();`}));
+  await page.setViewportSize({width:320,height:812});
+  await page.goto('/act-question-generator/');
+  for(const subject of Object.keys(samples)) {
+    await page.locator(`[data-subject="${subject}"]`).click();
+    await expect(page.locator('#skill')).toContainText('Challenge');
+    await page.locator('#reveal').click();
+    await expect(page.locator('#answer')).toContainText(samples[subject][0].explanation);
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);
   }
 });
