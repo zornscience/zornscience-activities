@@ -2,7 +2,7 @@
 /**
  * Plugin Name: ZornScience Language
  * Description: Connects the Spanish pages under /es/ to their English twins: a language toggle in the header, Spanish menus, sidebars and labels on Spanish pages, links that fall back to English until a Spanish page is published, and hreflang tags for search engines.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: Nick Zorn
  * License: GPL-2.0-or-later
  * Requires at least: 6.4
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZS_LANG_VERSION', '1.0.0' );
+define( 'ZS_LANG_VERSION', '1.1.0' );
 define( 'ZS_LANG_ES_ROOT', 'es' );
 define( 'ZS_LANG_CONTENT_START', '<!--zs-lang-content-start-->' );
 define( 'ZS_LANG_CONTENT_END', '<!--zs-lang-content-end-->' );
@@ -26,6 +26,7 @@ function zs_lang_ui_strings() {
 	return array(
 		'Home'                                        => 'Inicio',
 		'Science Lessons'                             => 'Lecciones de ciencias',
+		'Lessons'                                     => 'Lecciones',
 		'Science'                                     => 'Ciencias',
 		'Chemistry'                                   => 'Química',
 		'AP Chemistry'                                => 'Química AP',
@@ -428,6 +429,14 @@ add_action(
 .zs-lang-toggle svg{flex:none;width:21px;height:14px;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.35)}
 .zs-lang-toggle .zs-lang-short{display:none}
 @media (max-width:781px){.zs-lang-toggle{padding:6px 9px;font-size:14px}.zs-lang-toggle .zs-lang-long{display:none}.zs-lang-toggle .zs-lang-short{display:inline}}
+.zs-lang-switch{list-style:none}
+.zs-mobile-menu .wp-block-navigation__container>.zs-lang-switch{order:98;margin-top:18px;border-bottom:0!important;animation:none!important}
+.zs-lang-switch>div{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px;padding:4px;border-radius:999px;background:rgba(255,255,255,.1)}
+.zs-lang-toggle-opt{display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;border-radius:999px;color:#fff!important;text-decoration:none!important;font-size:15px;font-weight:600;line-height:1;transition:background-color .15s ease}
+.zs-lang-toggle-opt svg{flex:none;width:21px;height:14px;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.35)}
+.zs-lang-toggle-opt:hover,.zs-lang-toggle-opt:focus-visible{background:rgba(255,255,255,.18)}
+.zs-lang-toggle-opt.is-current{background:#fff;color:#0b2a5b!important}
+.zs-lang-toggle-opt.is-current svg{box-shadow:0 0 0 1px rgba(11,42,91,.25)}
 </style>
 		<?php
 	},
@@ -470,11 +479,60 @@ function zs_lang_toggle_html() {
 	);
 }
 
+/**
+ * English/Español switch for inside the phone menu. Both options are always
+ * shown; the current language is highlighted. Returns '' on an English page
+ * whose Spanish twin is not published yet, same as the header toggle.
+ */
+function zs_lang_switch_html() {
+	$path = zs_lang_current_path();
+	if ( null === $path ) {
+		return '';
+	}
+	$map   = zs_lang_map();
+	$twin  = zs_lang_twin_path( $path );
+	$is_es = zs_lang_is_es_path( $path );
+	if ( $is_es ) {
+		$en_href = isset( $map[ $twin ] ) ? zs_lang_url( $twin ) : home_url( '/' );
+		$es_href = zs_lang_url( $path );
+	} else {
+		if ( ! isset( $map[ $twin ] ) ) {
+			return '';
+		}
+		$en_href = zs_lang_url( $path );
+		$es_href = zs_lang_url( $twin );
+	}
+	$option = function ( $lang, $hreflang, $href, $label, $current ) {
+		return sprintf(
+			'<a class="zs-lang-toggle-opt%s" href="%s" hreflang="%s" lang="%s"%s>%s<span>%s</span></a>',
+			$current ? ' is-current' : '',
+			esc_url( $href ),
+			$hreflang,
+			$lang,
+			$current ? ' aria-current="true"' : '',
+			zs_lang_flag_svg( $lang ),
+			$label
+		);
+	};
+	return '<li class="wp-block-navigation-item zs-lang-switch"><div role="group" aria-label="' . ( $is_es ? 'Idioma' : 'Language' ) . '">'
+		. $option( 'en', 'en-US', $en_href, 'English', ! $is_es )
+		. $option( 'es', 'es-MX', $es_href, 'Español', $is_es )
+		. '</div></li>';
+}
+
 add_filter(
 	'render_block',
 	function ( $content, $block ) {
 		if ( is_admin() || empty( $block['blockName'] ) ) {
 			return $content;
+		}
+		if ( 'core/navigation' === $block['blockName'] && ! empty( $block['attrs']['className'] ) && false !== strpos( $block['attrs']['className'], 'zs-mobile-menu' ) ) {
+			$switch = zs_lang_switch_html();
+			$close  = strrpos( $content, '</ul>' );
+			if ( '' === $switch || false === $close ) {
+				return $content;
+			}
+			return substr( $content, 0, $close ) . $switch . substr( $content, $close );
 		}
 		if ( 'core/group' === $block['blockName'] && ! empty( $block['attrs']['className'] ) && false !== strpos( $block['attrs']['className'], 'zs-header-tools' ) ) {
 			$toggle = zs_lang_toggle_html();
