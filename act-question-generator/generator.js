@@ -22,7 +22,7 @@
     el('progress').textContent = result.seen + ' of ' + result.total + ' seen';
     el('question-title').textContent = names[subject] + ' practice';
     el('question-id').textContent = current.id.toUpperCase();
-    el('skill').textContent = current.skill;
+    el('skill').textContent = current.skill + (current.difficulty === 'hard' ? ' · Challenge' : '');
     el('context').textContent = current.context || ''; el('context').hidden = !current.context;
     el('prompt').textContent = current.prompt;
     el('table-wrap').replaceChildren(); el('table-wrap').hidden = !current.table;
@@ -46,7 +46,7 @@
     el('answer').hidden = true; el('answer').replaceChildren();
     el('check').disabled = true; el('reveal').disabled = false;
     el('reveal').textContent = 'Show answer'; el('reveal').setAttribute('aria-expanded', 'false');
-    el('session-status').textContent = result.cycle > 1 && result.seen === 1 ? 'You’ve seen all 200 ' + names[subject] + ' questions. Starting a newly shuffled bank.' : names[subject] + ' selected. Try the question, or show the answer whenever you need it.';
+    el('session-status').textContent = result.cycle > 1 && result.seen === 1 ? 'You’ve seen all 400 ' + names[subject] + ' questions. Starting a newly shuffled bank.' : names[subject] + ' selected. Try the question, or show the answer whenever you need it.';
     if (focus) el('question-title').focus();
   }
   function showAnswer(checked) {

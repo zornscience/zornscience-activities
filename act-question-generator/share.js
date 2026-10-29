@@ -7,7 +7,7 @@
   if (!toggle || !panel) return;
   var url = "https://activities.zornscience.org/act-question-generator/";
   var title = "ACT Question Generator | ZornScience";
-  var description = "Practice English, Math, and Science with 600 original ACT-style questions and answer explanations.";
+  var description = "Practice English, Math, and Science with 1,200 original ACT-style questions and answer explanations.";
   el("url").value = url;
   el("email").href = "mailto:?subject=" + encodeURIComponent(title) + "&body=" + encodeURIComponent(description + "\n\n" + url);
   function close(restoreFocus) {
