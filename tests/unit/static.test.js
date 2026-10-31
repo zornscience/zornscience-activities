@@ -7,6 +7,7 @@ var assert = require("node:assert/strict");
 var fs = require("fs");
 var path = require("path");
 var vm = require("vm");
+var crypto = require("node:crypto");
 
 var ROOT = path.join(__dirname, "..", "..");
 var SKIP = ["node_modules", ".git", "tests", ".github", "test-results", "playwright-report"];
@@ -53,6 +54,24 @@ test("pages have one CSP, no inline scripts or styles, and only the expected out
     var html = read(f);
     var m = html.match(/<meta http-equiv="Content-Security-Policy" content="([^"]+)">/);
     assert.ok(m, f + " CSP");
+    // Nick requested a single self-contained page. Preserve the existing policy
+    // for all other pages. Only this file may embed code, authorized by its hash.
+    if (f.split(path.sep).join("/") === "gas-laws/index.html") {
+      var styles = Array.from(html.matchAll(/<style>([\s\S]*?)<\/style>/g));
+      var scripts = Array.from(html.matchAll(/<script>([\s\S]*?)<\/script>/g));
+      assert.equal(styles.length, 1);
+      assert.equal(scripts.length, 1);
+      var digest = function (text) { return crypto.createHash("sha256").update(text).digest("base64"); };
+      var expected = "default-src 'none'; img-src data:; style-src 'sha256-" + digest(styles[0][1]) + "'; script-src 'sha256-" + digest(scripts[0][1]) + "'; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'";
+      assert.equal(m[1], expected, "exact embedded code hashes, no broad inline permission");
+      assert.equal((html.match(/http-equiv="Content-Security-Policy"/g) || []).length, 1);
+      assert.doesNotMatch(html, /<script[^>]+src=|<link[^>]+rel="stylesheet"|\sstyle=|\son[a-z]+=/);
+      assert.match(html, /<link rel="icon" type="image\/png" href="data:image\/png;base64,/);
+      assert.match(scripts[0][1], /^\s*\(function \(\) \{\n {2}"use strict";/);
+      assert.doesNotMatch(scripts[0][1], /localStorage|sessionStorage|indexedDB|document\.cookie|\bfetch\s*\(|XMLHttpRequest|WebSocket|sendBeacon|\beval\s*\(|new Function\b/);
+      new vm.Script(scripts[0][1], {filename: f});
+      return;
+    }
     var exception = exceptions[f.split(path.sep).join("/")];
     if (exception) assert.equal(m[1], exception, f + " CSP");
     else {
@@ -88,6 +107,11 @@ test("each activity's version agrees across its page, assets and docs", function
   activities.forEach(function (a) {
     var html = read(path.join(a, "index.html"));
     var version = html.match(/<meta name="zsa-version" content="([\d.]+)">/)[1];
+    if (a.split(path.sep).join("/") === "gas-laws") {
+      assert.match(version, /^\d+\.\d+\.\d+$/);
+      assert.doesNotMatch(html, /\?v=/, "self-contained page has no external assets to version");
+      return;
+    }
     var queries = html.match(/\?v=[\d.]+/g);
     assert.ok(queries.length >= 4, a + " assets");
     queries.forEach(function (q) { assert.equal(q, "?v=" + version, a + " " + q); });
