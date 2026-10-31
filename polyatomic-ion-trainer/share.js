@@ -5,7 +5,7 @@
   function el(id) { return root.querySelector("#zsa-ir-share-" + id); }
   var toggle = el("toggle"), panel = el("panel");
   if (!toggle || !panel) return;
-  var url = location.protocol === "file:" ? "https://activities.zornscience.org/polyatomic-ion-trainer/" : location.origin + location.pathname;
+  var url = "https://activities.zornscience.org/polyatomic-ion-trainer/";
   var title = "Polyatomic Ion Trainer | ZornScience";
   var description = "Study 17 shaded polyatomic ions with flip flashcards or a ZornScience quiz game.";
   el("url").value = url;
