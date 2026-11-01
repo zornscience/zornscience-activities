@@ -108,3 +108,20 @@ test("Spanish ion round translates hints, feedback, review and completion codes"
   await expect(work.getByText("Pega este código en tu tarea de Google Classroom.", {exact:true})).toBeVisible();
   await noEnglish(page);
 });
+
+test("Spanish follows links between activities and English is the fallback", async ({page}) => {
+  // The current trainer has no cross-activity link. Add a test-only link to its initial markup.
+  await page.route(/\/ion-charge-trainer\/\?lang=es$/, async route => {
+    const response = await route.fetch();
+    const body = (await response.text()).replace('<div class="zsa-layout">', '<div class="zsa-layout"><a id="activity-link" href="../periodic-table/?el=Na#details">Na</a>');
+    await route.fulfill({response, body});
+  });
+  await page.goto("/ion-charge-trainer/?lang=es");
+  await expect(page.locator("#activity-link")).toHaveAttribute("href", /el=Na&lang=es#details$/);
+  await page.locator("#activity-link").click();
+  await expect(page).toHaveTitle("Tabla periódica | ZornScience");
+  await expect(page.locator("#zsa-pt-details-title")).toHaveText("Sodio");
+  await page.goto("/ion-charge-trainer/?lang=fr");
+  await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(page).toHaveTitle("Predicting Ion Charge Trainer | ZornScience");
+});
