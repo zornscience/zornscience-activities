@@ -6,6 +6,8 @@
   var toggle = el("toggle"), panel = el("panel");
   if (!toggle || !panel) return;
   var url = "https://activities.zornscience.org/polyatomic-ion-trainer/";
+  // Preserve only the Spanish language selector, never lesson or student state.
+  if (new URLSearchParams(location.search).get("lang") === "es") url += "?lang=es";
   var title = "Polyatomic Ion Trainer | ZornScience";
   var description = "Study 17 shaded polyatomic ions with flip flashcards or a ZornScience quiz game.";
   el("url").value = url;
