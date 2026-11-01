@@ -6,7 +6,8 @@ const root = path.resolve(__dirname, '../..');
 const slugs = fs.readdirSync(root).filter(slug => {
   const file = path.join(root, slug, 'index.html');
   // Gas Laws retains its existing standalone header; i18n.spec.js checks its shared language controls.
-  return !slug.startsWith('act') && slug !== 'periodic-table' && slug !== 'gas-laws' && fs.existsSync(file) &&
+  // The Chemistry lab chooser (equilibrium-thermo-lab) is a link page with no activity header; i18n.spec.js checks it.
+  return !slug.startsWith('act') && slug !== 'periodic-table' && slug !== 'gas-laws' && slug !== 'equilibrium-thermo-lab' && fs.existsSync(file) &&
     /data-zsa-activity=/.test(fs.readFileSync(file, 'utf8'));
 });
 

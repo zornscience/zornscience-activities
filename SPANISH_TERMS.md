@@ -429,6 +429,141 @@ variable-volume reactor | reactor de volumen variable
 wire loop | asa de alambre
 X vs Y (graph name) | X contra Y
 zero (the spectrophotometer), zeroed | ajustar a cero, ajustado a cero
+chemical bonding (lab title) | enlace químico
+Unknown {n} (unknown sample in this lab, in sentences) | muestra desconocida {n}
+Unknowns 1, 2, and 3 | las muestras desconocidas 1, 2 y 3
+aluminum foil boat / foil boat | charola de papel aluminio / charola
+hot plate | parrilla
+beaker tongs / tongs | pinzas para vaso de precipitados / pinzas
+watch glass | vidrio de reloj
+inspection light | lámpara de inspección
+borosilicate | borosilicato
+conductivity tester (direct-contact) | conductímetro (de contacto directo)
+conductivity probe (immersed) / probes (touching a solid) | sonda de conductividad / puntas
+conductivity meter (instrument label) | conductímetro
+solid conductivity / liquid conductivity | conductividad del sólido / conductividad del líquido
+conductivity readings: none, low, medium, high, very high | nula, baja, media, alta, muy alta
+OPEN (circuit, meter display) | ABIERTO
+current (meter indicator) | corriente
+electrodes | electrodos
+balance (laboratory) | balanza
+weigh boat | navecilla de pesaje
+glass stirring rod | varilla de vidrio
+test tube | tubo de ensayo
+stirrer / coffee stirrer | agitador / agitador de café
+mortar and pestle | mortero y pistilo
+scoopula | espátula
+spatula-tip portion | porción tomada con la punta de la espátula
+cyclohexane | ciclohexano
+nonpolar solvent | disolvente no polar
+lactose | lactosa
+appearance | apariencia
+luster / metallic luster | brillo / brillo metálico
+malleable / malleability | maleable / maleabilidad
+brittle | quebradizo
+melting behavior | comportamiento al fundirse
+melt / sublime / vaporize / decompose | fundirse / sublimarse / vaporizarse / descomponerse
+browns (on heating) | se pone café
+granules | gránulos
+facets (of crystals) | caras
+off-white | blanquecino
+yellow-brown | café amarillento
+goggles | lentes de seguridad
+anode / cathode | ánodo / cátodo
+cell potential | potencial de celda
+standard reduction potential | potencial estándar de reducción
+galvanic (cell) / electrolytic (cell) | galvánica / electrolítica
+half-cell | semicelda
+salt bridge | puente salino
+electrode | electrodo
+electrochemical cell | celda electroquímica
+voltmeter | voltímetro
+power supply | fuente de poder
+DC supply (SVG label) | FUENTE CD
+load (external circuit) | carga
+meter branch | rama del medidor
+unit ion activity | actividad iónica unitaria
+overpotential | sobrepotencial
+negligible current | corriente despreciable
+terminal voltage under load | voltaje en las terminales bajo carga
+neutral metal atoms | átomos metálicos neutros
+nitrate ions / potassium ions | iones nitrato / iones de potasio
+charge balance | balance de carga
+agar gel | gel de agar
+E°cell = E°cathode − E°anode | E°celda = E°cátodo − E°ánodo
+zinc / copper / silver | zinc / cobre / plata
+balanced reaction event | evento de reacción balanceado
+analytical balance | balanza analítica
+Büchner funnel | embudo Büchner
+clay triangle | triángulo de arcilla
+constant mass | masa constante
+crucible | crisol
+crucible tongs | pinzas para crisol
+decant | decantar
+desiccator | desecador
+drying oven | horno de secado
+filter paper | papel filtro
+filtrate | filtrado
+hot-vessel gripper | sujetador para recipientes calientes
+hygroscopic | higroscópico
+insoluble | insoluble
+potassium carbonate | carbonato de potasio
+residual moisture / residual water | humedad residual / agua residual
+sediment / settle (a precipitate) | sedimento / asentarse, sedimentación
+side-arm flask | matraz Kitasato
+sodium carbonate | carbonato de sodio
+stirring rod | varilla de agitación
+supernatant | sobrenadante
+vacuum filtration | filtración al vacío
+wash (a precipitate) | lavado (lavar)
+weighing (a measurement) | pesada
+conductivity | conductividad
+conductivity tester (solid conductivity tester) | conductímetro (conductímetro para sólidos)
+doping (semiconductor) | dopaje
+dull (surface) | opaco
+fracture / fractures (a solid) | fracturarse / se fractura
+HCl Waste (beaker label) | Residuos de HCl (SVG label "RESIDUOS DE HCl")
+metallic reflection | reflejo metálico
+pestle | pistilo
+pipette (noun) / to pipette | pipeta / pipetear
+semiconductor behavior | se comporta como semiconductor
+sheet (a flattened metal) | lámina
+surface oxide layer | capa de óxido de la superficie
+test tube / test-tube rack | tubo de ensayo / gradilla
+unknown (solid sample, this lab) | muestra desconocida (button caption "Desconocida")
+waste beaker | vaso de precipitados para residuos
+Copper(II) sulfate | Sulfato de cobre(II)
+Lead(II) nitrate | Nitrato de plomo(II)
+Silver nitrate | Nitrato de plata
+Iron(III) nitrate | Nitrato de hierro(III)
+lead(II) sulfate | sulfato de plomo(II)
+lead(II) chloride | cloruro de plomo(II)
+silver chloride | cloruro de plata
+iron(III) hydroxide | hidróxido de hierro(III)
+copper(II) hydroxide | hidróxido de cobre(II)
+borosilicate glassware | material de vidrio de borosilicato
+reagent bottle | frasco de reactivo
+metal strip | tira de metal
+coating (on a metal) | recubrimiento
+settle / settling (of a precipitate) | asentarse / asentamiento
+curdy (precipitate) | grumoso
+gelatinous | gelatinoso
+rust-brown | café rojizo
+blue-green | verde azulado
+No net ionic reaction. | No hay reacción iónica neta.
+Redox Half-Reaction Balancer Coach | Práctica de balanceo de semirreacciones redox
+half-reaction | semirreacción
+oxidation half-reaction / reduction half-reaction | semirreacción de oxidación / semirreacción de reducción
+half-reaction method | método de semirreacciones
+acidic medium / basic medium | medio ácido / medio básico
+permanganate | permanganato
+skeleton coefficients | coeficientes de la ecuación base
+species (chemical) | especie
+electron loss / electron gain | pérdida de electrones / ganancia de electrones
+least common multiple | mínimo común múltiplo
+smallest whole-number ratio | relación de números enteros más pequeños
+mass balance / charge balance | balance de masa / balance de carga
+oxidation state (English text) | número de oxidación
 
 ## Additional interface labels
 
@@ -1011,6 +1146,248 @@ ZornScience · Idealized models for learning | ZornScience · Modelos idealizado
 {count} / 8 tested | {count} / 8 probadas
 {nm} nm ({light}) | {nm} nm (luz {light})
 {time} simulated s | {time} s simulados
+Chemical Bonding Lab | Laboratorio de enlace químico
+The unknowns | Las muestras desconocidas
+Unknown samples | Muestras desconocidas
+Unknown (sample button caption) | Desconocida
+UNKNOWN {n} | MUESTRA DESCONOCIDA {n}
+ALL FOUR UNKNOWNS | LAS CUATRO MUESTRAS DESCONOCIDAS
+SELECT A TEST | ELIGE UNA PRUEBA
+Lab stations | Estaciones del laboratorio
+Appearance / Color & luster | Apariencia / Color y brillo
+Solid conductivity / Touch both probes | Conductividad del sólido / Toca con ambas puntas
+Melting behavior / Heat all four together | Comportamiento al fundirse / Calienta las cuatro juntas
+In water / Dissolve & test conductivity | En agua / Disuelve y mide la conductividad
+In cyclohexane / Explore a nonpolar solvent | En ciclohexano / Explora un disolvente no polar
+Malleability / Flatten or fracture? | Maleabilidad / ¿Se aplana o se fractura?
+VIRTUAL LAB BENCH | MESA DE LABORATORIO VIRTUAL
+AT THE BENCH | EN LA MESA
+↺ Reset this test | ↺ Reiniciar esta prueba
+About this simulation | Acerca de esta simulación
+Investigate four unknown solids (instructions title) | Investigación de cuatro sólidos desconocidos
+Each link opens a fresh lab bench. | Cada enlace abre una mesa de laboratorio nueva.
+Activity link | Enlace de la actividad
+Appearance station | Estación de apariencia
+Equipment in use | Equipo en uso
+Hot plate on / Hot plate off | Parrilla encendida / Parrilla apagada
+Boat cooling away from hot plate | La charola se enfría lejos de la parrilla
+Test in progress | Prueba en curso
+Fresh solid • Room temperature | Sólido nuevo • Temperatura ambiente
+30× simulated time | Tiempo simulado a 30×
+Solvent observation time | Tiempo de observación del disolvente
+Move the inspection light | Mueve la lámpara de inspección
+Touch probes to solid / Lift probes | Toca el sólido con las puntas / Levanta las puntas
+Press with pestle / Press with scoopula | Presiona con el pistilo / Presiona con la espátula
+Load all four portions | Coloca las cuatro porciones
+Switch on hot plate / Switch off hot plate | Enciende la parrilla / Apaga la parrilla
+Lift boat with tongs | Levanta la charola con las pinzas
+Dispose of cooled boat | Desecha la charola fría
+Weigh 0.10 g / Measure 50.0 mL water / Transfer to beaker | Pesa 0.10 g / Mide 50.0 mL de agua / Pasa al vaso de precipitados
+Stir with glass rod / Immerse conductivity probe / Lift & rinse probe | Agita con la varilla de vidrio / Sumerge la sonda de conductividad / Levanta y enjuaga la sonda
+Measure 5.0 mL cyclohexane / Add solvent & spatula-tip solid / Stir & start observation | Mide 5.0 mL de ciclohexano / Agrega el disolvente y una punta de espátula de sólido / Agita e inicia la observación
+Advance to 5:00 / Repeat with fresh portion | Adelanta a 5:00 / Repite con una porción nueva
+WATCH GLASS / INSPECTION LIGHT | VIDRIO DE RELOJ / LÁMPARA DE INSPECCIÓN
+DIRECT-CONTACT CONDUCTIVITY TESTER | CONDUCTÍMETRO DE CONTACTO DIRECTO
+ALUMINUM FOIL BOAT / HOT PLATE / TONGS | CHAROLA DE PAPEL ALUMINIO / PARRILLA / PINZAS
+BALANCE / GRADUATED CYLINDER / BEAKER | BALANZA / PROBETA GRADUADA / VASO DE PRECIPITADOS
+GRADUATED CYLINDER / TEST TUBE / STIRRER | PROBETA GRADUADA / TUBO DE ENSAYO / AGITADOR
+MORTAR & PESTLE / SCOOPULA | MORTERO Y PISTILO / ESPÁTULA
+SOLID CONDUCTIVITY (meter label) | CONDUCT. DEL SÓLIDO
+CONDUCTIVITY METER (meter label) | CONDUCTÍMETRO
+HOT / PLATE (hot plate indicator) | CALIENTE / PARRILLA
+VAPORIZED (sample label) | VAPORIZADA
+DI WATER (bottle label) | H₂O DI
+BOTH PROBES MUST TOUCH THE SOLID | AMBAS PUNTAS DEBEN TOCAR EL SÓLIDO
+BOAT LIFTED WITH BEAKER TONGS | CHAROLA LEVANTADA CON PINZAS PARA VASO
+SEPARATE PORTIONS / SAME HEATING CONDITIONS | PORCIONES SEPARADAS / MISMAS CONDICIONES DE CALENTAMIENTO
+0.10 g SOLID + 50.0 mL DEIONIZED WATER | 0.10 g DE SÓLIDO + 50.0 mL DE AGUA DESIONIZADA
+5.0 mL SOLVENT / SPATULA-TIP PORTION | 5.0 mL DE DISOLVENTE / PORCIÓN CON PUNTA DE ESPÁTULA
+PORCELAIN MORTAR & PESTLE | MORTERO Y PISTILO DE PORCELANA
+STAINLESS STEEL SCOOPULA / WATCH GLASS | ESPÁTULA DE ACERO INOXIDABLE / VIDRIO DE RELOJ
+Electrochemistry Cell Builder | Constructor de celdas electroquímicas
+How to build your cell | Guía para armar tu celda
+Your electrochemical cell | Tu celda electroquímica
+01 / Explore | 01 / Explora
+02 / Observe | 02 / Observa
+Start with an example | Empieza con un ejemplo
+Build your own (option) / Build your own cell (section) | Arma tu propia celda
+Swap left and right | Intercambiar izquierda y derecha
+Cell type | Tipo de celda
+Galvanic · spontaneous | Galvánica · espontánea
+Electrolytic · driven by power | Electrolítica · con fuente
+Place {metal} left / Place {metal} right | Colocar {metal} a la izquierda / Colocar {metal} a la derecha
+Add KNO₃ salt bridge | Agregar puente salino de KNO₃
+Connect circuit + voltmeter | Conectar circuito + voltímetro
+Power supply / V | Fuente de poder / V
+Clear bench | Despejar la mesa
+Run cell | Iniciar la celda
+Step once | Avanzar un paso
+Restart particles | Reiniciar partículas
+Sample complete | Muestra completa
+Show ions / Show explanations | Mostrar iones / Mostrar explicaciones
+Animation speed | Velocidad de la animación
+Slow / Normal / Fast | Lenta / Normal / Rápida
+Animation controls | Controles de la animación
+e⁻ = electron | e⁻ = electrón
+Charged circle = ion | Círculo con carga = ion
+Solid bead = neutral atom | Esfera sólida = átomo neutro
+How is E° calculated? (drawer summary) | Cálculo de E°
+Particle key | Simbología de las partículas
+Particle sample counts | Conteos de la muestra de partículas
+Anode · oxidation · {sign} | Ánodo · oxidación · {sign}
+Cathode · reduction · {sign} | Cátodo · reducción · {sign}
+Left half-cell / Right half-cell | Semicelda izquierda / Semicelda derecha
+Left solution (1 M) / Right solution (1 M) | Solución izquierda (1 M) / Solución derecha (1 M) (no-break space in "1 M")
+Choose ionic solution | Elige la solución
+Choose a solution below (SVG) | Elige una solución abajo
+Electrochemical cell apparatus | Montaje de la celda electroquímica
+LOAD (SVG) | CARGA
+KNO₃ · agar gel | KNO₃ · gel de agar
+STANDARD E° / V | E° ESTÁNDAR / V
+OFF (meter display) | APAGADO
+<strong>{events} / 12</strong> events | <strong>{events} / 12</strong> eventos
+<strong>{n}</strong> e⁻ transferred | <strong>{n}</strong> e⁻ transferidos
+<strong>{n}</strong> {metal} atoms lost | <strong>{n}</strong> átomos de {metal} perdidos
+<strong>{n}</strong> {metal} atoms deposited | <strong>{n}</strong> átomos de {metal} depositados
+Share a fresh lab. Your cell setup and answers are not included. | Comparte el laboratorio desde cero. No se incluyen el montaje de tu celda ni tus respuestas.
+Use Copy link, email, or one of the social links instead. | Usa Copiar enlace, el correo electrónico o una de las redes sociales.
+Choose a Chemistry Lab (page title) | Selección de un laboratorio de química
+Choose your chemistry lab (heading) | Selección de tu laboratorio de química
+ZornScience · AP Chemistry | ZornScience · Química AP
+Gravimetric Analysis | Análisis gravimétrico
+GRAVIMETRY BENCH | MESA DE GRAVIMETRÍA
+Interactive laboratory bench | Mesa de laboratorio interactiva
+Laboratory equipment | Equipo de laboratorio
+Experiment progress | Progreso del experimento
+Prepare / Precipitate / Separate / Dry & weigh (phases) | Preparación / Precipitación / Separación / Secado y pesada
+THE SEPARATION | LA SEPARACIÓN
+In progress… | En proceso…
+Unknown sample | Muestra desconocida
+READY TO PREPARE | LISTO PARA PREPARAR
+PREPARE THE SAMPLE | PREPARACIÓN DE LA MUESTRA
+PRECIPITATE CaCO₃ | PRECIPITACIÓN DE CaCO₃
+VACUUM FILTRATION | FILTRACIÓN AL VACÍO
+DRY TO CONSTANT MASS | SECADO A MASA CONSTANTE
+DRYING OVEN | HORNO DE SECADO
+ANALYTICAL BALANCE | BALANZA ANALÍTICA
+400 mL BEAKER | VASO DE 400 mL
+BÜCHNER VACUUM FILTRATION | FILTRACIÓN BÜCHNER AL VACÍO
+WATCH GLASS | VIDRIO DE RELOJ
+CRUCIBLE TONGS | PINZAS PARA CRISOL
+LIVE READING · ±0.001 g | LECTURA EN VIVO · ±0.001 g
+Current balance reading | Lectura actual de la balanza
+● Goggles on · Handle hot glassware with tongs | ● Lentes de seguridad puestos · Toma el vidrio caliente con pinzas
+Accelerated lab time | Tiempo de laboratorio acelerado
+A mass with a meaning | Una masa con significado
+Reveal the unknown | Revela la muestra desconocida
+ZornScience · Gravimetric Analysis · Idealized model for learning · | ZornScience · Análisis gravimétrico · Modelo idealizado para aprender ·
+Identify the unknown: | Identifica la muestra desconocida:
+Step titles (noun phrases), e.g. Prepare the crucible / Cool in the desiccator / Weigh the empty crucible / Add the unknown / Drive off moisture / Let the solid settle / Wash the solid: 1 of 3 / Break up the solid / Check for constant mass / The evidence is ready | Preparación del crisol / Enfriamiento en el desecador / Pesada del crisol vacío / Adición de la muestra desconocida / Eliminación de la humedad / Sedimentación del sólido / Lavado del sólido: 1 de 3 / Fragmentación del sólido / Comprobación de masa constante / Evidencia lista
+Step action buttons (tú imperative), e.g. Dry crucible in oven / Weigh empty crucible / Add calcium chloride / Allow overnight settling / Dry, cool & reweigh | Seca el crisol en el horno / Pesa el crisol vacío / Agrega cloruro de calcio / Deja reposar toda la noche / Seca, enfría y vuelve a pesar
+Metals, Nonmetals & Metalloids | Metales, no metales y metaloides
+Metals, Nonmetals & Metalloids Lab | Laboratorio de metales, no metales y metaloides
+Investigate three unknowns | Investigación de tres muestras desconocidas
+02 / SELECT A TEST | 02 / ELIGE UNA PRUEBA
+Color & luster | Color y brillo
+Flatten or fracture? | ¿Se aplana o se fractura?
+Complete the circuit | Completa el circuito
+Chemical properties | Propiedades químicas
+Reaction with HCl | Reacción con HCl
+PORCELAIN MORTAR / PESTLE | MORTERO DE PORCELANA / PISTILO
+SOLID CONDUCTIVITY TESTER / PROBES | CONDUCTÍMETRO PARA SÓLIDOS / PUNTAS
+TEST TUBE / PIPETTE / HCl WASTE | TUBO DE ENSAYO / PIPETA / RESIDUOS DE HCl
+BOROSILICATE WATCH GLASS | VIDRIO DE RELOJ DE BOROSILICATO
+SOLID CONDUCTIVITY TESTER | CONDUCTÍMETRO PARA SÓLIDOS
+CURRENT | CORRIENTE
+DIRECT CONTACT / SENSITIVE CURRENT DETECTION | CONTACTO DIRECTO / DETECCIÓN SENSIBLE DE CORRIENTE
+ACID + SOLIDS | ÁCIDO + SÓLIDOS
+0.65 M HYDROCHLORIC ACID / FRESH SOLID PORTION | ÁCIDO CLORHÍDRICO 0.65 M / PORCIÓN NUEVA DE SÓLIDO
+OPEN / STRONG / NONE / WEAK (current meter) | ABIERTO / FUERTE / NULA / DÉBIL
+READY TO INSPECT | LISTO PARA INSPECCIONAR
+FRESH SOLID IN MORTAR | SÓLIDO NUEVO EN EL MORTERO
+PROBES DISCONNECTED | PUNTAS DESCONECTADAS
+EMPTY TUBE | TUBO VACÍO
+FRESH PORTION | PORCIÓN NUEVA
+TESTING MALLEABILITY | PRUEBA DE MALEABILIDAD EN CURSO
+SOLID FLATTENS / SOLID FRACTURES | EL SÓLIDO SE APLANA / EL SÓLIDO SE FRACTURA
+BOTH PROBES TOUCHING SOLID | AMBAS PUNTAS TOCAN EL SÓLIDO
+PIPETTING ACID | PIPETEANDO ÁCIDO
+3 mL HCl / READY FOR SOLID | 3 mL DE HCl / LISTO PARA EL SÓLIDO
+ADDING FRESH SOLID | AGREGANDO SÓLIDO NUEVO
+OBSERVATION PAUSED | OBSERVACIÓN EN PAUSA
+OBSERVING / 20× TIME | EN OBSERVACIÓN / TIEMPO 20×
+OBSERVATION COMPLETE | OBSERVACIÓN TERMINADA
+POURING INTO WASTE | VERTIENDO EN RESIDUOS
+WASTE COLLECTED | RESIDUOS RECOLECTADOS
+Move the inspection light / LEFT ↔ RIGHT | Mueve la lámpara de inspección / IZQUIERDA ↔ DERECHA
+Press with pestle / Press again / Test complete | Presiona con el pistilo / Presiona otra vez / Prueba terminada
+Fresh portion | Porción nueva
+1. Pipette 3 mL HCl | 1. Pipetea 3 mL de HCl
+2. Add solid | 2. Agrega el sólido
+3. Pour into HCl Waste | 3. Vierte en Residuos de HCl
+Fresh tube | Tubo nuevo
+Pause observation / Resume observation | Pausar observación / Reanudar observación
+Acid observation time | Tiempo de observación del ácido
+ZornScience · Explore. Observe. Explain. | ZornScience · Explora. Observa. Explica.
+Virtual lab · No data entry or saving | Laboratorio virtual · Sin captura ni guardado de datos
+This simulation needs JavaScript. | Esta simulación necesita JavaScript.
+Net Ionic Reactions Lab | Laboratorio de reacciones iónicas netas
+Select a mixture | Elige una mezcla
+Lab mixtures | Mezclas del laboratorio
+Mix reagents | Mezclar reactivos
+Reset mixture | Reiniciar mezcla
+Reveal the chemistry | Mostrar la química
+WHAT CAN YOU SEE? | ¿QUÉ PUEDES VER?
+Before mixing | Antes de mezclar
+After mixing | Después de mezclar
+Ready to mix | Listo para mezclar
+Mixed | Mezclado
+Settling… | Asentándose…
+Settled | Asentado
+First addition complete | Primera adición completa
+Lowering the zinc strip | Bajando la tira de zinc
+Observing the mixture | Observando la mezcla
+BOROSILICATE GLASSWARE | MATERIAL DE VIDRIO DE BOROSILICATO
+ROOM TEMPERATURE · 22 °C | TEMPERATURA AMBIENTE · 22 °C
+REACTION BEAKER | VASO DE PRECIPITADOS PARA LA REACCIÓN
+Zn · metal strip | Zn · tira de metal
+solid (bottle label) | sólido
+Share by email | Compartir por correo electrónico
+ZornScience · Idealized visual simulation · Reaction and settling times are accelerated. | ZornScience · Simulación visual idealizada · Los tiempos de reacción y de asentamiento están acelerados.
+How to use Redox Balancer Coach | Guía para usar la práctica de balanceo redox
+Share the activity link. Your equation, answers and progress are not included. | Comparte el enlace de la actividad desde cero. No se incluyen tu ecuación, tus respuestas ni tu progreso.
+Your reaction | Tu reacción
+Practice problem | Problema de práctica
+Progress | Progreso
+Undo last action | Deshacer la última acción
+Restart problem | Reiniciar problema
+Check Answer | Revisar respuesta
+Permanganate and iron | Permanganato y hierro
+Permanganate and iodide | Permanganato y yoduro
+yields (arrow label) | produce
+No species | Sin especies
+Unassigned species | Especies sin asignar
+Split into half-reactions | Separación en semirreacciones
+Mass balance: O and H | Balance de masa: O y H
+Charge balance: electrons | Balance de carga: electrones
+Equalize electrons | Igualación de electrones
+Combine and cancel | Suma y cancelación
+Basic media adjustment | Ajuste para medio básico
+Oxidation Half-Reaction / Reduction Half-Reaction | Semirreacción de oxidación / Semirreacción de reducción
+oxidation reactants / oxidation products | reactivos de la oxidación / productos de la oxidación
+reduction reactants / reduction products | reactivos de la reducción / productos de la reducción
+Oxidation multiplier / Reduction multiplier | Multiplicador de la oxidación / Multiplicador de la reducción
+Oxidation multiplied preview / Reduction multiplied preview | Vista previa de la oxidación multiplicada / Vista previa de la reducción multiplicada
+Cancel mode: ON / Cancel mode: OFF | Modo cancelar: ACTIVADO / Modo cancelar: DESACTIVADO
+Merge mode: H⁺ + OH⁻ → H₂O | Modo combinar: H⁺ + OH⁻ → H₂O
+Selection cleared. | Se borró la selección.
+Last action undone. | Se deshizo la última acción.
+Enter a positive whole number. | Escribe un número entero positivo.
+Select a term to begin. | Selecciona un término para empezar.
+Verified. Continue with the next step. | Verificado. Sigue con el siguiente paso.
+Success! You balanced the reaction. | ¡Lo lograste! Balanceaste la reacción.
+token (draggable piece) | ficha
+Space (key) | la barra espaciadora
 
 ## Full sentence templates
 
@@ -1324,6 +1701,153 @@ The flat region around it is a buffer. | La región plana a su alrededor es la r
 pH versus volume of titrant graph, 0 to {max} mL, pH 0 to 14. | Gráfica de pH contra volumen de titulante, de 0 a {max} mL, pH de 0 a 14.
 Key points shown. Equivalence at {v} mL, pH {pH}. | Se muestran los puntos clave. Equivalencia a los {v} mL, pH {pH}.
 Titration: {setup}. Titrant added: {v} mL, pH {pH}. Endpoint: {end} mL. | Titulación: {setup}. Titulante agregado: {v} mL, pH {pH}. Punto final: {end} mL.
+{station}, all four unknowns | {station}, las cuatro muestras desconocidas
+{station}, Unknown {n} | {station}, muestra desconocida {n}
+{equipment}. {observation} | {equipment}. {observation}
+Solid conductivity: very high. Both probes are touching the solid. | Conductividad del sólido: muy alta. Ambas puntas tocan el sólido.
+Solid conductivity: none. Both probes are touching the solid. | Conductividad del sólido: nula. Ambas puntas tocan el sólido.
+The probes are lifted. OPEN means the test circuit is incomplete. | Las puntas están levantadas. ABIERTO significa que el circuito de prueba está incompleto.
+A qualitative, sensitive tester. OPEN and NONE have different meanings. | Es un conductímetro cualitativo y sensible. ABIERTO y NULA no significan lo mismo.
+The balance reads 0.10 g of Unknown {n} in the weigh boat. | La balanza marca 0.10 g de la muestra desconocida {n} en la navecilla de pesaje.
+{water} Liquid conductivity: high. The electrodes are immersed above any undissolved solid. | {water} Conductividad del líquido: alta. Los electrodos están sumergidos por encima de cualquier sólido sin disolver.
+{water} Liquid conductivity: none. The electrodes are immersed above any undissolved solid. | {water} Conductividad del líquido: nula. Los electrodos están sumergidos por encima de cualquier sólido sin disolver.
+The solvent and a small spatula-tip portion of Unknown {n} are in the test tube. Stir to mix them. | El disolvente y una pequeña porción de la muestra desconocida {n}, tomada con la punta de la espátula, están en el tubo de ensayo. Agita para mezclarlos.
+{observation} Observation after five simulated minutes. | {observation} Observación después de cinco minutos simulados.
+{observation} The plate is switched off; the boat remains hot. | {observation} La parrilla se apagó; la charola sigue caliente.
+Unknown 1 melts near 232 °C into a shiny liquid. Unknown 2 remains solid up to 300 °C. Unknown 3 has browned and decomposed; Unknown 4 melted first and then vaporized. The foil stays solid. | La muestra desconocida 1 se funde cerca de 232 °C y forma un líquido brillante. La muestra desconocida 2 sigue sólida hasta 300 °C. La muestra desconocida 3 se puso café y se descompuso; la muestra desconocida 4 se fundió primero y luego se vaporizó. El papel aluminio sigue sólido.
+Heating stopped. The boat and hot plate are still hot. Lift the boat with the tongs to cool it. | Se detuvo el calentamiento. La charola y la parrilla siguen calientes. Levanta la charola con las pinzas para que se enfríe.
+The foil boat has cooled to room temperature. Dispose of the used foil boat to finish this test. | La charola ya se enfrió a temperatura ambiente. Desecha la charola usada para terminar esta prueba.
+Select and copy the link using your device's copy command. | Selecciona el enlace y cópialo con el comando para copiar de tu dispositivo.
+{metal} selected. Use a Place button or drag to a beaker. | Metal seleccionado: {metalLower}. Usa un botón Colocar o arrástralo a un vaso de precipitados.
+{metal} loses neutral atoms; ions enter solution. | El electrodo de {metalLower} pierde átomos neutros; los iones pasan a la solución.
+{metal} gains neutral atoms; ions leave solution. | El electrodo de {metalLower} gana átomos neutros; los iones salen de la solución.
+{metal} electrode. | Electrodo de {metalLower}.
+Choose or drop an electrode. | Elige o suelta un electrodo.
+Spontaneous: chemical → electrical energy. | Espontánea: energía química → eléctrica.
+Driven in reverse: electrical → chemical energy. | Impulsada en sentido inverso: energía eléctrica → química.
+Place two different metals, then choose their matching ionic solutions. | Coloca dos metales diferentes y luego elige la solución iónica de cada uno.
+Identical standard half-cells have E° = 0.00 V. Choose different metals to drive a reaction. | Dos semiceldas estándar idénticas tienen E° = 0.00 V. Elige metales diferentes para que ocurra una reacción.
+Match each electrode with its own metal-ion solution. This model does not simulate mismatched half-cells. | Combina cada electrodo con la solución de su propio ion metálico. Este modelo no simula semiceldas que no coinciden.
+Salt bridge disconnected: charge would build up, stopping sustained electron flow. Add the bridge to continue. | Puente salino desconectado: se acumularía carga y se detendría el flujo continuo de electrones. Agrega el puente para continuar.
+Complete the external circuit to allow electron flow. The voltmeter measures across the two electrodes. | Completa el circuito externo para permitir el flujo de electrones. El voltímetro mide entre los dos electrodos.
+Set the applied voltage above {v} V (up to 10 V) to drive the reverse reaction. | Ajusta el voltaje aplicado por encima de {v} V (hasta 10 V) para impulsar la reacción inversa.
+Sample complete: 12 balanced events. Restart particles to repeat or change the setup. | Muestra completa: 12 eventos balanceados. Usa Reiniciar partículas para repetirla o cambia el montaje.
+Running a short particle sample. Pause to inspect, or use Step once. | Se está reproduciendo una muestra corta de partículas. Pausa para observarla, o usa Avanzar un paso.
+Ready. Step once to observe a balanced reaction event, or run the sample. | Lista. Avanza un paso para observar un evento de reacción balanceado, o inicia la muestra.
+Event {events} of 12: {a} {anode} atom lost, {c} {cathode} atom deposited, {n} electrons transferred. K⁺ and NO₃⁻ maintain charge balance. | Evento {events} de 12: se perdió {a} átomo de {anode}, se depositó {c} átomo de {cathode} y se transfirieron {n} electrones. K⁺ y NO₃⁻ mantienen el balance de carga.
+Event {events} of 12: {a} {anode} atom lost, {c} {cathode} atoms deposited, {n} electrons transferred. K⁺ and NO₃⁻ maintain charge balance. | Evento {events} de 12: se perdió {a} átomo de {anode}, se depositaron {c} átomos de {cathode} y se transfirieron {n} electrones. K⁺ y NO₃⁻ mantienen el balance de carga.
+Event {events} of 12: {a} {anode} atoms lost, {c} {cathode} atom deposited, {n} electrons transferred. K⁺ and NO₃⁻ maintain charge balance. | Evento {events} de 12: se perdieron {a} átomos de {anode}, se depositó {c} átomo de {cathode} y se transfirieron {n} electrones. K⁺ y NO₃⁻ mantienen el balance de carga.
+Event {events} of 12: {a} {anode} atoms lost, {c} {cathode} atoms deposited, {n} electrons transferred. K⁺ and NO₃⁻ maintain charge balance. | Evento {events} de 12: se perdieron {a} átomos de {anode}, se depositaron {c} átomos de {cathode} y se transfirieron {n} electrones. K⁺ y NO₃⁻ mantienen el balance de carga.
+Calculated E° for this reaction: {e} V. The meter branch carries negligible current; electrons follow the load or power-supply circuit. | E° calculado para esta reacción: {e} V. Por la rama del medidor pasa una corriente despreciable; los electrones siguen el circuito de la carga o de la fuente de poder.
+Calculated E° for this reaction: {e} V. Applied supply: {p} V. The meter branch carries negligible current; electrons follow the load or power-supply circuit. | E° calculado para esta reacción: {e} V. Voltaje aplicado por la fuente: {p} V. Por la rama del medidor pasa una corriente despreciable; los electrones siguen el circuito de la carga o de la fuente de poder.
+Choose matching standard half-cells to calculate E°. | Elige semiceldas estándar que coincidan para calcular E°.
+Electrons: {anode} → load → {cathode}. K⁺ moves toward the cathode; NO₃⁻ toward the anode. Electrons never cross the salt bridge. | Electrones: {anode} → carga → {cathode}. El K⁺ se mueve hacia el cátodo y el NO₃⁻ hacia el ánodo. Los electrones nunca cruzan el puente salino.
+Electrons: {anode} → power supply → {cathode}. K⁺ moves toward the cathode; NO₃⁻ toward the anode. Electrons never cross the salt bridge. | Electrones: {anode} → fuente de poder → {cathode}. El K⁺ se mueve hacia el cátodo y el NO₃⁻ hacia el ánodo. Los electrones nunca cruzan el puente salino.
+Electron flow requires a complete circuit and a salt bridge for charge balance. | El flujo de electrones requiere un circuito completo y un puente salino para el balance de carga.
+Choose two different metals and match their solutions. | Elige dos metales diferentes y combina cada uno con su solución.
+Electrons travel from {anode} to {cathode}. Metal ions gain electrons at the cathode and deposit as neutral atoms. Anode metal dissolves into ions. | Los electrones viajan de {anode} a {cathode}. Los iones metálicos ganan electrones en el cátodo y se depositan como átomos neutros. El metal del ánodo se disuelve en forma de iones.
+Two beakers with electrodes connected by a salt bridge and insulated meter leads. | Dos vasos de precipitados con electrodos, conectados por un puente salino y por los cables aislados del medidor.
+Use standard *reduction* potentials for both electrodes. Do not multiply potentials when balancing electrons. | Usa los potenciales estándar de *reducción* de ambos electrodos. No multipliques los potenciales al balancear los electrones.
+Build galvanic and electrolytic cells and explore electron flow with ZornScience. | Arma celdas galvánicas y electrolíticas y explora el flujo de electrones con ZornScience.
+These experiments now have their own pages. Choose a lab to get started. | Estos experimentos ahora tienen sus propias páginas. Elige un laboratorio para empezar.
+Explore Le Chatelier’s principle with concentration, volume and temperature changes. | Explora el principio de Le Châtelier con cambios de concentración, volumen y temperatura.
+Investigate heated metals and acid-base neutralization with live temperature traces. | Investiga metales calientes y la neutralización ácido-base con curvas de temperatura en tiempo real.
+STEP {n} / {total} | PASO {n} / {total}
+Unknown {letter} | Muestra desconocida {letter}
+{name} ({formula}). The model yields {mass} g CaCO₃; the inferred molar mass is approximately {molar} g/mol. | {name} ({formula}). El modelo produce {mass} g de CaCO₃; la masa molar deducida es aproximadamente {molar} g/mol.
+Share a fresh lab. Each visitor starts with a new unknown sample. | Comparte el laboratorio desde cero. Cada visitante empieza con una muestra desconocida nueva.
+Identify an unknown carbonate using precipitation, vacuum filtration, and constant-mass drying. | Identifica un carbonato desconocido mediante precipitación, filtración al vacío y secado a masa constante.
+Constant mass confirmed. Use the balance evidence to identify the unknown. | Masa constante confirmada. Usa la evidencia de la balanza para identificar la muestra desconocida.
+Analysis complete. A dry precipitate, a constant mass, and evidence for your unknown. | Análisis terminado. Un precipitado seco, una masa constante y evidencia sobre tu muestra desconocida.
+Two consecutive balance readings agree to 0.001 g. | Dos lecturas consecutivas de la balanza coinciden hasta 0.001 g.
+The crucible is dry and hot. Never weigh a hot vessel. | El crisol está seco y caliente. Nunca peses un recipiente caliente.
+Add 125 mL of 0.200 M calcium chloride. Calcium ions bind carbonate ions into insoluble calcium carbonate. | Agrega 125 mL de cloruro de calcio 0.200 M. Los iones de calcio se unen a los iones carbonato y forman carbonato de calcio insoluble.
+Dry carbonate: 2.000 g. Subtract the filter paper mass (0.598 g) from the final balance reading to find the CaCO₃ mass. Each mole of CaCO₃ represents one mole of the original carbonate. | Carbonato seco: 2.000 g. Resta la masa del papel filtro (0.598 g) a la lectura final de la balanza para encontrar la masa de CaCO₃. Cada mol de CaCO₃ representa un mol del carbonato original.
+UNKNOWN {sample} | MUESTRA DESCONOCIDA {sample}
+Appearance station, Unknown {sample} | Estación de apariencia, muestra desconocida {sample}
+Malleability station, Unknown {sample} | Estación de maleabilidad, muestra desconocida {sample}
+Conductivity station, Unknown {sample} | Estación de conductividad, muestra desconocida {sample}
+Reaction with HCl station, Unknown {sample} | Estación de reacción con HCl, muestra desconocida {sample}
+A fresh portion of Unknown {sample} is in the mortar. Press with the pestle and watch whether it flattens or fractures. | Hay una porción nueva de la muestra desconocida {sample} en el mortero. Presiona con el pistilo y observa si se aplana o se fractura.
+The circuit is open. Bring both probes into direct contact with Unknown {sample} to test the solid itself. | El circuito está abierto. Pon ambas puntas en contacto directo con la muestra desconocida {sample} para probar el sólido mismo.
+The test tube contains 3 mL of clear 0.65 M HCl. Add a small, fresh portion of Unknown {sample}. | El tubo de ensayo contiene 3 mL de HCl 0.65 M transparente. Agrega una porción pequeña y nueva de la muestra desconocida {sample}.
+Adding a small portion of Unknown {sample} to the acid. | Agregando una porción pequeña de la muestra desconocida {sample} al ácido.
+Five-minute observation complete. {observation} Dispose of the mixture in HCl Waste. | Terminó la observación de cinco minutos. {observation} Desecha la mezcla en Residuos de HCl.
+Share a fresh lab. Each link opens a fresh bench. | Comparte el laboratorio desde cero. Cada enlace abre una mesa de trabajo nueva.
+Explore three unknown solids with four physical and chemical property tests. | Explora tres sólidos desconocidos con cuatro pruebas de propiedades físicas y químicas.
+Use physical and chemical evidence to decide which sample is a metal, a nonmetal, and a metalloid. | Usa evidencias físicas y químicas para decidir qué muestra es un metal, cuál es un no metal y cuál es un metaloide.
+The tester detects strong current through the solid. Both probes are in direct contact with the sample. | El conductímetro detecta una corriente fuerte a través del sólido. Ambas puntas están en contacto directo con la muestra.
+No current is detected by this tester. Both probes are touching the solid, but the current indicator stays dark. | Este conductímetro no detecta corriente. Ambas puntas tocan el sólido, pero el indicador de corriente sigue apagado.
+The sensitive tester detects weak current, much less than for Unknown A. This sample shows semiconductor behavior; real readings depend strongly on purity, doping, and probe contact. | El conductímetro sensible detecta una corriente débil, mucho menor que con la muestra desconocida A. Esta muestra se comporta como semiconductor; las lecturas reales dependen mucho de la pureza, el dopaje y el contacto de las puntas.
+The probes are lifted. The circuit is open and the tester no longer detects current. | Las puntas están levantadas. El circuito está abierto y el conductímetro ya no detecta corriente.
+The solid sits in clear acid. There is little visible change at first while the surface oxide layer is attacked. | El sólido reposa en el ácido transparente. Al principio hay poco cambio visible mientras el ácido ataca la capa de óxido de la superficie.
+Small bubbles form on the solid and rise through the liquid. Gas formation is evidence of a chemical reaction; the tube begins to warm. | Se forman burbujas pequeñas en el sólido que suben por el líquido. La formación de gas es evidencia de una reacción química; el tubo empieza a calentarse.
+Persistent gas bubbles rise from the shrinking solid. The temperature has risen; the liquid remains clear, with no new precipitate. The original solid is not a precipitate. | Del sólido, que se hace cada vez más pequeño, siguen subiendo burbujas de gas. La temperatura subió; el líquido sigue transparente, sin un precipitado nuevo. El sólido original no es un precipitado.
+The yellow solid remains in the clear acid. No persistent bubbles, new color, warming, or new precipitate appear during this observation. | El sólido amarillo permanece en el ácido transparente. Durante esta observación no aparecen burbujas persistentes, color nuevo, calentamiento ni un precipitado nuevo.
+The gray solid remains in the clear acid. No persistent bubbles, new color, warming, or new precipitate appear during this observation. | El sólido gris permanece en el ácido transparente. Durante esta observación no aparecen burbujas persistentes, color nuevo, calentamiento ni un precipitado nuevo.
+The acid and remaining solid are in HCl Waste. The tube is empty. You can start a fresh tube, choose another test, or investigate another unknown. | El ácido y el sólido restante están en Residuos de HCl. El tubo está vacío. Puedes empezar con un tubo nuevo, elegir otra prueba o investigar otra muestra desconocida.
+Adding {reagent} (phase label; Spanish uses the lowercase name) | Agregando {lower}
+Adding {reagent}. (status) | Agregando {lower}.
+{first}: {firstLook}. {second}: {secondLook}. | {first}: {firstLook}. {second}: {secondLook}.
+a silvery gray metal strip | una tira de metal gris plateado
+a transparent blue solution | una solución azul transparente
+a transparent yellow solution | una solución amarilla transparente
+a clear, colorless solution | una solución transparente e incolora
+Choose a reaction under {select}. | Elige una reacción en {select}.
+Inspect the starting solutions, then choose {mix}. The beaker starts empty. Watch each 10 mL portion pour in and raise the liquid level; for the zinc trial, the solution goes in before the metal strip. | Revisa las soluciones iniciales y luego elige {mix}. El vaso de precipitados empieza vacío. Observa cómo se vierte cada porción de 10 mL y cómo sube el nivel del líquido. En el ensayo con zinc, la solución se agrega antes que la tira de metal.
+Reset to replay, or select another mixture. Open {reveal} after making your own observations. | Reinicia para repetir o elige otra mezcla. Abre {reveal} después de hacer tus propias observaciones.
+Share a fresh lab with your class. | Comparte el laboratorio desde cero con tu grupo.
+Select and copy the activity link. | Selecciona y copia el enlace de la actividad.
+The beaker is empty. Ready to add the reagents. | El vaso de precipitados está vacío. Todo listo para agregar los reactivos.
+Fresh glassware is ready. | El material de vidrio limpio está listo.
+Reaction time accelerated: lead has deposited on the zinc. | Tiempo de reacción acelerado: el plomo se depositó sobre el zinc.
+Observe the liquid and look for suspended solid. | Observa el líquido y busca sólido en suspensión.
+The precipitate is sinking, leaving clearer liquid above. | El precipitado se hunde y deja arriba un líquido más transparente.
+Solid has collected at the bottom of the beaker. Settling time is accelerated. | El sólido se juntó en el fondo del vaso de precipitados. El tiempo de asentamiento está acelerado.
+Hydroxide is in excess at these solution concentrations. | Con estas concentraciones de las soluciones, el hidróxido está en exceso.
+Virtual reagents only. In a real lab, use eye protection and your teacher’s handling and waste instructions, especially for lead and silver compounds and sodium hydroxide. | Solo reactivos virtuales. En un laboratorio real, usa protección para los ojos y sigue las instrucciones de tu maestro o maestra para manejar y desechar los reactivos, sobre todo los compuestos de plomo y de plata y el hidróxido de sodio.
+{title} (acidic) | {title} (ácido)
+{title} (basic) | {title} (básico)
+{number}. {title}, completed and locked | {number}. {title}, completado y bloqueado
+{number}. {title}, locked | {number}. {title}, bloqueado
+{number}. {title}, current | {number}. {title}, paso actual
+Step {number}: {title} | Paso {number}: {title}
+{n} {formula} on left | {n} {formula} a la izquierda
+{n} {formula} on right | {n} {formula} a la derecha
+Select {formula} reactant | Seleccionar el reactivo {formula}
+Select {formula} product | Seleccionar el producto {formula}
+{formula} selected. Choose a destination. | Seleccionaste {formula}. Elige un destino.
+Place selected species in oxidation reactants | Colocar la especie seleccionada en los reactivos de la oxidación
+Place selected species in oxidation products | Colocar la especie seleccionada en los productos de la oxidación
+Place selected species in reduction reactants | Colocar la especie seleccionada en los reactivos de la reducción
+Place selected species in reduction products | Colocar la especie seleccionada en los productos de la reducción
+Species placed in oxidation reactants. | Colocaste la especie en los reactivos de la oxidación.
+Species placed in oxidation products. | Colocaste la especie en los productos de la oxidación.
+Species placed in reduction reactants. | Colocaste la especie en los reactivos de la reducción.
+Species placed in reduction products. | Colocaste la especie en los productos de la reducción.
+Total charge: {charge} | Carga total: {charge}
+Atoms: {counts} | Átomos: {counts}
+Add {formula} | Agregar {formula}
+Multiply entire reaction by {multiplier} | Multiplica toda la reacción por {multiplier}
+Add {n} OH⁻ to EACH side, then check. This preserves charge. | Agrega {n} OH⁻ a CADA lado y luego revisa. Así se conserva la carga.
+Add OH⁻ to left ({added}/{required}) | Agregar OH⁻ a la izquierda ({added}/{required})
+Add OH⁻ to right ({added}/{required}) | Agregar OH⁻ a la derecha ({added}/{required})
+Add exactly {n} OH⁻ to EACH side. | Agrega exactamente {n} OH⁻ a CADA lado.
+Formed {n} H₂O from H⁺ and OH⁻ on the left. | Se formaron {n} H₂O a partir de H⁺ y OH⁻ a la izquierda.
+Formed {n} H₂O from H⁺ and OH⁻ on the right. | Se formaron {n} H₂O a partir de H⁺ y OH⁻ a la derecha.
+Cancelled {n} {formula} from each side. Any remainder stays in the equation. | Cancelaste {n} {formula} de cada lado. Lo que sobra se queda en la ecuación.
+Check your oxygen atoms in the oxidation half-reaction. | Revisa tus átomos de oxígeno en la semirreacción de oxidación.
+Check your oxygen atoms in the reduction half-reaction. | Revisa tus átomos de oxígeno en la semirreacción de reducción.
+Check your hydrogen atoms in the oxidation half-reaction. | Revisa tus átomos de hidrógeno en la semirreacción de oxidación.
+Check your hydrogen atoms in the reduction half-reaction. | Revisa tus átomos de hidrógeno en la semirreacción de reducción.
+Check your {element} atoms in the oxidation half-reaction. | Revisa tus átomos de {element} en la semirreacción de oxidación.
+Check your {element} atoms in the reduction half-reaction. | Revisa tus átomos de {element} en la semirreacción de reducción.
+Charge is not balanced in the oxidation half-reaction. Each electron contributes −1. | La carga no está balanceada en la semirreacción de oxidación. Cada electrón aporta −1.
+Charge is not balanced in the reduction half-reaction. Each electron contributes −1. | La carga no está balanceada en la semirreacción de reducción. Cada electrón aporta −1.
+Pair the same changing element. A rise in oxidation state means oxidation. | Junta las especies del mismo elemento que cambia. Si el número de oxidación aumenta, hay oxidación.
+Oxidation releases electrons. / Reduction accepts electrons. | En la oxidación se liberan electrones. / En la reducción se aceptan electrones.
+Smallest whole-number ratio. Total charge: {charge} on both sides. No H⁺ remains in this basic equation. | Relación de números enteros más pequeños. Carga total: {charge} en ambos lados. No queda H⁺ en esta ecuación en medio básico.
+Smallest whole-number ratio. Total charge: {charge} on both sides. You completed the half-reaction method. | Relación de números enteros más pequeños. Carga total: {charge} en ambos lados. Completaste el método de semirreacciones.
 
 ## Agreement notes
 

@@ -2,6 +2,10 @@
   "use strict";
   var $ = function (id) { return document.getElementById(id); };
   var NS = "http://www.w3.org/2000/svg";
+  // Student text goes through t(): full templates from data.js, with English as the fallback.
+  var i18n, root = document.querySelector('[data-zsa-activity="chemical-bonding-lab"]');
+  if (root) root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail:{receive:function (api) { i18n = api; }}}));
+  function t(text, values) { return i18n ? i18n.text(text, values) : text.replace(/\{(\w+)\}/g, function (m, k) { return values && values[k] !== undefined ? values[k] : m; }); }
   var selected = 1, station = "appearance", phase = 0, busy = false, timer = null;
   var elapsed = 0, temp = 25, peakTemp = 25, target = 300, heating = false, lifted = false, light = 50;
   var samples = {
@@ -22,12 +26,12 @@
   function stop() { clearInterval(timer); timer = null; busy = false; }
   function reset() {
     stop(); phase = 0; elapsed = 0; temp = 25; peakTemp = 25; heating = false; lifted = false;
-    $("station-title").textContent = stations[station][0];
-    $("equipment").textContent = stations[station][1];
-    $("sample-badge").textContent = station === "melting" ? "ALL FOUR UNKNOWNS" : "UNKNOWN " + selected;
+    $("station-title").textContent = t(stations[station][0]);
+    $("equipment").textContent = t(stations[station][1]);
+    $("sample-badge").textContent = station === "melting" ? t("ALL FOUR UNKNOWNS") : t("UNKNOWN {n}", {n:selected});
     document.querySelectorAll("[data-sample]").forEach(function (b) { b.setAttribute("aria-pressed", String(Number(b.dataset.sample) === selected)); });
     document.querySelectorAll("[data-station]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.station === station)); });
-    say(stations[station][2]); render();
+    say(t(stations[station][2])); render();
   }
   // All drawing strings come from fixed equipment geometry and bounded simulation state.
   function draw(markup) {
@@ -35,7 +39,7 @@
     $("scene-content").replaceChildren.apply($("scene-content"), Array.from(parsed.documentElement.childNodes).map(function (n) { return document.importNode(n, true); }));
   }
   function solid(n, x, y, scale, extra) { return '<use href="#sample-' + n + '" transform="translate(' + x + ' ' + y + ') scale(' + scale + ')" ' + (extra || "") + '/>'; }
-  function label(text, x, y, cls) { return '<text x="' + x + '" y="' + y + '" text-anchor="middle" class="' + (cls || "svg-label") + '">' + text + '</text>'; }
+  function label(text, x, y, cls) { return '<text x="' + x + '" y="' + y + '" text-anchor="middle" class="' + (cls || "svg-label") + '">' + t(text) + '</text>'; }
   function fragments(n, x, y) { return [-40,-10,22,48].map(function (dx, i) { return solid(n, x + dx, y + (i % 2 ? 8 : -3), .30); }).join(""); }
   function dish(x, y) { return '<use href="#dish" transform="translate(' + x + ' ' + y + ')"/>'; }
   function meter(value, liquid) {
@@ -94,7 +98,7 @@
     if(mixed && !dissolved) s += solid(selected,440,340,.36);
     if(phase>=3) s += '<g class="' + (busy?"stir-tool":"") + '"><path d="M461 125 436 341" stroke="#d6c99f" stroke-width="6" stroke-linecap="round"/></g>';
     s += '<path d="M407 155V340Q407 375 440 375Q473 375 473 340V155" fill="url(#glass)" stroke="#b7dce7" stroke-width="2"/><ellipse cx="440" cy="155" rx="33" ry="6" fill="url(#glass)" stroke="#d0eff5"/><path d="M414 165V336Q413 354 428 361" fill="none" stroke="#ebffff" stroke-opacity=".6" stroke-width="3"/>';
-    s += '<path d="M635 181H681V214L704 237V350Q657 367 610 350V237L635 214Z" fill="#685443" stroke="#a58b6c"/><rect x="630" y="169" width="56" height="21" rx="3" fill="#233945"/><rect x="619" y="260" width="76" height="64" rx="3" fill="#f3ead9"/>' + label("CYCLOHEXANE",657,281,"svg-dark") + label("NONPOLAR",657,300,"svg-dark") + '<path d="m648 313 9-9 9 9-9 9Z" fill="none" stroke="#ba554b" stroke-width="2"/>';
+    s += '<path d="M635 181H681V214L704 237V350Q657 367 610 350V237L635 214Z" fill="#685443" stroke="#a58b6c"/><rect x="630" y="169" width="56" height="21" rx="3" fill="#233945"/><rect x="619" y="260" width="76" height="64" rx="3" fill="#f3ead9"/>' + label("CYCLOHEXANE",657,281,i18n && i18n.lang==="es"?"svg-dark svg-narrow":"svg-dark") + label("NONPOLAR",657,300,"svg-dark") + '<path d="m648 313 9-9 9 9-9 9Z" fill="none" stroke="#ba554b" stroke-width="2"/>';
     return s + label("5.0 mL SOLVENT / SPATULA-TIP PORTION",450,425);
   }
   function malleabilityScene() {
@@ -116,83 +120,84 @@
     $("interaction").append(lab,input);
   }
   function clock() {
-    var c=document.createElement("div");c.className="clock";var p=document.createElement("progress");p.max=300;p.value=elapsed;p.setAttribute("aria-label","Solvent observation time");var t=document.createElement("span");t.textContent=Math.floor(elapsed/60)+":"+String(Math.floor(elapsed%60)).padStart(2,"0")+" / 5:00";c.append(p,t);$("interaction").appendChild(c);
+    var c=document.createElement("div");c.className="clock";var p=document.createElement("progress");p.max=300;p.value=elapsed;p.setAttribute("aria-label",t("Solvent observation time"));var span=document.createElement("span");span.textContent=Math.floor(elapsed/60)+":"+String(Math.floor(elapsed%60)).padStart(2,"0")+" / 5:00";c.append(p,span);$("interaction").appendChild(c);
   }
   function timed(duration, end) {
     busy=true;var passed=0;render();timer=setInterval(function(){passed+=100;if(passed>=duration){stop();end();render();}},100);
   }
   function render() {
     var scene={appearance:appearanceScene,solid:solidScene,melting:heatingScene,water:waterScene,cyclohexane:cycloScene,malleability:malleabilityScene};
-    draw(scene[station]());$("scene-title").textContent=stations[station][0]+", "+(station==="melting"?"all four unknowns":"Unknown "+selected);
-    $("scene-desc").textContent=stations[station][1]+". "+$("observation").textContent;
-    $("scene-status").textContent=busy?"Equipment in use":station==="melting"?(heating?"Hot plate on":lifted?"Boat cooling away from hot plate":"Hot plate off"):phase?"Test in progress":"Fresh solid • Room temperature";
-    $("scene-detail").textContent=station==="melting"?Math.round(temp)+" °C":station==="cyclohexane" && phase>=3?"30× simulated time":"25 °C";
+    draw(scene[station]());$("scene-title").textContent=station==="melting"?t("{station}, all four unknowns",{station:t(stations[station][0])}):t("{station}, Unknown {n}",{station:t(stations[station][0]),n:selected});
+    $("scene-desc").textContent=t("{equipment}. {observation}",{equipment:t(stations[station][1]),observation:$("observation").textContent});
+    $("scene-status").textContent=t(busy?"Equipment in use":station==="melting"?(heating?"Hot plate on":lifted?"Boat cooling away from hot plate":"Hot plate off"):phase?"Test in progress":"Fresh solid • Room temperature");
+    $("scene-detail").textContent=station==="melting"?Math.round(temp)+" °C":station==="cyclohexane" && phase>=3?t("30× simulated time"):"25 °C";
     $("interaction").replaceChildren();
     if(station==="appearance") {
-      slider("Move the inspection light",light,0,100,function(v){light=v;draw(appearanceScene());say(samples[selected].appearance);});note("Sweep the light to inspect the same sample from different angles.");
+      slider(t("Move the inspection light"),light,0,100,function(v){light=v;draw(appearanceScene());say(t(samples[selected].appearance));});note(t("Sweep the light to inspect the same sample from different angles."));
     } else if(station==="solid") {
-      actions([[phase?"Lift probes":"Touch probes to solid",function(){phase=phase?0:1; say(phase?"Solid conductivity: "+samples[selected].solid.toLowerCase()+". Both probes are touching the solid.":"The probes are lifted. OPEN means the test circuit is incomplete.");render();},false,true]]);note("A qualitative, sensitive tester. OPEN and NONE have different meanings.");
+      actions([[t(phase?"Lift probes":"Touch probes to solid"),function(){phase=phase?0:1; say(t(phase?(samples[selected].solid==="VERY HIGH"?"Solid conductivity: very high. Both probes are touching the solid.":"Solid conductivity: none. Both probes are touching the solid."):"The probes are lifted. OPEN means the test circuit is incomplete."));render();},false,true]]);note(t("A qualitative, sensitive tester. OPEN and NONE have different meanings."));
     } else if(station==="malleability") {
-      actions([[selected===1?"Press with pestle":"Press with scoopula",function(){say("Applying pressure to the solid...");timed(1500,function(){phase=1;say(samples[selected].press);});},busy || phase>0,true]]);note(selected===1?"Use the mortar and pestle to apply pressure.":"Press the tip of the scoopula onto the solid.");
+      actions([[t(selected===1?"Press with pestle":"Press with scoopula"),function(){say(t("Applying pressure to the solid..."));timed(1500,function(){phase=1;say(t(samples[selected].press));});},busy || phase>0,true]]);note(t(selected===1?"Use the mortar and pestle to apply pressure.":"Press the tip of the scoopula onto the solid."));
     } else if(station==="melting") meltingControls();
     else if(station==="water") waterControls();
     else solventControls();
   }
   function meltingObservation() {
-    if(temp<80) return "All four portions remain solid as the foil boat warms.";
-    if(temp<114) return "Unknown 4 gives off faint violet vapor as some of the solid sublimes. The other portions remain solid.";
-    if(temp<184) return "Unknown 4 forms a dark liquid near 114 °C and gives off violet vapor. Unknowns 1, 2, and 3 remain solid.";
-    if(temp<203) return "Unknown 4 has vaporized as heating passes about 184 °C. Unknowns 1, 2, and 3 remain solid.";
-    if(temp<232) return "Unknown 3 softens and browns near 203 °C; decomposition accompanies the change. Unknown 4 melted first and has now vaporized. Unknowns 1 and 2 remain solid.";
-    return "Unknown 1 melts near 232 °C into a shiny liquid. Unknown 2 remains solid up to 300 °C. Unknown 3 has browned and decomposed; Unknown 4 melted first and then vaporized. The foil stays solid.";
+    if(temp<80) return t("All four portions remain solid as the foil boat warms.");
+    if(temp<114) return t("Unknown 4 gives off faint violet vapor as some of the solid sublimes. The other portions remain solid.");
+    if(temp<184) return t("Unknown 4 forms a dark liquid near 114 °C and gives off violet vapor. Unknowns 1, 2, and 3 remain solid.");
+    if(temp<203) return t("Unknown 4 has vaporized as heating passes about 184 °C. Unknowns 1, 2, and 3 remain solid.");
+    if(temp<232) return t("Unknown 3 softens and browns near 203 °C; decomposition accompanies the change. Unknown 4 melted first and has now vaporized. Unknowns 1 and 2 remain solid.");
+    return t("Unknown 1 melts near 232 °C into a shiny liquid. Unknown 2 remains solid up to 300 °C. Unknown 3 has browned and decomposed; Unknown 4 melted first and then vaporized. The foil stays solid.");
   }
   function meltingControls() {
-    if(phase===0) { actions([["Load all four portions",function(){phase=1;say("Four fresh portions are in separate corners of the foil boat. Numbers identify the unknowns.");render();},false,true]]);return; }
+    if(phase===0) { actions([[t("Load all four portions"),function(){phase=1;say(t("Four fresh portions are in separate corners of the foil boat. Numbers identify the unknowns."));render();},false,true]]);return; }
     if(!lifted) {
-      actions([[heating?"Switch off hot plate":"Switch on hot plate",function(){if(heating){stop();heating=false;say("Heating stopped. The boat and hot plate are still hot. Lift the boat with the tongs to cool it.");render();}else{heating=true;say(meltingObservation());timer=setInterval(function(){temp=Math.min(target,temp+2);peakTemp=Math.max(peakTemp,temp);say(meltingObservation());draw(heatingScene());$("scene-detail").textContent=Math.round(temp)+" °C";if(temp>=target){stop();heating=false;say(meltingObservation()+" The plate is switched off; the boat remains hot.");render();}},100);render();}},temp>=target,true],["Lift boat with tongs",function(){stop();heating=false;lifted=true;say("The hot foil boat is lifted with beaker tongs. Let it cool before disposal.");render();timer=setInterval(function(){temp=Math.max(25,temp-5);draw(heatingScene());$("scene-detail").textContent=Math.round(temp)+" °C";if(temp<=25){stop();say("The foil boat has cooled to room temperature. Dispose of the used foil boat to finish this test.");render();}},100);},heating,false]]);
-      note("Accelerated heating: about 20 °C per real second. Plate limit: 300 °C. The display models sample temperature.");
+      actions([[t(heating?"Switch off hot plate":"Switch on hot plate"),function(){if(heating){stop();heating=false;say(t("Heating stopped. The boat and hot plate are still hot. Lift the boat with the tongs to cool it."));render();}else{heating=true;say(meltingObservation());timer=setInterval(function(){temp=Math.min(target,temp+2);peakTemp=Math.max(peakTemp,temp);say(meltingObservation());draw(heatingScene());$("scene-detail").textContent=Math.round(temp)+" °C";if(temp>=target){stop();heating=false;say(t("{observation} The plate is switched off; the boat remains hot.",{observation:meltingObservation()}));render();}},100);render();}},temp>=target,true],[t("Lift boat with tongs"),function(){stop();heating=false;lifted=true;say(t("The hot foil boat is lifted with beaker tongs. Let it cool before disposal."));render();timer=setInterval(function(){temp=Math.max(25,temp-5);draw(heatingScene());$("scene-detail").textContent=Math.round(temp)+" °C";if(temp<=25){stop();say(t("The foil boat has cooled to room temperature. Dispose of the used foil boat to finish this test."));render();}},100);},heating,false]]);
+      note(t("Accelerated heating: about 20 °C per real second. Plate limit: 300 °C. The display models sample temperature."));
     } else {
-      actions([["Dispose of cooled boat",function(){reset();say("The cooled foil boat has been discarded. Load fresh portions to repeat the comparison.");},temp>25,true]]);note(temp>25?"Cooling with the heat switched off. Use tongs while the equipment is hot.":"Ready for disposal. Fresh portions are used if you repeat the test.");
+      actions([[t("Dispose of cooled boat"),function(){reset();say(t("The cooled foil boat has been discarded. Load fresh portions to repeat the comparison."));},temp>25,true]]);note(t(temp>25?"Cooling with the heat switched off. Use tongs while the equipment is hot.":"Ready for disposal. Fresh portions are used if you repeat the test."));
     }
   }
   function waterControls() {
     var steps=["Weigh 0.10 g","Measure 50.0 mL water","Transfer to beaker","Stir with glass rod","Immerse conductivity probe","Lift & rinse probe"];
-    actions([[steps[Math.min(phase,5)],function(){
-      if(phase===0){phase=1;say("The balance reads 0.10 g of Unknown "+selected+" in the weigh boat.");render();}
-      else if(phase===1){phase=2;say("The graduated cylinder contains 50.0 mL of deionized water, read at the bottom of the meniscus.");render();}
-      else if(phase===2){phase=3;say("The measured water and solid are transferred to the beaker. Stir to test solubility.");render();}
-      else if(phase===3){say("Stirring the measured portion in deionized water...");timed(1800,function(){phase=4;say(samples[selected].water);});}
-      else if(phase===4){phase=5;say(samples[selected].water+" Liquid conductivity: "+samples[selected].conductivity.toLowerCase()+". The electrodes are immersed above any undissolved solid.");render();}
-      else {phase=4;say("The probe has been lifted and rinsed with deionized water. The beaker still contains the same mixture.");render();}
+    actions([[t(steps[Math.min(phase,5)]),function(){
+      if(phase===0){phase=1;say(t("The balance reads 0.10 g of Unknown {n} in the weigh boat.",{n:selected}));render();}
+      else if(phase===1){phase=2;say(t("The graduated cylinder contains 50.0 mL of deionized water, read at the bottom of the meniscus."));render();}
+      else if(phase===2){phase=3;say(t("The measured water and solid are transferred to the beaker. Stir to test solubility."));render();}
+      else if(phase===3){say(t("Stirring the measured portion in deionized water..."));timed(1800,function(){phase=4;say(t(samples[selected].water));});}
+      else if(phase===4){phase=5;say(t(samples[selected].conductivity==="HIGH"?"{water} Liquid conductivity: high. The electrodes are immersed above any undissolved solid.":"{water} Liquid conductivity: none. The electrodes are immersed above any undissolved solid.",{water:t(samples[selected].water)}));render();}
+      else {phase=4;say(t("The probe has been lifted and rinsed with deionized water. The beaker still contains the same mixture."));render();}
     },busy,true]]);
-    note(phase<5?"Follow the preparation steps before testing the liquid. Fresh water and clean tools for every unknown.":"Qualitative conductivity scale: none, low, medium, high, very high. Deionized water alone has negligible conductivity here.");
+    note(t(phase<5?"Follow the preparation steps before testing the liquid. Fresh water and clean tools for every unknown.":"Qualitative conductivity scale: none, low, medium, high, very high. Deionized water alone has negligible conductivity here."));
   }
   function solventControls() {
     if(phase<3) {
       var steps=["Measure 5.0 mL cyclohexane","Add solvent & spatula-tip solid","Stir & start observation"];
-      actions([[steps[phase],function(){
+      actions([[t(steps[phase]),function(){
         phase++;
-        if(phase===1)say("The graduated cylinder contains 5.0 mL of cyclohexane.");
-        else if(phase===2)say("The solvent and a small spatula-tip portion of Unknown "+selected+" are in the test tube. Stir to mix them.");
-        else {busy=true;say("The mixture is stirred with a coffee stirrer. Observe five simulated minutes for dissolution.");timer=setInterval(function(){elapsed=Math.min(300,elapsed+3);if(elapsed>=300){finishSolvent();}else{render();}},100);}
+        if(phase===1)say(t("The graduated cylinder contains 5.0 mL of cyclohexane."));
+        else if(phase===2)say(t("The solvent and a small spatula-tip portion of Unknown {n} are in the test tube. Stir to mix them.",{n:selected}));
+        else {busy=true;say(t("The mixture is stirred with a coffee stirrer. Observe five simulated minutes for dissolution."));timer=setInterval(function(){elapsed=Math.min(300,elapsed+3);if(elapsed>=300){finishSolvent();}else{render();}},100);}
         render();
       },false,true]]);
-    } else if(phase===3) actions([["Advance to 5:00",finishSolvent,false,true]]);
-    else actions([["Repeat with fresh portion",reset,false,false]]);
+    } else if(phase===3) actions([[t("Advance to 5:00"),finishSolvent,false,true]]);
+    else actions([[t("Repeat with fresh portion"),reset,false,false]]);
     if(phase>=3)clock();
-    note("30× time: five simulated minutes takes ten seconds. Cyclohexane is a nonpolar solvent; this station uses no heat.");
+    note(t("30× time: five simulated minutes takes ten seconds. Cyclohexane is a nonpolar solvent; this station uses no heat."));
   }
-  function finishSolvent(){stop();elapsed=300;phase=4;say(samples[selected].cyclo+" Observation after five simulated minutes.");render();}
+  function finishSolvent(){stop();elapsed=300;phase=4;say(t("{observation} Observation after five simulated minutes.",{observation:t(samples[selected].cyclo)}));render();}
   document.querySelectorAll("[data-sample]").forEach(function(b){b.addEventListener("click",function(){selected=Number(b.dataset.sample);reset();});});
   document.querySelectorAll("[data-station]").forEach(function(b){b.addEventListener("click",function(){station=b.dataset.station;reset();});});
   $("reset").addEventListener("click",reset);
   ["instructions","share"].forEach(function(id){$(id+"-open").addEventListener("click",function(){$(id).showModal();});});
   document.querySelectorAll("[data-close]").forEach(function(b){b.addEventListener("click",function(){$(b.dataset.close).close();});});
-  $("share-url").value="https://activities.zornscience.org/chemical-bonding-lab/";
+  // In Spanish the shared link carries ?lang=es.
+  $("share-url").value=i18n?i18n.url("https://activities.zornscience.org/chemical-bonding-lab/"):"https://activities.zornscience.org/chemical-bonding-lab/";
   $("copy-link").addEventListener("click",function(){
-    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText($("share-url").value).then(function(){$("share-status").textContent="Link copied.";},fallbackCopy);
+    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText($("share-url").value).then(function(){$("share-status").textContent=t("Link copied.");},fallbackCopy);
     else fallbackCopy();
   });
-  function fallbackCopy(){$("share-url").focus();$("share-url").select();$("share-status").textContent="Select and copy the link using your device's copy command.";}
+  function fallbackCopy(){$("share-url").focus();$("share-url").select();$("share-status").textContent=t("Select and copy the link using your device's copy command.");}
   reset();
 }());

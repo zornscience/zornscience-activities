@@ -1,6 +1,6 @@
 # Electrochemistry Cell Builder
 
-Version: 1.3.0
+Version: 1.4.0
 
 Static, private-data-free AP Chemistry lab at `/electrochemistry-lab/`. No runtime dependencies, network requests, storage, accounts or completion codes. Shared font, embedding helper and branded Instructions/Share header are retained. The promotional banner, standalone reaction panel and prediction section remain removed.
 
@@ -25,3 +25,7 @@ K⁺ moves toward the cathode and NO₃⁻ toward the anode; neither electrons n
 25 °C, unit ion activities (approximately 1 M), fixed standard potential and ideal external power source. Only selected metal/metal-ion couples are included; competing aqueous reactions, resistance and overpotential are excluded. Electrolytic mode reverses the selected reaction and runs only with applied voltage strictly above |E°|, up to 10 V. Standard-state identical half-cells read 0 V but cannot run. Mismatched solutions are not simulated.
 
 Publish with the existing GitHub Pages site. Canonical URL: `https://activities.zornscience.org/electrochemistry-lab/`. Append `?embed=1` for supported embedding; the shared resize helper handles layout. No external libraries are requested by the activity.
+
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the fallback. All student text, status and feedback messages, half-cell labels, SVG labels, title and description, sample counts, accessible labels and the share title, description and link use the activity's `data.js`, and every sentence is one full template with placeholders, so Spanish keeps its own word order. Event messages have one template for each singular/plural combination of atoms lost and deposited. In Spanish the share link carries `?lang=es`. Formulas, symbols, charges, numbers, units and decimal points stay unchanged; the multimeter terminal label COM stays as printed on real meters. The language links reload the page, so a sample in progress starts over. See `../SPANISH_TERMS.md` for choices beyond the supplied glossary.

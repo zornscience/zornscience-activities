@@ -3,6 +3,18 @@
 (function () {
   "use strict";
 
+  // Student-facing text goes through t(): the shared language module in the page (its strings are in data.js),
+  // or the English template filled in directly in Node.
+  let i18n = null;
+  if (typeof document !== "undefined") {
+    const host = document.querySelector('[data-zsa-activity="redox-coach"]');
+    if (host) host.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive(api) { i18n = api; }}}));
+  }
+  function t(text, values = {}) {
+    if (i18n) return i18n.text(text, values);
+    return text.replace(/\{(\w+)\}/g, (m, k) => values[k] === undefined ? m : values[k]);
+  }
+
   // The first entry is the original test problem. Each problem has two redox pairs.
   // For ambiguous pairings supply halfReactions metadata with type, reactant,
   // product, leftCoefficient and rightCoefficient. H = +1 and O = -2 are assumed
@@ -122,8 +134,8 @@
 
   // Student actions enforce the active phase as well as the UI's restrictions.
   function assign(s, id, half, side) {
-    if (s.phase !== 1 || !s.pieces[id] || !s.pairs[half]) return "Select a species first.";
-    if (s.pieces[id].side !== side) return "Keep reactants on the left and products on the right.";
+    if (s.phase !== 1 || !s.pieces[id] || !s.pairs[half]) return t("Select a species first.");
+    if (s.pieces[id].side !== side) return t("Keep reactants on the left and products on the right.");
     s.assigned[id] = {half, side}; s.selected = null;
     return "";
   }
@@ -141,36 +153,44 @@
   function validMultiplier(v) { return /^\d+$/.test(v) && Number.isSafeInteger(Number(v)) && Number(v) > 0 && Number(v) <= 10000; }
 
   function select(s, side, f) {
-    if (![5, 6].includes(s.phase) || !count(s.combined[side], f)) return {ok: false, message: "Select a term in the current equation."};
+    if (![5, 6].includes(s.phase) || !count(s.combined[side], f)) return {ok: false, message: t("Select a term in the current equation.")};
     const merge = s.phase === 6 && s.basicStage === "merge";
-    if (s.phase === 6 && s.basicStage === "add") return {ok: false, message: "Add hydroxide to both sides, then check."};
-    if (!merge && !s.cancel) return {ok: false, message: "Turn on Cancel mode first."};
+    if (s.phase === 6 && s.basicStage === "add") return {ok: false, message: t("Add hydroxide to both sides, then check.")};
+    if (!merge && !s.cancel) return {ok: false, message: t("Turn on Cancel mode first.")};
     const p = s.selected;
     s.cancelled = null;
-    if (!p) { s.selected = {side, f}; return {ok: true, message: "One term selected. Choose its partner."}; }
-    if (p.side === side && p.f === f) { s.selected = null; return {ok: true, message: "Selection cleared."}; }
+    if (!p) { s.selected = {side, f}; return {ok: true, message: t("One term selected. Choose its partner.")}; }
+    if (p.side === side && p.f === f) { s.selected = null; return {ok: true, message: t("Selection cleared.")}; }
     if (merge) {
-      if (p.side !== side || p.f === f || ![p.f, f].every(x => ["H+", "OH-"].includes(x))) return {ok: false, message: "Match H⁺ with OH⁻ on the SAME side."};
+      if (p.side !== side || p.f === f || ![p.f, f].every(x => ["H+", "OH-"].includes(x))) return {ok: false, message: t("Match H⁺ with OH⁻ on the SAME side.")};
       const n = Math.min(count(s.combined[side], "H+"), count(s.combined[side], "OH-"));
       add(s.combined[side], "H+", -n); add(s.combined[side], "OH-", -n); add(s.combined[side], "H2O", n);
       s.selected = null;
-      return {ok: true, changed: true, message: "Formed " + n + " H₂O from H⁺ and OH⁻ on the " + side + "."};
+      return {ok: true, changed: true, message: t(side === "left" ? "Formed {n} H₂O from H⁺ and OH⁻ on the left." : "Formed {n} H₂O from H⁺ and OH⁻ on the right.", {n})};
     }
-    if (p.side === side || p.f !== f) return {ok: false, message: "Choose the SAME species on OPPOSITE sides."};
+    if (p.side === side || p.f !== f) return {ok: false, message: t("Choose the SAME species on OPPOSITE sides.")};
     const n = Math.min(count(s.combined.left, f), count(s.combined.right, f));
     add(s.combined.left, f, -n); add(s.combined.right, f, -n); s.selected = null; s.cancelled = {f, n};
-    return {ok: true, changed: true, message: "Cancelled " + n + " " + f + " from each side. Any remainder stays in the equation."};
+    return {ok: true, changed: true, message: t("Cancelled {n} {formula} from each side. Any remainder stays in the equation.", {n, formula: f})};
+  }
+
+  // One full sentence per element and half-reaction type, so each language keeps its own word order.
+  function atomMessage(element, type) {
+    const oxidation = type === "oxidation";
+    if (element === "O") return t(oxidation ? "Check your oxygen atoms in the oxidation half-reaction." : "Check your oxygen atoms in the reduction half-reaction.");
+    if (element === "H") return t(oxidation ? "Check your hydrogen atoms in the oxidation half-reaction." : "Check your hydrogen atoms in the reduction half-reaction.");
+    return t(oxidation ? "Check your {element} atoms in the oxidation half-reaction." : "Check your {element} atoms in the reduction half-reaction.", {element});
   }
 
   // A check is the only path to a new phase. Basic substeps also require checks.
   function check(s) {
     const fail = (message, half) => ({ok: false, message, half});
-    const pass = phase => { s.phase = phase; s.selected = null; s.cancelled = null; return {ok: true, message: phase === 7 ? "All checks passed. You balanced the reaction!" : "Verified. Continue with the next step."}; };
+    const pass = phase => { s.phase = phase; s.selected = null; s.cancelled = null; return {ok: true, message: t(phase === 7 ? "All checks passed. You balanced the reaction!" : "Verified. Continue with the next step.")}; };
     if (s.phase === 1) {
       for (let id = 0; id < s.pieces.length; id++) {
         const a = s.assigned[id], piece = s.pieces[id];
-        if (!a) return fail("Place every reactant and product in a half-reaction.");
-        if (piece.f !== s.pairs[a.half][piece.side === "left" ? "reactant" : "product"]) return fail("Pair the same changing element. A rise in oxidation state means oxidation.", a.half);
+        if (!a) return fail(t("Place every reactant and product in a half-reaction."));
+        if (piece.f !== s.pairs[a.half][piece.side === "left" ? "reactant" : "product"]) return fail(t("Pair the same changing element. A rise in oxidation state means oxidation."), a.half);
       }
       s.halves = s.pairs.map(p => ({left: {[p.reactant]: p.leftCoefficient}, right: {[p.product]: p.rightCoefficient}}));
       return pass(2);
@@ -178,20 +198,20 @@
     if (s.phase === 2 || s.phase === 3) {
       for (let i = 0; i < s.halves.length; i++) {
         const eq = s.halves[i], bad = mismatch(eq, s.catalog), name = s.pairs[i].type;
-        if (bad) return fail("Check your " + ({O: "oxygen", H: "hydrogen"}[bad] || bad) + " atoms in the " + name + " half-reaction.", i);
-        if (s.phase === 2 && common(eq)) return fail("Undo additions shared by both sides; use only the H₂O and H⁺ needed.", i);
+        if (bad) return fail(atomMessage(bad, name), i);
+        if (s.phase === 2 && common(eq)) return fail(t("Undo additions shared by both sides; use only the H₂O and H⁺ needed."), i);
         if (s.phase === 3) {
-          if (totals(eq.left, s.catalog).charge !== totals(eq.right, s.catalog).charge) return fail("Charge is not balanced in the " + name + " half-reaction. Each electron contributes −1.", i);
-          if (count(eq.left, "e-") && count(eq.right, "e-")) return fail("Electrons belong on just one side. Undo the extra electrons.", i);
-          if (!count(eq[name === "oxidation" ? "right" : "left"], "e-")) return fail(name === "oxidation" ? "Oxidation releases electrons." : "Reduction accepts electrons.", i);
+          if (totals(eq.left, s.catalog).charge !== totals(eq.right, s.catalog).charge) return fail(t(name === "oxidation" ? "Charge is not balanced in the oxidation half-reaction. Each electron contributes −1." : "Charge is not balanced in the reduction half-reaction. Each electron contributes −1."), i);
+          if (count(eq.left, "e-") && count(eq.right, "e-")) return fail(t("Electrons belong on just one side. Undo the extra electrons."), i);
+          if (!count(eq[name === "oxidation" ? "right" : "left"], "e-")) return fail(t(name === "oxidation" ? "Oxidation releases electrons." : "Reduction accepts electrons."), i);
         }
       }
       return pass(s.phase + 1);
     }
     if (s.phase === 4) {
-      if (!s.multipliers.every(validMultiplier)) return fail("Use positive whole-number multipliers from 1 to 10000.");
+      if (!s.multipliers.every(validMultiplier)) return fail(t("Use positive whole-number multipliers from 1 to 10000."));
       const e = s.halves.map(eq => count(eq.left, "e-") + count(eq.right, "e-"));
-      if (e[0] * Number(s.multipliers[0]) !== e[1] * Number(s.multipliers[1])) return fail("The electron counts must match. Try their least common multiple.");
+      if (e[0] * Number(s.multipliers[0]) !== e[1] * Number(s.multipliers[1])) return fail(t("The electron counts must match. Try their least common multiple."));
       s.combined = {left: {}, right: {}};
       s.halves.forEach((eq, i) => {
         const multiplied = scale(eq, Number(s.multipliers[i]));
@@ -200,9 +220,9 @@
       return pass(5);
     }
     if (s.phase === 5) {
-      if (count(s.combined.left, "e-") || count(s.combined.right, "e-")) return fail("Cancel all electrons before proceeding.");
-      if (common(s.combined)) return fail("A species remains on both sides. Cancel the shared amount.");
-      if (!conserved(s.combined, s.catalog)) return fail("Atoms and charge must both be conserved.");
+      if (count(s.combined.left, "e-") || count(s.combined.right, "e-")) return fail(t("Cancel all electrons before proceeding."));
+      if (common(s.combined)) return fail(t("A species remains on both sides. Cancel the shared amount."));
+      if (!conserved(s.combined, s.catalog)) return fail(t("Atoms and charge must both be conserved."));
       if (s.problem.media === "acidic") return pass(7);
       s.required = count(s.combined.left, "H+") + count(s.combined.right, "H+");
       s.basicStage = s.required ? "add" : "cancel";
@@ -210,22 +230,22 @@
     }
     if (s.phase === 6) {
       if (s.basicStage === "add") {
-        if (["left", "right"].some(side => s.added[side] !== s.required)) return fail("Add exactly " + s.required + " OH⁻ to EACH side.");
+        if (["left", "right"].some(side => s.added[side] !== s.required)) return fail(t("Add exactly {n} OH⁻ to EACH side.", {n: s.required}));
         s.basicStage = "merge";
       } else if (s.basicStage === "merge") {
-        if (count(s.combined.left, "H+") || count(s.combined.right, "H+")) return fail("Merge all H⁺ with OH⁻ on the same side.");
+        if (count(s.combined.left, "H+") || count(s.combined.right, "H+")) return fail(t("Merge all H⁺ with OH⁻ on the same side."));
         s.basicStage = "cancel";
       } else {
-        if (common(s.combined)) return fail("Cancel water or any other species shared by both sides.");
-        if (["left", "right"].some(side => count(s.combined[side], "H+") || count(s.combined[side], "e-")) || !conserved(s.combined, s.catalog)) return fail("Check atoms, charge, and remaining H⁺ or electrons.");
+        if (common(s.combined)) return fail(t("Cancel water or any other species shared by both sides."));
+        if (["left", "right"].some(side => count(s.combined[side], "H+") || count(s.combined[side], "e-")) || !conserved(s.combined, s.catalog)) return fail(t("Check atoms, charge, and remaining H⁺ or electrons."));
         return pass(7);
       }
       return pass(6);
     }
-    return {ok: true, message: "This reaction is complete."};
+    return {ok: true, message: t("This reaction is complete.")};
   }
 
-  const api = {PROBLEMS, clone, core, atoms, create, count, add, totals, mismatch, conserved, common, scale, normalize, assign, addHelper, validMultiplier, select, check};
+  const api = {t, PROBLEMS, clone, core, atoms, create, count, add, totals, mismatch, conserved, common, scale, normalize, assign, addHelper, validMultiplier, select, check};
   if (typeof document !== "undefined") {
     const root = document.querySelector('[data-zsa-activity="redox-coach"]');
     if (root) root.addEventListener("zsa-rx:request-model", event => event.detail.receive(api));

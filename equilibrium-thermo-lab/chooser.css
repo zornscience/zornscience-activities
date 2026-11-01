@@ -1,0 +1,2 @@
+/* The logo and the EN / ES toggle share one row. */
+.zsa > header {display:flex; align-items:center; justify-content:space-between; gap:12px;}

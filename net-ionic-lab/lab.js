@@ -7,6 +7,11 @@ function setMarkup(target, markup) {
  const source=svg?parsed.documentElement:parsed.body;
  target.replaceChildren(...Array.from(source.childNodes, node=>document.importNode(node,true)));
 }
+// Student text goes through tr(): full templates from data.js, with English as the fallback.
+let i18n;document.querySelector('[data-zsa-activity="net-ionic-lab"]').dispatchEvent(new CustomEvent('zsa:request-i18n',{detail:{receive:api=>{i18n=api;}}}));
+const tr=(text,values)=>i18n?i18n.text(text,values):text.replace(/\{(\w+)\}/g,(m,k)=>values&&values[k]!==undefined?values[k]:m);
+// Reagent names start with a capital letter; Spanish templates use the lowercase form mid-sentence.
+const lower=text=>text.charAt(0).toLowerCase()+text.slice(1);
 const reagents={nacl:['Sodium chloride','NaCl','1 M','#e2f3f5'],cu:['Copper(II) sulfate','CuSO₄','0.1 M','#309ed6'],pb:['Lead(II) nitrate','Pb(NO₃)₂','0.1 M','#e2f3f5'],ag:['Silver nitrate','AgNO₃','0.1 M','#e2f3f5'],ca:['Calcium chloride','CaCl₂','0.1 M','#e2f3f5'],fe:['Iron(III) nitrate','Fe(NO₃)₃','0.1 M','#e4bd56'],oh:['Sodium hydroxide','NaOH','1 M','#e2f3f5'],zn:['Zinc','Zn','solid','#a4adb5']};
 const trials=[
 ['nacl','cu',null,'#65b9df','The mixture stays transparent and blue, paler than the original copper(II) sulfate solution. No precipitate appears.','No net ionic reaction.','The ions remain dissolved. The blue solution is diluted when mixed with colorless sodium chloride.'],
@@ -21,10 +26,10 @@ const trials=[
 ['cu','oh','blue','#e2f3f5','A light blue, gelatinous precipitate forms. Fluffy clumps gradually collect beneath the clearer liquid.','Cu²⁺(aq) + 2 OH⁻(aq) → Cu(OH)₂(s)','Copper(II) hydroxide is insoluble. Hydroxide is in excess at these solution concentrations.']
 ];
 const $=id=>document.getElementById(id);let selected=0,stage='ready',start=0,raf=0,settling=0;let scene={a:0,b:0,metal:0,reaction:0,active:null,time:0};const reduced=matchMedia('(prefers-reduced-motion: reduce)');
-const name=t=>reagents[t[0]][0]+' + '+reagents[t[1]][0];
+const name=m=>tr(reagents[m[0]][0])+' + '+tr(reagents[m[1]][0]);
 setMarkup($('reactions'),trials.map((t,i)=>`<button type="button" data-trial="${i}" aria-pressed="${i===0}"><span class="number">${String(i+1).padStart(2,'0')}</span><span>${name(t)}</span></button>`).join(''));
 $('reactions').addEventListener('click',e=>{const b=e.target.closest('button');if(b){selected=Number(b.dataset.trial);reset();}});
-function reset(){cancelAnimationFrame(raf);stage='ready';settling=0;scene={a:0,b:0,metal:0,reaction:0,active:null,time:0};$('mix').disabled=false;$('chemistry').open=false;$('phase').textContent='Ready to mix';$('progress').textContent='The beaker is empty. Ready to add the reagents.';$('observation-title').textContent='Before mixing';const t=trials[selected];$('mixture-title').textContent=name(t);$('observation-text').textContent=t.slice(0,2).map(k=>`${reagents[k][0]}: ${k==='zn'?'a silvery gray metal strip':k==='cu'?'a transparent blue solution':k==='fe'?'a transparent yellow solution':'a clear, colorless solution'}`).join('. ')+'.';$('equation').textContent=t[5];$('explanation').textContent=t[6];document.querySelectorAll('[data-trial]').forEach((b,i)=>b.setAttribute('aria-pressed',String(i===selected)));draw();}
+function reset(){cancelAnimationFrame(raf);stage='ready';settling=0;scene={a:0,b:0,metal:0,reaction:0,active:null,time:0};$('mix').disabled=false;$('chemistry').open=false;$('phase').textContent=tr('Ready to mix');$('progress').textContent=tr('The beaker is empty. Ready to add the reagents.');$('observation-title').textContent=tr('Before mixing');const t=trials[selected];$('mixture-title').textContent=name(t);const look=k=>tr(k==='zn'?'a silvery gray metal strip':k==='cu'?'a transparent blue solution':k==='fe'?'a transparent yellow solution':'a clear, colorless solution');$('observation-text').textContent=tr('{first}: {firstLook}. {second}: {secondLook}.',{first:tr(reagents[t[0]][0]),firstLook:look(t[0]),second:tr(reagents[t[1]][0]),secondLook:look(t[1])});$('equation').textContent=tr(t[5]);$('explanation').textContent=tr(t[6]);document.querySelectorAll('[data-trial]').forEach((b,i)=>b.setAttribute('aria-pressed',String(i===selected)));draw();}
 const clamp=n=>Math.max(0,Math.min(1,n));
 const ease=n=>{n=clamp(n);return n*n*(3-2*n);};
 function bottle(k,x,slot){
@@ -42,7 +47,7 @@ function bottle(k,x,slot){
  <path d="M30 25V49Q5 63 5 85V240Q5 250 18 250H92Q105 250 105 240V85Q105 63 80 49V25Z" fill="url(#glass)" stroke="#a1c1cf" stroke-width="2"/>
  <g clip-path="url(#bottle-${slot})"><g transform="rotate(${-angle} 55 160)"><rect x="-260" y="${baseY}" width="640" height="500" fill="${r[3]}" opacity=".72"/><path d="M-260 ${baseY}H380" stroke="${r[3]}" stroke-width="3" opacity=".9"/></g></g>
  <rect x="12" y="135" width="86" height="77" rx="3" fill="#f7f5ed"/><rect x="12" y="135" width="86" height="6" fill="${k==='cu'?'#1e90bc':k==='fe'?'#b88a28':'#3c7375'}"/>
- <text x="55" y="166" text-anchor="middle" fill="#16384e" font-size="14" font-weight="600">${r[1]}</text><text x="55" y="188" text-anchor="middle" fill="#53636a" font-size="11">${r[2]}</text><path d="M17 88V127M17 218V235" stroke="white" stroke-width="4" opacity=".35"/>
+ <text x="55" y="166" text-anchor="middle" fill="#16384e" font-size="14" font-weight="600">${r[1]}</text><text x="55" y="188" text-anchor="middle" fill="#53636a" font-size="11">${tr(r[2])}</text><path d="M17 88V127M17 218V235" stroke="white" stroke-width="4" opacity=".35"/>
  ${active?'<ellipse cx="55" cy="25" rx="25" ry="5" fill="#132e40" stroke="#c2dce4"/>':'<rect x="27" y="0" width="56" height="25" rx="4" fill="#132434" stroke="#59707e"/>'}</g>
  ${active?`<rect x="${x+118}" y="332" width="40" height="15" rx="3" fill="#132434" stroke="#59707e"/>`:''}`;
 }
@@ -69,16 +74,16 @@ if(volume>0){
  if(stream){const impact=scene.active.slot==='a'?455:525;fluid+=`<ellipse cx="${impact}" cy="${level}" rx="${8+Math.abs(Math.sin(scene.time*12))*11}" ry="3" fill="none" stroke="#e9faff" opacity=".55"/><path d="M${impact-9} ${level-2}q-5 -8 -8 -5M${impact+7} ${level-1}q4 -9 8 -6" stroke="${liquid}" fill="none" opacity=".65"/>`;}
  fluid+='</g>';
 }
-setMarkup($('apparatus'),`<defs><linearGradient id="glass"><stop stop-color="#def5ff" stop-opacity=".25"/><stop offset=".2" stop-color="#fff" stop-opacity=".04"/><stop offset=".8" stop-color="#effaff" stop-opacity=".08"/><stop offset="1" stop-color="#b2d7e5" stop-opacity=".3"/></linearGradient><linearGradient id="zinc"><stop stop-color="#657682"/><stop offset=".4" stop-color="#d2d9db"/><stop offset="1" stop-color="#7f909a"/></linearGradient><linearGradient id="bench"><stop stop-color="#71828c"/><stop offset=".1" stop-color="#32434e"/><stop offset="1" stop-color="#1b303d"/></linearGradient><clipPath id="cup"><path d="M397 176H582V355Q582 375 560 375H419Q397 375 397 355Z"/></clipPath></defs><path d="M0 387H900V470H0Z" fill="url(#bench)"/><path d="M0 387H900" stroke="#9baeb6" stroke-opacity=".45"/><ellipse cx="489" cy="386" rx="133" ry="15" fill="#091c28" opacity=".5"/>${t[0]==='zn'?`<g opacity="${1-scene.metal}"><rect x="180" y="346" width="100" height="8" rx="2" fill="url(#zinc)" transform="rotate(-12 180 346)"/><text x="225" y="380" text-anchor="middle" fill="#c4dce7" font-size="12">Zn · metal strip</text></g>`:bottle(t[0],140,'a')}${bottle(t[1],665,'b')}${fluid}${metal}<path d="M393 168L382 159H583V355Q583 378 560 378H418Q394 378 394 355V170" fill="url(#glass)" stroke="#bbd5df" stroke-width="2.5"/><ellipse cx="486" cy="163" rx="99" ry="8" fill="none" stroke="#d8eaf0" stroke-width="2"/><path d="M407 183V343" stroke="#e7faff" stroke-width="5" opacity=".35"/><path d="M573 181V347" stroke="#e7faff" stroke-width="3" opacity=".2"/>${[190,235,280,325].map((y,i)=>`<path d="M535 ${y}h27" stroke="#d1e4eb" opacity=".7"/><text x="530" y="${y+4}" text-anchor="end" fill="#d1e4eb" font-size="10">${40-i*10}</text>`).join('')}<text x="475" y="205" text-anchor="middle" fill="#e0eff5" font-size="11">50 mL</text>${stream}<text x="489" y="420" text-anchor="middle" fill="#bed1dc" font-size="12" letter-spacing="2">REACTION BEAKER</text>`);}
-function finish(){stage='mixed';scene={a:trials[selected][0]==='zn'?0:1,b:1,metal:trials[selected][0]==='zn'?1:0,reaction:1,active:null,time:8};draw();$('mix').disabled=true;$('phase').textContent='Mixed';$('observation-title').textContent='After mixing';$('observation-text').textContent=trials[selected][4];$('progress').textContent=trials[selected][2]==='metal'?'Reaction time accelerated: lead has deposited on the zinc.':'Observe the liquid and look for suspended solid.';if(trials[selected][2]&&trials[selected][2]!=='metal')scheduleSettling();}
+setMarkup($('apparatus'),`<defs><linearGradient id="glass"><stop stop-color="#def5ff" stop-opacity=".25"/><stop offset=".2" stop-color="#fff" stop-opacity=".04"/><stop offset=".8" stop-color="#effaff" stop-opacity=".08"/><stop offset="1" stop-color="#b2d7e5" stop-opacity=".3"/></linearGradient><linearGradient id="zinc"><stop stop-color="#657682"/><stop offset=".4" stop-color="#d2d9db"/><stop offset="1" stop-color="#7f909a"/></linearGradient><linearGradient id="bench"><stop stop-color="#71828c"/><stop offset=".1" stop-color="#32434e"/><stop offset="1" stop-color="#1b303d"/></linearGradient><clipPath id="cup"><path d="M397 176H582V355Q582 375 560 375H419Q397 375 397 355Z"/></clipPath></defs><path d="M0 387H900V470H0Z" fill="url(#bench)"/><path d="M0 387H900" stroke="#9baeb6" stroke-opacity=".45"/><ellipse cx="489" cy="386" rx="133" ry="15" fill="#091c28" opacity=".5"/>${t[0]==='zn'?`<g opacity="${1-scene.metal}"><rect x="180" y="346" width="100" height="8" rx="2" fill="url(#zinc)" transform="rotate(-12 180 346)"/><text x="225" y="380" text-anchor="middle" fill="#c4dce7" font-size="12">${tr('Zn · metal strip')}</text></g>`:bottle(t[0],140,'a')}${bottle(t[1],665,'b')}${fluid}${metal}<path d="M393 168L382 159H583V355Q583 378 560 378H418Q394 378 394 355V170" fill="url(#glass)" stroke="#bbd5df" stroke-width="2.5"/><ellipse cx="486" cy="163" rx="99" ry="8" fill="none" stroke="#d8eaf0" stroke-width="2"/><path d="M407 183V343" stroke="#e7faff" stroke-width="5" opacity=".35"/><path d="M573 181V347" stroke="#e7faff" stroke-width="3" opacity=".2"/>${[190,235,280,325].map((y,i)=>`<path d="M535 ${y}h27" stroke="#d1e4eb" opacity=".7"/><text x="530" y="${y+4}" text-anchor="end" fill="#d1e4eb" font-size="10">${40-i*10}</text>`).join('')}<text x="475" y="205" text-anchor="middle" fill="#e0eff5" font-size="11">50 mL</text>${stream}<text x="489" y="420" text-anchor="middle" fill="#bed1dc" font-size="12" letter-spacing="2">${tr('REACTION BEAKER')}</text>`);}
+function finish(){stage='mixed';scene={a:trials[selected][0]==='zn'?0:1,b:1,metal:trials[selected][0]==='zn'?1:0,reaction:1,active:null,time:8};draw();$('mix').disabled=true;$('phase').textContent=tr('Mixed');$('observation-title').textContent=tr('After mixing');$('observation-text').textContent=tr(trials[selected][4]);$('progress').textContent=tr(trials[selected][2]==='metal'?'Reaction time accelerated: lead has deposited on the zinc.':'Observe the liquid and look for suspended solid.');if(trials[selected][2]&&trials[selected][2]!=='metal')scheduleSettling();}
 function scheduleSettling(){
  const mixedAt=performance.now();
  function tick(now){
   const elapsed=now-mixedAt;
   if(elapsed>=5000){
-   if(stage!=='settling'){stage='settling';$('phase').textContent='Settling…';$('progress').textContent='The precipitate is sinking, leaving clearer liquid above.';}
+   if(stage!=='settling'){stage='settling';$('phase').textContent=tr('Settling…');$('progress').textContent=tr('The precipitate is sinking, leaving clearer liquid above.');}
    settling=reduced.matches?1:clamp((elapsed-5000)/3500);draw();
-   if(settling>=1){stage='settled';$('phase').textContent='Settled';$('progress').textContent='Solid has collected at the bottom of the beaker. Settling time is accelerated.';return;}
+   if(settling>=1){stage='settled';$('phase').textContent=tr('Settled');$('progress').textContent=tr('Solid has collected at the bottom of the beaker. Settling time is accelerated.');return;}
   }
   raf=requestAnimationFrame(tick);
  }
@@ -89,8 +94,11 @@ function frame(seconds){
  const firstQ=clamp(seconds/2.8),secondQ=clamp((seconds-3)/2.8);
  const delivered=q=>clamp((q-.24)/.54);
  scene={a:zinc?0:delivered(firstQ),b:zinc?delivered(firstQ):delivered(secondQ),metal:zinc?ease((secondQ-.18)/.55):0,reaction:zinc?clamp((seconds-4.8)/2):delivered(secondQ),active:seconds<2.8?{slot:first,q:firstQ}:(!zinc&&seconds>=3&&seconds<5.8?{slot:'b',q:secondQ}:null),time:seconds};
- const label=seconds<2.8?'Adding '+reagents[t[zinc?1:0]][0]:seconds<3?'First addition complete':seconds<5.8?(zinc?'Lowering the zinc strip':'Adding '+reagents[t[1]][0]):'Observing the mixture';
- if($('phase').textContent!==label){$('phase').textContent=label;$('progress').textContent=label+'.';}
+ // Each phase has a full label template and a full status-sentence template.
+ const step=seconds<2.8?['Adding {reagent}',reagents[t[zinc?1:0]][0]]:seconds<3?['First addition complete']:seconds<5.8?(zinc?['Lowering the zinc strip']:['Adding {reagent}',reagents[t[1]][0]]):['Observing the mixture'];
+ const values=step[1]?{reagent:tr(step[1]),lower:lower(tr(step[1]))}:{};
+ const label=tr(step[0],values);
+ if($('phase').textContent!==label){$('phase').textContent=label;$('progress').textContent=tr(step[0]+'.',values);}
  draw();
 }
 $('mix').addEventListener('click',()=>{
@@ -104,6 +112,6 @@ $('mix').addEventListener('click',()=>{
  }
  frame(0);raf=requestAnimationFrame(tick);
 });
-$('reset').addEventListener('click',reset);$('instructions').addEventListener('click',()=>$('help').showModal());$('share').addEventListener('click',()=>$('share-dialog').showModal());document.querySelectorAll('dialog .close').forEach(b=>b.addEventListener('click',()=>b.closest('dialog').close()));$('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('share-url').value);$('share-status').textContent='Link copied.';}catch{$('share-url').select();$('share-status').textContent='Select and copy the activity link.';}});reset();
+$('reset').addEventListener('click',reset);$('instructions').addEventListener('click',()=>$('help').showModal());$('share').addEventListener('click',()=>$('share-dialog').showModal());{const url=i18n?i18n.url('https://activities.zornscience.org/net-ionic-lab/'):'https://activities.zornscience.org/net-ionic-lab/';$('share-url').value=url;$('email').href='mailto:?subject='+encodeURIComponent(tr('Net Ionic Reactions Lab'))+'&body='+encodeURIComponent(url);}document.querySelectorAll('dialog .close').forEach(b=>b.addEventListener('click',()=>b.closest('dialog').close()));$('copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('share-url').value);$('share-status').textContent=tr('Link copied.');}catch{$('share-url').select();$('share-status').textContent=tr('Select and copy the activity link.');}});reset();
 
 }());

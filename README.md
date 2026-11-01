@@ -42,14 +42,14 @@ physics-graphing-lab/      Physics Graphing Lab, v1.0.0 (a cart with linked posi
 collision-carts/           Collision Carts, v1.0.2 (two carts on a track, elastic and inelastic collisions, live velocity and momentum vectors)
 titration-lab/             Virtual Titration Simulator, v1.0.0 (burette, indicators and a live pH curve for strong and weak acids and bases)
 kinetics-lab/              Kinetics and Collision Theory Sandbox, v1.0.0 (colliding particles, temperature, concentration, activation energy and a catalyst, with a live concentration graph)
-redox-coach/              Redox Half-Reaction Balancer Coach, v1.1.2 (manual phase-by-phase balancing in acidic and basic media)
+redox-coach/              Redox Half-Reaction Balancer Coach, v1.2.0 (manual phase-by-phase balancing in acidic and basic media; English and Mexican Spanish)
 limiting-reactant/         Limiting Reactant Visualizer, v1.0.0 (molecules pair up into products and the excess reactant is left stranded, with a before, change and after table)
 projectile-lab/             Projectile Motion Vector Lab, v1.0.0 (a cannon with live velocity, component and acceleration vectors, snapshots and a velocity components graph)
 circuit-builder/           Circuit Builder, v1.0.0 (drag batteries, wires, resistors, switches and bulbs onto a board; a multimeter probes voltage and current, and bulbs glow by their power)
 beers-law-lab/             Beer's Law Spectrophotometer Lab, v1.0.0 (zero with a blank, measure standards for a calibration curve, then calculate the concentration of a random unknown)
 equilibrium-lab/          Equilibrium Sandbox, v1.2.1 (Le Chatelier stresses, Kc/Qc and live concentration graphs)
 calorimetry-lab/          Calorimetry & Enthalpy Lab, v1.2.1 (heated-metal and neutralization calorimetry)
-equilibrium-thermo-lab/   Compatibility chooser linking to the two standalone labs
+equilibrium-thermo-lab/   Compatibility chooser linking to the two standalone labs, v1.1.0 (English and Mexican Spanish)
 check/                     completion code checker for teachers, v1.2.0 (linked under "For teachers")
 TEACHERS.md                assigning activities in Google Classroom and checking completion codes
 templates/starter/         starter template for a new activity (not linked from the site)

@@ -1,6 +1,6 @@
 # Chemical Bonding Lab
 
-Version: 1.0.1
+Version: 1.1.0
 
 A static, browser-local simulation of the six tests in the supplied U3 & U4 Summative Lab: Chemical Bonding. Students operate equipment and compare four anonymous solids. There are no student response fields, data tables, scores, saved observations, accounts, storage, or network requests. The only text field is a read-only activity sharing link.
 
@@ -24,6 +24,10 @@ Conductivity is qualitative: none, low, medium, high, very high. This set yields
 Appearance uses a movable light. Conductivity uses two direct-contact probes. The foil boat compares all four at once, heats at about 20 °C per real second to 300 °C, then requires switching off, lifting with tongs, cooling, and disposal. Lactose browning persists during cooling. Vaporized iodine is not restored on cooling. Water preparation uses a balance (0.10 g), a graduated cylinder (50.0 mL), a beaker, glass stirring rod, and rinsable conductivity probe. Cyclohexane uses a 5.0 mL cylinder, spatula-tip solid, test tube, and coffee stirrer, with a five-minute observation at 30x speed and an optional clock advance. Malleability uses a porcelain mortar/pestle for Unknown 1 and a scoopula for the others.
 
 Changing station or unknown discards the current illustrative test and cancels its animation. Reset repeats with fresh portions. No lab report or worksheet instructions are implemented as input forms.
+
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the fallback. All student text, station and equipment labels, observations, button labels, SVG labels and the scene title and description, accessible labels, the instructions, the model note and the share dialog use the activity's `data.js`, and every sentence is one full template with placeholders, so Spanish keeps its own word order. Each conductivity reading (very high, high, none) has its own full sentence. In Spanish the share link carries `?lang=es` and the All activities link keeps its relative form with `?lang=es`. Formulas, numeric values, units and decimal points stay unchanged. The language links reload the page, so a test in progress starts over. See `../SPANISH_TERMS.md` for choices beyond the supplied glossary.
 
 ## Publishing
 

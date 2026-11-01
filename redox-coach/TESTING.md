@@ -1,6 +1,6 @@
 # Redox coach checks
 
-Version: 1.1.2
+Version: 1.2.0
 
 Run `node --test tests/unit/redox-coach.test.js tests/unit/static.test.js` and `npx playwright test tests/e2e/redox-coach.spec.js`.
 
@@ -9,3 +9,7 @@ Unit tests use independently worked acidic and basic half-reactions and net equa
 Browser tests play both problems through visible controls, exercise wrong checks and undo, phase locks, click and drag placement, keyboard focus, deep links, reduced motion, embed support, local-only asset requests, mobile layout from 320 px, 44 px control heights, and axe-core accessibility in each phase and on success.
 
 Header checks cover logo/title layout, modal keyboard behavior and preserved work, share links and clipboard fallback, no outside requests on opening Share, mobile overflow, embed visibility and accessibility with each panel open.
+
+## Spanish verification
+
+`tests/e2e/i18n.spec.js` opens the coach with `?lang=es`, checks text and accessible attributes for leftover English, and plays the acidic and basic problems through every step, with wrong and right checks, undo, Cancel mode, OH⁻ addition, same-side merging, water cancellation, both success screens, the instructions dialog and the share panel (link, email and Facebook carry `?lang=es`). English page markup, accessible labels and share links were compared with version 1.1.2 through 77 states and are identical. Spanish was checked at 320, 390 and 1366 px with no sideways scrolling or clipped labels; a Spanish-only rule shrinks the problem menu's font below 380 px.

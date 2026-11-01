@@ -1,6 +1,6 @@
 # Redox Half-Reaction Balancer Coach
 
-Version: 1.1.2
+Version: 1.2.0
 
 Manual, scaffolded redox balancing at `/redox-coach/`, linked from the activities page. Vanilla JavaScript and the shared site stylesheet and embed support, with no runtime dependencies, network calls, saved state or completion code. The multi-step equation editor uses a dedicated phase controller, like the site's other custom labs, rather than the shared engine's multiple-choice rounds. The existing shared production files are unchanged.
 
@@ -41,3 +41,7 @@ Version 1.1.1 keeps the Check Answer button's text dark on hover, so it stays re
 Version 1.1.0 matches the Ionic Reaction Builder header: the ZornScience logo sits beside the title, with Instructions and Share controls on the right (wrapping on phones). Instructions opens the existing method guidance in an accessible modal, closes with Escape, the close button or the backdrop, and restores focus. Opening or closing it preserves the student's work.
 
 Share offers Copy link, email, Facebook, X, and the device share sheet when supported. Only the canonical fresh activity link is shared, without equation state or progress. Sharing services load only when selected. The logo, share controls and footer hide in embed mode; Instructions remains available. The modal and share panel use activity-local scripts and styles; shared assets are unchanged.
+
+## Mexican Spanish
+
+Version 1.2.0 adds Mexican Spanish. Use `?lang=es` or the shared EN / ES header links. English is the fallback. All student text, step titles, instructions, feedback from `model.js`, accessible labels, the problem menu and the share title, description and link use the activity's `data.js`, and every sentence is one full template with placeholders, so Spanish keeps its own word order. `model.js` routes its messages through the same templates and fills in the English directly under Node, so the unit tests keep their English expectations. In Spanish the share link carries `?lang=es`, and the All activities link stays relative (`../?lang=es`). Formulas, charges and numbers stay unchanged; the glossary terms are número de oxidación, semirreacción, agente oxidante and agente reductor. The language links reload the page, so work in progress starts over. See `../SPANISH_TERMS.md` for choices beyond the supplied glossary.

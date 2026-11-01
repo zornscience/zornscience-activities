@@ -3,6 +3,10 @@
   var root = document.querySelector('[data-zsa-activity="gravimetric-lab"]');
   if (!root) return;
   function el(id) { return root.querySelector('#' + id); }
+  var i18n;
+  root.dispatchEvent(new CustomEvent('zsa:request-i18n', {detail:{receive:function (api) { i18n = api; }}}));
+  // English is the fallback; data.js holds the Spanish for each full sentence template.
+  function t(text, values) { return i18n ? i18n.text(text, values) : text.replace(/\{(\w+)\}/g, function (m, k) { return values && values[k] !== undefined ? values[k] : m; }); }
   var action = el('action'), index = 0, busy = false, timer = null, trial = 0;
   var carbonate, solid, crucible = 18.642, paper = 0.598;
   function mass(n) { el('balance-reading').textContent = n.toFixed(3) + ' g'; el('balance-display').textContent = n.toFixed(3) + ' g'; }
@@ -34,35 +38,35 @@
     [3,'Cool and weigh','Cool before weighing. Transfer only the filter paper and solid to the balance; the watch glass is excluded.','Cool & weigh paper + solid','First precipitate weighing','The solid looks dry, but appearance alone cannot confirm it.','weigh',function () { show('oven-sample',false); show('balance-paper',true); show('balance-solid',true); mass(paper+solid+0.032); }],
     [3,'Check for constant mass','Dry for another 5 minutes, cool, and weigh again. A lower reading means water was still present.','Dry, cool & reweigh','5 minutes in the oven, then cooling','The first weighing may still include residual water.','oven',function () { show('balance-paper',true); show('balance-solid',true); mass(paper+solid); }],
     [3,'Confirm constant mass','Repeat one more drying, cooling, and weighing cycle. Two consecutive matching readings establish constant mass at this balance resolution.','Repeat the drying cycle','5 minutes in the oven, then cooling','The mass decreased as the remaining moisture evaporated.','oven',function () { show('balance-paper',true); show('balance-solid',true); mass(paper+solid); }],
-    [3,'The evidence is ready','The final reading matches the previous reading. The precipitate is dry to constant mass.','Inspect the result','No measurements are stored','Two consecutive balance readings agree to 0.001 g.','finish',function () { el('result').hidden=false; el('result-text').textContent='Dry carbonate: 2.000 g. Subtract the filter paper mass (0.598 g) from the final balance reading to find the CaCO₃ mass. Each mole of CaCO₃ represents one mole of the original carbonate.'; }]
+    [3,'The evidence is ready','The final reading matches the previous reading. The precipitate is dry to constant mass.','Inspect the result','No measurements are stored','Two consecutive balance readings agree to 0.001 g.','finish',function () { el('result').hidden=false; el('result-text').textContent=t('Dry carbonate: 2.000 g. Subtract the filter paper mass (0.598 g) from the final balance reading to find the CaCO₃ mass. Each mole of CaCO₃ represents one mole of the original carbonate.'); }]
   ];
   function render() {
     var s=steps[index];
-    el('step-counter').textContent='STEP '+String(index+1).padStart(2,'0')+' / '+steps.length;
-    el('step-title').textContent=s[1]; el('step-detail').textContent=s[2]; action.textContent=s[3];
-    el('time-note').textContent=s[4]; el('observation').textContent=s[5];
-    el('scene-caption').textContent=s[5]; el('bench-state').textContent=['PREPARE THE SAMPLE','PRECIPITATE CaCO₃','VACUUM FILTRATION','DRY TO CONSTANT MASS'][s[0]];
+    el('step-counter').textContent=t('STEP {n} / {total}',{n:String(index+1).padStart(2,'0'),total:steps.length});
+    el('step-title').textContent=t(s[1]); el('step-detail').textContent=t(s[2]); action.textContent=t(s[3]);
+    el('time-note').textContent=t(s[4]); el('observation').textContent=t(s[5]);
+    el('scene-caption').textContent=t(s[5]); el('bench-state').textContent=t(['PREPARE THE SAMPLE','PRECIPITATE CaCO₃','VACUUM FILTRATION','DRY TO CONSTANT MASS'][s[0]]);
     root.querySelectorAll('.phases li').forEach(function (li,i) { li.classList.toggle('current',i===s[0]); li.classList.toggle('done',i<s[0]); });
   }
   action.addEventListener('click',function () {
     if (busy) return;
-    var s=steps[index]; busy=true; action.disabled=true; action.textContent='In progress…';
+    var s=steps[index]; busy=true; action.disabled=true; action.textContent=t('In progress…');
     root.classList.add('busy'); root.classList.toggle('heating',s[6]==='oven'); root.classList.toggle('stirring',s[6]==='stir'); root.classList.toggle('filtering',s[6]==='filter'); root.classList.toggle('measuring',s[6]==='weigh');
     if(s[6]==='burn') show('flame-shape',true);
     if(s[6]==='oven' && index>=17) { show('oven-sample',true); show('balance-paper',false); show('balance-solid',false); }
     if(index===0) crucibleAt('oven');
     if(s[6]==='cool') crucibleAt('cool');
-    el('observation').textContent=s[4]+'.'; el('scene-caption').textContent=s[3]+'…';
+    el('observation').textContent=t(s[4])+'.'; el('scene-caption').textContent=t(s[3])+'…';
     timer=setTimeout(function () {
       s[7](); root.classList.remove('busy','heating','stirring','filtering','measuring');
       if(index>=19) show('oven-sample',false);
       busy=false; action.disabled=false;
       if(index<steps.length-1) { index++; render(); }
-      else { action.hidden=true; el('observation').textContent='Constant mass confirmed. Use the balance evidence to identify the unknown.'; el('scene-caption').textContent='Analysis complete. A dry precipitate, a constant mass, and evidence for your unknown.'; }
+      else { action.hidden=true; el('observation').textContent=t('Constant mass confirmed. Use the balance evidence to identify the unknown.'); el('scene-caption').textContent=t('Analysis complete. A dry precipitate, a constant mass, and evidence for your unknown.'); }
     }, s[6]==='finish'?150:s[6]==='weigh'?750:1800);
   });
   el('reveal').addEventListener('click',function () {
-    el('identity').textContent=carbonate.name+' ('+carbonate.formula+'). The model yields '+solid.toFixed(3)+' g CaCO₃; the inferred molar mass is approximately '+carbonate.molar.toFixed(2)+' g/mol.';
+    el('identity').textContent=t('{name} ({formula}). The model yields {mass} g CaCO₃; the inferred molar mass is approximately {molar} g/mol.',{name:t(carbonate.name),formula:carbonate.formula,mass:solid.toFixed(3),molar:carbonate.molar.toFixed(2)});
     el('reveal').hidden=true;
   });
   function reset() {
@@ -71,7 +75,7 @@
     solid=2/carbonate.molar*100.09;
     ['oven-sample','crucible-powder','flame-shape','balance-object','solution','cloud','sediment','filtrate','filter-paper','filter-cake','balance-paper','balance-solid'].forEach(function (id) { show(id,false); });
     crucibleAt('burner'); mass(0); root.classList.remove('busy','heating','stirring','filtering','measuring');
-    el('sample').textContent='Unknown '+String.fromCharCode(65+(trial-1)%26); el('identity').textContent=''; el('result').hidden=true; el('reveal').hidden=false; action.hidden=false; action.disabled=false; render();
+    el('sample').textContent=t('Unknown {letter}',{letter:String.fromCharCode(65+(trial-1)%26)}); el('identity').textContent=''; el('result').hidden=true; el('reveal').hidden=false; action.hidden=false; action.disabled=false; render();
   }
   reset();
 }());
