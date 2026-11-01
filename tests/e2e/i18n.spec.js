@@ -50,10 +50,14 @@ for (const [slug, title] of Object.entries(activities)) {
       await page.locator("#zsa-pt-share-toggle").click();
       await expect(page.locator("#zsa-pt-share-url")).toHaveValue(/lang=es/);
     } else if (slug === "polyatomic-ion-trainer") {
+      await page.locator("#study-options summary").click();
+      await page.locator("#set").selectOption("ends");
       await page.locator("#start").click();
+      await expect(page.locator("#number")).toHaveText("2 tarjetas restantes");
       await page.locator("#card").click();
       await noEnglish(page);
       await page.locator("#known").click();
+      await expect(page.locator("#number")).toHaveText("1 tarjeta restante");
       await page.locator("#end").click();
       await noEnglish(page);
       await page.locator("#restart").click();
