@@ -339,6 +339,8 @@ s-block | bloque s
 search match | coincidencia de búsqueda
 selected | seleccionado
 streak | seguidas
+{count} card left | {count} tarjeta restante
+{count} cards left | {count} tarjetas restantes
 {low} to {high} | {low} a {high}
 ← Back to the lesson | ← Volver a la lección
 ↶ Back to question | ↶ Volver a la pregunta

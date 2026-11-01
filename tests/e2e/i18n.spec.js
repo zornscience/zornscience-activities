@@ -125,3 +125,17 @@ test("Spanish follows links between activities and English is the fallback", asy
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   await expect(page).toHaveTitle("Predicting Ion Charge Trainer | ZornScience");
 });
+
+test("Spanish activity headers fit narrow screens", async ({page}) => {
+  for (const slug of Object.keys(activities)) {
+    for (const width of [320, 390]) {
+      await page.setViewportSize({width, height:844});
+      await page.goto("/" + slug + "/?lang=es");
+      expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), slug + " at " + width).toBeLessThanOrEqual(0);
+      const toggle = page.getByRole("link", {name:"ES Español", exact:true});
+      const box = await toggle.boundingBox();
+      expect(box.width).toBeGreaterThanOrEqual(44);
+      expect(box.height).toBeGreaterThanOrEqual(44);
+    }
+  }
+});

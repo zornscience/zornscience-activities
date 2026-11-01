@@ -136,7 +136,9 @@
   " answered. Unanswered questions do not count. Try missed ions now, then return tomorrow.": " respondidas. Las preguntas sin responder no cuentan. Practica ahora los iones con errores y vuelve mañana.",
   "These are your self-ratings, including repeat cards. Check your recall again tomorrow.": "Estas son tus autoevaluaciones, incluidas las tarjetas repetidas. Revisa de nuevo lo que recuerdas mañana.",
   "No missed ions this session. Try both directions next.": "No hubo iones con errores en esta sesión. Después prueba ambas direcciones.",
-  "No answers recorded. Start when you’re ready.": "No se registraron respuestas. Empieza cuando estés listo."
+  "No answers recorded. Start when you’re ready.": "No se registraron respuestas. Empieza cuando estés listo.",
+  "{count} card left": "{count} tarjeta restante",
+  "{count} cards left": "{count} tarjetas restantes"
 }};
   i18n.configure(copy);
 }());
