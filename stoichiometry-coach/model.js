@@ -7,6 +7,19 @@
 (function () {
   "use strict";
 
+  // Student-facing text goes through t(): the shared language module in the page (its strings are in data.js),
+  // or the English template filled in directly in Node.
+  var i18n = null;
+  if (typeof document !== "undefined") {
+    var host = document.querySelector('[data-zsa-activity="stoichiometry-coach"]');
+    if (host) host.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: function (api) { i18n = api; }}}));
+  }
+  function t(text, values) {
+    values = values || {};
+    if (i18n) return i18n.text(text, values);
+    return text.replace(/\{(\w+)\}/g, function (m, k) { return values[k] === undefined ? m : values[k]; });
+  }
+
   // Molar masses (g/mol) from IUPAC standard atomic weights (H 1.008, N 14.007, O 15.999, Al 26.982, K 39.098,
   // Cl 35.453, Ca 40.078, C 12.011), summed and rounded to three decimal places. Coefficients are exact.
   var REACTIONS = [
@@ -61,10 +74,10 @@
     var u = p.start, value = p.value, steps = [];
     for (var i = 0; i < chain.length; i++) {
       var id = chain[i], f = factor(p, id), message = "";
-      if (!f) return {valid: false, complete: false, steps: steps, value: value, unit: u, message: "Choose a factor from this problem."};
-      if (f.du !== u) message = "You have " + u + ". Put " + u + " in the denominator of the next factor so it cancels.";
-      else if (id === "bad-mass") message = "Check the molar mass: " + p.r.from + " has a molar mass of " + p.r.mf + " g/mol. Units can cancel even when a number is wrong.";
-      else if (id === "bad-ratio") message = "Check the numbers in the mole ratio. They come from the coefficients in the balanced equation, not from the subscripts in a formula. Units can cancel even when a number is wrong.";
+      if (!f) return {valid: false, complete: false, steps: steps, value: value, unit: u, message: t("Choose a factor from this problem.")};
+      if (f.du !== u) message = t("You have {unit}. Put {unit} in the denominator of the next factor so it cancels.", {unit: u});
+      else if (id === "bad-mass") message = t("Check the molar mass: {from} has a molar mass of {mass} g/mol. Units can cancel even when a number is wrong.", {from: p.r.from, mass: p.r.mf});
+      else if (id === "bad-ratio") message = t("Check the numbers in the mole ratio. They come from the coefficients in the balanced equation, not from the subscripts in a formula. Units can cancel even when a number is wrong.");
       steps.push({valid: !message, message: message});
       if (message) return {valid: false, complete: false, steps: steps, value: value, unit: u, message: message};
       value = value * f.n / f.d;
@@ -72,7 +85,7 @@
     }
     var complete = u === p.target && chain.length === p.expected.length;
     return {valid: true, complete: complete, steps: steps, value: value, unit: u,
-      message: complete ? "Your units and conversion factors are correct." : "Your setup ends in " + u + " so far. Continue until you reach " + p.target + "."};
+      message: complete ? t("Your units and conversion factors are correct.") : t("Your setup ends in {unit} so far. Continue until you reach {target}.", {unit: u, target: p.target})};
   }
 
   // Reads 4.80, .480, 1.20e2, 1.20E-2, 1.20 x 10^2, 1.20×10^-2 or 1.20*10^2. Returns null for anything else.
@@ -93,50 +106,50 @@
   }
   function checkAnswer(p, raw) {
     var parsed = parse(raw);
-    if (!String(raw).trim()) return {ok: false, kind: "blank", message: "Enter your numerical answer first."};
-    if (!parsed || !isFinite(parsed.value)) return {ok: false, kind: "format", message: "Enter a number, such as 4.80 or 1.20e2. Leave the unit out; it is shown beside the box."};
-    if (parsed.value <= 0) return {ok: false, kind: "sign", message: "An amount of a substance is positive. Check the sign of your answer."};
+    if (!String(raw).trim()) return {ok: false, kind: "blank", message: t("Enter your numerical answer first.")};
+    if (!parsed || !isFinite(parsed.value)) return {ok: false, kind: "format", message: t("Enter a number, such as 4.80 or 1.20e2. Leave the unit out; it is shown beside the box.")};
+    if (parsed.value <= 0) return {ok: false, kind: "sign", message: t("An amount of a substance is positive. Check the sign of your answer.")};
     var n = parsed.value, rounded = Number(three(p.answer));
     if (Math.abs(n - rounded) > rounded * 1e-5) {
-      if (Math.abs(n - p.answer) / p.answer < 0.005) return {ok: false, kind: "rounding", message: "Your calculation is close. Round the final answer to three significant figures, keeping extra digits until the end."};
-      return {ok: false, kind: "value", message: "Recalculate: multiply the given value by every numerator and divide by every denominator. Keep extra digits until your final answer."};
+      if (Math.abs(n - p.answer) / p.answer < 0.005) return {ok: false, kind: "rounding", message: t("Your calculation is close. Round the final answer to three significant figures, keeping extra digits until the end.")};
+      return {ok: false, kind: "value", message: t("Recalculate: multiply the given value by every numerator and divide by every denominator. Keep extra digits until your final answer.")};
     }
-    if (sigFigs(raw) !== 3) return {ok: false, kind: "sigfigs", message: "The value is right. Show three significant figures. Use a decimal point or scientific notation when needed (for example, 1.20e2)."};
-    return {ok: true, kind: "correct", message: "Correct! Your conversion setup, value and three significant figures all agree."};
+    if (sigFigs(raw) !== 3) return {ok: false, kind: "sigfigs", message: t("The value is right. Show three significant figures. Use a decimal point or scientific notation when needed (for example, 1.20e2).")};
+    return {ok: true, kind: "correct", message: t("Correct! Your conversion setup, value and three significant figures all agree.")};
   }
 
   function question(p) {
     var v = three(p.value);
-    if (p.type === "gm") return "How many moles of " + p.r.from + " are in " + v + " g of " + p.r.from + "?";
-    return "How many " + (p.type === "mm" ? "moles" : "grams") + " of " + p.r.to + " form from " + v + " " + p.start + "?";
+    if (p.type === "gm") return t("How many moles of {from} are in {value} g of {from}?", {from: p.r.from, value: v});
+    return t(p.type === "mm" ? "How many moles of {to} form from {value} {start}?" : "How many grams of {to} form from {value} {start}?", {to: p.r.to, value: v, start: p.start});
   }
   function context(p) {
-    return p.type === "gm" ? "Convert the mass of one substance into its amount in moles. No mole ratio is needed." : p.r.context;
+    return p.type === "gm" ? t("Convert the mass of one substance into its amount in moles. No mole ratio is needed.") : t(p.r.context);
   }
   // The hint for the next step. A second hint on the same problem also names the next factor.
   function hint(p, chain, count) {
     var status = inspect(p, chain);
     if (!status.valid) return status.message;
-    if (status.complete) return "Multiply the given value by every numerator and divide by every denominator. Round only once, to three significant figures.";
+    if (status.complete) return t("Multiply the given value by every numerator and divide by every denominator. Round only once, to three significant figures.");
     var id = p.expected[chain.length], message;
-    if (id === "mass-in") message = "Start with grams of " + p.r.from + ". Use its molar mass (" + p.r.mf + " g/mol), with grams in the denominator.";
-    else if (id === "ratio") message = "Use the balanced equation: " + p.r.cf + " mol " + p.r.from + " corresponds to " + p.r.ct + " mol " + p.r.to + ". Put the substance you have in the denominator.";
-    else message = "You have moles of " + p.r.to + ". Multiply by its molar mass (" + p.r.mt + " g/mol) with grams on top.";
-    if (count > 1) { var f = factor(p, id); message += " The next factor is " + f.n + " " + f.nu + " / " + f.d + " " + f.du + "."; }
+    if (id === "mass-in") message = t("Start with grams of {from}. Use its molar mass ({mass} g/mol), with grams in the denominator.", {from: p.r.from, mass: p.r.mf});
+    else if (id === "ratio") message = t("Use the balanced equation: {cf} mol {from} corresponds to {ct} mol {to}. Put the substance you have in the denominator.", {cf: p.r.cf, from: p.r.from, ct: p.r.ct, to: p.r.to});
+    else message = t("You have moles of {to}. Multiply by its molar mass ({mass} g/mol) with grams on top.", {to: p.r.to, mass: p.r.mt});
+    if (count > 1) { var f = factor(p, id); message = t("{hint} The next factor is {factor}.", {hint: message, factor: f.n + " " + f.nu + " / " + f.d + " " + f.du}); }
     return message;
   }
   function solutionSteps(p) {
     return p.expected.map(function (id) {
-      if (id === "mass-in") return "Convert grams to moles of " + p.r.from + " using its molar mass.";
-      if (id === "ratio") return "Convert moles of " + p.r.from + " to moles of " + p.r.to + " using the balanced coefficients.";
-      return "Convert moles to grams of " + p.r.to + " using its molar mass.";
+      if (id === "mass-in") return t("Convert grams to moles of {from} using its molar mass.", {from: p.r.from});
+      if (id === "ratio") return t("Convert moles of {from} to moles of {to} using the balanced coefficients.", {from: p.r.from, to: p.r.to});
+      return t("Convert moles to grams of {to} using its molar mass.", {to: p.r.to});
     });
   }
 
   var api = {
     REACTIONS: REACTIONS, VALUES: VALUES, TYPES: TYPES, BANK_ORDER: BANK_ORDER,
     unit: unit, three: three, makeProblem: makeProblem, factor: factor, inspect: inspect,
-    parse: parse, sigFigs: sigFigs, checkAnswer: checkAnswer, question: question, context: context, hint: hint, solutionSteps: solutionSteps
+    t: t, parse: parse, sigFigs: sigFigs, checkAnswer: checkAnswer, question: question, context: context, hint: hint, solutionSteps: solutionSteps
   };
   if (typeof document !== "undefined") {
     var root = document.querySelector('[data-zsa-activity="stoichiometry-coach"]');
