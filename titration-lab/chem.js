@@ -6,16 +6,28 @@
 // (In Node, for the unit tests, it is module.exports.)
 (function () {
   "use strict";
+  // Words come from data.js through the shared language module. In Node (the unit tests) and in English, each
+  // template is filled as written. Every sentence is one full template, so Spanish keeps its own word order.
+  var i18n;
+  if (typeof document !== "undefined") {
+    var host = document.querySelector('[data-zsa-activity="titration-lab"]');
+    if (host) host.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: function (api) { i18n = api; }}}));
+  }
+  function t(text, values) {
+    values = values || {};
+    if (i18n) return i18n.text(text, values);
+    return text.replace(/\{(\w+)\}/g, function (m, k) { return values[k] === undefined ? m : values[k]; });
+  }
 
   var KW = 1.0e-14;
   // One drop from the burette (mL), the burette's capacity (mL) and the stopcock's flow rates (mL/s).
   var DROP = 0.05;
   var BURETTE = 50;
   var FLOWS = [
-    {id: "closed", label: "Closed", rate: 0},
-    {id: "drops", label: "Drop by drop", rate: 0.15},
-    {id: "slow", label: "Slow stream", rate: 0.5},
-    {id: "fast", label: "Fast stream", rate: 2}
+    {id: "closed", label: t("Closed"), lower: t("closed"), rate: 0},
+    {id: "drops", label: t("Drop by drop"), lower: t("drop by drop"), rate: 0.15},
+    {id: "slow", label: t("Slow stream"), lower: t("slow stream"), rate: 0.5},
+    {id: "fast", label: t("Fast stream"), lower: t("fast stream"), rate: 2}
   ];
   // While the stopcock is open the meter logs a point every 0.10 mL; a single drop always logs one.
   var LOG_STEP = 0.1;
@@ -24,13 +36,13 @@
   // ion is the ion each leaves in solution: the conjugate base of an acid, Na⁺, or the conjugate acid of a weak base
   // (whose pKa the half-equivalence point gives).
   var SPECIES = [
-    {id: "hcl", type: "acid", strong: true, name: "Hydrochloric acid", formula: "HCl", k: Infinity, ion: "Cl⁻"},
-    {id: "acetic", type: "acid", strong: false, name: "Acetic acid", formula: "HC₂H₃O₂", k: 1.8e-5, ion: "C₂H₃O₂⁻"},
-    {id: "formic", type: "acid", strong: false, name: "Formic acid", formula: "HCOOH", k: 1.8e-4, ion: "HCOO⁻"},
-    {id: "hypochlorous", type: "acid", strong: false, name: "Hypochlorous acid", formula: "HOCl", k: 3.0e-8, ion: "OCl⁻"},
-    {id: "naoh", type: "base", strong: true, name: "Sodium hydroxide", formula: "NaOH", k: Infinity, ion: "Na⁺"},
-    {id: "ammonia", type: "base", strong: false, name: "Ammonia", formula: "NH₃", k: 1.8e-5, ion: "NH₄⁺"},
-    {id: "methylamine", type: "base", strong: false, name: "Methylamine", formula: "CH₃NH₂", k: 4.4e-4, ion: "CH₃NH₃⁺"}
+    {id: "hcl", type: "acid", strong: true, name: t("Hydrochloric acid"), lower: t("hydrochloric acid"), formula: "HCl", k: Infinity, ion: "Cl⁻"},
+    {id: "acetic", type: "acid", strong: false, name: t("Acetic acid"), lower: t("acetic acid"), formula: "HC₂H₃O₂", k: 1.8e-5, ion: "C₂H₃O₂⁻"},
+    {id: "formic", type: "acid", strong: false, name: t("Formic acid"), lower: t("formic acid"), formula: "HCOOH", k: 1.8e-4, ion: "HCOO⁻"},
+    {id: "hypochlorous", type: "acid", strong: false, name: t("Hypochlorous acid"), lower: t("hypochlorous acid"), formula: "HOCl", k: 3.0e-8, ion: "OCl⁻"},
+    {id: "naoh", type: "base", strong: true, name: t("Sodium hydroxide"), lower: t("sodium hydroxide"), formula: "NaOH", k: Infinity, ion: "Na⁺"},
+    {id: "ammonia", type: "base", strong: false, name: t("Ammonia"), lower: t("ammonia"), formula: "NH₃", k: 1.8e-5, ion: "NH₄⁺"},
+    {id: "methylamine", type: "base", strong: false, name: t("Methylamine"), lower: t("methylamine"), formula: "CH₃NH₂", k: 4.4e-4, ion: "CH₃NH₃⁺"}
   ];
   var ANALYTES = ["hcl", "acetic", "formic", "hypochlorous", "naoh", "ammonia", "methylamine"];
   // Titrants for each kind of analyte: the standard solutions in the burette.
@@ -44,12 +56,14 @@
   // middle of the range and the base form. The fraction in the base form is 1 / (1 + 10^(pKin − pH)), with pKin the
   // middle of the range, so it is about 0.1 and 0.9 at the ends of the range.
   var INDICATORS = [
-    {id: "phenolphthalein", name: "Phenolphthalein", range: [8.2, 10.0], names: ["colorless", "pale pink", "pink"], colors: ["#eef6fb", "#f5b5d7", "#d63384"]},
-    {id: "bromothymol", name: "Bromothymol blue", range: [6.0, 7.6], names: ["yellow", "green", "blue"], colors: ["#e6cf3e", "#3fa34d", "#2b59c3"]},
-    {id: "methylred", name: "Methyl red", range: [4.4, 6.2], names: ["red", "orange", "yellow"], colors: ["#c81d4a", "#ef7d3c", "#f3cf4a"]},
-    {id: "methylorange", name: "Methyl orange", range: [3.1, 4.4], names: ["red", "orange", "yellow"], colors: ["#d7263d", "#f08c2e", "#f6c945"]},
-    {id: "none", name: "No indicator", range: null, names: ["colorless", "colorless", "colorless"], colors: ["#eef6fb", "#eef6fb", "#eef6fb"]}
+    {id: "phenolphthalein", name: t("Phenolphthalein"), lower: t("phenolphthalein"), range: [8.2, 10.0], names: ["colorless", "pale pink", "pink"], colors: ["#eef6fb", "#f5b5d7", "#d63384"]},
+    {id: "bromothymol", name: t("Bromothymol blue"), lower: t("bromothymol blue"), range: [6.0, 7.6], names: ["yellow", "green", "blue"], colors: ["#e6cf3e", "#3fa34d", "#2b59c3"]},
+    {id: "methylred", name: t("Methyl red"), lower: t("methyl red"), range: [4.4, 6.2], names: ["red", "orange", "yellow"], colors: ["#c81d4a", "#ef7d3c", "#f3cf4a"]},
+    {id: "methylorange", name: t("Methyl orange"), lower: t("methyl orange"), range: [3.1, 4.4], names: ["red", "orange", "yellow"], colors: ["#d7263d", "#f08c2e", "#f6c945"]},
+    {id: "none", name: t("No indicator"), lower: t("no indicator"), range: null, names: ["colorless", "colorless", "colorless"], colors: ["#eef6fb", "#eef6fb", "#eef6fb"]}
   ];
+  // The color names are words students read ("The solution turned pink"), so they are translated too.
+  INDICATORS.forEach(function (ind) { ind.names = ind.names.map(function (n) { return t(n); }); });
 
   function species(id) { return SPECIES.filter(function (s) { return s.id === id; })[0]; }
   function indicator(id) { return INDICATORS.filter(function (s) { return s.id === id; })[0]; }
@@ -120,46 +134,50 @@
 
   // How well an indicator suits a titration: the volume at the middle of its color change against the equivalence
   // volume. Close means within 2 drops or 0.5% of the equivalence volume, whichever is larger.
-  function judgeIndicator(t, id) {
-    var ind = indicator(id), veq = equivalence(t), kp = keyPoints(t);
-    if (!ind.range) return {level: "none", text: "No indicator: the solution stays colorless, so use the pH curve to find the equivalence point."};
-    var mid = (ind.range[0] + ind.range[1]) / 2, v = volumeAt(t, mid, veq * 3 + 10), tol = Math.max(2 * DROP, 0.005 * veq);
+  function judgeIndicator(t2, id) {
+    var ind = indicator(id), veq = equivalence(t2), kp = keyPoints(t2);
+    if (!ind.range) return {level: "none", text: t("No indicator: the solution stays colorless, so use the pH curve to find the equivalence point.")};
+    var mid = (ind.range[0] + ind.range[1]) / 2, v = volumeAt(t2, mid, veq * 3 + 10), tol = Math.max(2 * DROP, 0.005 * veq);
     var inRange = kp.pHeq >= ind.range[0] && kp.pHeq <= ind.range[1];
-    var range = ind.name + " (pH " + fmt(ind.range[0], 1) + " to " + fmt(ind.range[1], 1) + ")";
-    if (v === 0) return {level: "poor", volume: 0, text: range + " is already past its color change at the start (pH " + fmt(kp.start) + "), so it cannot show the equivalence point at pH " + fmt(kp.pHeq) + "."};
-    if (v === null) return {level: "poor", volume: null, text: range + " never finishes changing color in this titration, so it cannot show the equivalence point at pH " + fmt(kp.pHeq) + "."};
+    var range = t("{name} (pH {low} to {high})", {name: ind.name, low: fmt(ind.range[0], 1), high: fmt(ind.range[1], 1)});
+    if (v === 0) return {level: "poor", volume: 0, text: t("{range} is already past its color change at the start (pH {start}), so it cannot show the equivalence point at pH {eq}.", {range: range, start: fmt(kp.start), eq: fmt(kp.pHeq)})};
+    if (v === null) return {level: "poor", volume: null, text: t("{range} never finishes changing color in this titration, so it cannot show the equivalence point at pH {eq}.", {range: range, eq: fmt(kp.pHeq)})};
     var diff = v - veq;
-    if (Math.abs(diff) <= tol) return {level: "good", volume: v, text: range + " changes color at about " + fmt(v) + " mL, within " + fmt(Math.max(Math.abs(diff), 0.005)) + " mL of the equivalence point" + (inRange ? ", which is inside its range" : "") + ". A good choice."};
-    return {level: "poor", volume: v, text: range + " changes color at about " + fmt(v) + " mL, " + fmt(Math.abs(diff)) + " mL " + (diff < 0 ? "before" : "after") + " the equivalence point. Choose an indicator whose range includes the equivalence pH, " + fmt(kp.pHeq) + "."};
+    if (Math.abs(diff) <= tol) {
+      return {level: "good", volume: v, text: t(inRange ? "{range} changes color at about {v} mL, within {diff} mL of the equivalence point, which is inside its range. A good choice." : "{range} changes color at about {v} mL, within {diff} mL of the equivalence point. A good choice.",
+        {range: range, v: fmt(v), diff: fmt(Math.max(Math.abs(diff), 0.005))})};
+    }
+    return {level: "poor", volume: v, text: t(diff < 0 ? "{range} changes color at about {v} mL, {diff} mL before the equivalence point. Choose an indicator whose range includes the equivalence pH, {eq}." : "{range} changes color at about {v} mL, {diff} mL after the equivalence point. Choose an indicator whose range includes the equivalence pH, {eq}.",
+      {range: range, v: fmt(v), diff: fmt(Math.abs(diff)), eq: fmt(kp.pHeq)})};
   }
 
   // The student's analysis. Each answer is a number or null (blank). Returns one result per question asked.
-  function questions(t, unknown) {
-    var a = species(t.analyte), out = [{id: "veq", label: "Equivalence point volume", unit: "mL"}];
-    if (a.strong) out.push({id: "pheq", label: "pH at the equivalence point", unit: ""});
-    else out.push({id: "pka", label: a.type === "acid" ? "pKa of " + a.formula + ", from the half-equivalence point" : "pKa of " + a.ion + ", from the half-equivalence point", unit: ""});
-    if (unknown) out.push({id: "conc", label: "Concentration of the " + a.name.toLowerCase(), unit: "M"});
+  function questions(t2, unknown) {
+    var a = species(t2.analyte), out = [{id: "veq", label: t("Equivalence point volume"), unit: "mL"}];
+    if (a.strong) out.push({id: "pheq", label: t("pH at the equivalence point"), unit: ""});
+    else out.push({id: "pka", label: t("pKa of {formula}, from the half-equivalence point", {formula: a.type === "acid" ? a.formula : a.ion}), unit: ""});
+    if (unknown) out.push({id: "conc", label: t("Concentration of the {name}", {name: a.lower}), unit: "M"});
     return out;
   }
-  function check(t, unknown, answers) {
-    var kp = keyPoints(t), a = species(t.analyte);
-    return questions(t, unknown).map(function (q) {
+  function check(t2, unknown, answers) {
+    var kp = keyPoints(t2), a = species(t2.analyte);
+    return questions(t2, unknown).map(function (q) {
       var n = answers[q.id], ok, hint;
-      if (n === null || n === undefined || !Number.isFinite(n)) return {id: q.id, ok: false, blank: true, text: q.label + ": enter a value."};
+      if (n === null || n === undefined || !Number.isFinite(n)) return {id: q.id, ok: false, blank: true, text: t("{label}: enter a value.", {label: q.label})};
       if (q.id === "veq") {
         ok = Math.abs(n - kp.veq) <= Math.max(0.2, 0.02 * kp.veq);
-        hint = "Find the middle of the steepest part of the curve, where the pH changes most for each drop.";
+        hint = t("Find the middle of the steepest part of the curve, where the pH changes most for each drop.");
       } else if (q.id === "pheq") {
         ok = Math.abs(n - kp.pHeq) <= 0.3;
-        hint = "Read the pH at the middle of the steep part. Think about what is in the flask at equivalence.";
+        hint = t("Read the pH at the middle of the steep part. Think about what is in the flask at equivalence.");
       } else if (q.id === "pka") {
         ok = Math.abs(n - kp.pHhalf) <= 0.15 || Math.abs(n - kp.pKa) <= 0.15;
-        hint = "Halve the equivalence volume and read the pH there. At that point [" + (a.type === "acid" ? "HA] = [A⁻" : "B] = [BH⁺") + "], so pH = pKa.";
+        hint = t(a.type === "acid" ? "Halve the equivalence volume and read the pH there. At that point [HA] = [A⁻], so pH = pKa." : "Halve the equivalence volume and read the pH there. At that point [B] = [BH⁺], so pH = pKa.");
       } else {
-        ok = Math.abs(n - t.ca) <= 0.03 * t.ca;
-        hint = "Moles of titrant at equivalence = " + fmt(t.ct, 3) + " M × the equivalence volume in liters. Divide by the analyte volume in liters (" + fmt(t.va / 1000, 4) + " L).";
+        ok = Math.abs(n - t2.ca) <= 0.03 * t2.ca;
+        hint = t("Moles of titrant at equivalence = {ct} M × the equivalence volume in liters. Divide by the analyte volume in liters ({liters} L).", {ct: fmt(t2.ct, 3), liters: fmt(t2.va / 1000, 4)});
       }
-      return {id: q.id, ok: ok, blank: false, text: q.label + ": " + (ok ? "✓ Correct, within the precision of the curve." : "Not yet. " + hint)};
+      return {id: q.id, ok: ok, blank: false, text: ok ? t("{label}: ✓ Correct, within the precision of the curve.", {label: q.label}) : t("{label}: Not yet. {hint}", {label: q.label, hint: hint})};
     });
   }
 
@@ -173,40 +191,44 @@
   // The indicator's colors as a sentence.
   function indicatorText(id) {
     var ind = indicator(id);
-    if (!ind.range) return "No indicator. Watch the pH meter instead.";
-    return ind.name + " is " + ind.names[0] + " below pH " + fmt(ind.range[0], 1) + " and " + ind.names[2] + " above pH " + fmt(ind.range[1], 1) + ".";
+    if (!ind.range) return t("No indicator. Watch the pH meter instead.");
+    return t("{name} is {acid} below pH {low} and {base} above pH {high}.", {name: ind.name, lower: ind.lower, acid: ind.names[0], low: fmt(ind.range[0], 1), base: ind.names[2], high: fmt(ind.range[1], 1)});
   }
 
   // A short explanation of the curve for this titration.
-  function insight(t) {
-    var p = parts(t), a = species(t.analyte), kp = keyPoints(t), ttl = species(t.titrant);
-    var eq = "At equivalence (" + fmt(kp.veq) + " mL) the pH is " + fmt(kp.pHeq) + ". ";
+  function insight(t2) {
+    var p = parts(t2), a = species(t2.analyte), kp = keyPoints(t2), ttl = species(t2.titrant), above = kp.pHeq > 7;
+    var eq = t("At equivalence ({v} mL) the pH is {pH}.", {v: fmt(kp.veq), pH: fmt(kp.pHeq)}) + " ";
     if (!p.acid.strong && !p.base.strong) {
-      return eq + "Both the acid and the base are weak, so the pH changes gradually and the jump at equivalence is small. No indicator gives a sharp endpoint, which is why a weak acid is not titrated with a weak base.";
+      return eq + t("Both the acid and the base are weak, so the pH changes gradually and the jump at equivalence is small. No indicator gives a sharp endpoint, which is why a weak acid is not titrated with a weak base.");
     }
-    if (a.strong && ttl.strong) return eq + "A strong acid and a strong base react completely to make water and a neutral salt, so the equivalence point is at pH 7. The curve is flat at first, then rises almost vertically near equivalence.";
+    if (a.strong && ttl.strong) return eq + t("A strong acid and a strong base react completely to make water and a neutral salt, so the equivalence point is at pH 7. The curve is flat at first, then rises almost vertically near equivalence.");
     if (a.strong) {
-      return eq + "The titrant is weak, so its conjugate " + (p.acidIsAnalyte ? "acid" : "base") + " is in the flask at equivalence and the pH there is " + (kp.pHeq > 7 ? "above" : "below") + " 7. After equivalence the extra titrant forms a buffer, so the curve levels off sooner.";
+      return eq + (p.acidIsAnalyte ?
+        t(above ? "The titrant is weak, so its conjugate acid is in the flask at equivalence and the pH there is above 7. After equivalence the extra titrant forms a buffer, so the curve levels off sooner." : "The titrant is weak, so its conjugate acid is in the flask at equivalence and the pH there is below 7. After equivalence the extra titrant forms a buffer, so the curve levels off sooner.") :
+        t(above ? "The titrant is weak, so its conjugate base is in the flask at equivalence and the pH there is above 7. After equivalence the extra titrant forms a buffer, so the curve levels off sooner." : "The titrant is weak, so its conjugate base is in the flask at equivalence and the pH there is below 7. After equivalence the extra titrant forms a buffer, so the curve levels off sooner."));
     }
-    var conj = a.type === "acid" ? "conjugate base" : "conjugate acid";
-    var half = "At the half-equivalence point (" + fmt(kp.half) + " mL), half of the " + a.formula + " has reacted, so the weak " + a.type + " and its " + conj + " are equal and pH = pKa" +
-      (a.type === "base" ? " of " + a.ion : "") + " = " + fmt(kp.pKa) + ". ";
-    return half + "The flat region around it is a buffer. " + eq + "Only the " + conj + " is left at equivalence, so the pH there is " + (kp.pHeq > 7 ? "above" : "below") + " 7.";
+    var values = {half: fmt(kp.half), formula: a.formula, ion: a.ion, pKa: fmt(kp.pKa)};
+    var half = t(a.type === "acid" ? "At the half-equivalence point ({half} mL), half of the {formula} has reacted, so the weak acid and its conjugate base are equal and pH = pKa = {pKa}." : "At the half-equivalence point ({half} mL), half of the {formula} has reacted, so the weak base and its conjugate acid are equal and pH = pKa of {ion} = {pKa}.", values) + " ";
+    var end = a.type === "acid" ?
+      t(above ? "Only the conjugate base is left at equivalence, so the pH there is above 7." : "Only the conjugate base is left at equivalence, so the pH there is below 7.") :
+      t(above ? "Only the conjugate acid is left at equivalence, so the pH there is above 7." : "Only the conjugate acid is left at equivalence, so the pH there is below 7.");
+    return half + t("The flat region around it is a buffer.") + " " + eq + end;
   }
 
   // What a screen reader hears for the graph.
-  function describe(t, points, axisMax, shown) {
-    var text = "pH versus volume of titrant graph, 0 to " + fmt(axisMax, 0) + " mL, pH 0 to 14. ";
-    if (points.length < 2) text += "No data yet. Open the stopcock or add a drop.";
+  function describe(t2, points, axisMax, shown) {
+    var text = t("pH versus volume of titrant graph, 0 to {max} mL, pH 0 to 14.", {max: fmt(axisMax, 0)}) + " ";
+    if (points.length < 2) text += t("No data yet. Open the stopcock or add a drop.");
     else {
       var last = points[points.length - 1], steep = steepest(points);
-      text += "Your data: " + points.length + " points from 0.00 to " + fmt(last[0]) + " mL, pH " + fmt(points[0][1]) + " to " + fmt(last[1]) + ".";
-      if (steep && steep.rate > 1) text += " Steepest change between " + fmt(steep.from) + " and " + fmt(steep.to) + " mL, about " + fmt(steep.rate, 1) + " pH units per mL.";
+      text += t("Your data: {n} points from 0.00 to {v} mL, pH {first} to {last}.", {n: points.length, v: fmt(last[0]), first: fmt(points[0][1]), last: fmt(last[1])});
+      if (steep && steep.rate > 1) text += " " + t("Steepest change between {from} and {to} mL, about {rate} pH units per mL.", {from: fmt(steep.from), to: fmt(steep.to), rate: fmt(steep.rate, 1)});
     }
     if (shown) {
-      var kp = keyPoints(t);
-      text += " Equivalence point at " + fmt(kp.veq) + " mL, pH " + fmt(kp.pHeq) + ".";
-      if (kp.weak) text += " Half-equivalence point at " + fmt(kp.half) + " mL, pH " + fmt(kp.pHhalf) + ".";
+      var kp = keyPoints(t2);
+      text += " " + t("Equivalence point at {v} mL, pH {pH}.", {v: fmt(kp.veq), pH: fmt(kp.pHeq)});
+      if (kp.weak) text += " " + t("Half-equivalence point at {v} mL, pH {pH}.", {v: fmt(kp.half), pH: fmt(kp.pHhalf)});
     }
     return text;
   }
@@ -235,7 +257,7 @@
 
   // The logged data, for spreadsheets.
   function csv(points) {
-    return ["Titrant added (mL),pH"].concat(points.map(function (p) { return plain(p[0], 2) + "," + plain(p[1], 2); })).join("\n") + "\n";
+    return [t("Titrant added (mL),pH")].concat(points.map(function (p) { return plain(p[0], 2) + "," + plain(p[1], 2); })).join("\n") + "\n";
   }
 
   var api = {

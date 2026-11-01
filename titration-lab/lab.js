@@ -9,6 +9,14 @@
   var M;
   root.dispatchEvent(new CustomEvent("zsa-ti:request-model", {detail: {receive: function (value) { M = value; }}}));
   if (!M) return;
+  var i18n;
+  root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: function (api) { i18n = api; }}}));
+  // Every sentence is one full template from data.js, filled with values, so each language keeps its word order.
+  function t(text, values) {
+    values = values || {};
+    if (i18n) return i18n.text(text, values);
+    return text.replace(/\{(\w+)\}/g, function (m, k) { return values[k] === undefined ? m : values[k]; });
+  }
 
   var SVG = "http://www.w3.org/2000/svg";
   function $(id) { return root.querySelector("#zsa-ti-" + id); }
@@ -48,12 +56,15 @@
   function pHnow() { return M.pH(setup, added); }
 
   // ---------- Setup ----------
-  function speciesLabel(s) { return s.name + ", " + s.formula + (s.strong ? " (strong " : " (weak ") + s.type + ")"; }
+  function speciesLabel(s) {
+    var kind = s.type === "acid" ? (s.strong ? "{name}, {formula} (strong acid)" : "{name}, {formula} (weak acid)") : (s.strong ? "{name}, {formula} (strong base)" : "{name}, {formula} (weak base)");
+    return t(kind, {name: s.name, formula: s.formula});
+  }
   M.ANALYTES.forEach(function (id) { option($("analyte"), id, speciesLabel(M.species(id))); });
   M.CONCENTRATIONS.forEach(function (c) { option($("ca"), String(c), M.fmt(c, 3) + " M"); option($("ct"), String(c), M.fmt(c, 3) + " M"); });
-  option($("ca"), "unknown", "Unknown (find it)");
+  option($("ca"), "unknown", t("Unknown (find it)"));
   M.VOLUMES.forEach(function (v) { option($("va"), String(v), M.fmt(v) + " mL"); });
-  M.INDICATORS.forEach(function (ind) { option($("indicator"), ind.id, ind.range ? ind.name + " (pH " + M.fmt(ind.range[0], 1) + " to " + M.fmt(ind.range[1], 1) + ")" : ind.name); });
+  M.INDICATORS.forEach(function (ind) { option($("indicator"), ind.id, ind.range ? t("{name} (pH {low} to {high})", {name: ind.name, low: M.fmt(ind.range[0], 1), high: M.fmt(ind.range[1], 1)}) : ind.name); });
   function titrantOptions() {
     var list = M.TITRANTS[M.species(setup.analyte).type];
     clear($("titrant"));
@@ -70,12 +81,12 @@
     $("ct").value = String(setup.ct);
     $("indicator").value = setup.indicator;
     $("indicator-text").textContent = M.indicatorText(setup.indicator);
-    $("reaction").textContent = "Reaction: " + M.reaction(setup);
+    $("reaction").textContent = t("Reaction: {equation}", {equation: M.reaction(setup)});
   }
-  function caText() { return unknown ? "an unknown concentration of" : M.fmt(setup.ca, 3) + " M"; }
   function setupText() {
     var a = M.species(setup.analyte), b = M.species(setup.titrant);
-    return M.fmt(setup.va) + " mL of " + caText() + " " + a.name.toLowerCase() + " with " + M.fmt(setup.ct, 3) + " M " + b.name.toLowerCase() + ", " + M.indicator(setup.indicator).name.toLowerCase();
+    var values = {va: M.fmt(setup.va), ca: M.fmt(setup.ca, 3), analyte: a.lower, ct: M.fmt(setup.ct, 3), titrant: b.lower, indicator: M.indicator(setup.indicator).lower};
+    return t(unknown ? "{va} mL of an unknown concentration of {analyte} with {ct} M {titrant}, {indicator}" : "{va} mL of {ca} M {analyte} with {ct} M {titrant}, {indicator}", values);
   }
   ["analyte", "ca", "va", "titrant", "ct", "indicator"].forEach(function (id) {
     $(id).addEventListener("change", function () {
@@ -87,7 +98,7 @@
       showSetup();
       if (id === "indicator") { colorName = M.color(setup.indicator, pHnow()).name; redraw(); announce(M.indicatorText(setup.indicator)); return; }
       restart();
-      announce("New titration: " + setupText() + ". The burette is full and nothing has been added.");
+      announce(t("New titration: {setup}. The burette is full and nothing has been added.", {setup: setupText()}));
     });
   });
 
@@ -131,7 +142,7 @@
     g.appendChild(svg("rect", {x: 176, y: 162, width: 58, height: 36, rx: 6, class: "zsa-ti-meter"}));
     app.meter = svg("text", {x: 205, y: 186, "text-anchor": "middle", class: "zsa-ti-meter-text"}, "");
     g.appendChild(app.meter);
-    g.appendChild(svg("text", {x: 205, y: 214, "text-anchor": "middle", class: "zsa-ti-grad-label"}, "pH meter"));
+    g.appendChild(svg("text", {x: 205, y: 214, "text-anchor": "middle", class: "zsa-ti-grad-label"}, t("pH meter")));
     el.appendChild(g);
   }
   // The liquid in the flask: its level rises with the total volume, inside the flask's sloping sides.
@@ -161,10 +172,11 @@
       if (f >= 1) drop = null;
     } else app.drop.setAttribute("visibility", "hidden");
     app.meter.textContent = M.fmt(pHnow());
-    $("apparatus-desc").textContent = "Burette reading " + M.fmt(r) + " mL, stopcock " + flowName().toLowerCase() + ". The flask holds " + M.fmt(setup.va + added) +
-      " mL of " + c.name + " solution. The pH meter reads " + M.fmt(pHnow()) + ".";
+    $("apparatus-desc").textContent = t("Burette reading {r} mL, stopcock {flow}. The flask holds {v} mL of {color} solution. The pH meter reads {pH}.",
+      {r: M.fmt(r), flow: flowName(), v: M.fmt(setup.va + added), color: c.name, pH: M.fmt(pHnow())});
   }
-  function flowName() { return M.FLOWS.filter(function (f) { return f.id === flow; })[0].label; }
+  // The stopcock setting in lowercase, for use inside a sentence.
+  function flowName() { return M.FLOWS.filter(function (f) { return f.id === flow; })[0].lower; }
 
   // ---------- The graph ----------
   // Drawn at its own width (340 units tall), so its labels keep their real size on phones; redrawn when it changes.
@@ -199,7 +211,7 @@
     }
     axes.appendChild(svg("line", {x1: L, y1: T, x2: L, y2: B, class: "zsa-ti-axis"}));
     axes.appendChild(svg("line", {x1: L, y1: B, x2: R, y2: B, class: "zsa-ti-axis"}));
-    axes.appendChild(svg("text", {x: (L + R) / 2, y: H - 6, "text-anchor": "middle", class: "zsa-ti-axis-label"}, "Volume of " + M.species(setup.titrant).formula + " added (mL)"));
+    axes.appendChild(svg("text", {x: (L + R) / 2, y: H - 6, "text-anchor": "middle", class: "zsa-ti-axis-label"}, t("Volume of {formula} added (mL)", {formula: M.species(setup.titrant).formula})));
     axes.appendChild(svg("text", {x: 12, y: (T + B) / 2, "text-anchor": "middle", transform: "rotate(-90 12 " + (T + B) / 2 + ")", class: "zsa-ti-axis-label"}, "pH"));
     el.appendChild(axes);
 
@@ -220,18 +232,18 @@
       var kp = M.keyPoints(setup), up = M.species(setup.analyte).type === "acid";
       marks.appendChild(svg("line", {x1: X(kp.veq), y1: T, x2: X(kp.veq), y2: B, class: "zsa-ti-key-line"}));
       marks.appendChild(svg("circle", {cx: X(kp.veq), cy: Y(kp.pHeq), r: 6, class: "zsa-ti-key-point"}));
-      label(X(kp.veq), Y(kp.pHeq) + (up ? -10 : 20), "Equivalence: " + M.fmt(kp.veq) + " mL, pH " + M.fmt(kp.pHeq), "Equivalence, pH " + M.fmt(kp.pHeq), -1, "zsa-ti-key-label");
+      label(X(kp.veq), Y(kp.pHeq) + (up ? -10 : 20), t("Equivalence: {v} mL, pH {pH}", {v: M.fmt(kp.veq), pH: M.fmt(kp.pHeq)}), t("Equivalence, pH {pH}", {pH: M.fmt(kp.pHeq)}), -1, "zsa-ti-key-label");
       if (kp.weak) {
         marks.appendChild(svg("line", {x1: L, y1: Y(kp.pHhalf), x2: X(kp.half), y2: Y(kp.pHhalf), class: "zsa-ti-key-line"}));
         marks.appendChild(svg("line", {x1: X(kp.half), y1: Y(kp.pHhalf), x2: X(kp.half), y2: B, class: "zsa-ti-key-line"}));
         marks.appendChild(svg("rect", {x: X(kp.half) - 5, y: Y(kp.pHhalf) - 5, width: 10, height: 10, class: "zsa-ti-key-point"}));
-        label(X(kp.half), Y(kp.pHhalf) + (up ? 22 : -12), "Half-equivalence: pH = pKa = " + M.fmt(kp.pHhalf), "pH = pKa = " + M.fmt(kp.pHhalf), 1, "zsa-ti-key-label");
+        label(X(kp.half), Y(kp.pHhalf) + (up ? 22 : -12), t("Half-equivalence: pH = pKa = {pH}", {pH: M.fmt(kp.pHhalf)}), "pH = pKa = " + M.fmt(kp.pHhalf), 1, "zsa-ti-key-label");
       }
     }
     var up0 = M.species(setup.analyte).type === "acid";
     if (endpoint) {
       marks.appendChild(svg("line", {x1: X(endpoint.v), y1: T, x2: X(endpoint.v), y2: B, class: "zsa-ti-endline"}));
-      label(X(endpoint.v), T + 14, "Endpoint " + M.fmt(endpoint.v) + " mL", "Endpoint", up0 ? -1 : 1, "zsa-ti-end-label");
+      label(X(endpoint.v), T + 14, t("Endpoint {v} mL", {v: M.fmt(endpoint.v)}), t("Endpoint"), up0 ? -1 : 1, "zsa-ti-end-label");
     }
     if (points.length) {
       var line = points.map(function (q) { return X(q[0]).toFixed(1) + "," + Y(q[1]).toFixed(1); });
@@ -259,11 +271,11 @@
     $("ph-value").textContent = M.fmt(p);
     $("v-value").textContent = M.fmt(added) + " mL";
     $("reading-value").textContent = M.fmt(reading()) + " mL";
-    $("color-value").textContent = setup.indicator === "none" ? "colorless (no indicator)" : c.name;
+    $("color-value").textContent = setup.indicator === "none" ? t("colorless (no indicator)") : c.name;
     root.querySelectorAll("[data-flow]").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.flow === flow)); });
     $("refill").disabled = reading() === 0;
     var empty = reading() >= M.BURETTE - 1e-9;
-    $("status").textContent = empty ? "The burette is empty. Refill it to keep going." : flow === "closed" ? "Stopcock closed." : "Stopcock open: " + flowName().toLowerCase() + ".";
+    $("status").textContent = empty ? t("The burette is empty. Refill it to keep going.") : flow === "closed" ? t("Stopcock closed.") : t("Stopcock open: {flow}.", {flow: flowName()});
     showApparatus(now);
     drawGraph();
   }
@@ -288,15 +300,16 @@
     var name = M.color(setup.indicator, pHnow()).name;
     if (name !== colorName && setup.indicator !== "none") {
       colorName = name;
-      if (flow !== "closed") announce("The solution turned " + name + " at " + M.fmt(added) + " mL.");
+      if (flow !== "closed") announce(t("The solution turned {color} at {v} mL.", {color: name, v: M.fmt(added)}));
     }
     if (reading() >= M.BURETTE - 1e-9) {
       setFlow("closed", true);
-      announce("The burette is empty at " + M.fmt(added) + " mL added. Refill it to keep going.");
+      announce(t("The burette is empty at {v} mL added. Refill it to keep going.", {v: M.fmt(added)}));
     }
     return true;
   }
-  function state() { return M.fmt(added) + " mL added, pH " + M.fmt(pHnow()) + (setup.indicator === "none" ? "" : ", " + M.color(setup.indicator, pHnow()).name); }
+  function stateValues() { return {v: M.fmt(added), pH: M.fmt(pHnow()), color: M.color(setup.indicator, pHnow()).name}; }
+  function noColor() { return setup.indicator === "none"; }
 
   // One animation loop at most: frameId is the pending frame, cancelled whenever the loop is not needed, and a new
   // frame is only requested when none is pending.
@@ -317,15 +330,15 @@
     if (flow !== "closed" || drop) frameId = window.requestAnimationFrame(tick);
   }
   function setFlow(id, quiet) {
-    if (id !== "closed" && reading() >= M.BURETTE - 1e-9) { announce("The burette is empty. Refill it first."); return; }
+    if (id !== "closed" && reading() >= M.BURETTE - 1e-9) { announce(t("The burette is empty. Refill it first.")); return; }
     var was = flow;
     flow = id;
     dropClock = 0;
     if (id === "closed" && was !== "closed") {
       if (added > lastLog) log();
-      if (!quiet) announce("Stopcock closed at " + state() + ".");
+      if (!quiet) announce(t(noColor() ? "Stopcock closed at {v} mL added, pH {pH}." : "Stopcock closed at {v} mL added, pH {pH}, {color}.", stateValues()));
       printSummary();
-    } else if (id !== "closed" && !quiet) announce("Stopcock open: " + flowName().toLowerCase() + ".");
+    } else if (id !== "closed" && !quiet) announce(t("Stopcock open: {flow}.", {flow: flowName()}));
     if (id !== "closed") loop();
     show();
   }
@@ -338,18 +351,18 @@
     $("flows").appendChild(b);
   });
   $("drop").addEventListener("click", function () {
-    if (!deliver(M.DROP, true)) { announce("The burette is empty. Refill it first."); return; }
+    if (!deliver(M.DROP, true)) { announce(t("The burette is empty. Refill it first.")); return; }
     drop = {start: window.performance.now()};
     loop();
     show();
     printSummary();
-    announce("One drop. " + state() + ".");
+    announce(t(noColor() ? "One drop. {v} mL added, pH {pH}." : "One drop. {v} mL added, pH {pH}, {color}.", stateValues()));
   });
   $("refill").addEventListener("click", function () {
     setFlow("closed", true);
     refilled = added;
     show();
-    announce("Burette refilled to 0.00 mL. " + M.fmt(added) + " mL added so far.");
+    announce(t("Burette refilled to 0.00 mL. {v} mL added so far.", {v: M.fmt(added)}));
   });
   document.addEventListener("visibilitychange", function () { last = 0; });
 
@@ -362,25 +375,25 @@
     added = 0; refilled = 0; points = []; lastLog = 0; endpoint = null; shown = false;
     log();
     colorName = M.color(setup.indicator, pHnow()).name;
-    $("endpoint-text").textContent = "No endpoint recorded yet.";
+    $("endpoint-text").textContent = t("No endpoint recorded yet.");
     $("feedback").hidden = true;
     $("keypoints").hidden = true;
     $("show").setAttribute("aria-pressed", "false");
-    $("show").textContent = "Show key points";
+    $("show").textContent = t("Show key points");
     buildQuestions();
     redraw();
   }
   $("restart").addEventListener("click", function () {
     restart();
-    announce("Started over with the same solutions. The burette is full and nothing has been added.");
+    announce(t("Started over with the same solutions. The burette is full and nothing has been added."));
   });
 
   // ---------- Analysis ----------
   $("endpoint").addEventListener("click", function () {
-    if (added === 0) { announce("Add titrant before you record an endpoint."); $("endpoint-text").textContent = "Add titrant before you record an endpoint."; return; }
+    if (added === 0) { announce(t("Add titrant before you record an endpoint.")); $("endpoint-text").textContent = t("Add titrant before you record an endpoint."); return; }
     var p = pHnow();
     endpoint = {v: added, pH: p, name: M.color(setup.indicator, p).name};
-    var text = "Endpoint recorded at " + M.fmt(added) + " mL (pH " + M.fmt(p) + (setup.indicator === "none" ? "" : ", " + endpoint.name) + ").";
+    var text = t(noColor() ? "Endpoint recorded at {v} mL (pH {pH})." : "Endpoint recorded at {v} mL (pH {pH}, {color}).", {v: M.fmt(added), pH: M.fmt(p), color: endpoint.name});
     $("endpoint-text").textContent = text;
     redraw();
     announce(text);
@@ -390,7 +403,7 @@
     clear(box);
     M.questions(setup, unknown).forEach(function (q) {
       var lab = node("label", "zsa-ti-question");
-      lab.appendChild(node("span", "", q.label + (q.unit ? " (" + q.unit + ")" : "")));
+      lab.appendChild(node("span", "", q.unit ? t("{label} ({unit})", {label: q.label, unit: q.unit}) : q.label));
       var input = node("input", "zsa-ti-input");
       input.type = "number";
       input.step = "any";
@@ -407,25 +420,28 @@
     });
     var results = M.check(setup, unknown, answers), box = $("feedback");
     clear(box);
-    box.appendChild(node("h3", "", "Your answers"));
+    box.appendChild(node("h3", "", t("Your answers")));
     results.forEach(function (r) { box.appendChild(node("p", r.ok ? "zsa-ti-ok" : "zsa-ti-notyet", r.text)); });
     box.hidden = false;
     var right = results.filter(function (r) { return r.ok; }).length;
-    announce(right + " of " + results.length + " correct. " + results.map(function (r) { return r.text; }).join(" "));
+    announce(t("{right} of {total} correct.", {right: right, total: results.length}) + " " + results.map(function (r) { return r.text; }).join(" "));
   });
   function showKeyPoints() {
     var box = $("keypoints"), kp = M.keyPoints(setup), a = M.species(setup.analyte);
     clear(box);
-    box.appendChild(node("h3", "", "Key points"));
+    box.appendChild(node("h3", "", t("Key points")));
     var dl = node("dl", "zsa-ti-keylist");
     function row(term, value) { dl.appendChild(node("dt", "", term)); dl.appendChild(node("dd", "", value)); }
-    row("Equivalence point", M.fmt(kp.veq) + " mL, pH " + M.fmt(kp.pHeq));
-    if (kp.weak) row("Half-equivalence point", M.fmt(kp.half) + " mL, pH " + M.fmt(kp.pHhalf) + " (pKa" + (a.type === "base" ? " of " + a.ion : "") + " = " + M.fmt(kp.pKa) + ")");
-    row("Starting pH", M.fmt(kp.start));
-    if (unknown) row("Analyte concentration", M.fmt(setup.ca, 3) + " M");
+    row(t("Equivalence point"), M.fmt(kp.veq) + " mL, pH " + M.fmt(kp.pHeq));
+    if (kp.weak) {
+      var halfValues = {v: M.fmt(kp.half), pH: M.fmt(kp.pHhalf), ion: a.ion, pKa: M.fmt(kp.pKa)};
+      row(t("Half-equivalence point"), t(a.type === "base" ? "{v} mL, pH {pH} (pKa of {ion} = {pKa})" : "{v} mL, pH {pH} (pKa = {pKa})", halfValues));
+    }
+    row(t("Starting pH"), M.fmt(kp.start));
+    if (unknown) row(t("Analyte concentration"), M.fmt(setup.ca, 3) + " M");
     if (endpoint) {
-      var diff = endpoint.v - kp.veq;
-      row("Your endpoint", M.fmt(endpoint.v) + " mL, " + (Math.abs(diff) < 0.005 ? "at" : M.fmt(Math.abs(diff)) + " mL " + (diff < 0 ? "before" : "after")) + " the equivalence point");
+      var diff = endpoint.v - kp.veq, endValues = {v: M.fmt(endpoint.v), diff: M.fmt(Math.abs(diff))};
+      row(t("Your endpoint"), t(Math.abs(diff) < 0.005 ? "{v} mL, at the equivalence point" : diff < 0 ? "{v} mL, {diff} mL before the equivalence point" : "{v} mL, {diff} mL after the equivalence point", endValues));
     }
     box.appendChild(dl);
     box.appendChild(node("p", "", M.judgeIndicator(setup, setup.indicator).text));
@@ -435,19 +451,20 @@
   $("show").addEventListener("click", function () {
     shown = !shown;
     $("show").setAttribute("aria-pressed", String(shown));
-    $("show").textContent = shown ? "Hide key points" : "Show key points";
+    $("show").textContent = shown ? t("Hide key points") : t("Show key points");
     if (!shown) $("keypoints").hidden = true;
     redraw();
     if (shown) {
       var kp = M.keyPoints(setup);
-      announce("Key points shown. Equivalence at " + M.fmt(kp.veq) + " mL, pH " + M.fmt(kp.pHeq) + "." + (kp.weak ? " Half-equivalence at " + M.fmt(kp.half) + " mL, pH " + M.fmt(kp.pHhalf) + "." : ""));
-    } else announce("Key points hidden.");
+      var keyValues = {v: M.fmt(kp.veq), pH: M.fmt(kp.pHeq), half: M.fmt(kp.half), halfPH: M.fmt(kp.pHhalf)};
+      announce(t(kp.weak ? "Key points shown. Equivalence at {v} mL, pH {pH}. Half-equivalence at {half} mL, pH {halfPH}." : "Key points shown. Equivalence at {v} mL, pH {pH}.", keyValues));
+    } else announce(t("Key points hidden."));
   });
 
   // ---------- Reflection, printing and data ----------
   function printSummary() {
-    $("print-summary").textContent = "Titration: " + setupText() + ". Titrant added: " + M.fmt(added) + " mL, pH " + M.fmt(pHnow()) + "." +
-      (endpoint ? " Endpoint: " + M.fmt(endpoint.v) + " mL." : "");
+    var values = {setup: setupText(), v: M.fmt(added), pH: M.fmt(pHnow()), end: endpoint ? M.fmt(endpoint.v) : ""};
+    $("print-summary").textContent = t(endpoint ? "Titration: {setup}. Titrant added: {v} mL, pH {pH}. Endpoint: {end} mL." : "Titration: {setup}. Titrant added: {v} mL, pH {pH}.", values);
   }
   // A print copy of the reflection: a text area prints only its visible lines, a paragraph prints all of it.
   function mirrorReflection() { $("print-reflection").textContent = $("reflection").value; }
@@ -467,7 +484,7 @@
     link.click();
     root.removeChild(link);
     window.setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-    announce("Titration data downloaded as zornscience-titration-data.csv: " + data.length + " readings of volume and pH.");
+    announce(t("Titration data downloaded as zornscience-titration-data.csv: {n} readings of volume and pH.", {n: data.length}));
   });
 
   // ---------- Deep links and the back link ----------
