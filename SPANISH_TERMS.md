@@ -517,19 +517,15 @@ supernatant | sobrenadante
 vacuum filtration | filtración al vacío
 wash (a precipitate) | lavado (lavar)
 weighing (a measurement) | pesada
-appearance (physical property, station name) | apariencia
 conductivity | conductividad
 conductivity tester (solid conductivity tester) | conductímetro (conductímetro para sólidos)
 doping (semiconductor) | dopaje
 dull (surface) | opaco
 fracture / fractures (a solid) | fracturarse / se fractura
-goggles (safety) | gafas de seguridad
 HCl Waste (beaker label) | Residuos de HCl (SVG label "RESIDUOS DE HCl")
-malleability | maleabilidad
 metallic reflection | reflejo metálico
 pestle | pistilo
 pipette (noun) / to pipette | pipeta / pipetear
-probes (conductivity tester) | puntas (puntas de prueba)
 semiconductor behavior | se comporta como semiconductor
 sheet (a flattened metal) | lámina
 surface oxide layer | capa de óxido de la superficie
