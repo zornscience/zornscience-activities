@@ -2,12 +2,17 @@
   "use strict";
   var root = document.querySelector('[data-zsa-activity="iodine-clock-lab"]');
   if (!root) return;
+  var i18n;
+  root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: function (api) { i18n = api; }}}));
+  function t(text) { return i18n ? i18n.text(text) : text; }
   function el(id) { return root.querySelector("#zsa-th-share-" + id); }
   var toggle = el("toggle"), panel = el("panel");
   if (!toggle || !panel) return;
+  // The shared module keeps only ?lang=es and drops every other parameter and fragment.
   var url = "https://activities.zornscience.org/iodine-clock-lab/";
-  var title = "Iodine Clock Lab | ZornScience";
-  var description = "Prepare an iodine clock reaction, explore concentration and temperature, and try the 20-second challenge.";
+  url = i18n ? i18n.url(url) : url;
+  var title = t("Iodine Clock Lab") + " | ZornScience";
+  var description = t("Prepare an iodine clock reaction, explore concentration and temperature, and try the 20-second challenge.");
   el("url").value = url;
   el("email").href = "mailto:?subject=" + encodeURIComponent(title) + "&body=" + encodeURIComponent(description + "\n\n" + url);
   function close(restoreFocus) {
@@ -33,11 +38,11 @@
     try {
       if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error("Copy unavailable");
       await navigator.clipboard.writeText(url);
-      el("status").textContent = "Link copied.";
+      el("status").textContent = t("Link copied.");
     } catch (error) {
       el("url").focus();
       el("url").select();
-      el("status").textContent = "Link selected. Press Ctrl+C, or Command+C on a Mac, to copy it.";
+      el("status").textContent = t("Link selected. Press Ctrl+C, or Command+C on a Mac, to copy it.");
     }
   });
   if (typeof navigator.share === "function") {
@@ -45,9 +50,9 @@
     el("device").addEventListener("click", async function () {
       try {
         await navigator.share({title: title, text: description, url: url});
-        el("status").textContent = "Share options opened.";
+        el("status").textContent = t("Share options opened.");
       } catch (error) {
-        if (error.name !== "AbortError") el("status").textContent = "Use Copy link or email instead.";
+        if (error.name !== "AbortError") el("status").textContent = t("Use Copy link or email instead.");
       }
     });
   }
