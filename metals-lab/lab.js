@@ -3,6 +3,10 @@
   var root = document.querySelector('[data-zsa-activity="metals-lab"]');
   if (!root) return;
   function el(id) { return root.querySelector('#' + id); }
+  // Student text goes through t(): full templates from data.js, with English as the fallback.
+  var i18n;
+  root.dispatchEvent(new CustomEvent('zsa:request-i18n', {detail:{receive:function (api) { i18n = api; }}}));
+  function t(text, values) { return i18n ? i18n.text(text, values) : text.replace(/\{(\w+)\}/g, function (m, k) { return values && values[k] !== undefined ? values[k] : m; }); }
   var NS = 'http://www.w3.org/2000/svg';
   var sample = 'A', station = 'appearance', strikes = 0, contact = false;
   var acid = 'empty', elapsed = 0, paused = false, lastFrame = 0, generation = 0, timer = null;
@@ -29,7 +33,7 @@
     el('dispose').disabled = acid !== 'complete';
     setHidden(el('fresh-tube'), acid !== 'disposed');
     setHidden(el('pause'), acid !== 'running');
-    el('pause').textContent = paused ? 'Resume observation' : 'Pause observation';
+    el('pause').textContent = t(paused ? 'Resume observation' : 'Pause observation');
     setHidden(el('acid-liquid'), !['ready','adding','running','complete','disposing'].includes(acid));
     setHidden(el('meniscus'), el('acid-liquid').hasAttribute('hidden'));
     setHidden(el('tube-solid'), !['running','complete','disposing'].includes(acid));
@@ -46,16 +50,16 @@
     el('temperature').textContent = (22 + warming).toFixed(1) + ' °C';
     el('tube-solid').setAttribute('transform','translate(406 338) scale(' + (sample === 'A' ? .31 - .1 * Math.min(elapsed / 300, 1) : .31) + ')');
     var states = {empty:'EMPTY TUBE',pipetting:'PIPETTING ACID',ready:'3 mL HCl / READY FOR SOLID',adding:'ADDING FRESH SOLID',running:paused ? 'OBSERVATION PAUSED' : 'OBSERVING / 20× TIME',complete:'OBSERVATION COMPLETE',disposing:'POURING INTO WASTE',disposed:'WASTE COLLECTED'};
-    el('scene-state').textContent = states[acid];
+    el('scene-state').textContent = t(states[acid]);
     setAcidLocks();
   }
   function acidObservation() {
     if (sample === 'A') {
-      if (elapsed < 35) return 'The solid sits in clear acid. There is little visible change at first while the surface oxide layer is attacked.';
-      if (elapsed < 180) return 'Small bubbles form on the solid and rise through the liquid. Gas formation is evidence of a chemical reaction; the tube begins to warm.';
-      return 'Persistent gas bubbles rise from the shrinking solid. The temperature has risen; the liquid remains clear, with no new precipitate. The original solid is not a precipitate.';
+      if (elapsed < 35) return t('The solid sits in clear acid. There is little visible change at first while the surface oxide layer is attacked.');
+      if (elapsed < 180) return t('Small bubbles form on the solid and rise through the liquid. Gas formation is evidence of a chemical reaction; the tube begins to warm.');
+      return t('Persistent gas bubbles rise from the shrinking solid. The temperature has risen; the liquid remains clear, with no new precipitate. The original solid is not a precipitate.');
     }
-    return sample === 'B' ? 'The yellow solid remains in the clear acid. No persistent bubbles, new color, warming, or new precipitate appear during this observation.' : 'The gray solid remains in the clear acid. No persistent bubbles, new color, warming, or new precipitate appear during this observation.';
+    return t(sample === 'B' ? 'The yellow solid remains in the clear acid. No persistent bubbles, new color, warming, or new precipitate appear during this observation.' : 'The gray solid remains in the clear acid. No persistent bubbles, new color, warming, or new precipitate appear during this observation.');
   }
   function buildFragments() {
     el('fragments').replaceChildren();
@@ -72,20 +76,20 @@
     generation++; clearTimeout(timer); cleanAnimation(); strikes = 0; contact = false; acid = 'empty'; elapsed = 0; paused = false; lastFrame = 0;
     root.querySelectorAll('.solid-holder').forEach(cloneSolid); cloneSolid(el('tube-solid')); cloneSolid(el('falling-solid')); buildFragments();
     setHidden(el('fragments'), true); setHidden(el('flattened'), true); setHidden(el('mortar-solid'), false);
-    el('press').disabled = false; el('press').textContent = 'Press with pestle'; el('fresh-mortar').disabled = false;
-    el('meter-value').textContent = 'OPEN'; el('meter-led').setAttribute('fill','#3b4637'); el('contact').textContent = 'Touch probes to solid';
+    el('press').disabled = false; el('press').textContent = t('Press with pestle'); el('fresh-mortar').disabled = false;
+    el('meter-value').textContent = t('OPEN'); el('meter-led').setAttribute('fill','#3b4637'); el('contact').textContent = t('Touch probes to solid');
     ['appearance','malleability','conductivity','acid'].forEach(function (key) { setHidden(el(key + '-scene'), key !== station); setHidden(el(key + '-controls'), key !== station); });
-    el('station-title').textContent = titles[station]; el('sample-badge').textContent = 'UNKNOWN ' + sample; el('equipment').textContent = equipment[station];
-    el('scene-title').textContent = titles[station] + ' station, Unknown ' + sample;
-    el('scene-desc').textContent = {appearance:'A solid on a glass watch glass under an inspection lamp.',malleability:'A solid inside a porcelain mortar with a pestle above it.',conductivity:'Two probes and a sensitive solid conductivity tester next to a solid sample.',acid:'A test tube in a wooden rack, a pipette, dilute hydrochloric acid, and a waste beaker.'}[station];
+    el('station-title').textContent = t(titles[station]); el('sample-badge').textContent = t('UNKNOWN {sample}', {sample:sample}); el('equipment').textContent = t(equipment[station]);
+    el('scene-title').textContent = t({appearance:'Appearance station, Unknown {sample}',malleability:'Malleability station, Unknown {sample}',conductivity:'Conductivity station, Unknown {sample}',acid:'Reaction with HCl station, Unknown {sample}'}[station], {sample:sample});
+    el('scene-desc').textContent = t({appearance:'A solid on a glass watch glass under an inspection lamp.',malleability:'A solid inside a porcelain mortar with a pestle above it.',conductivity:'Two probes and a sensitive solid conductivity tester next to a solid sample.',acid:'A test tube in a wooden rack, a pipette, dilute hydrochloric acid, and a waste beaker.'}[station]);
     root.querySelectorAll('[data-sample]').forEach(function (btn) { btn.setAttribute('aria-pressed',String(btn.dataset.sample === sample)); });
     root.querySelectorAll('[data-station]').forEach(function (btn) { btn.setAttribute('aria-pressed',String(btn.dataset.station === station)); });
-    el('scene-state').textContent = {appearance:'READY TO INSPECT',malleability:'FRESH SOLID IN MORTAR',conductivity:'PROBES DISCONNECTED',acid:'EMPTY TUBE'}[station];
-    el('clock').textContent = 'FRESH PORTION';
+    el('scene-state').textContent = t({appearance:'READY TO INSPECT',malleability:'FRESH SOLID IN MORTAR',conductivity:'PROBES DISCONNECTED',acid:'EMPTY TUBE'}[station]);
+    el('clock').textContent = t('FRESH PORTION');
     if (station === 'appearance') { el('light-angle').value = '50'; light(); }
-    if (station === 'malleability') say('A fresh portion of Unknown ' + sample + ' is in the mortar. Press with the pestle and watch whether it flattens or fractures.');
-    if (station === 'conductivity') say('The circuit is open. Bring both probes into direct contact with Unknown ' + sample + ' to test the solid itself.');
-    if (station === 'acid') { updateAcid(); say('Start with a clean test tube. Use the pipette to add 3 mL of 0.65 M hydrochloric acid before adding the solid.'); }
+    if (station === 'malleability') say(t('A fresh portion of Unknown {sample} is in the mortar. Press with the pestle and watch whether it flattens or fractures.', {sample:sample}));
+    if (station === 'conductivity') say(t('The circuit is open. Bring both probes into direct contact with Unknown {sample} to test the solid itself.', {sample:sample}));
+    if (station === 'acid') { updateAcid(); say(t('Start with a clean test tube. Use the pipette to add 3 mL of 0.65 M hydrochloric acid before adding the solid.')); }
     else setAcidLocks();
   }
   function light() {
@@ -94,7 +98,7 @@
     el('light-pool').setAttribute('cx',String(330 + value * 2.1));
     var solid = el('appearance-scene').querySelector('.solid-holder');
     solid.setAttribute('opacity',String(sample === 'B' ? .95 : .72 + .28 * (1 - Math.abs(value - (sample === 'A' ? 42 : 62)) / 100)));
-    say(samples[sample].appearance);
+    say(t(samples[sample].appearance));
   }
   root.querySelectorAll('[data-sample]').forEach(function (btn) { btn.addEventListener('click',function () { if (acidBusy()) return; sample = btn.dataset.sample; restore(); }); });
   root.querySelectorAll('[data-station]').forEach(function (btn) { btn.addEventListener('click',function () { if (acidBusy()) return; station = btn.dataset.station; restore(); }); });
@@ -102,39 +106,39 @@
   el('fresh-mortar').addEventListener('click',restore);
   el('press').addEventListener('click',function () {
     strikes++; root.classList.add('pressing'); el('press').disabled = true; el('fresh-mortar').disabled = true;
-    say('Applying pressure with the porcelain pestle…'); el('scene-state').textContent = 'TESTING MALLEABILITY';
+    say(t('Applying pressure with the porcelain pestle…')); el('scene-state').textContent = t('TESTING MALLEABILITY');
     defer(function () {
       root.classList.remove('pressing'); setHidden(el('mortar-solid'), true);
       setHidden(el('flattened'), sample !== 'A'); setHidden(el('fragments'), sample === 'A');
       el('flattened').setAttribute('rx',String(65 + Math.min(strikes,3) * 10));
       el('flattened').setAttribute('ry',String(16 - Math.min(strikes,3) * 2));
       if (strikes > 1 && sample !== 'A') el('fragments').querySelectorAll('g > g').forEach(function (g) { g.setAttribute('transform','scale(.7)'); });
-      say(samples[sample].mechanical); el('scene-state').textContent = sample === 'A' ? 'SOLID FLATTENS' : 'SOLID FRACTURES';
-      el('press').disabled = strikes >= 3; el('press').textContent = strikes >= 3 ? 'Test complete' : 'Press again'; el('fresh-mortar').disabled = false;
+      say(t(samples[sample].mechanical)); el('scene-state').textContent = t(sample === 'A' ? 'SOLID FLATTENS' : 'SOLID FRACTURES');
+      el('press').disabled = strikes >= 3; el('press').textContent = t(strikes >= 3 ? 'Test complete' : 'Press again'); el('fresh-mortar').disabled = false;
     },reduced.matches ? 100 : 1950);
   });
   el('contact').addEventListener('click',function () {
     contact = !contact; root.classList.toggle('contacted',contact);
-    el('meter-value').textContent = contact ? samples[sample].current : 'OPEN'; el('meter-led').setAttribute('fill',contact ? samples[sample].led : '#3b4637');
-    el('contact').textContent = contact ? 'Lift probes' : 'Touch probes to solid';
-    el('scene-state').textContent = contact ? 'BOTH PROBES TOUCHING SOLID' : 'PROBES DISCONNECTED';
-    say(contact ? samples[sample].conductivity : 'The probes are lifted. The circuit is open and the tester no longer detects current.');
+    el('meter-value').textContent = t(contact ? samples[sample].current : 'OPEN'); el('meter-led').setAttribute('fill',contact ? samples[sample].led : '#3b4637');
+    el('contact').textContent = t(contact ? 'Lift probes' : 'Touch probes to solid');
+    el('scene-state').textContent = t(contact ? 'BOTH PROBES TOUCHING SOLID' : 'PROBES DISCONNECTED');
+    say(t(contact ? samples[sample].conductivity : 'The probes are lifted. The circuit is open and the tester no longer detects current.'));
   });
   el('add-acid').addEventListener('click',function () {
     if (acid !== 'empty') return;
-    acid = 'pipetting'; root.classList.add('pipetting'); updateAcid(); say('Pipetting 3 mL of 0.65 M HCl into the test tube.');
-    defer(function () { acid = 'ready'; root.classList.remove('pipetting'); updateAcid(); say('The test tube contains 3 mL of clear 0.65 M HCl. Add a small, fresh portion of Unknown ' + sample + '.'); },reduced.matches ? 100 : 1300);
+    acid = 'pipetting'; root.classList.add('pipetting'); updateAcid(); say(t('Pipetting 3 mL of 0.65 M HCl into the test tube.'));
+    defer(function () { acid = 'ready'; root.classList.remove('pipetting'); updateAcid(); say(t('The test tube contains 3 mL of clear 0.65 M HCl. Add a small, fresh portion of Unknown {sample}.', {sample:sample})); },reduced.matches ? 100 : 1300);
   });
   el('add-solid').addEventListener('click',function () {
     if (acid !== 'ready') return;
-    acid = 'adding'; root.classList.add('adding-solid'); updateAcid(); say('Adding a small portion of Unknown ' + sample + ' to the acid.');
+    acid = 'adding'; root.classList.add('adding-solid'); updateAcid(); say(t('Adding a small portion of Unknown {sample} to the acid.', {sample:sample}));
     defer(function () { acid = 'running'; root.classList.remove('adding-solid'); lastFrame = 0; updateAcid(); say(acidObservation()); },reduced.matches ? 100 : 1100);
   });
   el('pause').addEventListener('click',function () { paused = !paused; lastFrame = 0; updateAcid(); });
   el('dispose').addEventListener('click',function () {
     if (acid !== 'complete') return;
-    acid = 'disposing'; root.classList.add('disposing'); updateAcid(); say('Pouring the acid and remaining solid into the beaker labeled HCl Waste.');
-    defer(function () { acid = 'disposed'; root.classList.remove('disposing'); updateAcid(); say('The acid and remaining solid are in HCl Waste. The tube is empty. You can start a fresh tube, choose another test, or investigate another unknown.'); },reduced.matches ? 100 : 1700);
+    acid = 'disposing'; root.classList.add('disposing'); updateAcid(); say(t('Pouring the acid and remaining solid into the beaker labeled HCl Waste.'));
+    defer(function () { acid = 'disposed'; root.classList.remove('disposing'); updateAcid(); say(t('The acid and remaining solid are in HCl Waste. The tube is empty. You can start a fresh tube, choose another test, or investigate another unknown.')); },reduced.matches ? 100 : 1700);
   });
   el('fresh-tube').addEventListener('click',restore);
   function frame(now) {
@@ -148,7 +152,7 @@
         var phase = reduced.matches ? (j / 16) : ((elapsed / 32 + j / 16) % 1);
         b.setAttribute('cx',String(389 + (j * 13 % 34) + Math.sin(j + phase * 5) * 3)); b.setAttribute('cy',String(339 - phase * 66)); b.setAttribute('opacity',String(1 - phase * .7));
       });
-      if (elapsed >= 300) { acid = 'complete'; updateAcid(); say('Five-minute observation complete. ' + acidObservation() + ' Dispose of the mixture in HCl Waste.'); }
+      if (elapsed >= 300) { acid = 'complete'; updateAcid(); say(t('Five-minute observation complete. {observation} Dispose of the mixture in HCl Waste.', {observation:acidObservation()})); }
     } else lastFrame = 0;
     window.requestAnimationFrame(frame);
   }

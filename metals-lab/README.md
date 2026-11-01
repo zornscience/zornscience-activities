@@ -1,6 +1,6 @@
 # Metals, Nonmetals & Metalloids Lab
 
-Version: 1.0.2
+Version: 1.1.0
 
 Standalone, buildless simulation of the four tests in the supplied Unit 1 lab. The PDF's pre-lab questions, graded prompts, data tables, and post-lab response fields are deliberately excluded. Header branding, Instructions dialog, canonical Share link, email, device sharing, clipboard fallback, and embed behavior follow the Equilibrium Sandbox. Homepage route: `/metals-lab/`.
 
@@ -21,3 +21,7 @@ Equipment is original shaded SVG artwork with glass, metal and porcelain gradien
 `node --check metals-lab/lab.js` and `npx playwright test tests/e2e/metals-lab.spec.js`.
 
 The browser checks investigate all three samples, enforce acid → solid → observation → waste, verify pause, protect acid mixtures from sample switches, verify strong/none/weak current, cancel stale animations, check instructions and share focus, run axe, and check a 390px mobile viewport. Shared files are unchanged.
+
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the fallback. All student text, observations, bench status lines, SVG labels, title and description, meter readings, accessible labels and the share title, description and link use the activity's `data.js`, and every sentence is one full template with placeholders (for example the sample letter), so Spanish keeps its own word order. In Spanish the share link carries `?lang=es`. Formulas, concentrations, volumes, temperatures and decimal points stay unchanged. Spanish-only CSS (`:lang(es)`) lets the longer labels fit the tester panel, the waste beaker label and narrow screens. The language links reload the page, so a test in progress starts over. See `../SPANISH_TERMS.md` for choices beyond the supplied glossary.
