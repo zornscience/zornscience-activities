@@ -10,6 +10,10 @@
   root.dispatchEvent(new CustomEvent("zsa-gl:request-physics", {detail: {receive: function (value) { phys = value; }}}));
   if (!data || !phys) return;
   var ui = data.lab, R = phys.RANGES;
+  // Words written here in the scripts (not in data.js) go through t(), which falls back to English.
+  var i18n;
+  root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: function (api) { i18n = api; }}}));
+  function t(text, values) { return i18n ? i18n.text(text, values) : fill(text, values || {}); }
 
   function $(id) { return root.querySelector("#zsa-gl-" + id); }
   function node(tag, cls, text) {
@@ -197,7 +201,7 @@
     range.disabled = disabled; num.disabled = disabled;
     range.setAttribute("aria-valuetext", num.value + " " + (range.getAttribute("data-unit") || ""));
   }
-  rangeV.setAttribute("data-unit", "liters"); rangeT.setAttribute("data-unit", "kelvins");
+  rangeV.setAttribute("data-unit", t("liters")); rangeT.setAttribute("data-unit", t("kelvins"));
   function renderControls() {
     var r = R[state.mode];
     [rangeV, numV].forEach(function (el) { el.min = r.V[0]; el.max = r.V[1]; el.step = r.Vstep; });
@@ -213,7 +217,7 @@
       var off = mix && g.gas === "none";
       row.nrow.hidden = off;
       if (!off) {
-        row.range.setAttribute("data-unit", "moles");
+        row.range.setAttribute("data-unit", t("moles"));
         setPair(row.range, row.num, g.n, 2, false);
       }
     });
@@ -297,12 +301,12 @@
       body.appendChild(tr); sum += pi; parts.push(pi.toFixed(digits));
     });
     var totalRow = node("tr", "zsa-gl-total");
-    var th = node("th", "", "Total"); th.scope = "row"; totalRow.appendChild(th);
+    var th = node("th", "", t("Total")); th.scope = "row"; totalRow.appendChild(th);
     totalRow.appendChild(node("td", "", total.toFixed(2)));
     totalRow.appendChild(node("td", "", "1.000"));
     totalRow.appendChild(node("td", "", P.toFixed(digits) + " " + ui.atm));
     body.appendChild(totalRow);
-    $("mix-sum").textContent = "P total = " + parts.join(" + ") + " = " + sum.toFixed(digits) + " " + ui.atm + ". Each gas's partial pressure is its mole fraction times the total.";
+    $("mix-sum").textContent = t("P total = {parts} = {sum} {atm}. Each gas's partial pressure is its mole fraction times the total.", {parts: parts.join(" + "), sum: sum.toFixed(digits), atm: ui.atm});
   }
   function renderReal(real) {
     var box = $("real");
@@ -557,7 +561,7 @@
     onChange: function (fn) { listeners.push(fn); },
     selectTab: function (id) { selectTab($("tab-" + id), false); },
     playing: function () { return playing; },
-    format: {sig: sig, fixed: fixed, group: group, p: pText, fill: fill, node: node}
+    format: {sig: sig, fixed: fixed, group: group, p: pText, fill: fill, node: node, t: t}
   };
   root.addEventListener("zsa-gl:request-lab", function (event) { event.detail.receive(api); });
 

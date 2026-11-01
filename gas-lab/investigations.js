@@ -74,7 +74,7 @@
     if (quantity === "ke") return f.sig(x, 3) + " kJ/mol";
     if (quantity === "speed") return f.group(x) + " m/s";
     if (quantity === "z") return x.toFixed(3);
-    if (quantity === "ratio") return x === 1 ? "1 time (the same speed)" : f.sig(x, 2) + " times";
+    if (quantity === "ratio") return x === 1 ? f.t("1 time (the same speed)") : f.t("{x} times", {x: f.sig(x, 2)});
     return String(x);
   }
   function numbers(task) {
