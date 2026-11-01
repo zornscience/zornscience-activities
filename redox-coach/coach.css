@@ -120,3 +120,6 @@ button.zsa-rx-token:hover { background: #e7f4fc; }
   .zsa-rx-instructions {padding:18px 15px;font-size:14px;}
   .zsa-rx-instructions-heading h2 {font-size:20px;}
 }
+
+/* Mexican Spanish: the longer problem names fit the menu on narrow phones. */
+@media (max-width: 380px) { .zsa-rx:lang(es) select { font-size: 14px; } }
