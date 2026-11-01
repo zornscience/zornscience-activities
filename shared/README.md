@@ -95,7 +95,7 @@ Helpers on `zsa`: `node`, `button`, `cap`, `shuffle`, `chargeLabel` (2+, 3− wi
 
 ### Labels
 
-The engine's words have English defaults (`zsa.LABELS`). Pass every word your activity says differently in `labels`: `next`, `complete`, `singleDone`, `firstTry`, `itemLabel`, `singleLabel` and `currentMark` are usually activity-specific. Keep them in `data.js` so all student-facing text is in one file. The completion code words (`codeLabel`, `copyCode`, `codeCopied`, `codeSelected`, `codeReady`, `codeNote`) are the same in every activity and use the defaults.
+The engine's words have English defaults (`zsa.LABELS`). Pass every word your activity says differently in `labels`: `next`, `complete`, `singleDone`, `firstTry`, `itemLabel`, `singleLabel` and `currentMark` are usually activity-specific. The progress line is one full template, `progress` (default `"{label} {number} of {total} · Step {step} of {steps}"`), so a translation can reorder its words. Keep them in `data.js` so all student-facing text is in one file. The completion code words (`codeLabel`, `copyCode`, `codeCopied`, `codeSelected`, `codeReady`, `codeNote`) are the same in every activity and use the defaults.
 
 ## Completion codes
 

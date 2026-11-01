@@ -118,7 +118,7 @@
         singleDone: "Chosen structure complete", firstTry: "First-try correct on original structures", review: "Keep practicing",
         none: "You completed every original step on the first try.", again: "Practice again", misses: "Practice my misses",
         repeatNote: "Review items do not change the first-try counts.", itemLabel: "Structure", reviewLabel: "Review",
-        singleLabel: "Chosen structure", of: "of", stepLabel: "Step", trailLabel: "Your answers so far", correctMark: "Correct: ",
+        singleLabel: "Chosen structure", trailLabel: "Your answers so far", correctMark: "Correct: ",
         shownMark: "Shown: ", triedMark: " (tried, not correct)", currentMark: " (in this structure)", hintMark: " (hint)",
         chargeMark: "ion charge", tableCaption: "Main-group elements by group (column) and period (row)", periodLabel: "Period"
       },

@@ -218,6 +218,9 @@ var ui = {
   actinides: "Actinides",
   placeholder: {6: ["57-71", "Lanthanides, atomic numbers 57 to 71, in the first row below the table"], 7: ["89-103", "Actinides, atomic numbers 89 to 103, in the second row below the table"]},
   atomicNumber: "atomic number",
+  // Spoken table headers, as full templates so each language orders the words naturally.
+  groupHeader: "group {n}",
+  periodHeader: "period {n}",
   selected: "selected",
   match: "search match",
   found: "Found {name}. Press Enter for details.",

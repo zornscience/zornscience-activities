@@ -22,6 +22,11 @@
   }
   function blockLabel(block) { return ui.blocks.find(function (pair) { return pair[0] === block; })[1]; }
   function fill(template, ctx) { return template.replace(/\{(\w+)\}/g, function (m, k) { return ctx[k]; }); }
+  // A header shows its number and is read as one full phrase, such as "group 1" or "grupo 1".
+  function headerText(th, n, template) {
+    var shown = node("span", "", String(n)); shown.setAttribute("aria-hidden", "true");
+    th.appendChild(shown); th.appendChild(node("span", "zsa-sr-only", fill(template, {n: n})));
+  }
   // Charges number first with a true minus sign: 2+, 1−.
   function chargeLabel(q) { return Math.abs(q) + (q > 0 ? "+" : "−"); }
 
@@ -70,7 +75,7 @@
     grid.setAttribute("aria-label", ui.gridLabel);
     var head = node("thead"), hr = node("tr");
     var corner = node("td", "zsa-pt-corner"); hr.appendChild(corner);
-    for (var g = 1; g <= 18; g++) { var th = node("th", "zsa-pt-colhead", String(g)); th.scope = "col"; th.appendChild(node("span", "zsa-sr-only", " " + ui.details.group.toLowerCase())); hr.appendChild(th); }
+    for (var g = 1; g <= 18; g++) { var th = node("th", "zsa-pt-colhead"); th.scope = "col"; headerText(th, g, ui.groupHeader); hr.appendChild(th); }
     head.appendChild(hr); grid.appendChild(head);
     var body = node("tbody");
     for (var r = 1; r <= 9; r++) {
@@ -80,7 +85,7 @@
       }
       var tr = node("tr", r >= 8 ? "zsa-pt-frow" : "");
       var rh;
-      if (r <= 7) { rh = node("th", "zsa-pt-rowhead", String(r)); rh.appendChild(node("span", "zsa-sr-only", " " + ui.details.period.toLowerCase())); }
+      if (r <= 7) { rh = node("th", "zsa-pt-rowhead"); headerText(rh, r, ui.periodHeader); }
       else { rh = node("th", "zsa-pt-rowhead zsa-pt-flabel", r === 8 ? ui.lanthanides : ui.actinides); rh.colSpan = 3; }
       rh.scope = "row"; tr.appendChild(rh);
       for (var c = r >= 8 ? 3 : 1; c <= 18; c++) {

@@ -136,8 +136,8 @@ tin(II) ion | ion de estaño(II)
 tin(IV) ion | ion de estaño(IV)
 titanium(III) ion | ion de titanio(III)
 titanium(IV) ion | ion de titanio(IV)
-tungsten(IV) ion | ion de wolframio(IV)
-tungsten(VI) ion | ion de wolframio(VI)
+tungsten(IV) ion | ion de tungsteno(IV)
+tungsten(VI) ion | ion de tungsteno(VI)
 uranium(IV) ion | ion de uranio(IV)
 uranium(VI) ion | ion de uranio(VI)
 vanadium(III) ion | ion de vanadio(III)
@@ -147,7 +147,7 @@ yttrium ion | ion de itrio
 zinc ion | ion de zinc
 zirconium ion | ion de zirconio
 
-## Additional interface labels and fragments
+## Additional interface labels
 
 English | Spanish
 --- | ---
@@ -176,11 +176,9 @@ Block | Bloque
 Block (s, p, d, f) | Bloque (s, p, d, f)
 Both hints shown | Ya se mostraron ambas pistas
 Carbonate | Carbonato
-Card | Tarjeta
 Cards rated | Tarjetas evaluadas
 Cards recalled | Tarjetas recordadas
 Category | Categoría
-Charge | Carga
 Check answer | Revisar respuesta
 Chlorate | Clorato
 Chlorine family · 4 ions | Familia del cloro · 4 iones
@@ -227,7 +225,6 @@ Formula + charge → name | Fórmula + carga → nombre
 Full screen | Pantalla completa
 Gain | Gana
 Gain or lose | Ganancia o pérdida
-Gains | Gana
 Group | Grupo
 Here’s how you did | Estos son tus resultados
 Hint | Pista
@@ -243,7 +240,6 @@ Keep practicing | Sigue practicando
 Lanthanides | Lantánidos
 Liquid | Líquido
 Lose | Pierde
-Loses | Pierde
 Metal, nonmetal, metalloid | Metal, no metal, metaloide
 Mix both directions | Combinar ambas direcciones
 Mixed practice | Práctica mixta
@@ -287,7 +283,6 @@ Review | Repaso
 Review complete | Repaso terminado
 Review element | Elemento de repaso
 Review missed ions → | Repasar los iones con errores →
-Review · | Repaso ·
 Round complete | Ronda terminada
 Same number of electrons as | Mismo número de electrones que
 Scroll sideways for more → | Desplázate hacia los lados para ver más →
@@ -309,7 +304,6 @@ Start a new round | Iniciar una ronda nueva
 Start flashcards → | Iniciar tarjetas de estudio →
 Start quiz → | Iniciar preguntas →
 State at room temperature | Estado a temperatura ambiente
-Step | Paso
 Study mode | Modo de estudio
 Sulfate | Sulfato
 Sulfite | Sulfito
@@ -322,23 +316,16 @@ Your answers so far | Tus respuestas hasta ahora
 ZornScience home | Inicio de ZornScience
 card | tarjeta
 cards | tarjetas
-correct out of | correctas de
 d-block | bloque d
 decreases | disminuye
 f-block | bloque f
 increases | aumenta
 kilojoules per mole | kilojoules por mol
-left | restantes
-like | como
 no data | sin datos
-of | de
 p-block | bloque p
-points · | puntos ·
-recalled | recordadas
 s-block | bloque s
 search match | coincidencia de búsqueda
 selected | seleccionado
-streak | seguidas
 {count} card left | {count} tarjeta restante
 {count} cards left | {count} tarjetas restantes
 {low} to {high} | {low} a {high}
@@ -349,9 +336,37 @@ streak | seguidas
 ◆ Quiz game | ◆ Juego de preguntas
 ✓ I knew it | ✓ Lo sabía
 
+## Full sentence templates
+
+Counts and names are filled into one complete template per sentence, never joined from fragments, so the Spanish word order stays natural.
+
+English | Spanish
+--- | ---
+{points} points · {streak} streak | {points} puntos · racha de {streak}
+{recalled} of {total} recalled | {recalled} de {total} recordadas
+Question {number} of {total} | Pregunta {number} de {total}
+Review · Question {number} of {total} | Repaso · Pregunta {number} de {total}
+Card {number} · {count} left | Tarjeta {number} · {count} restantes
+Review · Card {number} · {count} left | Repaso · Tarjeta {number} · {count} restantes
+Review · {count} cards left | Repaso · {count} tarjetas restantes
+Review · {count} card left | Repaso · {count} tarjeta restante
+✓ Correct. {answer}. {note} | ✓ Correcto. {answer}. {note}
+Time’s up. {answer}. {note} | Se acabó el tiempo. {answer}. {note}
+Not quite. {answer}. {note} | Todavía no. {answer}. {note}
+{correct} correct out of {answered} answered. Unanswered questions do not count. Try missed ions now, then return tomorrow. | Acertaste {correct} de {answered} preguntas respondidas. Las preguntas sin responder no cuentan. Practica ahora los iones con errores y vuelve mañana.
+{label} {number} of {total} · Step {step} of {steps} | {label} {number} de {total} · Paso {step} de {steps}
+{count} valence electron | {count} electrón de valencia
+{count} valence electrons | {count} electrones de valencia
+Loses {count} | Pierde {count}
+Gains {count} | Gana {count}
+Charge {charge} | Carga {charge}
+{ion}, like {gas} | {ion}, como {gas}
+group {n} | grupo {n}
+period {n} | periodo {n}
+
 ## Element-name spellings
 
-The kit requires standard Spanish element names. Individual spellings are listed here so the choices are explicit, including zinc and wolframio.
+The kit requires standard Spanish element names. Individual spellings are listed here so the choices are explicit, including zinc and tungsteno.
 
 English | Spanish
 --- | ---
@@ -428,7 +443,7 @@ Ytterbium | Iterbio
 Lutetium | Lutecio
 Hafnium | Hafnio
 Tantalum | Tantalio
-Tungsten | Wolframio
+Tungsten | Tungsteno
 Rhenium | Renio
 Osmium | Osmio
 Iridium | Iridio

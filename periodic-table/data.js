@@ -282,6 +282,8 @@
       ]
     },
     "atomicNumber": "atomic number",
+    "groupHeader": "group {n}",
+    "periodHeader": "period {n}",
     "selected": "selected",
     "match": "search match",
     "found": "Found {name}. Press Enter for details.",
@@ -410,7 +412,7 @@
   "Lutetium": "Lutecio",
   "Hafnium": "Hafnio",
   "Tantalum": "Tantalio",
-  "Tungsten": "Wolframio",
+  "Tungsten": "Tungsteno",
   "Rhenium": "Renio",
   "Osmium": "Osmio",
   "Iridium": "Iridio",
@@ -673,8 +675,8 @@
   "cerium(IV) ion": "ion de cerio(IV)",
   "europium(III) ion": "ion de europio(III)",
   "europium(II) ion": "ion de europio(II)",
-  "tungsten(VI) ion": "ion de wolframio(VI)",
-  "tungsten(IV) ion": "ion de wolframio(IV)",
+  "tungsten(VI) ion": "ion de tungsteno(VI)",
+  "tungsten(IV) ion": "ion de tungsteno(IV)",
   "rhenium(VII) ion": "ion de renio(VII)",
   "rhenium(IV) ion": "ion de renio(IV)",
   "iridium(III) ion": "ion de iridio(III)",
@@ -697,7 +699,9 @@
   "nobelium(II) ion": "ion de nobelio(II)",
   "nobelium(III) ion": "ion de nobelio(III)",
   "Periodic Table | ZornScience": "Tabla periódica | ZornScience",
-  "ZornScience home": "Inicio de ZornScience"
+  "ZornScience home": "Inicio de ZornScience",
+  "group {n}": "grupo {n}",
+  "period {n}": "periodo {n}"
 }});
     if (i18n.lang === "es") {
       var modes = data.ui.modes;
