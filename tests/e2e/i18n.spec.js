@@ -51,6 +51,9 @@ for (const [slug, title] of Object.entries(activities)) {
         await page.locator('input[value="' + mode + '"]').check();
         await noEnglish(page);
       }
+      // Spoken headers are one full phrase in Spanish word order.
+      await expect(page.getByRole("columnheader", {name:"grupo 18", exact:true})).toHaveCount(1);
+      await expect(page.getByRole("rowheader", {name:"periodo 3", exact:true})).toHaveCount(1);
       await page.locator("#zsa-pt-share-toggle").click();
       await expect(page.locator("#zsa-pt-share-url")).toHaveValue(/lang=es/);
     } else if (slug === "polyatomic-ion-trainer") {
@@ -67,9 +70,14 @@ for (const [slug, title] of Object.entries(activities)) {
       await page.locator("#restart").click();
       await page.locator("#quiz-mode").click();
       await page.locator("#start").click();
+      // Full templates keep natural Spanish word order.
+      await expect(page.locator("#number")).toHaveText(/^Pregunta 1 de \d+$/);
       await page.locator("#choices button").first().click();
+      await expect(page.locator("#score")).toHaveText(/^\d+ puntos · racha de [01]$/);
+      await expect(page.locator("#feedback")).toHaveText(/^(✓ Correcto|Todavía no)\. .+ = .+\./);
       await noEnglish(page);
       await page.locator("#end").click();
+      await expect(page.locator("#result-note")).toHaveText(/^Acertaste [01] de 1 preguntas respondidas\. Las preguntas sin responder no cuentan\./);
       await noEnglish(page);
     } else {
       await page.getByRole("button", {name:"Pista", exact:true}).click();
@@ -86,6 +94,7 @@ for (const [slug, title] of Object.entries(activities)) {
 test("Spanish ion round translates hints, feedback, review and completion codes", async ({page}) => {
   await page.goto("/ion-charge-trainer/?lang=es");
   const work = page.locator("#zsa-ict-work");
+  await expect(page.locator("#zsa-ict-progress")).toHaveText(/^Elemento 1 de 10 · Paso 1 de [34]$/);
   for (let action = 0; action < 350; action++) {
     if (await work.getByRole("heading", {name:"Ronda terminada", exact:true}).count()) break;
     const step = work.locator(":scope > fieldset");
