@@ -143,7 +143,7 @@
   "Equivalence point at {v} mL, pH {pH}.": "Punto de equivalencia a los {v} mL, pH {pH}.",
   "Half-equivalence point at {v} mL, pH {pH}.": "Punto de semiequivalencia a los {v} mL, pH {pH}.",
   // Analysis
-  "4. Analyze": "4. Analiza",
+  "4. Analyze": "4. Análisis",
   "Find the key points": "Encuentra los puntos clave",
   "The endpoint": "El punto final",
   "When the indicator changes color and the color stays, record the endpoint.": "Cuando el indicador cambie de color y el color se mantenga, registra el punto final.",

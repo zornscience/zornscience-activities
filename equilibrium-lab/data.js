@@ -34,7 +34,7 @@
   "Download lab data (CSV)": "Descargar datos del laboratorio (CSV)",
   "Print lab": "Imprimir laboratorio",
   // Instructions dialog
-  "How to use this lab": "Cómo usar este laboratorio",
+  "How to use this lab": "Guía para usar este laboratorio",
   "Close instructions": "Cerrar instrucciones",
   "Start at equilibrium, predict a shift, then change one condition and watch the system respond.": "Empieza en equilibrio, predice un desplazamiento y luego cambia una condición y observa cómo responde el sistema.",
   "Disturb the equilibrium and use the live concentrations to explain the shift.": "Perturba el equilibrio y usa las concentraciones en tiempo real para explicar el desplazamiento.",

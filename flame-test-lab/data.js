@@ -25,7 +25,7 @@
   "Link copied.": "Enlace copiado.",
   "Link selected. Press Ctrl+C, or Command+C on a Mac, to copy it.": "Enlace seleccionado. Presiona Ctrl+C, o Command+C en una Mac, para copiarlo.",
   "Share options opened.": "Se abrieron las opciones para compartir.",
-  "Use Copy link or email instead.": "Mejor usa Copiar enlace o el correo electrónico.",
+  "Use Copy link or email instead.": "Usa Copiar enlace o el correo electrónico.",
   "Compare eight known metal salts and identify an unknown sample in the ZornScience virtual flame test lab.": "Compara ocho sales metálicas conocidas e identifica una muestra desconocida en el laboratorio virtual de prueba de llama de ZornScience.",
   // Workbench
   "Virtual laboratory": "Laboratorio virtual",
