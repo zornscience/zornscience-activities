@@ -61,3 +61,4 @@ body:has(.thermo){background:#edf2f7}.thermo{--zsa-blue:#2457d6;--zsa-navy:#102d
 
 
 .thermo .rate-panel .small{color:#52697e}.thermo .actions .zsa-btn--primary{background:#2457d6;border-color:#2457d6;color:#fff}.thermo .actions .zsa-btn--primary:hover{background:#173f9f}.thermo[data-zsa-activity="calorimetry-lab"] .layout aside{position:static;overflow:visible}
+html[lang="es-MX"] .thermo .layout aside:before{content:"CONTROLES DEL LABORATORIO"}

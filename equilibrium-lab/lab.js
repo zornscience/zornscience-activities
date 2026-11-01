@@ -2,6 +2,9 @@
   "use strict";
 const $=id=>document.getElementById(id);
 let M;document.querySelector('.thermo').dispatchEvent(new CustomEvent('equilibrium-lab-model',{detail:{receive:api=>{M=api;}}}));
+// Every sentence is one full template from data.js, filled with values. English is the fallback.
+let i18n;document.querySelector('.thermo').dispatchEvent(new CustomEvent('zsa:request-i18n',{detail:{receive:api=>{i18n=api;}}}));
+const t=(text,values={})=>i18n?i18n.text(text,values):text.replace(/\{(\w+)\}/g,(m,k)=>values[k]===undefined?m:values[k]);
 // All markup is generated from fixed templates and numeric model values.
 function put(el,markup){const svg=el.namespaceURI==='http://www.w3.org/2000/svg',tbody=el.tagName==='TBODY';const wrapped=svg?'<svg xmlns="http://www.w3.org/2000/svg">'+markup+'</svg>':tbody?'<table><tbody>'+markup+'</tbody></table>':'<body>'+markup+'</body>';const doc=new DOMParser().parseFromString(wrapped,'text/html'),source=svg?doc.querySelector('svg'):tbody?doc.querySelector('tbody'):doc.body;el.replaceChildren(...Array.from(source.childNodes).map(n=>document.importNode(n,true)));}
 function metric(value,label){return '<div><strong>'+value+'</strong><span>'+label+'</span></div>';}
@@ -14,15 +17,15 @@ function graph(id,rows,keys,labels){
  for(let i=0;i<=4;i++){let v=maxX*i/4;out+='<text x="'+x(v)+'" y="238" text-anchor="middle" font-size="12" fill="#334155">'+v.toFixed(0)+'</text>';}
  if(id==='eq-graph') marks.forEach(t=>{out+='<path d="M'+x(t)+' 20V218" stroke="#94a3b8" stroke-dasharray="3 4"/>';});
  keys.forEach((k,i)=>{out+='<path fill="none" stroke="'+(i?'#964a20':'#1d4ed8')+'" stroke-width="3" '+(i?'stroke-dasharray="8 4"':'')+' d="'+rows.map((r,j)=>(j?'L':'M')+x(r[0]).toFixed(2)+' '+y(r[k]).toFixed(2)).join(' ')+'"/>';});
- put(svg,'<title>'+labels+'</title>'+out+'<text x="350" y="274" text-anchor="middle" font-size="12" fill="#334155">Simulated time (s)</text>');
+ put(svg,'<title>'+labels+'</title>'+out+'<text x="350" y="274" text-anchor="middle" font-size="12" fill="#334155">'+t('Simulated time (s)')+'</text>');
 }
 let e,eh,marks=[],playing=true;
 function record(){const a=e.a/e.v,b=e.b/e.v,r=M.rates(e);eh.push([e.time,a,b,e.t,e.v,M.K(e.t),a>1e-12?b*b/a:'',r.forward,r.reverse]);}
 function renderEq(){
  $('temp-out').textContent=e.t+' K';$('volume-out').textContent=e.v.toFixed(1)+' L';
  let a=e.a/e.v,b=e.b/e.v,q=b*b/Math.max(a,1e-20),k=M.K(e.t),balanced=Math.abs(q/k-1)<.005,empty=e.a+e.b<1e-12;
- $('state').textContent=empty?'Empty vessel':balanced?'At equilibrium':q<k?'Shifting right →':'← Shifting left';
- put($('eq-metrics'),metric(a.toFixed(3)+' M','[N₂O₄]')+metric(b.toFixed(3)+' M','[NO₂]')+metric(k.toFixed(3),'Kc · Qc = '+(empty?'undefined':e.a<1e-12?'∞':q.toFixed(3)))+metric(((e.a+e.b)*.082057*e.t/e.v).toFixed(2)+' atm','Pressure')); 
+ $('state').textContent=t(empty?'Empty vessel':balanced?'At equilibrium':q<k?'Shifting right →':'← Shifting left');
+ put($('eq-metrics'),metric(a.toFixed(3)+' M','[N₂O₄]')+metric(b.toFixed(3)+' M','[NO₂]')+metric(k.toFixed(3),t('Kc · Qc = {q}',{q:empty?t('undefined'):e.a<1e-12?'∞':q.toFixed(3)}))+metric(((e.a+e.b)*.082057*e.t/e.v).toFixed(2)+' atm',t('Pressure'))); 
  let width=220+e.v*30,left=(600-width)/2;
  let out='<defs><linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#8ab7c7" stop-opacity=".12"/><stop offset="1" stop-color="#081f32" stop-opacity=".3"/></linearGradient><linearGradient id="steel"><stop stop-color="#a5bac6"/><stop offset=".5" stop-color="#e1eaf0"/><stop offset="1" stop-color="#6e8c9e"/></linearGradient></defs><path d="M'+(left+15)+' 151h'+(width-30)+'" stroke="#081c2d" stroke-width="7" stroke-linecap="round"/><rect x="'+left+'" y="23" width="'+width+'" height="122" rx="20" fill="url(#glass)" stroke="#91b6c7" stroke-width="2"/><path d="M'+(left+22)+' 32h'+(width-44)+'" stroke="#e7f7ff" stroke-opacity=".5" stroke-width="2"/><rect x="'+(left-7)+'" y="41" width="14" height="87" rx="4" fill="url(#steel)"/><rect x="'+(left+width-7)+'" y="41" width="14" height="87" rx="4" fill="url(#steel)"/>';
  let na=Math.max(0,Math.round(e.a*22)),nb=Math.max(0,Math.round(e.b*22));
@@ -36,18 +39,18 @@ function renderEq(){
  const rates=M.rates(e),scale=Math.max(rates.forward,rates.reverse,1e-12);
  $('forward-rate').value=rates.forward/scale;$('reverse-rate').value=rates.reverse/scale;
  $('forward-value').textContent=(rates.forward>0&&rates.forward<.00001?rates.forward.toExponential(2):rates.forward.toFixed(5));$('reverse-value').textContent=(rates.reverse>0&&rates.reverse<.00001?rates.reverse.toExponential(2):rates.reverse.toFixed(5));
- $('rate-note').textContent=empty?'No molecules: neither reaction can occur. Add substance to begin.':balanced?'Nearly equal, nonzero rates: both reactions continue while concentrations are stable. Equilibrium is detected when Qc is within 0.5% of Kc. Values are illustrative mol/(L·simulated s), not experimental kinetics.':'The faster direction changes the composition. Rate indicators are illustrative mol/(L·simulated s); compare their sizes.';
- put($('vessel'),out);graph('eq-graph',eh,[1,2],'Concentration (mol/L) versus time; blue N2O4, dashed brown NO2.');
+ $('rate-note').textContent=t(empty?'No molecules: neither reaction can occur. Add substance to begin.':balanced?'Nearly equal, nonzero rates: both reactions continue while concentrations are stable. Equilibrium is detected when Qc is within 0.5% of Kc. Values are illustrative mol/(L·simulated s), not experimental kinetics.':'The faster direction changes the composition. Rate indicators are illustrative mol/(L·simulated s); compare their sizes.');
+ put($('vessel'),out);graph('eq-graph',eh,[1,2],t('Concentration (mol/L) versus time; blue N2O4, dashed brown NO2.'));
 }
-function resetEq(){e={...M.equilibrium(2,.2,5,298),v:5,t:298,time:0};eh=[];marks=[];record();$('temp').value=298;$('volume').value=5;playing=true;document.querySelector('.thermo').classList.remove('is-paused');$('pause').textContent='Pause';$('explanation').textContent='Start at equilibrium. Make one change and compare Qc with Kc as the system responds.';renderEq();}
-function disturb(text){marks.push(e.time);record();$('explanation').textContent=text;renderEq();}
+function resetEq(){e={...M.equilibrium(2,.2,5,298),v:5,t:298,time:0};eh=[];marks=[];record();$('temp').value=298;$('volume').value=5;playing=true;document.querySelector('.thermo').classList.remove('is-paused');$('pause').textContent=t('Pause');$('explanation').textContent=t('Start at equilibrium. Make one change and compare Qc with Kc as the system responds.');renderEq();}
+function disturb(text,values){marks.push(e.time);record();$('explanation').textContent=t(text,values);renderEq();}
 $('temp').oninput=()=>{let t=+$('temp').value,up=t>e.t;if(t===e.t)return;e.t=t;disturb(up?'Heating favors the endothermic forward reaction. Kc increases; the system produces more NO₂.':'Cooling favors the exothermic reverse reaction. Kc decreases; the system produces more N₂O₄.');};
 $('volume').oninput=()=>{let v=+$('volume').value,compress=v<e.v;if(v===e.v)return;e.v=v;disturb(compress?'Compression instantly raises both concentrations. The reaction then shifts left toward fewer gas molecules. Kc stays constant.':'Expansion instantly lowers both concentrations. The reaction then shifts right toward more gas molecules. Kc stays constant.');};
-function substance(sign){let key=$('species').value,before=e[key];e[key]=Math.max(0,e[key]+sign*.1);if(before===e[key])return;let right=(key==='a')===(sign>0);disturb((sign>0?'Added ':'Removed ')+(Math.abs(e[key]-before)).toFixed(2)+' mol '+(key==='a'?'N₂O₄':'NO₂')+'. The reaction shifts '+(right?'right toward products.':'left toward reactants.')+' Kc stays constant.');}
-$('add').onclick=()=>substance(1);$('remove').onclick=()=>substance(-1);$('reset-eq').onclick=resetEq;$('pause').onclick=()=>{playing=!playing;document.querySelector('.thermo').classList.toggle('is-paused',!playing);$('pause').textContent=playing?'Pause':'Resume';};
-$('csv').onclick=()=>{let rows=eh;let text='time_s,N2O4_M,NO2_M,temperature_K,volume_L,Kc,Qc,forward_rate_M_per_sim_s,reverse_rate_M_per_sim_s'+'\n'+rows.map(r=>r.join(',')).join('\n');let url=URL.createObjectURL(new Blob([text],{type:'text/csv'})),a=document.createElement('a');a.href=url;a.download='equilibrium-lab.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+function substance(sign){let key=$('species').value,before=e[key];e[key]=Math.max(0,e[key]+sign*.1);if(before===e[key])return;let right=(key==='a')===(sign>0);disturb(sign>0?(right?'Added {amount} mol {species}. The reaction shifts right toward products. Kc stays constant.':'Added {amount} mol {species}. The reaction shifts left toward reactants. Kc stays constant.'):(right?'Removed {amount} mol {species}. The reaction shifts right toward products. Kc stays constant.':'Removed {amount} mol {species}. The reaction shifts left toward reactants. Kc stays constant.'),{amount:(Math.abs(e[key]-before)).toFixed(2),species:key==='a'?'N₂O₄':'NO₂'});}
+$('add').onclick=()=>substance(1);$('remove').onclick=()=>substance(-1);$('reset-eq').onclick=resetEq;$('pause').onclick=()=>{playing=!playing;document.querySelector('.thermo').classList.toggle('is-paused',!playing);$('pause').textContent=t(playing?'Pause':'Resume');};
+$('csv').onclick=()=>{let rows=eh;let text=t('time_s,N2O4_M,NO2_M,temperature_K,volume_L,Kc,Qc,forward_rate_M_per_sim_s,reverse_rate_M_per_sim_s')+'\n'+rows.map(r=>r.join(',')).join('\n');let url=URL.createObjectURL(new Blob([text],{type:'text/csv'})),a=document.createElement('a');a.href=url;a.download='equilibrium-lab.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
 $('print').onclick=()=>window.print();
-function tick(dt){e={...M.advance(e,dt),time:e.time+dt};record();renderEq();if(eh.length>=3600){playing=false;$('pause').textContent='Resume';$('explanation').textContent='This run has reached its recording limit. Reset experiment to start a new graph.';}}
-$('eq-step').onclick=()=>{playing=false;document.querySelector('.thermo').classList.add('is-paused');$('pause').textContent='Resume';if(eh.length<3600)tick(1);};
+function tick(dt){e={...M.advance(e,dt),time:e.time+dt};record();renderEq();if(eh.length>=3600){playing=false;$('pause').textContent=t('Resume');$('explanation').textContent=t('This run has reached its recording limit. Reset experiment to start a new graph.');}}
+$('eq-step').onclick=()=>{playing=false;document.querySelector('.thermo').classList.add('is-paused');$('pause').textContent=t('Resume');if(eh.length<3600)tick(1);};
 resetEq();setInterval(()=>{if(document.hidden||!playing||eh.length>=3600)return;tick(.25);},250);
 }());
