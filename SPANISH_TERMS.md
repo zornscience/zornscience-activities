@@ -194,9 +194,14 @@ Close | Cerrar
 Close details | Cerrar detalles
 Close instructions | Cerrar instrucciones
 Close share options | Cerrar opciones para compartir
+Code copied. | Código copiado.
+Code selected | Código seleccionado
 Color by | Colorear por
 Common ion charges | Cargas de iones comunes
 Compare related ions: | Compara iones relacionados:
+Completion code | Código de finalización
+Completion code ready. | Código de finalización listo.
+Copy code | Copiar código
 Copy link | Copiar enlace
 Correct: | Correcto:
 Cyanide | Cianuro
@@ -221,6 +226,7 @@ Formula + charge | Fórmula + carga
 Formula + charge → name | Fórmula + carga → nombre
 Full screen | Pantalla completa
 Gain | Gana
+Gain or lose | Ganancia o pérdida
 Gains | Gana
 Group | Grupo
 Here’s how you did | Estos son tus resultados
@@ -243,6 +249,7 @@ Mix both directions | Combinar ambas direcciones
 Mixed practice | Práctica mixta
 More share options | Más opciones para compartir
 Move to the next card | Pasar a la siguiente tarjeta
+Name the ion | Nombre del ion
 Name → formula + charge | Nombre → fórmula + carga
 Name, symbol or number | Nombre, símbolo o número
 Next element | Siguiente elemento
@@ -285,6 +292,7 @@ Round complete | Ronda terminada
 Same number of electrons as | Mismo número de electrones que
 Scroll sideways for more → | Desplázate hacia los lados para ver más →
 See results → | Ver resultados →
+See round summary | Ver resumen de la ronda
 Session complete | Sesión terminada
 Session progress | Progreso de la sesión
 Share | Compartir

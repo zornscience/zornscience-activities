@@ -1317,6 +1317,16 @@
     "xenon"
   ]
 };
+  Object.assign(data.ui, {
+  "general": "Use a hint and try again.",
+  "chargeMark": "ion charge",
+  "codeLabel": "Completion code",
+  "copyCode": "Copy code",
+  "codeCopied": "Code copied.",
+  "codeReady": "Completion code ready.",
+  "codeSelected": "The code is selected. Press Ctrl+C, or Command+C on a Mac, to copy it.",
+  "codeNote": "Paste this code into your Google Classroom assignment."
+});
   var i18n;
   root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail:{receive:function (api) { i18n = api; }}}));
   if (i18n) {

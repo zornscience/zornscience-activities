@@ -102,9 +102,6 @@
     return zsa.shuffle(missed.concat(others.slice(0, Math.max(0, 10 - missed.length)))).map(function (e) {return {item:e};});
   }
 
-  ["general", "chargeMark", "codeLabel", "copyCode", "codeCopied", "codeReady", "codeSelected", "codeNote"].forEach(function (key) {
-    if (!ui[key]) ui[key] = zsa.LABELS[key];
-  });
   var activity = zsa.create(root, {
     prefix:"zsa-ict", strip:"zsa-ict-element",
     labels:{

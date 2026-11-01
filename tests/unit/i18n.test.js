@@ -53,6 +53,7 @@ test("Spanish data translates all 118 names and science notes while preserving c
     if (element.name !== "Zinc") assert.notEqual(translated.name, element.name, element.name);
     element.notes.forEach((note, n) => assert.notEqual(translated.notes[n], note, note));
     element.ions.forEach((ion, n) => {
+      assert.doesNotMatch(translated.ions[n][1], /\b[a-z]+ide\b/, ion[1]);
       assert.equal(translated.ions[n][0], ion[0]);
       assert.notEqual(translated.ions[n][1], ion[1], ion[1]);
     });
