@@ -874,7 +874,7 @@ Closed | Cerrada
 Collide. Graph. Explain. Nothing you enter leaves this tab. | Choca. Grafica. Explica. Nada de lo que escribes sale de esta pestaña.
 Compare with | Comparar con
 COMPARE YOUR TRIALS | COMPARA TUS ENSAYOS
-Concentration vs. time | Concentración vs. tiempo
+Concentration vs. time | Concentración contra tiempo
 Condition Solution A | Acondicionar la solución A
 Conditions | Condiciones
 Copy data | Copiar datos

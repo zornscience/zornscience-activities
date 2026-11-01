@@ -91,7 +91,7 @@
   "In the last few seconds, about {hits} A-B collisions and {wins} successful collisions per second.": "En los últimos segundos, aproximadamente {hits} colisiones A-B y {wins} colisiones exitosas por segundo.",
   // The graph
   "3. Read the graph": "3. Lee la gráfica",
-  "Concentration vs. time": "Concentración vs. tiempo",
+  "Concentration vs. time": "Concentración contra tiempo",
   "A change": "Un cambio",
   "Earlier runs ([A] only)": "Corridas anteriores (solo [A])",
   "Clear earlier runs": "Borrar las corridas anteriores",
