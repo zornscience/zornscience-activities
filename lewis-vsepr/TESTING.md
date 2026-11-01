@@ -1,5 +1,5 @@
 # Verification record
-Version: 1.1.1
+Version: 1.2.0
 Date: 2026-10-16
 Reviewer: Claude (built and tested 1.0.0; 1.1.0 changes tested as recorded below)
 
@@ -57,3 +57,7 @@ PASS means the check was run on version 1.1.0 as committed and passed, except ro
 | axe on the summary with a code (1.1.0) | PASS | 0 violations at 1366x657 and 390x664 for both settings, and on `/check/` with an LVB and an LVA result. |
 | Landing page card | PASS | Same markup as the other cards; the landing page passes axe and links to every registered activity. |
 | Live URL, WordPress callout | NOT TESTED | After merging and publishing: https://activities.zornscience.org/lewis-vsepr/ |
+
+## Spanish verification
+
+`tests/unit/i18n.test.js` and `tests/e2e/i18n.spec.js` cover the shared module and the Spanish interface, including dynamic views, accessible text and generated share links. The Spanish check plays a full mixed round with hints, wrong answers, Show me and the structure editor to a completion code, and finds no English text or accessible labels. English output is unchanged: the Lewis browser tests pass as before. The language toggle intentionally adds header controls.
