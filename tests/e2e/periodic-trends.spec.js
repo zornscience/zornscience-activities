@@ -401,7 +401,7 @@ test("periodic trends: a full mixed round gives a completion code that check/ re
   expect(sum.stats).toEqual(["Same group or period: 8 / 9", "Trend direction: 8 / 9", "Which element: 9 / 9"]);
   // The code is exactly the one these results give, worked out here from the plan.
   var day = codes.dayNumber(new Date());
-  expect(sum.code).toBe(codes.encode({activity: "periodic-trends", version: "1.1.0", day: day, items: 9, totals: {"0": 9, "1": 9, "2": 9},
+  expect(sum.code).toBe(codes.encode({activity: "periodic-trends", version: "1.2.0", day: day, items: 9, totals: {"0": 9, "1": 9, "2": 9},
     results: {"0": 8, "1": 8, "2": 9}, show: 1, hints: 2}));
   await checker.audit(page, "round summary with a code 1366x657");
   await page.setViewportSize({width: 390, height: 664});
@@ -421,7 +421,7 @@ test("periodic trends: a full mixed round gives a completion code that check/ re
   await page.goto("/check/");
   await checker.check(page, "Student\t" + copied);
   expect(await checker.results(page)).toEqual([{
-    "Line": "1", "Code": sum.code, "Status": "Valid", "Activity": "Periodic Trends Practice", "Version": "1.1",
+    "Line": "1", "Code": sum.code, "Status": "Valid", "Activity": "Periodic Trends Practice", "Version": "1.2",
     "Date completed": checker.readable(codes.isoDate(day)), "Items": "9", "First-try correct": sum.stats, "Show me uses": "1", "Hints used": "2"
   }]);
   await checker.audit(page, "checker with a Periodic Trends code");

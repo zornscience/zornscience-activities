@@ -1,5 +1,5 @@
 # Stoichiometry Coach
-Version: 1.0.1
+Version: 1.1.0
 
 Practice for stoichiometry with dimensional analysis. Students read a problem, build a conversion setup from a bank of conversion factors (some with errors), watch the units cancel, then calculate and check a three significant figure answer. Guided practice gives feedback after each step; independent practice waits until the student checks.
 
@@ -98,4 +98,9 @@ Complete reaction, the other reactants in excess, and the supplied molar masses.
 - No sideways scrolling from 320 px, and every button, select and the answer box is at least 44 px.
 
 ## Changelog
+- 1.1.0: Mexican Spanish with `?lang=es` and the shared EN / ES links.
 - 1.0.0: first version in the repository, ported from the handoff build with the changes above.
+
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the fallback. All student text, feedback, hints, the worked solution, live announcements and accessible labels use the activity's `data.js`, through `t()` in `model.js` (plain English templates in Node) and `coach.js`. Each sentence is one full template with `{placeholders}`, so Spanish keeps its own word order. Formulas, units, molar masses, numbers and decimal points stay unchanged. See `../SPANISH_TERMS.md` for choices beyond the supplied glossary.

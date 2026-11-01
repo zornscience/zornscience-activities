@@ -1,5 +1,5 @@
 # Verification record
-Version: 1.0.1
+Version: 1.1.0
 Date: 2026-10-18
 Reviewer: Claude (built and tested 1.0.0)
 
@@ -31,3 +31,7 @@ PASS means the check was run on version 1.0.0 as committed and passed. Browser c
 
 ## Not tested
 Real screen readers (NVDA, VoiceOver, ChromeVox), Firefox, Safari, Chromebooks and phones, and the live site.
+
+## Spanish verification
+
+`tests/e2e/i18n.spec.js` opens the coach with `?lang=es`, checks text and accessible attributes for leftover English, and exercises the setup, guided feedback, hints, a wrong and a correct answer, the worked solution and the share dialog. The English unit and browser tests run unchanged against the same templates. The language toggle intentionally adds header controls.

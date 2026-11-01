@@ -34,7 +34,9 @@
   function en(symbol) { return elements[symbol].en.toFixed(2); }
   function sum(list) { return list.reduce(function (a, b) { return a + b; }, 0); }
   function counted(list, n) { return fill(list[Math.min(n, 2)], {n: String(n)}).join(""); }
-  function electrons(n) { return n + (n === 1 ? " electron" : " electrons"); }
+  function electrons(n) { return counted(ui.electronCount, n); }
+  // Geometry names: the English name is the value the rules compare; a translation only changes what is shown.
+  function geo(name) { return name && ui.geometryNames && ui.geometryNames[name] || name; }
   function txt(template, ctx) { return speak(fill(template, ctx || {})); }
   // Formal charges are written sign first with a true minus sign (+1, −1); ion charges number first (2−).
   function signed(n) { return n > 0 ? "+" + n : n < 0 ? "−" + (-n) : "0"; }
@@ -102,7 +104,8 @@
     var spoken = [];
     item.formula.forEach(function (f) { spoken.push(f[0]); if (f[1] > 1) spoken.push(String(f[1])); });
     var q = item.charge, said = spoken.join(" ");
-    if (q) said += ", " + (Math.abs(q) > 1 ? Math.abs(q) + " " : "") + (q > 0 ? ui.spokenCharge.plus : ui.spokenCharge.minus);
+    var sc = ui.spokenCharge;
+    if (q) said += ", " + fill(Math.abs(q) > 1 ? (q > 0 ? sc.plus : sc.minus) : (q > 0 ? sc.plusOne : sc.minusOne), {n: String(Math.abs(q))}).join("");
     return zsa.token(function () {
       var span = node("span", "zsa-lv-formula");
       item.formula.forEach(function (f) {
@@ -136,7 +139,7 @@
     var ctx = {
       formula: formulaToken(item), name: item.name, center: item.center, total: String(item.total),
       chargeLabel: item.charge ? chargeText(item.charge) : "", tally: tallyText(item),
-      n: String(item.domains || ""), eg: item.eg || "", mg: item.mg || "", angle: item.angle ? ui.angles[item.angle] : "",
+      n: String(item.domains || ""), eg: geo(item.eg) || "", mg: geo(item.mg) || "", angle: item.angle ? ui.angles[item.angle] : "",
       ideal: item.eg ? ui.angles[ui.ideal[item.eg]] : "", bonded: counted(ui.bondedAtoms, b), lonePairs: counted(ui.lonePairsText, l),
       enPair: enPair(item), enList: enList([item.center].concat(item.outer)), measured: item.measured || ""
     };
@@ -240,7 +243,7 @@
     var parts = [txt(ui.describeCenter, {symbol: item.center, pairs: pairsText(st.c)})];
     var lay = layout(item);
     st.o.forEach(function (p, i) {
-      parts.push(txt(ui.describeOuter, {position: zsa.cap(ui.positions[lay.pos[i]]), symbol: item.outer[i], bond: ui.bondNames[p[0]], pairs: pairsText(p[1])}));
+      parts.push(txt(ui.describeOuter, {position: ui.positions[lay.pos[i]], symbol: item.outer[i], bond: ui.bondNames[p[0]], pairs: pairsText(p[1])}));
     });
     return txt(ui.structureLabel, {description: parts.join(". ")}) + ".";
   }
@@ -326,10 +329,12 @@
     function statusText() {
       var u = used(st), t = item.total, unset = st.o.filter(function (p) { return !p[0]; }).length;
       var out = txt(ui.placed, {used: String(u), total: String(t)}) + " ";
-      var notSet = counted(ui.bondsNotSet, unset);
-      if (u > t) out += txt(u - t === bondSum(st) ? ui.status.overBonds : ui.status.over, {n: String(u - t)});
-      else if (u === t) out += unset ? txt(ui.status.fullUnset, {n: notSet}) : txt(ui.status.done);
-      else out += unset ? txt(ui.status.unset, {n: notSet}) + " " + txt(ui.status.left, {n: String(t - u)}) : txt(ui.status.left, {n: String(t - u)});
+      // n: the English phrase ("2 bonds are"); count: the number, for languages with a singular template ("One").
+      var notSet = {n: counted(ui.bondsNotSet, unset), count: String(unset)}, us = ui.status;
+      function one(key) { return unset === 1 && us[key + "One"] ? us[key + "One"] : us[key]; }
+      if (u > t) out += txt(u - t === bondSum(st) ? us.overBonds : us.over, {n: String(u - t)});
+      else if (u === t) out += unset ? txt(one("fullUnset"), notSet) : txt(us.done);
+      else out += unset ? txt(one("unset"), notSet) + " " + txt(us.left, {n: String(t - u)}) : txt(us.left, {n: String(t - u)});
       return out;
     }
     function refresh() {
@@ -439,12 +444,12 @@
       if (kind === "domains") {
         return {question: txt(q, {center: item.center}), parts: [
           {name: "domains", modifier: "five", legend: ui.legends.domains, values: [2, 3, 4, 5, 6].map(function (n) { return [n, String(n)]; })},
-          {name: "eg", modifier: "names", legend: ui.legends.eg, values: (ap ? ui.egChoicesAp : ui.egChoices).map(function (n) { return [n, n]; })}
+          {name: "eg", modifier: "names", legend: ui.legends.eg, values: (ap ? ui.egChoicesAp : ui.egChoices).map(function (n) { return [n, geo(n)]; })}
         ]};
       }
       if (kind === "shape") {
         return {question: q, parts: [
-          {name: "mg", modifier: "names", legend: ui.legends.mg, values: ui.mgFamily[item.eg].map(function (n) { return [n, n]; })},
+          {name: "mg", modifier: "names", legend: ui.legends.mg, values: ui.mgFamily[item.eg].map(function (n) { return [n, geo(n)]; })},
           {name: "angle", modifier: "angles" + ui.angleFamily[item.eg].length, legend: ui.legends.angle, values: ui.angleFamily[item.eg].map(function (a) { return [a, ui.angles[a]]; })}
         ]};
       }
@@ -511,7 +516,7 @@
           else if (domainsWrong && EG_FOR[picks.domains] === picks.eg) out.keys.push("egFollows");
           else out.keys.push("egMatch");
         }
-        out.slots = {pick: picks.eg, egList: ap ? ui.egListAp : ui.egList};
+        out.slots = {pick: geo(picks.eg), egList: ap ? ui.egListAp : ui.egList};
         return out.wrong.length ? out : null;
       }
       if (kind === "shape") {
@@ -574,7 +579,7 @@
     function buildHint(item) {
       var h = ui.buildHint, k = item.outer.length, left = item.total - 2 * k;
       var nonH = item.outer.filter(function (s) { return s !== "H"; }).length, outerE = 6 * nonH, rest = left - outerE;
-      var out = txt(h.start, {bonds: zsa.cap(ui.numberWords[k] || String(k)), used: String(2 * k), left: String(left)});
+      var out = txt(k === 1 && h.startOne ? h.startOne : h.start, {bonds: zsa.cap(ui.numberWords[k] || String(k)), used: String(2 * k), left: String(left)});
       out += nonH ? txt(h.outer, {outerPairs: String(3 * nonH), outerElectrons: String(outerE)}) : txt(h.outerNone);
       if (nonH && item.outer.indexOf("H") >= 0) out += txt(h.outerNone);
       out += rest > 0 ? txt(h.center, {centerElectrons: String(rest), center: item.center, centerPairs: pairsText(rest / 2)}) : txt(h.centerNone, {center: item.center});
@@ -619,12 +624,17 @@
       if (kind === "build") extra.buildHint = buildHint(item);
       if (kind === "fc") extra.fcList = cur.fcOrder.map(function (ci, k) { return ui.letters[k] + ": " + fcSummary(item, fromForm(item.fc.cands[ci])); }).join(". ");
       if (kind === "polarity") extra.lpNote = lonePairsOnCenter(item) ? txt(ui.lpNote, {lonePairs: counted(ui.lonePairsText, lonePairsOnCenter(item)), center: item.center}) : "";
+      // A language can give the second polarity hint as one sentence for structures with lone pairs on the center.
+      if (kind === "polarity" && level === 1 && lonePairsOnCenter(item) && ui.hints.polarityLP) h = ui.hints.polarityLP;
       return text(h, item, extra);
     }
     function explain(entry, s) {
       var item = entry.item, st = state(entry), kind = st.kinds[s], e = ui.explain;
       if (kind === "total") return text(e.total, item, {sum: sumText(item)});
-      if (kind === "center") return text(e.center, item, {hPart: distinct(item).indexOf("H") >= 0 ? e.hPart : ""});
+      if (kind === "center") {
+        var hasH = distinct(item).indexOf("H") >= 0;
+        return text(hasH && e.centerH ? e.centerH : e.center, item, {hPart: hasH ? e.hPart : ""});
+      }
       if (kind === "build") {
         if (!st.buildOK) st.built = fromForm(item.forms[0]);
         var b = st.built, c = around(b, -1), octets;
@@ -645,14 +655,14 @@
       if (kind === "fc") {
         var best = fromForm(item.fc.cands[item.fc.best]);
         var neg = best.o.some(function (p, i) { return formal(item, best, i) < 0; });
-        return text(e.fc, item, {best: ui.letters[st.fcOrder.indexOf(item.fc.best)], bestCharges: fcSummary(item, best), negNote: neg ? e.negNote : ""});
+        return text(neg && e.fcNeg ? e.fcNeg : e.fc, item, {best: ui.letters[st.fcOrder.indexOf(item.fc.best)], bestCharges: fcSummary(item, best), negNote: neg ? e.negNote : ""});
       }
       if (kind === "domains") return text(e.domains, item);
       if (kind === "shape") {
         var lp = lonePairsOnCenter(item), measured = item.measured ? txt(e.measured, {measured: item.measured}) : "";
         if (!lp) return text(e.shapeNoLP, item, {measured: measured});
         var squeezed = ui.squeezed.indexOf(item.angle) >= 0;
-        return text(e.shapeLP, item, {lonePairs: zsa.cap(counted(ui.lonePairsText, lp)), squeeze: squeezed ? e.squeeze : "", measured: measured});
+        return text(lp === 1 && e.shapeLPOne ? e.shapeLPOne : e.shapeLP, item, {lonePairs: zsa.cap(counted(ui.lonePairsText, lp)), squeeze: squeezed ? e.squeeze : "", measured: measured});
       }
       if (item.note === "o3") return text(ui.feedback.o3, item);
       if (item.polar) return text(item.mixed ? e.polarMixed : e.polar, item);
@@ -700,7 +710,7 @@
       return [out];
     }
     function reminder(item) {
-      var detail = item.domains ? txt(ui.reminderShape, {mg: item.mg, angle: ui.angles[item.angle]}) : ui.reminderTwo;
+      var detail = item.domains ? txt(ui.reminderShape, {mg: geo(item.mg), angle: ui.angles[item.angle]}) : ui.reminderTwo;
       if (item.polar !== null) detail += item.polar ? ui.reminderPolar : ui.reminderNonpolar;
       return fill(ui.reminder, {formula: formulaToken(item), name: item.name, detail: detail});
     }
@@ -789,7 +799,8 @@
     return data.items.find(function (it) {
       var f = it.formula.map(function (x) { return x[0] + (x[1] > 1 ? x[1] : ""); }).join("");
       var withCharge = f + (it.charge ? (Math.abs(it.charge) > 1 ? Math.abs(it.charge) : "") + (it.charge > 0 ? "+" : "-") : "");
-      return [withCharge, it.id, it.name, it.name.replace(/ ion$/, "")].some(function (k) { return norm(k) === q; });
+      var name = it.nameEn || it.name;
+      return [withCharge, it.id, name, name.replace(/ ion$/, ""), it.name].some(function (k) { return norm(k) === q; });
     });
   }
   // "Back to the lesson" follows ?from= only for an https page on the zornscience.org host itself.

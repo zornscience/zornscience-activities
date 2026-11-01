@@ -9,6 +9,7 @@
   var M;
   root.dispatchEvent(new CustomEvent("zsa-sc:request-model", {detail: {receive: function (value) { M = value; }}}));
   if (!M) return;
+  var t = M.t;
 
   function $(id) { return root.querySelector("#zsa-sc-" + id); }
   function node(tag, cls, text) {
@@ -18,12 +19,26 @@
     return el;
   }
   function clear(el) { while (el.firstChild) el.removeChild(el.firstChild); }
+  // Fills el with a translated sentence, putting the element child where the placeholder key is.
+  function slot(el, text, key, child) {
+    var parts = text.split(key);
+    if (parts[0]) el.appendChild(document.createTextNode(parts[0]));
+    el.appendChild(child);
+    if (parts[1]) el.appendChild(document.createTextNode(parts[1]));
+  }
 
   var mode = "guided", p = null, chain = [], solved = 0, credited = false, shown = false, checked = false, hints = 0;
 
+  // The solved count sits inside one full sentence. Spanish puts it where its template says.
+  if (document.documentElement.lang === "es-MX") {
+    var count = $("solved"), line = count.parentNode;
+    clear(line);
+    slot(line, t("{count} solved this session"), "{count}", count);
+  }
+
   // ---------- Settings ----------
   Object.keys(M.TYPES).forEach(function (key) {
-    var o = node("option", "", M.TYPES[key].label);
+    var o = node("option", "", t(M.TYPES[key].label));
     o.value = key;
     $("type").appendChild(o);
   });
@@ -46,7 +61,7 @@
     });
     return frac;
   }
-  function spoken(f) { return f.n + " " + f.nu + " per " + f.d + " " + f.du; }
+  function spoken(f) { return t("{n} {top} per {d} {bottom}", {n: f.n, top: f.nu, d: f.d, bottom: f.du}); }
   function toolButton(text, label, data, disabled) {
     var b = node("button", "zsa-sc-tool", text);
     b.type = "button";
@@ -71,7 +86,7 @@
     gv.appendChild(document.createTextNode(M.three(p.value) + " "));
     gv.appendChild(node("span", show && good > 0 ? "zsa-sc-u zsa-sc-cancel" : "zsa-sc-u", p.start));
     given.appendChild(gv);
-    given.appendChild(node("span", "zsa-sr-only", "Given: " + M.three(p.value) + " " + p.start + (show && good > 0 ? ", " + p.start + " cancels" : "")));
+    given.appendChild(node("span", "zsa-sr-only", t(show && good > 0 ? "Given: {value} {unit}, {unit} cancels" : "Given: {value} {unit}", {value: M.three(p.value), unit: p.start})));
     list.appendChild(given);
 
     chain.forEach(function (id, i) {
@@ -84,26 +99,26 @@
       var frac = fraction(f, show && i + 1 < good, ok);
       frac.setAttribute("aria-hidden", "true");
       card.appendChild(frac);
-      card.appendChild(node("span", "zsa-sr-only", "Factor " + (i + 1) + ": " + spoken(f) + (ok ? ". Fits: " + f.du + " cancels." : bad ? ". Does not fit." : ".")));
+      card.appendChild(node("span", "zsa-sr-only", t(ok ? "Factor {number}: {factor}. Fits: {unit} cancels." : bad ? "Factor {number}: {factor}. Does not fit." : "Factor {number}: {factor}.", {number: i + 1, factor: spoken(f), unit: f.du})));
       if (ok || bad) {
         var mark = node("span", "zsa-sc-mark", ok ? "✓" : "✗");
         mark.setAttribute("aria-hidden", "true");
         card.appendChild(mark);
       }
       var tools = node("div", "zsa-sc-tools");
-      tools.appendChild(toolButton("←", "Move factor " + (i + 1) + " left", {move: i, dir: -1}, i === 0));
-      tools.appendChild(toolButton("×", "Remove factor " + (i + 1), {remove: i}));
-      tools.appendChild(toolButton("→", "Move factor " + (i + 1) + " right", {move: i, dir: 1}, i === chain.length - 1));
+      tools.appendChild(toolButton("←", t("Move factor {number} left", {number: i + 1}), {move: i, dir: -1}, i === 0));
+      tools.appendChild(toolButton("×", t("Remove factor {number}", {number: i + 1}), {remove: i}));
+      tools.appendChild(toolButton("→", t("Move factor {number} right", {number: i + 1}), {move: i, dir: 1}, i === chain.length - 1));
       card.appendChild(tools);
       li.appendChild(card);
       list.appendChild(li);
     });
     if (chain.length < p.expected.length) {
       var ph = node("li", "zsa-sc-placeholder");
-      var t = node("span", "zsa-sc-times", "×");
-      t.setAttribute("aria-hidden", "true");
-      ph.appendChild(t);
-      ph.appendChild(node("span", "zsa-sc-slot", chain.length ? "Choose your next factor" : "Choose your first factor"));
+      var slotTimes = node("span", "zsa-sc-times", "×");
+      slotTimes.setAttribute("aria-hidden", "true");
+      ph.appendChild(slotTimes);
+      ph.appendChild(node("span", "zsa-sc-slot", t(chain.length ? "Choose your next factor" : "Choose your first factor")));
       list.appendChild(ph);
     }
 
@@ -118,8 +133,8 @@
       var fr = fraction(f);
       fr.setAttribute("aria-hidden", "true");
       b.appendChild(fr);
-      b.appendChild(node("span", "zsa-sr-only", spoken(f) + ", "));
-      b.appendChild(node("span", "zsa-sc-add", chain.indexOf(f.id) >= 0 ? "In your setup" : "Add factor"));
+      b.appendChild(node("span", "zsa-sr-only", t("{factor}, ", {factor: spoken(f)})));
+      b.appendChild(node("span", "zsa-sc-add", t(chain.indexOf(f.id) >= 0 ? "In your setup" : "Add factor")));
       bank.appendChild(b);
     });
 
@@ -130,7 +145,7 @@
       fb.className = "zsa-sc-feedback " + (status.valid ? (status.complete ? "zsa-sc-ok" : "zsa-sc-info") : "zsa-sc-error");
     } else fb.hidden = true;
     $("hint").hidden = mode === "independent";
-    $("instruction").textContent = mode === "guided" ? "Choose a factor below. Its denominator should match the unit you have." : "Build the complete setup and enter your answer. Feedback appears when you check your work.";
+    $("instruction").textContent = t(mode === "guided" ? "Choose a factor below. Its denominator should match the unit you have." : "Build the complete setup and enter your answer. Feedback appears when you check your work.");
     placeFocus(focus);
   }
   function placeFocus(focus) {
@@ -158,9 +173,8 @@
     window.setTimeout(function () { live.textContent = text; }, 50);
   }
   function setupNews(prefix) {
-    var status = M.inspect(p, chain), words = prefix + " Your setup has " + chain.length + " of " + p.expected.length + " factors.";
-    if (mode === "guided" && chain.length) words += " " + status.message;
-    announce(words);
+    var status = M.inspect(p, chain), values = {news: prefix, count: chain.length, total: p.expected.length, feedback: status.message};
+    announce(t(mode === "guided" && chain.length ? "{news} Your setup has {count} of {total} factors. {feedback}" : "{news} Your setup has {count} of {total} factors.", values));
   }
 
   // ---------- Problems ----------
@@ -176,7 +190,7 @@
     $("context").textContent = M.context(p);
     $("given").textContent = M.three(p.value) + " " + p.start;
     $("target").textContent = p.target;
-    $("route").textContent = M.TYPES[p.type].route;
+    $("route").textContent = t(M.TYPES[p.type].route);
     $("unit").textContent = p.target;
     var dl = $("masses");
     clear(dl);
@@ -201,7 +215,7 @@
     var index = Array.prototype.indexOf.call($("bank").children, b);
     chain.push(b.dataset.add);
     edited({kind: "bank", index: index});
-    setupNews("Added " + spoken(M.factor(p, b.dataset.add)) + ".");
+    setupNews(t("Added {factor}.", {factor: spoken(M.factor(p, b.dataset.add))}));
   });
   $("chain").addEventListener("click", function (e) {
     var rm = e.target.closest("[data-remove]"), mv = e.target.closest("[data-move]");
@@ -209,37 +223,37 @@
       var r = Number(rm.dataset.remove), gone = M.factor(p, chain[r]);
       chain.splice(r, 1);
       edited({kind: "remove", index: r});
-      setupNews("Removed " + spoken(gone) + ".");
+      setupNews(t("Removed {factor}.", {factor: spoken(gone)}));
     } else if (mv && !mv.disabled) {
       var i = Number(mv.dataset.move), dir = Number(mv.dataset.dir), j = i + dir, tmp = chain[i];
       chain[i] = chain[j]; chain[j] = tmp;
       edited({kind: "move", index: j, dir: dir});
-      setupNews("Moved factor " + (i + 1) + " to position " + (j + 1) + ".");
+      setupNews(t("Moved factor {from} to position {to}.", {from: i + 1, to: j + 1}));
     }
   });
   $("clear").addEventListener("click", function () {
     chain = [];
     $("input").value = "";
     edited();
-    announce("Setup cleared. Choose your first factor.");
+    announce(t("Setup cleared. Choose your first factor."));
   });
   $("type").addEventListener("change", newProblem);
   $("reaction").addEventListener("change", newProblem);
   ["new", "next"].forEach(function (id) {
-    $(id).addEventListener("click", function () { newProblem(); announce("New problem. " + M.question(p)); });
+    $(id).addEventListener("click", function () { newProblem(); announce(t("New problem. {question}", {question: M.question(p)})); });
   });
 
   function setMode(m) {
     mode = m;
     checked = false;
     ["guided", "independent"].forEach(function (id) { $(id).setAttribute("aria-pressed", String(id === m)); });
-    $("mode-note").textContent = m === "guided" ? "Feedback after each step" : "Try the full problem before checking";
+    $("mode-note").textContent = t(m === "guided" ? "Feedback after each step" : "Try the full problem before checking");
     $("hintbox").hidden = true;
     $("result").hidden = true;
     render();
   }
-  $("guided").addEventListener("click", function () { setMode("guided"); announce("Guided practice. Feedback after each step."); });
-  $("independent").addEventListener("click", function () { setMode("independent"); announce("Independent practice. Feedback appears when you check your work."); });
+  $("guided").addEventListener("click", function () { setMode("guided"); announce(t("Guided practice. Feedback after each step.")); });
+  $("independent").addEventListener("click", function () { setMode("independent"); announce(t("Independent practice. Feedback appears when you check your work.")); });
 
   function showResult(text, ok) {
     var box = $("result");
@@ -252,14 +266,14 @@
     checked = true;
     render();
     var status = M.inspect(p, chain);
-    if (!status.valid || !status.complete) { showResult(chain.length ? status.message : "Build your setup first. Choose a factor whose denominator is " + p.start + ".", false); return; }
+    if (!status.valid || !status.complete) { showResult(chain.length ? status.message : t("Build your setup first. Choose a factor whose denominator is {unit}.", {unit: p.start}), false); return; }
     var result = M.checkAnswer(p, $("input").value);
-    var text = result.message + (result.ok && shown ? " This problem was completed with the worked solution visible, so it does not add to your solved count." : "");
+    var text = result.ok && shown ? t("{message} This problem was completed with the worked solution visible, so it does not add to your solved count.", {message: result.message}) : result.message;
     if (result.ok && !credited && !shown) {
       solved++;
       credited = true;
       $("solved").textContent = String(solved);
-      text += " Solved this session: " + solved + ".";
+      text = t("{message} Solved this session: {count}.", {message: text, count: solved});
     }
     showResult(text, result.ok);
   });
@@ -271,15 +285,15 @@
     var box = $("hintbox");
     box.textContent = M.hint(p, chain, hints);
     box.hidden = false;
-    announce("Hint: " + box.textContent);
+    announce(t("Hint: {hint}", {hint: box.textContent}));
   });
 
   $("solution").addEventListener("click", function () {
     shown = true;
     var box = $("solutionbox"), fs = p.expected.map(function (id) { return M.factor(p, id); });
     clear(box);
-    box.appendChild(node("h3", "", "Worked solution"));
-    box.appendChild(node("p", "", "Follow the units from " + p.start + " to " + p.target + "."));
+    box.appendChild(node("h3", "", t("Worked solution")));
+    box.appendChild(node("p", "", t("Follow the units from {start} to {target}.", {start: p.start, target: p.target})));
     var line = node("div", "zsa-sc-solution-chain");
     line.setAttribute("aria-hidden", "true");
     line.appendChild(node("strong", "", M.three(p.value) + " " + p.start));
@@ -291,11 +305,11 @@
     var ol = node("ol");
     M.solutionSteps(p).forEach(function (s) { ol.appendChild(node("li", "", s)); });
     box.appendChild(ol);
-    var final = node("p", "", "Unrounded: " + p.answer.toPrecision(9) + " " + p.target + ". Final answer: ");
-    final.appendChild(node("strong", "", M.three(p.answer) + " " + p.target));
-    final.appendChild(document.createTextNode(" (three significant figures)."));
+    // One full sentence; the bold final answer goes where {answer} is in the template.
+    var final = node("p");
+    slot(final, t("Unrounded: {unrounded} {unit}. Final answer: {answer} (three significant figures).", {unrounded: p.answer.toPrecision(9), unit: p.target}), "{answer}", node("strong", "", M.three(p.answer) + " " + p.target));
     box.appendChild(final);
-    box.appendChild(node("p", "zsa-sc-small", "This is a learning example. It will not add to your solved count. Choose Next problem for a fresh attempt."));
+    box.appendChild(node("p", "zsa-sc-small", t("This is a learning example. It will not add to your solved count. Choose Next problem for a fresh attempt.")));
     box.hidden = false;
     box.focus();
   });

@@ -123,6 +123,15 @@ var mainTable = [1, 2, 3, 4, 5, 6].map(function (p) {
   });
 });
 
+// Mexican Spanish: the words in tools/spanish.json, and element names from the Periodic Table's Spanish source.
+var spanish = JSON.parse(fs.readFileSync(path.join(__dirname, "spanish.json"), "utf8"));
+var tableSpanish = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "..", "periodic-table", "tools", "spanish.json"), "utf8"));
+var names = {};
+Object.keys(elements).sort(function (x, y) { return elements[x].z - elements[y].z; }).forEach(function (s) {
+  names[s] = tableSpanish[elements[s].name];
+  if (!names[s]) throw new Error("no Spanish name for " + elements[s].name);
+});
+
 var rules = {};
 PROPS.forEach(function (p) { rules[p.id] = p.rule; });
 function line(x) { return "    " + JSON.stringify(x); }
@@ -149,6 +158,16 @@ var out = [
   "  table: " + JSON.stringify(mainTable) + ",",
   "  ui: " + JSON.stringify(ui, null, 2).split("\n").join("\n  "),
   "  };",
+  "  var i18n;",
+  "  root.dispatchEvent(new CustomEvent(\"zsa:request-i18n\", {detail:{receive:function (api) { i18n = api; }}}));",
+  "  if (i18n) {",
+  "    i18n.configure({title:\"Periodic Trends Practice\", es:" + JSON.stringify(spanish.es, null, 2).split("\n").join("\n    ") + "});",
+  "    if (i18n.lang === \"es\") {",
+  "      var names = " + JSON.stringify(names) + ";",
+  "      Object.keys(data.elements).forEach(function (symbol) { data.elements[symbol].name = names[symbol]; });",
+  "      data.ui = " + JSON.stringify(spanish.ui, null, 2).split("\n").join("\n      ") + ";",
+  "    }",
+  "  }",
   "  root.addEventListener(\"zsa:request-data\", function (event) { event.detail.receive(data); }, {once: true});",
   "}());",
   ""

@@ -24,7 +24,9 @@
         groupB: String(b.group), periodA: String(a.period), periodB: String(b.period), label: p.label, higher: p.higher,
         winner: win.name.toLowerCase(), valueA: value(a), valueB: value(b), relation: q.relation, direction: ui.trailDirection[direction],
         where: ui.where[q.relation], think: ui.think[q.relation], toward: ui.toward[q.relation][direction], why: p.why[q.relation], confuse: p.confuse,
-        place: zsa.fill(ui.place[q.relation], {group: String(a.group), period: String(a.period)}).join(""), positionA: ui.position[q.relation]}
+        place: zsa.fill(ui.place[q.relation], {group: String(a.group), period: String(a.period)}).join(""), positionA: ui.position[q.relation],
+        // Spanish templates also use the label with its article, a gendered "a higher" phrase and the relation word.
+        theLabel: p.the || p.label, aHigher: p.aHigher || "", relationWord: ui.relationWord ? ui.relationWord[q.relation] : q.relation}
     };
   }
   function text(template, q) { return zsa.fill(template, info(q).slots); }

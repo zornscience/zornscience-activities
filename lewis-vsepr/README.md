@@ -1,5 +1,5 @@
 # Lewis Structure and VSEPR Builder
-Version: 1.1.1
+Version: 1.2.0
 
 ## Assumptions and departures
 - Claude hosts these static files and the lesson link is added on WordPress separately. This package makes no hosting or WordPress changes.
@@ -232,5 +232,10 @@ Button label: Open the Lewis and VSEPR Builder
 - 320x568 and 683x384 (200% zoom) are not fit targets: some steps need a short scroll there. There is no sideways scrolling at any size.
 
 ## Changelog
+1.2.0: Mexican Spanish with `?lang=es` or the shared EN / ES header links, through `shared/zsa-i18n.js`. English is unchanged.
 1.1.0: Completion codes for a full mixed round, LVB for the octet rule and LVA for the AP setting, read by `check/` with the setting.
 1.0.0: Initial builder with 29 octet-rule items and 8 AP expanded-octet items; steps for valence electrons, central atom, a keyboard-operable structure editor with live counters, the AP formal charge step, electron domains and geometry, molecular geometry and angle, and polarity; targeted feedback, two hint levels, Show me, review repeats, first-try summary, Practice my misses, structure picker, deep links (`?item`, `?set=ap`, `?from`), a periodic table with valence electrons and electronegativity on demand, and optional embed mode.
+
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the fallback. All student text, feedback, hints, editor controls and accessible labels come from the activity's `data.js`, which keeps the English text and lays the Spanish over it. Geometry names, angle keys and claim and reason keys stay the English values the rules compare; `ui.geometryNames` only changes what is shown. Sentences with a count have their own singular template (`unsetOne`, `fullUnsetOne`, `startOne`, `shapeLPOne`), and a few sentences that English builds from an added clause have one full Spanish template (`polarityLP`, `centerH`, `fcNeg`). `?item=` accepts the English and the Spanish names. Formulas, symbols, charges, electronegativity values and decimal points stay unchanged. See `../SPANISH_TERMS.md` for choices beyond the supplied glossary.

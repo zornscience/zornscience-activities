@@ -10,6 +10,14 @@
   var M;
   root.dispatchEvent(new CustomEvent("zsa-lr:request-model", {detail: {receive: function (value) { M = value; }}}));
   if (!M) return;
+  var i18n;
+  root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: function (api) { i18n = api; }}}));
+  // Every sentence is one full template from data.js, filled with values, so each language keeps its word order.
+  function t(text, values) {
+    values = values || {};
+    if (i18n) return i18n.text(text, values);
+    return text.replace(/\{(\w+)\}/g, function (m, k) { return values[k] === undefined ? m : values[k]; });
+  }
 
   function $(id) { return root.querySelector("#zsa-lr-" + id); }
   function node(tag, cls, text) {
@@ -165,7 +173,7 @@
     lockPredictions(true);
     show();
     var pr = prediction();
-    announce("The reaction stopped. " + M.resultText(p) + " " + M.stopText(p) + (pr.lines.length ? " " + pr.lines.join(" ") : ""));
+    announce(t("The reaction stopped.") + " " + M.resultText(p) + " " + M.stopText(p) + (pr.lines.length ? " " + pr.lines.join(" ") : ""));
   }
 
   // One animation loop at most: frameId is the pending frame, and a new frame is only requested when none is pending.
@@ -249,8 +257,9 @@
     c.beginPath(); c.moveTo(412 * s, 210 * s); c.lineTo(402 * s, 202 * s); c.lineTo(402 * s, 218 * s); c.closePath(); c.fill();
     var excess = finished && p.limiting !== null && p.limiting !== "both" ? 1 - p.limiting : null;
     var left = excess === null ? 0 : free.filter(function (m) { return m.side === excess; }).length;
-    label(c, s, finished && excess !== null && left ? "Left over: " + left + " " + M.name(p.rxn.reactants[excess][0]) + (s < 0.8 ? "" : ", nothing to react with") : "Reactants", 12, 26, finished && left ? "#92400e" : COLORS.text);
-    label(c, s, "Products", 588, 26, COLORS.text, "right");
+    var leftLabel = finished && excess !== null && left ? t(s < 0.8 ? "Left over: {n} {f}" : "Left over: {n} {f}, nothing to react with", {n: left, f: M.name(p.rxn.reactants[excess][0])}) : t("Reactants");
+    label(c, s, leftLabel, 12, 26, finished && left ? "#92400e" : COLORS.text);
+    label(c, s, t("Products"), 588, 26, COLORS.text, "right");
     // Bursts where molecules reacted, under everything.
     flashes.forEach(function (f) {
       var k = (now - f.t0) / FLASH;
@@ -302,18 +311,18 @@
     var r = M.reaction(settings.rxn);
     $("rxn").value = r.id;
     $("equation").textContent = M.equation(r);
-    $("scale").textContent = M.scaleText(r) + " Molecules are drawn flat, not to scale.";
+    $("scale").textContent = M.scaleText(r) + " " + t("Molecules are drawn flat, not to scale.");
     ["a", "b"].forEach(function (k, i) {
       var f = M.name(r.reactants[i][0]), v = settings[k];
-      $(k + "-label").textContent = "Starting moles of " + f;
+      $(k + "-label").textContent = t("Starting moles of {f}", {f: f});
       $(k).value = String(v);
-      $(k + "-down").setAttribute("aria-label", "1 mol less " + f);
-      $(k + "-up").setAttribute("aria-label", "1 mol more " + f);
+      $(k + "-down").setAttribute("aria-label", t("1 mol less {f}", {f: f}));
+      $(k + "-up").setAttribute("aria-label", t("1 mol more {f}", {f: f}));
       $(k + "-down").setAttribute("aria-disabled", String(v <= M.MOLES.min));
       $(k + "-up").setAttribute("aria-disabled", String(v >= M.MOLES.max));
       $("pick-" + i).textContent = f;
     });
-    $("amount-label").textContent = "How many mol of " + M.name(r.product[0]) + " will form?";
+    $("amount-label").textContent = t("How many mol of {f} will form?", {f: M.name(r.product[0])});
     var legend = $("legend");
     clear(legend);
     var seen = {};
@@ -326,7 +335,7 @@
       });
     });
     legend.appendChild(node("span", "zsa-lr-key zsa-lr-key-stranded"));
-    legend.appendChild(node("span", "zsa-lr-key-text", "Left over (excess)"));
+    legend.appendChild(node("span", "zsa-lr-key-text", t("Left over (excess)")));
   }
   var settleTimer = 0;
   function setUp(changes, clearPredictions) {
@@ -386,7 +395,7 @@
     if (playing) {
       playing = false;
       show();
-      announce("Paused after " + started + " of " + p.sets + " reactions.");
+      announce(t("Paused after {started} of {sets} reactions.", {started: started, sets: p.sets}));
       return;
     }
     begin();
@@ -394,7 +403,7 @@
     playing = true;
     nextAt = now;
     show();
-    announce("Reacting.");
+    announce(t("Reacting."));
     nudge();
   });
   $("once").addEventListener("click", function () {
@@ -411,37 +420,37 @@
   $("reset").addEventListener("click", function () {
     reset();
     nudge();
-    announce("Started over. " + M.setupText(p));
+    announce(t("Started over.") + " " + M.setupText(p));
   });
 
   // ---------- Status, table and explanation ----------
   function showStatus() {
     var status;
-    if (finished) status = "Stopped. " + M.resultText(p);
-    else if (playing) status = "Reacting: " + done + " of " + p.sets + " reactions.";
-    else if (started === 0) status = "Ready: " + p.start[0] + " " + M.name(p.rxn.reactants[0][0]) + " and " + p.start[1] + " " + M.name(p.rxn.reactants[1][0]) + " molecules. Predict, then press React all or React once.";
-    else status = done + " of " + p.sets + " reactions done. Keep reacting to see where it stops.";
+    if (finished) status = t("Stopped.") + " " + M.resultText(p);
+    else if (playing) status = t("Reacting: {done} of {sets} reactions.", {done: done, sets: p.sets});
+    else if (started === 0) status = t("Ready: {na} {A} and {nb} {B} molecules. Predict, then press React all or React once.", {na: p.start[0], A: M.name(p.rxn.reactants[0][0]), nb: p.start[1], B: M.name(p.rxn.reactants[1][0])});
+    else status = t("{done} of {sets} reactions done. Keep reacting to see where it stops.", {done: done, sets: p.sets});
     $("status").textContent = status;
-    $("play").textContent = playing ? "Pause" : "React all";
+    $("play").textContent = playing ? t("Pause") : t("React all");
     $("play").setAttribute("aria-disabled", String(finished));
     $("once").setAttribute("aria-disabled", String(finished || playing || (p.sets > 0 && started >= p.sets)));
   }
   function showTable() {
-    var t = M.table(p, done), head = $("thead"), body = $("tbody");
+    var tb = M.table(p, done), head = $("thead"), body = $("tbody");
     clear(head);
     clear(body);
     head.appendChild(node("td"));
-    t.species.forEach(function (f, i) {
+    tb.species.forEach(function (f, i) {
       var th = node("th");
       th.scope = "col";
       th.appendChild(document.createTextNode(M.name(f)));
       var tag = finished && i < 2 && p.limiting !== null ? (p.limiting === "both" || p.limiting === i ? "limiting" : "excess") : i === 2 ? "product" : "";
-      if (tag) th.appendChild(node("span", "zsa-lr-tag zsa-lr-tag-" + tag, tag));
+      if (tag) th.appendChild(node("span", "zsa-lr-tag zsa-lr-tag-" + tag, t(tag)));
       head.appendChild(th);
     });
-    [["Before", t.before, M.num], ["Change", t.change, M.signed], ["After", t.after, M.num], ["Molecules in the box", t.particles, String]].forEach(function (row) {
+    [["Before", tb.before, M.num], ["Change", tb.change, M.signed], ["After", tb.after, M.num], ["Molecules in the box", tb.particles, String]].forEach(function (row) {
       var tr = node("tr", row[0] === "Molecules in the box" ? "zsa-lr-count-row" : "");
-      var th = node("th", "", row[0]);
+      var th = node("th", "", t(row[0]));
       th.scope = "row";
       tr.appendChild(th);
       row[1].forEach(function (v, i) {
@@ -455,8 +464,8 @@
     var box = $("why-body");
     clear(box);
     if (!finished) {
-      box.appendChild(node("p", "zsa-lr-small", started === 0 ? "React to find out. When the reaction stops, look at which molecules are left and what they would need to react." :
-        done + " of " + p.sets + " reactions so far. The explanation appears when the reaction stops."));
+      box.appendChild(node("p", "zsa-lr-small", started === 0 ? t("React to find out. When the reaction stops, look at which molecules are left and what they would need to react.") :
+        t("{done} of {sets} reactions so far. The explanation appears when the reaction stops.", {done: done, sets: p.sets})));
       return;
     }
     box.appendChild(node("p", "zsa-lr-result", M.resultText(p)));
@@ -464,7 +473,7 @@
     box.appendChild(node("p", "", M.ratioText(p)));
     var pr = prediction();
     if (p.limiting === null) return;
-    if (!pr.lines.length) box.appendChild(node("p", "zsa-lr-small", "You did not make a prediction this time. Change the amounts and predict before you react."));
+    if (!pr.lines.length) box.appendChild(node("p", "zsa-lr-small", t("You did not make a prediction this time. Change the amounts and predict before you react.")));
     pr.lines.forEach(function (line) { box.appendChild(node("p", /^✓/.test(line) ? "zsa-lr-ok" : "zsa-lr-notyet", line)); });
   }
   function show() {
@@ -479,7 +488,7 @@
   // ---------- Check your thinking ----------
   M.QUESTIONS.forEach(function (q, i) {
     var fs = node("fieldset", "zsa-lr-question");
-    fs.appendChild(node("legend", "", (i + 1) + ". " + q.text + "..."));
+    fs.appendChild(node("legend", "", t("{n}. {question}...", {n: i + 1, question: q.text})));
     q.choices.forEach(function (ch) {
       var lab = node("label", "zsa-lr-choice"), input = node("input");
       input.type = "radio";
@@ -497,19 +506,19 @@
     root.querySelectorAll("[data-question]:checked").forEach(function (input) { answers[input.dataset.question] = input.value; });
     var results = M.check(answers), box = $("feedback");
     clear(box);
-    box.appendChild(node("h3", "", "Your answers"));
+    box.appendChild(node("h3", "", t("Your answers")));
     results.forEach(function (r, i) { box.appendChild(node("p", r.ok ? "zsa-lr-ok" : "zsa-lr-notyet", (i + 1) + ". " + (r.ok ? "✓ " : "") + r.text)); });
     box.hidden = false;
     var right = results.filter(function (r) { return r.ok; }).length;
-    announce(right + " of " + results.length + " correct. " + results.map(function (r, i) { return (i + 1) + ". " + r.text; }).join(" "));
+    announce(t("{right} of {total} correct.", {right: right, total: results.length}) + " " + results.map(function (r, i) { return (i + 1) + ". " + r.text; }).join(" "));
   });
 
   // ---------- Reflection and printing ----------
   function printSummary() {
     if (!p) return;
     var r = p.rxn.reactants;
-    $("print-summary").textContent = M.equation(p.rxn) + ", starting with " + M.mol(p.mol[0]) + " " + M.name(r[0][0]) + " and " + M.mol(p.mol[1]) + " " + M.name(r[1][0]) + ". " +
-      (finished ? M.resultText(p) : done + " of " + p.sets + " reactions done.");
+    $("print-summary").textContent = t("{equation}, starting with {a} {A} and {b} {B}.", {equation: M.equation(p.rxn), a: M.mol(p.mol[0]), A: M.name(r[0][0]), b: M.mol(p.mol[1]), B: M.name(r[1][0])}) + " " +
+      (finished ? M.resultText(p) : t("{done} of {sets} reactions done.", {done: done, sets: p.sets}));
   }
   // A print copy of the reflection: a text area prints only its visible lines, a paragraph prints all of it.
   function mirrorReflection() { $("print-reflection").textContent = $("reflection").value; }

@@ -1,5 +1,5 @@
 # Periodic Trends Practice
-Version: 1.1.1
+Version: 1.2.0
 
 ## Assumptions and departures
 - Runs on the shared activity engine (`shared/zsa-engine.js`, `shared/zsa-activity.css`) exactly as it is, like the Ion Charge Trainer and the Ionic Formula Builder: tap to check, answer trail, two hints, Show me, review queue, round summary, Practice my misses and the always-visible main-group table. `trends.js` holds the steps, the misconception rules and the question strip.
@@ -125,5 +125,11 @@ Button label: Open Periodic Trends Practice
 - Only Chromium was tested.
 
 ## Changelog
+1.2.0: Mexican Spanish with `?lang=es` or the EN / ES header links. Full Spanish sentence templates, Spanish element names and Spanish completion-code labels.
+
 1.1.0: Completion codes for a full mixed round (prefix PTR). `?from=` for the back link. Near ties (values within 2%) are no longer asked: 8 pairs removed, 418 questions. A round of one trend gives no code.
 1.0.0: Initial practice with 426 questions from the Periodic Table's data, three steps with targeted feedback, hints, Show me, review, summaries, Practice my misses, single-trend rounds and linkable questions.
+
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the fallback. All student text, feedback, hints and accessible labels come from `data.js`, which `tools/build-data.js` writes from `tools/spanish.json` (the words) and the Periodic Table's `tools/spanish.json` (element names). Spanish questions, feedback and hints are full sentence templates with placeholders, so word order and articles stay natural. Scientific symbols, values, units and decimal points stay unchanged. See `../SPANISH_TERMS.md` for choices beyond the supplied glossary.

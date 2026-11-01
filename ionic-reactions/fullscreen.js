@@ -2,6 +2,9 @@
   "use strict";
   var root = document.querySelector('[data-zsa-activity="ionic-reactions"]');
   if (!root) return;
+  var i18n;
+  root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: function (api) { i18n = api; }}}));
+  function t(text) { return i18n ? i18n.text(text) : text; }
   var button = root.querySelector("#zsa-ir-fullscreen-toggle");
   var icon = root.querySelector("#zsa-ir-fullscreen-icon");
   var status = root.querySelector("#zsa-ir-fullscreen-status");
@@ -10,7 +13,7 @@
   var pending = false;
   function sync() {
     var active = !!document.fullscreenElement;
-    var label = active ? "Exit fullscreen" : "Enter fullscreen";
+    var label = active ? t("Exit fullscreen") : t("Enter fullscreen");
     button.setAttribute("aria-label", label);
     button.setAttribute("title", label);
     button.setAttribute("aria-pressed", String(active));
@@ -30,8 +33,8 @@
       else await document.documentElement.requestFullscreen();
     } catch (error) {
       status.hidden = false;
-      status.textContent = document.fullscreenElement ? "Fullscreen could not close. Try pressing Escape." :
-        "Fullscreen is unavailable here. You can use your browser's fullscreen controls.";
+      status.textContent = document.fullscreenElement ? t("Fullscreen could not close. Try pressing Escape.") :
+        t("Fullscreen is unavailable here. You can use your browser's fullscreen controls.");
     } finally {
       pending = false; button.disabled = false; sync();
     }
