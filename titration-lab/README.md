@@ -1,5 +1,5 @@
 # Virtual Titration Simulator
-Version: 1.0.1
+Version: 1.1.0
 
 A titration lab for AP Chemistry (Unit 8, Acids and Bases). Students choose an analyte, a titrant and an indicator, add titrant with a stopcock (closed, drop by drop, slow or fast stream) or one drop at a time, and watch the flask's color, the pH meter and a live pH curve. They record the endpoint, read the equivalence volume and the pKa (or the equivalence pH) from their own curve, check those answers, and then show the key points to connect the steep slope to the equivalence point and the half-equivalence point to the pKa.
 
@@ -79,6 +79,7 @@ Suggested links (add `&from=` with the lesson's own URL):
 | File | What it holds |
 |---|---|
 | `index.html` | Page shell: setup, bench with stopcock and readouts, the graph, analysis, reflection and the live region. |
+| `data.js` | Every English string and its Mexican Spanish translation, for the shared language module. |
 | `chem.js` | The species, pH from the charge balance, equivalence and half-equivalence points, indicator colors and verdicts, the analysis checks, insight text, spoken descriptions, number formatting and the CSV. No page code. |
 | `lab.js` | The page: the apparatus drawing, the stopcock and animation loop, the curve, the endpoint, questions and key points, printing, the download and deep links. |
 | `lab.css` | Layout, apparatus and graph colors and print styles, prefixed `zsa-ti-`. |
@@ -97,4 +98,9 @@ Suggested links (add `&from=` with the lesson's own URL):
 - No sideways scrolling from 320 px, and every button, select and box is at least 44 px.
 
 ## Changelog
+- 1.1.0: Mexican Spanish with `?lang=es` and the shared EN / ES header links. Every sentence is one full template in `data.js`.
 - 1.0.0: first version.
+
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the fallback. All student text, feedback, the apparatus and graph labels, spoken descriptions, live region messages, the print summary and the CSV header row use the activity's `data.js`, and every sentence is one full template with placeholders, so Spanish keeps its own word order. Titration is "titulación", never "valoración". Color names are feminine because they always describe the solution (la solución se volvió rosa). The noscript message is bilingual, since it shows before any script runs. Formulas, numeric values, units and decimal points stay unchanged, and the CSV file name stays `zornscience-titration-data.csv`. The toggle reloads the page, so a titration in progress starts over. See `../SPANISH_TERMS.md` for choices beyond the supplied glossary.

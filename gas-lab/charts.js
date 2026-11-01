@@ -293,7 +293,7 @@
     var bar = node("li", "zsa-gl-key zsa-gl-key--bar", fill(label.bars, {count: count, gas: ui.gases[gas].name})); legend.appendChild(bar);
     curves.forEach(function (k, ci) {
       legend.appendChild(node("li", "zsa-gl-key " + (ci ? "zsa-gl-key--dashed" : "zsa-gl-key--solid"),
-        fill(label.curve, {gas: ui.formula[k.gas], T: Math.round(k.T)}) + ": " + (ci ? label.dashed : label.solid) + " curve"));
+        f.t("{curve}: {style} curve", {curve: fill(label.curve, {gas: ui.formula[k.gas], T: Math.round(k.T)}), style: ci ? label.dashed : label.solid})));
     });
     var body = $("mb-body"); body.replaceChildren();
     curves.forEach(function (k, ci) {

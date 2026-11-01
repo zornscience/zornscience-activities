@@ -1,6 +1,6 @@
 # Equilibrium Sandbox
 
-Version: 1.2.1
+Version: 1.3.0
 
 Standalone static lab at `equilibrium-lab/`. No runtime dependencies, accounts, tracking, storage or outside requests. Supports `?embed=1` via the existing embed helper.
 
@@ -21,3 +21,10 @@ Visual presentation: an instrument bench, labeled apparatus, numeric readout til
 - CSV includes temperature, volume, Kc, Qc and both rates.
 
 The activity opens directly into the experiment, without an introductory banner or a direct link to the other chemistry lab. The common All activities link remains available.
+
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the fallback. All student text, the instructions dialog, the share panel and share text, state and explanation messages, rate notes, graph axis text and SVG titles, accessible labels, the CSV header row and the printed page use the activity's `data.js`. Every sentence is one full template with placeholders, so Spanish keeps its own word order. Formulas, numeric values, units and decimal points stay unchanged. In Spanish the share link carries `?lang=es`. The EN / ES links reload the page, so a running experiment starts fresh. See `../SPANISH_TERMS.md` for choices beyond the supplied glossary.
+
+## Changelog
+- 1.3.0: Mexican Spanish with `?lang=es` and the shared EN / ES header links. Every sentence is one full template in `data.js`.

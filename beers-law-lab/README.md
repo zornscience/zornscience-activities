@@ -1,5 +1,5 @@
 # Beer's Law Spectrophotometer Lab
-Version: 1.0.1
+Version: 1.1.0
 
 A spectrophotometry lab for Chemistry and AP Chemistry (Beer's law, Beer-Lambert law). Students zero a spectrophotometer with a blank, choose the concentrations of their own standards and measure each one to build a calibration curve, then measure an unknown of the same solution and calculate its concentration. They check their answer, or show it, and can take a new unknown, which has a different random concentration each time. The page shows a mock-up of the spectrophotometer, with a cutaway of the light path (lamp, grating, the selected wavelength, the cuvette and the light that gets through to the detector), a calibration curve with every standard, the best-fit line and the unknown's absorbance, and a data table.
 
@@ -76,6 +76,7 @@ Suggested links (add `&from=` with the lesson's own URL):
 ## Files
 | File | What it holds |
 |---|---|
+| `data.js` | Every English string and its Mexican Spanish translation, for the shared language module. |
 | `index.html` | Page shell: setup, the spectrophotometer with its readouts and controls, the graph, the table and the unknown, reflection and the live region. |
 | `model.js` | The solutions and their spectra, Beer's law readings with stray light and noise, λmax, the best-fit line, random unknowns, the answer check and hints, the worked answer, light and solution colors, insight text, spoken descriptions, graph scales, number formatting and the CSV. No page code. |
 | `lab.js` | The page: the instrument drawing, the blank, standards and unknown, the wavelength lock, the graph, the table, checking and showing the answer, printing, the download and deep links. |
@@ -95,4 +96,9 @@ Suggested links (add `&from=` with the lesson's own URL):
 - No sideways scrolling from 320 px, and every button, select, slider and box is at least 44 px.
 
 ## Changelog
+- 1.1.0: Mexican Spanish with `?lang=es` and the shared EN / ES header links. Every sentence is one full template in `data.js`.
 - 1.0.0: first version.
+
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the fallback. All student text, feedback, hints, the worked answer, the instrument and graph labels, the data table, the CSV header row, the print summary and accessible labels use the activity's `data.js`, and every sentence is one full template with placeholders, so Spanish keeps its own word order. Formulas, ion formulas, numeric values, units and decimal points stay unchanged. The share link carries `?lang=es`. The language toggle reloads the page, so measured standards are not kept. The CSV file name stays `zornscience-beers-law-data.csv`. Terms follow the Style Kit (ley de Beer, celda, curva de calibración, línea de mejor ajuste, absorbancia); see `../SPANISH_TERMS.md` for choices beyond the supplied glossary.

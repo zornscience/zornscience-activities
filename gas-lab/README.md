@@ -1,12 +1,12 @@
 # Gas Laws and KMT Lab
-Version: 1.0.1
+Version: 1.1.0
 
 A particle simulation of a gas in a container with a movable piston, linked to a live pressure gauge, readouts, graphs of the gas laws, Maxwell-Boltzmann speed distributions, gas mixtures and a real gas mode. An Investigations tab adds guided predict, test and explain tasks with a completion code.
 
 ## Assumptions and departures
 - Built on the house conventions: plain JavaScript in strict IIFEs, classic deferred scripts, no globals, the shared Content Security Policy (no inline scripts, styles or style attributes; the canvas and SVG are drawn by script), shared tokens and Inter, embed mode, no storage, cookies, analytics or outside requests. The only file changed in `shared/` is `zsa-codes.js` (to register the activity).
 - The lab is not an engine activity. The Investigations tab uses the shared engine (`shared/zsa-engine.js`, `shared/zsa-activity.css`). The engine always draws a periodic table, which this activity does not need, so it draws into a hidden holder (`#zsa-gl-table`).
-- Scripts: `physics.js` is the model (constants, gas law, van der Waals, Maxwell-Boltzmann, the simulation) and has no page text; `data.js` holds every string the scripts show; `lab.js` runs the container, controls, readouts, tabs and deep links; `charts.js` draws the Graphs and Speeds tabs; `investigations.js` is the engine activity. They talk through one-use-style events on the root (`zsa:request-data`, `zsa-gl:request-physics`, `zsa-gl:request-lab`), never through globals.
+- Scripts: `physics.js` is the model (constants, gas law, van der Waals, Maxwell-Boltzmann, the simulation) and has no page text; `data.js` holds every string the scripts show; `i18n-data.js` maps each English string (data, page markup and the few words written in the scripts) to Mexican Spanish for the shared language module (`shared/zsa-i18n.js`), and is named so because `data.js` already holds the science data; `lab.js` runs the container, controls, readouts, tabs and deep links; `charts.js` draws the Graphs and Speeds tabs; `investigations.js` is the engine activity. They talk through one-use-style events on the root (`zsa:request-data`, `zsa-gl:request-physics`, `zsa-gl:request-lab`), never through globals.
 - When pressure is held, the piston is placed where the ideal gas law puts it (V = nRT/P) and the gauge then confirms the pressure; the piston itself is not simulated as a moving mass.
 - Built and browser-tested in Chromium by Claude. Real screen readers, Firefox, Safari and school devices remain untested. See TESTING.md.
 
@@ -120,4 +120,9 @@ Eleven tasks, each with three steps: predict, test in the lab (Set up the lab, t
 - Narrower: one column. The container and its gauge sit side by side, then the controls; at 390x664 the container, every control and the gauge fit without scrolling. Charts are drawn at the panel's width so their text stays readable.
 
 ## Changelog
+- 1.1.0: Mexican Spanish with `?lang=es` and the shared EN / ES header links. Translations are in `i18n-data.js`; every sentence is one full template.
 - 1.0.0: first version, with the lab (ideal, mixture and real gas modes), graphs, speed distributions and 11 investigations with completion codes.
+
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the fallback, and English text is unchanged. `i18n-data.js` runs before `data.js` and translates the page markup; `data.js` then hands the scripts its words in Spanish (lab readouts, graph titles and axes, the speed tab, the investigations, their hints, feedback and summaries, and the engine's own buttons and marks), while ids, gas symbols, lab settings and choice values stay in English because the scripts look things up by them. The few words written in `lab.js`, `charts.js` and `investigations.js` go through the lab's `t()`. Every sentence is one full template with placeholders, so Spanish keeps its own word order. Formulas, symbols, numbers, units and decimal points stay unchanged, and the Copy data header row is translated. The toggle reloads the page (the lab state is not kept). See `../SPANISH_TERMS.md` for choices beyond the supplied glossary.

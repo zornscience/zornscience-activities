@@ -1,5 +1,5 @@
 # Verification record
-Version: 1.0.1
+Version: 1.1.0
 Date: 2026-10-16
 Reviewer: Claude (built and tested 1.0.0)
 
@@ -51,3 +51,7 @@ PASS means the check was run on version 1.0.0 as committed and passed. NOT TESTE
 | Real screen readers (NVDA, VoiceOver, ChromeVox) | NOT TESTED | Not available here. Names, roles and live regions were checked in the DOM. |
 | Firefox, Safari, school devices | NOT TESTED | Only Chromium is available. |
 | Live URL, lesson links | NOT TESTED | After merging: https://activities.zornscience.org/gas-lab/ |
+
+## Spanish verification
+
+`tests/e2e/i18n.spec.js` opens the lab with `?lang=es`, checks text and accessible attributes for leftover English, and drives the lab controls, a sweep and the data table, the Speeds comparisons, an investigation with a wrong pick, a hint, the right answers and the summary, the instructions dialog and the share panel (whose link carries `?lang=es`). The English page was compared with version 1.0.1 through the same states (start, mixture, real gas, every graph after a sweep, Speeds presets, an investigation with feedback): the visible text and accessible labels are identical apart from the EN / ES header links.

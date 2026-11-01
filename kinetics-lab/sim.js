@@ -7,6 +7,18 @@
 // (In Node, for the unit tests, it is module.exports.)
 (function () {
   "use strict";
+  // Words come from data.js through the shared language module. In Node (the unit tests) and in English, each
+  // template is filled as written. Every sentence is one full template, so Spanish keeps its own word order.
+  var i18n;
+  if (typeof document !== "undefined") {
+    var host = document.querySelector('[data-zsa-activity="kinetics-lab"]');
+    if (host) host.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: function (api) { i18n = api; }}}));
+  }
+  function t(text, values) {
+    values = values || {};
+    if (i18n) return i18n.text(text, values);
+    return text.replace(/\{(\w+)\}/g, function (m, k) { return values[k] === undefined ? m : values[k]; });
+  }
 
   var R = 8.314; // J/(mol·K)
   // The box in simulation units, the disks' radius and mass, and the simulation's Boltzmann constant (energy units
@@ -123,7 +135,7 @@
     var kind = catalyst !== run.settings.catalyst ? "catalyst" : "ea";
     run.settings.ea = ea;
     run.settings.catalyst = catalyst;
-    mark(run, kind, kind === "catalyst" ? (catalyst ? "Catalyst added" : "Catalyst removed") : "Ea " + fmt(ea, 1));
+    mark(run, kind, kind === "catalyst" ? (catalyst ? t("Catalyst added") : t("Catalyst removed")) : "Ea " + fmt(ea, 1));
   }
   function copy(s) { return {conc: s.conc, T: s.T, ea: s.ea, catalyst: s.catalyst}; }
 
@@ -218,28 +230,30 @@
 
   // Text the page shows and speaks.
   function settingsText(s) {
-    return fmt(s.conc, 2) + " M, " + fmt(s.T, 0) + " K, Ea " + fmt(s.ea, 1) + " kJ/mol" + (s.catalyst ? " with a catalyst (Ea " + fmt(effectiveEa(s.ea, true), 1) + ")" : "");
+    var v = {conc: fmt(s.conc, 2), T: fmt(s.T, 0), ea: fmt(s.ea, 1), cat: fmt(effectiveEa(s.ea, true), 1)};
+    return s.catalyst ? t("{conc} M, {T} K, Ea {ea} kJ/mol with a catalyst (Ea {cat})", v) : t("{conc} M, {T} K, Ea {ea} kJ/mol", v);
   }
   // A run by its starting conditions, noting changes made during it.
-  function runText(run) { return settingsText(run.start) + (run.marks.length ? ", then changed" : ""); }
+  function runText(run) { return run.marks.length ? t("{settings}, then changed", {settings: settingsText(run.start)}) : settingsText(run.start); }
   function percent(f) { return f >= 0.0995 ? fmt(f * 100, 0) + "%" : f >= 0.00995 ? fmt(f * 100, 1) + "%" : fmt(f * 100, 2) + "%"; }
   // What a screen reader hears for the box.
   function describeBox(run) {
     var r = rates(run), p = run.n0 - run.nA;
-    return "Box at " + fmt(run.settings.T, 0) + " K after " + fmt(run.t, 1) + " s: " + run.nA + " A and " + run.nA + " B particles, " + p + " C and " + p +
-      " D particles. In the last few seconds, about " + fmt(r.collisions, 0) + " A-B collisions and " + fmt(r.successes, 1) + " successful collisions per second.";
+    return t("Box at {T} K after {t} s: {a} A and {a} B particles, {p} C and {p} D particles.", {T: fmt(run.settings.T, 0), t: fmt(run.t, 1), a: run.nA, p: p}) + " " +
+      t("In the last few seconds, about {hits} A-B collisions and {wins} successful collisions per second.", {hits: fmt(r.collisions, 0), wins: fmt(r.successes, 1)});
   }
   // What a screen reader hears for the graph.
   function describeGraph(run, xmax, ymax, earlier) {
-    var text = "Concentration versus time graph, 0 to " + fmt(xmax, 0) + " s, 0 to " + fmt(ymax, 1) + " M. ";
-    if (run.t === 0) text += "No data yet.";
+    var text = t("Concentration versus time graph, 0 to {x} s, 0 to {y} M.", {x: fmt(xmax, 0), y: fmt(ymax, 1)}) + " ";
+    if (run.t === 0) text += t("No data yet.");
     else {
-      text += "[A] falls from " + fmt(conc(run.n0), 2) + " to " + fmt(conc(run.nA), 2) + " M and [C] rises from 0.00 to " + fmt(conc(run.n0 - run.nA), 2) + " M over " + fmt(run.t, 1) + " s.";
-      if (run.halfAt !== null) text += " Half of A was used up at " + fmt(run.halfAt, 1) + " s.";
+      text += t("[A] falls from {a0} to {a} M and [C] rises from 0.00 to {c} M over {t} s.", {a0: fmt(conc(run.n0), 2), a: fmt(conc(run.nA), 2), c: fmt(conc(run.n0 - run.nA), 2), t: fmt(run.t, 1)});
+      if (run.halfAt !== null) text += " " + t("Half of A was used up at {t} s.", {t: fmt(run.halfAt, 1)});
     }
-    if (run.marks.length) text += " Changes: " + run.marks.map(function (m) { return m.text + " at " + fmt(m.t, 1) + " s"; }).join(", ") + ".";
+    if (run.marks.length) text += " " + t("Changes: {list}.", {list: run.marks.map(function (m) { return t("{change} at {t} s", {change: m.text, t: fmt(m.t, 1)}); }).join(", ")});
     (earlier || []).forEach(function (e) {
-      text += " Earlier run " + e.number + " (" + runText(e) + "): " + (e.halfAt !== null ? "half of A used up at " + fmt(e.halfAt, 1) + " s." : "[A] " + fmt(conc(e.log[e.log.length - 1][1]), 2) + " M after " + fmt(e.log[e.log.length - 1][0], 1) + " s.");
+      var v = {n: e.number, run: runText(e), half: e.halfAt === null ? "" : fmt(e.halfAt, 1), a: fmt(conc(e.log[e.log.length - 1][1]), 2), t: fmt(e.log[e.log.length - 1][0], 1)};
+      text += " " + (e.halfAt !== null ? t("Earlier run {n} ({run}): half of A used up at {half} s.", v) : t("Earlier run {n} ({run}): [A] {a} M after {t} s.", v));
     });
     return text;
   }
@@ -248,43 +262,43 @@
   function energyText(run, s) {
     s = s || run.settings;
     var ea = effectiveEa(s.ea, s.catalyst), f = fractionAbove(ea, s.T);
-    var text = "At " + fmt(s.T, 0) + " K, the average collision energy (RT) is " + fmt(RT(s.T), 2) + " kJ/mol. Collision theory predicts that " + percent(f) +
-      " of A-B collisions have at least Ea = " + fmt(ea, 1) + " kJ/mol.";
-    if (run.collisions) text += " So far this run, " + run.successes + " of " + run.collisions + " A-B collisions (" + percent(run.successes / run.collisions) + ") were successful.";
+    var text = t("At {T} K, the average collision energy (RT) is {rt} kJ/mol.", {T: fmt(s.T, 0), rt: fmt(RT(s.T), 2)}) + " " +
+      t("Collision theory predicts that {pct} of A-B collisions have at least Ea = {ea} kJ/mol.", {pct: percent(f), ea: fmt(ea, 1)});
+    if (run.collisions) text += " " + t("So far this run, {wins} of {hits} A-B collisions ({pct}) were successful.", {wins: run.successes, hits: run.collisions, pct: percent(run.successes / run.collisions)});
     return text;
   }
 
   // Check your thinking: multiple choice, with feedback for each choice.
   var QUESTIONS = [
-    {id: "temp", text: "Raising the temperature speeds up the reaction mainly because", answer: "fraction", choices: [
-      {id: "more", text: "the particles collide more often.", feedback: "They do collide a little more often, but that is not the main reason. Compare the collisions per second with the successful ones at 300 K and at 500 K."},
-      {id: "fraction", text: "a larger fraction of collisions have at least the activation energy.", feedback: "Yes. Faster particles hit harder, so many more collisions get over the barrier. The collision energy graph shows the shaded tail growing."},
-      {id: "lower", text: "the activation energy gets smaller.", feedback: "Not quite. Temperature does not change Ea; watch the Ea line on the energy graphs stay put while you change the temperature."},
-      {id: "bigger", text: "the particles get bigger.", feedback: "Not quite. The particles stay the same size; only their speeds change."}
+    {id: "temp", text: t("Raising the temperature speeds up the reaction mainly because"), answer: "fraction", choices: [
+      {id: "more", text: t("the particles collide more often."), feedback: t("They do collide a little more often, but that is not the main reason. Compare the collisions per second with the successful ones at 300 K and at 500 K.")},
+      {id: "fraction", text: t("a larger fraction of collisions have at least the activation energy."), feedback: t("Yes. Faster particles hit harder, so many more collisions get over the barrier. The collision energy graph shows the shaded tail growing.")},
+      {id: "lower", text: t("the activation energy gets smaller."), feedback: t("Not quite. Temperature does not change Ea; watch the Ea line on the energy graphs stay put while you change the temperature.")},
+      {id: "bigger", text: t("the particles get bigger."), feedback: t("Not quite. The particles stay the same size; only their speeds change.")}
     ]},
-    {id: "conc", text: "If you double the concentration of both A and B, the starting rate of successful collisions becomes about", answer: "four", choices: [
-      {id: "same", text: "the same.", feedback: "Not quite. Run 0.50 M and then 1.00 M and compare the successful collisions per second at the start."},
-      {id: "two", text: "twice as fast.", feedback: "Close, but each A now has twice as many B to hit, and there are twice as many A. Try 0.50 M and 1.00 M."},
-      {id: "four", text: "four times as fast.", feedback: "Yes. Twice as many A, each meeting twice as many B, gives about four times as many collisions, so rate = k[A][B]."},
-      {id: "half", text: "half as fast.", feedback: "Not quite. More particles in the same box collide more often, not less."}
+    {id: "conc", text: t("If you double the concentration of both A and B, the starting rate of successful collisions becomes about"), answer: "four", choices: [
+      {id: "same", text: t("the same."), feedback: t("Not quite. Run 0.50 M and then 1.00 M and compare the successful collisions per second at the start.")},
+      {id: "two", text: t("twice as fast."), feedback: t("Close, but each A now has twice as many B to hit, and there are twice as many A. Try 0.50 M and 1.00 M.")},
+      {id: "four", text: t("four times as fast."), feedback: t("Yes. Twice as many A, each meeting twice as many B, gives about four times as many collisions, so rate = k[A][B].")},
+      {id: "half", text: t("half as fast."), feedback: t("Not quite. More particles in the same box collide more often, not less.")}
     ]},
-    {id: "cat", text: "A catalyst speeds up the reaction because it", answer: "pathway", choices: [
-      {id: "energy", text: "gives the particles more energy.", feedback: "Not quite. The speeds do not change when you add the catalyst; the temperature stays the same."},
-      {id: "pathway", text: "offers a pathway with a lower activation energy.", feedback: "Yes. With a lower barrier, a larger fraction of the same collisions are successful. The catalyst is not used up."},
-      {id: "used", text: "is used up as it reacts with A.", feedback: "Not quite. A catalyst is not used up; it takes part and is given back."},
-      {id: "collide", text: "makes the particles collide more often.", feedback: "Not quite. Compare the collisions per second with and without the catalyst: about the same."}
+    {id: "cat", text: t("A catalyst speeds up the reaction because it"), answer: "pathway", choices: [
+      {id: "energy", text: t("gives the particles more energy."), feedback: t("Not quite. The speeds do not change when you add the catalyst; the temperature stays the same.")},
+      {id: "pathway", text: t("offers a pathway with a lower activation energy."), feedback: t("Yes. With a lower barrier, a larger fraction of the same collisions are successful. The catalyst is not used up.")},
+      {id: "used", text: t("is used up as it reacts with A."), feedback: t("Not quite. A catalyst is not used up; it takes part and is given back.")},
+      {id: "collide", text: t("makes the particles collide more often."), feedback: t("Not quite. Compare the collisions per second with and without the catalyst: about the same.")}
     ]},
-    {id: "slope", text: "As the reaction goes on, the [A] curve gets less steep because", answer: "fewer", choices: [
-      {id: "slow", text: "the particles slow down.", feedback: "Not quite. The box is held at its temperature, so the particles keep their speeds."},
-      {id: "fewer", text: "fewer A and B particles are left to collide.", feedback: "Yes. Fewer reactants means fewer A-B collisions each second, so fewer successful ones."},
-      {id: "ea", text: "the activation energy rises.", feedback: "Not quite. Ea stays the same during the run unless you change it."},
-      {id: "block", text: "the products block A from reaching B.", feedback: "Not quite. Products bounce around too, but the main change is that there are fewer A and B to meet."}
+    {id: "slope", text: t("As the reaction goes on, the [A] curve gets less steep because"), answer: "fewer", choices: [
+      {id: "slow", text: t("the particles slow down."), feedback: t("Not quite. The box is held at its temperature, so the particles keep their speeds.")},
+      {id: "fewer", text: t("fewer A and B particles are left to collide."), feedback: t("Yes. Fewer reactants means fewer A-B collisions each second, so fewer successful ones.")},
+      {id: "ea", text: t("the activation energy rises."), feedback: t("Not quite. Ea stays the same during the run unless you change it.")},
+      {id: "block", text: t("the products block A from reaching B."), feedback: t("Not quite. Products bounce around too, but the main change is that there are fewer A and B to meet.")}
     ]}
   ];
   function check(answers) {
     return QUESTIONS.map(function (q) {
       var pick = answers[q.id];
-      if (!pick) return {id: q.id, ok: false, text: "No answer yet."};
+      if (!pick) return {id: q.id, ok: false, text: t("No answer yet.")};
       var c = q.choices.filter(function (ch) { return ch.id === pick; })[0];
       return {id: q.id, ok: pick === q.answer, text: c.feedback};
     });
@@ -298,7 +312,7 @@
   }
   // The logged data, for spreadsheets.
   function csv(log) {
-    return ["Time (s),[A] (M),[B] (M),[C] (M),[D] (M),A-B collisions,Successful collisions"].concat(log.map(function (e) {
+    return [t("Time (s),[A] (M),[B] (M),[C] (M),[D] (M),A-B collisions,Successful collisions")].concat(log.map(function (e) {
       return [e[0].toFixed(2), conc(e[1]).toFixed(2), conc(e[1]).toFixed(2), conc(e[2]).toFixed(2), conc(e[2]).toFixed(2), e[3], e[4]].join(",");
     })).join("\n") + "\n";
   }

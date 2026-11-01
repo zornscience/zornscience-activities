@@ -1,5 +1,5 @@
 # Verification record
-Version: 1.0.1
+Version: 1.1.0
 Date: 2026-10-18
 Reviewer: Claude (built and tested 1.0.0)
 
@@ -32,6 +32,10 @@ PASS means the check was run on version 1.0.0 as committed and passed. Browser c
 | Repeatability | PASS | The browser tests ran 3 times in a row without a failure. |
 | House rules | PASS | `tests/unit/static.test.js` with the rest of the site. |
 | Visual check | PASS | Screenshots at 1366 and 390 px while running with the catalyst and an earlier run, reviewed by eye: particles, bursts, graph, marks, energy charts and labels. |
+
+## Spanish verification
+
+`tests/e2e/i18n.spec.js` opens the sandbox with `?lang=es`, checks text and accessible attributes for leftover English, and exercises running, pausing, a new run with an earlier run kept, the catalyst, the questions with blank, wrong and right answers, the instructions and the share panel (the share link carries `?lang=es`), with full-sentence templates. The unit tests still pass on the English model text, and the English page text was compared with version 1.0.1 through the same states and is identical apart from the EN / ES header links, which the language toggle intentionally adds.
 
 ## Not tested
 Real screen readers (NVDA, VoiceOver, ChromeVox), Firefox, Safari, Chromebooks and phones (frame rate on slow devices included), printing to paper (print media was emulated), and the live site. The model was checked against collision theory, not against measured rate data.

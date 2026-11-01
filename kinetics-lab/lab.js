@@ -9,6 +9,14 @@
   var M;
   root.dispatchEvent(new CustomEvent("zsa-kn:request-model", {detail: {receive: function (value) { M = value; }}}));
   if (!M) return;
+  var i18n;
+  root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: function (api) { i18n = api; }}}));
+  // Every sentence is one full template from data.js, filled with values, so each language keeps its word order.
+  function t(text, values) {
+    values = values || {};
+    if (i18n) return i18n.text(text, values);
+    return text.replace(/\{(\w+)\}/g, function (m, k) { return values[k] === undefined ? m : values[k]; });
+  }
 
   var SVG = "http://www.w3.org/2000/svg";
   function $(id) { return root.querySelector("#zsa-kn-" + id); }
@@ -42,9 +50,9 @@
 
   // ---------- Conditions ----------
   var SLIDERS = {
-    temp: {spec: M.TEMP, key: "T", text: function (v) { return fmt(v, 0) + " K"; }, spoken: function (v) { return fmt(v, 0) + " kelvin"; }},
-    conc: {spec: M.CONC, key: "conc", text: function (v) { return fmt(v, 2) + " M"; }, spoken: function (v) { return fmt(v, 2) + " molar, " + M.particles(v) + " particles each of A and B"; }},
-    ea: {spec: M.EA, key: "ea", text: function (v) { return fmt(v, 1) + " kJ/mol"; }, spoken: function (v) { return fmt(v, 1) + " kilojoules per mole"; }}
+    temp: {spec: M.TEMP, key: "T", text: function (v) { return fmt(v, 0) + " K"; }, spoken: function (v) { return t("{v} kelvin", {v: fmt(v, 0)}); }},
+    conc: {spec: M.CONC, key: "conc", text: function (v) { return fmt(v, 2) + " M"; }, spoken: function (v) { return t("{v} molar, {n} particles each of A and B", {v: fmt(v, 2), n: M.particles(v)}); }},
+    ea: {spec: M.EA, key: "ea", text: function (v) { return fmt(v, 1) + " kJ/mol"; }, spoken: function (v) { return t("{v} kilojoules per mole", {v: fmt(v, 1)}); }}
   };
   Object.keys(SLIDERS).forEach(function (id) {
     var s = SLIDERS[id], input = $(id);
@@ -61,10 +69,10 @@
     });
     var cat = $("catalyst");
     cat.setAttribute("aria-pressed", String(settings.catalyst));
-    cat.textContent = settings.catalyst ? "Remove the catalyst" : "Add a catalyst";
+    cat.textContent = settings.catalyst ? t("Remove the catalyst") : t("Add a catalyst");
     $("catalyst-text").textContent = settings.catalyst
-      ? "Catalyst in the box: Ea is lowered from " + fmt(settings.ea, 1) + " to " + fmt(M.effectiveEa(settings.ea, true), 1) + " kJ/mol."
-      : "A catalyst offers a pathway with half the activation energy.";
+      ? t("Catalyst in the box: Ea is lowered from {from} to {to} kJ/mol.", {from: fmt(settings.ea, 1), to: fmt(M.effectiveEa(settings.ea, true), 1)})
+      : t("A catalyst offers a pathway with half the activation energy.");
   }
   function sliderValue(id) {
     var s = SLIDERS[id].spec, v = Number($(id).value);
@@ -102,7 +110,8 @@
     if (!run.doneAt) M.setBarrier(run, settings.ea, settings.catalyst);
     changed();
     var ea = M.effectiveEa(settings.ea, settings.catalyst);
-    announce((settings.catalyst ? "Catalyst added. Ea is now " : "Catalyst removed. Ea is back to ") + fmt(ea, 1) + " kJ/mol, so " + M.percent(M.fractionAbove(ea, settings.T)) + " of collisions have enough energy.");
+    var v = {ea: fmt(ea, 1), pct: M.percent(M.fractionAbove(ea, settings.T))};
+    announce(settings.catalyst ? t("Catalyst added. Ea is now {ea} kJ/mol, so {pct} of collisions have enough energy.", v) : t("Catalyst removed. Ea is back to {ea} kJ/mol, so {pct} of collisions have enough energy.", v));
   });
   // Announcements for the sliders wait until the value settles, so dragging is not read out step by step.
   var settleTimer = 0;
@@ -111,8 +120,9 @@
       window.clearTimeout(settleTimer);
       settleTimer = window.setTimeout(function () {
         var ea = M.effectiveEa(settings.ea, settings.catalyst);
-        announce((id === "temp" ? "Temperature " + fmt(settings.T, 0) + " K." : "Activation energy " + fmt(settings.ea, 1) + " kJ/mol" + (settings.catalyst ? ", " + fmt(ea, 1) + " with the catalyst." : ".")) +
-          " " + M.percent(M.fractionAbove(ea, settings.T)) + " of collisions have enough energy to react.");
+        var v = {T: fmt(settings.T, 0), ea: fmt(settings.ea, 1), cat: fmt(ea, 1)};
+        announce((id === "temp" ? t("Temperature {T} K.", v) : settings.catalyst ? t("Activation energy {ea} kJ/mol, {cat} with the catalyst.", v) : t("Activation energy {ea} kJ/mol.", v)) +
+          " " + t("{pct} of collisions have enough energy to react.", {pct: M.percent(M.fractionAbove(ea, settings.T))}));
       }, 400);
     });
   });
@@ -142,19 +152,21 @@
     showEarlier();
     if (playing) loop();
     show();
-    if (!quiet) announce("New run " + runNumber + ": " + M.settingsText(settings) + ", " + run.n0 + " A and " + run.n0 + " B particles." + (kept ? " Run " + (runNumber - 1) + " is kept on the graph." : "") + (playing ? "" : " Press Play to start."));
+    if (!quiet) announce(t("New run {n}: {settings}, {count} A and {count} B particles.", {n: runNumber, settings: M.settingsText(settings), count: run.n0}) +
+      (kept ? " " + t("Run {n} is kept on the graph.", {n: runNumber - 1}) : "") + (playing ? "" : " " + t("Press Play to start.")));
   }
   $("new").addEventListener("click", function () { newRun(); });
   $("play").addEventListener("click", function () {
     if (run.doneAt !== null) { playing = true; newRun(); return; }
     playing = !playing;
-    if (playing) { loop(); announce("Running."); }
-    else announce("Paused at " + fmt(run.t, 1) + " s. " + summary());
+    if (playing) { loop(); announce(t("Running.")); }
+    else announce(t("Paused at {t} s.", {t: fmt(run.t, 1)}) + " " + summary());
     show();
   });
   function summary() {
     var r = M.rates(run);
-    return "[A] is " + fmt(M.conc(run.nA), 2) + " M. " + run.successes + " of " + run.collisions + " A-B collisions have been successful. Recently " + fmt(r.collisions, 0) + " collisions and " + fmt(r.successes, 1) + " successful collisions per second.";
+    return t("[A] is {a} M.", {a: fmt(M.conc(run.nA), 2)}) + " " + t("{wins} of {hits} A-B collisions have been successful.", {wins: run.successes, hits: run.collisions}) + " " +
+      t("Recently {hits} collisions and {wins} successful collisions per second.", {hits: fmt(r.collisions, 0), wins: fmt(r.successes, 1)});
   }
 
   // One animation loop at most: frameId is the pending frame, and a new frame is only requested when none is pending.
@@ -170,11 +182,11 @@
     events.forEach(function (e) { flashes.push({x: e.x, y: e.y, ok: e.ok, t: run.t}); });
     if (run.halfAt !== null && !halfTold) {
       halfTold = true;
-      announce("Half of A has reacted at " + fmt(run.halfAt, 1) + " s.");
+      announce(t("Half of A has reacted at {t} s.", {t: fmt(run.halfAt, 1)}));
     }
     if (run.doneAt !== null) {
       playing = false;
-      announce(run.nA === 0 ? "All of A has reacted at " + fmt(run.doneAt, 1) + " s." : "The run stopped at 10 minutes. " + summary());
+      announce(run.nA === 0 ? t("All of A has reacted at {t} s.", {t: fmt(run.doneAt, 1)}) : t("The run stopped at 10 minutes.") + " " + summary());
       show();
       return;
     }
@@ -246,16 +258,16 @@
     $("a-value").textContent = fmt(M.conc(run.nA), 2) + " M";
     $("hits-value").textContent = fmt(r.collisions, 0) + " /s";
     $("wins-value").textContent = fmt(r.successes, 1) + " /s";
-    $("pct-value").textContent = r.collisions ? M.percent(r.successes / r.collisions) : "none yet";
+    $("pct-value").textContent = r.collisions ? M.percent(r.successes / r.collisions) : t("none yet");
     $("rate-value").textContent = fmt(r.rate, 3) + " M/s";
   }
   function show() {
-    $("play").textContent = playing ? "Pause" : "Play";
+    $("play").textContent = playing ? t("Pause") : t("Play");
     var status;
-    if (run.doneAt !== null) status = run.nA === 0 ? "All of A has reacted at " + fmt(run.doneAt, 1) + " s. Press Play for a new run." : "The run stopped at 10 minutes. Press Play for a new run.";
-    else if (playing) status = "Running" + (run.halfAt !== null ? ". Half of A had reacted at " + fmt(run.halfAt, 1) + " s." : ".");
-    else if (reduceMotion && run.t === 0) status = "Paused because your device asks for less motion. Press Play to run.";
-    else status = "Paused.";
+    if (run.doneAt !== null) status = run.nA === 0 ? t("All of A has reacted at {t} s. Press Play for a new run.", {t: fmt(run.doneAt, 1)}) : t("The run stopped at 10 minutes. Press Play for a new run.");
+    else if (playing) status = run.halfAt !== null ? t("Running. Half of A had reacted at {t} s.", {t: fmt(run.halfAt, 1)}) : t("Running.");
+    else if (reduceMotion && run.t === 0) status = t("Paused because your device asks for less motion. Press Play to run.");
+    else status = t("Paused.");
     $("status").textContent = status;
     drawBox();
     describeBox();
@@ -288,14 +300,14 @@
       if (major) axes.appendChild(svg("text", {x: L - 6, y: Y(c) + 4, "text-anchor": "end", class: "zsa-kn-tick"}, fmt(c, 1)));
     }
     var step = xmax <= 60 ? 10 : xmax <= 180 ? 30 : xmax <= 360 ? 60 : 120, every = (R - L) / (xmax / step) < 36 ? 2 : 1;
-    for (var t = 0, k = 0; t <= xmax + 1e-9; t += step, k++) {
-      axes.appendChild(svg("line", {x1: X(t), y1: T, x2: X(t), y2: B, class: "zsa-kn-gridline"}));
-      if (k % every === 0) axes.appendChild(svg("text", {x: X(t), y: B + 18, "text-anchor": "middle", class: "zsa-kn-tick"}, String(t)));
+    for (var tt = 0, k = 0; tt <= xmax + 1e-9; tt += step, k++) {
+      axes.appendChild(svg("line", {x1: X(tt), y1: T, x2: X(tt), y2: B, class: "zsa-kn-gridline"}));
+      if (k % every === 0) axes.appendChild(svg("text", {x: X(tt), y: B + 18, "text-anchor": "middle", class: "zsa-kn-tick"}, String(tt)));
     }
     axes.appendChild(svg("line", {x1: L, y1: T, x2: L, y2: B, class: "zsa-kn-axis"}));
     axes.appendChild(svg("line", {x1: L, y1: B, x2: R, y2: B, class: "zsa-kn-axis"}));
-    axes.appendChild(svg("text", {x: (L + R) / 2, y: H - 6, "text-anchor": "middle", class: "zsa-kn-axis-label"}, "Time (s)"));
-    axes.appendChild(svg("text", {x: 12, y: (T + B) / 2, "text-anchor": "middle", transform: "rotate(-90 12 " + (T + B) / 2 + ")", class: "zsa-kn-axis-label"}, "Concentration (M)"));
+    axes.appendChild(svg("text", {x: (L + R) / 2, y: H - 6, "text-anchor": "middle", class: "zsa-kn-axis-label"}, t("Time (s)")));
+    axes.appendChild(svg("text", {x: 12, y: (T + B) / 2, "text-anchor": "middle", transform: "rotate(-90 12 " + (T + B) / 2 + ")", class: "zsa-kn-axis-label"}, t("Concentration (M)")));
     el.appendChild(axes);
 
     var marks = svg("g", {"aria-hidden": "true"});
@@ -309,7 +321,7 @@
     earlier.forEach(function (r, i) {
       marks.appendChild(svg("polyline", {points: line(r, 1, false), class: "zsa-kn-old zsa-kn-old-" + (i + 1)}));
       var e = r.log[r.log.length - 1];
-      marks.appendChild(svg("text", {x: Math.min(R - 4, X(e[0]) + 4), y: Math.max(T + 12, Y(M.conc(e[1])) - 6), "text-anchor": X(e[0]) + 40 > R ? "end" : "start", class: "zsa-kn-old-label"}, "Run " + r.number));
+      marks.appendChild(svg("text", {x: Math.min(R - 4, X(e[0]) + 4), y: Math.max(T + 12, Y(M.conc(e[1])) - 6), "text-anchor": X(e[0]) + 40 > R ? "end" : "start", class: "zsa-kn-old-label"}, t("Run {n}", {n: r.number})));
     });
     run.marks.forEach(function (m, i) {
       marks.appendChild(svg("line", {x1: X(m.t), y1: T, x2: X(m.t), y2: B, class: "zsa-kn-markline"}));
@@ -336,7 +348,8 @@
       var key = svg("svg", {width: 28, height: 10, "aria-hidden": "true", focusable: "false"});
       key.appendChild(svg("line", {x1: 1, y1: 5, x2: 27, y2: 5, class: "zsa-kn-old zsa-kn-old-" + (i + 1)}));
       li.appendChild(key);
-      li.appendChild(document.createTextNode("Run " + r.number + ": " + M.runText(r) + ". " + (r.halfAt !== null ? "Half of A used up at " + fmt(r.halfAt, 1) + " s." : "Less than half of A used up in " + fmt(lastTime(r), 1) + " s.")));
+      var v = {n: r.number, run: M.runText(r), half: r.halfAt === null ? "" : fmt(r.halfAt, 1), t: fmt(lastTime(r), 1)};
+      li.appendChild(document.createTextNode(r.halfAt !== null ? t("Run {n}: {run}. Half of A used up at {half} s.", v) : t("Run {n}: {run}. Less than half of A used up in {t} s.", v)));
       list.appendChild(li);
     });
     $("earlier").hidden = earlier.length === 0;
@@ -345,7 +358,7 @@
     earlier = [];
     showEarlier();
     drawGraph();
-    announce("Earlier runs cleared from the graph.");
+    announce(t("Earlier runs cleared from the graph."));
     $("new").focus();
   });
 
@@ -363,8 +376,8 @@
     }
     g.appendChild(svg("line", {x1: L, y1: T, x2: L, y2: B, class: "zsa-kn-axis"}));
     g.appendChild(svg("line", {x1: L, y1: B, x2: R, y2: B, class: "zsa-kn-axis"}));
-    g.appendChild(svg("text", {x: 12, y: (T + B) / 2, "text-anchor": "middle", transform: "rotate(-90 12 " + (T + B) / 2 + ")", class: "zsa-kn-axis-label"}, "Energy"));
-    g.appendChild(svg("text", {x: (L + R) / 2, y: B + 20, "text-anchor": "middle", class: "zsa-kn-axis-label"}, "Reaction progress"));
+    g.appendChild(svg("text", {x: 12, y: (T + B) / 2, "text-anchor": "middle", transform: "rotate(-90 12 " + (T + B) / 2 + ")", class: "zsa-kn-axis-label"}, t("Energy")));
+    g.appendChild(svg("text", {x: (L + R) / 2, y: B + 20, "text-anchor": "middle", class: "zsa-kn-axis-label"}, t("Reaction progress")));
     g.appendChild(svg("line", {x1: 44, y1: Y(0), x2: 300, y2: Y(0), class: "zsa-kn-level"}));
     g.appendChild(svg("path", {d: path(s.ea), class: "zsa-kn-curve"}));
     if (s.catalyst) g.appendChild(svg("path", {d: path(ea), class: "zsa-kn-curve-cat"}));
@@ -373,11 +386,13 @@
     g.appendChild(svg("text", {x: 298, y: Y(M.DH) + 16, "text-anchor": "end", class: "zsa-kn-chart-label"}, "ΔH = " + fmt(M.DH, 0) + " kJ/mol"));
     g.appendChild(svg("line", {x1: 170, y1: Y(0) - 2, x2: 170, y2: Y(ea) + 7, class: "zsa-kn-arrow"}));
     g.appendChild(svg("path", {d: "M164 " + (Y(ea) + 8) + "L170 " + Y(ea) + "L176 " + (Y(ea) + 8) + "Z", class: "zsa-kn-arrowhead"}));
-    g.appendChild(svg("text", {x: 40, y: T + 10, class: "zsa-kn-chart-strong"}, "Ea = " + fmt(ea, 1) + " kJ/mol" + (s.catalyst ? " with the catalyst" : "")));
-    if (s.catalyst) g.appendChild(svg("text", {x: 40, y: T + 26, class: "zsa-kn-cat-label"}, "Without it: " + fmt(s.ea, 1) + " kJ/mol"));
+    g.appendChild(svg("text", {x: 40, y: T + 10, class: "zsa-kn-chart-strong"}, s.catalyst ? t("Ea = {ea} kJ/mol with the catalyst", {ea: fmt(ea, 1)}) : "Ea = " + fmt(ea, 1) + " kJ/mol"));
+    if (s.catalyst) g.appendChild(svg("text", {x: 40, y: T + 26, class: "zsa-kn-cat-label"}, t("Without it: {ea} kJ/mol", {ea: fmt(s.ea, 1)})));
     el.appendChild(g);
-    $("profile-desc").textContent = "Energy profile. The reactants A + B climb a barrier of " + fmt(s.ea, 1) + " kJ/mol" + (s.catalyst ? ", or " + fmt(ea, 1) + " kJ/mol by the catalyst's pathway," : "") +
-      " and end as C + D, " + fmt(-M.DH, 0) + " kJ/mol lower.";
+    var pv = {ea: fmt(s.ea, 1), cat: fmt(ea, 1), dh: fmt(-M.DH, 0)};
+    $("profile-desc").textContent = s.catalyst
+      ? t("Energy profile. The reactants A + B climb a barrier of {ea} kJ/mol, or {cat} kJ/mol by the catalyst's pathway, and end as C + D, {dh} kJ/mol lower.", pv)
+      : t("Energy profile. The reactants A + B climb a barrier of {ea} kJ/mol and end as C + D, {dh} kJ/mol lower.", pv);
 
     // Collision energies: e^(−E/RT)/RT from 0 to 20 kJ/mol, the share at or above Ea shaded, and this run's bars.
     el = $("dist");
@@ -408,22 +423,22 @@
     for (var tk = 0; tk <= emax; tk += 5) g.appendChild(svg("text", {x: X(tk), y: B + 16, "text-anchor": "middle", class: "zsa-kn-tick"}, String(tk)));
     g.appendChild(svg("line", {x1: L, y1: T, x2: L, y2: B, class: "zsa-kn-axis"}));
     g.appendChild(svg("line", {x1: L, y1: B, x2: R, y2: B, class: "zsa-kn-axis"}));
-    g.appendChild(svg("text", {x: 12, y: (T + B) / 2, "text-anchor": "middle", transform: "rotate(-90 12 " + (T + B) / 2 + ")", class: "zsa-kn-axis-label"}, "Share of collisions"));
-    g.appendChild(svg("text", {x: (L + R) / 2, y: B + 32, "text-anchor": "middle", class: "zsa-kn-axis-label"}, "Collision energy (kJ/mol)"));
+    g.appendChild(svg("text", {x: 12, y: (T + B) / 2, "text-anchor": "middle", transform: "rotate(-90 12 " + (T + B) / 2 + ")", class: "zsa-kn-axis-label"}, t("Share of collisions")));
+    g.appendChild(svg("text", {x: (L + R) / 2, y: B + 32, "text-anchor": "middle", class: "zsa-kn-axis-label"}, t("Collision energy (kJ/mol)")));
     if (s.catalyst) g.appendChild(svg("line", {x1: X(s.ea), y1: T + 18, x2: X(s.ea), y2: B, class: "zsa-kn-ealine-old"}));
     g.appendChild(svg("line", {x1: X(ea), y1: T, x2: X(ea), y2: B, class: "zsa-kn-ealine"}));
     var right = X(ea) + 110 < R;
-    g.appendChild(svg("text", {x: X(ea) + (right ? 6 : -6), y: T + 12, "text-anchor": right ? "start" : "end", class: "zsa-kn-chart-strong"}, "Ea: " + M.percent(f) + " react"));
+    g.appendChild(svg("text", {x: X(ea) + (right ? 6 : -6), y: T + 12, "text-anchor": right ? "start" : "end", class: "zsa-kn-chart-strong"}, t("Ea: {pct} react", {pct: M.percent(f)})));
     el.appendChild(g);
-    $("dist-desc").textContent = "Collision energies at " + fmt(s.T, 0) + " K: most collisions are gentle and few are hard, falling off from 0 with an average of " + fmt(rt, 2) +
-      " kJ/mol. The share at or above Ea = " + fmt(ea, 1) + " kJ/mol is shaded: " + M.percent(f) + ". Bars: " + total + " A-B collisions measured this run.";
+    $("dist-desc").textContent = t("Collision energies at {T} K: most collisions are gentle and few are hard, falling off from 0 with an average of {rt} kJ/mol.", {T: fmt(s.T, 0), rt: fmt(rt, 2)}) + " " +
+      t("The share at or above Ea = {ea} kJ/mol is shaded: {pct}.", {ea: fmt(ea, 1), pct: M.percent(f)}) + " " + t("Bars: {total} A-B collisions measured this run.", {total: total});
     $("energy-text").textContent = M.energyText(run, settings);
   }
 
   // ---------- Check your thinking ----------
   M.QUESTIONS.forEach(function (q, i) {
     var fs = node("fieldset", "zsa-kn-question");
-    fs.appendChild(node("legend", "", (i + 1) + ". " + q.text + "..."));
+    fs.appendChild(node("legend", "", t("{n}. {question}...", {n: i + 1, question: q.text})));
     q.choices.forEach(function (ch) {
       var lab = node("label", "zsa-kn-choice"), input = node("input");
       input.type = "radio";
@@ -441,18 +456,18 @@
     root.querySelectorAll("[data-question]:checked").forEach(function (input) { answers[input.dataset.question] = input.value; });
     var results = M.check(answers), box = $("feedback");
     clear(box);
-    box.appendChild(node("h3", "", "Your answers"));
+    box.appendChild(node("h3", "", t("Your answers")));
     results.forEach(function (r, i) { box.appendChild(node("p", r.ok ? "zsa-kn-ok" : "zsa-kn-notyet", (i + 1) + ". " + (r.ok ? "✓ " : "") + r.text)); });
     box.hidden = false;
     var right = results.filter(function (r) { return r.ok; }).length;
-    announce(right + " of " + results.length + " correct. " + results.map(function (r, i) { return (i + 1) + ". " + r.text; }).join(" "));
+    announce(t("{right} of {total} correct.", {right: right, total: results.length}) + " " + results.map(function (r, i) { return (i + 1) + ". " + r.text; }).join(" "));
   });
 
   // ---------- Reflection, printing and data ----------
   function printSummary() {
     if (!run) return;
-    $("print-summary").textContent = "Run " + runNumber + ": " + M.runText(run) + ". After " + fmt(run.t, 1) + " s, [A] = " + fmt(M.conc(run.nA), 2) + " M; " +
-      run.successes + " of " + run.collisions + " A-B collisions were successful." + (run.halfAt !== null ? " Half of A had reacted at " + fmt(run.halfAt, 1) + " s." : "");
+    $("print-summary").textContent = t("Run {n}: {run}. After {t} s, [A] = {a} M; {wins} of {hits} A-B collisions were successful.", {n: runNumber, run: M.runText(run), t: fmt(run.t, 1), a: fmt(M.conc(run.nA), 2), wins: run.successes, hits: run.collisions}) +
+      (run.halfAt !== null ? " " + t("Half of A had reacted at {t} s.", {t: fmt(run.halfAt, 1)}) : "");
   }
   // A print copy of the reflection: a text area prints only its visible lines, a paragraph prints all of it.
   function mirrorReflection() { $("print-reflection").textContent = $("reflection").value; }
@@ -472,7 +487,7 @@
     link.click();
     root.removeChild(link);
     window.setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-    announce("Run data downloaded as zornscience-kinetics-data.csv: " + data.length + " rows of time, concentrations and collisions.");
+    announce(t("Run data downloaded as zornscience-kinetics-data.csv: {rows} rows of time, concentrations and collisions.", {rows: data.length}));
   });
 
   // ---------- Deep links and the back link ----------

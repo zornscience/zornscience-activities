@@ -1,4 +1,4 @@
-# Iodine Clock Lab · v1.0.1
+# Iodine Clock Lab · v1.1.0
 
 Self-contained simulation of the supplied U8.A1 Summative Lab Iodine Clock handout. Uses existing shared ZornScience branding, local font, logo, embed support, and a copy of the equilibrium lab's share behavior. No student data entry, storage, accounts, network requests, export, or completion codes.
 
@@ -18,6 +18,14 @@ The 2% starch and 0.20 M sodium metabisulfite in the handout describe stocks use
 
 ## Files
 
-`index.html`, `lab.css`, `lab.js`, `model.js`, and `share.js`. Reuses `../shared/zsa-base.css`, `../shared/zsa-embed.js`, and the equilibrium lab header stylesheet. No shared files are changed. Deploy by committing the activity folder and homepage link to the existing GitHub Pages `main` branch.
+`index.html`, `data.js`, `lab.css`, `lab.js`, `model.js`, and `share.js`. `data.js` holds every English string and its Mexican Spanish translation. Reuses `../shared/zsa-base.css`, `../shared/zsa-embed.js`, `../shared/zsa-i18n.js`, and the equilibrium lab header stylesheet. No shared files are changed. Deploy by committing the activity folder and homepage link to the existing GitHub Pages `main` branch.
 
-Version: 1.0.2
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the fallback, and switching language reloads the page with a fresh trial. All student text, status messages, bench labels, the SVG title and description, the instructions, the model details and the share text use the activity's `data.js`, and every sentence is one full template with placeholders, so Spanish keeps its own word order. The share link carries `?lang=es` in Spanish. Formulas, numeric values, units and decimal points stay unchanged. See `../SPANISH_TERMS.md` for choices beyond the supplied glossary.
+
+## Changelog
+
+- 1.1.0: Mexican Spanish with `?lang=es` and the shared EN / ES header links.
+
+Version: 1.1.0

@@ -403,5 +403,42 @@
       ]
     }
   };
+  // Spanish: i18n-data.js has already given the shared i18n module every English string with its translation.
+  // Only words are swapped, by exact English match: ids, lab settings, gas symbols and choice values stay as they
+  // are, because the scripts look things up by them. The engine's own default words are added so they are
+  // translated too; English keeps the engine defaults.
+  var i18n;
+  root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: function (api) { i18n = api; }}}));
+  if (i18n && i18n.lang === "es") {
+    var engine = {hint: "Hint", hint2: "Another hint", hintsDone: "Both hints shown", show: "Show me", hintPrefix: "Hint: ",
+      correct: "\u2713 Correct. ", wrong: "\u21bb Not yet. ", revealed: "\u2192 Answer shown. ", general: "Use a hint and try again.",
+      finish: "See round summary", roundComplete: "Round complete", review: "Keep practicing", again: "Practice again",
+      misses: "Practice my misses", repeatNote: "Review items do not change the first-try counts.",
+      progress: "{label} {number} of {total} \u00b7 Step {step} of {steps}", trailLabel: "Your answers so far",
+      correctMark: "Correct: ", shownMark: "Shown: ", triedMark: " (tried, not correct)", hintMark: " (hint)",
+      codeLabel: "Completion code", copyCode: "Copy code", codeCopied: "Code copied.", codeReady: "Completion code ready.",
+      codeSelected: "The code is selected. Press Ctrl+C, or Command+C on a Mac, to copy it.",
+      codeNote: "Paste this code into your Google Classroom assignment.",
+      chargeMark: "ion charge", tableCaption: "Main-group elements by group (column) and period (row)", periodLabel: "Period"};
+    Object.keys(data.inv.labels).forEach(function (k) { engine[k] = data.inv.labels[k]; });
+    data.inv.labels = engine;
+    var KEEP = {id: 1, group: 1, setup: 1, run: 1, chart: 1, celsius: 1, quantity: 1, curves: 1, formula: 1, spoken: 1, defaultBack: 1};
+    var localize = function (value) {
+      if (typeof value === "string") return i18n.text(value);
+      if (Array.isArray(value)) return value.map(localize);
+      if (!value || typeof value !== "object") return value;
+      var out = {};
+      Object.keys(value).forEach(function (k) {
+        var v = value[k];
+        if (KEEP[k] && (k !== "celsius" || Array.isArray(v))) out[k] = v; // feedback.celsius is a message
+        // [value, label, feedback key] or, in test steps, [value, feedback key]: only a label is a word.
+        else if (k === "choices") out[k] = v.map(function (c) { return c.length === 3 ? [c[0], i18n.text(c[1]), c[2]] : c.slice(); });
+        else if (k === "stats") out[k] = v.map(function (st) { return [st[0], i18n.text(st[1])]; });
+        else out[k] = localize(v);
+      });
+      return out;
+    };
+    data = localize(data);
+  }
   root.addEventListener("zsa:request-data", function (event) { event.detail.receive(data); });
 }());

@@ -1,5 +1,5 @@
 # Verification record
-Version: 1.0.1
+Version: 1.1.0
 Date: 2026-10-18
 Reviewer: Claude (built and tested 1.0.0)
 
@@ -27,3 +27,7 @@ PASS means the check was run on version 1.0.0 as committed and passed. Browser c
 
 ## Not tested
 Real screen readers (NVDA, VoiceOver, ChromeVox), Firefox, Safari, Chromebooks and phones, printing to paper (print media was emulated), and the live site. The chemistry was checked against standard textbook calculations, not against measured titration data.
+
+## Spanish verification
+
+`tests/e2e/i18n.spec.js` opens the simulator with `?lang=es`, checks text and accessible attributes for leftover English, and exercises the setup, drops, the stopcock, the endpoint, wrong and right answers, the key points, the instructions and the share panel, with full-sentence templates. English output of every `chem.js` text function (reaction, insight, questions, checks with right, wrong and blank answers, indicator verdicts and text, colors, graph descriptions and the CSV) was compared with version 1.0.1 for every analyte, titrant, concentration and two volumes, and is identical. The page's English text was compared with version 1.0.1 through the same states and matches apart from the language links. The language toggle intentionally adds header controls.
