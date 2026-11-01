@@ -102,6 +102,9 @@
     return zsa.shuffle(missed.concat(others.slice(0, Math.max(0, 10 - missed.length)))).map(function (e) {return {item:e};});
   }
 
+  ["general", "chargeMark", "codeLabel", "copyCode", "codeCopied", "codeReady", "codeSelected", "codeNote"].forEach(function (key) {
+    if (!ui[key]) ui[key] = zsa.LABELS[key];
+  });
   var activity = zsa.create(root, {
     prefix:"zsa-ict", strip:"zsa-ict-element",
     labels:{
@@ -111,7 +114,9 @@
       again:ui.again, misses:ui.misses, repeatNote:ui.repeatNote, itemLabel:ui.elementLabel, reviewLabel:ui.reviewLabel,
       singleLabel:ui.singleLabel, of:ui.of, stepLabel:ui.stepLabel, trailLabel:ui.trailLabel, correctMark:ui.correctMark,
       shownMark:ui.shownMark, triedMark:ui.triedMark, currentMark:ui.currentMark, hintMark:ui.hintMark,
-      tableCaption:data.tableCaption, periodLabel:data.periodLabel
+      tableCaption:data.tableCaption, periodLabel:data.periodLabel,
+      general:ui.general, chargeMark:ui.chargeMark, codeLabel:ui.codeLabel, copyCode:ui.copyCode,
+      codeCopied:ui.codeCopied, codeReady:ui.codeReady, codeSelected:ui.codeSelected, codeNote:ui.codeNote
     },
     pool:data.elements, key:function (e) {return e.symbol;},
     // 10 different elements: at least 3 metals and 3 nonmetals.

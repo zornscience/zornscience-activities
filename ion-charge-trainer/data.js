@@ -1317,5 +1317,1364 @@
     "xenon"
   ]
 };
+  var i18n;
+  root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail:{receive:function (api) { i18n = api; }}}));
+  if (i18n) {
+    i18n.configure({title:"Predicting Ion Charge Trainer", es:{
+  "Activity tools": "Herramientas de la actividad",
+  "Close": "Cerrar",
+  "Close instructions": "Cerrar instrucciones",
+  "Close share options": "Cerrar opciones para compartir",
+  "Copy link": "Copiar enlace",
+  "Email": "Correo electrónico",
+  "Instructions": "Instrucciones",
+  "Share": "Compartir",
+  "Share activity": "Compartir actividad",
+  "Share link": "Enlace para compartir",
+  "Share this activity": "Compartir esta actividad",
+  "ZornScience home": "Inicio de ZornScience",
+  "← Back to the lesson": "← Volver a la lección",
+  "Link copied.": "Enlace copiado.",
+  "Link selected. Copy it with Ctrl+C or Command+C.": "Enlace seleccionado. Cópialo con Ctrl+C o Command+C.",
+  "Share a fresh activity. Your answers and experiment data are not included.": "Comparte una actividad nueva. No se incluyen tus respuestas ni los datos del experimento.",
+  "Predicting Ion Charge Trainer": "Práctica de predicción de la carga de iones",
+  "Practice options": "Opciones de práctica",
+  "Element and periodic table": "Elemento y tabla periódica",
+  "Ion practice": "Práctica de iones",
+  "Main groups only. Transition metals are not shown.": "Solo grupos principales. No se muestran los metales de transición.",
+  "Start a fresh mixed round or work on one element. Starting again clears this round.": "Inicia una ronda mixta nueva o trabaja con un elemento. Al reiniciar se borra esta ronda.",
+  "Choose an answer for each step. Hint offers guidance; Show me explains an answer after two unsuccessful attempts.": "Elige una respuesta para cada paso. Pista te orienta; Muéstrame explica una respuesta después de dos intentos incorrectos.",
+  "Finish a full mixed round to get a completion code. Practice options lets you start a new round or choose one element.": "Termina una ronda mixta completa para obtener un código de finalización. Opciones de práctica te permite iniciar una ronda nueva o elegir un elemento.",
+  "Use the highlighted element and periodic table to predict valence electrons, electron transfer, and ion charge.": "Usa el elemento resaltado y la tabla periódica para predecir los electrones de valencia, la transferencia de electrones y la carga del ion.",
+  "Start a new round": "Iniciar una ronda nueva",
+  "Choose an element": "Elige un elemento",
+  "Practice this element": "Practicar este elemento",
+  "Include step 4: name the ion and match its noble gas": "Incluir el paso 4: nombrar el ion y relacionarlo con su gas noble",
+  "Changes apply from the next element.": "Los cambios se aplican a partir del siguiente elemento."
+}});
+    if (i18n.lang === "es") data = {
+  "elements": [
+    {
+      "name": "litio",
+      "symbol": "Li",
+      "z": 3,
+      "group": 1,
+      "period": 2,
+      "valence": 1,
+      "charge": 1,
+      "ion": "ion de litio",
+      "gas": "helio",
+      "electrons": 2,
+      "direction": "loses",
+      "moved": 1,
+      "metal": "metal",
+      "chargeLabel": "1+",
+      "spoken": "ion de litio, carga 1 positiva",
+      "summary": "Litio pierde 1 electrón. 3 protones − 2 electrones = 1+. El ion es un catión y es isoelectrónico con helio.",
+      "reminder": "El litio pierde 1 electrón. Su primer nivel de energía queda lleno con 2 electrones, como el helio.",
+      "hints": [
+        [
+          "Busca litio en la tabla periódica. ¿En qué grupo o columna está?",
+          "Litio está en el grupo 1. Para los grupos 1 y 2, el número de grupo indica los electrones de valencia."
+        ],
+        [
+          "¿Litio es un metal o un no metal? Para estos iones comunes, los metales pierden electrones y los no metales los ganan.",
+          "El litio pierde 1 electrón. Su primer nivel de energía queda lleno con 2 electrones, como el helio."
+        ],
+        [
+          "Carga = protones − electrones.",
+          "Litio tiene 3 protones. Después de perder 1, tiene 2 electrones. ¿Cuánto es 3 − 2?"
+        ],
+        [
+          "Los iones metálicos usan ion de seguido del nombre del elemento. Los iones no metálicos cambian su terminación. Para el gas noble, cuenta los electrones del ion.",
+          "Litio es un metal. Tiene 3 protones y pierde 1 electrón, así que el ion tiene 2 electrones. ¿Qué gas noble también tiene 2?"
+        ]
+      ],
+      "correct": [
+        "Litio tiene 1 electrón de valencia. Para los grupos 1 y 2, el número de grupo indica los electrones de valencia.",
+        "El litio pierde 1 electrón. Su primer nivel de energía queda lleno con 2 electrones, como el helio.",
+        "3 protones − 2 electrones = 1+.",
+        "El ion de litio tiene 2 electrones, igual que el helio. Al perder su único electrón de valencia, solo queda su primer nivel de energía lleno."
+      ],
+      "feedback": {
+        "period": "Ese es el periodo o fila de litio. Los electrones de valencia se obtienen del grupo o columna.",
+        "atomic": "Ese es el número total de electrones del átomo neutro. Solo los externos son electrones de valencia.",
+        "complement": "Esa es la cantidad de electrones que litio necesitaría para llegar a 8. La pregunta pide cuántos tiene ya en su nivel externo.",
+        "combined": "Ese número es tanto el periodo de litio como los electrones que necesita para llegar a 8. Usa su grupo o columna para saber cuántos tiene ya.",
+        "long": "Ganar 7 es el camino largo. El litio es un átomo pequeño y su primer nivel de energía solo admite 2 electrones. ¿Qué cambio deja ese nivel pequeño como un nivel externo lleno?",
+        "direction": "Para estos iones comunes, los metales pierden electrones y los no metales los ganan. Litio es un metal.",
+        "number": "Cuenta de nuevo. ¿Cuántos electrones deben cambiar para alcanzar un nivel externo lleno?",
+        "valence": "Ese es el número de electrones de valencia, no la carga. La carga depende de cuántos electrones gana o pierde el átomo.",
+        "sign": "Al perder electrones quedan más protones que electrones, así que la carga es positiva.",
+        "size": "Revisa con protones − electrones.",
+        "general": "Usa una pista e inténtalo de nuevo.",
+        "nameRule": "Un ion metálico se nombra con ion de seguido del nombre del elemento. Solo los iones negativos cambian su terminación.",
+        "trapGas": "Litio perdió todo su nivel externo, así que no coincide con el gas noble de su propio periodo. Cuenta los electrones del ion.",
+        "gasCount": "Cuenta los electrones del ion, protones menos la carga, y busca el gas noble con esa cantidad."
+      },
+      "nameWrong": "litiouro",
+      "trapGas": "neón"
+    },
+    {
+      "name": "sodio",
+      "symbol": "Na",
+      "z": 11,
+      "group": 1,
+      "period": 3,
+      "valence": 1,
+      "charge": 1,
+      "ion": "ion de sodio",
+      "gas": "neón",
+      "electrons": 10,
+      "direction": "loses",
+      "moved": 1,
+      "metal": "metal",
+      "chargeLabel": "1+",
+      "spoken": "ion de sodio, carga 1 positiva",
+      "summary": "Sodio pierde 1 electrón. 11 protones − 10 electrones = 1+. El ion es un catión y es isoelectrónico con neón.",
+      "reminder": "Sodio pierde 1 electrón y forma un ion de carga 1+.",
+      "hints": [
+        [
+          "Busca sodio en la tabla periódica. ¿En qué grupo o columna está?",
+          "Sodio está en el grupo 1. Para los grupos 1 y 2, el número de grupo indica los electrones de valencia."
+        ],
+        [
+          "¿Sodio es un metal o un no metal? Para estos iones comunes, los metales pierden electrones y los no metales los ganan.",
+          "Sodio tiene 1 electrón de valencia. ¿Qué es menos: perder 1 o ganar 7?"
+        ],
+        [
+          "Carga = protones − electrones.",
+          "Sodio tiene 11 protones. Después de perder 1, tiene 10 electrones. ¿Cuánto es 11 − 10?"
+        ],
+        [
+          "Los iones metálicos usan ion de seguido del nombre del elemento. Los iones no metálicos cambian su terminación. Para el gas noble, cuenta los electrones del ion.",
+          "Sodio es un metal. Tiene 11 protones y pierde 1 electrón, así que el ion tiene 10 electrones. ¿Qué gas noble también tiene 10?"
+        ]
+      ],
+      "correct": [
+        "Sodio tiene 1 electrón de valencia. Para los grupos 1 y 2, el número de grupo indica los electrones de valencia.",
+        "Sodio pierde 1 electrón para alcanzar un nivel externo lleno.",
+        "11 protones − 10 electrones = 1+.",
+        "Ion de sodio tiene 10 electrones, igual que neón. Perdió todo su nivel externo, así que coincide con el gas noble del periodo anterior."
+      ],
+      "feedback": {
+        "period": "Ese es el periodo o fila de sodio. Los electrones de valencia se obtienen del grupo o columna.",
+        "atomic": "Ese es el número total de electrones del átomo neutro. Solo los externos son electrones de valencia.",
+        "complement": "Esa es la cantidad de electrones que sodio necesitaría para llegar a 8. La pregunta pide cuántos tiene ya en su nivel externo.",
+        "combined": "Ese número es tanto el periodo de sodio como los electrones que necesita para llegar a 8. Usa su grupo o columna para saber cuántos tiene ya.",
+        "long": "Ese es el camino largo en este modelo de predicción. Para estos iones comunes, usa el camino más corto a 8. Es un patrón, no una explicación completa de la formación de iones.",
+        "direction": "Para estos iones comunes, los metales pierden electrones y los no metales los ganan. Sodio es un metal.",
+        "number": "Cuenta de nuevo. ¿Cuántos electrones deben cambiar para alcanzar un nivel externo lleno?",
+        "valence": "Ese es el número de electrones de valencia, no la carga. La carga depende de cuántos electrones gana o pierde el átomo.",
+        "sign": "Al perder electrones quedan más protones que electrones, así que la carga es positiva.",
+        "size": "Revisa con protones − electrones.",
+        "general": "Usa una pista e inténtalo de nuevo.",
+        "nameRule": "Un ion metálico se nombra con ion de seguido del nombre del elemento. Solo los iones negativos cambian su terminación.",
+        "trapGas": "Sodio perdió todo su nivel externo, así que no coincide con el gas noble de su propio periodo. Cuenta los electrones del ion.",
+        "gasCount": "Cuenta los electrones del ion, protones menos la carga, y busca el gas noble con esa cantidad."
+      },
+      "nameWrong": "sodiouro",
+      "trapGas": "argón"
+    },
+    {
+      "name": "potasio",
+      "symbol": "K",
+      "z": 19,
+      "group": 1,
+      "period": 4,
+      "valence": 1,
+      "charge": 1,
+      "ion": "ion de potasio",
+      "gas": "argón",
+      "electrons": 18,
+      "direction": "loses",
+      "moved": 1,
+      "metal": "metal",
+      "chargeLabel": "1+",
+      "spoken": "ion de potasio, carga 1 positiva",
+      "summary": "Potasio pierde 1 electrón. 19 protones − 18 electrones = 1+. El ion es un catión y es isoelectrónico con argón.",
+      "reminder": "Potasio pierde 1 electrón y forma un ion de carga 1+.",
+      "hints": [
+        [
+          "Busca potasio en la tabla periódica. ¿En qué grupo o columna está?",
+          "Potasio está en el grupo 1. Para los grupos 1 y 2, el número de grupo indica los electrones de valencia."
+        ],
+        [
+          "¿Potasio es un metal o un no metal? Para estos iones comunes, los metales pierden electrones y los no metales los ganan.",
+          "Potasio tiene 1 electrón de valencia. ¿Qué es menos: perder 1 o ganar 7?"
+        ],
+        [
+          "Carga = protones − electrones.",
+          "Potasio tiene 19 protones. Después de perder 1, tiene 18 electrones. ¿Cuánto es 19 − 18?"
+        ],
+        [
+          "Los iones metálicos usan ion de seguido del nombre del elemento. Los iones no metálicos cambian su terminación. Para el gas noble, cuenta los electrones del ion.",
+          "Potasio es un metal. Tiene 19 protones y pierde 1 electrón, así que el ion tiene 18 electrones. ¿Qué gas noble también tiene 18?"
+        ]
+      ],
+      "correct": [
+        "Potasio tiene 1 electrón de valencia. Para los grupos 1 y 2, el número de grupo indica los electrones de valencia.",
+        "Potasio pierde 1 electrón para alcanzar un nivel externo lleno.",
+        "19 protones − 18 electrones = 1+.",
+        "Ion de potasio tiene 18 electrones, igual que argón. Perdió todo su nivel externo, así que coincide con el gas noble del periodo anterior."
+      ],
+      "feedback": {
+        "period": "Ese es el periodo o fila de potasio. Los electrones de valencia se obtienen del grupo o columna.",
+        "atomic": "Ese es el número total de electrones del átomo neutro. Solo los externos son electrones de valencia.",
+        "complement": "Esa es la cantidad de electrones que potasio necesitaría para llegar a 8. La pregunta pide cuántos tiene ya en su nivel externo.",
+        "combined": "Ese número es tanto el periodo de potasio como los electrones que necesita para llegar a 8. Usa su grupo o columna para saber cuántos tiene ya.",
+        "long": "Ese es el camino largo en este modelo de predicción. Para estos iones comunes, usa el camino más corto a 8. Es un patrón, no una explicación completa de la formación de iones.",
+        "direction": "Para estos iones comunes, los metales pierden electrones y los no metales los ganan. Potasio es un metal.",
+        "number": "Cuenta de nuevo. ¿Cuántos electrones deben cambiar para alcanzar un nivel externo lleno?",
+        "valence": "Ese es el número de electrones de valencia, no la carga. La carga depende de cuántos electrones gana o pierde el átomo.",
+        "sign": "Al perder electrones quedan más protones que electrones, así que la carga es positiva.",
+        "size": "Revisa con protones − electrones.",
+        "general": "Usa una pista e inténtalo de nuevo.",
+        "nameRule": "Un ion metálico se nombra con ion de seguido del nombre del elemento. Solo los iones negativos cambian su terminación.",
+        "trapGas": "Potasio perdió todo su nivel externo, así que no coincide con el gas noble de su propio periodo. Cuenta los electrones del ion.",
+        "gasCount": "Cuenta los electrones del ion, protones menos la carga, y busca el gas noble con esa cantidad."
+      },
+      "nameWrong": "potasiouro",
+      "trapGas": "kriptón"
+    },
+    {
+      "name": "rubidio",
+      "symbol": "Rb",
+      "z": 37,
+      "group": 1,
+      "period": 5,
+      "valence": 1,
+      "charge": 1,
+      "ion": "ion de rubidio",
+      "gas": "kriptón",
+      "electrons": 36,
+      "direction": "loses",
+      "moved": 1,
+      "metal": "metal",
+      "chargeLabel": "1+",
+      "spoken": "ion de rubidio, carga 1 positiva",
+      "summary": "Rubidio pierde 1 electrón. 37 protones − 36 electrones = 1+. El ion es un catión y es isoelectrónico con kriptón.",
+      "reminder": "Rubidio pierde 1 electrón y forma un ion de carga 1+.",
+      "hints": [
+        [
+          "Busca rubidio en la tabla periódica. ¿En qué grupo o columna está?",
+          "Rubidio está en el grupo 1. Para los grupos 1 y 2, el número de grupo indica los electrones de valencia."
+        ],
+        [
+          "¿Rubidio es un metal o un no metal? Para estos iones comunes, los metales pierden electrones y los no metales los ganan.",
+          "Rubidio tiene 1 electrón de valencia. ¿Qué es menos: perder 1 o ganar 7?"
+        ],
+        [
+          "Carga = protones − electrones.",
+          "Rubidio tiene 37 protones. Después de perder 1, tiene 36 electrones. ¿Cuánto es 37 − 36?"
+        ],
+        [
+          "Los iones metálicos usan ion de seguido del nombre del elemento. Los iones no metálicos cambian su terminación. Para el gas noble, cuenta los electrones del ion.",
+          "Rubidio es un metal. Tiene 37 protones y pierde 1 electrón, así que el ion tiene 36 electrones. ¿Qué gas noble también tiene 36?"
+        ]
+      ],
+      "correct": [
+        "Rubidio tiene 1 electrón de valencia. Para los grupos 1 y 2, el número de grupo indica los electrones de valencia.",
+        "Rubidio pierde 1 electrón para alcanzar un nivel externo lleno.",
+        "37 protones − 36 electrones = 1+.",
+        "Ion de rubidio tiene 36 electrones, igual que kriptón. Perdió todo su nivel externo, así que coincide con el gas noble del periodo anterior."
+      ],
+      "feedback": {
+        "period": "Ese es el periodo o fila de rubidio. Los electrones de valencia se obtienen del grupo o columna.",
+        "atomic": "Ese es el número total de electrones del átomo neutro. Solo los externos son electrones de valencia.",
+        "complement": "Esa es la cantidad de electrones que rubidio necesitaría para llegar a 8. La pregunta pide cuántos tiene ya en su nivel externo.",
+        "combined": "Ese número es tanto el periodo de rubidio como los electrones que necesita para llegar a 8. Usa su grupo o columna para saber cuántos tiene ya.",
+        "long": "Ese es el camino largo en este modelo de predicción. Para estos iones comunes, usa el camino más corto a 8. Es un patrón, no una explicación completa de la formación de iones.",
+        "direction": "Para estos iones comunes, los metales pierden electrones y los no metales los ganan. Rubidio es un metal.",
+        "number": "Cuenta de nuevo. ¿Cuántos electrones deben cambiar para alcanzar un nivel externo lleno?",
+        "valence": "Ese es el número de electrones de valencia, no la carga. La carga depende de cuántos electrones gana o pierde el átomo.",
+        "sign": "Al perder electrones quedan más protones que electrones, así que la carga es positiva.",
+        "size": "Revisa con protones − electrones.",
+        "general": "Usa una pista e inténtalo de nuevo.",
+        "nameRule": "Un ion metálico se nombra con ion de seguido del nombre del elemento. Solo los iones negativos cambian su terminación.",
+        "trapGas": "Rubidio perdió todo su nivel externo, así que no coincide con el gas noble de su propio periodo. Cuenta los electrones del ion.",
+        "gasCount": "Cuenta los electrones del ion, protones menos la carga, y busca el gas noble con esa cantidad."
+      },
+      "nameWrong": "rubidiouro",
+      "trapGas": "xenón"
+    },
+    {
+      "name": "cesio",
+      "symbol": "Cs",
+      "z": 55,
+      "group": 1,
+      "period": 6,
+      "valence": 1,
+      "charge": 1,
+      "ion": "ion de cesio",
+      "gas": "xenón",
+      "electrons": 54,
+      "direction": "loses",
+      "moved": 1,
+      "metal": "metal",
+      "chargeLabel": "1+",
+      "spoken": "ion de cesio, carga 1 positiva",
+      "summary": "Cesio pierde 1 electrón. 55 protones − 54 electrones = 1+. El ion es un catión y es isoelectrónico con xenón.",
+      "reminder": "Cesio pierde 1 electrón y forma un ion de carga 1+.",
+      "hints": [
+        [
+          "Busca cesio en la tabla periódica. ¿En qué grupo o columna está?",
+          "Cesio está en el grupo 1. Para los grupos 1 y 2, el número de grupo indica los electrones de valencia."
+        ],
+        [
+          "¿Cesio es un metal o un no metal? Para estos iones comunes, los metales pierden electrones y los no metales los ganan.",
+          "Cesio tiene 1 electrón de valencia. ¿Qué es menos: perder 1 o ganar 7?"
+        ],
+        [
+          "Carga = protones − electrones.",
+          "Cesio tiene 55 protones. Después de perder 1, tiene 54 electrones. ¿Cuánto es 55 − 54?"
+        ],
+        [
+          "Los iones metálicos usan ion de seguido del nombre del elemento. Los iones no metálicos cambian su terminación. Para el gas noble, cuenta los electrones del ion.",
+          "Cesio es un metal. Tiene 55 protones y pierde 1 electrón, así que el ion tiene 54 electrones. ¿Qué gas noble también tiene 54?"
+        ]
+      ],
+      "correct": [
+        "Cesio tiene 1 electrón de valencia. Para los grupos 1 y 2, el número de grupo indica los electrones de valencia.",
+        "Cesio pierde 1 electrón para alcanzar un nivel externo lleno.",
+        "55 protones − 54 electrones = 1+.",
+        "Ion de cesio tiene 54 electrones, igual que xenón. Perdió todo su nivel externo, así que coincide con el gas noble del periodo anterior."
+      ],
+      "feedback": {
+        "period": "Ese es el periodo o fila de cesio. Los electrones de valencia se obtienen del grupo o columna.",
+        "atomic": "Ese es el número total de electrones del átomo neutro. Solo los externos son electrones de valencia.",
+        "complement": "Esa es la cantidad de electrones que cesio necesitaría para llegar a 8. La pregunta pide cuántos tiene ya en su nivel externo.",
+        "combined": "Ese número es tanto el periodo de cesio como los electrones que necesita para llegar a 8. Usa su grupo o columna para saber cuántos tiene ya.",
+        "long": "Ese es el camino largo en este modelo de predicción. Para estos iones comunes, usa el camino más corto a 8. Es un patrón, no una explicación completa de la formación de iones.",
+        "direction": "Para estos iones comunes, los metales pierden electrones y los no metales los ganan. Cesio es un metal.",
+        "number": "Cuenta de nuevo. ¿Cuántos electrones deben cambiar para alcanzar un nivel externo lleno?",
+        "valence": "Ese es el número de electrones de valencia, no la carga. La carga depende de cuántos electrones gana o pierde el átomo.",
+        "sign": "Al perder electrones quedan más protones que electrones, así que la carga es positiva.",
+        "size": "Revisa con protones − electrones.",
+        "general": "Usa una pista e inténtalo de nuevo.",
+        "nameRule": "Un ion metálico se nombra con ion de seguido del nombre del elemento. Solo los iones negativos cambian su terminación.",
+        "trapGas": "Cesio perdió todo su nivel externo, así que no coincide con el gas noble de su propio periodo. Cuenta los electrones del ion.",
+        "gasCount": "Cuenta los electrones del ion, protones menos la carga, y busca el gas noble con esa cantidad."
+      },
+      "nameWrong": "cesiouro",
+      "trapGas": "radón"
+    },
+    {
+      "name": "magnesio",
+      "symbol": "Mg",
+      "z": 12,
+      "group": 2,
+      "period": 3,
+      "valence": 2,
+      "charge": 2,
+      "ion": "ion de magnesio",
+      "gas": "neón",
+      "electrons": 10,
+      "direction": "loses",
+      "moved": 2,
+      "metal": "metal",
+      "chargeLabel": "2+",
+      "spoken": "ion de magnesio, carga 2 positiva",
+      "summary": "Magnesio pierde 2 electrones. 12 protones − 10 electrones = 2+. El ion es un catión y es isoelectrónico con neón.",
+      "reminder": "Magnesio pierde 2 electrones y forma un ion de carga 2+.",
+      "hints": [
+        [
+          "Busca magnesio en la tabla periódica. ¿En qué grupo o columna está?",
+          "Magnesio está en el grupo 2. Para los grupos 1 y 2, el número de grupo indica los electrones de valencia."
+        ],
+        [
+          "¿Magnesio es un metal o un no metal? Para estos iones comunes, los metales pierden electrones y los no metales los ganan.",
+          "Magnesio tiene 2 electrones de valencia. ¿Qué es menos: perder 2 o ganar 6?"
+        ],
+        [
+          "Carga = protones − electrones.",
+          "Magnesio tiene 12 protones. Después de perder 2, tiene 10 electrones. ¿Cuánto es 12 − 10?"
+        ],
+        [
+          "Los iones metálicos usan ion de seguido del nombre del elemento. Los iones no metálicos cambian su terminación. Para el gas noble, cuenta los electrones del ion.",
+          "Magnesio es un metal. Tiene 12 protones y pierde 2 electrones, así que el ion tiene 10 electrones. ¿Qué gas noble también tiene 10?"
+        ]
+      ],
+      "correct": [
+        "Magnesio tiene 2 electrones de valencia. Para los grupos 1 y 2, el número de grupo indica los electrones de valencia.",
+        "Magnesio pierde 2 electrones para alcanzar un nivel externo lleno.",
+        "12 protones − 10 electrones = 2+.",
+        "Ion de magnesio tiene 10 electrones, igual que neón. Perdió todo su nivel externo, así que coincide con el gas noble del periodo anterior."
+      ],
+      "feedback": {
+        "period": "Ese es el periodo o fila de magnesio. Los electrones de valencia se obtienen del grupo o columna.",
+        "atomic": "Ese es el número total de electrones del átomo neutro. Solo los externos son electrones de valencia.",
+        "complement": "Esa es la cantidad de electrones que magnesio necesitaría para llegar a 8. La pregunta pide cuántos tiene ya en su nivel externo.",
+        "combined": "Ese número es tanto el periodo de magnesio como los electrones que necesita para llegar a 8. Usa su grupo o columna para saber cuántos tiene ya.",
+        "long": "Ese es el camino largo en este modelo de predicción. Para estos iones comunes, usa el camino más corto a 8. Es un patrón, no una explicación completa de la formación de iones.",
+        "direction": "Para estos iones comunes, los metales pierden electrones y los no metales los ganan. Magnesio es un metal.",
+        "number": "Cuenta de nuevo. ¿Cuántos electrones deben cambiar para alcanzar un nivel externo lleno?",
+        "valence": "Ese es el número de electrones de valencia, no la carga. La carga depende de cuántos electrones gana o pierde el átomo.",
+        "sign": "Al perder electrones quedan más protones que electrones, así que la carga es positiva.",
+        "size": "Revisa con protones − electrones.",
+        "general": "Usa una pista e inténtalo de nuevo.",
+        "nameRule": "Un ion metálico se nombra con ion de seguido del nombre del elemento. Solo los iones negativos cambian su terminación.",
+        "trapGas": "Magnesio perdió todo su nivel externo, así que no coincide con el gas noble de su propio periodo. Cuenta los electrones del ion.",
+        "gasCount": "Cuenta los electrones del ion, protones menos la carga, y busca el gas noble con esa cantidad."
+      },
+      "nameWrong": "magnesiouro",
+      "trapGas": "argón"
+    },
+    {
+      "name": "calcio",
+      "symbol": "Ca",
+      "z": 20,
+      "group": 2,
+      "period": 4,
+      "valence": 2,
+      "charge": 2,
+      "ion": "ion de calcio",
+      "gas": "argón",
+      "electrons": 18,
+      "direction": "loses",
+      "moved": 2,
+      "metal": "metal",
+      "chargeLabel": "2+",
+      "spoken": "ion de calcio, carga 2 positiva",
+      "summary": "Calcio pierde 2 electrones. 20 protones − 18 electrones = 2+. El ion es un catión y es isoelectrónico con argón.",
+      "reminder": "Calcio pierde 2 electrones y forma un ion de carga 2+.",
+      "hints": [
+        [
+          "Busca calcio en la tabla periódica. ¿En qué grupo o columna está?",
+          "Calcio está en el grupo 2. Para los grupos 1 y 2, el número de grupo indica los electrones de valencia."
+        ],
+        [
+          "¿Calcio es un metal o un no metal? Para estos iones comunes, los metales pierden electrones y los no metales los ganan.",
+          "Calcio tiene 2 electrones de valencia. ¿Qué es menos: perder 2 o ganar 6?"
+        ],
+        [
+          "Carga = protones − electrones.",
+          "Calcio tiene 20 protones. Después de perder 2, tiene 18 electrones. ¿Cuánto es 20 − 18?"
+        ],
+        [
+          "Los iones metálicos usan ion de seguido del nombre del elemento. Los iones no metálicos cambian su terminación. Para el gas noble, cuenta los electrones del ion.",
+          "Calcio es un metal. Tiene 20 protones y pierde 2 electrones, así que el ion tiene 18 electrones. ¿Qué gas noble también tiene 18?"
+        ]
+      ],
+      "correct": [
+        "Calcio tiene 2 electrones de valencia. Para los grupos 1 y 2, el número de grupo indica los electrones de valencia.",
+        "Calcio pierde 2 electrones para alcanzar un nivel externo lleno.",
+        "20 protones − 18 electrones = 2+.",
+        "Ion de calcio tiene 18 electrones, igual que argón. Perdió todo su nivel externo, así que coincide con el gas noble del periodo anterior."
+      ],
+      "feedback": {
+        "period": "Ese es el periodo o fila de calcio. Los electrones de valencia se obtienen del grupo o columna.",
+        "atomic": "Ese es el número total de electrones del átomo neutro. Solo los externos son electrones de valencia.",
+        "complement": "Esa es la cantidad de electrones que calcio necesitaría para llegar a 8. La pregunta pide cuántos tiene ya en su nivel externo.",
+        "combined": "Ese número es tanto el periodo de calcio como los electrones que necesita para llegar a 8. Usa su grupo o columna para saber cuántos tiene ya.",
+        "long": "Ese es el camino largo en este modelo de predicción. Para estos iones comunes, usa el camino más corto a 8. Es un patrón, no una explicación completa de la formación de iones.",
+        "direction": "Para estos iones comunes, los metales pierden electrones y los no metales los ganan. Calcio es un metal.",
+        "number": "Cuenta de nuevo. ¿Cuántos electrones deben cambiar para alcanzar un nivel externo lleno?",
+        "valence": "Ese es el número de electrones de valencia, no la carga. La carga depende de cuántos electrones gana o pierde el átomo.",
+        "sign": "Al perder electrones quedan más protones que electrones, así que la carga es positiva.",
+        "size": "Revisa con protones − electrones.",
+        "general": "Usa una pista e inténtalo de nuevo.",
+        "nameRule": "Un ion metálico se nombra con ion de seguido del nombre del elemento. Solo los iones negativos cambian su terminación.",
+        "trapGas": "Calcio perdió todo su nivel externo, así que no coincide con el gas noble de su propio periodo. Cuenta los electrones del ion.",
+        "gasCount": "Cuenta los electrones del ion, protones menos la carga, y busca el gas noble con esa cantidad."
+      },
+      "nameWrong": "calciouro",
+      "trapGas": "kriptón"
+    },
+    {
+      "name": "estroncio",
+      "symbol": "Sr",
+      "z": 38,
+      "group": 2,
+      "period": 5,
+      "valence": 2,
+      "charge": 2,
+      "ion": "ion de estroncio",
+      "gas": "kriptón",
+      "electrons": 36,
+      "direction": "loses",
+      "moved": 2,
+      "metal": "metal",
+      "chargeLabel": "2+",
+      "spoken": "ion de estroncio, carga 2 positiva",
+      "summary": "Estroncio pierde 2 electrones. 38 protones − 36 electrones = 2+. El ion es un catión y es isoelectrónico con kriptón.",
+      "reminder": "Estroncio pierde 2 electrones y forma un ion de carga 2+.",
+      "hints": [
+        [
+          "Busca estroncio en la tabla periódica. ¿En qué grupo o columna está?",
+          "Estroncio está en el grupo 2. Para los grupos 1 y 2, el número de grupo indica los electrones de valencia."
+        ],
+        [
+          "¿Estroncio es un metal o un no metal? Para estos iones comunes, los metales pierden electrones y los no metales los ganan.",
+          "Estroncio tiene 2 electrones de valencia. ¿Qué es menos: perder 2 o ganar 6?"
+        ],
+        [
+          "Carga = protones − electrones.",
+          "Estroncio tiene 38 protones. Después de perder 2, tiene 36 electrones. ¿Cuánto es 38 − 36?"
+        ],
+        [
+          "Los iones metálicos usan ion de seguido del nombre del elemento. Los iones no metálicos cambian su terminación. Para el gas noble, cuenta los electrones del ion.",
+          "Estroncio es un metal. Tiene 38 protones y pierde 2 electrones, así que el ion tiene 36 electrones. ¿Qué gas noble también tiene 36?"
+        ]
+      ],
+      "correct": [
+        "Estroncio tiene 2 electrones de valencia. Para los grupos 1 y 2, el número de grupo indica los electrones de valencia.",
+        "Estroncio pierde 2 electrones para alcanzar un nivel externo lleno.",
+        "38 protones − 36 electrones = 2+.",
+        "Ion de estroncio tiene 36 electrones, igual que kriptón. Perdió todo su nivel externo, así que coincide con el gas noble del periodo anterior."
+      ],
+      "feedback": {
+        "period": "Ese es el periodo o fila de estroncio. Los electrones de valencia se obtienen del grupo o columna.",
+        "atomic": "Ese es el número total de electrones del átomo neutro. Solo los externos son electrones de valencia.",
+        "complement": "Esa es la cantidad de electrones que estroncio necesitaría para llegar a 8. La pregunta pide cuántos tiene ya en su nivel externo.",
+        "combined": "Ese número es tanto el periodo de estroncio como los electrones que necesita para llegar a 8. Usa su grupo o columna para saber cuántos tiene ya.",
+        "long": "Ese es el camino largo en este modelo de predicción. Para estos iones comunes, usa el camino más corto a 8. Es un patrón, no una explicación completa de la formación de iones.",
+        "direction": "Para estos iones comunes, los metales pierden electrones y los no metales los ganan. Estroncio es un metal.",
+        "number": "Cuenta de nuevo. ¿Cuántos electrones deben cambiar para alcanzar un nivel externo lleno?",
+        "valence": "Ese es el número de electrones de valencia, no la carga. La carga depende de cuántos electrones gana o pierde el átomo.",
+        "sign": "Al perder electrones quedan más protones que electrones, así que la carga es positiva.",
+        "size": "Revisa con protones − electrones.",
+        "general": "Usa una pista e inténtalo de nuevo.",
+        "nameRule": "Un ion metálico se nombra con ion de seguido del nombre del elemento. Solo los iones negativos cambian su terminación.",
+        "trapGas": "Estroncio perdió todo su nivel externo, así que no coincide con el gas noble de su propio periodo. Cuenta los electrones del ion.",
+        "gasCount": "Cuenta los electrones del ion, protones menos la carga, y busca el gas noble con esa cantidad."
+      },
+      "nameWrong": "estronciouro",
+      "trapGas": "xenón"
+    },
+    {
+      "name": "bario",
+      "symbol": "Ba",
+      "z": 56,
+      "group": 2,
+      "period": 6,
+      "valence": 2,
+      "charge": 2,
+      "ion": "ion de bario",
+      "gas": "xenón",
+      "electrons": 54,
+      "direction": "loses",
+      "moved": 2,
+      "metal": "metal",
+      "chargeLabel": "2+",
+      "spoken": "ion de bario, carga 2 positiva",
+      "summary": "Bario pierde 2 electrones. 56 protones − 54 electrones = 2+. El ion es un catión y es isoelectrónico con xenón.",
+      "reminder": "Bario pierde 2 electrones y forma un ion de carga 2+.",
+      "hints": [
+        [
+          "Busca bario en la tabla periódica. ¿En qué grupo o columna está?",
+          "Bario está en el grupo 2. Para los grupos 1 y 2, el número de grupo indica los electrones de valencia."
+        ],
+        [
+          "¿Bario es un metal o un no metal? Para estos iones comunes, los metales pierden electrones y los no metales los ganan.",
+          "Bario tiene 2 electrones de valencia. ¿Qué es menos: perder 2 o ganar 6?"
+        ],
+        [
+          "Carga = protones − electrones.",
+          "Bario tiene 56 protones. Después de perder 2, tiene 54 electrones. ¿Cuánto es 56 − 54?"
+        ],
+        [
+          "Los iones metálicos usan ion de seguido del nombre del elemento. Los iones no metálicos cambian su terminación. Para el gas noble, cuenta los electrones del ion.",
+          "Bario es un metal. Tiene 56 protones y pierde 2 electrones, así que el ion tiene 54 electrones. ¿Qué gas noble también tiene 54?"
+        ]
+      ],
+      "correct": [
+        "Bario tiene 2 electrones de valencia. Para los grupos 1 y 2, el número de grupo indica los electrones de valencia.",
+        "Bario pierde 2 electrones para alcanzar un nivel externo lleno.",
+        "56 protones − 54 electrones = 2+.",
+        "Ion de bario tiene 54 electrones, igual que xenón. Perdió todo su nivel externo, así que coincide con el gas noble del periodo anterior."
+      ],
+      "feedback": {
+        "period": "Ese es el periodo o fila de bario. Los electrones de valencia se obtienen del grupo o columna.",
+        "atomic": "Ese es el número total de electrones del átomo neutro. Solo los externos son electrones de valencia.",
+        "complement": "Esa es la cantidad de electrones que bario necesitaría para llegar a 8. La pregunta pide cuántos tiene ya en su nivel externo.",
+        "combined": "Ese número es tanto el periodo de bario como los electrones que necesita para llegar a 8. Usa su grupo o columna para saber cuántos tiene ya.",
+        "long": "Ese es el camino largo en este modelo de predicción. Para estos iones comunes, usa el camino más corto a 8. Es un patrón, no una explicación completa de la formación de iones.",
+        "direction": "Para estos iones comunes, los metales pierden electrones y los no metales los ganan. Bario es un metal.",
+        "number": "Cuenta de nuevo. ¿Cuántos electrones deben cambiar para alcanzar un nivel externo lleno?",
+        "valence": "Ese es el número de electrones de valencia, no la carga. La carga depende de cuántos electrones gana o pierde el átomo.",
+        "sign": "Al perder electrones quedan más protones que electrones, así que la carga es positiva.",
+        "size": "Revisa con protones − electrones.",
+        "general": "Usa una pista e inténtalo de nuevo.",
+        "nameRule": "Un ion metálico se nombra con ion de seguido del nombre del elemento. Solo los iones negativos cambian su terminación.",
+        "trapGas": "Bario perdió todo su nivel externo, así que no coincide con el gas noble de su propio periodo. Cuenta los electrones del ion.",
+        "gasCount": "Cuenta los electrones del ion, protones menos la carga, y busca el gas noble con esa cantidad."
+      },
+      "nameWrong": "bariouro",
+      "trapGas": "radón"
+    },
+    {
+      "name": "aluminio",
+      "symbol": "Al",
+      "z": 13,
+      "group": 13,
+      "period": 3,
+      "valence": 3,
+      "charge": 3,
+      "ion": "ion de aluminio",
+      "gas": "neón",
+      "electrons": 10,
+      "direction": "loses",
+      "moved": 3,
+      "metal": "metal",
+      "chargeLabel": "3+",
+      "spoken": "ion de aluminio, carga 3 positiva",
+      "summary": "Aluminio pierde 3 electrones. 13 protones − 10 electrones = 3+. El ion es un catión y es isoelectrónico con neón.",
+      "reminder": "Aluminio pierde 3 electrones y forma un ion de carga 3+.",
+      "hints": [
+        [
+          "Busca aluminio en la tabla periódica. ¿En qué grupo o columna está?",
+          "Aluminio está en el grupo 13. Para los grupos 13 a 18, usa el último dígito."
+        ],
+        [
+          "¿Aluminio es un metal o un no metal? Para estos iones comunes, los metales pierden electrones y los no metales los ganan.",
+          "Aluminio tiene 3 electrones de valencia. ¿Qué es menos: perder 3 o ganar 5?"
+        ],
+        [
+          "Carga = protones − electrones.",
+          "Aluminio tiene 13 protones. Después de perder 3, tiene 10 electrones. ¿Cuánto es 13 − 10?"
+        ],
+        [
+          "Los iones metálicos usan ion de seguido del nombre del elemento. Los iones no metálicos cambian su terminación. Para el gas noble, cuenta los electrones del ion.",
+          "Aluminio es un metal. Tiene 13 protones y pierde 3 electrones, así que el ion tiene 10 electrones. ¿Qué gas noble también tiene 10?"
+        ]
+      ],
+      "correct": [
+        "Aluminio tiene 3 electrones de valencia. Para los grupos 13 a 18, usa el último dígito.",
+        "Aluminio pierde 3 electrones para alcanzar un nivel externo lleno.",
+        "13 protones − 10 electrones = 3+.",
+        "Ion de aluminio tiene 10 electrones, igual que neón. Perdió todo su nivel externo, así que coincide con el gas noble del periodo anterior."
+      ],
+      "feedback": {
+        "period": "Ese es el periodo o fila de aluminio. Los electrones de valencia se obtienen del grupo o columna.",
+        "atomic": "Ese es el número total de electrones del átomo neutro. Solo los externos son electrones de valencia.",
+        "complement": "Esa es la cantidad de electrones que aluminio necesitaría para llegar a 8. La pregunta pide cuántos tiene ya en su nivel externo.",
+        "combined": "Ese número es tanto el periodo de aluminio como los electrones que necesita para llegar a 8. Usa su grupo o columna para saber cuántos tiene ya.",
+        "long": "Ese es el camino largo en este modelo de predicción. Para estos iones comunes, usa el camino más corto a 8. Es un patrón, no una explicación completa de la formación de iones.",
+        "direction": "Para estos iones comunes, los metales pierden electrones y los no metales los ganan. Aluminio es un metal.",
+        "number": "Cuenta de nuevo. ¿Cuántos electrones deben cambiar para alcanzar un nivel externo lleno?",
+        "valence": "Ese es el número de electrones de valencia, no la carga. La carga depende de cuántos electrones gana o pierde el átomo.",
+        "sign": "Al perder electrones quedan más protones que electrones, así que la carga es positiva.",
+        "size": "Revisa con protones − electrones.",
+        "general": "Usa una pista e inténtalo de nuevo.",
+        "nameRule": "Un ion metálico se nombra con ion de seguido del nombre del elemento. Solo los iones negativos cambian su terminación.",
+        "trapGas": "Aluminio perdió todo su nivel externo, así que no coincide con el gas noble de su propio periodo. Cuenta los electrones del ion.",
+        "gasCount": "Cuenta los electrones del ion, protones menos la carga, y busca el gas noble con esa cantidad."
+      },
+      "nameWrong": "aluminiouro",
+      "trapGas": "argón"
+    },
+    {
+      "name": "nitrógeno",
+      "symbol": "N",
+      "z": 7,
+      "group": 15,
+      "period": 2,
+      "valence": 5,
+      "charge": -3,
+      "ion": "nitruro",
+      "gas": "neón",
+      "electrons": 10,
+      "direction": "gains",
+      "moved": 3,
+      "metal": "nonmetal",
+      "chargeLabel": "3−",
+      "spoken": "nitruro, carga 3 negativa",
+      "summary": "Nitrógeno gana 3 electrones. 7 protones − 10 electrones = 3−. El ion es un anión y es isoelectrónico con neón.",
+      "reminder": "Nitrógeno gana 3 electrones y forma un ion de carga 3−.",
+      "hints": [
+        [
+          "Busca nitrógeno en la tabla periódica. ¿En qué grupo o columna está?",
+          "Nitrógeno está en el grupo 15. Para los grupos 13 a 18, usa el último dígito."
+        ],
+        [
+          "¿Nitrógeno es un metal o un no metal? Para estos iones comunes, los metales pierden electrones y los no metales los ganan.",
+          "Nitrógeno tiene 5 electrones de valencia. ¿Qué es menos: perder 5 o ganar 3?"
+        ],
+        [
+          "Carga = protones − electrones.",
+          "Nitrógeno tiene 7 protones. Después de ganar 3, tiene 10 electrones. ¿Cuánto es 7 − 10?"
+        ],
+        [
+          "Los iones metálicos usan ion de seguido del nombre del elemento. Los iones no metálicos cambian su terminación. Para el gas noble, cuenta los electrones del ion.",
+          "Nitrógeno es un no metal. Tiene 7 protones y gana 3 electrones, así que el ion tiene 10 electrones. ¿Qué gas noble también tiene 10?"
+        ]
+      ],
+      "correct": [
+        "Nitrógeno tiene 5 electrones de valencia. Para los grupos 13 a 18, usa el último dígito.",
+        "Nitrógeno gana 3 electrones para alcanzar un nivel externo lleno.",
+        "7 protones − 10 electrones = 3−.",
+        "Nitruro tiene 10 electrones, igual que neón. Llenó su propio nivel externo, así que coincide con el gas noble al final de su periodo."
+      ],
+      "feedback": {
+        "period": "Ese es el periodo o fila de nitrógeno. Los electrones de valencia se obtienen del grupo o columna.",
+        "atomic": "Ese es el número total de electrones del átomo neutro. Solo los externos son electrones de valencia.",
+        "complement": "Esa es la cantidad de electrones que nitrógeno necesitaría para llegar a 8. La pregunta pide cuántos tiene ya en su nivel externo.",
+        "combined": "Ese número es tanto el periodo de nitrógeno como los electrones que necesita para llegar a 8. Usa su grupo o columna para saber cuántos tiene ya.",
+        "long": "Ese es el camino largo en este modelo de predicción. Para estos iones comunes, usa el camino más corto a 8. Es un patrón, no una explicación completa de la formación de iones.",
+        "direction": "Para estos iones comunes, los metales pierden electrones y los no metales los ganan. Nitrógeno es un no metal.",
+        "number": "Cuenta de nuevo. ¿Cuántos electrones deben cambiar para alcanzar un nivel externo lleno?",
+        "valence": "Ese es el número de electrones de valencia, no la carga. La carga depende de cuántos electrones gana o pierde el átomo.",
+        "sign": "Al ganar electrones quedan más electrones que protones, así que la carga es negativa.",
+        "size": "Revisa con protones − electrones.",
+        "general": "Usa una pista e inténtalo de nuevo.",
+        "nameRule": "Un ion negativo formado por un solo no metal cambia su terminación.",
+        "trapGas": "Nitrógeno ganó electrones para llenar su propio nivel externo, así que coincide con el gas noble al final de su periodo, no con el anterior.",
+        "gasCount": "Cuenta los electrones del ion, protones menos la carga, y busca el gas noble con esa cantidad."
+      },
+      "nameWrong": "ion de nitrógeno",
+      "trapGas": "helio"
+    },
+    {
+      "name": "fósforo",
+      "symbol": "P",
+      "z": 15,
+      "group": 15,
+      "period": 3,
+      "valence": 5,
+      "charge": -3,
+      "ion": "fosfuro",
+      "gas": "argón",
+      "electrons": 18,
+      "direction": "gains",
+      "moved": 3,
+      "metal": "nonmetal",
+      "chargeLabel": "3−",
+      "spoken": "fosfuro, carga 3 negativa",
+      "summary": "Fósforo gana 3 electrones. 15 protones − 18 electrones = 3−. El ion es un anión y es isoelectrónico con argón.",
+      "reminder": "Fósforo gana 3 electrones y forma un ion de carga 3−.",
+      "hints": [
+        [
+          "Busca fósforo en la tabla periódica. ¿En qué grupo o columna está?",
+          "Fósforo está en el grupo 15. Para los grupos 13 a 18, usa el último dígito."
+        ],
+        [
+          "¿Fósforo es un metal o un no metal? Para estos iones comunes, los metales pierden electrones y los no metales los ganan.",
+          "Fósforo tiene 5 electrones de valencia. ¿Qué es menos: perder 5 o ganar 3?"
+        ],
+        [
+          "Carga = protones − electrones.",
+          "Fósforo tiene 15 protones. Después de ganar 3, tiene 18 electrones. ¿Cuánto es 15 − 18?"
+        ],
+        [
+          "Los iones metálicos usan ion de seguido del nombre del elemento. Los iones no metálicos cambian su terminación. Para el gas noble, cuenta los electrones del ion.",
+          "Fósforo es un no metal. Tiene 15 protones y gana 3 electrones, así que el ion tiene 18 electrones. ¿Qué gas noble también tiene 18?"
+        ]
+      ],
+      "correct": [
+        "Fósforo tiene 5 electrones de valencia. Para los grupos 13 a 18, usa el último dígito.",
+        "Fósforo gana 3 electrones para alcanzar un nivel externo lleno.",
+        "15 protones − 18 electrones = 3−.",
+        "Fosfuro tiene 18 electrones, igual que argón. Llenó su propio nivel externo, así que coincide con el gas noble al final de su periodo."
+      ],
+      "feedback": {
+        "period": "Ese es el periodo o fila de fósforo. Los electrones de valencia se obtienen del grupo o columna.",
+        "atomic": "Ese es el número total de electrones del átomo neutro. Solo los externos son electrones de valencia.",
+        "complement": "Esa es la cantidad de electrones que fósforo necesitaría para llegar a 8. La pregunta pide cuántos tiene ya en su nivel externo.",
+        "combined": "Ese número es tanto el periodo de fósforo como los electrones que necesita para llegar a 8. Usa su grupo o columna para saber cuántos tiene ya.",
+        "long": "Ese es el camino largo en este modelo de predicción. Para estos iones comunes, usa el camino más corto a 8. Es un patrón, no una explicación completa de la formación de iones.",
+        "direction": "Para estos iones comunes, los metales pierden electrones y los no metales los ganan. Fósforo es un no metal.",
+        "number": "Cuenta de nuevo. ¿Cuántos electrones deben cambiar para alcanzar un nivel externo lleno?",
+        "valence": "Ese es el número de electrones de valencia, no la carga. La carga depende de cuántos electrones gana o pierde el átomo.",
+        "sign": "Al ganar electrones quedan más electrones que protones, así que la carga es negativa.",
+        "size": "Revisa con protones − electrones.",
+        "general": "Usa una pista e inténtalo de nuevo.",
+        "nameRule": "Un ion negativo formado por un solo no metal cambia su terminación.",
+        "trapGas": "Fósforo ganó electrones para llenar su propio nivel externo, así que coincide con el gas noble al final de su periodo, no con el anterior.",
+        "gasCount": "Cuenta los electrones del ion, protones menos la carga, y busca el gas noble con esa cantidad."
+      },
+      "nameWrong": "ion de fósforo",
+      "trapGas": "neón"
+    },
+    {
+      "name": "oxígeno",
+      "symbol": "O",
+      "z": 8,
+      "group": 16,
+      "period": 2,
+      "valence": 6,
+      "charge": -2,
+      "ion": "óxido",
+      "gas": "neón",
+      "electrons": 10,
+      "direction": "gains",
+      "moved": 2,
+      "metal": "nonmetal",
+      "chargeLabel": "2−",
+      "spoken": "óxido, carga 2 negativa",
+      "summary": "Oxígeno gana 2 electrones. 8 protones − 10 electrones = 2−. El ion es un anión y es isoelectrónico con neón.",
+      "reminder": "Oxígeno gana 2 electrones y forma un ion de carga 2−.",
+      "hints": [
+        [
+          "Busca oxígeno en la tabla periódica. ¿En qué grupo o columna está?",
+          "Oxígeno está en el grupo 16. Para los grupos 13 a 18, usa el último dígito."
+        ],
+        [
+          "¿Oxígeno es un metal o un no metal? Para estos iones comunes, los metales pierden electrones y los no metales los ganan.",
+          "Oxígeno tiene 6 electrones de valencia. ¿Qué es menos: perder 6 o ganar 2?"
+        ],
+        [
+          "Carga = protones − electrones.",
+          "Oxígeno tiene 8 protones. Después de ganar 2, tiene 10 electrones. ¿Cuánto es 8 − 10?"
+        ],
+        [
+          "Los iones metálicos usan ion de seguido del nombre del elemento. Los iones no metálicos cambian su terminación. Para el gas noble, cuenta los electrones del ion.",
+          "Oxígeno es un no metal. Tiene 8 protones y gana 2 electrones, así que el ion tiene 10 electrones. ¿Qué gas noble también tiene 10?"
+        ]
+      ],
+      "correct": [
+        "Oxígeno tiene 6 electrones de valencia. Para los grupos 13 a 18, usa el último dígito.",
+        "Oxígeno gana 2 electrones para alcanzar un nivel externo lleno.",
+        "8 protones − 10 electrones = 2−.",
+        "Óxido tiene 10 electrones, igual que neón. Llenó su propio nivel externo, así que coincide con el gas noble al final de su periodo."
+      ],
+      "feedback": {
+        "period": "Ese es el periodo o fila de oxígeno. Los electrones de valencia se obtienen del grupo o columna.",
+        "atomic": "Ese es el número total de electrones del átomo neutro. Solo los externos son electrones de valencia.",
+        "complement": "Esa es la cantidad de electrones que oxígeno necesitaría para llegar a 8. La pregunta pide cuántos tiene ya en su nivel externo.",
+        "combined": "Ese número es tanto el periodo de oxígeno como los electrones que necesita para llegar a 8. Usa su grupo o columna para saber cuántos tiene ya.",
+        "long": "Ese es el camino largo en este modelo de predicción. Para estos iones comunes, usa el camino más corto a 8. Es un patrón, no una explicación completa de la formación de iones.",
+        "direction": "Para estos iones comunes, los metales pierden electrones y los no metales los ganan. Oxígeno es un no metal.",
+        "number": "Cuenta de nuevo. ¿Cuántos electrones deben cambiar para alcanzar un nivel externo lleno?",
+        "valence": "Ese es el número de electrones de valencia, no la carga. La carga depende de cuántos electrones gana o pierde el átomo.",
+        "sign": "Al ganar electrones quedan más electrones que protones, así que la carga es negativa.",
+        "size": "Revisa con protones − electrones.",
+        "general": "Usa una pista e inténtalo de nuevo.",
+        "nameRule": "Un ion negativo formado por un solo no metal cambia su terminación.",
+        "trapGas": "Oxígeno ganó electrones para llenar su propio nivel externo, así que coincide con el gas noble al final de su periodo, no con el anterior.",
+        "gasCount": "Cuenta los electrones del ion, protones menos la carga, y busca el gas noble con esa cantidad."
+      },
+      "nameWrong": "ion de oxígeno",
+      "trapGas": "helio"
+    },
+    {
+      "name": "azufre",
+      "symbol": "S",
+      "z": 16,
+      "group": 16,
+      "period": 3,
+      "valence": 6,
+      "charge": -2,
+      "ion": "sulfuro",
+      "gas": "argón",
+      "electrons": 18,
+      "direction": "gains",
+      "moved": 2,
+      "metal": "nonmetal",
+      "chargeLabel": "2−",
+      "spoken": "sulfuro, carga 2 negativa",
+      "summary": "Azufre gana 2 electrones. 16 protones − 18 electrones = 2−. El ion es un anión y es isoelectrónico con argón.",
+      "reminder": "Azufre gana 2 electrones y forma un ion de carga 2−.",
+      "hints": [
+        [
+          "Busca azufre en la tabla periódica. ¿En qué grupo o columna está?",
+          "Azufre está en el grupo 16. Para los grupos 13 a 18, usa el último dígito."
+        ],
+        [
+          "¿Azufre es un metal o un no metal? Para estos iones comunes, los metales pierden electrones y los no metales los ganan.",
+          "Azufre tiene 6 electrones de valencia. ¿Qué es menos: perder 6 o ganar 2?"
+        ],
+        [
+          "Carga = protones − electrones.",
+          "Azufre tiene 16 protones. Después de ganar 2, tiene 18 electrones. ¿Cuánto es 16 − 18?"
+        ],
+        [
+          "Los iones metálicos usan ion de seguido del nombre del elemento. Los iones no metálicos cambian su terminación. Para el gas noble, cuenta los electrones del ion.",
+          "Azufre es un no metal. Tiene 16 protones y gana 2 electrones, así que el ion tiene 18 electrones. ¿Qué gas noble también tiene 18?"
+        ]
+      ],
+      "correct": [
+        "Azufre tiene 6 electrones de valencia. Para los grupos 13 a 18, usa el último dígito.",
+        "Azufre gana 2 electrones para alcanzar un nivel externo lleno.",
+        "16 protones − 18 electrones = 2−.",
+        "Sulfuro tiene 18 electrones, igual que argón. Llenó su propio nivel externo, así que coincide con el gas noble al final de su periodo."
+      ],
+      "feedback": {
+        "period": "Ese es el periodo o fila de azufre. Los electrones de valencia se obtienen del grupo o columna.",
+        "atomic": "Ese es el número total de electrones del átomo neutro. Solo los externos son electrones de valencia.",
+        "complement": "Esa es la cantidad de electrones que azufre necesitaría para llegar a 8. La pregunta pide cuántos tiene ya en su nivel externo.",
+        "combined": "Ese número es tanto el periodo de azufre como los electrones que necesita para llegar a 8. Usa su grupo o columna para saber cuántos tiene ya.",
+        "long": "Ese es el camino largo en este modelo de predicción. Para estos iones comunes, usa el camino más corto a 8. Es un patrón, no una explicación completa de la formación de iones.",
+        "direction": "Para estos iones comunes, los metales pierden electrones y los no metales los ganan. Azufre es un no metal.",
+        "number": "Cuenta de nuevo. ¿Cuántos electrones deben cambiar para alcanzar un nivel externo lleno?",
+        "valence": "Ese es el número de electrones de valencia, no la carga. La carga depende de cuántos electrones gana o pierde el átomo.",
+        "sign": "Al ganar electrones quedan más electrones que protones, así que la carga es negativa.",
+        "size": "Revisa con protones − electrones.",
+        "general": "Usa una pista e inténtalo de nuevo.",
+        "nameRule": "Un ion negativo formado por un solo no metal cambia su terminación.",
+        "trapGas": "Azufre ganó electrones para llenar su propio nivel externo, así que coincide con el gas noble al final de su periodo, no con el anterior.",
+        "gasCount": "Cuenta los electrones del ion, protones menos la carga, y busca el gas noble con esa cantidad."
+      },
+      "nameWrong": "ion de azufre",
+      "trapGas": "neón"
+    },
+    {
+      "name": "selenio",
+      "symbol": "Se",
+      "z": 34,
+      "group": 16,
+      "period": 4,
+      "valence": 6,
+      "charge": -2,
+      "ion": "seleniuro",
+      "gas": "kriptón",
+      "electrons": 36,
+      "direction": "gains",
+      "moved": 2,
+      "metal": "nonmetal",
+      "chargeLabel": "2−",
+      "spoken": "seleniuro, carga 2 negativa",
+      "summary": "Selenio gana 2 electrones. 34 protones − 36 electrones = 2−. El ion es un anión y es isoelectrónico con kriptón.",
+      "reminder": "Selenio gana 2 electrones y forma un ion de carga 2−.",
+      "hints": [
+        [
+          "Busca selenio en la tabla periódica. ¿En qué grupo o columna está?",
+          "Selenio está en el grupo 16. Para los grupos 13 a 18, usa el último dígito."
+        ],
+        [
+          "¿Selenio es un metal o un no metal? Para estos iones comunes, los metales pierden electrones y los no metales los ganan.",
+          "Selenio tiene 6 electrones de valencia. ¿Qué es menos: perder 6 o ganar 2?"
+        ],
+        [
+          "Carga = protones − electrones.",
+          "Selenio tiene 34 protones. Después de ganar 2, tiene 36 electrones. ¿Cuánto es 34 − 36?"
+        ],
+        [
+          "Los iones metálicos usan ion de seguido del nombre del elemento. Los iones no metálicos cambian su terminación. Para el gas noble, cuenta los electrones del ion.",
+          "Selenio es un no metal. Tiene 34 protones y gana 2 electrones, así que el ion tiene 36 electrones. ¿Qué gas noble también tiene 36?"
+        ]
+      ],
+      "correct": [
+        "Selenio tiene 6 electrones de valencia. Para los grupos 13 a 18, usa el último dígito.",
+        "Selenio gana 2 electrones para alcanzar un nivel externo lleno.",
+        "34 protones − 36 electrones = 2−.",
+        "Seleniuro tiene 36 electrones, igual que kriptón. Llenó su propio nivel externo, así que coincide con el gas noble al final de su periodo."
+      ],
+      "feedback": {
+        "period": "Ese es el periodo o fila de selenio. Los electrones de valencia se obtienen del grupo o columna.",
+        "atomic": "Ese es el número total de electrones del átomo neutro. Solo los externos son electrones de valencia.",
+        "complement": "Esa es la cantidad de electrones que selenio necesitaría para llegar a 8. La pregunta pide cuántos tiene ya en su nivel externo.",
+        "combined": "Ese número es tanto el periodo de selenio como los electrones que necesita para llegar a 8. Usa su grupo o columna para saber cuántos tiene ya.",
+        "long": "Ese es el camino largo en este modelo de predicción. Para estos iones comunes, usa el camino más corto a 8. Es un patrón, no una explicación completa de la formación de iones.",
+        "direction": "Para estos iones comunes, los metales pierden electrones y los no metales los ganan. Selenio es un no metal.",
+        "number": "Cuenta de nuevo. ¿Cuántos electrones deben cambiar para alcanzar un nivel externo lleno?",
+        "valence": "Ese es el número de electrones de valencia, no la carga. La carga depende de cuántos electrones gana o pierde el átomo.",
+        "sign": "Al ganar electrones quedan más electrones que protones, así que la carga es negativa.",
+        "size": "Revisa con protones − electrones.",
+        "general": "Usa una pista e inténtalo de nuevo.",
+        "nameRule": "Un ion negativo formado por un solo no metal cambia su terminación.",
+        "trapGas": "Selenio ganó electrones para llenar su propio nivel externo, así que coincide con el gas noble al final de su periodo, no con el anterior.",
+        "gasCount": "Cuenta los electrones del ion, protones menos la carga, y busca el gas noble con esa cantidad."
+      },
+      "nameWrong": "ion de selenio",
+      "trapGas": "argón"
+    },
+    {
+      "name": "flúor",
+      "symbol": "F",
+      "z": 9,
+      "group": 17,
+      "period": 2,
+      "valence": 7,
+      "charge": -1,
+      "ion": "fluoruro",
+      "gas": "neón",
+      "electrons": 10,
+      "direction": "gains",
+      "moved": 1,
+      "metal": "nonmetal",
+      "chargeLabel": "1−",
+      "spoken": "fluoruro, carga 1 negativa",
+      "summary": "Flúor gana 1 electrón. 9 protones − 10 electrones = 1−. El ion es un anión y es isoelectrónico con neón.",
+      "reminder": "Flúor gana 1 electrón y forma un ion de carga 1−.",
+      "hints": [
+        [
+          "Busca flúor en la tabla periódica. ¿En qué grupo o columna está?",
+          "Flúor está en el grupo 17. Para los grupos 13 a 18, usa el último dígito."
+        ],
+        [
+          "¿Flúor es un metal o un no metal? Para estos iones comunes, los metales pierden electrones y los no metales los ganan.",
+          "Flúor tiene 7 electrones de valencia. ¿Qué es menos: perder 7 o ganar 1?"
+        ],
+        [
+          "Carga = protones − electrones.",
+          "Flúor tiene 9 protones. Después de ganar 1, tiene 10 electrones. ¿Cuánto es 9 − 10?"
+        ],
+        [
+          "Los iones metálicos usan ion de seguido del nombre del elemento. Los iones no metálicos cambian su terminación. Para el gas noble, cuenta los electrones del ion.",
+          "Flúor es un no metal. Tiene 9 protones y gana 1 electrón, así que el ion tiene 10 electrones. ¿Qué gas noble también tiene 10?"
+        ]
+      ],
+      "correct": [
+        "Flúor tiene 7 electrones de valencia. Para los grupos 13 a 18, usa el último dígito.",
+        "Flúor gana 1 electrón para alcanzar un nivel externo lleno.",
+        "9 protones − 10 electrones = 1−.",
+        "Fluoruro tiene 10 electrones, igual que neón. Llenó su propio nivel externo, así que coincide con el gas noble al final de su periodo."
+      ],
+      "feedback": {
+        "period": "Ese es el periodo o fila de flúor. Los electrones de valencia se obtienen del grupo o columna.",
+        "atomic": "Ese es el número total de electrones del átomo neutro. Solo los externos son electrones de valencia.",
+        "complement": "Esa es la cantidad de electrones que flúor necesitaría para llegar a 8. La pregunta pide cuántos tiene ya en su nivel externo.",
+        "combined": "Ese número es tanto el periodo de flúor como los electrones que necesita para llegar a 8. Usa su grupo o columna para saber cuántos tiene ya.",
+        "long": "Ese es el camino largo en este modelo de predicción. Para estos iones comunes, usa el camino más corto a 8. Es un patrón, no una explicación completa de la formación de iones.",
+        "direction": "Para estos iones comunes, los metales pierden electrones y los no metales los ganan. Flúor es un no metal.",
+        "number": "Cuenta de nuevo. ¿Cuántos electrones deben cambiar para alcanzar un nivel externo lleno?",
+        "valence": "Ese es el número de electrones de valencia, no la carga. La carga depende de cuántos electrones gana o pierde el átomo.",
+        "sign": "Al ganar electrones quedan más electrones que protones, así que la carga es negativa.",
+        "size": "Revisa con protones − electrones.",
+        "general": "Usa una pista e inténtalo de nuevo.",
+        "nameRule": "Un ion negativo formado por un solo no metal cambia su terminación.",
+        "trapGas": "Flúor ganó electrones para llenar su propio nivel externo, así que coincide con el gas noble al final de su periodo, no con el anterior.",
+        "gasCount": "Cuenta los electrones del ion, protones menos la carga, y busca el gas noble con esa cantidad."
+      },
+      "nameWrong": "ion de flúor",
+      "trapGas": "helio"
+    },
+    {
+      "name": "cloro",
+      "symbol": "Cl",
+      "z": 17,
+      "group": 17,
+      "period": 3,
+      "valence": 7,
+      "charge": -1,
+      "ion": "cloruro",
+      "gas": "argón",
+      "electrons": 18,
+      "direction": "gains",
+      "moved": 1,
+      "metal": "nonmetal",
+      "chargeLabel": "1−",
+      "spoken": "cloruro, carga 1 negativa",
+      "summary": "Cloro gana 1 electrón. 17 protones − 18 electrones = 1−. El ion es un anión y es isoelectrónico con argón.",
+      "reminder": "Cloro gana 1 electrón y forma un ion de carga 1−.",
+      "hints": [
+        [
+          "Busca cloro en la tabla periódica. ¿En qué grupo o columna está?",
+          "Cloro está en el grupo 17. Para los grupos 13 a 18, usa el último dígito."
+        ],
+        [
+          "¿Cloro es un metal o un no metal? Para estos iones comunes, los metales pierden electrones y los no metales los ganan.",
+          "Cloro tiene 7 electrones de valencia. ¿Qué es menos: perder 7 o ganar 1?"
+        ],
+        [
+          "Carga = protones − electrones.",
+          "Cloro tiene 17 protones. Después de ganar 1, tiene 18 electrones. ¿Cuánto es 17 − 18?"
+        ],
+        [
+          "Los iones metálicos usan ion de seguido del nombre del elemento. Los iones no metálicos cambian su terminación. Para el gas noble, cuenta los electrones del ion.",
+          "Cloro es un no metal. Tiene 17 protones y gana 1 electrón, así que el ion tiene 18 electrones. ¿Qué gas noble también tiene 18?"
+        ]
+      ],
+      "correct": [
+        "Cloro tiene 7 electrones de valencia. Para los grupos 13 a 18, usa el último dígito.",
+        "Cloro gana 1 electrón para alcanzar un nivel externo lleno.",
+        "17 protones − 18 electrones = 1−.",
+        "Cloruro tiene 18 electrones, igual que argón. Llenó su propio nivel externo, así que coincide con el gas noble al final de su periodo."
+      ],
+      "feedback": {
+        "period": "Ese es el periodo o fila de cloro. Los electrones de valencia se obtienen del grupo o columna.",
+        "atomic": "Ese es el número total de electrones del átomo neutro. Solo los externos son electrones de valencia.",
+        "complement": "Esa es la cantidad de electrones que cloro necesitaría para llegar a 8. La pregunta pide cuántos tiene ya en su nivel externo.",
+        "combined": "Ese número es tanto el periodo de cloro como los electrones que necesita para llegar a 8. Usa su grupo o columna para saber cuántos tiene ya.",
+        "long": "Ese es el camino largo en este modelo de predicción. Para estos iones comunes, usa el camino más corto a 8. Es un patrón, no una explicación completa de la formación de iones.",
+        "direction": "Para estos iones comunes, los metales pierden electrones y los no metales los ganan. Cloro es un no metal.",
+        "number": "Cuenta de nuevo. ¿Cuántos electrones deben cambiar para alcanzar un nivel externo lleno?",
+        "valence": "Ese es el número de electrones de valencia, no la carga. La carga depende de cuántos electrones gana o pierde el átomo.",
+        "sign": "Al ganar electrones quedan más electrones que protones, así que la carga es negativa.",
+        "size": "Revisa con protones − electrones.",
+        "general": "Usa una pista e inténtalo de nuevo.",
+        "nameRule": "Un ion negativo formado por un solo no metal cambia su terminación.",
+        "trapGas": "Cloro ganó electrones para llenar su propio nivel externo, así que coincide con el gas noble al final de su periodo, no con el anterior.",
+        "gasCount": "Cuenta los electrones del ion, protones menos la carga, y busca el gas noble con esa cantidad."
+      },
+      "nameWrong": "ion de cloro",
+      "trapGas": "neón"
+    },
+    {
+      "name": "bromo",
+      "symbol": "Br",
+      "z": 35,
+      "group": 17,
+      "period": 4,
+      "valence": 7,
+      "charge": -1,
+      "ion": "bromuro",
+      "gas": "kriptón",
+      "electrons": 36,
+      "direction": "gains",
+      "moved": 1,
+      "metal": "nonmetal",
+      "chargeLabel": "1−",
+      "spoken": "bromuro, carga 1 negativa",
+      "summary": "Bromo gana 1 electrón. 35 protones − 36 electrones = 1−. El ion es un anión y es isoelectrónico con kriptón.",
+      "reminder": "Bromo gana 1 electrón y forma un ion de carga 1−.",
+      "hints": [
+        [
+          "Busca bromo en la tabla periódica. ¿En qué grupo o columna está?",
+          "Bromo está en el grupo 17. Para los grupos 13 a 18, usa el último dígito."
+        ],
+        [
+          "¿Bromo es un metal o un no metal? Para estos iones comunes, los metales pierden electrones y los no metales los ganan.",
+          "Bromo tiene 7 electrones de valencia. ¿Qué es menos: perder 7 o ganar 1?"
+        ],
+        [
+          "Carga = protones − electrones.",
+          "Bromo tiene 35 protones. Después de ganar 1, tiene 36 electrones. ¿Cuánto es 35 − 36?"
+        ],
+        [
+          "Los iones metálicos usan ion de seguido del nombre del elemento. Los iones no metálicos cambian su terminación. Para el gas noble, cuenta los electrones del ion.",
+          "Bromo es un no metal. Tiene 35 protones y gana 1 electrón, así que el ion tiene 36 electrones. ¿Qué gas noble también tiene 36?"
+        ]
+      ],
+      "correct": [
+        "Bromo tiene 7 electrones de valencia. Para los grupos 13 a 18, usa el último dígito.",
+        "Bromo gana 1 electrón para alcanzar un nivel externo lleno.",
+        "35 protones − 36 electrones = 1−.",
+        "Bromuro tiene 36 electrones, igual que kriptón. Llenó su propio nivel externo, así que coincide con el gas noble al final de su periodo."
+      ],
+      "feedback": {
+        "period": "Ese es el periodo o fila de bromo. Los electrones de valencia se obtienen del grupo o columna.",
+        "atomic": "Ese es el número total de electrones del átomo neutro. Solo los externos son electrones de valencia.",
+        "complement": "Esa es la cantidad de electrones que bromo necesitaría para llegar a 8. La pregunta pide cuántos tiene ya en su nivel externo.",
+        "combined": "Ese número es tanto el periodo de bromo como los electrones que necesita para llegar a 8. Usa su grupo o columna para saber cuántos tiene ya.",
+        "long": "Ese es el camino largo en este modelo de predicción. Para estos iones comunes, usa el camino más corto a 8. Es un patrón, no una explicación completa de la formación de iones.",
+        "direction": "Para estos iones comunes, los metales pierden electrones y los no metales los ganan. Bromo es un no metal.",
+        "number": "Cuenta de nuevo. ¿Cuántos electrones deben cambiar para alcanzar un nivel externo lleno?",
+        "valence": "Ese es el número de electrones de valencia, no la carga. La carga depende de cuántos electrones gana o pierde el átomo.",
+        "sign": "Al ganar electrones quedan más electrones que protones, así que la carga es negativa.",
+        "size": "Revisa con protones − electrones.",
+        "general": "Usa una pista e inténtalo de nuevo.",
+        "nameRule": "Un ion negativo formado por un solo no metal cambia su terminación.",
+        "trapGas": "Bromo ganó electrones para llenar su propio nivel externo, así que coincide con el gas noble al final de su periodo, no con el anterior.",
+        "gasCount": "Cuenta los electrones del ion, protones menos la carga, y busca el gas noble con esa cantidad."
+      },
+      "nameWrong": "ion de bromo",
+      "trapGas": "argón"
+    },
+    {
+      "name": "yodo",
+      "symbol": "I",
+      "z": 53,
+      "group": 17,
+      "period": 5,
+      "valence": 7,
+      "charge": -1,
+      "ion": "yoduro",
+      "gas": "xenón",
+      "electrons": 54,
+      "direction": "gains",
+      "moved": 1,
+      "metal": "nonmetal",
+      "chargeLabel": "1−",
+      "spoken": "yoduro, carga 1 negativa",
+      "summary": "Yodo gana 1 electrón. 53 protones − 54 electrones = 1−. El ion es un anión y es isoelectrónico con xenón.",
+      "reminder": "Yodo gana 1 electrón y forma un ion de carga 1−.",
+      "hints": [
+        [
+          "Busca yodo en la tabla periódica. ¿En qué grupo o columna está?",
+          "Yodo está en el grupo 17. Para los grupos 13 a 18, usa el último dígito."
+        ],
+        [
+          "¿Yodo es un metal o un no metal? Para estos iones comunes, los metales pierden electrones y los no metales los ganan.",
+          "Yodo tiene 7 electrones de valencia. ¿Qué es menos: perder 7 o ganar 1?"
+        ],
+        [
+          "Carga = protones − electrones.",
+          "Yodo tiene 53 protones. Después de ganar 1, tiene 54 electrones. ¿Cuánto es 53 − 54?"
+        ],
+        [
+          "Los iones metálicos usan ion de seguido del nombre del elemento. Los iones no metálicos cambian su terminación. Para el gas noble, cuenta los electrones del ion.",
+          "Yodo es un no metal. Tiene 53 protones y gana 1 electrón, así que el ion tiene 54 electrones. ¿Qué gas noble también tiene 54?"
+        ]
+      ],
+      "correct": [
+        "Yodo tiene 7 electrones de valencia. Para los grupos 13 a 18, usa el último dígito.",
+        "Yodo gana 1 electrón para alcanzar un nivel externo lleno.",
+        "53 protones − 54 electrones = 1−.",
+        "Yoduro tiene 54 electrones, igual que xenón. Llenó su propio nivel externo, así que coincide con el gas noble al final de su periodo."
+      ],
+      "feedback": {
+        "period": "Ese es el periodo o fila de yodo. Los electrones de valencia se obtienen del grupo o columna.",
+        "atomic": "Ese es el número total de electrones del átomo neutro. Solo los externos son electrones de valencia.",
+        "complement": "Esa es la cantidad de electrones que yodo necesitaría para llegar a 8. La pregunta pide cuántos tiene ya en su nivel externo.",
+        "combined": "Ese número es tanto el periodo de yodo como los electrones que necesita para llegar a 8. Usa su grupo o columna para saber cuántos tiene ya.",
+        "long": "Ese es el camino largo en este modelo de predicción. Para estos iones comunes, usa el camino más corto a 8. Es un patrón, no una explicación completa de la formación de iones.",
+        "direction": "Para estos iones comunes, los metales pierden electrones y los no metales los ganan. Yodo es un no metal.",
+        "number": "Cuenta de nuevo. ¿Cuántos electrones deben cambiar para alcanzar un nivel externo lleno?",
+        "valence": "Ese es el número de electrones de valencia, no la carga. La carga depende de cuántos electrones gana o pierde el átomo.",
+        "sign": "Al ganar electrones quedan más electrones que protones, así que la carga es negativa.",
+        "size": "Revisa con protones − electrones.",
+        "general": "Usa una pista e inténtalo de nuevo.",
+        "nameRule": "Un ion negativo formado por un solo no metal cambia su terminación.",
+        "trapGas": "Yodo ganó electrones para llenar su propio nivel externo, así que coincide con el gas noble al final de su periodo, no con el anterior.",
+        "gasCount": "Cuenta los electrones del ion, protones menos la carga, y busca el gas noble con esa cantidad."
+      },
+      "nameWrong": "ion de yodo",
+      "trapGas": "kriptón"
+    }
+  ],
+  "ui": {
+    "stepNames": [
+      "Electrones de valencia",
+      "Ganancia o pérdida",
+      "Carga del ion",
+      "Nombre del ion"
+    ],
+    "questions": [
+      "¿Cuántos electrones de valencia tiene este átomo?",
+      "¿Este átomo pierde o gana electrones y cuántos?",
+      "¿Qué carga tiene el ion que se forma?",
+      "Nombra el ion y el gas noble con el mismo número de electrones."
+    ],
+    "check": "Revisar respuesta",
+    "hint": "Pista",
+    "hint2": "Otra pista",
+    "hintsDone": "Ya se mostraron ambas pistas",
+    "show": "Muéstrame",
+    "next": "Siguiente elemento",
+    "correct": "✓ Correcto. ",
+    "wrong": "↻ Todavía no. ",
+    "revealed": "→ Respuesta mostrada. ",
+    "missing": "Primero elige una respuesta.",
+    "missing2": "Elige Pierde o Gana y el número de electrones.",
+    "lose": "Pierde",
+    "gain": "Gana",
+    "count": "¿Cuántos electrones?",
+    "complete": "Elemento terminado",
+    "reviewComplete": "Repaso terminado",
+    "roundComplete": "Ronda terminada",
+    "firstTry": "Respuestas correctas al primer intento en los elementos originales",
+    "review": "Sigue practicando",
+    "none": "Completaste cada paso original al primer intento.",
+    "again": "Practicar de nuevo",
+    "misses": "Practicar mis errores",
+    "reviewLabel": "Repaso",
+    "singleLabel": "Elemento elegido",
+    "elementLabel": "Elemento",
+    "of": "de",
+    "stepLabel": "Paso",
+    "reviewNote": "Los elementos de repaso pueden alargar esta ronda hasta 3 elementos.",
+    "nextReview": "Elemento de repaso",
+    "all": "Práctica mixta",
+    "start": "Iniciar una ronda nueva",
+    "select": "Elige un elemento",
+    "specific": "Practicar este elemento",
+    "summaryIntro": "Usa el cambio en los electrones para explicar la carga.",
+    "singleDone": "Elemento elegido terminado",
+    "hintPrefix": "Pista: ",
+    "repeatNote": "Los elementos de repaso no cambian los conteos del primer intento.",
+    "previewNote": "Termina la ronda actual o elige otro modo de práctica abajo.",
+    "nameLegend": "Nombre del ion",
+    "gasLegend": "Mismo número de electrones que",
+    "missing4": "Elige el nombre de un ion y un gas noble.",
+    "namingOption": "Incluir el paso 4: nombrar el ion y relacionarlo con su gas noble",
+    "namingNote": "Los cambios se aplican a partir del siguiente elemento.",
+    "valenceOne": "electrón de valencia",
+    "valenceMany": "electrones de valencia",
+    "loses": "Pierde",
+    "gains": "Gana",
+    "chargeWord": "Carga",
+    "likeWord": "como",
+    "trailLabel": "Tus respuestas hasta ahora",
+    "correctMark": "Correcto: ",
+    "shownMark": "Mostrado: ",
+    "currentMark": " (este elemento)",
+    "hintMark": " (pista)",
+    "triedMark": " (intentado, incorrecto)",
+    "general": "Usa una pista e inténtalo de nuevo.",
+    "chargeMark": "carga del ion",
+    "codeLabel": "Código de finalización",
+    "copyCode": "Copiar código",
+    "codeCopied": "Código copiado.",
+    "codeReady": "Código de finalización listo.",
+    "codeSelected": "El código está seleccionado. Presiona Ctrl+C, o Command+C en una Mac, para copiarlo.",
+    "codeNote": "Pega este código en tu tarea de Google Classroom."
+  },
+  "atomicLabel": "Número atómico",
+  "tableCaption": "Elementos de los grupos principales por grupo (columna) y periodo (fila)",
+  "periodLabel": "Periodo",
+  "finishLabel": "Ver resumen de la ronda",
+  "groups": [
+    1,
+    2,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18
+  ],
+  "table": [
+    [
+      "H",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "He"
+    ],
+    [
+      "Li",
+      "Be",
+      "B",
+      "C",
+      "N",
+      "O",
+      "F",
+      "Ne"
+    ],
+    [
+      "Na",
+      "Mg",
+      "Al",
+      "Si",
+      "P",
+      "S",
+      "Cl",
+      "Ar"
+    ],
+    [
+      "K",
+      "Ca",
+      "Ga",
+      "Ge",
+      "As",
+      "Se",
+      "Br",
+      "Kr"
+    ],
+    [
+      "Rb",
+      "Sr",
+      "In",
+      "Sn",
+      "Sb",
+      "Te",
+      "I",
+      "Xe"
+    ],
+    [
+      "Cs",
+      "Ba",
+      "Tl",
+      "Pb",
+      "Bi",
+      "Po",
+      "At",
+      "Rn"
+    ]
+  ],
+  "gases": [
+    "helio",
+    "neón",
+    "argón",
+    "kriptón",
+    "xenón"
+  ]
+};
+  }
   root.addEventListener("zsa:request-data", function (event) { event.detail.receive(data); }, {once: true});
 }());

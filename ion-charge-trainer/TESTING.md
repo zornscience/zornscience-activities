@@ -1,5 +1,5 @@
 # Verification record
-Version: 1.4.1
+Version: 1.5.0
 Date: 2026-10-16
 Reviewer: Claude (integration review of ChatGPT's 1.0.0 package, then the 1.1.0 to 1.3.1 updates)
 
@@ -126,3 +126,7 @@ PASS means the check was run on version 1.0.1 and passed. NOT TESTED means it co
 - Lithium's long-path feedback stated the answer on the first wrong try.
 - Table rows were labeled "Row" instead of "Period", and the caption was "Group (column)". The current element was marked in the table before any hint.
 - Footer text and link were misaligned. The body had an 8px default margin.
+
+## Spanish verification
+
+`tests/unit/i18n.test.js` and `tests/e2e/i18n.spec.js` cover the shared module and Spanish interface, including dynamic views, accessible text and generated share links. The Ion Charge Trainer test completes a full round with hints, wrong answers and a completion code. The language toggle intentionally adds header controls.

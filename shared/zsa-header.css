@@ -1,4 +1,4 @@
-/* Opt-in activity chrome. ACT and Periodic Table do not load this stylesheet. */
+/* Opt-in activity chrome. Periodic Table loads only the language toggle rules. */
 .zsa [data-zsa-header] {
   display:block; position:relative; width:100%; height:auto; background:transparent;
   max-width:none; margin:0 0 16px!important;
@@ -69,3 +69,18 @@
 @media print {
   .zsa [data-zsa-header-tools],.zsa-header-dialog {display:none!important;}
 }
+
+.zsa-languages { display: inline-flex; gap: 4px; align-items: center; }
+.zsa-languages .zsa-btn { display:inline-flex; align-items:center; justify-content:center; box-sizing:border-box; width:44px; min-width:44px; height:44px; padding:0; font-size:13px; line-height:1.4; text-decoration:none; }
+.zsa-languages [aria-current="true"] { background: var(--zsa-navy, #0b2a5b); color: white; }
+.zsa [data-zsa-header-tools] .zsa-languages .zsa-btn {
+  display:inline-flex; align-items:center; min-height:44px; padding:9px 8px;
+  border:1px solid #c9d7e5; border-radius:8px; font:500 13px/1.4 var(--zsa-font);
+  color:#274864; background:white;
+}
+.zsa .zsa-languages [aria-current="true"] { background:#0b2a5b; color:white; }
+@media(max-width:599px) {
+  .zsa [data-zsa-header-tools]:has(.zsa-languages) { margin-left:0!important; max-width:100%!important; }
+}
+@media print { .zsa-languages { display:none; } }
+.zsa-languages[hidden] { display:none!important; }

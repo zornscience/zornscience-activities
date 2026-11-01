@@ -1,9 +1,9 @@
 const test=require('node:test');
-test('gas sandbox equations, locks, validation, animation and self-contained assets',()=>{
+test('gas sandbox equations, locks, validation, animation and local assets',()=>{
 const fs=require('fs'),vm=require('vm'),assert=require('node:assert/strict');
 const html=fs.readFileSync(require('node:path').join(__dirname,'../../gas-laws/index.html'),'utf8');
-const script=html.match(/<script>([\s\S]*?)<\/script>/)[1].replace('\n(function () {','').replace(/\}\)\(\);\s*$/, '');
-const context={matchMedia:()=>({matches:false}),console};
+const script=fs.readFileSync(require('node:path').join(__dirname,'../../gas-laws/activity.js'),'utf8').replace('(function () {','').replace(/\}\)\(\);\s*$/, '');
+const context={matchMedia:()=>({matches:false}),console,document:{querySelector:()=>({dispatchEvent:e=>e.detail.receive(e.type==='zsa:request-i18n'?{lang:'en'}:{})})},CustomEvent:function(type,options){this.type=type;this.detail=options.detail;}};
 vm.createContext(context);
 vm.runInContext(script.slice(0,script.indexOf('function makeControls'))+script.slice(script.indexOf('let dots=[]'),script.indexOf('function drawParticles')),context);
 vm.runInContext(`
@@ -49,6 +49,6 @@ assert(!html.includes('\u2014'),'em dash found');
 assert(!/<(?:script|link)[^>]+(?:src|href)="https?:/i.test(html),'external script or CSS');
 assert(!/\b(fetch\(|XMLHttpRequest|localStorage|sessionStorage|document\.cookie)/.test(script),'unexpected data access');
 assert(html.includes('data:image/png;base64,'),'missing embedded favicon');
-console.log('Self-contained page, license, embedded favicon and no em dashes checked.');
+console.log('Local assets, embedded favicon and no em dashes checked.');
 
 });

@@ -9,6 +9,8 @@
   var data;
   root.dispatchEvent(new CustomEvent("zsa:request-data", {detail: {receive: function (value) { data = value; }}}));
   if (!data) return;
+  var i18n;
+  root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail:{receive:function (api) { i18n = api; }}}));
   var ui = data.ui, els = data.elements;
 
   function $(id) { return root.querySelector("#zsa-pt-" + id); }
@@ -354,7 +356,7 @@
       p.set("mode", state.mode);
       if (state.selected && state.open) p.set("el", byZ[state.selected].symbol);
       if (!state.trends) p.set("trends", "0");
-      return sh.url + "?" + p.toString();
+      return i18n ? i18n.url(sh.url + "?" + p.toString()) : sh.url + "?" + p.toString();
     }
     refreshShare = function () {
       var url = link();

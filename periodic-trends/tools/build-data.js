@@ -12,8 +12,8 @@ var TARGET = path.join(__dirname, "..", "data.js");
 // Read the Periodic Table's data.js the way the page does: it hands its data to a stand-in activity root.
 var table;
 (function () {
-  var root = {addEventListener: function (type, fn) { fn({detail: {receive: function (d) { table = d; }}}); }};
-  vm.runInNewContext(fs.readFileSync(path.join(__dirname, "..", "..", "periodic-table", "data.js"), "utf8"), {document: {querySelector: function () { return root; }}});
+  var root = {dispatchEvent: function () {}, addEventListener: function (type, fn) { fn({detail: {receive: function (d) { table = d; }}}); }};
+  vm.runInNewContext(fs.readFileSync(path.join(__dirname, "..", "..", "periodic-table", "data.js"), "utf8"), {CustomEvent: function (type, options) { this.type = type; this.detail = options.detail; }, document: {querySelector: function () { return root; }}});
 }());
 
 var GROUPS = [1, 2, 13, 14, 15, 16, 17, 18];

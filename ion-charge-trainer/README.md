@@ -1,5 +1,5 @@
 # Predicting Ion Charge Trainer
-Version: 1.4.1
+Version: 1.5.0
 
 ## Assumptions and departures
 - Claude will host these static files and add the WordPress link. This package makes no hosting or WordPress changes.
@@ -147,3 +147,7 @@ Button label: Open the Ion Charge Trainer
 1.0.1 (Claude review): Added the Inter font and enabled its rule. No automatic focus on first load (it skipped the intro and scrolled an embedding page to the activity). Hint button keeps focus after the last hint. Finished steps hide their buttons. "Answer shown" feedback uses a neutral panel instead of the success style. Grammar fixes ("1 valence electron", "an anion"). Lithium long-path feedback no longer gives away the answer. Reference table labels rows "Period" and marks the element only after a hint. Footer alignment, body margin, and embed height buffer adjusted.
 
 1.0.0: Initial 19-element trainer, hints, misconception feedback, constrained mixed rounds, delayed review, missed-group practice, element picker, reference table, and optional embed mode.
+
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the fallback. All student text, feedback and accessible labels use the activity's `data.js`; the Periodic Table generator keeps its source translations in `tools/spanish.json`. Scientific symbols, formulas, numeric values and decimal points stay unchanged. See `../SPANISH_TERMS.md` for choices beyond the supplied glossary.
