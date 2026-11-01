@@ -66,7 +66,7 @@ for (var ap of [false, true]) {
       expect(sum.buttons).toEqual(["Copy code", "Practice again", "Practice my misses"]);
       expect(sum.stats).toEqual(want.lines);
       var day = codes.dayNumber(new Date());
-      expect(sum.code).toBe(codes.encode({activity: prefix, version: "1.1.0", day: day, items: 6, totals: want.totals, results: want.results, show: 1, hints: 2}));
+      expect(sum.code).toBe(codes.encode({activity: prefix, version: "1.2.0", day: day, items: 6, totals: want.totals, results: want.results, show: 1, hints: 2}));
       await checker.audit(page, setting + " round summary with a code 1366x657");
       await page.setViewportSize({width: 390, height: 664});
       await checker.audit(page, setting + " round summary with a code 390x664");
@@ -81,7 +81,7 @@ for (var ap of [false, true]) {
       await page.goto("/check/");
       await checker.check(page, copied);
       expect(await checker.results(page)).toEqual([{
-        "Line": "1", "Code": sum.code, "Status": "Valid", "Activity": "Lewis Structure and VSEPR Builder (" + setting + ")", "Version": "1.1",
+        "Line": "1", "Code": sum.code, "Status": "Valid", "Activity": "Lewis Structure and VSEPR Builder (" + setting + ")", "Version": "1.2",
         "Date completed": checker.readable(codes.isoDate(day)), "Items": "6", "First-try correct": sum.stats, "Show me uses": "1", "Hints used": "2"
       }]);
       await checker.audit(page, "checker with a " + prefix + " code");
