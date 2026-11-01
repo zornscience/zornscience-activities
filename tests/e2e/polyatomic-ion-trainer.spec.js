@@ -8,14 +8,32 @@ test('options default closed and expand with keyboard on mobile',async({page})=>
 
 test('flashcard reveal keeps context and gates recall controls on a phone',async({page},testInfo)=>{await page.setViewportSize({width:375,height:812});await page.goto('/polyatomic-ion-trainer/');await page.locator('#study-options summary').click();await page.locator('#direction').selectOption('formula');await page.locator('#start').click();await expect(page.locator('#card-side')).toHaveText('Question');await expect(page.locator('#known')).toBeDisabled();await expect(page.locator('#again')).toBeDisabled();const prompt=await page.locator('#card-content').textContent();await page.screenshot({path:testInfo.outputPath('flash-front.png'),fullPage:true});await page.locator('#card').focus();await page.keyboard.press('Enter');await expect(page.locator('#card-side')).toHaveText('Answer');await expect(page.locator('#card-context')).toHaveText(prompt);await expect(page.locator('#known')).toBeEnabled();await expect(page.locator('#again')).toBeEnabled();expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBe(true);await page.screenshot({path:testInfo.outputPath('flash-back.png'),fullPage:true});await page.keyboard.press('Space');await expect(page.locator('#known')).toBeDisabled();await page.locator('#card').click();await page.locator('#known').click();await expect(page.locator('#score')).toContainText('1 of 17 recalled');await expect(page.locator('#meter')).toHaveAttribute('value','1');await expect(page.locator('#card-side')).toHaveText('Question');await expect(page.locator('#card')).toBeFocused();});
 
-test('share links use the public activity URL without lesson or session parameters', async ({page}) => {
-  const url = 'https://activities.zornscience.org/polyatomic-ion-trainer/';
-  await page.goto('/polyatomic-ion-trainer/index.html?from=lesson&session=example#results');
-  await page.getByRole('button', {name:'Share activity', exact:true}).click();
-  await expect(page.locator('#zsa-ir-share-url')).toHaveValue(url);
-  await expect(page.locator('#zsa-ir-share-email')).toHaveAttribute('href', new RegExp(encodeURIComponent(url) + '$'));
-  await expect(page.locator('#zsa-ir-share-facebook')).toHaveAttribute('href', 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url));
-  await expect(page.locator('#zsa-ir-share-x')).toHaveAttribute('href', new RegExp(encodeURIComponent(url) + '$'));
-  await page.keyboard.press('Escape');
-  await expect(page.getByRole('button', {name:'Share activity', exact:true})).toBeFocused();
-});
+for (const lang of ['', 'en', 'es', 'fr']) {
+  test('share links preserve only Spanish language: ' + (lang || 'default'), async ({page}) => {
+    const url = 'https://activities.zornscience.org/polyatomic-ion-trainer/' + (lang === 'es' ? '?lang=es' : '');
+    await page.addInitScript(() => {
+      Object.defineProperty(navigator, 'clipboard', {configurable:true, value:{
+        writeText: async text => { window.copiedShareUrl = text; }
+      }});
+      Object.defineProperty(navigator, 'share', {configurable:true, value:async data => {
+        window.deviceShareUrl = data.url;
+      }});
+    });
+    await page.goto('/polyatomic-ion-trainer/index.html?from=lesson&session=example&utm_source=test' + (lang ? '&lang=' + lang : '') + '#results');
+    const share = page.getByRole('button', {name:'Share activity', exact:true});
+    await share.click();
+    await expect(page.locator('#zsa-ir-share-url')).toHaveValue(url);
+    const email = new URL(await page.locator('#zsa-ir-share-email').getAttribute('href'));
+    expect(email.searchParams.get('body').split('\n\n').pop()).toBe(url);
+    const facebook = new URL(await page.locator('#zsa-ir-share-facebook').getAttribute('href'));
+    expect(facebook.searchParams.get('u')).toBe(url);
+    const x = new URL(await page.locator('#zsa-ir-share-x').getAttribute('href'));
+    expect(x.searchParams.get('url')).toBe(url);
+    await page.getByRole('button', {name:'Copy link', exact:true}).click();
+    await expect.poll(() => page.evaluate(() => window.copiedShareUrl)).toBe(url);
+    await page.getByRole('button', {name:'More share options', exact:true}).click();
+    await expect.poll(() => page.evaluate(() => window.deviceShareUrl)).toBe(url);
+    await page.keyboard.press('Escape');
+    await expect(share).toBeFocused();
+  });
+}
