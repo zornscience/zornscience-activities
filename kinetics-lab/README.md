@@ -1,5 +1,5 @@
 # Kinetics and Collision Theory Sandbox
-Version: 1.0.1
+Version: 1.1.0
 
 A collision theory lab for AP Chemistry (Unit 5, Kinetics). A 2D box holds reactant particles A and B that bounce off each other and the walls. When an A hits a B hard enough, they react: A + B → C + D. Students change the temperature (how fast the particles move), the concentration (how many start in the box) and the activation energy, and can add a catalyst. They watch the collisions per second, the successful collisions per second and the success rate, a live concentration vs. time graph, and two energy charts (an energy profile and the distribution of collision energies with the share above Ea shaded). Earlier runs stay on the graph for comparison, four questions check the main ideas, and a reflection prints with the lab.
 
@@ -71,6 +71,7 @@ Suggested links (add `&from=` with the lesson's own URL):
 |---|---|
 | `index.html` | Page shell: conditions, the box with its readouts, the graph, the energy charts, the questions, the reflection and the live region. |
 | `sim.js` | The model: runs, elastic collisions, reacting, changes during a run, the log, rates, collision theory, the questions, spoken descriptions, number formatting and the CSV. No page code. |
+| `data.js` | Every English string with its Mexican Spanish translation, passed to the shared language module. |
 | `lab.js` | The page: sliders and the catalyst, the animation loop, drawing the box, the graph with earlier runs, the energy charts, the questions, printing, the download and deep links. |
 | `lab.css` | Layout, colors and print styles, prefixed `zsa-kn-`. |
 
@@ -88,4 +89,9 @@ Suggested links (add `&from=` with the lesson's own URL):
 - No sideways scrolling from 320 px, and every button, slider and box is at least 44 px (a radio button's whole label is the target).
 
 ## Changelog
+- 1.1.0: Mexican Spanish with `?lang=es` and the shared EN / ES header links. Every sentence is one full template in `data.js`.
 - 1.0.0: first version.
+
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the fallback. All student text, feedback, graph and chart labels, spoken descriptions, live announcements, the print line and the CSV header row use the activity's `data.js`, and every sentence is one full template with placeholders, so Spanish keeps its own word order. Formulas, numeric values, units and decimal points stay unchanged. The toggle reloads the page, so the current run starts over. The Spanish title is "Simulador de cinética y teoría de colisiones". Reaction rate is "velocidad de reacción" and particle speed is "rapidez". A run is a "corrida". See `../SPANISH_TERMS.md` for choices beyond the supplied glossary.
