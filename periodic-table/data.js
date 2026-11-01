@@ -696,7 +696,8 @@
   "uranium(IV) ion": "ion de uranio(IV)",
   "nobelium(II) ion": "ion de nobelio(II)",
   "nobelium(III) ion": "ion de nobelio(III)",
-  "Periodic Table | ZornScience": "Tabla periódica | ZornScience"
+  "Periodic Table | ZornScience": "Tabla periódica | ZornScience",
+  "ZornScience home": "Inicio de ZornScience"
 }});
     if (i18n.lang === "es") {
       var modes = data.ui.modes;

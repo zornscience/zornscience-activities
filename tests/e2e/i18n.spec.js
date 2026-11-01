@@ -6,7 +6,7 @@ const activities = {
   "periodic-table":"Tabla periódica",
   "polyatomic-ion-trainer":"Práctica de iones poliatómicos"
 };
-const english = /\b(?:the|your|Choose|You|Hint|Another hint|Both hints|Correct|Not yet|No data|Across a period|Down a group|Common ion|Next question|End session|Time remaining|points|recalled|Question|Answer|Instructions|Share|Close|Copy link|Practice options|Valence electrons|Next element|Completion code|Ion name|Formula \+ charge|Show answer|Still learning|Start flashcards|Quiz game|Session complete|Element details|Atomic number|Color by|Find an element|Full screen|Gas Laws Sandbox|Particle model|Gas controls|Reset|Pause motion|Live graph)\b/;
+const english = /\b(?:ZornScience home|Practice|Reference|Feedback|Results|Start|Finish|Help|Options|Time|Show|Incorrect|Wrong|Recall|Cards|Card|Points|Streak|Selected|Unknown|Period|Group|Symbol|Block|Element|Copied|the|your|Choose|You|Hint|Another hint|Both hints|Correct|Not yet|No data|Across a period|Down a group|Common ion|Next question|End session|Time remaining|points|recalled|Question|Answer|Instructions|Share|Close|Copy link|Practice options|Valence electrons|Next element|Completion code|Ion name|Formula \+ charge|Show answer|Still learning|Start flashcards|Quiz game|Session complete|Element details|Atomic number|Color by|Find an element|Full screen|Gas Laws Sandbox|Particle model|Gas controls|Reset|Pause motion|Live graph)\b/i;
 async function noEnglish(page) {
   const strings = await page.locator("body").evaluate(body => {
     const result = [];
@@ -38,6 +38,10 @@ for (const [slug, title] of Object.entries(activities)) {
       await page.getByRole("link", {name:"EN English", exact:true}).click();
       await expect(page.locator("#law")).toHaveValue("charles");
       await expect(page.getByRole("button", {name:"Resume motion"})).toBeVisible();
+      await page.getByRole("button", {name:"Reset", exact:true}).click();
+      await page.getByRole("link", {name:"ES Español", exact:true}).click();
+      await expect(page.locator("#status")).toHaveText("Se restablecieron las condiciones estándar.");
+      await noEnglish(page);
     } else if (slug === "periodic-table") {
       await page.locator("#zsa-pt-query").fill("sodio");
       await page.locator("#zsa-pt-find").click();
@@ -100,7 +104,7 @@ test("Spanish ion round translates hints, feedback, review and completion codes"
     const id = await step.getAttribute("id");
     const parts = await step.locator("[data-zsa-part]").count();
     for (let part = 0; part < parts; part++) {
-      if (await step.getAttribute("id").catch(() => null) !== id) break;
+      if (!await step.count() || await step.getAttribute("id") !== id) break;
       const group = step.locator("[data-zsa-part]").nth(part);
       await group.locator('button:not([aria-disabled="true"])').first().click();
     }

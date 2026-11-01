@@ -20,6 +20,7 @@
     if (text !== undefined) el.textContent = text;
     return el;
   }
+  function blockLabel(block) { return ui.blocks.find(function (pair) { return pair[0] === block; })[1]; }
   function fill(template, ctx) { return template.replace(/\{(\w+)\}/g, function (m, k) { return ctx[k]; }); }
   // Charges number first with a true minus sign: 2+, 1−.
   function chargeLabel(q) { return Math.abs(q) + (q > 0 ? "+" : "−"); }
@@ -126,7 +127,7 @@
     els.forEach(function (e) {
       var c = cells[e.z], cls = "zsa-pt-el", text = "", phrase;
       if (state.mode === "category") { cls += " zsa-pt-cat-" + e.category; phrase = ui.categoryName[e.category]; }
-      else if (state.mode === "block") { cls += " zsa-pt-blk-" + e.block; text = e.block; phrase = e.block + "-block"; }
+      else if (state.mode === "block") { cls += " zsa-pt-blk-" + e.block; text = e.block; phrase = blockLabel(e.block); }
       else {
         var v = e[m.key];
         if (v === null) { cls += " zsa-pt-none"; text = "n/a"; }
@@ -256,7 +257,7 @@
     row(dl, d.mass, e.mass);
     row(dl, d.group, e.group === null ? d.noGroup : String(e.group));
     row(dl, d.period, String(e.period));
-    row(dl, d.block, e.block + "-block");
+    row(dl, d.block, blockLabel(e.block));
     row(dl, d.category, ui.categoryName[e.category]);
     row(dl, d.state, ui.states[e.state]);
     row(dl, d.config, configNode(e.config));
