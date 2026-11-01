@@ -1,5 +1,5 @@
 # Verification record
-Version: 1.0.1
+Version: 1.1.0
 Date: 2026-10-18
 Reviewer: Claude (built and tested 1.0.0)
 
@@ -32,3 +32,7 @@ PASS means the check was run on version 1.0.0 as committed and passed. Browser c
 
 ## Not tested
 Real screen readers (NVDA, VoiceOver, ChromeVox), Firefox, Safari, Chromebooks and phones (frame rate on slow devices included), printing to paper (print media was emulated), and the live site.
+
+## Spanish verification
+
+`tests/e2e/i18n.spec.js` opens the visualizer with `?lang=es`, checks text and accessible attributes for leftover English, and exercises predictions, reacting, the explanation, the questions and full-sentence templates. English output of every model text function was compared with version 1.0.1 for all four reactions and every starting amount from 0 to 10 mol, with every prediction choice, and is identical. The language toggle intentionally adds header controls.

@@ -1,5 +1,5 @@
 # Limiting Reactant Visualizer
-Version: 1.0.1
+Version: 1.1.0
 
 A stoichiometry visualizer for Chemistry (Unit 6, Stoichiometry). Students pick a reaction between simple molecules, such as 2 H₂ + O₂ → 2 H₂O, and the starting moles of each reactant. They predict which reactant runs out first and how much product forms, then watch the molecules gather in sets, react, and move to the product side. When the limiting reactant is gone, the excess molecules are left drifting on the reactant side with a dashed amber ring and the label "Left over: ..., nothing to react with", so students can see why the reaction stopped. A before, change and after table in mol fills in with each reaction, an explanation works the ratio once it stops and checks the predictions, four questions check the main ideas, and a reflection prints with the page.
 
@@ -66,6 +66,7 @@ Suggested links (add `&from=` with the lesson's own URL):
 | File | What it holds |
 |---|---|
 | `index.html` | Page shell: set up, predictions, the box, the table, the explanation, the questions, the reflection and the live region. |
+| `data.js` | Every English string and its Mexican Spanish translation, for the shared language module. |
 | `model.js` | The model: elements, molecules, reactions, the plan for starting amounts, the table, number formatting, explanations, spoken descriptions, predictions and questions. No page code. |
 | `lab.js` | The page: set up controls, the animation loop, drawing the box, the table, the explanation, the questions, printing and deep links. |
 | `lab.css` | Layout, colors and print styles, prefixed `zsa-lr-`. |
@@ -85,4 +86,9 @@ Suggested links (add `&from=` with the lesson's own URL):
 - No sideways scrolling from 320 px, and every button, field and radio label is at least 44 px.
 
 ## Changelog
+- 1.1.0: Mexican Spanish with `?lang=es` and the shared EN / ES header links. Every sentence is one full template in `data.js`.
 - 1.0.0: first version.
+
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the fallback. All student text, feedback, canvas labels and accessible labels use the activity's `data.js`, and every sentence is one full template with placeholders, so Spanish keeps its own word order. Formulas, numeric values, units and decimal points stay unchanged. See `../SPANISH_TERMS.md` for choices beyond the supplied glossary.
