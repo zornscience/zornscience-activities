@@ -14,7 +14,7 @@ Quiz covers each selected ion once, gives feedback after each response, prevents
 
 Reference lists all 17 shaded ions with aliases and highlights useful family patterns. Students are encouraged to retrieve before revealing and revisit on another day. State stays in the tab; no accounts or stored student data. This is individual practice, without multiplayer rooms or leaderboards.
 
-Keyboard: Tab/Enter/Space operate flashcards and controls; keys 1-4 select quiz answers. Corrections use text and symbols as well as color. Responsive phone layout preserves 44px targets. Share uses the canonical public activity URL and excludes preview addresses, lesson parameters, and results.
+Keyboard: Tab/Enter/Space operate flashcards and controls; keys 1-4 select quiz answers. Corrections use text and symbols as well as color. Responsive phone layout preserves 44px targets. Share uses the canonical public activity URL, retaining only ?lang=es when selected. It excludes preview addresses, all other parameters, and fragments.
 
 Flashcards show a Question/Answer badge, an explicit Show answer control, and the original prompt above the revealed answer. Recall controls stay visible and become available after revealing: Still learning repeats the card; I knew it advances. The progress bar counts recalled ions out of the selected set.
 

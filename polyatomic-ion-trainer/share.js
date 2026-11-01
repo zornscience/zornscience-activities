@@ -1,16 +1,17 @@
 (function () {
   "use strict";
-  var i18n;
-  document.querySelector('[data-zsa-activity="polyatomic-ion-trainer"]').dispatchEvent(new CustomEvent("zsa:request-i18n", {detail:{receive:function (api) { i18n = api; }}}));
-  function t(text) { return i18n ? i18n.text(text) : text; }
   var root = document.querySelector('[data-zsa-activity="polyatomic-ion-trainer"]');
   if (!root) return;
+  var i18n;
+  root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail:{receive:function (api) { i18n = api; }}}));
+  function t(text) { return i18n ? i18n.text(text) : text; }
   function el(id) { return root.querySelector("#zsa-ir-share-" + id); }
   var toggle = el("toggle"), panel = el("panel");
   if (!toggle || !panel) return;
   var url = "https://activities.zornscience.org/polyatomic-ion-trainer/";
   var title = document.title;
   var description = t("Study 17 shaded polyatomic ions with flip flashcards or a ZornScience quiz game.");
+  // The shared module keeps only ?lang=es and drops every other parameter and fragment.
   url = i18n ? i18n.url(url) : url;
   el("url").value = url;
   el("email").href = "mailto:?subject=" + encodeURIComponent(title) + "&body=" + encodeURIComponent(description + "\n\n" + url);
