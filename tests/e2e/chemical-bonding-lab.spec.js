@@ -61,5 +61,11 @@ test("header dialogs, keyboard, SVG and mobile layout", async function ({page}) 
       await expect(page.locator("#scene-content")).not.toBeEmpty();
       expect(await page.locator("#scene-content").evaluate(function(el){return !el.querySelector("parsererror");})).toBe(true);
     }
+  }  // At 320 px the page does not scroll sideways and each sample's icon and caption stay inside its button.
+  await page.setViewportSize({width:320,height:850});
+  for(var s2 of ["appearance","solid","melting","water","cyclohexane","malleability"]) {
+    await page.locator('[data-station="'+s2+'"]').click();
+    expect(await page.evaluate(function(){return document.documentElement.scrollWidth<=innerWidth;})).toBe(true);
   }
+  expect(await page.locator("[data-sample]").evaluateAll(function(buttons){return buttons.every(function(b){var r=b.getBoundingClientRect();return Array.from(b.children).every(function(c){var q=c.getBoundingClientRect();return q.left>=r.left-0.5&&q.right<=r.right+0.5;});});})).toBe(true);
 });

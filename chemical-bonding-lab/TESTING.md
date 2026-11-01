@@ -1,6 +1,6 @@
 # Chemical Bonding Lab checks
 
-Version: 1.1.0
+Version: 1.1.1
 
 Run `npx playwright test tests/e2e/chemical-bonding-lab.spec.js` and `node --test tests/unit/static.test.js`.
 
@@ -11,3 +11,7 @@ Visual QA: inspect the watch glass/light, beaker, balance, graduated cylinder, c
 ## Spanish verification
 
 `tests/e2e/i18n.spec.js` opens the lab with `?lang=es`, checks text and accessible attributes for leftover English, and runs every station through its observations, the foil boat heating and cooling, the instructions dialog and the share dialog with the `?lang=es` link. English page text, SVG markup, accessible labels and the share link were compared with version 1.0.1 through the same states and are identical. The language toggle intentionally adds header controls. Spanish layout was checked at 320, 390 and 1366 px.
+
+## Narrow screens (1.1.1)
+
+At 320 px, in English and Spanish and with a wide fallback font (DejaVu Sans), the page has no sideways scrolling and every sample icon and caption stays inside its button. Element boxes at 360, 390, 768 and 1366 px in English, and at every width in Spanish, were compared with version 1.1.0 and are identical.

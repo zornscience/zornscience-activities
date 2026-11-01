@@ -9,3 +9,5 @@ body:has(.bonding){background:#edf2f7}.bonding{--zsa-max-width:1400px;--zsa-navy
 .bonding:lang(es) .badge{min-width:0;max-width:100%}
 @media(max-width:760px){.bonding:lang(es) .stations{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:420px){.bonding:lang(es) .samples{grid-template-columns:repeat(2,minmax(0,1fr))}.bonding:lang(es) .stations{grid-template-columns:minmax(0,1fr)}}
+/* Below 360 px, every language: four sample buttons in a row are too narrow for their icon and caption, so they form a 2 x 2 grid. */
+@media(max-width:359px){.bonding .samples{grid-template-columns:repeat(2,minmax(0,1fr))}}

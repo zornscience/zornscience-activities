@@ -1,6 +1,8 @@
 # Chemical Bonding Lab
 
-Version: 1.1.0
+Version: 1.1.1
+
+Version 1.1.1 keeps each sample's icon and caption inside its button on screens narrower than 360 px, in every language: the four samples form a 2 x 2 grid there. Layout at 360 px and wider is unchanged.
 
 A static, browser-local simulation of the six tests in the supplied U3 & U4 Summative Lab: Chemical Bonding. Students operate equipment and compare four anonymous solids. There are no student response fields, data tables, scores, saved observations, accounts, storage, or network requests. The only text field is a read-only activity sharing link.
 
