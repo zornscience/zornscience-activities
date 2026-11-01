@@ -5,7 +5,8 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '../..');
 const slugs = fs.readdirSync(root).filter(slug => {
   const file = path.join(root, slug, 'index.html');
-  return !slug.startsWith('act') && slug !== 'periodic-table' && fs.existsSync(file) &&
+  // Gas Laws retains its existing standalone header; i18n.spec.js checks its shared language controls.
+  return !slug.startsWith('act') && slug !== 'periodic-table' && slug !== 'gas-laws' && fs.existsSync(file) &&
     /data-zsa-activity=/.test(fs.readFileSync(file, 'utf8'));
 });
 

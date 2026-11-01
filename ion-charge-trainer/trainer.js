@@ -10,6 +10,7 @@
   var namingBox = root.querySelector("#zsa-ict-naming");
   var select = root.querySelector("#zsa-ict-select");
   function isMetal(e) {return e.charge > 0;}
+  function fill(template, values) {return template.replace(/\{(\w+)\}/g, function (m, k) {return values[k];});}
 
   // Which feedback applies to an answer (README "Misconception map and precedence"). A correct answer is always
   // checked first. Returns null when right, otherwise the feedback keys and the parts to clear.
@@ -65,10 +66,11 @@
   }
   function trail(entry, s) {
     var e = entry.item;
-    if (s === 0) return e.valence + " " + (e.valence === 1 ? ui.valenceOne : ui.valenceMany);
-    if (s === 1) return (e.direction === "loses" ? ui.loses : ui.gains) + " " + e.moved;
-    if (s === 2) return ui.chargeWord + " " + e.chargeLabel;
-    return cap(e.ion) + ", " + ui.likeWord + " " + e.gas;
+    // Full templates, so each language can order the words naturally.
+    if (s === 0) return fill(e.valence === 1 ? ui.valenceOne : ui.valenceMany, {count:e.valence});
+    if (s === 1) return fill(e.direction === "loses" ? ui.loses : ui.gains, {count:e.moved});
+    if (s === 2) return fill(ui.chargeWord, {charge:e.chargeLabel});
+    return fill(ui.likeWord, {ion:cap(e.ion), gas:e.gas});
   }
   function renderStrip(entry, strip) {
     var e = entry.item;
@@ -109,9 +111,11 @@
       wrong:ui.wrong, revealed:ui.revealed, next:ui.next, finish:data.finishLabel, complete:ui.complete,
       roundComplete:ui.roundComplete, singleDone:ui.singleDone, firstTry:ui.firstTry, review:ui.review, none:ui.none,
       again:ui.again, misses:ui.misses, repeatNote:ui.repeatNote, itemLabel:ui.elementLabel, reviewLabel:ui.reviewLabel,
-      singleLabel:ui.singleLabel, of:ui.of, stepLabel:ui.stepLabel, trailLabel:ui.trailLabel, correctMark:ui.correctMark,
+      singleLabel:ui.singleLabel, progress:ui.progress, trailLabel:ui.trailLabel, correctMark:ui.correctMark,
       shownMark:ui.shownMark, triedMark:ui.triedMark, currentMark:ui.currentMark, hintMark:ui.hintMark,
-      tableCaption:data.tableCaption, periodLabel:data.periodLabel
+      tableCaption:data.tableCaption, periodLabel:data.periodLabel,
+      general:ui.general, chargeMark:ui.chargeMark, codeLabel:ui.codeLabel, copyCode:ui.copyCode,
+      codeCopied:ui.codeCopied, codeReady:ui.codeReady, codeSelected:ui.codeSelected, codeNote:ui.codeNote
     },
     pool:data.elements, key:function (e) {return e.symbol;},
     // 10 different elements: at least 3 metals and 3 nonmetals.

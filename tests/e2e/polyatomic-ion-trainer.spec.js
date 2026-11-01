@@ -20,7 +20,9 @@ for (const lang of ['', 'en', 'es', 'fr']) {
       }});
     });
     await page.goto('/polyatomic-ion-trainer/index.html?from=lesson&session=example&utm_source=test' + (lang ? '&lang=' + lang : '') + '#results');
-    const share = page.getByRole('button', {name:'Share activity', exact:true});
+    // The shared i18n module translates the share controls when Spanish is selected.
+    const names = lang === 'es' ? {share:'Compartir actividad', copy:'Copiar enlace', more:'Más opciones para compartir'} : {share:'Share activity', copy:'Copy link', more:'More share options'};
+    const share = page.getByRole('button', {name:names.share, exact:true});
     await share.click();
     await expect(page.locator('#zsa-ir-share-url')).toHaveValue(url);
     const email = new URL(await page.locator('#zsa-ir-share-email').getAttribute('href'));
@@ -29,9 +31,9 @@ for (const lang of ['', 'en', 'es', 'fr']) {
     expect(facebook.searchParams.get('u')).toBe(url);
     const x = new URL(await page.locator('#zsa-ir-share-x').getAttribute('href'));
     expect(x.searchParams.get('url')).toBe(url);
-    await page.getByRole('button', {name:'Copy link', exact:true}).click();
+    await page.getByRole('button', {name:names.copy, exact:true}).click();
     await expect.poll(() => page.evaluate(() => window.copiedShareUrl)).toBe(url);
-    await page.getByRole('button', {name:'More share options', exact:true}).click();
+    await page.getByRole('button', {name:names.more, exact:true}).click();
     await expect.poll(() => page.evaluate(() => window.deviceShareUrl)).toBe(url);
     await page.keyboard.press('Escape');
     await expect(share).toBeFocused();

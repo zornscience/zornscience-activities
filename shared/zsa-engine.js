@@ -193,7 +193,7 @@
     singleDone:"Chosen item complete", firstTry:"First-try correct on original items", review:"Keep practicing",
     none:"You completed every original step on the first try.", again:"Practice again", misses:"Practice my misses",
     repeatNote:"Review items do not change the first-try counts.", itemLabel:"Item", reviewLabel:"Review",
-    singleLabel:"Chosen item", of:"of", stepLabel:"Step", trailLabel:"Your answers so far", correctMark:"Correct: ",
+    singleLabel:"Chosen item", progress:"{label} {number} of {total} · Step {step} of {steps}", trailLabel:"Your answers so far", correctMark:"Correct: ",
     shownMark:"Shown: ", triedMark:" (tried, not correct)", currentMark:" (current)", hintMark:" (hint)",
     chargeMark:"ion charge", tableCaption:"Main-group elements by group (column) and period (row)", periodLabel:"Period",
     codeLabel:"Completion code", copyCode:"Copy code", codeCopied:"Code copied.", codeReady:"Completion code ready.",
@@ -292,7 +292,9 @@
     }
     function progressText() {
       var label = queue.type === "single" ? labels.singleLabel : (entry.review ? labels.reviewLabel : labels.itemLabel);
-      return label + " " + (position + 1) + " " + labels.of + " " + queue.items.length + " · " + labels.stepLabel + " " + Math.min(step + 1, stepCount) + " " + labels.of + " " + stepCount;
+      // One full template, so each language can order the words naturally.
+      var values = {label:label, number:position + 1, total:queue.items.length, step:Math.min(step + 1, stepCount), steps:stepCount};
+      return labels.progress.replace(/\{(\w+)\}/g, function (m, k) { return values[k]; });
     }
     // Progress (in the strip), the answers already given for this item, and the explanation for the last step.
     function header(showLast) {

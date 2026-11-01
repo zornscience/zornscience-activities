@@ -95,7 +95,7 @@ Helpers on `zsa`: `node`, `button`, `cap`, `shuffle`, `chargeLabel` (2+, 3− wi
 
 ### Labels
 
-The engine's words have English defaults (`zsa.LABELS`). Pass every word your activity says differently in `labels`: `next`, `complete`, `singleDone`, `firstTry`, `itemLabel`, `singleLabel` and `currentMark` are usually activity-specific. Keep them in `data.js` so all student-facing text is in one file. The completion code words (`codeLabel`, `copyCode`, `codeCopied`, `codeSelected`, `codeReady`, `codeNote`) are the same in every activity and use the defaults.
+The engine's words have English defaults (`zsa.LABELS`). Pass every word your activity says differently in `labels`: `next`, `complete`, `singleDone`, `firstTry`, `itemLabel`, `singleLabel` and `currentMark` are usually activity-specific. The progress line is one full template, `progress` (default `"{label} {number} of {total} · Step {step} of {steps}"`), so a translation can reorder its words. Keep them in `data.js` so all student-facing text is in one file. The completion code words (`codeLabel`, `copyCode`, `codeCopied`, `codeSelected`, `codeReady`, `codeNote`) are the same in every activity and use the defaults.
 
 ## Completion codes
 
@@ -168,3 +168,13 @@ Add an entry to `ACTIVITIES` in `zsa-codes.js` and load `zsa-codes.js` on the ac
 - Charges are written number first with the Unicode minus sign (2−). No en or em dashes.
 - 44 by 44 px targets, visible focus, and nothing that moves focus on first load.
 - Changes to `shared/` affect every activity. Run the whole test suite and `npm run parity` before merging one, and bump each activity's version so browsers fetch the new files.
+
+## Activity languages
+
+`zsa-i18n.js` is opt-in. Load it before an activity's `data.js`, then ask for its API with `zsa:request-i18n` on the activity root. Configure it once with `{title:englishTitle, es:{englishText:spanishText}}`. English is the default; only `?lang=es` selects Mexican Spanish and sets `html[lang=es-MX]`.
+
+The module translates initial static text and accessible attributes, sets the document title, adds EN / ES links to the shared header tools (or the activity header), and carries language on local activity links. It does not watch or rewrite subsequent DOM changes. Keep all English and Spanish strings in `data.js`; dynamic renderers use `api.text(text, values)` with `{placeholder}` interpolation or receive localized data. `api.localize(data)` maps exact string values recursively, leaving object keys alone. Preserve enum values used by behavior when localizing data. The Periodic Table generator emits its Spanish source from `tools/spanish.json` into `data.js`.
+
+`api.url(href)` keeps the language on generated activity and share URLs without adding it to outside websites. Switch links preserve current URL parameters. Activities normally navigate when switching. Gas Laws installs `api.onChange(language)` to render again in place and retain its simulation state. Language is never inferred from the browser or saved in storage.
+
+New terminology beyond Style Kit sections 4 to 6 is recorded in `SPANISH_TERMS.md`. Formulas, symbols, charges, units and decimal points stay unchanged.

@@ -9,6 +9,8 @@
   var data;
   root.dispatchEvent(new CustomEvent("zsa:request-data", {detail: {receive: function (value) { data = value; }}}));
   if (!data) return;
+  var i18n;
+  root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail:{receive:function (api) { i18n = api; }}}));
   var ui = data.ui, els = data.elements;
 
   function $(id) { return root.querySelector("#zsa-pt-" + id); }
@@ -18,7 +20,13 @@
     if (text !== undefined) el.textContent = text;
     return el;
   }
+  function blockLabel(block) { return ui.blocks.find(function (pair) { return pair[0] === block; })[1]; }
   function fill(template, ctx) { return template.replace(/\{(\w+)\}/g, function (m, k) { return ctx[k]; }); }
+  // A header shows its number and is read as one full phrase, such as "group 1" or "grupo 1".
+  function headerText(th, n, template) {
+    var shown = node("span", "", String(n)); shown.setAttribute("aria-hidden", "true");
+    th.appendChild(shown); th.appendChild(node("span", "zsa-sr-only", fill(template, {n: n})));
+  }
   // Charges number first with a true minus sign: 2+, 1−.
   function chargeLabel(q) { return Math.abs(q) + (q > 0 ? "+" : "−"); }
 
@@ -67,7 +75,7 @@
     grid.setAttribute("aria-label", ui.gridLabel);
     var head = node("thead"), hr = node("tr");
     var corner = node("td", "zsa-pt-corner"); hr.appendChild(corner);
-    for (var g = 1; g <= 18; g++) { var th = node("th", "zsa-pt-colhead", String(g)); th.scope = "col"; th.appendChild(node("span", "zsa-sr-only", " " + ui.details.group.toLowerCase())); hr.appendChild(th); }
+    for (var g = 1; g <= 18; g++) { var th = node("th", "zsa-pt-colhead"); th.scope = "col"; headerText(th, g, ui.groupHeader); hr.appendChild(th); }
     head.appendChild(hr); grid.appendChild(head);
     var body = node("tbody");
     for (var r = 1; r <= 9; r++) {
@@ -77,7 +85,7 @@
       }
       var tr = node("tr", r >= 8 ? "zsa-pt-frow" : "");
       var rh;
-      if (r <= 7) { rh = node("th", "zsa-pt-rowhead", String(r)); rh.appendChild(node("span", "zsa-sr-only", " " + ui.details.period.toLowerCase())); }
+      if (r <= 7) { rh = node("th", "zsa-pt-rowhead"); headerText(rh, r, ui.periodHeader); }
       else { rh = node("th", "zsa-pt-rowhead zsa-pt-flabel", r === 8 ? ui.lanthanides : ui.actinides); rh.colSpan = 3; }
       rh.scope = "row"; tr.appendChild(rh);
       for (var c = r >= 8 ? 3 : 1; c <= 18; c++) {
@@ -124,7 +132,7 @@
     els.forEach(function (e) {
       var c = cells[e.z], cls = "zsa-pt-el", text = "", phrase;
       if (state.mode === "category") { cls += " zsa-pt-cat-" + e.category; phrase = ui.categoryName[e.category]; }
-      else if (state.mode === "block") { cls += " zsa-pt-blk-" + e.block; text = e.block; phrase = e.block + "-block"; }
+      else if (state.mode === "block") { cls += " zsa-pt-blk-" + e.block; text = e.block; phrase = blockLabel(e.block); }
       else {
         var v = e[m.key];
         if (v === null) { cls += " zsa-pt-none"; text = "n/a"; }
@@ -254,7 +262,7 @@
     row(dl, d.mass, e.mass);
     row(dl, d.group, e.group === null ? d.noGroup : String(e.group));
     row(dl, d.period, String(e.period));
-    row(dl, d.block, e.block + "-block");
+    row(dl, d.block, blockLabel(e.block));
     row(dl, d.category, ui.categoryName[e.category]);
     row(dl, d.state, ui.states[e.state]);
     row(dl, d.config, configNode(e.config));
@@ -354,7 +362,7 @@
       p.set("mode", state.mode);
       if (state.selected && state.open) p.set("el", byZ[state.selected].symbol);
       if (!state.trends) p.set("trends", "0");
-      return sh.url + "?" + p.toString();
+      return i18n ? i18n.url(sh.url + "?" + p.toString()) : sh.url + "?" + p.toString();
     }
     refreshShare = function () {
       var url = link();

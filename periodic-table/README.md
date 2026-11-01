@@ -1,5 +1,5 @@
 # Periodic Table
-Version: 1.2.0
+Version: 1.3.0
 
 An interactive reference table of all 118 elements, with color modes for metal, nonmetal and metalloid, for the s, p, d and f blocks, and heatmaps of atomic radius, electronegativity and first ionization energy with trend arrows.
 
@@ -116,3 +116,7 @@ Button label: Open the Periodic Table
 1.1.0: Full screen button for presenting: the page fills the screen, the table grows to fit, and Esc or the button leaves.
 
 1.0.0: Initial periodic table with all 118 elements, category, block and three heatmap modes with legend and trend arrows, details panel, search, keyboard grid, linkable views, embed mode and data sources.
+
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the fallback. All student text, feedback and accessible labels use the activity's `data.js`; the Periodic Table generator keeps its source translations in `tools/spanish.json`. Scientific symbols, formulas, numeric values and decimal points stay unchanged. See `../SPANISH_TERMS.md` for choices beyond the supplied glossary.

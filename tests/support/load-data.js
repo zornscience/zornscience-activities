@@ -7,8 +7,8 @@ var vm = require("vm");
 
 function loadData(file) {
   var data;
-  var root = {addEventListener: function (type, fn) { fn({detail: {receive: function (d) { data = d; }}}); }};
-  vm.runInNewContext(fs.readFileSync(path.resolve(file), "utf8"), {document: {querySelector: function () { return root; }}});
+  var root = {dispatchEvent: function () {}, addEventListener: function (type, fn) { fn({detail: {receive: function (d) { data = d; }}}); }};
+  vm.runInNewContext(fs.readFileSync(path.resolve(file), "utf8"), {CustomEvent: function (type, options) { this.type = type; this.detail = options.detail; }, document: {querySelector: function () { return root; }}});
   if (!data) throw new Error("no data from " + file);
   return JSON.parse(JSON.stringify(data)); // plain objects from this realm, so deepEqual compares values only
 }

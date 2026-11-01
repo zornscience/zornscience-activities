@@ -15,14 +15,15 @@ shared/
   README.md                the activity engine and how to make a new activity
   zsa-base.css             design tokens and shared components (scoped to .zsa)
   zsa-activity.css         activity layout and engine components
+  zsa-i18n.js              shared English and Mexican Spanish interface and URLs
   zsa-engine.js            the activity engine
   zsa-embed.js             ?embed=1 mode and zsa:resize messages
   zsa-codes.js             completion codes: activity registry, writing and reading codes
   fonts/InterVariable.woff2, Inter-OFL.txt
-ion-charge-trainer/        Predicting Ion Charge Trainer, v1.4.0
+ion-charge-trainer/        Predicting Ion Charge Trainer, v1.5.0
 ionic-formula-builder/     Redirect only: the retired Ionic Formula Builder now sends visitors to ionic-reactions/
 ionic-reactions/           Ionic Reaction Builder, v3.4.0 (four reaction families, ionic product formulas, automatic balance checks and fullscreen practice)
-periodic-table/            Periodic Table reference, v1.2.0 (data built by periodic-table/tools/build-data.js)
+periodic-table/            Periodic Table reference, v1.3.0 (data built by periodic-table/tools/build-data.js)
 periodic-trends/           Periodic Trends Practice, v1.1.2 (questions built from the periodic table's data)
 lewis-vsepr/               Lewis Structure and VSEPR Builder, v1.1.2
 act/                       ACT Practice, v1.11.0 (English, Math, Reading and Science sections and the full ACT; question banks in act/bank-*.js; optional practice codes with PINs, and class sets for teachers)
@@ -32,6 +33,8 @@ wordpress/zornscience-act-history/  WordPress plugin for zornscience.org that st
 wordpress/zornscience-language/  WordPress plugin for zornscience.org that connects the Spanish pages under /es/ to their English twins: language toggle, Spanish menus and links, hreflang (not part of the static site)
 scientific-calculator/     Scientific Calculator Practice, v1.1.2 (independent scientific calculator with six guided exercises)
 virtual-lab-graphing/      Virtual Lab Graphing Tool, v1.1.2 (student data, scatter plots, linear best fit and graph downloads)
+gas-laws/                  Gas Laws Sandbox, v1.1.0 (English and Mexican Spanish)
+polyatomic-ion-trainer/    Polyatomic Ion Trainer, v2.2.0 (English and Mexican Spanish)
 gas-lab/                   Gas Laws and KMT Lab, v1.0.0 (particle simulation, graphs and investigations)
 stoichiometry-coach/       Stoichiometry Coach, v1.0.0 (conversion factor setups with unit cancellation)
 atwood-machine/           The Atwood Machine, v1.0.1 (ideal pulley, adjustable masses and live vectors; no data recording)

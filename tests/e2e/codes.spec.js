@@ -7,7 +7,7 @@ var {answerKey, play} = require("./play");
 var {audit, results, check, readable} = require("./checker");
 var codes = require("../../shared/zsa-codes.js");
 
-var VERSION = {"ion-charge-trainer": "1.4"};
+var VERSION = {"ion-charge-trainer": "1.5"};
 // Focus as the activity helpers describe it, or on the checker page "#id" (or the tag name).
 async function focusOf(page) {
   return page.evaluate(() => {

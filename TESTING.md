@@ -77,3 +77,9 @@ Use it whenever `shared/` or an activity changes in a way that should not change
 ## Not automated
 
 Real screen readers (NVDA, VoiceOver, ChromeVox), Firefox, Safari, school devices and the live site. Each activity's TESTING.md records these.
+
+## Spanish activities
+
+`tests/unit/i18n.test.js` covers explicit language selection, local and hosted URL propagation, outside-link exclusions, interpolation, all 118 localized element names and notes, unchanged scientific data, every Ion Charge Trainer hint and misconception message, and Spanish completion-code labels. `tests/e2e/i18n.spec.js` opens Gas Laws, Ion Charge Trainer, Periodic Table and Polyatomic Ion Trainer with `?lang=es`, checks text and accessible attributes for leftover English, exercises dynamic states, verifies share URLs, and completes a Spanish ion round including hints, wrong answers, review and a completion code.
+
+Adding EN / ES controls intentionally changes the header layout and DOM. Mark this PR `behavior-change` as required by the parity workflow; English science and round behavior are also exercised by the existing browser suite.
