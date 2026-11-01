@@ -6,6 +6,11 @@
   root.dispatchEvent(new CustomEvent("zsa:request-ir-data", {detail: {receive: function (api) { data = api; }}}));
   root.dispatchEvent(new CustomEvent("zsa:request-ir-model", {detail: {receive: function (api) { model = api; }}}));
   if (!data || !model) return;
+  var i18n;
+  root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: function (api) { i18n = api; }}}));
+  // English is the fallback. Spanish uses whole sentence templates with {placeholders}, never joined fragments.
+  function t(text, values) { return i18n ? i18n.text(text, values) : text.replace(/\{(\w+)\}/g, function (m, k) { return values && values[k] !== undefined ? values[k] : m; }); }
+  function nameOf(id) { return t(data.tokens[id].name); }
   function el(id) { return root.querySelector("#zsa-ir-" + id); }
   function node(tag, cls, text) {
     var n = document.createElement(tag);
@@ -31,7 +36,7 @@
   }
   function typeLabel(type) {
     var entry = data.types.find(function (t) { return t.id === type; });
-    return entry ? entry.label : type;
+    return entry ? t(entry.label) : type;
   }
   function say(text) { el("live").textContent = text; }
   function feedback(text, kind, preventScroll) {
@@ -55,12 +60,12 @@
   function progress() {
     var finished = position + (record.solved ? 1 : 0);
     el("meter").value = finished;
-    el("progress").textContent = finished + " of " + round.length + " finished";
+    el("progress").textContent = t("{finished} of {total} finished", {finished: finished, total: round.length});
   }
   function setSelected(id) {
     selected = selected === id ? null : id;
     el("bank").querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.token === selected)); });
-    var text = selected ? data.tokens[selected].name + " selected. Choose a product space." : "Choose a building block to place.";
+    var text = selected ? t("{name} selected. Choose a product space.", {name: nameOf(selected)}) : t("Choose a building block to place.");
     el("selection").textContent = text;
     say(text);
   }
@@ -91,23 +96,23 @@
     if (!id) {
       products[index][part] = null;
       slots[index][part].className = "zsa-ir-slot zsa-ir-slot--component";
-      slots[index][part].textContent = part === 0 ? "First part" : "Second part";
-      slots[index][part].setAttribute("aria-label", "Product " + (index + 1) + " component " + (part + 1) + ": " + (part === 0 ? "First part" : "Second part"));
+      slots[index][part].textContent = part === 0 ? t("First part") : t("Second part");
+      slots[index][part].setAttribute("aria-label", t("Product {product} component {part}: {content}", {product: index + 1, part: part + 1, content: part === 0 ? t("First part") : t("Second part")}));
       preview(index);
-      say("Product " + (index + 1) + " component " + (part + 1) + " cleared.");
+      say(t("Product {product} component {part} cleared.", {product: index + 1, part: part + 1}));
       return;
     }
     if (!data.tokens[id] || !reaction.bank.includes(id)) return;
     var token = data.tokens[id];
     products[index][part] = id;
     slots[index][part].className = "zsa-ir-slot zsa-ir-slot--" + category(token);
-    slots[index][part].replaceChildren(tokenVisual(id), document.createTextNode(" "), node("span", "zsa-ir-slot-name", token.name));
-    slots[index][part].setAttribute("aria-label", "Product " + (index + 1) + " component " + (part + 1) + ": " + token.formula + charge(token) + " " + token.name);
+    slots[index][part].replaceChildren(tokenVisual(id), document.createTextNode(" "), node("span", "zsa-ir-slot-name", nameOf(id)));
+    slots[index][part].setAttribute("aria-label", t("Product {product} component {part}: {formula} {name}", {product: index + 1, part: part + 1, formula: token.formula + charge(token), name: nameOf(id)}));
     preview(index);
     selected = null;
     el("bank").querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", "false"); });
-    el("selection").textContent = "Choose another block, or select a filled space to clear it.";
-    say(token.name + " placed in product " + (index + 1) + ", component " + (part + 1) + ".");
+    el("selection").textContent = t("Choose another block, or select a filled space to clear it.");
+    say(t("{name} placed in product {product}, component {part}.", {name: nameOf(id), product: index + 1, part: part + 1}));
   }
   function buildBank() {
     el("bank").replaceChildren();
@@ -115,7 +120,7 @@
       var token = data.tokens[id], button = node("button", "zsa-ir-ion zsa-ir-ion--" + category(token));
       button.type = "button"; button.draggable = true; button.dataset.token = id;
       button.setAttribute("aria-pressed", "false");
-      button.append(tokenVisual(id), document.createTextNode(" "), node("span", "zsa-ir-ion-name", token.name));
+      button.append(tokenVisual(id), document.createTextNode(" "), node("span", "zsa-ir-ion-name", nameOf(id)));
       button.addEventListener("click", function () { setSelected(id); });
       button.addEventListener("dragstart", function (event) {
         event.dataTransfer.setData("text/plain", id);
@@ -131,24 +136,24 @@
         var plus = node("span", "zsa-ir-product-plus", "+"); plus.setAttribute("aria-hidden", "true"); el("products").appendChild(plus);
       }
       var card = node("fieldset", "zsa-ir-product");
-      card.appendChild(node("legend", "", "Product " + (index + 1)));
+      card.appendChild(node("legend", "", t("Product {product}", {product: index + 1})));
       var parts = node("div", "zsa-ir-parts"); fields[index] = []; slots[index] = [];
       [0, 1].forEach(function (part) {
         var group = node("div", "zsa-ir-compound");
-        var slot = node("button", "zsa-ir-slot zsa-ir-slot--component", part === 0 ? "First part" : "Second part");
+        var slot = node("button", "zsa-ir-slot zsa-ir-slot--component", part === 0 ? t("First part") : t("Second part"));
         slot.type = "button"; slot.dataset.product = String(index); slot.dataset.part = String(part);
-        slot.setAttribute("aria-label", "Product " + (index + 1) + " component " + (part + 1) + ": " + (part === 0 ? "First part" : "Second part"));
+        slot.setAttribute("aria-label", t("Product {product} component {part}: {content}", {product: index + 1, part: part + 1, content: part === 0 ? t("First part") : t("Second part")}));
         slot.setAttribute("aria-describedby", "zsa-ir-subscript-help");
         slot.addEventListener("click", function () { place(index, part, selected); });
         slot.addEventListener("dragover", function (event) {
           if (stage === "products") { event.preventDefault(); event.dataTransfer.dropEffect = "copy"; }
         });
         slot.addEventListener("drop", function (event) { event.preventDefault(); place(index, part, event.dataTransfer.getData("text/plain")); });
-        var label = node("label", "zsa-ir-subscript-label", "Subscript");
+        var label = node("label", "zsa-ir-subscript-label", t("Subscript"));
         var input = node("input", "zsa-ir-subscript");
         input.type = "number"; input.min = "1"; input.max = "9"; input.step = "1"; input.inputMode = "numeric"; input.placeholder = "1";
         input.id = "zsa-ir-sub-" + index + "-" + part;
-        input.setAttribute("aria-label", "Product " + (index + 1) + " component " + (part + 1) + " subscript");
+        input.setAttribute("aria-label", t("Product {product} component {part} subscript", {product: index + 1, part: part + 1}));
         input.setAttribute("aria-describedby", "zsa-ir-subscript-help");
         label.htmlFor = input.id;
         input.addEventListener("input", function () { preview(index); });
@@ -157,7 +162,7 @@
         var control = node("div", "zsa-ir-sub-control"), arrows = node("span", "zsa-ir-sub-arrows");
         function subscriptButton(delta) {
           var button = node("button", "zsa-ir-sub-step"); button.type = "button";
-          button.setAttribute("aria-label", (delta > 0 ? "Increase" : "Decrease") + " product " + (index + 1) + " component " + (part + 1) + " subscript");
+          button.setAttribute("aria-label", t(delta > 0 ? "Increase product {product} component {part} subscript" : "Decrease product {product} component {part} subscript", {product: index + 1, part: part + 1}));
           var icon = node("span", "", delta > 0 ? "▲" : "▼"); icon.setAttribute("aria-hidden", "true"); button.appendChild(icon);
           button.addEventListener("click", function () {
             var current = readSubscript(index, part);
@@ -172,7 +177,7 @@
         subscriptField.append(label, control); group.append(slot, subscriptField); parts.appendChild(group);
       });
       var result = node("p", "zsa-ir-preview");
-      result.setAttribute("aria-label", "Product " + (index + 1) + " formula preview");
+      result.setAttribute("aria-label", t("Product {product} formula preview", {product: index + 1}));
       previews[index] = result;
       card.append(parts, result); el("products").appendChild(card); preview(index);
     });
@@ -184,24 +189,24 @@
     if (stage !== "products") return;
     var parts = products.map(function (_, i) { return readParts(i); });
     if (parts.some(function (p) { return !p; })) {
-      incorrect("Fill the first space in each product and use whole-number subscripts from 1 to 9. Leave the second space empty for a one-part product. A blank subscript means 1."); return;
+      incorrect(t("Fill the first space in each product and use whole-number subscripts from 1 to 9. Leave the second space empty for a one-part product. A blank subscript means 1.")); return;
     }
     var matches = parts.map(function (p) { return reaction.products.findIndex(function (expected) { return sameParts(p, expected.parts, true); }); });
     if (!matches.includes(-1) && new Set(matches).size !== matches.length) {
-      incorrect("Use each different product once. Two identical product cards leave another product missing."); return;
+      incorrect(t("Use each different product once. Two identical product cards leave another product missing.")); return;
     }
     if (matches.includes(-1) || new Set(matches).size !== matches.length) {
       var hasRightComponents = parts.every(function (p) { return reaction.products.some(function (expected) { return sameParts(p, expected.parts, false); }); });
-      incorrect(hasRightComponents ? "Check the subscripts. Use the simplest neutral formula, and remember the 2 in diatomic elements such as O2 and Cl2. Keep polyatomic ions together." :
-        "Check the products for this reaction type. Put positive ions before negative ions in ionic formulas. Use atom blocks for free elements, and put each different product in its own card.");
+      incorrect(hasRightComponents ? t("Check the subscripts. Use the simplest neutral formula, and remember the 2 in diatomic elements such as O2 and Cl2. Keep polyatomic ions together.") :
+        t("Check the products for this reaction type. Put positive ions before negative ions in ionic formulas. Use atom blocks for free elements, and put each different product in its own card."));
       return;
     }
     productOrder = matches; stage = "balance"; hintLevel = 0;
     el("bank").querySelectorAll("button").forEach(function (b) { b.disabled = true; b.draggable = false; });
     el("products").querySelectorAll("button, input").forEach(function (b) { b.disabled = true; });
     el("check-products").disabled = true;
-    el("selection").textContent = "Products are set. Change only the coefficients below.";
-    el("note").textContent = reaction.note || "Correct formulas are locked. Change coefficients to balance the equation.";
+    el("selection").textContent = t("Products are set. Change only the coefficients below.");
+    el("note").textContent = t(reaction.note || "Correct formulas are locked. Change coefficients to balance the equation.");
     el("predict").hidden = true;
     el("balance").hidden = false;
     var ones = reaction.reactants.concat(reaction.products).map(function () { return 1; });
@@ -209,7 +214,7 @@
     el("count-controls").hidden = !canCountIons;
     el("count-mode").value = canCountIons ? "ions" : "atoms";
     buildEquation();
-    feedback("Correct products! Now conserve every atom by changing coefficients. Keep the formulas fixed.", "correct", true);
+    feedback(t("Correct products! Now conserve every atom by changing coefficients. Keep the formulas fixed."), "correct", true);
     el("balance-title").focus();
   }
   function displayedSpecies() { return reaction.reactants.concat(productOrder.map(function (index) { return reaction.products[index]; })); }
@@ -223,12 +228,12 @@
       var term = node("div", "zsa-ir-term"), stepper = node("div", "zsa-ir-stepper");
       var input = node("input", "zsa-ir-coefficient");
       input.type = "number"; input.min = "1"; input.max = "99"; input.step = "1"; input.inputMode = "numeric"; input.value = "1";
-      input.setAttribute("aria-label", "Coefficient for " + species.formula);
+      input.setAttribute("aria-label", t("Coefficient for {formula}", {formula: species.formula}));
       input.setAttribute("aria-describedby", "zsa-ir-coefficient-help");
       input.addEventListener("input", syncBalance);
       function stepButton(delta) {
         var button = node("button", "zsa-ir-step"); button.type = "button";
-        button.setAttribute("aria-label", (delta < 0 ? "Decrease" : "Increase") + " coefficient for " + species.formula);
+        button.setAttribute("aria-label", t(delta < 0 ? "Decrease coefficient for {formula}" : "Increase coefficient for {formula}", {formula: species.formula}));
         var symbol = node("span", "", delta < 0 ? "▼" : "▲"); symbol.setAttribute("aria-hidden", "true"); button.appendChild(symbol);
         button.addEventListener("click", function () {
           var current = Number(input.value);
@@ -252,8 +257,8 @@
     var values = readCoefficients(), valid = values.every(function (n) { return n !== null; });
     var rows = countRows(valid ? values : values.map(function () { return 1; }));
     var ions = el("count-mode").value === "ions";
-    el("count-label").textContent = ions ? "Ion" : "Atom";
-    el("count-caption").textContent = ions ? "Whole ions are unchanged in this partner swap. Every row must match." : "Atoms are conserved in every reaction type. Every row must match.";
+    el("count-label").textContent = ions ? t("Ion") : t("Atom");
+    el("count-caption").textContent = ions ? t("Whole ions are unchanged in this partner swap. Every row must match.") : t("Atoms are conserved in every reaction type. Every row must match.");
     el("counts").replaceChildren();
     var spoken = [];
     rows.forEach(function (row) {
@@ -261,20 +266,20 @@
       th.appendChild(ions && row.token ? tokenVisual(row.token) : formula(row.symbol));
       var equal = valid && row.left === row.right;
       var status = node("td", "zsa-ir-match" + (equal ? " zsa-ir-match--yes" : ""), equal ? "✓" : "");
-      status.setAttribute("aria-label", !valid ? "Enter whole-number coefficients" : equal ? "Balanced" : "Not balanced");
+      status.setAttribute("aria-label", !valid ? t("Enter whole-number coefficients") : equal ? t("Balanced") : t("Not balanced"));
       tr.append(th, node("td", "", valid ? String(row.left) : "?"), node("td", "", valid ? String(row.right) : "?"),
         status);
       el("counts").appendChild(tr);
-      spoken.push(row.symbol + ": " + row.left + " on reactants, " + row.right + " on products");
+      spoken.push(t("{symbol}: {left} on reactants, {right} on products", {symbol: row.symbol, left: row.left, right: row.right}));
     });
-    if (stage === "balance") say(valid ? spoken.join(". ") + "." : "Coefficients must be whole numbers from 1 to 99.");
+    if (stage === "balance") say(valid ? spoken.join(". ") + "." : t("Coefficients must be whole numbers from 1 to 99."));
   }
   function completeBalance(preventScroll) {
     if (stage !== "complete" || !record.solved) {
       record.solved = true; stage = "complete"; progress();
     }
     el("next").disabled = false; el("skip").disabled = true;
-    feedback("Balanced! Every atom is conserved and the coefficients are in the smallest whole-number ratio.", "correct", preventScroll);
+    feedback(t("Balanced! Every atom is conserved and the coefficients are in the smallest whole-number ratio."), "correct", preventScroll);
   }
   function syncBalance() {
     if (stage !== "balance" && stage !== "complete") return;
@@ -285,17 +290,17 @@
     }
     if (stage === "complete") { stage = "balance"; record.solved = false; progress(); }
     el("next").disabled = true; el("skip").disabled = false;
-    var message = values.some(function (n) { return n === null; }) ? "Enter whole numbers from 1 to 99 for every coefficient." :
-      model.isBalanced(reaction, values, productOrder) ? "The counts match. Reduce all coefficients to the smallest whole-number ratio." :
-        "Counts updated. Keep adjusting coefficients until every row matches.";
+    var message = values.some(function (n) { return n === null; }) ? t("Enter whole numbers from 1 to 99 for every coefficient.") :
+      model.isBalanced(reaction, values, productOrder) ? t("The counts match. Reduce all coefficients to the smallest whole-number ratio.") :
+        t("Counts updated. Keep adjusting coefficients until every row matches.");
     feedback(message, "hint", true);
   }
   function checkBalance() {
     if (stage !== "balance" && stage !== "complete") return;
     var values = readCoefficients();
-    if (values.some(function (n) { return n === null; })) { incorrect("Enter whole numbers from 1 to 99 for every coefficient."); return; }
-    if (!model.isBalanced(reaction, values, productOrder)) { incorrect("Not balanced yet. Compare each row in the table, then change coefficients to conserve the atoms on both sides."); return; }
-    if (!model.isLowest(reaction, values, productOrder)) { incorrect("The counts match! Now reduce all coefficients to the smallest whole-number ratio."); return; }
+    if (values.some(function (n) { return n === null; })) { incorrect(t("Enter whole numbers from 1 to 99 for every coefficient.")); return; }
+    if (!model.isBalanced(reaction, values, productOrder)) { incorrect(t("Not balanced yet. Compare each row in the table, then change coefficients to conserve the atoms on both sides.")); return; }
+    if (!model.isLowest(reaction, values, productOrder)) { incorrect(t("The counts match! Now reduce all coefficients to the smallest whole-number ratio.")); return; }
     completeBalance(false);
   }
   function hint() {
@@ -308,11 +313,11 @@
         "single-replacement": "A more reactive element replaces another element in a compound. The displaced element is an uncombined element, not an ion.",
         "double-replacement": "Swap the ion partners. Keep cations first and use the smallest subscripts that make each product neutral."
       };
-      feedback(hintLevel === 1 ? hints[reaction.type] : "One product is " + reaction.products[0].formula + ". " + (reaction.hint || "Use the available blocks to build the remaining product, if any. Put each different product in its own card."), "hint");
+      feedback(hintLevel === 1 ? t(hints[reaction.type]) : t("One product is {formula}. {hint}", {formula: reaction.products[0].formula, hint: t(reaction.hint || "Use the available blocks to build the remaining product, if any. Put each different product in its own card.")}), "hint");
     } else {
       var rows = countRows(readCoefficients().map(function (n) { return n || 1; }));
       var mismatch = rows.find(function (row) { return row.left !== row.right; });
-      feedback(mismatch ? "Start with " + mismatch.symbol + ": " + mismatch.left + " on the reactant side and " + mismatch.right + " on the product side. A coefficient multiplies the entire formula." : "All counts match. If needed, divide every coefficient by their greatest common factor.", "hint");
+      feedback(mismatch ? t("Start with {symbol}: {left} on the reactant side and {right} on the product side. A coefficient multiplies the entire formula.", {symbol: mismatch.symbol, left: mismatch.left, right: mismatch.right}) : t("All counts match. If needed, divide every coefficient by their greatest common factor."), "hint");
     }
   }
   function loadProblem(quiet) {
@@ -320,11 +325,11 @@
     stage = "products"; selected = null; hintLevel = 0; productOrder = [];
     products = reaction.products.map(function () { return [null, null]; });
     root.dataset.reaction = reaction.id; root.dataset.reactionType = reaction.type;
-    el("round").textContent = "Problem " + (position + 1) + " of " + round.length;
+    el("round").textContent = t("Problem {number} of {total}", {number: position + 1, total: round.length});
     el("type").textContent = typeLabel(reaction.type); progress();
-    el("selection").textContent = "Choose a building block to place.";
-    el("note").textContent = "Predict the products first, then balance the equation. Skip a problem to return to its answer in the summary.";
-    el("condition").textContent = reaction.condition || ""; el("condition").hidden = !reaction.condition;
+    el("selection").textContent = t("Choose a building block to place.");
+    el("note").textContent = t("Predict the products first, then balance the equation. Skip a problem to return to its answer in the summary.");
+    el("condition").textContent = reaction.condition ? t(reaction.condition) : ""; el("condition").hidden = !reaction.condition;
     el("reactants").replaceChildren();
     reaction.reactants.forEach(function (species, i) {
       if (i) el("reactants").appendChild(node("span", "zsa-ir-symbol", "+"));
@@ -335,9 +340,9 @@
     el("balance").hidden = true;
     el("check-products").closest("section").after(el("feedback"));
     el("check-products").disabled = false; el("next").disabled = true; el("skip").disabled = false;
-    el("next").textContent = position === round.length - 1 ? "View summary" : "Next reaction";
+    el("next").textContent = position === round.length - 1 ? t("View summary") : t("Next reaction");
     el("feedback").textContent = ""; el("feedback").hidden = true; el("feedback").removeAttribute("data-kind");
-    if (!quiet) { el("round").focus(); say("Problem " + (position + 1) + " of " + round.length + ". " + typeLabel(reaction.type) + ". Predict the products."); }
+    if (!quiet) { el("round").focus(); say(t("Problem {number} of {total}. {type}. Predict the products.", {number: position + 1, total: round.length, type: typeLabel(reaction.type)})); }
   }
   function balancedEquation(r) {
     var container = node("p", "zsa-ir-review-equation"), values = model.coefficients(r);
@@ -354,26 +359,26 @@
     var missed = records.filter(function (r) { return r.missed || r.skipped; });
     var skipped = records.filter(function (r) { return r.skipped; }).length;
     var solved = records.filter(function (r) { return r.solved && !r.skipped; }).length;
-    el("summary-lede").textContent = "You finished " + round.length + " problems. You missed " + missed.length + ", including " + skipped + " skipped.";
+    el("summary-lede").textContent = t("You finished {total} problems. You missed {missed}, including {skipped} skipped.", {total: round.length, missed: missed.length, skipped: skipped});
     el("summary-totals").replaceChildren();
-    [["balanced", solved, "Balanced"], ["first-try", round.length - missed.length, "Correct first try"], ["missed", missed.length, "Missed (includes skips)"], ["skipped", skipped, "Skipped"]].forEach(function (stat) {
+    [["balanced", solved, t("Balanced")], ["first-try", round.length - missed.length, t("Correct first try")], ["missed", missed.length, t("Missed (includes skips)")], ["skipped", skipped, t("Skipped")]].forEach(function (stat) {
       var n = node("div", "zsa-ir-stat"); n.dataset.stat = stat[0]; n.append(node("strong", "", String(stat[1])), node("span", "", stat[2])); el("summary-totals").appendChild(n);
     });
     el("summary-review").replaceChildren();
     missed.forEach(function (r) {
       var item = node("li", "zsa-ir-review-item");
-      item.append(node("p", "zsa-ir-review-status", typeLabel(r.reaction.type) + " · " + (r.skipped ? "Skipped" : "Needed another try")), balancedEquation(r.reaction));
-      if (r.reaction.condition) item.appendChild(node("p", "zsa-ir-small", r.reaction.condition));
+      item.append(node("p", "zsa-ir-review-status", t(r.skipped ? "{type} · Skipped" : "{type} · Needed another try", {type: typeLabel(r.reaction.type)})), balancedEquation(r.reaction));
+      if (r.reaction.condition) item.appendChild(node("p", "zsa-ir-small", t(r.reaction.condition)));
       el("summary-review").appendChild(item);
     });
-    if (!missed.length) el("summary-review").appendChild(node("li", "zsa-ir-review-item", "Every problem was correct on the first check. Nice work!"));
+    if (!missed.length) el("summary-review").appendChild(node("li", "zsa-ir-review-item", t("Every problem was correct on the first check. Nice work!")));
     el("summary-types").replaceChildren();
     data.types.filter(function (type) { return selectedTypes.includes(type.id); }).forEach(function (type) {
       var entries = records.filter(function (r) { return r.reaction.type === type.id; });
       var misses = entries.filter(function (r) { return r.missed || r.skipped; }).length;
-      el("summary-types").appendChild(node("p", "zsa-ir-type-result", type.label + ": " + (entries.length - misses) + " of " + entries.length + " correct first try"));
+      el("summary-types").appendChild(node("p", "zsa-ir-type-result", t("{type}: {correct} of {total} correct first try", {type: t(type.label), correct: entries.length - misses, total: entries.length})));
     });
-    el("summary-title").focus(); say("Practice complete. " + missed.length + " problems missed, including " + skipped + " skipped.");
+    el("summary-title").focus(); say(t("Practice complete. {missed} problems missed, including {skipped} skipped.", {missed: missed.length, skipped: skipped}));
   }
   function advance() { position++; if (position === round.length) showSummary(); else loadProblem(false); }
   function startRound(quiet) {
@@ -386,12 +391,12 @@
     stage = "setup"; el("setup").hidden = false; el("practice").hidden = true; el("summary").hidden = true;
     el("setup-error").hidden = true;
     delete root.dataset.reaction; delete root.dataset.reactionType;
-    if (!quiet) { el("setup-title").focus(); say("Choose at least one reaction type, then start practice."); }
+    if (!quiet) { el("setup-title").focus(); say(t("Choose at least one reaction type, then start practice.")); }
   }
   el("start").addEventListener("click", function () {
     var checked = Array.from(root.querySelectorAll('input[name="reaction-type"]:checked')).map(function (input) { return input.value; });
     if (!checked.length) {
-      el("setup-error").textContent = "Choose at least one reaction type before starting.";
+      el("setup-error").textContent = t("Choose at least one reaction type before starting.");
       el("setup-error").hidden = false;
       root.querySelector('input[name="reaction-type"]').focus();
       return;

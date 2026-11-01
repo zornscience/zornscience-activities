@@ -1,6 +1,6 @@
 # Ionic Reaction Builder
 
-Version: 3.4.1
+Version: 3.5.0
 
 Choose Synthesis, Decomposition, Single Replacement, Double Replacement, or any combination before starting a ten-problem round. At least one checkbox must be selected. The 40-reaction bank contains ten examples per family, so even a single-family round has ten distinct problems. Rounds distribute questions as evenly as possible across the selected families and shuffle the order, including the first problem. The existing `ionic-reactions/` address stays the same.
 
@@ -45,6 +45,7 @@ Static HTML, CSS and strict JavaScript IIFEs, with shared site styles and embed 
 
 ## Changelog
 
+- 3.5.0: Add Mexican Spanish with `?lang=es` and the shared EN / ES header links.
 - 3.4.0: Remove the separate All activities header link and add a Fullscreen toggle beside Share. Preserve activity state through fullscreen changes, synchronize the icon and accessible state after external exits, and give brief feedback when a fullscreen request fails.
 - 3.3.0: Put the title beside the logo, group Instructions with Share, remove the extra Products heading and give balancing directions the full panel width. Automatically confirm the smallest whole-number balance and enable Next; keep Check balance optional, avoid counting exploratory edits as misses, and relock a completed balance if its coefficients change.
 - 3.2.0: Audit the bank for ionic compounds, chemically specific conditions, varied product subscripts and coefficient changes in every problem. Remove molecular compounds, acid reactants and the phosphite model; broaden the ion selection and reduce nitrate repetition. Replace the worked instructions example with copper(II) phosphate. Remove the colored header rule, header tagline and balancing step label, and simplify the balancing heading.
@@ -54,3 +55,7 @@ Static HTML, CSS and strict JavaScript IIFEs, with shared site styles and embed 
 - 2.0.0: ZornScience branding, share options, mixed reaction families, shuffled ten-problem rounds, skipping, and a scored summary with answer review.
 - 1.0.1: Large coefficient minus and plus controls.
 - 1.0.0: Initial ion-exchange product prediction and balancing activity.
+
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the fallback. All student text, feedback, hints, reaction conditions, explanations and accessible labels use the activity's `data.js`, with one full sentence template per message. The instruction step that mixes formulas with prose is translated as one whole step. Scientific symbols, formulas, charges, numeric values and decimal points stay unchanged. Share links keep only `?lang=es`. See `../SPANISH_TERMS.md` for choices beyond the supplied glossary.

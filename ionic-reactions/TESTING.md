@@ -1,6 +1,6 @@
 # Ionic Reaction Builder checks
 
-Version: 3.4.1
+Version: 3.5.0
 
 `node --test tests/unit/ionic-reactions.test.js` verifies all 40 independently pinned reaction equations, elemental counts, smallest coefficients, ionic and elemental species, product-order permutations, invalid coefficients and round sampling. It checks all 15 nonempty combinations of the four allowed reaction types, unique questions and fair distribution, and the polyatomic-ion restrictions for each family. Chemistry checks require ionic compounds, valid ion charges, conserved polyatomic anions in single replacement, and a coefficient change in every equation. They also check product-subscript variety and reduced nitrate repetition.
 
@@ -19,3 +19,7 @@ Bank relevance checks independently verify that every offered block uses current
 Fullscreen checks cover entry and exit, icon and accessible-state updates after native fullscreen changes, activity state preservation, unsupported-browser hiding and polite inline feedback for a rejected request. The control remains available in embeds when the host permits fullscreen.
 
 The static checks keep the site CSP and prohibit injection, globals, inline styles/scripts, storage and network requests. Only the two explicit user-initiated social-share URL templates in `share.js` are added to the outside-link check.
+
+## Spanish verification
+
+`tests/unit/i18n.test.js` and `tests/e2e/i18n.spec.js` cover the shared module and Spanish interface. The Ionic Reaction Builder check opens `?lang=es`, places blocks, uses both hint levels, makes a wrong products check, balances, skips to the summary and opens the instructions and share panel, checking text and accessible attributes for leftover English. Share links keep only `?lang=es`. The language toggle intentionally adds header controls.
