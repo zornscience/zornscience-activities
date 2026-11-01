@@ -52,3 +52,5 @@ body:has(.metals){background:#edf2f7}.metals{--zsa-max-width:1400px;--zsa-navy:#
 .metals:lang(es) .bench-heading{flex-wrap:wrap}.metals:lang(es) .sample-badge{white-space:nowrap}
 .metals:lang(es) #waste rect{x:597px;width:108px}.metals:lang(es) #waste text[font-size="14"]{font-size:12px}
 @media(max-width:760px){.metals:lang(es) .workspace{grid-template-columns:minmax(0,1fr)}.metals:lang(es) .samples,.metals:lang(es) .stations{grid-template-columns:repeat(var(--zsa-es-cols,3),minmax(0,1fr))}.metals:lang(es) .stations{--zsa-es-cols:2}.metals:lang(es) .sample{display:flex}.metals:lang(es) .stations button>span:nth-child(2){min-width:0}}
+/* Below 360 px, every language: the grids may shrink below their content, the samples stack their icon and caption, and the stations take one column, so the page never scrolls sideways. */
+@media(max-width:359px){.metals .workspace{grid-template-columns:minmax(0,1fr)}.metals .samples{grid-template-columns:repeat(3,minmax(0,1fr))}.metals .sample{display:flex}.metals .stations{grid-template-columns:minmax(0,1fr)}.metals .stations button>span:nth-child(2){min-width:0}}

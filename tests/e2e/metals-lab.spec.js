@@ -73,5 +73,11 @@ test('instructions, sharing, mobile sizing and accessibility', async function ({
   await expect(page.locator('#apparatus')).toBeVisible();
   expect(await page.evaluate(function () { return document.documentElement.scrollWidth <= window.innerWidth; })).toBe(true);
   await page.screenshot({path:test.info().outputPath('metals-mobile.png'),fullPage:true});
+  // At 320 px the page does not scroll sideways at any station.
+  await page.setViewportSize({width:320,height:844});
+  for (var station of await page.locator('[data-station]').all()) {
+    await station.click();
+    expect(await page.evaluate(function () { return document.documentElement.scrollWidth <= window.innerWidth; })).toBe(true);
+  }
   expect(await page.locator('textarea,input:not([readonly]):not([type=range])').count()).toBe(0);
 });
