@@ -1,4 +1,4 @@
-# The Atwood Machine - v1.0.2
+# The Atwood Machine - v1.1.0
 
 Ideal Newton's second-law simulation. Two adjustable 50-500 g total masses (including 50 g hangers), realistic SVG brass weights, support stand, string, rotating pulley, travel ruler, signed acceleration and driving force, tension and speed. Mass swaps, equal masses, fixed-total 25 g transfer, pause/resume, reset, slow motion, optional acceleration and force arrows. Instructions and sharing use the Metals Lab header pattern. Shared local fonts, logo and embed support. No student data entry, records, tracking, dependencies or external requests.
 
@@ -6,6 +6,10 @@ Mass changes reset the system. Free motion uses a=(m2-m1)g/(m1+m2), T=2m1m2g/(m1
 
 The activity intentionally does not use the quiz engine or completion codes, because it is an exploration simulation with no data recording. Arrow colors: mint acceleration, gold gravity, blue tension, each also labeled. The SVG equipment is illustrative, with enlarged hanger geometry.
 
-Version: 1.0.3
+Version: 1.1.0
 
 Version 1.0.2 removes the introductory banner so the simulation follows the header directly.
+
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the fallback. All student text, instructions, labels, buttons, the playback menu, readout labels, run states, direction and explanation messages, SVG labels, the spoken apparatus description, title and accessible labels, the model note and the share title, description and status messages use the activity's `data.js`, and every sentence is one full template with placeholders, so Spanish keeps its own word order. The instruction step that names the Release button is rebuilt from one template around the bold button name. In Spanish the share link carries `?lang=es`. Symbols, equations, numbers, units and decimal points stay unchanged. The language links reload the page, so a run in progress starts over. See `../SPANISH_TERMS.md` for choices beyond the Style Kit glossary.

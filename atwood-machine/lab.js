@@ -1,6 +1,10 @@
 (function () {
   "use strict";
-const $=id=>document.getElementById(id), P=document.querySelector('[data-zsa-activity="atwood-machine"]').AtwoodPhysics;
+const $=id=>document.getElementById(id), root=document.querySelector('[data-zsa-activity="atwood-machine"]'), P=root.AtwoodPhysics;
+let i18n;
+root.dispatchEvent(new CustomEvent('zsa:request-i18n',{detail:{receive:api=>{i18n=api;}}}));
+// English is the fallback; data.js holds the Spanish for each full sentence template.
+const t=(text,values)=>i18n?i18n.text(text,values):text.replace(/\{(\w+)\}/g,(m,k)=>values&&values[k]!==undefined?values[k]:m);
 function render(id,markup){
  const parsed=new DOMParser().parseFromString('<svg xmlns="http://www.w3.org/2000/svg">'+markup+'</svg>','image/svg+xml');
  $(id).replaceChildren(...Array.from(parsed.documentElement.childNodes).map(n=>document.importNode(n,true)));
@@ -24,13 +28,13 @@ function draw(){
  if(!ended&&$('forces').checked){for(const [x,y,m] of [[353,y1,mass(1)],[548,y2,mass(2)]])v+=arrow(x,y+25,m*9.81*15,'g','mg')+arrow(x,y+25,-model.tension*15,'t','T');}
  render('vectors',v);
  $('m1-value').textContent=mass(1)*1000+' g';$('m2-value').textContent=mass(2)*1000+' g';
- for(const [id,value,unit] of [['a',model.a,'m/s²'],['f',model.force,'N'],['t',model.tension,'N'],['v',Math.abs(model.a*time),'m/s']]) {const target=$(id+'-value');target.textContent=ended?'n/a':value.toFixed(3)+' ';if(!ended){const small=document.createElement('small');small.textContent=unit;target.append(small);}}
+ for(const [id,value,unit] of [['a',model.a,'m/s²'],['f',model.force,'N'],['t',model.tension,'N'],['v',Math.abs(model.a*time),'m/s']]) {const target=$(id+'-value');target.textContent=ended?t('n/a'):value.toFixed(3)+' ';if(!ended){const small=document.createElement('small');small.textContent=unit;target.append(small);}}
  $('clock').textContent=time.toFixed(2)+' s';
- $('release').textContent=ended?'Travel complete':running?'Ⅱ Pause':time>0?'▶ Resume':'▶ Release masses';$('release').disabled=ended;
- $('state').textContent=ended?'TRAVEL LIMIT / RESET TO REPEAT':running?'IN MOTION':time>0?'PAUSED':'READY TO RELEASE';
- $('direction').textContent=ended?'Travel limit reached. Reset to repeat.':model.a===0?'Balanced: no acceleration.':model.a>0?'Right side accelerates down.':'Left side accelerates down.';
- $('insight').textContent=model.a===0?'Equal weights balance. Released from rest, both hangers remain stationary.':'The weight difference drives the motion; both masses contribute inertia.';
- $('scene-desc').textContent=`Left mass ${mass(1)*1000} grams, right mass ${mass(2)*1000} grams. ${$('direction').textContent} ${ended?'Free motion ended.':`Acceleration ${Math.abs(model.a).toFixed(3)} meters per second squared.`}`;
+ $('release').textContent=t(ended?'Travel complete':running?'Ⅱ Pause':time>0?'▶ Resume':'▶ Release masses');$('release').disabled=ended;
+ $('state').textContent=t(ended?'TRAVEL LIMIT / RESET TO REPEAT':running?'IN MOTION':time>0?'PAUSED':'READY TO RELEASE');
+ $('direction').textContent=t(ended?'Travel limit reached. Reset to repeat.':model.a===0?'Balanced: no acceleration.':model.a>0?'Right side accelerates down.':'Left side accelerates down.');
+ $('insight').textContent=t(model.a===0?'Equal weights balance. Released from rest, both hangers remain stationary.':'The weight difference drives the motion; both masses contribute inertia.');
+ $('scene-desc').textContent=t('Left mass {m1} grams, right mass {m2} grams. {direction} {motion}',{m1:mass(1)*1000,m2:mass(2)*1000,direction:$('direction').textContent,motion:ended?t('Free motion ended.'):t('Acceleration {a} meters per second squared.',{a:Math.abs(model.a).toFixed(3)})});
 }
 function reset(){time=0;running=false;ended=false;last=null;draw();}
 for(const id of ['m1','m2'])$(id).addEventListener('input',reset);
