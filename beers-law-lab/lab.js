@@ -9,6 +9,15 @@
   var M;
   root.dispatchEvent(new CustomEvent("zsa-bl:request-model", {detail: {receive: function (value) { M = value; }}}));
   if (!M) return;
+  // Words come from data.js through the shared language module; English is the fallback. Every sentence is one
+  // full template with placeholders, so Spanish keeps its own word order.
+  var i18n;
+  root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: function (api) { i18n = api; }}}));
+  function t(text, values) {
+    values = values || {};
+    if (i18n) return i18n.text(text, values);
+    return text.replace(/\{(\w+)\}/g, function (m, k) { return values[k] === undefined ? m : values[k]; });
+  }
 
   var SVG = "http://www.w3.org/2000/svg";
   function $(id) { return root.querySelector("#zsa-bl-" + id); }
@@ -50,13 +59,13 @@
 
   // ---------- Setup ----------
   M.SOLUTIONS.forEach(function (s) {
-    var o = node("option", "", s.name + ", " + s.formula);
+    var o = node("option", "", t("{name}, {formula}", {name: t(s.name), formula: s.formula}));
     o.value = s.id;
     $("solution").appendChild(o);
   });
   $("wavelength").min = String(M.RANGE.min);
   $("wavelength").max = String(M.RANGE.max);
-  function nmText(nm) { return nm + " nm (" + M.lightName(nm) + ")"; }
+  function nmText(nm) { return t("{nm} nm ({light})", {nm: nm, light: M.lightName(nm)}); }
   function showSetup() {
     var s = sol(), locked = lab.points.length > 0;
     $("solution").value = s.id;
@@ -65,13 +74,13 @@
     $("wavelength").disabled = locked;
     $("wavelength").setAttribute("aria-valuetext", nmText(lab.wavelength));
     $("wavelength-value").textContent = nmText(lab.wavelength);
-    $("peak").textContent = "Use λmax (" + peak() + " nm)";
+    $("peak").textContent = t("Use λmax ({peak} nm)", {peak: peak()});
     $("peak").disabled = locked;
-    $("wavelength-note").textContent = locked ? "Clear your standards to change the wavelength. A calibration curve only works at the wavelength it was measured at." :
-      "Set the wavelength before you measure standards. This solution absorbs most at " + peak() + " nm.";
+    $("wavelength-note").textContent = locked ? t("Clear your standards to change the wavelength. A calibration curve only works at the wavelength it was measured at.") :
+      t("Set the wavelength before you measure standards. This solution absorbs most at {peak} nm.", {peak: peak()});
     $("conc").max = String(s.max);
-    $("conc").placeholder = "e.g. " + M.fmt(s.max / 7, 3);
-    $("conc-help").textContent = "From 0 to " + M.fmt(s.max, 3) + " M, to the nearest 0.001 M. Up to " + M.MAX_STANDARDS + " standards.";
+    $("conc").placeholder = t("e.g. {c}", {c: M.fmt(s.max / 7, 3)});
+    $("conc-help").textContent = t("From 0 to {max} M, to the nearest 0.001 M. Up to {n} standards.", {max: M.fmt(s.max, 3), n: M.MAX_STANDARDS});
   }
   function newUnknown() {
     lab.unknown = M.drawUnknown(sol(), rng, lab.unknown || null);
@@ -89,8 +98,8 @@
     newUnknown();
     showSetup();
     redraw();
-    announce("New solution: " + sol().name.toLowerCase() + ", wavelength set to its λmax, " + peak() + " nm. Your standards were cleared and a new unknown is ready." +
-      (zeroed ? " The spectrophotometer is still zeroed." : ""));
+    announce(t("New solution: {name}, wavelength set to its λmax, {peak} nm. Your standards were cleared and a new unknown is ready.", {name: M.lower(sol()), peak: peak()}) +
+      (zeroed ? " " + t("The spectrophotometer is still zeroed.") : ""));
   });
   function setWavelength(nm, speak) {
     if (lab.points.length) return;
@@ -100,15 +109,15 @@
     showSetup();
     redraw();
     if (speak) {
-      announce("Wavelength " + nmText(lab.wavelength) + "." + (zeroed && a !== null && cuvette.kind !== "blank" ? " Absorbance " + M.fmt(a, 3) + "." : "") +
-        (stale ? " Measure the unknown again at this wavelength." : ""));
+      announce(t("Wavelength {nm}.", {nm: nmText(lab.wavelength)}) + (zeroed && a !== null && cuvette.kind !== "blank" ? " " + t("Absorbance {a}.", {a: M.fmt(a, 3)}) : "") +
+        (stale ? " " + t("Measure the unknown again at this wavelength.") : ""));
       stale = false;
     }
   }
   $("wavelength").addEventListener("input", function () { setWavelength(Number($("wavelength").value), false); });
   $("wavelength").addEventListener("change", function () { setWavelength(Number($("wavelength").value), true); });
   $("peak").addEventListener("click", function () {
-    if (lab.wavelength === peak()) { announce("Already at λmax, " + peak() + " nm."); return; }
+    if (lab.wavelength === peak()) { announce(t("Already at λmax, {peak} nm.", {peak: peak()})); return; }
     setWavelength(peak(), true);
   });
 
@@ -122,12 +131,14 @@
     clear(el, 1);
     var g = svg("g", {"aria-hidden": "true"});
     g.appendChild(svg("rect", {x: 6, y: 8, width: 348, height: 236, rx: 14, class: "zsa-bl-body"}));
-    g.appendChild(svg("text", {x: 22, y: 36, class: "zsa-bl-brand"}, "Spectrophotometer"));
+    g.appendChild(svg("text", {x: 22, y: 36, class: "zsa-bl-brand"}, t("Spectrophotometer")));
     g.appendChild(svg("circle", {cx: 48, cy: 82, r: 20, class: "zsa-bl-knob"}));
     inst.pointer = svg("line", {x1: 48, y1: 82, x2: 48, y2: 66, class: "zsa-bl-pointer"});
     g.appendChild(inst.pointer);
-    g.appendChild(svg("text", {x: 76, y: 80, class: "zsa-bl-label-dark"}, "Wavelength"));
-    g.appendChild(svg("text", {x: 76, y: 98, class: "zsa-bl-label-dark"}, "knob"));
+    // The knob's label on two lines, split at "|".
+    var knob = t("Wavelength|knob").split("|");
+    g.appendChild(svg("text", {x: 76, y: 80, class: "zsa-bl-label-dark"}, knob[0]));
+    g.appendChild(svg("text", {x: 76, y: 98, class: "zsa-bl-label-dark"}, knob[1]));
     g.appendChild(svg("rect", {x: 176, y: 20, width: 166, height: 104, rx: 8, class: "zsa-bl-lcd"}));
     inst.nm = svg("text", {x: 188, y: 44, class: "zsa-bl-lcd-small"}, "");
     inst.a = svg("text", {x: 188, y: 80, class: "zsa-bl-lcd-big"}, "");
@@ -149,7 +160,7 @@
     g.appendChild(svg("text", {x: 150, y: 176, "text-anchor": "middle", class: "zsa-bl-label"}, "I₀"));
     g.appendChild(svg("text", {x: 242, y: 176, "text-anchor": "middle", class: "zsa-bl-label"}, "I"));
     [[40, "Lamp"], [110, "Grating"], [193, "Cuvette"], [289, "Detector"]].forEach(function (l) {
-      g.appendChild(svg("text", {x: l[0], y: 228, "text-anchor": "middle", class: "zsa-bl-label"}, l[1]));
+      g.appendChild(svg("text", {x: l[0], y: 228, "text-anchor": "middle", class: "zsa-bl-label"}, t(l[1])));
     });
     el.appendChild(g);
   }
@@ -176,17 +187,17 @@
     $("instrument-desc").textContent = M.describeInstrument({solution: lab.solution, wavelength: nm, zeroed: zeroed, cuvette: {kind: cuvette.kind, c: sampleC()}, a: a});
   }
   function cuvetteText() {
-    if (cuvette.kind === "none") return "Empty";
-    if (cuvette.kind === "blank") return "Blank (distilled water)";
+    if (cuvette.kind === "none") return t("Empty");
+    if (cuvette.kind === "blank") return t("Blank (distilled water)");
     var name = M.sampleColor(sol(), sampleC()).name;
-    return cuvette.kind === "unknown" ? "Unknown (" + name + ")" : "Standard, " + M.fmt(cuvette.c, 3) + " M (" + name + ")";
+    return cuvette.kind === "unknown" ? t("Unknown ({color})", {color: name}) : t("Standard, {c} M ({color})", {c: M.fmt(cuvette.c, 3), color: name});
   }
   function showReadouts() {
-    $("a-value").textContent = !zeroed ? "Zero first" : a === null ? "No sample" : M.fmt(a, 3);
+    $("a-value").textContent = !zeroed ? t("Zero first") : a === null ? t("No sample") : M.fmt(a, 3);
     $("t-value").textContent = zeroed && a !== null ? M.fmt(M.transmittance(a), 1) + "%" : "-";
     $("nm-value").textContent = nmText(lab.wavelength);
     $("cuvette-value").textContent = cuvetteText();
-    $("zero").textContent = zeroed ? "Insert blank and zero again" : "Insert blank and zero";
+    $("zero").textContent = zeroed ? t("Insert blank and zero again") : t("Insert blank and zero");
     $("zero").className = "zsa-btn zsa-bl-wide" + (zeroed ? "" : " zsa-btn--primary");
   }
   function status(text) { $("status").textContent = text; }
@@ -197,13 +208,13 @@
     cuvette = {kind: "blank"};
     a = 0;
     redraw();
-    var text = "Blank inserted and zeroed: absorbance 0.000, transmittance 100.0%. Now measure your standards.";
+    var text = t("Blank inserted and zeroed: absorbance 0.000, transmittance 100.0%. Now measure your standards.");
     status(text);
     announce(text);
   });
   function needZero() {
     if (zeroed) return false;
-    var text = "Zero the spectrophotometer with the blank first.";
+    var text = t("Zero the spectrophotometer with the blank first.");
     status(text);
     announce(text);
     return true;
@@ -212,11 +223,11 @@
     if (needZero()) return;
     var s = sol(), raw = $("conc").value.trim(), c = raw === "" ? NaN : Number(raw), text;
     if (!Number.isFinite(c) || c < 0 || c > s.max + 1e-9) {
-      text = "Enter a standard concentration from 0 to " + M.fmt(s.max, 3) + " M.";
+      text = t("Enter a standard concentration from 0 to {max} M.", {max: M.fmt(s.max, 3)});
       status(text); announce(text); return;
     }
     if (lab.points.length >= M.MAX_STANDARDS) {
-      text = "You have " + M.MAX_STANDARDS + " standards, the most this lab keeps. Remove one first.";
+      text = t("You have {n} standards, the most this lab keeps. Remove one first.", {n: M.MAX_STANDARDS});
       status(text); announce(text); return;
     }
     c = Math.round(c * 1000) / 1000;
@@ -225,7 +236,7 @@
     lab.points.push([c, a]);
     showSetup();
     redraw();
-    text = "Standard " + lab.points.length + ": " + M.fmt(c, 3) + " M, absorbance " + M.fmt(a, 3) + ", transmittance " + M.fmt(M.transmittance(a), 1) + "%. Added to the calibration curve.";
+    text = t("Standard {n}: {c} M, absorbance {a}, transmittance {t}%. Added to the calibration curve.", {n: lab.points.length, c: M.fmt(c, 3), a: M.fmt(a, 3), t: M.fmt(M.transmittance(a), 1)});
     status(text);
     announce(text);
   });
@@ -235,7 +246,7 @@
     read();
     lab.unknownA = a;
     redraw();
-    var text = "Unknown: absorbance " + M.fmt(a, 3) + ", transmittance " + M.fmt(M.transmittance(a), 1) + "%. Use your calibration curve to find its concentration.";
+    var text = t("Unknown: absorbance {a}, transmittance {t}%. Use your calibration curve to find its concentration.", {a: M.fmt(a, 3), t: M.fmt(M.transmittance(a), 1)});
     status(text);
     announce(text);
   });
@@ -265,8 +276,8 @@
     }
     axes.appendChild(svg("line", {x1: L, y1: T, x2: L, y2: B, class: "zsa-bl-axis"}));
     axes.appendChild(svg("line", {x1: L, y1: B, x2: R, y2: B, class: "zsa-bl-axis"}));
-    axes.appendChild(svg("text", {x: (L + R) / 2, y: H - 6, "text-anchor": "middle", class: "zsa-bl-axis-label"}, "Concentration of " + sol().formula + " (M)"));
-    axes.appendChild(svg("text", {x: 14, y: (T + B) / 2, "text-anchor": "middle", transform: "rotate(-90 14 " + (T + B) / 2 + ")", class: "zsa-bl-axis-label"}, "Absorbance at " + lab.wavelength + " nm"));
+    axes.appendChild(svg("text", {x: (L + R) / 2, y: H - 6, "text-anchor": "middle", class: "zsa-bl-axis-label"}, t("Concentration of {f} (M)", {f: sol().formula})));
+    axes.appendChild(svg("text", {x: 14, y: (T + B) / 2, "text-anchor": "middle", transform: "rotate(-90 14 " + (T + B) / 2 + ")", class: "zsa-bl-axis-label"}, t("Absorbance at {nm} nm", {nm: lab.wavelength})));
     el.appendChild(axes);
 
     var marks = svg("g", {"aria-hidden": "true"}), fit = line();
@@ -284,7 +295,7 @@
     }
     if (lab.unknownA !== null) {
       marks.appendChild(svg("line", {x1: L, y1: Y(lab.unknownA), x2: R, y2: Y(lab.unknownA), class: "zsa-bl-unk-line"}));
-      var ut = (narrow ? "Unknown A = " : "Unknown's absorbance = ") + M.fmt(lab.unknownA, 3);
+      var ut = t(narrow ? "Unknown A = {a}" : "Unknown's absorbance = {a}", {a: M.fmt(lab.unknownA, 3)});
       marks.appendChild(svg("text", {x: R - 4, y: Math.max(T + 12, Y(lab.unknownA) - 6), "text-anchor": "end", class: "zsa-bl-unk-label"}, ut));
     }
     if (shown) {
@@ -294,15 +305,15 @@
         var uy = Y(lab.unknownA);
         marks.appendChild(svg("path", {d: "M" + ux + " " + (uy - 8) + "L" + (ux + 8) + " " + uy + "L" + ux + " " + (uy + 8) + "L" + (ux - 8) + " " + uy + "Z", class: "zsa-bl-unk-point"}));
       }
-      label(ux, B - 8, "Unknown: " + M.fmt(lab.unknown, 3) + " M", "zsa-bl-unk-label");
+      label(ux, B - 8, t("Unknown: {c} M", {c: M.fmt(lab.unknown, 3)}), "zsa-bl-unk-label");
     }
     lab.points.forEach(function (p) {
       marks.appendChild(svg("circle", {cx: X(p[0]).toFixed(1), cy: Y(p[1]).toFixed(1), r: 5.5, class: "zsa-bl-std"}));
     });
     el.appendChild(marks);
     $("graph-desc").textContent = M.describeGraph(lab, showFit, shown);
-    $("equation").textContent = !fit ? "Measure two or more standards at different concentrations to draw the best-fit line." :
-      showFit ? M.equation(fit) + ", R² = " + M.fmt(fit.r2, 4) + " (c in M)" : "Best-fit line hidden. Work out the slope from your data.";
+    $("equation").textContent = !fit ? t("Measure two or more standards at different concentrations to draw the best-fit line.") :
+      showFit ? t("{eq}, R² = {r2} (c in M)", {eq: M.equation(fit), r2: M.fmt(fit.r2, 4)}) : t("Best-fit line hidden. Work out the slope from your data.");
   }
   if (typeof ResizeObserver !== "undefined") {
     new ResizeObserver(function () {
@@ -315,7 +326,7 @@
     $("fit").setAttribute("aria-pressed", String(showFit));
     drawGraph();
     var fit = line();
-    announce(showFit ? "Best-fit line shown." + (fit ? " " + M.equation(fit) + ", R² = " + M.fmt(fit.r2, 4) + "." : "") : "Best-fit line hidden.");
+    announce(showFit ? t("Best-fit line shown.") + (fit ? " " + t("{eq}, R² = {r2}.", {eq: M.equation(fit), r2: M.fmt(fit.r2, 4)}) : "") : t("Best-fit line hidden."));
   });
 
   // ---------- The table and the unknown ----------
@@ -330,24 +341,24 @@
     }
     if (!lab.points.length && lab.unknownA === null) {
       var tr = node("tr");
-      cell(tr, "No data yet. Measure a standard to start.").colSpan = 4;
+      cell(tr, t("No data yet. Measure a standard to start.")).colSpan = 4;
       body.appendChild(tr);
     }
     lab.points.forEach(function (p, i) {
       var row = node("tr");
-      cell(row, "Standard " + (i + 1), true);
+      cell(row, t("Standard {n}", {n: i + 1}), true);
       cell(row, M.fmt(p[0], 3));
       cell(row, M.fmt(p[1], 3));
-      var td = cell(row, ""), b = node("button", "zsa-btn zsa-bl-remove", "Remove");
+      var td = cell(row, ""), b = node("button", "zsa-btn zsa-bl-remove", t("Remove"));
       b.type = "button";
       b.dataset.remove = String(i);
-      b.setAttribute("aria-label", "Remove standard " + (i + 1) + ", " + M.fmt(p[0], 3) + " M");
+      b.setAttribute("aria-label", t("Remove standard {n}, {c} M", {n: i + 1, c: M.fmt(p[0], 3)}));
       td.appendChild(b);
       body.appendChild(row);
     });
     if (lab.unknownA !== null) {
       var u = node("tr", "zsa-bl-unknown-row");
-      cell(u, "Unknown", true);
+      cell(u, t("Unknown"), true);
       cell(u, shown ? M.fmt(lab.unknown, 3) : "?");
       cell(u, M.fmt(lab.unknownA, 3));
       cell(u, "");
@@ -365,21 +376,21 @@
     // The button that had focus is gone: focus the next Remove button, else the last one, else the concentration box.
     var rest = root.querySelectorAll("[data-remove]");
     (rest[Math.min(i, rest.length - 1)] || $("conc")).focus();
-    announce("Removed standard " + (i + 1) + ", " + M.fmt(p[0], 3) + " M. " + lab.points.length + (lab.points.length === 1 ? " standard" : " standards") + " left." +
-      (lab.points.length ? "" : " You can change the wavelength again."));
+    var left = lab.points.length;
+    announce(t("Removed standard {n}, {c} M.", {n: i + 1, c: M.fmt(p[0], 3)}) + " " + t(left === 1 ? "{n} standard left." : "{n} standards left.", {n: left}) +
+      (left ? "" : " " + t("You can change the wavelength again.")));
   });
   $("clear").addEventListener("click", function () {
     lab.points = [];
     showSetup();
     redraw();
     $("conc").focus();
-    announce("Standards cleared. You can change the wavelength again.");
+    announce(t("Standards cleared. You can change the wavelength again."));
   });
   function showTask() {
-    var s = sol().name.toLowerCase();
-    $("task").textContent = lab.unknownA === null ? "A sample of " + s + " with an unknown concentration is ready. Measure it, then use your calibration curve to calculate its concentration." :
-      "The unknown's absorbance is " + M.fmt(lab.unknownA, 3) + " at " + lab.wavelength + " nm. Use your calibration curve to calculate its concentration.";
-    $("solved").textContent = "Unknowns found: " + found + ". Each new unknown has a different random concentration.";
+    $("task").textContent = lab.unknownA === null ? t("A sample of {name} with an unknown concentration is ready. Measure it, then use your calibration curve to calculate its concentration.", {name: M.lower(sol())}) :
+      t("The unknown's absorbance is {a} at {nm} nm. Use your calibration curve to calculate its concentration.", {a: M.fmt(lab.unknownA, 3), nm: lab.wavelength});
+    $("solved").textContent = t("Unknowns found: {n}. Each new unknown has a different random concentration.", {n: found});
     $("insight").textContent = M.insight(lab);
   }
   function feedback(cls, text) {
@@ -393,7 +404,9 @@
     if (r.ok) {
       if (!shown && !foundThis) { found++; foundThis = true; }
       shown = true;
-      text += " " + M.solve(lab).replace(/^The unknown is [\d.]+ M\. /, "");
+      // The worked line, after "Correct" has already given the concentration (the whole answer when there is no line).
+      var more = M.solveLine(lab);
+      text += " " + (more === null ? M.solve(lab) : more);
     }
     feedback(r.ok ? "zsa-bl-ok" : "zsa-bl-notyet", text);
     redraw();
@@ -401,7 +414,7 @@
   });
   $("show").addEventListener("click", function () {
     shown = true;
-    var text = M.solve(lab) + (lab.unknownA === null ? " Measure it to see what your calibration curve gives." : "");
+    var text = M.solve(lab) + (lab.unknownA === null ? " " + t("Measure it to see what your calibration curve gives.") : "");
     feedback("zsa-bl-shown", text);
     redraw();
     announce(text);
@@ -409,7 +422,7 @@
   $("new").addEventListener("click", function () {
     newUnknown();
     redraw();
-    announce("New unknown " + sol().name.toLowerCase() + " sample ready. Measure it, then find its concentration.");
+    announce(t("New unknown {name} sample ready. Measure it, then find its concentration.", {name: M.lower(sol())}));
   });
 
   // ---------- Showing the state ----------
@@ -425,9 +438,10 @@
   // ---------- Reflection, printing and data ----------
   function printSummary() {
     var fit = line();
-    $("print-summary").textContent = "Beer's law lab: " + sol().name.toLowerCase() + " at " + lab.wavelength + " nm, " + M.fmt(M.PATH) + " cm cuvette. " +
-      lab.points.length + (lab.points.length === 1 ? " standard." : " standards.") + (fit ? " Best-fit line: " + M.equation(fit) + " (R² = " + M.fmt(fit.r2, 4) + ")." : "") +
-      (lab.unknownA !== null ? " Unknown's absorbance: " + M.fmt(lab.unknownA, 3) + "." : "") + ($("answer").value.trim() ? " My answer: " + $("answer").value.trim() + " M." : "");
+    var n = lab.points.length, answer = $("answer").value.trim();
+    $("print-summary").textContent = t("Beer's law lab: {name} at {nm} nm, {b} cm cuvette.", {name: M.lower(sol()), nm: lab.wavelength, b: M.fmt(M.PATH)}) + " " +
+      t(n === 1 ? "{n} standard." : "{n} standards.", {n: n}) + (fit ? " " + t("Best-fit line: {eq} (R² = {r2}).", {eq: M.equation(fit), r2: M.fmt(fit.r2, 4)}) : "") +
+      (lab.unknownA !== null ? " " + t("Unknown's absorbance: {a}.", {a: M.fmt(lab.unknownA, 3)}) : "") + (answer ? " " + t("My answer: {answer} M.", {answer: answer}) : "");
   }
   // A print copy of the reflection: a text area prints only its visible lines, a paragraph prints all of it.
   function mirrorReflection() { $("print-reflection").textContent = $("reflection").value; }
@@ -446,8 +460,9 @@
     link.click();
     root.removeChild(link);
     window.setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-    announce("Data downloaded as zornscience-beers-law-data.csv: " + lab.points.length + (lab.points.length === 1 ? " standard" : " standards") +
-      (lab.unknownA !== null ? " and the unknown." : "."));
+    var n = lab.points.length, file = "zornscience-beers-law-data.csv";
+    announce(t(lab.unknownA !== null ? (n === 1 ? "Data downloaded as {file}: {n} standard and the unknown." : "Data downloaded as {file}: {n} standards and the unknown.") :
+      (n === 1 ? "Data downloaded as {file}: {n} standard." : "Data downloaded as {file}: {n} standards."), {file: file, n: n}));
   });
 
   // ---------- Deep links and the back link ----------
@@ -472,5 +487,5 @@
   newUnknown();
   showSetup();
   redraw();
-  status("Start by inserting the blank (distilled water) and zeroing the spectrophotometer.");
+  status(t("Start by inserting the blank (distilled water) and zeroing the spectrophotometer."));
 }());
