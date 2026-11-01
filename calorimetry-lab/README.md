@@ -1,6 +1,6 @@
 # Calorimetry & Enthalpy Lab
 
-Version: 1.2.1
+Version: 1.3.0
 
 Standalone static lab at `calorimetry-lab/`. No runtime dependencies, accounts, tracking, storage or outside requests. Supports `?embed=1` via the existing embed helper.
 
@@ -21,3 +21,7 @@ Visual presentation: an instrument bench, labeled apparatus, numeric readout til
 - Four completed trials remain in a comparison table for one-variable investigations. Notes and trials clear on reload, with no storage or outside requests. Live screen-reader messages announce run phases, not every animation frame.
 
 The activity opens directly into the experiment, without an introductory banner or a direct link to the other chemistry lab. The common All activities link remains available.
+
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the fallback. All student text, feedback, SVG labels and titles, graph text, accessible labels, the CSV header row and the share title, description and link use the activity's `data.js`, and every sentence is one full template with placeholders, so Spanish keeps its own word order. In Spanish the share link carries `?lang=es`. Formulas, numeric values, units and decimal points stay unchanged. The language links reload the page, so a run in progress starts over. See `../SPANISH_TERMS.md` for choices beyond the supplied glossary.
