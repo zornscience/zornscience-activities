@@ -675,5 +675,265 @@
     ]
   }
   };
+  var i18n;
+  root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail:{receive:function (api) { i18n = api; }}}));
+  if (i18n) {
+    i18n.configure({title:"Periodic Trends Practice", es:{
+      "Periodic Trends Practice": "Práctica de tendencias periódicas",
+      "ZornScience home": "Inicio de ZornScience",
+      "Activity tools": "Herramientas de la actividad",
+      "Instructions": "Instrucciones",
+      "Share": "Compartir",
+      "Share activity": "Compartir actividad",
+      "Close": "Cerrar",
+      "Close instructions": "Cerrar instrucciones",
+      "Compare the two highlighted elements for atomic radius, electronegativity, or first ionization energy.": "Compara los dos elementos resaltados según su radio atómico, su electronegatividad o su primera energía de ionización.",
+      "Choose an answer and use Hint when you need help. Review the feedback before moving on.": "Elige una respuesta y usa Pista cuando necesites ayuda. Lee la retroalimentación antes de continuar.",
+      "Finish a mixed round for a completion code, or use Practice options to work on one trend.": "Termina una ronda mixta para obtener un código de finalización o usa Opciones de práctica para trabajar con una sola tendencia.",
+      "Share this activity": "Compartir esta actividad",
+      "Close share options": "Cerrar opciones para compartir",
+      "Share a fresh activity. Your answers and experiment data are not included.": "Comparte una actividad nueva. No se incluyen tus respuestas ni los datos del experimento.",
+      "Share link": "Enlace para compartir",
+      "Copy link": "Copiar enlace",
+      "Email": "Correo electrónico",
+      "Link copied.": "Enlace copiado.",
+      "Link selected. Copy it with Ctrl+C or Command+C.": "Enlace seleccionado. Cópialo con Ctrl+C o Command+C.",
+      "Question and periodic table": "Pregunta y tabla periódica",
+      "Main groups only. Both elements in the question are marked.": "Solo grupos principales. Los dos elementos de la pregunta están marcados.",
+      "Trend practice": "Práctica de tendencias",
+      "Practice options": "Opciones de práctica",
+      "Start a fresh round of all three trends or practice one trend. Starting again clears this round.": "Inicia una ronda nueva con las tres tendencias o practica una sola tendencia. Al reiniciar se borra esta ronda.",
+      "Start a new round": "Iniciar una ronda nueva",
+      "Choose a trend": "Elige una tendencia",
+      "Practice this trend": "Practicar esta tendencia",
+      "← Back to the lesson": "← Volver a la lección"
+    }});
+    if (i18n.lang === "es") {
+      var names = {"Li":"Litio","Be":"Berilio","B":"Boro","C":"Carbono","N":"Nitrógeno","O":"Oxígeno","F":"Flúor","Ne":"Neón","Na":"Sodio","Mg":"Magnesio","Al":"Aluminio","Si":"Silicio","P":"Fósforo","S":"Azufre","Cl":"Cloro","Ar":"Argón","K":"Potasio","Ca":"Calcio","Ga":"Galio","Ge":"Germanio","As":"Arsénico","Se":"Selenio","Br":"Bromo","Kr":"Kriptón","Rb":"Rubidio","Sr":"Estroncio","In":"Indio","Sn":"Estaño","Sb":"Antimonio","Te":"Telurio","I":"Yodo","Xe":"Xenón"};
+      Object.keys(data.elements).forEach(function (symbol) { data.elements[symbol].name = names[symbol]; });
+      data.ui = {
+        "props": {
+          "radius": {
+            "label": "radio atómico",
+            "Label": "Radio atómico",
+            "the": "el radio atómico",
+            "aHigher": "un mayor radio atómico",
+            "unit": " pm",
+            "higher": "mayor",
+            "question": "¿Cuál tiene el mayor radio atómico?",
+            "why": {
+              "period": "A lo largo de un periodo, el radio atómico disminuye: cada elemento agrega un protón al mismo nivel de energía, así que una mayor carga nuclear efectiva acerca más los electrones al núcleo.",
+              "group": "Al bajar en un grupo, el radio atómico aumenta: cada periodo agrega un nivel de energía, así que los electrones externos están más lejos del núcleo."
+            },
+            "confuse": "Esa es la tendencia de la energía de ionización. El radio atómico cambia en sentido opuesto."
+          },
+          "en": {
+            "label": "electronegatividad",
+            "Label": "Electronegatividad",
+            "the": "la electronegatividad",
+            "aHigher": "una mayor electronegatividad",
+            "unit": "",
+            "higher": "mayor",
+            "question": "¿Cuál tiene la mayor electronegatividad?",
+            "why": {
+              "period": "A lo largo de un periodo, la electronegatividad aumenta: una mayor carga nuclear efectiva atrae con más fuerza a los electrones de enlace.",
+              "group": "Al bajar en un grupo, la electronegatividad disminuye: más niveles de energía ponen a los electrones de enlace más lejos del núcleo."
+            },
+            "confuse": "Eso está al revés."
+          },
+          "ie": {
+            "label": "primera energía de ionización",
+            "Label": "Primera energía de ionización",
+            "the": "la primera energía de ionización",
+            "aHigher": "una mayor primera energía de ionización",
+            "unit": " kJ/mol",
+            "higher": "mayor",
+            "question": "¿Cuál tiene la mayor primera energía de ionización?",
+            "why": {
+              "period": "A lo largo de un periodo, la primera energía de ionización aumenta: una mayor carga nuclear efectiva sujeta con más fuerza a los electrones externos.",
+              "group": "Al bajar en un grupo, la primera energía de ionización disminuye: más niveles de energía ponen al electrón externo más lejos del núcleo, así que es más fácil quitarlo."
+            },
+            "confuse": "Esa es la tendencia del radio atómico. La energía de ionización cambia en sentido opuesto."
+          }
+        },
+        "questions": [
+          "¿El {nameA} y el {nameB} están en el mismo grupo o en el mismo periodo?",
+          {
+            "period": "A lo largo de un periodo (de izquierda a derecha), ¿cómo cambia {theLabel}?",
+            "group": "Al bajar en un grupo (de arriba hacia abajo), ¿cómo cambia {theLabel}?"
+          }
+        ],
+        "relations": [
+          [
+            "group",
+            "Mismo grupo"
+          ],
+          [
+            "period",
+            "Mismo periodo"
+          ],
+          [
+            "neither",
+            "Ninguno"
+          ]
+        ],
+        "directions": [
+          [
+            "increases",
+            "Aumenta"
+          ],
+          [
+            "decreases",
+            "Disminuye"
+          ],
+          [
+            "same",
+            "No cambia"
+          ]
+        ],
+        "relationWord": {
+          "group": "grupo",
+          "period": "periodo"
+        },
+        "place": {
+          "group": "el grupo {group}",
+          "period": "el periodo {period}"
+        },
+        "feedback": {
+          "relation": "El {nameA} está en el grupo {groupA}, periodo {periodA}; el {nameB} está en el grupo {groupB}, periodo {periodB}. Un grupo es una columna; un periodo es una fila.",
+          "neither": "Sí comparten una fila o una columna. Busca ambos en la tabla: un grupo es una columna y un periodo es una fila.",
+          "flat": {
+            "period": "Sí cambia. A lo largo de un periodo, cada elemento agrega un protón al mismo nivel de energía, y eso cambia la atracción sobre los electrones.",
+            "group": "Sí cambia. Al bajar en un grupo, cada periodo agrega un nivel de energía, y eso cambia qué tan lejos del núcleo están los electrones externos."
+          },
+          "reverse": "{confuse} {think}",
+          "atomicNumber": "Un número atómico mayor no siempre significa {aHigher}. Usa la tendencia: {theLabel} {direction} {where}.",
+          "applyReverse": "Usa la dirección que encontraste: {theLabel} {direction} {where}, así que el elemento que está más {toward} tiene el valor mayor."
+        },
+        "where": {
+          "period": "de izquierda a derecha",
+          "group": "de arriba hacia abajo"
+        },
+        "think": {
+          "period": "Piensa en la carga nuclear efectiva.",
+          "group": "Piensa en los niveles de energía."
+        },
+        "toward": {
+          "period": {
+            "increases": "a la derecha",
+            "decreases": "a la izquierda"
+          },
+          "group": {
+            "increases": "abajo",
+            "decreases": "arriba"
+          }
+        },
+        "hints": [
+          [
+            "Busca ambos elementos en la tabla. Un grupo es una columna; un periodo es una fila.",
+            "{NameA}: grupo {groupA}, periodo {periodA}. {NameB}: grupo {groupB}, periodo {periodB}."
+          ],
+          [
+            {
+              "period": "A lo largo de un periodo, se agregan protones, pero los electrones externos se quedan en el mismo nivel de energía.",
+              "group": "Al bajar en un grupo, cada periodo agrega un nivel de energía."
+            },
+            "{why}"
+          ],
+          [
+            "Usa la dirección del paso 2 y la posición de cada elemento en la tabla.",
+            "{TheLabel} {direction} {where}. El {nameA} está {positionA} {nameB}."
+          ]
+        ],
+        "position": {
+          "period": "a la izquierda del",
+          "group": "arriba del"
+        },
+        "trail": [
+          "Mismo {relationWord}",
+          "{TheLabel} {direction}",
+          "{Winner}"
+        ],
+        "trailDirection": {
+          "increases": "aumenta",
+          "decreases": "disminuye"
+        },
+        "explain": [
+          "Ambos están en {place}.",
+          "{why}",
+          "El {winner} tiene {aHigher}: {symbolA} {valueA}, {symbolB} {valueB}."
+        ],
+        "summary": "El {winner} tiene {aHigher}. {SymbolA}: {valueA}. {SymbolB}: {valueB}.",
+        "tableLink": "Ver esta tendencia en la tabla periódica",
+        "heading": "{NameA} ({symbolA}) y {nameB} ({symbolB})",
+        "caption": "Compara: {theLabel}",
+        "reminder": "{NameA} y {nameB}: {theLabel}. El {winner} tiene el valor mayor.",
+        "stats": [
+          "Mismo grupo o periodo",
+          "Dirección de la tendencia",
+          "Qué elemento"
+        ],
+        "labels": {
+          "next": "Siguiente pregunta",
+          "complete": "Pregunta terminada",
+          "singleDone": "Práctica de la tendencia terminada",
+          "firstTry": "Respuestas correctas al primer intento en las preguntas originales",
+          "itemLabel": "Pregunta",
+          "singleLabel": "Pregunta",
+          "currentMark": " (en esta pregunta)",
+          "finish": "Ver resumen de la ronda",
+          "hint": "Pista",
+          "hint2": "Otra pista",
+          "hintsDone": "Ya se mostraron ambas pistas",
+          "show": "Muéstrame",
+          "hintPrefix": "Pista: ",
+          "correct": "✓ Correcto. ",
+          "wrong": "↻ Todavía no. ",
+          "revealed": "→ Respuesta mostrada. ",
+          "general": "Usa una pista e inténtalo de nuevo.",
+          "roundComplete": "Ronda terminada",
+          "review": "Sigue practicando",
+          "none": "Completaste cada paso original al primer intento.",
+          "again": "Practicar de nuevo",
+          "misses": "Practicar mis errores",
+          "repeatNote": "Las preguntas de repaso no cambian los conteos del primer intento.",
+          "reviewLabel": "Repaso",
+          "progress": "{label} {number} de {total} · Paso {step} de {steps}",
+          "trailLabel": "Tus respuestas hasta ahora",
+          "correctMark": "Correcto: ",
+          "shownMark": "Mostrado: ",
+          "triedMark": " (intentado, incorrecto)",
+          "hintMark": " (pista)",
+          "chargeMark": "carga del ion",
+          "tableCaption": "Elementos de los grupos principales por grupo (columna) y periodo (fila)",
+          "periodLabel": "Periodo",
+          "codeLabel": "Código de finalización",
+          "copyCode": "Copiar código",
+          "codeCopied": "Código copiado.",
+          "codeReady": "Código de finalización listo.",
+          "codeSelected": "El código está seleccionado. Presiona Ctrl+C, o Command+C en una Mac, para copiarlo.",
+          "codeNote": "Pega este código en tu tarea de Google Classroom."
+        },
+        "practice": [
+          [
+            "mixed",
+            "Las tres tendencias"
+          ],
+          [
+            "radius",
+            "Solo radio atómico"
+          ],
+          [
+            "en",
+            "Solo electronegatividad"
+          ],
+          [
+            "ie",
+            "Solo primera energía de ionización"
+          ]
+        ]
+      };
+    }
+  }
   root.addEventListener("zsa:request-data", function (event) { event.detail.receive(data); }, {once: true});
 }());

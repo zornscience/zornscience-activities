@@ -1,5 +1,5 @@
 # Verification record
-Version: 1.1.1
+Version: 1.2.0
 Date: 2026-10-16
 Reviewer: Claude (built and tested 1.0.0; 1.1.0 changes tested as recorded below)
 
@@ -43,3 +43,7 @@ PASS means the check was run on version 1.1.0 as committed and passed. Rows mark
 | Screenshots reviewed (1.0.0) | PASS | 390x664 and 1366x657 viewed by Claude. Fixes made from them: "No change" instead of "Stays about the same" so the three choices fit on phones, shorter step 2 question, shorter confusion and atomic-number messages and step 2 hint so feedback plus hint fit at 360x640 with the table in view. |
 | Real screen readers, Firefox, Safari, school devices | NOT TESTED | Not available here. |
 | Live URL, WordPress callout | NOT TESTED | After merging: https://activities.zornscience.org/periodic-trends/ |
+
+## Spanish verification
+
+`tests/unit/i18n.test.js` and `tests/e2e/i18n.spec.js` cover the shared module and Spanish interface, including dynamic views, hints, feedback, the progress line, accessible text and generated share links. The language toggle intentionally adds header controls. English questions, wording and completion codes are unchanged; the code version is now 1.2.
