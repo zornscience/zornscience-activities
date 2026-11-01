@@ -11,6 +11,9 @@
 // Both are compared as zsa-<name>, so moving a class from an activity into shared/ is not a difference, but any
 // change in what is shown, said, focused or laid out is.
 //
+// Absolute links to the page's own server (the EN / ES language links) are compared without the origin, since the
+// base and the working tree run on different ports.
+//
 // One intended difference is set aside: the completion code box on the summary of a full mixed round
 // ([data-zsa-code], added in Ion Charge Trainer 1.4.0 and Ionic Formula Builder 1.1.0) and its announcement
 // ("Completion code ready."). Before each comparison the box is hidden in both pages and left out of the DOM and
@@ -76,7 +79,9 @@ function snapshot(ignore) {
       STYLE.map(function (p) { return s.getPropertyValue(p); }).join(";") + (b.content !== "none" ? " | before " + b.content + " " + b.color + " " + b.fontSize : ""));
   });
   var live = ((document.querySelector("[aria-live]") || {}).textContent || "").replace(/\. Completion code ready\.$/, "");
-  return {dom: clone.outerHTML, props: props.join(" "), focus: focus, live: live,
+  // The base and the working tree are served on different ports. Links written as absolute URLs (the EN / ES
+  // language links) differ only by that origin, so it is removed before comparing.
+  return {dom: clone.outerHTML.split(location.origin).join(""), props: props.join(" "), focus: focus, live: live,
     scroll: Math.round(window.scrollY), title: document.title, layout: layout};
 }
 
