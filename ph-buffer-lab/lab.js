@@ -58,8 +58,8 @@
     if(s.k){var x=Math.sqrt(s.k*c),ph=s.type==='weak-base'?14+Math.log10(x):-Math.log10(x),pct=100*x/c;
       line(s.type==='weak-base'?'Weak base method: x = √(Kb × C) = {x} M ≈ [OH⁻].':'Weak acid method: x = √(Ka × C) = {x} M ≈ [H₃O⁺].',{x:sci(x)});
       line('Substitution: √({k} × {c}) = {x} M. Student pH = {pH}; exact pH = {exact}.',{k:sci(s.k),c:sci(c),x:sci(x),pH:f(ph),exact:f(r.pH)});
-      line('Check: x/C × 100 = {percent}%. Is x under about 1% of C?',{percent:f(pct)});
-      line(pct<1?'Yes. Small ionization supports this shortcut, provided water autoionization is negligible.':'No. The shortcut is unreliable here. Use the exact equilibrium result.');
+      line('Check: x/C × 100 = {percent}%. Is x/C at most 5%?',{percent:f(pct)});
+      line(pct<=5?'Yes, close enough. The shortcut and the exact pH agree within about 0.01.':'No. The shortcut is unreliable here. Use the exact equilibrium result.');
       if(x<1e-6)line('Water autoionization matters at low concentrations. The exact answer includes it.');
     }else{var stoich=c*s.factor,ph=s.type==='strong-base'?14+Math.log10(stoich):-Math.log10(stoich);
       line(s.type==='strong-base'?'Direct method: [OH⁻] ≈ {factor} × C = {c} M; pH = 14.00 − pOH ≈ {pH}.':'Direct method: [H₃O⁺] ≈ C = {c} M; pH ≈ {pH}.',{factor:s.factor,c:sci(stoich),pH:f(ph)});
@@ -85,7 +85,8 @@
     el.setAttribute('viewBox','0 0 '+w+' '+h);var current=points[points.length-1];el.replaceChildren(svg('title',{id:'graph-desc'},t('pH vs. cumulative volume. {n} readings. Latest: {v} mL, water pH {water}, buffer pH {buffer}.',{n:points.length,v:f(current.volume),water:f(current.water.pH),buffer:f(current.buffer.pH)})));
     function x(v){return l+v/max*pw;}function y(p){return top+(14-Math.max(0,Math.min(14,p)))/14*ph;}
     for(var tick=0;tick<=14;tick+=2){el.appendChild(svg('line',{x1:l,y1:y(tick),x2:w-r,y2:y(tick),class:'zsa-pb-grid'}));el.appendChild(svg('text',{x:l-8,y:y(tick)+4,'text-anchor':'end'},String(tick)));}
-    for(var i=0;i<=4;i++){var val=max*i/4;el.appendChild(svg('text',{x:x(val),y:h-32,'text-anchor':'middle'},String(Number(val.toFixed(1)))));}
+    var tickStep=max<=5?1:5*Math.ceil(max/25);max=Math.ceil(max/tickStep)*tickStep;
+    for(var val=0;val<=max;val+=tickStep){el.appendChild(svg('text',{x:x(val),y:h-32,'text-anchor':'middle'},String(val)));}
     el.appendChild(svg('path',{d:'M '+l+' '+top+' V '+(h-bottom)+' H '+(w-r),class:'zsa-pb-axis'}));el.appendChild(svg('text',{x:6,y:14},'pH'));el.appendChild(svg('text',{x:l+pw/2,y:h-7,'text-anchor':'middle'},t('Volume added (mL)')));
     ['water','buffer'].forEach(function(type){var color=type==='water'?'#475569':'#1d4ed8';el.appendChild(svg('polyline',{points:points.map(function(p){return x(p.volume)+','+y(p[type].pH);}).join(' '),fill:'none',stroke:color,'stroke-width':2.5,'stroke-dasharray':type==='water'?'7 4':'none'}));el.appendChild(svg('circle',{cx:x(current.volume),cy:y(current[type].pH),r:4,fill:color}));});
   }
@@ -122,7 +123,7 @@
   ['builder-pair','ha','a','nonbuffer'].forEach(function(id){$(id).addEventListener(id==='ha'||id==='a'?'input':'change',function(){builder();syncURL();});});
   ['stress-pair','capacity'].forEach(function(id){$(id).addEventListener(id==='capacity'?'input':'change',function(){reset();syncURL();});});
   $('stress-reset').addEventListener('click',function(){reset();say(t('Experiment reset.'));});
-  [['acid-small',true,.1],['acid-large',true,1],['base-small',false,.1],['base-large',false,1]].forEach(function(a){$(a[0]).addEventListener('click',function(){add(a[1],a[2]);});});
+  [['acid-small',true,.1],['acid-large',true,1],['acid-bulk',true,5],['base-small',false,.1],['base-large',false,1],['base-bulk',false,5]].forEach(function(a){$(a[0]).addEventListener('click',function(){add(a[1],a[2]);});});
   $('use-stress').addEventListener('click',function(){$('stress-pair').value=$('builder-pair').value;reset();showMode('stress',true);syncURL();});
   $('check-design').addEventListener('click',design);['target-ph','challenge-pair','challenge-ratio'].forEach(function(id){$(id).addEventListener('input',design);});
   $('blood-ratio').addEventListener('input',blood);$('check-indicator').addEventListener('click',indicator);['equivalence-ph','indicator'].forEach(function(id){$(id).addEventListener('change',indicator);});

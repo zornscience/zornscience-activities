@@ -4,19 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.0.0">
+<meta name="zsa-version" content="1.0.1">
 <meta name="description" content="Explore pH, design buffers and compare buffer capacity with water in the interactive ZornScience pH and Buffer Lab.">
 <title>pH &amp; Buffer Lab | ZornScience</title>
 <link rel="icon" href="../favicon.png" type="image/png">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
-<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.0">
-<link rel="stylesheet" href="lab.css?v=1.0.0">
-<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
-<script src="../shared/zsa-i18n.js?v=1.0.0" defer></script>
-<script src="data.js?v=1.0.0" defer></script>
-<script src="chem.js?v=1.0.0" defer></script>
-<script src="lab.js?v=1.0.0" defer></script>
-<script src="../shared/zsa-header.js?v=1.0.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.1">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.1">
+<link rel="stylesheet" href="lab.css?v=1.0.1">
+<script src="../shared/zsa-embed.js?v=1.0.1" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.0.1" defer></script>
+<script src="data.js?v=1.0.1" defer></script>
+<script src="chem.js?v=1.0.1" defer></script>
+<script src="lab.js?v=1.0.1" defer></script>
+<script src="../shared/zsa-header.js?v=1.0.1" defer></script>
 </head>
 <body>
 <main class="zsa zsa-pb" data-zsa-activity="ph-buffer-lab">
@@ -68,10 +68,10 @@
 <section role="tabpanel" id="panel-stress" aria-labelledby="tab-stress" hidden>
 <div class="zsa-pb-layout"><section class="zsa-card" aria-labelledby="stress-title"><p class="zsa-eyebrow">1. Set up and add</p><h2 id="stress-title">Compare buffer capacity</h2>
 <label for="stress-pair">Buffer pair</label><select id="stress-pair"></select>
-<label for="capacity">Total buffer concentration (M)</label><input id="capacity" type="range" min="-2" max="0" step="0.01" value="-0.69897"><output id="capacity-value" for="capacity"></output>
+<label for="capacity">Total buffer concentration (M)</label><input id="capacity" type="range" min="-2" max="0" step="0.01" value="-1.69897"><output id="capacity-value" for="capacity"></output>
 <p class="zsa-pb-note">Each beaker starts at 100.0 mL. The buffer starts with equal moles of HA and A⁻. Changing the pair or capacity starts a new experiment.</p>
 <h3>Add to both beakers</h3><p>HCl and NaOH are 0.10 M.</p>
-<div class="zsa-pb-additions"><button class="zsa-btn" id="acid-small" type="button">Add 0.1 mL HCl</button><button class="zsa-btn" id="acid-large" type="button">Add 1.0 mL HCl</button><button class="zsa-btn" id="base-small" type="button">Add 0.1 mL NaOH</button><button class="zsa-btn" id="base-large" type="button">Add 1.0 mL NaOH</button></div>
+<div class="zsa-pb-additions"><button class="zsa-btn" id="acid-small" type="button">Add 0.1 mL HCl</button><button class="zsa-btn" id="acid-large" type="button">Add 1.0 mL HCl</button><button class="zsa-btn" id="acid-bulk" type="button">Add 5.0 mL HCl</button><button class="zsa-btn" id="base-small" type="button">Add 0.1 mL NaOH</button><button class="zsa-btn" id="base-large" type="button">Add 1.0 mL NaOH</button><button class="zsa-btn" id="base-bulk" type="button">Add 5.0 mL NaOH</button></div>
 <button id="stress-reset" class="zsa-btn" type="button">Reset experiment</button><p id="capacity-note"></p><p id="stress-reaction" class="zsa-panel" role="status"></p><p id="stress-status"></p>
 </section><div>
 <section class="zsa-card" aria-labelledby="beakers-title"><p class="zsa-eyebrow">2. Compare</p><h2 id="beakers-title">Water and buffer</h2><div class="zsa-pb-beakers">

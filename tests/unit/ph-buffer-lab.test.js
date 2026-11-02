@@ -51,7 +51,7 @@ test('mixed additions neutralize excess before restoring the buffer, with cumula
  near(r.formalA,.0005,1e-14);near(r.formalHA,.0005,1e-14);
 });
 test('capacity scales with total moles and larger capacity reduces equal stress',()=>{
- near(M.stress('acetate',.01,0,0).capacityML,5);near(M.stress('acetate',1,0,0).capacityML,500);
+ near(M.stress('acetate',.01,0,0).capacityML,5);near(M.stress('acetate',.02,0,0).capacityML,10);near(M.stress('acetate',1,0,0).capacityML,500);
  const delta=c=>Math.abs(M.stress('acetate',c,1,0).buffer.pH-M.stress('acetate',c,0,0).buffer.pH);
  assert.ok(delta(1)<delta(.1));assert.ok(delta(.1)<delta(.01));
 });
