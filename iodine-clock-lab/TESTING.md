@@ -10,4 +10,4 @@ Timing is illustrative, as disclosed in Instructions and model details. Chemical
 
 `tests/e2e/i18n.spec.js` opens the lab with `?lang=es`, checks text and accessible attributes for leftover English, and runs a concentration trial, a temperature trial, a missed and a met 20-second challenge, Instructions and the Share panel (with `?lang=es` in the share link). English text, aria-labels and titles were compared with version 1.0.2 through the same states and are identical apart from the added EN / ES header links.
 
-Version: 1.1.0
+Version: 1.1.1
