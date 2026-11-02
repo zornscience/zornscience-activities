@@ -1,0 +1,107 @@
+(function () {
+  "use strict";
+  // Collision Carts: every English string with its Mexican Spanish translation, for ../shared/zsa-i18n.js.
+  // English is the default and the fallback. Symbols, numbers, units and decimal points stay exactly as written.
+  var root = document.querySelector('[data-zsa-activity="collision-carts"]');
+  if (!root) return;
+  var i18n;
+  root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail:{receive:function (api) { i18n = api; }}}));
+  if (!i18n) return;
+  var copy = {title:"Collision Carts", es:{
+  // Header, instructions and share
+  "Collision Carts": "Carritos de colisión",
+  "ZornScience home": "Inicio de ZornScience",
+  "Activity links": "Enlaces de la actividad",
+  "Instructions": "Instrucciones",
+  "Share": "Compartir",
+  "Share activity": "Compartir actividad",
+  "Share this activity": "Compartir esta actividad",
+  "Close share options": "Cerrar opciones para compartir",
+  "Close instructions": "Cerrar instrucciones",
+  "Share a fresh lab. Each link opens a fresh track.": "Comparte el laboratorio desde cero. Cada enlace abre una pista nueva.",
+  "Share link": "Enlace para compartir",
+  "Copy link": "Copiar enlace",
+  "Email": "Correo electrónico",
+  "More share options": "Más opciones para compartir",
+  "Link copied.": "Enlace copiado.",
+  "Link selected. Press Ctrl+C, or Command+C on a Mac, to copy it.": "Enlace seleccionado. Presiona Ctrl+C, o Command+C en una Mac, para copiarlo.",
+  "Share options opened.": "Se abrieron las opciones para compartir.",
+  "Use Copy link or email instead.": "Usa Copiar enlace o el correo electrónico.",
+  "Explore conservation of momentum with two colliding carts.": "Explora la conservación de la cantidad de movimiento con dos carritos que chocan.",
+  "Explore conservation of momentum": "Exploración de la conservación de la cantidad de movimiento",
+  "Choose magnetic bumpers for a perfectly elastic collision or hook-and-loop pads for a perfectly inelastic collision.": "Elige parachoques magnéticos para una colisión perfectamente elástica o almohadillas de velcro para una colisión perfectamente inelástica.",
+  "Set each cart’s total mass and starting velocity. Positive velocity points right; negative velocity points left.": "Ajusta la masa total y la velocidad inicial de cada carrito. La velocidad positiva apunta a la derecha; la velocidad negativa apunta a la izquierda.",
+  "Launch the carts. Pause, advance one frame, or use slow motion to inspect the collision.": "Lanza los carritos. Pausa, avanza un cuadro o usa la cámara lenta para examinar la colisión.",
+  "Turn on velocity and momentum vectors. Arrow direction shows the sign; length shows magnitude. Momentum depends on both mass and velocity.": "Activa los vectores de velocidad y de cantidad de movimiento. La dirección de la flecha muestra el signo; su longitud muestra la magnitud. La cantidad de movimiento depende tanto de la masa como de la velocidad.",
+  "Reset to replay. Changing the setup also resets the track. Try the same setup in both collision modes.": "Reinicia para repetir. Cambiar la configuración también reinicia la pista. Prueba la misma configuración en los dos modos de colisión.",
+  "Total momentum stays constant during the cart-to-cart collision. Kinetic energy stays constant only in the elastic mode. A zero-length vector appears as a dot.": "La cantidad de movimiento total se mantiene constante durante la colisión entre los carritos. La energía cinética se mantiene constante solo en el modo elástico. Un vector de longitud cero aparece como un punto.",
+  "Ideal model: level frictionless track, one-dimensional motion, instantaneous collision. The run pauses before either cart reaches an end stop, where an external impulse would change the carts’ total momentum.": "Modelo ideal: pista nivelada sin fricción, movimiento en una dimensión y colisión instantánea. La corrida se pausa antes de que cualquiera de los carritos llegue a un tope, donde un impulso externo cambiaría la cantidad de movimiento total de los carritos.",
+  "This simulation needs JavaScript.": "Esta simulación necesita JavaScript.",
+  // Setup
+  "01 / SET UP THE COLLISION": "01 / PREPARA LA COLISIÓN",
+  "At the track": "En la pista",
+  "Bumper type": "Tipo de parachoques",
+  "Perfectly elastic · magnetic": "Perfectamente elástica · imanes",
+  "Perfectly inelastic · hook & loop": "Perfectamente inelástica · velcro",
+  "Carts rebound. Momentum and kinetic energy are conserved.": "Los carritos rebotan. Se conservan la cantidad de movimiento y la energía cinética.",
+  "Carts stick together. Momentum is conserved; kinetic energy can decrease.": "Los carritos se quedan unidos. Se conserva la cantidad de movimiento; la energía cinética puede disminuir.",
+  "Cart A": "Carrito A",
+  "Cart B": "Carrito B",
+  "Total mass": "Masa total",
+  "Starting velocity": "Velocidad inicial",
+  "Try a setup": "Prueba una configuración",
+  "Equal masses · one at rest": "Masas iguales · uno en reposo",
+  "Head-on · equal and opposite": "De frente · velocidades iguales y opuestas",
+  "Heavy cart meets light cart": "Un carrito pesado choca con uno ligero",
+  "Catch-up collision": "Colisión por alcance",
+  "Mass includes the 250 g cart and its slotted steel masses.": "La masa incluye el carrito de 250 g y sus pesas ranuradas de acero.",
+  // Bench and track
+  "02 / OBSERVE THE MOTION": "02 / OBSERVA EL MOVIMIENTO",
+  "Low-friction dynamics track": "Pista de dinámica de baja fricción",
+  "MAGNETIC BUMPERS": "PARACHOQUES MAGNÉTICOS",
+  "HOOK & LOOP PADS": "ALMOHADILLAS DE VELCRO",
+  "LEVEL TRACK / 4.0 m": "PISTA NIVELADA / 4.0 m",
+  "+ RIGHT →": "+ DERECHA →",
+  "Two dynamics carts on an aluminum laboratory track": "Dos carritos de dinámica sobre una pista de laboratorio de aluminio",
+  "A blue cart and an orange cart carry removable steel masses. Optional arrows show their current velocities and momenta.": "Un carrito azul y un carrito naranja llevan pesas de acero removibles. Las flechas opcionales muestran sus velocidades y cantidades de movimiento actuales.",
+  "ALUMINUM DYNAMICS TRACK · ADJUSTABLE LEVELING FEET": "PISTA DE DINÁMICA DE ALUMINIO · PATAS NIVELADORAS AJUSTABLES",
+  "CART {letter}": "CARRITO {letter}",
+  "READY TO LAUNCH": "LISTO PARA LANZAR",
+  "CARTS IN MOTION": "CARRITOS EN MOVIMIENTO",
+  "PAUSED": "EN PAUSA",
+  "AFTER COLLISION / REBOUND": "DESPUÉS DE LA COLISIÓN / REBOTE",
+  "AFTER COLLISION / JOINED": "DESPUÉS DE LA COLISIÓN / UNIDOS",
+  "PAUSED BEFORE END STOP": "EN PAUSA ANTES DEL TOPE",
+  // Transport and vectors
+  "▶ Launch": "▶ Lanzar",
+  "Ⅱ Pause": "Ⅱ Pausar",
+  "▶ Resume": "▶ Reanudar",
+  "Run complete": "Corrida completa",
+  "Step +0.02 s": "Avanzar +0.02 s",
+  "↺ Reset": "↺ Reiniciar",
+  "Playback": "Reproducción",
+  "¼× slow motion": "¼× cámara lenta",
+  "¹⁄₁₀× slow motion": "¹⁄₁₀× cámara lenta",
+  "SHOW VECTORS": "MOSTRAR VECTORES",
+  "Velocity": "Velocidad",
+  "Momentum": "Cantidad de movimiento",
+  "Separate scales · p = mv": "Escalas separadas · p = mv",
+  // Readouts and observations
+  "Cart A velocity": "Velocidad del carrito A",
+  "Cart B velocity": "Velocidad del carrito B",
+  "Total momentum": "Cantidad de movimiento total",
+  "Kinetic energy": "Energía cinética",
+  "Set up the carts, then launch. Watch how motion transfers from one cart to the other.": "Prepara los carritos y luego lánzalos. Observa cómo se transfiere el movimiento de un carrito al otro.",
+  "Set up the carts, then launch. Positive velocity is to the right; negative velocity is to the left.": "Prepara los carritos y luego lánzalos. La velocidad positiva es hacia la derecha; la velocidad negativa es hacia la izquierda.",
+  "The carts have rebounded. Total momentum and kinetic energy are unchanged. Compare each cart’s new velocity and momentum arrows.": "Los carritos rebotaron. La cantidad de movimiento total y la energía cinética no cambian. Compara las nuevas flechas de velocidad y de cantidad de movimiento de cada carrito.",
+  "The hook-and-loop pads have joined the carts. Both now have the same velocity. Total momentum is unchanged; some kinetic energy becomes internal energy.": "Las almohadillas de velcro unieron los carritos. Ahora los dos tienen la misma velocidad. La cantidad de movimiento total no cambia; parte de la energía cinética se convierte en energía interna.",
+  "The run paused before an end stop. An end-stop impact would exert an external impulse on the two-cart system. Reset to try another collision.": "La corrida se pausó antes de un tope. Un impacto contra el tope ejercería un impulso externo sobre el sistema de dos carritos. Reinicia para probar otra colisión.",
+  // Model note and footer
+  "Physics behind the simulation": "La física detrás de la simulación",
+  "For elastic collisions, v′A = [(mA − mB)vA + 2mBvB] / (mA + mB), with the corresponding expression for B. For perfectly inelastic collisions both carts move together at (mAvA + mBvB) / (mA + mB). Total momentum is signed; kinetic energy is ½mv² summed over both carts.": "Para las colisiones elásticas, v′A = [(mA − mB)vA + 2mBvB] / (mA + mB), con la expresión correspondiente para B. En las colisiones perfectamente inelásticas, los dos carritos se mueven juntos a (mAvA + mBvB) / (mA + mB). La cantidad de movimiento total tiene signo; la energía cinética es ½mv² sumada sobre los dos carritos.",
+  "The magnetic bumpers model a perfectly elastic interaction; hook-and-loop pads model sticking. Real equipment has rolling resistance and some energy loss. The collision is instantaneous in this ideal model; vector lengths change immediately at impact. The run ends before end-stop contact.": "Los parachoques magnéticos modelan una interacción perfectamente elástica; las almohadillas de velcro modelan carritos que se quedan pegados. El equipo real tiene resistencia a la rodadura y algo de pérdida de energía. En este modelo ideal la colisión es instantánea; la longitud de los vectores cambia de inmediato en el impacto. La corrida termina antes de tocar un tope.",
+  "ZornScience · Explore. Observe. Explain.": "ZornScience · Explora. Observa. Explica.",
+  "Conservation of momentum": "Conservación de la cantidad de movimiento"
+}};
+  i18n.configure(copy);
+}());
