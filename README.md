@@ -31,7 +31,7 @@ act-question-generator/    Standalone ACT question generator, v1.2.0 (400 questi
 act-science/               Redirect only: ACT Science Practice is now the Science section of act/
 wordpress/zornscience-act-history/  WordPress plugin for zornscience.org that stores ACT Practice scores under anonymous practice codes (not part of the static site)
 wordpress/zornscience-language/  WordPress plugin for zornscience.org that connects the Spanish pages under /es/ to their English twins: language toggle, Spanish menus and links, hreflang (not part of the static site)
-scientific-calculator/     Scientific Calculator Practice, v1.2.0 (independent scientific calculator with six guided exercises; English and Mexican Spanish)
+scientific-calculator/     Scientific Calculator Practice, v1.2.1 (independent scientific calculator with six guided exercises; English and Mexican Spanish)
 virtual-lab-graphing/      Virtual Lab Graphing Tool, v1.2.0 (student data, scatter plots, linear best fit and graph downloads; English and Mexican Spanish)
 gas-laws/                  Gas Laws Sandbox, v1.1.0 (English and Mexican Spanish)
 polyatomic-ion-trainer/    Polyatomic Ion Trainer, v2.2.0 (English and Mexican Spanish)
