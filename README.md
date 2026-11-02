@@ -38,14 +38,14 @@ polyatomic-ion-trainer/    Polyatomic Ion Trainer, v2.2.0 (English and Mexican S
 gas-lab/                   Gas Laws and KMT Lab, v1.0.0 (particle simulation, graphs and investigations)
 stoichiometry-coach/       Stoichiometry Coach, v1.0.0 (conversion factor setups with unit cancellation)
 atwood-machine/           The Atwood Machine, v1.1.0 (ideal pulley, adjustable masses and live vectors; no data recording; English and Mexican Spanish)
-physics-graphing-lab/      Physics Graphing Lab, v1.0.0 (a cart with linked position, velocity and acceleration graphs)
+physics-graphing-lab/      Physics Graphing Lab, v1.1.0 (a cart with linked position, velocity and acceleration graphs; English and Mexican Spanish)
 collision-carts/           Collision Carts, v1.1.0 (two carts on a track, elastic and inelastic collisions, live velocity and momentum vectors; English and Mexican Spanish)
 titration-lab/             Virtual Titration Simulator, v1.0.0 (burette, indicators and a live pH curve for strong and weak acids and bases)
 kinetics-lab/              Kinetics and Collision Theory Sandbox, v1.0.0 (colliding particles, temperature, concentration, activation energy and a catalyst, with a live concentration graph)
 redox-coach/              Redox Half-Reaction Balancer Coach, v1.2.0 (manual phase-by-phase balancing in acidic and basic media; English and Mexican Spanish)
 limiting-reactant/         Limiting Reactant Visualizer, v1.0.0 (molecules pair up into products and the excess reactant is left stranded, with a before, change and after table)
 projectile-lab/             Projectile Motion Vector Lab, v1.1.0 (a cannon with live velocity, component and acceleration vectors, snapshots and a velocity components graph; English and Mexican Spanish)
-circuit-builder/           Circuit Builder, v1.0.0 (drag batteries, wires, resistors, switches and bulbs onto a board; a multimeter probes voltage and current, and bulbs glow by their power)
+circuit-builder/           Circuit Builder, v1.1.0 (drag batteries, wires, resistors, switches and bulbs onto a board; a multimeter probes voltage and current, and bulbs glow by their power; English and Mexican Spanish)
 beers-law-lab/             Beer's Law Spectrophotometer Lab, v1.0.0 (zero with a blank, measure standards for a calibration curve, then calculate the concentration of a random unknown)
 equilibrium-lab/          Equilibrium Sandbox, v1.2.1 (Le Chatelier stresses, Kc/Qc and live concentration graphs)
 calorimetry-lab/          Calorimetry & Enthalpy Lab, v1.2.1 (heated-metal and neutralization calorimetry)
@@ -57,7 +57,7 @@ tests/                     automated tests (development only; see TESTING.md)
 package.json               test tooling only; the site has no dependencies
 ```
 
-faraday-lab/               Faraday’s Law · Magnet Drop, v1.0.0 (realistic tube apparatus, free-fall comparison, eddy currents, induced fields, pause and slow motion; no data recording)
+faraday-lab/               Faraday’s Law · Magnet Drop, v1.2.0 (realistic tube apparatus, free-fall comparison, eddy currents, induced fields, pause and slow motion; no data recording; English and Mexican Spanish)
 
 ## Publishing (GitHub Pages)
 
