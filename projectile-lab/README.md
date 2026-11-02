@@ -1,5 +1,5 @@
 # Projectile Motion Vector Lab
-Version: 1.0.1
+Version: 1.1.0
 
 A 2D dynamics lab for Physics. A cannon fires a ball from a launch height, angle and speed that students choose. The key feature is the vectors: students turn on live velocity, velocity component (vx and vy) and acceleration arrows on the ball, and can leave snapshots along the path. As the ball arcs, the vx arrow stays the same while the vy arrow shrinks, flips at the top and grows, and the acceleration arrow points down the whole time. A velocity components graph draws itself during the flight, results appear on landing, five questions check the main ideas, and a reflection prints with the lab.
 
@@ -72,6 +72,7 @@ Suggested links (add `&from=` with the lesson's own URL):
 | `model.js` | The model: the motion, the top and landing, scenarios, snapshot times, fitting the scene, phases, spoken descriptions, the questions and the CSV. No page code. |
 | `lab.js` | The page: settings and sliders, drawing the scene and arrows, the animation loop, the graph, results, the questions, printing, the download and deep links. |
 | `lab.css` | Layout, colors and print styles, prefixed `zsa-pj-`. |
+| `data.js` | Every English sentence template with its Mexican Spanish translation, for `../shared/zsa-i18n.js`. |
 
 ## Keyboard and screen readers
 - Every control is a native button, select, range slider, checkbox, radio button or text area. The sliders speak their values in words ("15 meters", "50 degrees above horizontal", "18.0 meters per second"), and the Time slider adds "top of the path" or "landed".
@@ -86,4 +87,9 @@ Suggested links (add `&from=` with the lesson's own URL):
 - No sideways scrolling from 320 px, and every button, slider, select, checkbox and radio label is at least 44 px.
 
 ## Changelog
+- 1.1.0: Mexican Spanish with `?lang=es` and the shared EN / ES header links. Every sentence is one full template in `data.js`.
 - 1.0.0: first version.
+
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the fallback. All student text, scenario names and descriptions, readouts, the insight line, the scene and graph labels and spoken descriptions, flight results, the questions and their feedback, live announcements, the print line, the CSV header row and the download announcement use the activity's `data.js`, and every sentence is one full template with placeholders, so Spanish keeps its own word order. Sentences that contain v<sub>x</sub> or v<sub>y</sub> are rebuilt from one template in Spanish, so they are never pieced together. The Spanish title is "Laboratorio de vectores del movimiento de proyectiles". Speed is "rapidez" and velocity is "velocidad", always kept separate; the ball is "el proyectil", a ledge is "cornisa" and the highest point is "el punto más alto". The noscript message is bilingual, since it shows before any script runs. Symbols, numbers, units and decimal points stay unchanged, and the CSV file name stays `zornscience-projectile-data.csv`. The toggle reloads the page, so a flight in progress starts over. See `../SPANISH_TERMS.md` for choices beyond the supplied glossary.

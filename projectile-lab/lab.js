@@ -2,7 +2,7 @@
 // ball) with live velocity, component and acceleration arrows and snapshots, playback with slow motion and a pause at
 // the top, the time scrubber, readouts, the velocity components graph, flight results, the questions, the reflection,
 // printing, CSV export, deep links and the live region. The physics and the text are in model.js, reached through a
-// "zsa-pj:request-model" event on the root (no globals).
+// "zsa-pj:request-model" event on the root (no globals). The words come from data.js through ../shared/zsa-i18n.js.
 (function () {
   "use strict";
   var root = document.querySelector('[data-zsa-activity="projectile-lab"]');
@@ -10,6 +10,14 @@
   var M;
   root.dispatchEvent(new CustomEvent("zsa-pj:request-model", {detail: {receive: function (value) { M = value; }}}));
   if (!M) return;
+  var i18n;
+  root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: function (api) { i18n = api; }}}));
+  // Every sentence is one full template from data.js, filled with values, so each language keeps its word order.
+  function tr(text, values) {
+    values = values || {};
+    if (i18n) return i18n.text(text, values);
+    return text.replace(/\{(\w+)\}/g, function (m, k) { return values[k] === undefined ? m : values[k]; });
+  }
 
   var SVG = "http://www.w3.org/2000/svg";
   var fmt = M.fmt;
@@ -38,30 +46,46 @@
   var shown = {v: true, c: true, a: false, s: false};
   function T() { return M.flightTime(p); }
   // Velocity in words for the readouts: "13.79 m/s up".
-  function signed(n, pos, neg) { return fmt(Math.abs(n)) + " m/s" + (Math.abs(n) < 0.005 ? "" : " " + (n > 0 ? pos : neg)); }
+  // pos and neg are the templates for each sign, such as "{v} m/s up" and "{v} m/s down".
+  function signed(n, pos, neg) { return Math.abs(n) < 0.005 ? fmt(Math.abs(n)) + " m/s" : tr(n > 0 ? pos : neg, {v: fmt(Math.abs(n))}); }
+  // Text with v<sub>x</sub> and v<sub>y</sub> in it, from one template with {vx} and {vy}. Used for the Spanish
+  // static text, so each sentence stays whole; the English markup is left as written.
+  function rich(el, template) {
+    clear(el);
+    template.split(/(\{v[xy]\})/).forEach(function (part) {
+      var m = /^\{v([xy])\}$/.exec(part);
+      if (m) { el.appendChild(document.createTextNode("v")); el.appendChild(node("sub", "", m[1])); }
+      else if (part) el.appendChild(document.createTextNode(part));
+    });
+  }
+  if (i18n && i18n.lang === "es") {
+    rich($("show-c").parentNode.lastChild, tr("Components, {vx} and {vy}"));
+    rich(root.querySelector(".zsa-pj-graphcard > .zsa-pj-small"), tr("The graph draws itself during the flight. A flat line means a component that does not change; the slope of the {vy} line is the acceleration."));
+    rich($("reflection-help"), tr("What happens to {vx} and to {vy} during the flight? Which way does the acceleration point, and how does that explain what each component does?"));
+  }
 
   // ---------- Settings ----------
   M.SCENARIOS.forEach(function (s) {
-    var o = node("option", "", s.label);
+    var o = node("option", "", tr(s.label));
     o.value = s.id;
     $("scenario").appendChild(o);
   });
-  var customOption = node("option", "", "Custom settings");
+  var customOption = node("option", "", tr("Custom settings"));
   customOption.value = "custom";
   $("scenario").appendChild(customOption);
-  var SLIDERS = [["h0", " m", 0, " meters"], ["angle", "°", 0, " degrees above horizontal"], ["speed", " m/s", 1, " meters per second"]];
+  var SLIDERS = [["h0", " m", 0, "{v} meters"], ["angle", "°", 0, "{v} degrees above horizontal"], ["speed", " m/s", 1, "{v} meters per second"]];
   function showSettings() {
     SLIDERS.forEach(function (s) {
       var input = $(s[0]);
       input.value = String(p[s[0]]);
-      input.setAttribute("aria-valuetext", fmt(p[s[0]], s[2]) + s[3]);
+      input.setAttribute("aria-valuetext", tr(s[3], {v: fmt(p[s[0]], s[2])}));
       $(s[0] + "-out").textContent = fmt(p[s[0]], s[2]) + s[1];
     });
     $("scenario").value = scenario;
     var sc = M.SCENARIOS.filter(function (s) { return s.id === scenario; })[0];
-    $("scenario-text").textContent = sc ? sc.text : "Your own launch. Predict what each arrow will do before you fire.";
+    $("scenario-text").textContent = sc ? tr(sc.text) : tr("Your own launch. Predict what each arrow will do before you fire.");
     var v = M.launch(p);
-    $("launch-parts").textContent = "At launch: vx = " + fmt(v.vx) + " m/s, vy = " + fmt(v.vy) + " m/s.";
+    $("launch-parts").textContent = tr("At launch: vx = {vx} m/s, vy = {vy} m/s.", {vx: fmt(v.vx), vy: fmt(v.vy)});
   }
 
   // ---------- The scene ----------
@@ -100,7 +124,7 @@
     var peakY = Y(M.maxHeight(p));
     if (M.topTime(p) !== null) {
       scene.peak.appendChild(svg("line", {x1: X(0), y1: peakY, x2: W - 14, y2: peakY, class: "zsa-pj-peakline"}));
-      scene.peak.appendChild(svg("text", {x: W - 16, y: peakY - 6, "text-anchor": "end", class: "zsa-pj-ticklabel"}, "highest point " + fmt(M.maxHeight(p), 1) + " m"));
+      scene.peak.appendChild(svg("text", {x: W - 16, y: peakY - 6, "text-anchor": "end", class: "zsa-pj-ticklabel"}, tr("highest point {h} m", {h: fmt(M.maxHeight(p), 1)})));
     }
     bg.appendChild(scene.peak);
     el.appendChild(bg);
@@ -121,8 +145,7 @@
     el.appendChild(fg);
     scene.snapKey = "";
     var a = f.arrows, landing = M.stateAt(p, T());
-    $("scale-note").textContent = T() > 0 ? "Velocity arrows are to scale with each other: the longest is the landing speed, " + fmt(landing.speed, 1) +
-      " m/s. The acceleration arrow, always 9.80 m/s² down, has its own scale." : "";
+    $("scale-note").textContent = T() > 0 ? tr("Velocity arrows are to scale with each other: the longest is the landing speed, {v} m/s. The acceleration arrow, always 9.80 m/s² down, has its own scale.", {v: fmt(landing.speed, 1)}) : "";
     scene.long = a.long;
   }
   // An arrow from (x, y) by (dx, dy) pixels, with a head, and a label beside its tip. Nothing when it is too short.
@@ -180,8 +203,8 @@
       axes.appendChild(svg("text", {x: X(n), y: GB + 16, "text-anchor": "middle", class: "zsa-pj-gtick"}, fmt(n, M.decimals(ts.step))));
     });
     axes.appendChild(svg("line", {x1: GL, y1: GT, x2: GL, y2: GB, class: "zsa-pj-axis"}));
-    axes.appendChild(svg("text", {x: (GL + GR) / 2, y: GH - 8, "text-anchor": "middle", class: "zsa-pj-gaxis"}, "Time (s)"));
-    axes.appendChild(svg("text", {x: 14, y: (GT + GB) / 2, "text-anchor": "middle", transform: "rotate(-90 14 " + (GT + GB) / 2 + ")", class: "zsa-pj-gaxis"}, "Velocity (m/s)"));
+    axes.appendChild(svg("text", {x: (GL + GR) / 2, y: GH - 8, "text-anchor": "middle", class: "zsa-pj-gaxis"}, tr("Time (s)")));
+    axes.appendChild(svg("text", {x: 14, y: (GT + GB) / 2, "text-anchor": "middle", transform: "rotate(-90 14 " + (GT + GB) / 2 + ")", class: "zsa-pj-gaxis"}, tr("Velocity (m/s)")));
     // The landing time, dashed, so the end of the flight is visible before the lines reach it.
     if (T() > 0) axes.appendChild(svg("line", {x1: X(T()), y1: GT, x2: X(T()), y2: GB, class: "zsa-pj-gend"}));
     el.appendChild(axes);
@@ -193,7 +216,7 @@
     graph.dvy = svg("circle", {r: 5, class: "zsa-pj-gdot zsa-pj-gdot-vy"});
     [graph.vx, graph.vy, graph.cursor, graph.dvx, graph.dvy].forEach(function (n) { marks.appendChild(n); });
     el.appendChild(marks);
-    $("graph-desc").textContent = T() > 0 ? M.graphDescription(p) : "Velocity components versus time: no flight to graph.";
+    $("graph-desc").textContent = T() > 0 ? M.graphDescription(p) : tr("Velocity components versus time: no flight to graph.");
   }
   function showGraph(st) {
     var n = 120, vx = [], vy = [], X = graph.X, Y = graph.Y;
@@ -227,12 +250,12 @@
     $("x-value").textContent = fmt(st.x) + " m";
     $("y-value").textContent = fmt(Math.max(0, st.y)) + " m";
     $("speed-value").textContent = fmt(st.speed) + " m/s";
-    $("vx-value").textContent = signed(st.vx, "right", "left");
-    $("vy-value").textContent = signed(st.vy, "up", "down");
-    $("a-value").textContent = "9.80 m/s² down";
+    $("vx-value").textContent = signed(st.vx, "{v} m/s right", "{v} m/s left");
+    $("vy-value").textContent = signed(st.vy, "{v} m/s up", "{v} m/s down");
+    $("a-value").textContent = tr("9.80 m/s² down");
     $("dir-value").textContent = M.direction(st.vx, st.vy);
     $("time").value = String(Math.min(t, Number($("time").max)));
-    $("time").setAttribute("aria-valuetext", fmt(t) + " seconds" + (M.phase(p, t) === "top" ? ", top of the path" : M.phase(p, t) === "landed" ? ", landed" : ""));
+    $("time").setAttribute("aria-valuetext", tr(M.phase(p, t) === "top" ? "{t} seconds, top of the path" : M.phase(p, t) === "landed" ? "{t} seconds, landed" : "{t} seconds", {t: fmt(t)}));
     // The path so far.
     var pts = [], n = 150;
     for (var i = 0; i <= n && f * i / n <= t; i++) { var s = M.stateAt(p, f * i / n); pts.push(scene.X(s.x).toFixed(1) + "," + scene.Y(Math.max(0, s.y)).toFixed(1)); }
@@ -260,14 +283,14 @@
     var r = M.summary(p), names = ["time", "height", "range", "landing"];
     if (!landed) {
       names.forEach(function (n) { $("r-" + n).textContent = "?"; });
-      $("results-note").textContent = r.time > 0 ? "Launch to find out. Predict first: how far will it go, and how fast will it hit the ground?" : "No flight: raise the angle or the launch height.";
+      $("results-note").textContent = r.time > 0 ? tr("Launch to find out. Predict first: how far will it go, and how fast will it hit the ground?") : tr("No flight: raise the angle or the launch height.");
       return;
     }
     $("r-time").textContent = fmt(r.time) + " s";
-    $("r-height").textContent = fmt(r.maxHeight) + " m" + (r.top !== null ? " at " + fmt(r.top) + " s" : " (the launch point)");
+    $("r-height").textContent = r.top !== null ? tr("{h} m at {t} s", {h: fmt(r.maxHeight), t: fmt(r.top)}) : tr("{h} m (the launch point)", {h: fmt(r.maxHeight)});
     $("r-range").textContent = fmt(r.range) + " m";
-    $("r-landing").textContent = fmt(r.landing.speed) + " m/s, " + M.direction(r.landing.vx, r.landing.vy);
-    $("results-note").textContent = "vx at landing: " + fmt(r.landing.vx) + " m/s, the same as at launch. vy at landing: " + fmt(r.landing.vy) + " m/s.";
+    $("r-landing").textContent = tr("{v} m/s, {dir}", {v: fmt(r.landing.speed), dir: M.direction(r.landing.vx, r.landing.vy)});
+    $("results-note").textContent = tr("vx at landing: {vx} m/s, the same as at launch. vy at landing: {vy} m/s.", {vx: fmt(r.landing.vx), vy: fmt(r.landing.vy)});
   }
 
   // ---------- Playback ----------
@@ -276,7 +299,7 @@
   var playing = false, frameId = 0, last = 0;
   function playLabel() {
     var f = T();
-    $("play").textContent = playing ? "Pause" : f > 0 && t >= f ? "Launch again" : t > 0 ? "Resume" : "Launch";
+    $("play").textContent = tr(playing ? "Pause" : f > 0 && t >= f ? "Launch again" : t > 0 ? "Resume" : "Launch");
     $("play").disabled = f <= 0;
   }
   function stop() {
@@ -289,7 +312,7 @@
     if (t >= T()) { t = 0; scene.snapKey = ""; }
     if (t === 0) {
       var v = M.launch(p);
-      announce("Launched at " + fmt(p.speed, 1) + " m/s, " + fmt(p.angle, 0) + "° above horizontal, from " + fmt(p.h0, 0) + " m. vx = " + fmt(v.vx) + " m/s, vy = " + fmt(v.vy) + " m/s.");
+      announce(tr("Launched at {speed} m/s, {angle}° above horizontal, from {h} m. vx = {vx} m/s, vy = {vy} m/s.", {speed: fmt(p.speed, 1), angle: fmt(p.angle, 0), h: fmt(p.h0, 0), vx: fmt(v.vx), vy: fmt(v.vy)}));
     }
     playing = true;
     last = 0;
@@ -297,7 +320,7 @@
     playLabel();
   }
   function topWords(st) {
-    return "Top of the path at " + fmt(st.t) + " s, " + fmt(st.y) + " m high. vy is 0 m/s; vx is still " + fmt(st.vx) + " m/s; the acceleration is still 9.80 m/s² down.";
+    return tr("Top of the path at {t} s, {y} m high. vy is 0 m/s; vx is still {vx} m/s; the acceleration is still 9.80 m/s² down.", {t: fmt(st.t), y: fmt(st.y), vx: fmt(st.vx)});
   }
   function tick(now) {
     frameId = 0;
@@ -311,7 +334,7 @@
         t = top;
         stop();
         show();
-        announce("Paused at the top. " + topWords(M.stateAt(p, top)));
+        announce(tr("Paused at the top. {top}", {top: topWords(M.stateAt(p, top))}));
         return;
       }
       announce(topWords(M.stateAt(p, top)));
@@ -320,11 +343,11 @@
     if (t >= f) {
       stop();
       var end = M.stateAt(p, f);
-      announce("Landed at " + fmt(f) + " s, " + fmt(end.x) + " m away. vx = " + fmt(end.vx) + " m/s, the same as at launch. vy = " + fmt(end.vy) + " m/s.");
+      announce(tr("Landed at {t} s, {x} m away. vx = {vx} m/s, the same as at launch. vy = {vy} m/s.", {t: fmt(f), x: fmt(end.x), vx: fmt(end.vx), vy: fmt(end.vy)}));
     } else frameId = window.requestAnimationFrame(tick);
   }
   $("play").addEventListener("click", function () { if (playing) stop(); else play(); });
-  $("reset").addEventListener("click", function () { stop(); t = 0; scene.snapKey = ""; playLabel(); show(); announce("Reset to the launch."); });
+  $("reset").addEventListener("click", function () { stop(); t = 0; scene.snapKey = ""; playLabel(); show(); announce(tr("Reset to the launch.")); });
   $("time").addEventListener("input", function () { stop(); t = Math.min(T(), Number($("time").value)); playLabel(); show(); });
   document.addEventListener("visibilitychange", function () { last = 0; });
 
@@ -346,7 +369,7 @@
     scenario = sc.id; p = {h0: sc.h0, angle: sc.angle, speed: sc.speed};
     showSettings();
     restart();
-    announce(sc.label + ". " + sc.text);
+    announce(tr("{label}. {text}", {label: tr(sc.label), text: tr(sc.text)}));
   });
   SLIDERS.forEach(function (s) {
     $(s[0]).addEventListener("input", function () {
@@ -360,7 +383,7 @@
   // ---------- Check your thinking ----------
   M.QUESTIONS.forEach(function (q, i) {
     var fs = node("fieldset", "zsa-pj-question");
-    fs.appendChild(node("legend", "", (i + 1) + ". " + q.text + "..."));
+    fs.appendChild(node("legend", "", tr("{n}. {text}...", {n: i + 1, text: tr(q.text)})));
     q.choices.forEach(function (ch) {
       var lab = node("label", "zsa-pj-choice"), input = node("input");
       input.type = "radio";
@@ -368,7 +391,7 @@
       input.value = ch.id;
       input.dataset.question = q.id;
       lab.appendChild(input);
-      lab.appendChild(node("span", "", ch.text));
+      lab.appendChild(node("span", "", tr(ch.text)));
       fs.appendChild(lab);
     });
     $("questions").appendChild(fs);
@@ -378,18 +401,19 @@
     root.querySelectorAll("[data-question]:checked").forEach(function (input) { answers[input.dataset.question] = input.value; });
     var results = M.check(answers), box = $("feedback");
     clear(box);
-    box.appendChild(node("h3", "", "Your answers"));
+    box.appendChild(node("h3", "", tr("Your answers")));
     results.forEach(function (r, i) { box.appendChild(node("p", r.ok ? "zsa-pj-ok" : "zsa-pj-notyet", (i + 1) + ". " + (r.ok ? "✓ " : "") + r.text)); });
     box.hidden = false;
     var right = results.filter(function (r) { return r.ok; }).length;
-    announce(right + " of " + results.length + " correct. " + results.map(function (r, i) { return (i + 1) + ". " + r.text; }).join(" "));
+    announce(tr("{right} of {total} correct.", {right: right, total: results.length}) + " " + results.map(function (r, i) { return (i + 1) + ". " + r.text; }).join(" "));
   });
 
   // ---------- Reflection, printing and data ----------
   function printSummary() {
-    var v = M.launch(p), r = M.summary(p), name = scenario === "custom" ? "Custom settings" : M.SCENARIOS.filter(function (s) { return s.id === scenario; })[0].label;
-    $("print-summary").textContent = "Launch: " + name + ". h₀ = " + fmt(p.h0, 0) + " m, θ = " + fmt(p.angle, 0) + "°, v₀ = " + fmt(p.speed, 1) + " m/s (vx = " + fmt(v.vx) +
-      " m/s, vy = " + fmt(v.vy) + " m/s). Shown at t = " + fmt(t) + " s." + (landed ? " Time in the air " + fmt(r.time) + " s, highest point " + fmt(r.maxHeight) + " m, range " + fmt(r.range) + " m." : "");
+    var v = M.launch(p), r = M.summary(p), name = tr(scenario === "custom" ? "Custom settings" : M.SCENARIOS.filter(function (s) { return s.id === scenario; })[0].label);
+    $("print-summary").textContent = tr("Launch: {name}. h₀ = {h} m, θ = {angle}°, v₀ = {speed} m/s (vx = {vx} m/s, vy = {vy} m/s). Shown at t = {t} s.",
+      {name: name, h: fmt(p.h0, 0), angle: fmt(p.angle, 0), speed: fmt(p.speed, 1), vx: fmt(v.vx), vy: fmt(v.vy), t: fmt(t)}) +
+      (landed ? " " + tr("Time in the air {time} s, highest point {h} m, range {range} m.", {time: fmt(r.time), h: fmt(r.maxHeight), range: fmt(r.range)}) : "");
   }
   // A print copy of the reflection: a text area prints only its visible lines, a paragraph prints all of it.
   function mirrorReflection() { $("print-reflection").textContent = $("reflection").value; }
@@ -407,7 +431,7 @@
     link.click();
     root.removeChild(link);
     window.setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-    announce("Flight data downloaded as zornscience-projectile-data.csv: time, position, velocity components, speed and acceleration every 0.05 s.");
+    announce(tr("Flight data downloaded as zornscience-projectile-data.csv: time, position, velocity components, speed and acceleration every 0.05 s."));
   });
 
   // ---------- Deep links and the back link ----------

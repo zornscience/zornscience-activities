@@ -1,5 +1,5 @@
 # Verification record
-Version: 1.0.1
+Version: 1.1.0
 Date: 2026-10-18
 Reviewer: Claude (built and tested 1.0.0)
 
@@ -28,6 +28,10 @@ PASS means the check was run on version 1.0.0 as committed and passed. Browser c
 | Console and CSP | PASS | Every browser test fails on any console error or warning, page error or CSP violation. |
 | House rules | PASS | `tests/unit/static.test.js` with the rest of the site. |
 | Visual check | PASS | Screenshots at 1366 and 390 px of the ledge, cliff and ground scenarios with every arrow and snapshots, reviewed by eye. |
+
+## Spanish verification
+
+`tests/e2e/i18n.spec.js` opens the lab with `?lang=es`, checks text and accessible attributes (including slider values) for leftover English, and exercises the defaults, the instructions and the share panel (the share link and email carry `?lang=es`), launching, the pause at the top, resuming to the landing with results, blank, right and wrong answers, the CSV header row and its announcement, the print line, a scenario change, Reset and a launch with no flight, with full-sentence templates. The unit tests still pass on the English model text, and the English page text, accessible labels, live region, print line and CSV header were compared with version 1.0.1 through the same states and are identical apart from the EN / ES header links, which the language toggle intentionally adds, and the bilingual noscript message. The Spanish layout was checked at 320, 360, 390, 768, 1366 and 1920 px with no sideways scrolling, 44 px language links and no axe-core violations at 390 and 1366 px.
 
 ## Not tested
 Real screen readers (NVDA, VoiceOver, ChromeVox), Firefox, Safari, Chromebooks and phones, printing to paper (print media was emulated), and the live site.

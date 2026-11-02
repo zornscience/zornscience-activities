@@ -1,12 +1,24 @@
 // Projectile Motion Vector Lab: the model. A ball launched from a cannon at a height, angle and speed, with no air
 // resistance: the motion, the key moments (top of the path, landing), the scenarios, snapshot times, the fit of the
 // flight and its vectors into the scene, the phase text, spoken descriptions, the questions and the CSV export. No
-// drawing: lab.js builds the page.
+// drawing: lab.js builds the page. The English text is here; data.js holds each template's Mexican Spanish.
 //
 // No globals: the page asks for this module with a "zsa-pj:request-model" event on the activity root.
 // (In Node, for the unit tests, it is module.exports.)
 (function () {
   "use strict";
+  // Words come from data.js through the shared language module. In Node (the unit tests) and in English, each
+  // template is filled as written. Every sentence is one full template, so Spanish keeps its own word order.
+  var i18n;
+  if (typeof document !== "undefined") {
+    var host = document.querySelector('[data-zsa-activity="projectile-lab"]');
+    if (host) host.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: function (api) { i18n = api; }}}));
+  }
+  function t(text, values) {
+    values = values || {};
+    if (i18n) return i18n.text(text, values);
+    return text.replace(/\{(\w+)\}/g, function (m, k) { return values[k] === undefined ? m : values[k]; });
+  }
 
   var G = 9.8;
   // Slider ranges: launch height (m), launch angle (degrees above horizontal) and launch speed (m/s).
@@ -145,46 +157,51 @@
   }
   // The direction of a velocity in words.
   function direction(vx, vy) {
-    if (Math.abs(vx) < 0.005 && Math.abs(vy) < 0.005) return "at rest";
-    if (Math.abs(vx) < 0.005) return vy > 0 ? "straight up" : "straight down";
+    if (Math.abs(vx) < 0.005 && Math.abs(vy) < 0.005) return t("at rest");
+    if (Math.abs(vx) < 0.005) return vy > 0 ? t("straight up") : t("straight down");
     var deg = Math.atan2(vy, vx) * 180 / Math.PI;
-    if (Math.abs(deg) < 0.5) return "horizontally to the right";
-    return fmt(Math.abs(deg), 0) + "° " + (deg > 0 ? "above" : "below") + " horizontal";
+    if (Math.abs(deg) < 0.5) return t("horizontally to the right");
+    return t(deg > 0 ? "{deg}° above horizontal" : "{deg}° below horizontal", {deg: fmt(Math.abs(deg), 0)});
   }
   // What the vectors are doing now, under the scene.
-  function insight(p, t) {
-    var v = launch(p), st = stateAt(p, t), vx = fmt(v.vx) + " m/s";
-    switch (phase(p, t)) {
-      case "none": return "Launched along the ground, the ball has no time in the air. Raise the angle or the launch height.";
-      case "ready": return "At launch, vx = " + vx + " and vy = " + fmt(v.vy) + " m/s. Which component do you think will change during the flight, and which will stay the same?";
-      case "rising": return "Rising: vy is positive (up) and shrinking by 9.8 m/s every second, because the acceleration points down. vx is still " + vx + ".";
-      case "top": return "At the top: vy is zero, but vx is still " + vx + ", so the ball is still moving" + (v.vx > 0.005 ? " sideways" : "") + ". The acceleration is still 9.8 m/s² down, even here.";
-      case "falling": return "Falling: vy is negative (down) and growing by 9.8 m/s every second. vx is still " + vx + ".";
-      default: return "Landed after " + fmt(t) + " s. vx stayed " + vx + " the whole time. vy went from " + fmt(v.vy) + " to " + fmt(st.vy) +
-        " m/s, a change of " + fmt(st.vy - v.vy) + " m/s: 9.8 m/s less for each of the " + fmt(t) + " seconds.";
+  function insight(p, time) {
+    var v = launch(p), st = stateAt(p, time), vx = fmt(v.vx);
+    switch (phase(p, time)) {
+      case "none": return t("Launched along the ground, the ball has no time in the air. Raise the angle or the launch height.");
+      case "ready": return t("At launch, vx = {vx} m/s and vy = {vy} m/s. Which component do you think will change during the flight, and which will stay the same?", {vx: vx, vy: fmt(v.vy)});
+      case "rising": return t("Rising: vy is positive (up) and shrinking by 9.8 m/s every second, because the acceleration points down. vx is still {vx} m/s.", {vx: vx});
+      case "top": return t(v.vx > 0.005 ? "At the top: vy is zero, but vx is still {vx} m/s, so the ball is still moving sideways. The acceleration is still 9.8 m/s² down, even here." :
+        "At the top: vy is zero, but vx is still {vx} m/s, so the ball is still moving. The acceleration is still 9.8 m/s² down, even here.", {vx: vx});
+      case "falling": return t("Falling: vy is negative (down) and growing by 9.8 m/s every second. vx is still {vx} m/s.", {vx: vx});
+      default: return t("Landed after {t} s. vx stayed {vx} m/s the whole time. vy went from {vy0} to {vy} m/s, a change of {dvy} m/s: 9.8 m/s less for each of the {t} seconds.",
+        {t: fmt(time), vx: vx, vy0: fmt(v.vy), vy: fmt(st.vy), dvy: fmt(st.vy - v.vy)});
     }
   }
   // What a screen reader hears for the scene.
-  function describe(p, t, shown) {
-    var T = flightTime(p);
-    var setup = "Cannon " + (p.h0 > 0 ? "on a " + fmt(p.h0, 0) + " m ledge" : "on the ground") + ", aimed " + fmt(p.angle, 0) + "° above horizontal, launch speed " + fmt(p.speed, 1) + " m/s.";
-    if (T <= 0) return setup + " The ball cannot leave the ground.";
-    var st = stateAt(p, t), ph = phase(p, t), text = setup + " ";
-    text += ph === "ready" ? "Ball at the launch point, " : ph === "landed" ? "Ball landed " + fmt(st.x) + " m away after " + fmt(t) + " s, " :
-      "At " + fmt(t) + " s the ball is " + fmt(st.x) + " m across and " + fmt(st.y) + " m high" + (ph === "top" ? ", at the top of its path, " : ", ");
-    text += (ph === "landed" ? "hitting the ground at " : "moving at ") + fmt(st.speed) + " m/s " + direction(st.vx, st.vy) + ".";
+  function describe(p, time, shown) {
+    var T = flightTime(p), aim = {h: fmt(p.h0, 0), angle: fmt(p.angle, 0), speed: fmt(p.speed, 1)};
+    var setup = t(p.h0 > 0 ? "Cannon on a {h} m ledge, aimed {angle}° above horizontal, launch speed {speed} m/s." :
+      "Cannon on the ground, aimed {angle}° above horizontal, launch speed {speed} m/s.", aim);
+    if (T <= 0) return setup + " " + t("The ball cannot leave the ground.");
+    var st = stateAt(p, time), ph = phase(p, time);
+    var values = {t: fmt(time), x: fmt(st.x), y: fmt(st.y), speed: fmt(st.speed), dir: direction(st.vx, st.vy)};
+    var text = setup + " " + t(ph === "ready" ? "Ball at the launch point, moving at {speed} m/s {dir}." :
+      ph === "landed" ? "Ball landed {x} m away after {t} s, hitting the ground at {speed} m/s {dir}." :
+      ph === "top" ? "At {t} s the ball is {x} m across and {y} m high, at the top of its path, moving at {speed} m/s {dir}." :
+      "At {t} s the ball is {x} m across and {y} m high, moving at {speed} m/s {dir}.", values);
     var arrows = [];
-    if (shown.v) arrows.push("velocity");
-    if (shown.c) arrows.push("vx " + fmt(st.vx) + " m/s and vy " + fmt(st.vy) + " m/s");
-    if (shown.a) arrows.push("acceleration 9.80 m/s² down");
-    if (arrows.length) text += " Arrows: " + arrows.join(", ") + ".";
-    if (shown.s) text += " Snapshots every " + String(snapStep(T)) + " s.";
+    if (shown.v) arrows.push(t("velocity"));
+    if (shown.c) arrows.push(t("vx {vx} m/s and vy {vy} m/s", {vx: fmt(st.vx), vy: fmt(st.vy)}));
+    if (shown.a) arrows.push(t("acceleration 9.80 m/s² down"));
+    if (arrows.length) text += " " + t("Arrows: {list}.", {list: arrows.join(", ")});
+    if (shown.s) text += " " + t("Snapshots every {s} s.", {s: String(snapStep(T))});
     return text;
   }
   function graphDescription(p) {
     var T = flightTime(p), v = launch(p), end = stateAt(p, T), top = topTime(p);
-    return "Velocity components versus time, 0 to " + fmt(T) + " s. vx is a horizontal line at " + fmt(v.vx) + " m/s. vy is a straight line from " +
-      fmt(v.vy) + " m/s down to " + fmt(end.vy) + " m/s, slope −9.80 m/s²" + (top !== null ? ", crossing zero at " + fmt(top) + " s, the top of the path." : ".");
+    var values = {T: fmt(T), vx: fmt(v.vx), vy0: fmt(v.vy), vy: fmt(end.vy), top: top !== null ? fmt(top) : ""};
+    return t(top !== null ? "Velocity components versus time, 0 to {T} s. vx is a horizontal line at {vx} m/s. vy is a straight line from {vy0} m/s down to {vy} m/s, slope −9.80 m/s², crossing zero at {top} s, the top of the path." :
+      "Velocity components versus time, 0 to {T} s. vx is a horizontal line at {vx} m/s. vy is a straight line from {vy0} m/s down to {vy} m/s, slope −9.80 m/s².", values);
   }
 
   // Check your thinking: multiple choice, with feedback for each choice.
@@ -223,15 +240,15 @@
   function check(answers) {
     return QUESTIONS.map(function (q) {
       var pick = answers[q.id];
-      if (!pick) return {id: q.id, ok: false, text: "No answer yet."};
+      if (!pick) return {id: q.id, ok: false, text: t("No answer yet.")};
       var c = q.choices.filter(function (ch) { return ch.id === pick; })[0];
-      return {id: q.id, ok: pick === q.answer, text: c.feedback};
+      return {id: q.id, ok: pick === q.answer, text: t(c.feedback)};
     });
   }
 
   // The flight every 0.05 s and at landing, plain minus signs for spreadsheets.
   function csv(p) {
-    var T = flightTime(p), rows = ["Time (s),x (m),y (m),vx (m/s),vy (m/s),Speed (m/s),ax (m/s^2),ay (m/s^2)"], times = [];
+    var T = flightTime(p), rows = [t("Time (s),x (m),y (m),vx (m/s),vy (m/s),Speed (m/s),ax (m/s^2),ay (m/s^2)")], times = [];
     for (var i = 0; i * 0.05 < T - 1e-9; i++) times.push(i * 0.05);
     times.push(T);
     times.forEach(function (t) {
