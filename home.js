@@ -101,6 +101,8 @@
   "Gas Laws and KMT Lab": "Laboratorio de leyes de los gases y TCM",
   "Move a piston, heat and add gas, and watch particles hit the walls. Graph the gas laws, compare speed distributions, mix gases and see when real gases stop acting ideal.": "Mueve un pistón, calienta y agrega gas, y observa cómo las partículas chocan con las paredes. Grafica las leyes de los gases, compara distribuciones de rapidez, mezcla gases y ve cuándo los gases reales dejan de comportarse como ideales.",
   "AP Chemistry · Acids and Bases": "Química AP · Ácidos y bases",
+  "pH & Buffer Lab": "Laboratorio de pH y soluciones amortiguadoras",
+  "Explore pH, build conjugate pairs, and add acid or base to water and a buffer. Compare buffer capacity with a live graph and downloadable data.": "Explora el pH, prepara pares conjugados y agrega ácido o base al agua y a un amortiguador. Compara la capacidad amortiguadora con una gráfica en vivo y datos descargables.",
   "Virtual Titration Simulator": "Simulador virtual de titulación",
   "Pick an analyte, a titrant and an indicator, then add titrant drop by drop and watch the pH curve grow. Find the equivalence point, and read the pKa at the half-equivalence point.": "Elige un analito, un titulante y un indicador, y luego agrega el titulante gota a gota y observa cómo crece la curva de pH. Encuentra el punto de equivalencia y lee el pKa en el punto de semiequivalencia.",
   "AP Chemistry · Kinetics": "Química AP · Cinética",
