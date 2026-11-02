@@ -1,5 +1,5 @@
 # Verification record
-Version: 1.0.1
+Version: 1.1.0
 Date: 2026-10-18
 Reviewer: Claude (built and tested 1.0.0)
 
@@ -32,6 +32,9 @@ PASS means the check was run on version 1.0.0 as committed and passed. Browser c
 | Console and CSP | PASS | Every browser test fails on any console error or warning, page error or CSP violation. |
 | House rules | PASS | `tests/unit/static.test.js` with the rest of the site. |
 | Visual check | PASS | Screenshots at 1366, 900 and 390 px of the side by side, mixed and parallel with a switch circuits, reviewed by eye. |
+
+## Spanish verification
+`tests/e2e/i18n.spec.js` opens the lab with `?lang=es` and checks text, accessible names and slider values for leftover English. It covers the title, the Instructions dialog and the Share panel (link with `?lang=es`), every starting circuit, building a short circuit by keyboard, undo and clear, opening and closing a switch, a battery's voltage and flip, the meter in voltage and current mode, swapping and removing probes, moving charge on a fake clock, blank, wrong and right answers, the CSV header and file name, the print summary, and no sideways scrolling with a 44 px language toggle at 320 and 390 px. English text, accessible names, the live region, the print summary and the CSV were compared with version 1.0.1 through the same states and are identical. The language toggle intentionally adds header controls.
 
 ## Not tested
 Real screen readers (NVDA, VoiceOver, ChromeVox), Firefox, Safari, touch screens (dragging was tested with a mouse), Chromebooks and phones, printing to paper (print media was emulated), and the live site.

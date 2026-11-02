@@ -18,10 +18,13 @@ const labs = {
   "beers-law-lab":"Laboratorio de la ley de Beer con espectrofotómetro",
   "calorimetry-lab":"Laboratorio de calorimetría y entalpía",
   "chemical-bonding-lab":"Laboratorio de enlace químico",
+  "circuit-builder":"Constructor de circuitos",
   "collision-carts":"Carritos de colisión",
   "electrochemistry-lab":"Constructor de celdas electroquímicas",
   "equilibrium-lab":"Explorador del equilibrio",
   "equilibrium-thermo-lab":"Selección de un laboratorio de química",
+  "equipotential-lab":"Líneas equipotenciales y mapeo de campos eléctricos",
+  "faraday-lab":"Ley de Faraday · Caída del imán",
   "flame-test-lab":"Laboratorio virtual de prueba de llama",
   "gas-lab":"Laboratorio de leyes de los gases y TCM",
   "gravimetric-lab":"Análisis gravimétrico",
@@ -32,11 +35,14 @@ const labs = {
   "metals-lab":"Metales, no metales y metaloides",
   "net-ionic-lab":"Laboratorio de reacciones iónicas netas",
   "pendulum-lab":"El péndulo simple",
+  "physics-graphing-lab":"Laboratorio de gráficas de física",
   "projectile-lab":"Laboratorio de vectores del movimiento de proyectiles",
   "redox-coach":"Práctica de balanceo de semirreacciones redox",
+  "snells-law-lab":"Ley de Snell y refracción",
+  "standing-waves-lab":"Ondas estacionarias en una cuerda",
   "titration-lab":"Simulador virtual de titulación"
 };
-const english = /\b(?:ZornScience home|Practice|Reference|Feedback|Results|Start|Finish|Help|Options|Time|Show|Incorrect|Wrong|Recall|Cards|Card|Points|Streak|Selected|Unknown|Period|Group|Symbol|Block|Element|Copied|the|your|Choose|You|Hint|Another hint|Both hints|Correct|Not yet|No data|Across a period|Down a group|Common ion|Next question|End session|Time remaining|points|recalled|Question|Answer|Instructions|Share|Close|Copy link|Practice options|Valence electrons|Next element|Completion code|Ion name|Formula \+ charge|Show answer|Still learning|Start flashcards|Quiz game|Session complete|Element details|Atomic number|Color by|Find an element|Full screen|Gas Laws Sandbox|Particle model|Gas controls|Reset|Pause motion|Live graph|Absorbance|Transmittance|Wavelength|Spectrophotometer|Cuvette|Calibration|Standards|Blank|Measure|Concentration|Best-fit|Remove|Grating|Lamp|distilled|Calorimetry|Calorimeter|Experiment|Copper|Aluminum|Water|Heated|Simulated|Insulation|Probe|Trials|Measured|Specific heat|Neutralization|Prediction|Equilibrium Sandbox|Temperature|Pressure|vessel|Forward|Reverse|Advance|Resume|Download|shifts|Flame|Sample|Samples|Lithium|Sodium|Potassium|Strontium|Barium|Cesium|Chloride|Burner|Tested|Investigation|Tray|Volume|Speeds|Graphs|Investigations|Mixture|Container|piston|dots|Record point|Run sweep|Set up the lab|Make the change for me|Test in the lab|Solution|Playback|Stopped|Iodine|starch|beaker|endpoint|trial|challenge|Clock|Collision|Collisions|Catalyst|Activation|Successful|Running|Paused|Bounce|Earlier|Sandbox|Run|Energy|Titrant|Burette|Stopcock|Endpoint|Analyte|Equivalence|Refill|Indicator|Phenolphthalein|Hydrochloric|flask|drop|Bonding|Unknowns|Appearance|Conductivity|Melting|Malleability|cyclohexane|probes|scoopula|pestle|mortar|tongs|foil|Weigh|Stir|Lift|Immerse|rinse|Dispose|Load|Switch|plate|brittle|malleable|crystals|granules|solid|fresh|Repeat|Bench|Station|stations|watch glass|Copy|Link|simulation|portion|portions|Nonpolar|very high|Equipment|Heating|cooling|boat|Observation|cylinder|Sweep|luster|Flatten|fracture|Electrochemistry|Electrochemical|Cell Builder|cell|cells|Anode|Cathode|oxidation|reduction|electrode|electrodes|electrons|Galvanic|Electrolytic|spontaneous|half-cell|half-cells|Swap|salt bridge|voltmeter|circuit|Power supply|DC SUPPLY|OFF|STANDARD|Step once|Restart particles|Clear bench|Place|Silver|beakers|Run cell|Sample complete|Ready|Event|events|atoms|atom|deposited|transferred|lost|gains|loses|Slow|Fast|Animation|explanations|ions|bead|Observe|Explore|Particle key|Scope|agar gel|wires|meter|Calculated|Applied|Left|Right|Gravimetric|Gravimetry|Crucible|Desiccator|Oven|Weighing|Goggles|Filter paper|Funnel|Vacuum|Filtration|Precipitate|Supernatant|Sediment|Decant|Wash|Deionized|Carbonate|Moisture|Dry|Cool|Heat|Step|Reading|Reveal|Inspect|Evidence|Laboratory|lab|Prepare|Separate|Settle|overnight|Analysis|Analytical|Constant mass|Accelerated|Live|Identify|tester|waste|pipette|inspection|flattens|fractures|bubbles|solids|Nonmetal|Nonmetals|Metalloid|Metalloids|Strong|Weak|Open|Pour|Borosilicate|glass|acid|Reaction|Reagent|Reagents|mixing|Mixed|Settling|Settled|Glassware|Lead|Calcium|Iron|Nitrate|Sulfate|Hydroxide|colorless|Adding|Lowering|strip|Observing|replay|bottle|Reactants|Products|Half-Reaction|half-reactions|Balancer|Undo|Restart|species|multiplier|multiplied|Merge|Total charge|Cancel mode|medium|Acidic|Basic|Unassigned|Permanganate|iodide|yields|Selection|placed|Success|balanced|locked|current|Hanger|hangers|Pulley|Release|masses|Equal|Transfer|Acceleration|Gravity|tension|Slow motion|Real time|apparatus|String|Steel|Travel|accelerates|driving|Speed|weight|weights|Massless|frictionless|Brass|discs|motion|inertia|Carts?|Launch|Bumpers?|Momentum|Velocity|Kinetic energy|Track|Rebound|Joined|In motion|Hook|Pads|End stop|Setup|Hooke’s|Harmonic|Spring|Springs|Damping|damped|Slotted|Mass|Extension|Displacement|Equilibrium|Oscillating|oscillation|oscillate|Pull|Released|Net force|Amplitude|Position|Ruler|Retort|Timer|Pause|Force|Investigate|cycle|cycles|peak|peaks|Unloaded|Held|downward|upward|stand|hanging|pointer|soft|firm|Inclined|Plane|Ramp|Friction|Wood|Felt|Plastic|downhill|slide|sliding|slip|Kinetic|Static|Rest|Resolve|arrows|Critical|Mechanics|protractor|hinge|Surface|angle|Return|DISTANCE|Adjustable|tipping|Pendulum|pendulums|oscillations|bob|swing|Length|Moon|Earth|Jupiter|Potential|Outbound|Returning|Dashed|Moving|turning point|Double|Free exploration|restoring|pivot|Projectile|Cannon|ball|Launched|Snapshots|snapshot|flight|Highest|ledge|cliff|Landed|landing|Rising|Falling|arrow|above|below|straight|seconds|meters|Across|Height|Direction|Range|Custom|Steep|Ground|Components|component|vectors)\b/i;
+const english = /\b(?:ZornScience home|Practice|Reference|Feedback|Results|Start|Finish|Help|Options|Time|Show|Incorrect|Wrong|Recall|Cards|Card|Points|Streak|Selected|Unknown|Period|Group|Symbol|Block|Element|Copied|the|your|Choose|You|Hint|Another hint|Both hints|Correct|Not yet|No data|Across a period|Down a group|Common ion|Next question|End session|Time remaining|points|recalled|Question|Answer|Instructions|Share|Close|Copy link|Practice options|Valence electrons|Next element|Completion code|Ion name|Formula \+ charge|Show answer|Still learning|Start flashcards|Quiz game|Session complete|Element details|Atomic number|Color by|Find an element|Full screen|Gas Laws Sandbox|Particle model|Gas controls|Reset|Pause motion|Live graph|Absorbance|Transmittance|Wavelength|Spectrophotometer|Cuvette|Calibration|Standards|Blank|Measure|Concentration|Best-fit|Remove|Grating|Lamp|distilled|Calorimetry|Calorimeter|Experiment|Copper|Aluminum|Water|Heated|Simulated|Insulation|Probe|Trials|Measured|Specific heat|Neutralization|Prediction|Equilibrium Sandbox|Temperature|Pressure|vessel|Forward|Reverse|Advance|Resume|Download|shifts|Flame|Sample|Samples|Lithium|Sodium|Potassium|Strontium|Barium|Cesium|Chloride|Burner|Tested|Investigation|Tray|Volume|Speeds|Graphs|Investigations|Mixture|Container|piston|dots|Record point|Run sweep|Set up the lab|Make the change for me|Test in the lab|Solution|Playback|Stopped|Iodine|starch|beaker|endpoint|trial|challenge|Clock|Collision|Collisions|Catalyst|Activation|Successful|Running|Paused|Bounce|Earlier|Sandbox|Run|Energy|Titrant|Burette|Stopcock|Endpoint|Analyte|Equivalence|Refill|Indicator|Phenolphthalein|Hydrochloric|flask|drop|Bonding|Unknowns|Appearance|Conductivity|Melting|Malleability|cyclohexane|probes|scoopula|pestle|mortar|tongs|foil|Weigh|Stir|Lift|Immerse|rinse|Dispose|Load|Switch|plate|brittle|malleable|crystals|granules|solid|fresh|Repeat|Bench|Station|stations|watch glass|Copy|Link|simulation|portion|portions|Nonpolar|very high|Equipment|Heating|cooling|boat|Observation|cylinder|Sweep|luster|Flatten|fracture|Electrochemistry|Electrochemical|Cell Builder|cell|cells|Anode|Cathode|oxidation|reduction|electrode|electrodes|electrons|Galvanic|Electrolytic|spontaneous|half-cell|half-cells|Swap|salt bridge|voltmeter|circuit|Power supply|DC SUPPLY|OFF|STANDARD|Step once|Restart particles|Clear bench|Place|Silver|beakers|Run cell|Sample complete|Ready|Event|events|atoms|atom|deposited|transferred|lost|gains|loses|Slow|Fast|Animation|explanations|ions|bead|Observe|Explore|Particle key|Scope|agar gel|wires|meter|Calculated|Applied|Left|Right|Gravimetric|Gravimetry|Crucible|Desiccator|Oven|Weighing|Goggles|Filter paper|Funnel|Vacuum|Filtration|Precipitate|Supernatant|Sediment|Decant|Wash|Deionized|Carbonate|Moisture|Dry|Cool|Heat|Step|Reading|Reveal|Inspect|Evidence|Laboratory|lab|Prepare|Separate|Settle|overnight|Analysis|Analytical|Constant mass|Accelerated|Live|Identify|tester|waste|pipette|inspection|flattens|fractures|bubbles|solids|Nonmetal|Nonmetals|Metalloid|Metalloids|Strong|Weak|Open|Pour|Borosilicate|glass|acid|Reaction|Reagent|Reagents|mixing|Mixed|Settling|Settled|Glassware|Lead|Calcium|Iron|Nitrate|Sulfate|Hydroxide|colorless|Adding|Lowering|strip|Observing|replay|bottle|Reactants|Products|Half-Reaction|half-reactions|Balancer|Undo|Restart|species|multiplier|multiplied|Merge|Total charge|Cancel mode|medium|Acidic|Basic|Unassigned|Permanganate|iodide|yields|Selection|placed|Success|balanced|locked|current|Hanger|hangers|Pulley|Release|masses|Equal|Transfer|Acceleration|Gravity|tension|Slow motion|Real time|apparatus|String|Steel|Travel|accelerates|driving|Speed|weight|weights|Massless|frictionless|Brass|discs|motion|inertia|Carts?|Launch|Bumpers?|Momentum|Velocity|Kinetic energy|Track|Rebound|Joined|In motion|Hook|Pads|End stop|Setup|Hooke’s|Harmonic|Spring|Springs|Damping|damped|Slotted|Mass|Extension|Displacement|Equilibrium|Oscillating|oscillation|oscillate|Pull|Released|Net force|Amplitude|Position|Ruler|Retort|Timer|Pause|Force|Investigate|cycle|cycles|peak|peaks|Unloaded|Held|downward|upward|stand|hanging|pointer|soft|firm|Inclined|Plane|Ramp|Friction|Wood|Felt|Plastic|downhill|slide|sliding|slip|Kinetic|Static|Rest|Resolve|arrows|Critical|Mechanics|protractor|hinge|Surface|angle|Return|DISTANCE|Adjustable|tipping|Pendulum|pendulums|oscillations|bob|swing|Length|Moon|Earth|Jupiter|Potential|Outbound|Returning|Dashed|Moving|turning point|Double|Free exploration|restoring|pivot|Projectile|Cannon|ball|Launched|Snapshots|snapshot|flight|Highest|ledge|cliff|Landed|landing|Rising|Falling|arrow|above|below|straight|seconds|meters|Across|Height|Direction|Range|Custom|Steep|Ground|Components|component|vectors|Circuit Builder|Battery|Batteries|Bulb|Bulbs|Wire|Resistor|Resistors|Switches|Multimeter|Voltage|Brightness|Readings|Short circuit|Lit|Dark|Brightest|Equally bright|Flip|Swap probes|Clear board|Undone|Tap board|Not placed|removed|moved|empty|loop|branch|branches|parallel|Supplies|pushes|Meter reads|Through|flowing|Choose a part|Your own circuit|Empty board|Erase|Where|Setting|Power|closed|opened|Equipotential|Equipotentials|Contour|contours|Charge tray|charge|charges|Quadrupole|Dipole|Like charges|Positive|Negative|Configuration|Grid|Mapping|Electric|field|infinity|Predict|nonzero|point charge|thumbtacks|centimeters|Arrange|Gold|workbench|Drag|None|added|Magnet|magnets|Tube|Eddy|Induced|flux|Slot|braking|Neodymium|Cutaway|Ring|poles|Strength|Explain|Caught|clamps|trays|insulating|insulator|conventional|clockwise|counterclockwise|Approaching|Leaving|Faraday’s|Lenz’s|frozen|wall|loops|graph|Sketch|Predicted|versus|slope|origin|curve|Cruise|steady|scale|edge|keyboard|Three views|Lab mode|Initial|Stay at rest|Turn around|Speed up|Slow to a stop|turns around|crosses zero|whole time|point object|rough guide|grade|Snell’s|Refraction|Laser|Incidence|Acrylic|Diamond|Air|beam|rays|Breadboard|Surrounding|degrees|Snap|Zoom|threshold|Just below|Just above|transmitted|reflected|incident|Optical|Angle guides|Full bench|bends|Matching indices|Standing|Harmonics|Oscillator|Strobe|Generator|Vibrator|Tuned|Detuned|Resonance|Resonances|Antinode|Antinodes|Node|Nodes|Envelope|Drive|Frequency|neighboring|Adjacent|crests|density|cord|Vibrating)\b/i;
 async function noEnglish(page) {
   const strings = await page.locator("body").evaluate(body => {
     const result = [];
@@ -1856,6 +1862,756 @@ test("projectile-lab opens in Mexican Spanish and translates the flight, vectors
   await expect(page.locator("#zsa-pj-scene-desc")).toHaveText("Cañón en el suelo, apuntando a 0° sobre la horizontal, con una rapidez de lanzamiento de 12.0 m/s. El proyectil no puede despegar del suelo.");
   await expect(page.locator("#zsa-pj-dir-value")).toHaveText("horizontalmente hacia la derecha");
   await noEnglish(page);
+  expect(errors).toEqual([]);
+});
+
+test("circuit-builder opens in Mexican Spanish and translates circuits, parts, the multimeter, readings, questions, CSV and printing", async ({page}) => {
+  const errors = [];
+  page.on("pageerror", e => errors.push(e.message));
+  await page.clock.install({time: new Date("2026-10-18T12:00:00")});
+  await page.clock.pauseAt(new Date("2026-10-18T12:00:01"));
+  await page.goto("/circuit-builder/?lang=es");
+  const live = page.locator("#zsa-cb-live");
+  async function heard(text) { await page.clock.runFor(100); await expect(live).toHaveText(text); }
+  const spot = (a, b) => page.getByRole("button", {name: new RegExp("^De " + a + " a " + b + ": ")});
+  const tool = name => page.getByRole("group", {name: "Piezas"}).getByRole("button", {name: name, exact: true});
+  await expect(page.locator("html")).toHaveAttribute("lang", "es-MX");
+  await expect(page).toHaveTitle("Constructor de circuitos | ZornScience");
+  await expect(page.getByRole("link", {name: "ES Español", exact: true})).toHaveAttribute("aria-current", "true");
+  await expect(page.getByRole("heading", {level: 1})).toHaveText("Constructor de circuitos");
+  await expect(page.locator("#zsa-cb-preset-text")).toHaveText("Un foco conectado a una pila de 6 V: el brillo con el que se compara cada uno de los demás circuitos.");
+  await expect(page.locator("#zsa-cb-insight")).toHaveText(/^Pila 1 empuja 0\.600 A por el circuito, con una resistencia total de 10\.0 Ω\. Los focos y las resistencias usan 3\.60 W, todos los 3\.60 W que entrega la pila\. Con luz: Foco 1, al 100%\.$/);
+  await expect(page.locator("#zsa-cb-meter-caption")).toHaveText("Roja en D2, negra en E2: entre los extremos de Foco 1.");
+  await expect(spot("D2", "E2")).toHaveAttribute("aria-label", /^De D2 a E2: Foco 1, foco de 10 Ω, 6\.00 V, 0\.600 A, brillo de 100%$/);
+  await noEnglish(page);
+  // Instructions and the share panel, whose link keeps Spanish.
+  await page.getByRole("button", {name: "Instrucciones", exact: true}).click();
+  await expect(page.getByRole("dialog")).toContainText("Compara circuitos en serie y en paralelo. Usa Imprimir laboratorio para guardar tus observaciones.");
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", {name: "Compartir actividad", exact: true}).click();
+  await expect(page.locator("#zsa-header-share-url")).toHaveValue("https://activities.zornscience.org/circuit-builder/?lang=es");
+  const email = decodeURIComponent(await page.locator("[data-zsa-share-email]").getAttribute("href"));
+  expect(email).toContain("subject=Constructor de circuitos | ZornScience");
+  expect(email).toContain("https://activities.zornscience.org/circuit-builder/?lang=es");
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+  // Every starting circuit, with its description and what the circuit is doing.
+  const presets = {one: "Un foco", series2: "Dos focos en serie", parallel2: "Dos focos en paralelo", series3: "Tres focos en serie",
+    parallel3: "Tres focos en paralelo", sidebyside: "Serie y paralelo lado a lado", mixed: "Un foco y luego dos en paralelo",
+    pswitch: "Paralelo con un interruptor", divider: "Las resistencias se reparten el voltaje", empty: "Tablero vacío"};
+  for (const [id, label] of Object.entries(presets)) {
+    await page.locator("#zsa-cb-preset").selectOption(id);
+    await page.clock.runFor(100);
+    await expect(live).toHaveText(new RegExp("^" + label + "\\. "));
+    await noEnglish(page);
+  }
+  await expect(page.locator("#zsa-cb-insight")).toHaveText("El tablero está vacío. Arrastra a él una pila, cables y un foco, o empieza con uno de los circuitos.");
+  await expect(page.locator("#zsa-cb-table-body")).toHaveText("Todavía no hay piezas, aparte de los cables.");
+  // Building by keyboard: a battery from B2 to B3, then wires that join its ends, a short circuit.
+  await tool("Pila").click();
+  await heard("Elegiste Pila. Toca un lugar del tablero para colocar la pieza, o presiona Enter en un lugar.");
+  await spot("B2", "B3").focus();
+  await page.keyboard.press("Enter");
+  await heard("Se colocó Pila 1 de B2 a B3. Coloca las dos puntas en el tablero.");
+  await expect(page.locator("#zsa-cb-insight")).toHaveText("No hay corriente: no hay un circuito cerrado completo. La carga necesita un camino sin interrupciones desde el extremo + de la pila, a través de las piezas, de regreso a su extremo −.");
+  await tool("Cable").click();
+  for (const [a, b] of [["B2", "C2"], ["C2", "C3"], ["B3", "C3"]]) { await spot(a, b).focus(); await page.keyboard.press("Enter"); }
+  await expect(page.locator("#zsa-cb-insight")).toHaveText(/^¡Cortocircuito! Pila 1 tiene sus extremos \+ y − unidos solo por cables/);
+  await heard(/^Se colocó Cable 3 de B3 a C3\. Atención: cortocircuito\. /);
+  await expect(page.locator("#zsa-cb-meter-caption")).toHaveText("Coloca las dos puntas en el tablero.");
+  await expect(spot("B2", "B3")).toHaveAttribute("aria-label", "De B2 a B3: Pila 1, 6.0 V, extremo + en B3, cortocircuito, pieza seleccionada");
+  await noEnglish(page);
+  await page.getByRole("button", {name: "Deshacer", exact: true}).click();
+  await heard(/^Se deshizo el último cambio\. /);
+  await page.getByRole("button", {name: "Vaciar el tablero", exact: true}).click();
+  await heard("Se vació el tablero. Deshacer lo recupera.");
+  await noEnglish(page);
+  // A switch: open by default, so no complete loop; close it from the selected part's settings.
+  await page.locator("#zsa-cb-preset").selectOption("pswitch");
+  await tool("Seleccionar y mover").click();
+  await heard("Seleccionar y mover: toca una pieza para seleccionarla, o arrástrala.");
+  await page.getByRole("button", {name: /^De F3 a F4: Interruptor 1/}).focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#zsa-cb-part-title")).toHaveText("Interruptor 1, de F3 a F4");
+  await expect(page.getByRole("button", {name: "Cerrar el interruptor", exact: true})).toBeVisible();
+  await noEnglish(page);
+  await page.getByRole("button", {name: "Cerrar el interruptor", exact: true}).click();
+  await heard(/^Cerraste Interruptor 1\. /);
+  await expect(page.getByRole("button", {name: "Abrir el interruptor", exact: true})).toBeVisible();
+  await expect(spot("F3", "F4")).toHaveAttribute("aria-label", /^De F3 a F4: Interruptor 1, cerrado, 0\.600 A, pieza seleccionada$/);
+  await noEnglish(page);
+  // A battery's settings: voltage, flipping, and the current mode of the meter.
+  await page.locator("#zsa-cb-preset").selectOption("one");
+  await spot("B2", "B3").focus();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#zsa-cb-part-reading")).toHaveText("Voltaje entre sus extremos: 6.00 V. Corriente: 0.600 A. Entrega 3.60 W. El extremo + está en B2.");
+  await page.getByLabel("Voltaje de la pila", {exact: true}).selectOption("9");
+  await heard(/^Ajustaste Pila 1 a 9\.0 V\. /);
+  await page.getByRole("button", {name: "Voltear la pila", exact: true}).click();
+  await heard(/^Volteaste Pila 1: el extremo \+ ahora está en B3\. /);
+  await page.getByRole("button", {name: "Medir la corriente que pasa por la pieza", exact: true}).click();
+  await page.clock.runFor(100);
+  await expect(page.locator("#zsa-cb-meter-caption")).toHaveText(/^A través de Pila 1, circulando de B\d a B\d\.$/);
+  await expect(live).toHaveText(/^El multímetro marca 0\.900 A\. A través de Pila 1/);
+  await page.getByLabel("Corriente a través de", {exact: true}).selectOption({label: "Foco 1, de D2 a E2"});
+  await noEnglish(page);
+  await page.getByLabel("Voltaje (V)", {exact: true}).check();
+  await heard(/^Modo de voltaje\. El multímetro marca /);
+  await page.getByRole("button", {name: "Intercambiar las puntas", exact: true}).click();
+  await heard(/^Se intercambiaron las puntas\. /);
+  await page.getByLabel("Punta roja (+)", {exact: true}).selectOption("");
+  await heard("Se quitó la punta roja. Coloca las dos puntas en el tablero.");
+  await page.getByRole("button", {name: "Tocar el tablero", exact: true}).first().click();
+  await heard("Toca un punto del tablero para la punta roja.");
+  await noEnglish(page);
+  // Moving charge on the fake clock.
+  await page.getByLabel("Mostrar el flujo de corriente", {exact: true}).check();
+  await page.clock.runFor(500);
+  await noEnglish(page);
+  // Check your thinking: blank, wrong and right answers.
+  await page.getByRole("button", {name: "Revisar mis respuestas", exact: true}).click();
+  const fb = page.locator("#zsa-cb-feedback");
+  await expect(fb.locator("h3")).toHaveText("Tus respuestas");
+  await expect(fb.locator("p").first()).toHaveText("1. Todavía no hay respuesta.");
+  await page.getByRole("group", {name: /^1\. Comparado con un foco solo/}).getByLabel("más brillante, porque hay dos focos.").check();
+  await page.getByRole("group", {name: /^2\. Comparado con un foco solo/}).getByLabel("igual de brillante, porque cada foco recibe todo el voltaje de la pila.").check();
+  await page.getByRole("button", {name: "Revisar mis respuestas", exact: true}).click();
+  await expect(fb.locator("p").first()).toHaveText(/^1\. Todavía no\. Carga Un foco/);
+  await expect(fb.locator("p").nth(1)).toHaveText(/^2\. ✓ Sí\. Cada rama conecta su foco/);
+  await page.clock.runFor(100);
+  await expect(live).toHaveText(/^Correctas: 1 de 6\. /);
+  await noEnglish(page);
+  // CSV header and the print summary.
+  const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", {name: "Descargar lecturas (CSV)", exact: true}).click()]);
+  expect(download.suggestedFilename()).toBe("zornscience-lecturas-del-circuito.csv");
+  const csv = fs.readFileSync(await download.path(), "utf8").split("\n");
+  expect(csv[0]).toBe("Pieza,Desde,Hasta,Ajuste,Voltaje (V),Corriente (A),Potencia (W),Brillo (%)");
+  expect(csv[1]).toMatch(/^Pila 1,B2,B3,9\.0 V,/);
+  expect(csv.join("\n")).toContain("Foco 1,D2,E2,foco de 10 Ω,");
+  await heard("Lecturas descargadas como zornscience-lecturas-del-circuito.csv: cada pieza con su voltaje, corriente, potencia y brillo.");
+  await expect(page.locator("#zsa-cb-print-summary")).toHaveText(/^Circuito: Tu propio circuito\. Pila 1 empuja 0\.900 A por el circuito, .* Multímetro: /);
+  await noEnglish(page);
+  // Narrow screens: no sideways scrolling and a 44 px language toggle.
+  for (const width of [320, 390]) {
+    await page.setViewportSize({width, height: 844});
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), "at " + width).toBeLessThanOrEqual(0);
+    const box = await page.getByRole("link", {name: "ES Español", exact: true}).boundingBox();
+    expect(box.width).toBeGreaterThanOrEqual(44);
+    expect(box.height).toBeGreaterThanOrEqual(44);
+  }
+  expect(errors).toEqual([]);
+});
+
+test("equipotential-lab opens in Mexican Spanish and translates the probe, readouts, charges, explorations and sharing", async ({page}) => {
+  const errors = [];
+  page.on("pageerror", e => errors.push(e.message));
+  page.on("console", m => { if (m.type() === "error" || m.type() === "warning") errors.push(m.text()); });
+  await page.goto("/equipotential-lab/?lang=es");
+  await expect(page.locator("html")).toHaveAttribute("lang", "es-MX");
+  await expect(page).toHaveTitle("Líneas equipotenciales y mapeo de campos eléctricos | ZornScience");
+  await expect(page.getByRole("link", {name:"ES Español", exact:true})).toHaveAttribute("aria-current", "true");
+  await expect(page.locator("#field-value")).toHaveText("Campo eléctrico: 179.8 V/m");
+  await expect(page.locator("#probe-insight")).toHaveText("Un voltaje casi cero todavía puede tener un campo eléctrico distinto de cero.");
+  await expect(page.locator("#probe")).toHaveAttribute("aria-label", "Punta del voltímetro, 0.00 volts. Usa las flechas para moverla.");
+  await expect(page.getByRole("button", {name:"Carga positiva de 0.10 nanocoulombs en 20.0, 20.0 centímetros. Usa las flechas para moverla.", exact:true})).toBeVisible();
+  await noEnglish(page);
+  // Instructions: the opening sentence is one Spanish template around the bold section name.
+  await page.getByRole("button", {name:"Instrucciones", exact:true}).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog.locator("> p").first()).toHaveText("Empieza con una exploración opcional en Explora una pregunta o arma tu propio acomodo. Predice qué va a pasar antes de seleccionar Revelar y explicar.");
+  await expect(dialog.locator("> p strong")).toHaveText("Explora una pregunta");
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+  // Share panel: the link keeps Spanish.
+  await page.getByRole("button", {name:"Compartir actividad", exact:true}).click();
+  await expect(page.locator("#zsa-th-share-url")).toHaveValue("https://activities.zornscience.org/equipotential-lab/?lang=es");
+  const email = decodeURIComponent(await page.locator("#zsa-th-share-email").getAttribute("href"));
+  expect(email).toContain("subject=Líneas equipotenciales y mapeo de campos eléctricos | ZornScience");
+  expect(email).toContain("Explora el potencial eléctrico y los campos eléctricos con cargas que puedes mover y una punta virtual.");
+  expect(email).toContain("https://activities.zornscience.org/equipotential-lab/?lang=es");
+  await page.context().grantPermissions(["clipboard-read", "clipboard-write"]);
+  await page.locator("#zsa-th-share-copy").click();
+  await expect(page.locator("#zsa-th-share-status")).toHaveText("Enlace copiado.");
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+  // The probe by keyboard: next to a charge, then away from it.
+  await page.locator("#preset").selectOption("single");
+  await expect(page.locator("#status")).toHaveText("Cambió la configuración.");
+  await page.locator("#probe").focus();
+  await page.keyboard.press("ArrowRight");
+  await expect(page.locator("#field-value")).toHaveText("Demasiado cerca de una carga puntual");
+  await expect(page.locator("#probe-insight")).toHaveText("Demasiado cerca: aleja la punta para medir.");
+  await expect(page.locator("#probe")).toHaveAttribute("aria-label", "Punta del voltímetro, demasiado cerca de una carga. Usa las flechas para moverla.");
+  await noEnglish(page);
+  for (let i = 0; i < 5; i++) await page.keyboard.press("Shift+ArrowRight");
+  await expect(page.locator("#field-value")).toHaveText(/^Campo eléctrico: \d+\.\d V\/m$/);
+  await expect(page.locator("#probe")).toHaveAttribute("aria-label", /^Punta del voltímetro, \d+\.\d\d volts\. Usa las flechas para moverla\.$/);
+  // The probe by pointer: drag it and read the announcement.
+  const probe = await page.locator("#probe").boundingBox();
+  const board = await page.locator("#board").boundingBox();
+  await page.mouse.move(probe.x + probe.width / 2, probe.y + probe.height / 2);
+  await page.mouse.down();
+  await page.mouse.move(board.x + board.width * 0.8, board.y + board.height * 0.3, {steps: 5});
+  await page.mouse.up();
+  await expect(page.locator("#status")).toHaveText(/^La punta marca -?\d+\.\d\d V\.$/);
+  await noEnglish(page);
+  // Charges: add, select, remove and the 12-charge limit.
+  await page.getByRole("button", {name:"Agregar carga negativa", exact:true}).click();
+  await expect(page.locator("#status")).toHaveText("Se agregó una carga negativa. Arrástrala para acomodar tu campo.");
+  await expect(page.locator("#charge-value")).toHaveText("−0.10 nC");
+  await page.getByRole("button", {name:"Quitar la seleccionada", exact:true}).click();
+  await expect(page.locator("#status")).toHaveText("Se quitó la carga.");
+  await page.locator("#preset").selectOption("empty");
+  await expect(page.locator("#charge-value")).toHaveText("Ninguna");
+  for (let i = 0; i < 12; i++) await page.getByRole("button", {name:"Agregar carga positiva", exact:true}).click();
+  await expect(page.locator("#status")).toHaveText("Se agregó una carga positiva. Arrástrala para acomodar tu campo.");
+  await page.getByRole("button", {name:"Agregar carga positiva", exact:true}).click();
+  await expect(page.locator("#status")).toHaveText("La cuadrícula admite hasta 12 cargas. Quita una para agregar otra.");
+  await noEnglish(page);
+  for (const name of ["like", "quad", "dipole"]) {
+    await page.locator("#preset").selectOption(name);
+    await noEnglish(page);
+  }
+  // Every exploration, before and after Reveal & explain.
+  const explorations = {
+    distance:["Predice: ¿qué pasa con el voltaje y la intensidad del campo cuando te acercas a una carga positiva?", "Para una carga puntual, V varía como 1/r"],
+    along:["Predice: ¿cambia el voltaje cuando te mueves alrededor de una carga a una distancia constante?", "Una línea equipotencial une puntos de igual voltaje."],
+    dipole:["Predice: si el voltímetro marca cero entre cargas opuestas, ¿el campo eléctrico también tiene que ser cero?", "V = 0 no implica E = 0."],
+    like:["Predice: ¿cuáles son el voltaje y el campo eléctrico a la mitad entre dos cargas positivas iguales?", "E = 0 no implica V = 0."]
+  };
+  for (const [value, [question, explanation]] of Object.entries(explorations)) {
+    await page.locator("#investigation").selectOption(value);
+    await expect(page.locator("#question")).toHaveText(question);
+    await expect(page.locator("#status")).toHaveText("Primero predice, explora con la punta y luego revela la explicación.");
+    await expect(page.locator("#probe-insight")).toHaveText("Compara las dos lecturas y luego revela la explicación.");
+    await noEnglish(page);
+    await page.getByRole("button", {name:"Revelar y explicar", exact:true}).click();
+    await expect(page.locator("#explanation")).toContainText(explanation);
+    await expect(page.locator("#status")).toHaveText("Mapa revelado. Sigue moviendo la punta para poner a prueba la explicación.");
+    await noEnglish(page);
+  }
+  await expect(page.locator("#probe-insight")).toHaveText("Aquí el campo es cero, pero el potencial eléctrico no es cero.");
+  await page.getByRole("button", {name:"Reiniciar laboratorio", exact:true}).click();
+  await expect(page.locator("#status")).toHaveText("El laboratorio se reinició con un dipolo.");
+  await page.locator(".model-note summary").click();
+  await noEnglish(page);
+  // Narrow screens: no sideways scrolling and a 44 px language toggle.
+  for (const width of [320, 390]) {
+    await page.setViewportSize({width, height:844});
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), "at " + width).toBeLessThanOrEqual(0);
+    const box = await page.getByRole("link", {name:"ES Español", exact:true}).boundingBox();
+    expect(box.width).toBeGreaterThanOrEqual(44);
+    expect(box.height).toBeGreaterThanOrEqual(44);
+  }
+  expect(errors).toEqual([]);
+});
+
+test("faraday-lab opens in Mexican Spanish and translates the drop, the fixed ring, the canvas labels and sharing", async ({page}) => {
+  const errors = [];
+  page.on("pageerror", e => errors.push(e.message));
+  // Record every word the canvas draws, so the apparatus labels are checked too.
+  await page.addInitScript(() => {
+    window.__canvasText = [];
+    const fill = CanvasRenderingContext2D.prototype.fillText;
+    CanvasRenderingContext2D.prototype.fillText = function (s, ...rest) { window.__canvasText.push(String(s)); return fill.call(this, s, ...rest); };
+  });
+  async function noEnglishAnywhere() {
+    await noEnglish(page);
+    const drawn = await page.evaluate(() => { const list = window.__canvasText; window.__canvasText = []; return list.join("\n"); });
+    expect(drawn).not.toMatch(english);
+  }
+  await page.clock.install();
+  await page.goto("/faraday-lab/?lang=es");
+  await expect(page.locator("html")).toHaveAttribute("lang", "es-MX");
+  await expect(page).toHaveTitle("Ley de Faraday · Caída del imán | ZornScience");
+  await expect(page.getByRole("link", {name:"ES Español", exact:true})).toHaveAttribute("aria-current", "true");
+  await expect(page.locator("#state")).toHaveText("LISTO PARA SOLTAR");
+  await expect(page.locator("#speed")).toHaveText("TIEMPO REAL");
+  await expect(page.locator("#replay-time")).toHaveText("Lista");
+  await expect(page.locator("#replay")).toHaveAttribute("aria-valuetext", "Primero suelta los imanes");
+  await expect(page.locator("#observation")).toHaveText("Primero predice: ¿qué imán llegará primero? Los dos imanes tienen la misma masa y la misma altura inicial. Solo uno pasa por el tubo.");
+  await expect(page.locator("#flip")).toHaveText("Invertir polos · N abajo");
+  await noEnglishAnywhere();
+  // Instructions: the steps with a bold label or button name are one full template each.
+  await page.getByRole("button", {name:"Instrucciones", exact:true}).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog.locator("h2")).toHaveText("Exploración de la caída del imán");
+  await expect(dialog.locator("p").first()).toHaveText("Tu objetivo: explicar cómo un flujo magnético que cambia crea una corriente y por qué esa corriente frena a un imán que cae.");
+  await expect(dialog.locator("li").nth(1)).toHaveText("Presiona Soltar los imanes. Un imán idéntico cae libremente junto al tubo para comparar.");
+  await expect(dialog.locator("li").nth(2)).toHaveText(/^Elige Explicar para mostrar las corrientes parásitas/);
+  await expect(dialog.locator("li").nth(3)).toHaveText(/^Arrastra Revisar la caída para pausar en cualquier instante/);
+  await expect(dialog.locator("li strong")).toHaveText(["Soltar los imanes", "Explicar", "Revisar la caída"]);
+  await noEnglishAnywhere();
+  await page.keyboard.press("Escape");
+  // Share panel: the link keeps Spanish.
+  await page.getByRole("button", {name:"Compartir actividad", exact:true}).click();
+  await expect(page.locator("#zsa-th-share-url")).toHaveValue("https://activities.zornscience.org/faraday-lab/?lang=es");
+  const email = decodeURIComponent(await page.locator("#zsa-th-share-email").getAttribute("href"));
+  expect(email).toContain("subject=Ley de Faraday · Caída del imán | ZornScience");
+  expect(email).toContain("Deja caer un imán por un tubo de cobre y descubre la inducción electromagnética.");
+  expect(email).toContain("https://activities.zornscience.org/faraday-lab/?lang=es");
+  await page.getByRole("button", {name:"Copiar enlace", exact:true}).click();
+  await expect(page.locator("#zsa-th-share-status")).toHaveText(/^Enlace (copiado\.|seleccionado\. Presiona Ctrl\+C, o Command\+C en una Mac, para copiarlo\.)$/);
+  await noEnglishAnywhere();
+  await page.keyboard.press("Escape");
+  // Explain view, then a copper drop on the fake clock: falling, paused, resumed and caught.
+  await page.getByRole("button", {name:"Explicar", exact:true}).click();
+  await expect(page.locator("#flux-title")).toHaveText("En el anillo fijo de cobre");
+  await expect(page.locator("#flux-description")).toHaveText("El imán se mantiene quieto. El flujo a través del anillo no cambia, así que no hay corriente inducida.");
+  await page.getByRole("button", {name:"Soltar los imanes", exact:true}).click();
+  await page.clock.runFor(600);
+  await expect(page.locator("#state")).toHaveText("IMANES EN CAÍDA");
+  await expect(page.locator("#replay")).toHaveAttribute("aria-valuetext", /^\d+\.\d\d segundos desde el inicio de la caída$/);
+  await noEnglishAnywhere();
+  await page.getByRole("button", {name:"Pausar", exact:true}).click();
+  await expect(page.locator("#state")).toHaveText("EN PAUSA · TIEMPO SIMULADO DETENIDO");
+  await expect(page.locator("#observation")).toHaveText(/^El tiempo está detenido para que lo examines\./);
+  await expect(page.getByRole("img")).toHaveAttribute("aria-label", /^El tiempo está detenido para que lo examines\./);
+  await noEnglishAnywhere();
+  await page.getByRole("button", {name:"Reanudar", exact:true}).click();
+  await page.locator("#slow").check();
+  await expect(page.locator("#speed")).toHaveText("¼ DEL TIEMPO REAL");
+  await page.locator("#slow").uncheck();
+  for (let i = 0; i < 40 && (await page.locator("#state").textContent()) !== "AMBOS IMANES ATRAPADOS"; i++) await page.clock.runFor(500);
+  await expect(page.locator("#state")).toHaveText("AMBOS IMANES ATRAPADOS");
+  await expect(page.locator("#release")).toHaveText("Soltar de nuevo");
+  await expect(page.locator("#observation")).toHaveText(/^El imán del tubo de cobre llegó después\./);
+  await expect(page.locator("#flux-description")).toHaveText("El imán está en la charola. El flujo a través del anillo no cambia, así que no hay corriente inducida.");
+  await noEnglishAnywhere();
+  // Replay: increasing and decreasing flux with the matching current direction.
+  await page.locator("#release").click();
+  await page.locator("#replay").fill("450");
+  await expect(page.locator("#flux-description")).toHaveText("El imán se acerca al anillo: el flujo aumenta. El campo inducido apunta hacia arriba; la corriente convencional va en sentido contrario al de las manecillas del reloj, vista desde arriba.");
+  await expect(page.locator("#replay-time")).toHaveText(/^\d+\.\d\d s \/ \d+\.\d\d s$/);
+  await noEnglishAnywhere();
+  await page.locator("#replay").fill("750");
+  await expect(page.locator("#flux-description")).toHaveText("El imán se aleja del anillo: el flujo disminuye. El campo inducido apunta hacia abajo; la corriente convencional va en el sentido de las manecillas del reloj, vista desde arriba.");
+  await noEnglishAnywhere();
+  // Reverse the poles, then plastic and the slotted tube.
+  await page.getByRole("button", {name:"Invertir los polos", exact:true}).click();
+  await expect(page.locator("#flip")).toHaveText("Invertir polos · S abajo");
+  await expect(page.locator("#challenge")).toHaveText(/^Predice: ¿invertir los polos invertirá la fuerza de frenado\?/);
+  await page.locator("#release").click();
+  await page.locator("#replay").fill("450");
+  await expect(page.locator("#flux-description")).toContainText("en el sentido de las manecillas del reloj");
+  await noEnglishAnywhere();
+  await page.locator("#material").selectOption("plastic");
+  await expect(page.locator("#material-note")).toHaveText("Un aislante no puede conducir corrientes parásitas.");
+  await expect(page.locator("#flux-title")).toHaveText("En el anillo fijo de plástico");
+  await page.locator("#release").click();
+  await page.locator("#replay").fill("500");
+  await expect(page.locator("#flux-description")).toHaveText("El flujo cambia cuando pasa el imán, pero el plástico es aislante: el tubo no tiene corriente parásita ni campo inducido.");
+  await expect(page.locator("#observation")).toHaveText("El plástico aislante no conduce corrientes parásitas. Los dos imanes aceleran juntos por la gravedad.");
+  await page.getByRole("button", {name:"Reanudar", exact:true}).click();
+  for (let i = 0; i < 20 && (await page.locator("#state").textContent()) !== "AMBOS IMANES ATRAPADOS"; i++) await page.clock.runFor(500);
+  await expect(page.locator("#observation")).toHaveText(/^El plástico no puede mantener corrientes parásitas\./);
+  await noEnglishAnywhere();
+  await page.getByRole("button", {name:"Romper la espira de corriente", exact:true}).click();
+  await expect(page.locator("#material-note")).toHaveText("Una ranura a lo largo del tubo interrumpe las espiras de corriente grandes.");
+  await expect(page.locator("#challenge")).toHaveText(/^Predice: ¿romper la trayectoria circular cambiará la caída\?/);
+  await page.locator("#release").click();
+  await page.locator("#replay").fill("500");
+  await expect(page.locator("#flux-description")).toHaveText(/^El flujo que cambia puede impulsar pequeñas corrientes locales/);
+  await expect(page.locator("#observation")).toHaveText(/^La ranura interrumpe las trayectorias circulares grandes/);
+  await noEnglishAnywhere();
+  await page.getByRole("button", {name:"Observar", exact:true}).click();
+  await expect(page.locator("#flux-panel")).toBeHidden();
+  await page.locator(".model-note summary").click();
+  await expect(page.locator(".model-note")).toContainText("Este modelo cualitativo integra la gravedad");
+  await page.getByRole("button", {name:"Reiniciar", exact:true}).click();
+  await expect(page.locator("#state")).toHaveText("LISTO PARA SOLTAR");
+  await noEnglishAnywhere();
+  // Narrow screens: no sideways scrolling.
+  for (const width of [320, 390]) {
+    await page.setViewportSize({width, height:844});
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), "at " + width).toBeLessThanOrEqual(0);
+  }
+  expect(errors).toEqual([]);
+});
+
+// A stroke across a graph from (t0, fraction of height) to (t1, fraction), with the mouse.
+async function sketch(page, el, from, to) {
+  await el.scrollIntoViewIfNeeded();
+  const box = await el.boundingBox(), sx = box.width / 320, sy = box.height / 236;
+  const px = t => box.x + (54 + t / 10 * 254) * sx, py = f => box.y + (192 - f * 178) * sy;
+  await page.mouse.move(px(from[0]), py(from[1]));
+  await page.mouse.down();
+  for (let i = 1; i <= 20; i++) await page.mouse.move(px(from[0] + (to[0] - from[0]) * i / 20), py(from[1] + (to[1] - from[1]) * i / 20));
+  await page.mouse.up();
+}
+
+test("physics-graphing-lab opens in Mexican Spanish and translates scenarios, playback, graphs, predictions, the CSV and printing", async ({page}) => {
+  const errors = [];
+  page.on("pageerror", e => errors.push(e.message));
+  page.on("console", m => { if (m.type() === "error" || m.type() === "warning") errors.push(m.text()); });
+  await page.clock.install({time: new Date("2026-10-18T12:00:00")});
+  await page.clock.pauseAt(new Date("2026-10-18T12:00:01"));
+  await page.goto("/physics-graphing-lab/?lang=es");
+  await expect(page.locator("html")).toHaveAttribute("lang", "es-MX");
+  await expect(page).toHaveTitle("Laboratorio de gráficas de física | ZornScience");
+  await expect(page.getByRole("link", {name:"ES Español", exact:true})).toHaveAttribute("aria-current", "true");
+  await expect(page.getByRole("heading", {level:1})).toHaveText("Laboratorio de gráficas de física");
+  await expect(page.locator("#zsa-pg-scenario-text")).toHaveText("El carrito se mueve a la derecha con velocidad constante.");
+  await expect(page.getByRole("img", {name:"Carrito en 0.00 m, moviéndose a la derecha a 2.00 m/s, a los 0.00 s."})).toBeVisible();
+  await expect(page.getByRole("img", {name:/^Gráfica de posición contra tiempo, de 0 a 10 segundos, en m de /})).toHaveAccessibleName(/Modelo: La posición es 0\.00 m a los 0 s, 10\.00 m a los 5 s y 20\.00 m a los 10 s\. Una línea recta\.$/);
+  await expect(page.getByRole("img", {name:/^Gráfica de aceleración contra tiempo/})).toHaveAccessibleName(/Modelo: La aceleración es 0\.00 m\/s² todo el tiempo\.$/);
+  await expect(page.locator("#zsa-pg-insight")).toHaveText("La gráfica de posición es una línea recta porque la velocidad es constante. La gráfica de velocidad es horizontal, y la aceleración es cero.");
+  await expect(page.getByRole("button", {name:"Iniciar el movimiento", exact:true})).toBeVisible();
+  await noEnglish(page);
+
+  // Instructions and the share panel, whose link keeps Spanish.
+  await page.getByRole("button", {name:"Instrucciones", exact:true}).click();
+  await expect(page.getByRole("dialog")).toContainText("Ajusta las condiciones del carrito y predice sus gráficas de posición, velocidad y aceleración.");
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", {name:"Compartir actividad", exact:true}).click();
+  await expect(page.locator("#zsa-header-share-url")).toHaveValue("https://activities.zornscience.org/physics-graphing-lab/?lang=es");
+  const email = decodeURIComponent(await page.locator("[data-zsa-share-email]").getAttribute("href"));
+  expect(email).toContain("subject=Laboratorio de gráficas de física | ZornScience");
+  expect(email).toContain("https://activities.zornscience.org/physics-graphing-lab/?lang=es");
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+
+  // Every scenario, with its text, readouts and graph descriptions.
+  const scenarios = [
+    ["cruise", "Avance constante a la derecha"], ["speed", "Cada vez más rápido a la derecha"], ["stop", "Frenado hasta detenerse"],
+    ["turn", "Cambio de sentido"], ["left", "Cada vez más rápido a la izquierda"], ["rest", "En reposo"]
+  ];
+  const select = page.getByLabel("Empieza con una situación");
+  for (const [id, label] of scenarios) {
+    await select.selectOption(id);
+    await expect(select.locator("option:checked")).toHaveText(label);
+    await page.clock.runFor(100);
+    await expect(page.locator("#zsa-pg-live")).toHaveText(new RegExp("^" + label + "\\. El carrito "));
+    await noEnglish(page);
+  }
+  await select.selectOption("turn");
+  await expect(page.locator("#zsa-pg-insight")).toHaveText("La gráfica de posición es curva porque la velocidad cambia. La gráfica de velocidad tiene una pendiente constante de −0.6 m/s². La rapidez del carrito aumenta cuando la velocidad y la aceleración tienen el mismo signo, y disminuye cuando sus signos son distintos. Cambia de sentido a los 5.00 s, cuando la velocidad es cero.");
+  await expect(page.getByRole("img", {name:/^Gráfica de posición contra tiempo/})).toHaveAccessibleName(/La posición es 0\.00 m a los 0 s, 7\.50 m a los 5 s y 0\.00 m a los 10 s\. El carrito cambia de sentido en 7\.50 m, a los 5\.00 s\. Una curva\.$/);
+  await expect(page.getByRole("img", {name:/^Gráfica de velocidad contra tiempo/})).toHaveAccessibleName(/La velocidad pasa por cero a los 5\.00 s\. Una línea recta con pendiente de −0\.6 m\/s²\.$/);
+
+  // The time slider, then a run on the fake clock with Pause and Replay.
+  const time = page.getByRole("slider", {name:"Tiempo"});
+  await time.fill("7");
+  await expect(time).toHaveAttribute("aria-valuetext", "7.0 segundos");
+  await expect(page.getByRole("img", {name:/^Carrito en 6\.30 m, moviéndose a la izquierda a 1\.20 m\/s, a los 7\.00 s\.$/})).toBeVisible();
+  await page.getByRole("button", {name:"Reiniciar", exact:true}).click();
+  await page.getByRole("button", {name:"Iniciar el movimiento", exact:true}).click();
+  await page.clock.runFor(1000);
+  await expect(page.getByRole("button", {name:"Pausar", exact:true})).toBeVisible();
+  await noEnglish(page);
+  await page.getByRole("button", {name:"Pausar", exact:true}).click();
+  await expect(page.getByRole("button", {name:"Iniciar el movimiento", exact:true})).toBeVisible();
+  await page.getByRole("button", {name:"Iniciar el movimiento", exact:true}).click();
+  await page.clock.runFor(12000);
+  await page.clock.runFor(100);
+  await expect(page.getByRole("button", {name:"Repetir", exact:true})).toBeVisible();
+  await expect(page.locator("#zsa-pg-live")).toHaveText("La corrida terminó a los 10 s. Posición: 0.00 m. Velocidad: −3.00 m/s.");
+  await noEnglish(page);
+
+  // Custom settings from a slider.
+  await page.getByRole("slider", {name:"Posición inicial, x₀"}).fill("-20");
+  await expect(select.locator("option:checked")).toHaveText("Ajustes personalizados");
+  await expect(page.locator("#zsa-pg-scenario-text")).toHaveText("Movimiento personalizado: usa tus ajustes para explicar las gráficas.");
+  await noEnglish(page);
+
+  // Predict and compare: the model is hidden, a sketch by mouse, values typed off the scale, reveal, clear.
+  await select.selectOption("turn");
+  await page.getByRole("button", {name:"Predecir y comparar", exact:true}).click();
+  await page.clock.runFor(100);
+  await expect(page.locator("#zsa-pg-live")).toHaveText("Predecir y comparar. El modelo está oculto. Dibuja en cada gráfica o escribe valores y luego revela y compara.");
+  await expect(page.getByRole("img", {name:/^Gráfica de posición contra tiempo/})).toHaveAccessibleName(/El modelo está oculto hasta que lo reveles\.$/);
+  await expect(page.locator("#zsa-pg-insight")).toHaveText("Predice la forma y el signo de cada gráfica. Pon en marcha el carrito si quieres observar su movimiento antes de revelar el modelo.");
+  await noEnglish(page);
+  await sketch(page, page.getByRole("img", {name:/^Gráfica de posición contra tiempo/}), [0, 0.2], [10, 0.8]);
+  await expect(page.getByRole("img", {name:/^Gráfica de posición contra tiempo/})).toHaveAccessibleName(/Tu predicción: \d+ puntos de 0\.0 a 10\.0 s\.$/);
+  await page.getByText("Escribe valores de predicción con el teclado").click();
+  await page.getByLabel("Velocidad predicha a los 0 s, en m/s").fill("3");
+  await page.getByLabel("Velocidad predicha a los 10 s, en m/s").fill("500");
+  await expect(page.locator(".zsa-pg-graph-v .zsa-pg-scale-note")).toHaveText("Fuera de la escala: 500 m/s a los 10 s. Se muestran en el borde.");
+  await page.getByLabel("Aceleración predicha a los 4 s, en m/s²").fill("-0.6");
+  await expect(page.getByRole("img", {name:/^Gráfica de aceleración contra tiempo/})).toHaveAccessibleName(/Tu predicción: 1 punto de 4\.0 a 4\.0 s\.$/);
+  await noEnglish(page);
+  await page.getByRole("button", {name:"Revelar y comparar", exact:true}).click();
+  const fb = page.locator("#zsa-pg-feedback");
+  await expect(fb.locator("h3")).toHaveText("Compara tu predicción con el modelo");
+  await expect(fb.locator("p").nth(1)).toHaveText("Velocidad: Compara el valor inicial, el signo y la curvatura con el modelo.");
+  await expect(fb.locator("p").nth(2)).toHaveText("Aceleración: agrega un dibujo en tu próximo intento. Compara el signo, la pendiente y la forma del modelo.");
+  await page.clock.runFor(100);
+  await expect(page.locator("#zsa-pg-live")).toHaveText(/^Modelo revelado\. Posición: /);
+  await noEnglish(page);
+
+  // Printing: the summary and the reflection.
+  await page.getByLabel("Explica con evidencia de las gráficas.").fill("Noto que la pendiente cambia de signo.");
+  await page.emulateMedia({media:"print"});
+  await expect(page.locator("#zsa-pg-print-summary")).toHaveText("Experimento: Cambio de sentido. x₀ = 0.0 m, v₀ = 3.0 m/s, a = −0.6 m/s². Predicción comparada con el modelo.");
+  await expect(page.locator("#zsa-pg-print-reflection")).toHaveText("Noto que la pendiente cambia de signo.");
+  await page.emulateMedia({media:"screen"});
+  await page.getByRole("button", {name:"Borrar predicciones", exact:true}).click();
+  await page.clock.runFor(100);
+  await expect(page.locator("#zsa-pg-live")).toHaveText("Se borraron las predicciones. El modelo está oculto.");
+  await expect(page.locator("#zsa-pg-print-summary")).toHaveText("Experimento: Cambio de sentido. x₀ = 0.0 m, v₀ = 3.0 m/s, a = −0.6 m/s². Predicción (el modelo todavía no se revela).");
+  await noEnglish(page);
+
+  // The CSV header and its announcement.
+  const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", {name:"Descargar datos del movimiento (CSV)", exact:true}).click()]);
+  expect(download.suggestedFilename()).toBe("zornscience-motion-data.csv");
+  const text = require("fs").readFileSync(await download.path(), "utf8");
+  expect(text.split("\n")[0]).toBe("Tiempo (s),Posición (m),Velocidad (m/s),Aceleración (m/s^2)");
+  expect(text.split("\n")[1]).toBe("0.0,0.0000,3.0000,-0.6000");
+  await page.clock.runFor(100);
+  await expect(page.locator("#zsa-pg-live")).toHaveText("Datos del movimiento descargados como zornscience-motion-data.csv: tiempo, posición, velocidad y aceleración cada 0.1 s.");
+
+  // Explore again, then narrow screens.
+  await page.getByRole("button", {name:"Explorar", exact:true}).click();
+  await page.clock.runFor(100);
+  await expect(page.locator("#zsa-pg-live")).toHaveText("Explorar. El modelo se muestra en cada gráfica.");
+  await expect(page.locator("#zsa-pg-print-summary")).toHaveText(/Modo de exploración\.$/);
+  await noEnglish(page);
+  for (const width of [320, 390]) {
+    await page.setViewportSize({width, height:844});
+    await page.clock.runFor(100);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), "at " + width).toBeLessThanOrEqual(0);
+    const box = await page.getByRole("link", {name:"ES Español", exact:true}).boundingBox();
+    expect(box.width).toBeGreaterThanOrEqual(44);
+    expect(box.height).toBeGreaterThanOrEqual(44);
+  }
+  await noEnglish(page);
+  expect(errors).toEqual([]);
+});
+
+test("snells-law-lab opens in Mexican Spanish and translates both blocks, materials, the critical angle, investigations and sharing", async ({page}) => {
+  const errors = [];
+  page.on("pageerror", e => errors.push(e.message));
+  await page.goto("/snells-law-lab/?lang=es");
+  await expect(page.locator("html")).toHaveAttribute("lang", "es-MX");
+  await expect(page).toHaveTitle("Ley de Snell y refracción | ZornScience");
+  await expect(page.getByRole("link", {name:"ES Español", exact:true})).toHaveAttribute("aria-current", "true");
+  await expect(page.locator("#refraction")).toHaveText("28.1°");
+  await expect(page.locator("#ray-direction")).toHaveText("Aire → Vidrio");
+  await expect(page.locator("#index-key")).toHaveText("Primera superficie plana: n₁ = 1.000 (incidente), n₂ = 1.500 (otro lado)");
+  await expect(page.locator("#scene-desc")).toHaveText("Bloque rectangular de vidrio en aire. Incidencia de 45.0 grados. Refracción de 28.1 grados.");
+  await expect(page.locator("#laser")).toHaveAttribute("aria-valuetext", "45.0 grados desde la normal");
+  await expect(page.locator("#explanation")).toHaveText("La luz se acerca a la normal al entrar al medio de mayor índice. En la cara de salida paralela, el rayo saliente es paralelo al rayo entrante.");
+  await expect(page.locator("#laser-power")).toHaveText("Láser encendido");
+  await expect(page.locator("#medium-label")).toHaveText("AIRE / n = 1.000");
+  await noEnglish(page);
+  // Instructions: the paragraph with five bold control names is one Spanish template.
+  await page.getByRole("button", {name:"Instrucciones", exact:true}).click();
+  await expect(page.getByRole("dialog")).toContainText("Abre Prueba una investigación para ver indicaciones breves de exploración. Desactiva Mostrar mediciones para usar el transportador");
+  await expect(page.getByRole("dialog")).toContainText("Usa Justo por debajo y Justo por encima para comparar el límite del ángulo crítico sin cambiar los materiales.");
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", {name:"Compartir actividad", exact:true}).click();
+  await expect(page.locator("#zsa-th-share-url")).toHaveValue("https://activities.zornscience.org/snells-law-lab/?lang=es");
+  const email = decodeURIComponent(await page.locator("#zsa-th-share-email").getAttribute("href"));
+  expect(email).toContain("subject=Ley de Snell y refracción | ZornScience");
+  expect(email).toContain("Explora la refracción y la reflexión interna total con un láser y bloques ópticos.");
+  expect(email).toContain("https://activities.zornscience.org/snells-law-lab/?lang=es");
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+  // Semicircular block: total internal reflection, the critical angle and the steps around it.
+  await page.locator("#tir-mode").click();
+  await expect(page.locator("#refraction")).toHaveText("No hay rayo transmitido");
+  await expect(page.locator("#scene-state")).toHaveText("REFLEXIÓN INTERNA TOTAL");
+  await expect(page.locator("#bench-title")).toHaveText("El banco de reflexión interna");
+  await expect(page.locator("#geometry-label")).toHaveText("BLOQUE SEMICIRCULAR");
+  await expect(page.locator("#explanation")).toHaveText("Más allá del ángulo crítico, toda la luz se refleja de vuelta hacia el medio incidente. Ningún haz cruza la superficie plana. La cara curva da una entrada radial sin desviación inicial.");
+  await expect(page.locator("#equation-values")).toHaveText(/^La transmisión requeriría sin θ₂ = 1\.061 > 1\. No existe un ángulo refractado real: hay reflexión interna total\.$/);
+  await expect(page.locator("#critical-note")).toHaveText("A 41.8°, el rayo transmitido corre a lo largo de la superficie.");
+  await noEnglish(page);
+  await page.getByRole("button", {name:"Ir al ángulo crítico", exact:true}).click();
+  await expect(page.locator("#scene-state")).toHaveText("EN EL ÁNGULO CRÍTICO");
+  await expect(page.locator("#explanation")).toContainText("En el ángulo crítico, el rayo transmitido roza la superficie.");
+  await page.getByRole("button", {name:"Justo por debajo", exact:true}).click();
+  await expect(page.locator("#explanation")).toContainText("Justo por debajo del ángulo crítico, todavía se transmite algo de luz.");
+  await expect(page.locator("#equation-values")).toHaveText(/^1\.500 × sin\(41\.3°\) = 1\.000 × sin\(\d+\.\d°\)\. Ambos lados ≈ 0\.\d{4} \(con ángulos sin redondear\)\.$/);
+  await page.getByRole("button", {name:"Justo por encima", exact:true}).click();
+  await expect(page.locator("#scene-state")).toHaveText("REFLEXIÓN INTERNA TOTAL");
+  await noEnglish(page);
+  // Matching indices, a custom block, laser off and a direction with no critical angle.
+  await page.locator("#surrounding").selectOption("glass");
+  await expect(page.locator("#explanation")).toContainText("Índices iguales: la luz cruza la frontera sin desviarse.");
+  await expect(page.locator("#critical-reading")).toHaveText("Ninguno");
+  await expect(page.locator("#critical-note")).toHaveText("No hay ángulo crítico en esta dirección: n₁ ≤ n₂.");
+  await page.locator("#block").selectOption("custom");
+  await page.locator("#block-index").fill("2.5"); await page.locator("#block-index").press("Tab");
+  await expect(page.locator("#ray-direction")).toHaveText("Material personalizado → Vidrio");
+  await noEnglish(page);
+  await page.getByRole("button", {name:"Láser encendido", exact:true}).click();
+  await expect(page.locator("#refraction")).toHaveText("Láser apagado");
+  await expect(page.locator("#scene-state")).toHaveText("LÁSER APAGADO");
+  await expect(page.locator("#explanation")).toHaveText("El láser está apagado. Enciéndelo para seguir el rayo a través del aparato.");
+  await noEnglish(page);
+  // Reset, hidden measurements, zoom and snapping.
+  await page.getByRole("button", {name:"Reiniciar banco ↺", exact:true}).click();
+  await page.getByLabel("Mostrar mediciones").uncheck();
+  await expect(page.locator("#refraction")).toHaveText("Mide θ₂");
+  await expect(page.locator("#critical-reading")).toHaveText("Ninguno");
+  await expect(page.locator("#scene-desc")).toHaveText("Bloque rectangular de vidrio en aire. Incidencia de 45.0 grados. Usa el transportador para medir la refracción desde la normal.");
+  await expect(page.locator("#equation-values")).toHaveText("Muestra las mediciones después de usar el transportador para ver la sustitución numérica.");
+  await expect(page.locator("#measurement-note")).toBeVisible();
+  await page.getByRole("button", {name:"Acercar a la entrada", exact:true}).click();
+  await expect(page.locator("#zoom")).toHaveText("Banco completo");
+  await expect(page.locator("#protractor-state")).toHaveText("TRANSPORTADOR ALINEADO · CERO SOBRE LA NORMAL");
+  await noEnglish(page);
+  await page.getByRole("button", {name:"Banco completo", exact:true}).click();
+  // Normal incidence: light changes speed but not direction.
+  await page.locator("#laser").focus(); await page.keyboard.press("Home");
+  await expect(page.locator("#explanation")).toHaveText("A lo largo de la normal, la luz cambia de rapidez pero no de dirección. En la cara de salida paralela, el rayo saliente es paralelo al rayo entrante.");
+  await expect(page.locator("#laser")).toHaveAttribute("aria-valuetext", "0.0 grados desde la normal");
+  await noEnglish(page);
+  // The three investigations.
+  await page.locator(".investigation summary").click();
+  await page.getByRole("button", {name:"1. Mide la desviación", exact:true}).click();
+  await expect(page.locator("#investigation-prompt")).toHaveText(/^Mide: ¿qué ángulo es menor, θ₁ o θ₂\?/);
+  await noEnglish(page);
+  await page.getByRole("button", {name:"2. Compara materiales", exact:true}).click();
+  await expect(page.locator("#investigation-prompt")).toHaveText(/^Predice: con el mismo ángulo de incidencia/);
+  await page.locator("#block").selectOption("diamond");
+  await expect(page.locator("#medium-label")).toHaveText("AIRE / n = 1.000");
+  await noEnglish(page);
+  await page.getByRole("button", {name:"3. Encuentra el umbral", exact:true}).click();
+  await expect(page.locator("#ray-direction")).toHaveText("Vidrio → Aire");
+  await expect(page.locator("#critical-reading")).toHaveText("Encuentra θc");
+  await expect(page.locator("#critical-note")).toHaveText("Aumenta el ángulo poco a poco. ¿Puedes encontrar cuándo deja de transmitirse la luz?");
+  await noEnglish(page);
+  // The model note.
+  await page.locator(".model-note summary").click();
+  await expect(page.locator(".model-note")).toContainText("La reflexión interna total ocurre solo cuando n₁ > n₂");
+  await noEnglish(page);
+  // Narrow screens.
+  for (const width of [320, 390]) {
+    await page.setViewportSize({width, height:844});
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), "at " + width).toBeLessThanOrEqual(0);
+  }
+  expect(errors).toEqual([]);
+});
+
+test("standing-waves-lab opens in Mexican Spanish and translates the apparatus, harmonics, strobe, measurements, investigations and sharing", async ({page}) => {
+  const errors = [];
+  page.on("pageerror", e => errors.push(e.message));
+  await page.clock.install();
+  await page.goto("/standing-waves-lab/?lang=es");
+  await expect(page.locator("html")).toHaveAttribute("lang", "es-MX");
+  await expect(page).toHaveTitle("Ondas estacionarias en una cuerda | ZornScience");
+  await expect(page.getByRole("link", {name:"ES Español", exact:true})).toHaveAttribute("aria-current", "true");
+  await expect(page.locator("#badge")).toHaveText("OSCILADOR APAGADO");
+  await expect(page.locator("#state")).toHaveText("LISTO PARA HACER VIBRAR LA CUERDA");
+  await expect(page.locator("#power")).toHaveText("▶ Encender el oscilador");
+  await expect(page.locator("#strobe")).toHaveText("Bloqueo estroboscópico: apagado");
+  await expect(page.locator("#tension")).toHaveText("TENSIÓN 1.96 N");
+  await expect(page.locator("#view-label")).toHaveText("CÁMARA LENTA · 1/40 DEL TIEMPO REAL");
+  await expect(page.locator("#tuning-label")).toHaveText("Oscilador apagado");
+  await expect(page.locator("#insight")).toHaveText("Enciende el oscilador y luego sintoniza la frecuencia para que la cuerda entre en resonancia.");
+  await expect(page.locator("#scene-desc")).toHaveText("Frecuencia del generador: 26.1 hertz; tensión: 1.96 newtons; longitud de vibración: 1.20 metros. Oscilador apagado.");
+  await expect(page.locator("[data-cursor=a]")).toHaveAttribute("aria-label", "Cursor A de la regla");
+  await expect(page.locator("[data-cursor=b]")).toHaveAttribute("aria-valuetext", "0.400 metros");
+  await noEnglish(page);
+  // Instructions: the two steps with bold text are each one full Spanish template.
+  await page.getByRole("button", {name:"Instrucciones", exact:true}).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toContainText("Búsqueda de los armónicos");
+  await expect(dialog.locator("li").nth(3)).toHaveText(/^Activa el Bloqueo estroboscópico para ver la cuerda en el mismo punto de cada ciclo\./);
+  await expect(dialog.locator("li").nth(3).locator("strong")).toHaveText("Bloqueo estroboscópico");
+  await expect(dialog.locator("li").nth(5)).toHaveText(/Los nodos adyacentes están a media longitud de onda uno del otro: λ = 2Δx\.$/);
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+  // Share panel: the link keeps Spanish.
+  await page.getByRole("button", {name:"Compartir actividad", exact:true}).click();
+  await expect(page.locator("#zsa-th-share-url")).toHaveValue("https://activities.zornscience.org/standing-waves-lab/?lang=es");
+  const email = decodeURIComponent(await page.locator("#zsa-th-share-email").getAttribute("href"));
+  expect(email).toContain("subject=Ondas estacionarias en una cuerda | ZornScience");
+  expect(email).toContain("Produce armónicos y mide la separación entre nodos con una luz estroboscópica sincronizada.");
+  expect(email).toContain("https://activities.zornscience.org/standing-waves-lab/?lang=es");
+  await expect(page.locator("#zsa-th-share-panel")).toContainText("Comparte esta simulación. Cada enlace abre el aparato desde cero.");
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+  // Start the oscillator: the starting frequency is harmonic 2.
+  await page.locator("#power").click();
+  await expect(page.locator("#power")).toHaveText("■ Apagar el oscilador");
+  await expect(page.locator("#badge")).toHaveText("CÁMARA LENTA");
+  await expect(page.locator("#state")).toHaveText("ARMÓNICO 2 · 2 SEGMENTOS");
+  await expect(page.locator("#resonance")).toHaveText("Sintonizada");
+  await page.clock.runFor(500);
+  await noEnglish(page);
+  // Harmonic 3 with labeled nodes: counts follow labels, so one template fits every harmonic.
+  await page.locator("[data-harmonic='3']").click();
+  await page.locator("#nodes").check();
+  await expect(page.locator("#state")).toHaveText("ARMÓNICO 3 · 3 SEGMENTOS");
+  await expect(page.locator("#resonance")).toHaveText("Sintonizada");
+  await expect(page.locator("#tuning-label")).toHaveText("Resonancia · armónico 3");
+  await expect(page.locator("#tuning-hint")).toHaveText("Resonancia más cercana: 39.15 Hz · razón de frecuencias f/f₁ ≈ 3");
+  await expect(page.locator("#insight")).toHaveText("Armónico 3. Nodos: 4. Antinodos: 3. Los nodos adyacentes están a 0.400 m uno del otro; la longitud de onda es 0.800 m.");
+  await expect(page.locator("#scene-desc")).toHaveText("Frecuencia del generador: 39.1 hertz; tensión: 1.96 newtons; longitud de vibración: 1.20 metros. Armónico 3. Nodos inmóviles: 4. Antinodos: 3.");
+  await noEnglish(page);
+  // Strobe lock with a tracked string point.
+  await page.locator("#strobe").click();
+  await page.locator("#track").check();
+  await expect(page.locator("#strobe")).toHaveText("Bloqueo estroboscópico: encendido");
+  await expect(page.locator("#badge")).toHaveText("LUZ ESTROBOSCÓPICA SINCRONIZADA");
+  await expect(page.locator("#view-label")).toHaveText("LUZ ESTROBOSCÓPICA · FASE SINCRONIZADA");
+  await expect(page.locator("#view-note")).toHaveText("El bloqueo estroboscópico toma la misma fase en cada ciclo; la cuerda real sigue vibrando. Cambia la fase para examinar otra posición. El punto verde es un pedazo de la cuerda: su posición horizontal no cambia.");
+  await noEnglish(page);
+  // Cursors on adjacent nodes, then off them.
+  await page.locator("#snap-nodes").click();
+  await expect(page.locator("#measurement-feedback")).toHaveText("Nodos vecinos: Δx = 0.400 m = λ/2. La longitud de onda que mediste es λ = 2Δx = 0.800 m.");
+  await noEnglish(page);
+  await page.locator("#cursor-b").fill("0.3");
+  await expect(page.locator("#measurement-feedback")).toHaveText("Δx es la distancia entre tus cursores. Colócalos en nodos vecinos antes de usar λ = 2Δx.");
+  await expect(page.locator("[data-cursor=b]")).toHaveAttribute("aria-valuetext", "0.300 metros");
+  // Detune, then zero drive.
+  await page.locator("#strobe").click();
+  await page.locator("#frequency").fill("40");
+  await expect(page.locator("#tuning-hint")).toHaveText("Resonancia más cercana: 39.15 Hz · baja 0.85 Hz");
+  await expect(page.locator("#state")).toHaveText("SINTONIZA EL GENERADOR PARA FORMAR UNA ONDA ESTACIONARIA");
+  await expect(page.locator("#tuning-label")).toHaveText("Entre resonancias");
+  await expect(page.locator("#resonance")).toHaveText("Desintonizada");
+  await expect(page.locator("#insight")).toHaveText("Entre resonancias: la respuesta es menor y los puntos interiores no forman nodos inmóviles exactos. Prueba un botón de armónico o ajusta la frecuencia con precisión.");
+  await expect(page.locator("#scene-desc")).toHaveText(/La cuerda vibra entre resonancias\.$/);
+  await expect(page.locator("#view-note")).toHaveText("El movimiento se muestra a 1/40 del tiempo real. El generador marca la frecuencia física, no la frecuencia más lenta que ves en pantalla. El punto verde es un pedazo de la cuerda: su posición horizontal no cambia. Sintoniza una resonancia para que aparezcan nodos inmóviles.");
+  await page.locator("#frequency").fill("38");
+  await expect(page.locator("#tuning-hint")).toHaveText("Resonancia más cercana: 39.15 Hz · sube 1.15 Hz");
+  await page.locator("#amplitude").fill("0");
+  await expect(page.locator("#tuning-label")).toHaveText("Sin excitación · cuerda en reposo");
+  await expect(page.locator("#insight")).toHaveText("La amplitud de excitación es cero: la cuerda está en reposo.");
+  await expect(page.locator("#measurement-feedback")).toHaveText("Enciende una excitación mayor que cero y sintoniza una resonancia para medir nodos inmóviles.");
+  await page.clock.runFor(500);
+  await noEnglish(page);
+  // The three investigations and their explanations.
+  await page.locator("[data-task='measure']").click();
+  await expect(page.locator("#task-prompt")).toHaveText(/^Sintoniza el armónico 3 y activa el bloqueo estroboscópico\./);
+  await page.locator(".investigation summary").click();
+  await expect(page.locator("#task-explain")).toHaveText(/así que la longitud de onda es λ = 2Δx\./);
+  await noEnglish(page);
+  await page.locator("[data-task='tension']").click();
+  await expect(page.locator("#task-prompt")).toHaveText(/^Sintoniza el armónico 2\./);
+  await expect(page.locator("#task-explain")).toHaveText(/Duplicar la masa la multiplica por √2, no por 2\./);
+  await noEnglish(page);
+  // The fundamental is one segment.
+  await page.locator("#amplitude").fill("50");
+  await page.locator("[data-harmonic='1']").click();
+  await expect(page.locator("#state")).toHaveText("ARMÓNICO 1 · 1 SEGMENTO");
+  await expect(page.locator("#insight")).toHaveText("Armónico 1. Nodos: 2. Antinodos: 1. Los nodos adyacentes están a 1.200 m uno del otro; la longitud de onda es 2.400 m.");
+  await noEnglish(page);
+  // Stop, the model note and reset.
+  await page.locator("#power").click();
+  await expect(page.locator("#tuning-label")).toHaveText("Oscilador apagado");
+  await page.locator(".model-note summary").click();
+  await expect(page.locator(".model-note")).toContainText("La reproducción normal va a 1/40 del tiempo real");
+  await page.locator("#reset").click();
+  await expect(page.locator("[data-task='harmonics']")).toHaveAttribute("aria-pressed", "true");
+  await expect(page.locator("#task-prompt")).toHaveText(/^Enciende el oscilador\. Sintoniza los armónicos 1, 2 y 3/);
+  await noEnglish(page);
+  // Narrow screens: no sideways scrolling and a 44 px language toggle.
+  for (const width of [320, 390]) {
+    await page.setViewportSize({width, height:844});
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), "at " + width).toBeLessThanOrEqual(0);
+    const box = await page.getByRole("link", {name:"ES Español", exact:true}).boundingBox();
+    expect(box.width).toBeGreaterThanOrEqual(44);
+    expect(box.height).toBeGreaterThanOrEqual(44);
+  }
   expect(errors).toEqual([]);
 });
 

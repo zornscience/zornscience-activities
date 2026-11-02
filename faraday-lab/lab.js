@@ -1,6 +1,11 @@
 (function () {
   "use strict";
 const $=id=>document.getElementById(id), canvas=$('apparatus'), c=canvas.getContext('2d');
+let i18n;
+const root=document.querySelector('[data-zsa-activity="faraday-lab"]');
+if(root)root.dispatchEvent(new CustomEvent('zsa:request-i18n',{detail:{receive:api=>{i18n=api;}}}));
+// Every sentence is one full template from data.js, filled with values, so each language keeps its word order.
+function tr(s,values){values=values||{};return i18n?i18n.text(s,values):s.replace(/\{(\w+)\}/g,(m,k)=>values[k]===undefined?m:values[k]);}
 let y=0,v=0,fy=0,fv=0,phase='ready',north=1,last=0,clock=0;
 const top=135,scale=350,end=1.13;
 function dragAt(pos){const k=$('material').value==='copper'?34:$('material').value==='slotted'?0.65:0;return k*Number($('strength').value)**2*Math.max(0,Math.min(1,(pos+.025)/.07,(1.025-pos)/.07));}
@@ -19,41 +24,41 @@ function prepareReplay(){
 function sample(time){clock=Math.max(0,Math.min(duration,time));[y,v,fy,fv]=replayFrames[Math.min(replayFrames.length-1,Math.round(clock/.002))];}
 function describe(){
   const material=$('material').value;
-  if(phase==='ready')return 'Predict first: which magnet will arrive first? Both magnets have the same mass and release height. Only one passes through the tube.';
-  if(material==='plastic')return phase==='done'?'Plastic cannot sustain eddy currents. Both magnets fell together under gravity. A magnetic field alone does not create a braking force.':'The insulating plastic carries no eddy currents. Both magnets accelerate together under gravity.';
-  if(material==='slotted')return 'The slot interrupts the large circular current paths. Small local currents can remain, so the braking is weak. Compare with intact copper at the same magnet strength.';
-  if(phase==='done')return 'The copper magnet arrived later. Its gravitational energy transferred into thermal energy in the tube. Copper is not ferromagnetic: changing flux and circulating currents caused the braking.';
-  if(phase==='paused')return 'Time is frozen for inspection. The currents shown belong to this instant of the falling motion. A magnet actually held still would induce no sustained eddy current.';
-  if(y>.15&&y<.85)return 'Inside copper, upward magnetic braking nearly balances downward weight. The magnet keeps moving at nearly constant terminal speed; balanced forces do not mean it stops.';
-  return 'As the magnet enters or leaves the copper, the changing flux drives currents. Their fields oppose the change and the resulting force opposes the fall.';
+  if(phase==='ready')return tr('Predict first: which magnet will arrive first? Both magnets have the same mass and release height. Only one passes through the tube.');
+  if(material==='plastic')return phase==='done'?tr('Plastic cannot sustain eddy currents. Both magnets fell together under gravity. A magnetic field alone does not create a braking force.'):tr('The insulating plastic carries no eddy currents. Both magnets accelerate together under gravity.');
+  if(material==='slotted')return tr('The slot interrupts the large circular current paths. Small local currents can remain, so the braking is weak. Compare with intact copper at the same magnet strength.');
+  if(phase==='done')return tr('The copper magnet arrived later. Its gravitational energy transferred into thermal energy in the tube. Copper is not ferromagnetic: changing flux and circulating currents caused the braking.');
+  if(phase==='paused')return tr('Time is frozen for inspection. The currents shown belong to this instant of the falling motion. A magnet actually held still would induce no sustained eddy current.');
+  if(y>.15&&y<.85)return tr('Inside copper, upward magnetic braking nearly balances downward weight. The magnet keeps moving at nearly constant terminal speed; balanced forces do not mean it stops.');
+  return tr('As the magnet enters or leaves the copper, the changing flux drives currents. Their fields oppose the change and the resulting force opposes the fall.');
 }
 function updateReadout(){
   $('replay').value=duration?Math.round(clock/duration*1000):0;
-  $('replay-time').textContent=phase==='ready'?'Ready':clock.toFixed(2)+' s / '+duration.toFixed(2)+' s';
-  $('replay').setAttribute('aria-valuetext',phase==='ready'?'Release magnets first':clock.toFixed(2)+' seconds into the drop');
+  $('replay-time').textContent=phase==='ready'?tr('Ready'):clock.toFixed(2)+' s / '+duration.toFixed(2)+' s';
+  $('replay').setAttribute('aria-valuetext',phase==='ready'?tr('Release magnets first'):tr('{t} seconds into the drop',{t:clock.toFixed(2)}));
   const delta=y-(320-top)/scale, moving=phase!=='ready'&&phase!=='done'&&v>0&&y<1.05;
   let info;
-  if(!moving)info='The magnet is '+(phase==='ready'?'held still':'in the catch tray')+'. No changing flux through the ring, so there is no induced current.';
-  else if($('material').value==='plastic')info='Flux changes as the magnet passes, but plastic is an insulator: no eddy current or induced field from the tube.';
-  else if($('material').value==='slotted')info='The changing flux can drive small local currents, but the slot interrupts a complete current loop around this ring. Braking is much weaker.';
-  else if(Math.abs(delta)<.035)info='At the ring: flux is near its maximum. Its rate of change passes through zero, and the current reverses as the magnet passes.';
+  if(!moving)info=phase==='ready'?tr('The magnet is held still. No changing flux through the ring, so there is no induced current.'):tr('The magnet is in the catch tray. No changing flux through the ring, so there is no induced current.');
+  else if($('material').value==='plastic')info=tr('Flux changes as the magnet passes, but plastic is an insulator: no eddy current or induced field from the tube.');
+  else if($('material').value==='slotted')info=tr('The changing flux can drive small local currents, but the slot interrupts a complete current loop around this ring. Braking is much weaker.');
+  else if(Math.abs(delta)<.035)info=tr('At the ring: flux is near its maximum. Its rate of change passes through zero, and the current reverses as the magnet passes.');
   else {const approaching=delta<0, down=(approaching?north:-north)<0;
-    info=(approaching?'Approaching the ring: flux is increasing. ':'Leaving the ring: flux is decreasing. ');
-    if($('material').value==='plastic')info+='Flux changes, but plastic is an insulator: no eddy current.';
-    else info+='The induced field points '+(down?'down':'up')+'; conventional current is '+(down?'clockwise':'counterclockwise')+' viewed from above.'+($('material').value==='slotted'?' The slot prevents a complete current loop; local currents are much weaker.':'');
+    info=(approaching?tr('Approaching the ring: flux is increasing.'):tr('Leaving the ring: flux is decreasing.'))+' ';
+    if($('material').value==='plastic')info+=tr('Flux changes, but plastic is an insulator: no eddy current.');
+    else info+=(down?tr('The induced field points down; conventional current is clockwise viewed from above.'):tr('The induced field points up; conventional current is counterclockwise viewed from above.'))+($('material').value==='slotted'?' '+tr('The slot prevents a complete current loop; local currents are much weaker.'):'');
   }
   $('flux-description').textContent=info;
-  $('flux-title').textContent='At the fixed '+($('material').value==='plastic'?'plastic':'copper')+' ring';
+  $('flux-title').textContent=$('material').value==='plastic'?tr('At the fixed plastic ring'):tr('At the fixed copper ring');
   canvas.setAttribute('aria-label',describe()+' '+(!$('flux-panel').hidden?info:''));
 }
 function reset(){
-  prepareReplay();sample(0);phase='ready';$('release').disabled=false;$('release').textContent='Release magnets';
-  $('pause').disabled=true;$('pause').textContent='Pause';$('replay').disabled=true;
-  $('state').textContent='READY TO RELEASE';$('observation').textContent=describe();draw();
+  prepareReplay();sample(0);phase='ready';$('release').disabled=false;$('release').textContent=tr('Release magnets');
+  $('pause').disabled=true;$('pause').textContent=tr('Pause');$('replay').disabled=true;
+  $('state').textContent=tr('READY TO RELEASE');$('observation').textContent=describe();draw();
 }
 function step(dt){
   sample(clock+dt);
-  if(clock>=duration){phase='done';$('pause').disabled=true;$('release').disabled=false;$('release').textContent='Release again';$('state').textContent='BOTH MAGNETS CAUGHT';}
+  if(clock>=duration){phase='done';$('pause').disabled=true;$('release').disabled=false;$('release').textContent=tr('Release again');$('state').textContent=tr('BOTH MAGNETS CAUGHT');}
   const message=describe();if($('observation').textContent!==message)$('observation').textContent=message;
 }
 function grad(x,w,colors){let g=c.createLinearGradient(x,0,x+w,0);colors.forEach(([s,col])=>g.addColorStop(s,col));return g;}
@@ -73,33 +78,33 @@ box(541,144,25,350,'#d5bd84',2);for(let i=0;i<=50;i++){let yy=144+i*7;line(542,y
 let plastic=$('material').value==='plastic';let copper=grad(351,98,plastic?[[0,'#b0c0ce'],[.23,'#edf4f8'],[.55,'#95aebe'],[1,'#506a80']]:[[0,'#6a3927'],[.16,'#b4744d'],[.34,'#f0bd86'],[.5,'#bf8056'],[.76,'#915133'],[1,'#4d2b22']]);
 box(351,144,98,350,copper);ellipse(400,494,49,13,copper,'#8f664d');
 if($('cutaway').checked){box(373,144,54,350,'#132c3c');box(374,144,5,350,'#684831');box(422,144,5,350,'#d09c6a');}
-if($('material').value==='slotted'){box(435,144,9,350,'#0a2232');text('SLOT',482,476,14);line(443,466,476,471,'#c9dbe5',1);}
+if($('material').value==='slotted'){box(435,144,9,350,'#0a2232');text(tr('SLOT'),482,476,14);line(443,466,476,471,'#c9dbe5',1);}
 // Magnets: hidden by intact opaque wall unless cutaway is enabled.
 if($('cutaway').checked||y<.025||y>1.06)magnet(400,y);magnet(745,fy);
 ellipse(400,144,49,13,copper,'#d8a576');ellipse(400,144,35,8,'#0b2130','#6e4937');
 // Catch pads and a free-fall guide reference.
 for(const x of [400,745]){ellipse(x,554,71,17,'#0b202d');box(x-62,535,124,17,'#6b8790',5);ellipse(x,535,62,12,'#a0b7b8');ellipse(x,535,49,8,'#405b62');}
 c.setLineDash([4,9]);line(745,158,745,508,'#668394',1);c.setLineDash([]);if(fy===end)magnet(745,fy);if(y===end)magnet(400,y);
-if(!$('flux-panel').hidden){c.setLineDash([7,5]);ellipse(400,320,57,15,null,'#f3e6bb');c.setLineDash([]);text('FIXED RING',620,316,15,'#f3e6bb');line(456,320,605,320,'#f3e6bb',1);}
+if(!$('flux-panel').hidden){c.setLineDash([7,5]);ellipse(400,320,57,15,null,'#f3e6bb');c.setLineDash([]);text(tr('FIXED RING'),620,316,15,'#f3e6bb');line(456,320,605,320,'#f3e6bb',1);}
 const active=y>.03&&y<.99&&v>.001, alpha=Math.min(1,dragAt(y)*v/9.81);
 if(active&&!plastic){const yy=top+y*scale;for(const d of [-65,-43,43,65]){const cy=yy+d;if(cy<155||cy>482)continue;const sign=(d<0?1:-1)*north;if($('currents').checked)ring(cy,sign,Math.max(.18,alpha));if($('fields').checked){const dir=(d<0?1:-1)*north;c.save();c.globalAlpha=Math.max(.2,alpha);for(let xx of [387,413])arrow(xx,cy-dir*13,xx,cy+dir*13,'#ffd584',3);c.restore();}}}
-if($('forces').checked&&y<end&&phase!=='ready'){const yy=top+y*scale;arrow(475,yy,475,yy+62,'#e4eaf0');text('weight',492,yy+51,12);if(active&&!plastic){arrow(320,yy,320,yy-62*Math.min(1.8,dragAt(y)*v/9.81),'#ffd584');text('braking',305,yy-18,12,'#ffd584','right');}}
-text(plastic?'PLASTIC TUBE':$('material').value==='slotted'?'SLOTTED COPPER':'COPPER TUBE',400,38,17,'#e0ebf0','center');text('IDENTICAL MAGNET',745,38,17,'#e0ebf0','center');text('Held in two retort clamps',400,61,12,'#abc3d0','center');text('Free-fall comparison',745,61,12,'#abc3d0','center');text('SOFT CATCH TRAYS',575,604,12,'#bdd1db','center');
+if($('forces').checked&&y<end&&phase!=='ready'){const yy=top+y*scale;arrow(475,yy,475,yy+62,'#e4eaf0');text(tr('weight'),492,yy+51,12);if(active&&!plastic){arrow(320,yy,320,yy-62*Math.min(1.8,dragAt(y)*v/9.81),'#ffd584');text(tr('braking'),305,yy-18,12,'#ffd584','right');}}
+text(tr(plastic?'PLASTIC TUBE':$('material').value==='slotted'?'SLOTTED COPPER':'COPPER TUBE'),400,38,17,'#e0ebf0','center');text(tr('IDENTICAL MAGNET'),745,38,17,'#e0ebf0','center');text(tr('Held in two retort clamps'),400,61,12,'#abc3d0','center');text(tr('Free-fall comparison'),745,61,12,'#abc3d0','center');text(tr('SOFT CATCH TRAYS'),575,604,12,'#bdd1db','center');
 c.save();if(compact)c.translate(215,0);
-if($('currents').checked){line(45,593,70,593,'#69e4f4',3);text('Eddy current',80,598,12);}if($('fields').checked){arrow(45,615,70,615,'#ffd584',2);text('Induced field',80,620,12);}
+if($('currents').checked){line(45,593,70,593,'#69e4f4',3);text(tr('Eddy current'),80,598,12);}if($('fields').checked){arrow(45,615,70,615,'#ffd584',2);text(tr('Induced field'),80,620,12);}
 c.restore();
 }
 function frame(now){let dt=last?Math.min((now-last)/1000,.05):0;last=now;if(phase==='running'){step(dt*($('slow').checked?.25:1));draw();}requestAnimationFrame(frame);}
-$('release').onclick=()=>{reset();phase='running';$('release').disabled=true;$('pause').disabled=false;$('replay').disabled=false;$('state').textContent='MAGNETS FALLING';$('observation').textContent=describe();draw();};
-$('pause').onclick=()=>{phase=phase==='running'?'paused':'running';$('pause').textContent=phase==='paused'?'Resume':'Pause';$('state').textContent=phase==='paused'?'PAUSED · SIMULATED TIME FROZEN':'MAGNETS FALLING';$('observation').textContent=describe();draw();};
+$('release').onclick=()=>{reset();phase='running';$('release').disabled=true;$('pause').disabled=false;$('replay').disabled=false;$('state').textContent=tr('MAGNETS FALLING');$('observation').textContent=describe();draw();};
+$('pause').onclick=()=>{phase=phase==='running'?'paused':'running';$('pause').textContent=tr(phase==='paused'?'Resume':'Pause');$('state').textContent=tr(phase==='paused'?'PAUSED · SIMULATED TIME FROZEN':'MAGNETS FALLING');$('observation').textContent=describe();draw();};
 $('replay').addEventListener('input',()=>{
   sample(Number($('replay').value)/1000*duration);phase='paused';
-  $('pause').disabled=false;$('pause').textContent='Resume';$('release').disabled=false;
-  $('state').textContent='PAUSED · SIMULATED TIME FROZEN';$('observation').textContent=describe();draw();
+  $('pause').disabled=false;$('pause').textContent=tr('Resume');$('release').disabled=false;
+  $('state').textContent=tr('PAUSED · SIMULATED TIME FROZEN');$('observation').textContent=describe();draw();
 });
 $('reset').onclick=reset;
-$('flip').onclick=()=>{north*=-1;$('flip').textContent='Reverse poles · '+(north===1?'N':'S')+' down';reset();};
-$('material').onchange=()=>{$('challenge').textContent='Predict: how will this tube compare with free fall? Keep magnet strength fixed while comparing materials.';$('material-note').textContent=$('material').value==='copper'?'Closed conducting loops allow strong eddy currents.':$('material').value==='slotted'?'A lengthwise slot interrupts the large current loops.':'An insulator cannot carry eddy currents.';reset();};
+$('flip').onclick=()=>{north*=-1;$('flip').textContent=tr('Reverse poles · {pole} down',{pole:north===1?'N':'S'});reset();};
+$('material').onchange=()=>{$('challenge').textContent=tr('Predict: how will this tube compare with free fall? Keep magnet strength fixed while comparing materials.');$('material-note').textContent=$('material').value==='copper'?tr('Closed conducting loops allow strong eddy currents.'):$('material').value==='slotted'?tr('A lengthwise slot interrupts the large current loops.'):tr('An insulator cannot carry eddy currents.');reset();};
 $('strength').oninput=()=>{$('strength-value').textContent=Number($('strength').value).toFixed(1)+'×';reset();};
 function syncView(){
   const explain=$('currents').checked||$('fields').checked||$('forces').checked;
@@ -108,9 +113,9 @@ function syncView(){
 for(const id of ['cutaway','currents','fields','forces'])$(id).onchange=syncView;
 $('observe-view').onclick=()=>{for(const id of ['currents','fields','forces'])$(id).checked=false;syncView();};
 $('explain-view').onclick=()=>{for(const id of ['currents','fields','forces','cutaway'])$(id).checked=true;syncView();};
-$('try-slot').onclick=()=>{$('material').value='slotted';$('material').onchange();$('challenge').textContent='Predict: will breaking the circular path change the fall? Release again, then compare with intact copper using the same magnet strength.';};
-$('try-poles').onclick=()=>{$('flip').click();$('challenge').textContent='Predict: will reversing the poles reverse the braking force? Use Explain and compare current directions before and after the flip, keeping the material and strength unchanged.';};
-$('slow').onchange=()=>{$('speed').textContent=$('slow').checked?'¼ SPEED':'REAL TIME';};
+$('try-slot').onclick=()=>{$('material').value='slotted';$('material').onchange();$('challenge').textContent=tr('Predict: will breaking the circular path change the fall? Release again, then compare with intact copper using the same magnet strength.');};
+$('try-poles').onclick=()=>{$('flip').click();$('challenge').textContent=tr('Predict: will reversing the poles reverse the braking force? Use Explain and compare current directions before and after the flip, keeping the material and strength unchanged.');};
+$('slow').onchange=()=>{$('speed').textContent=tr($('slow').checked?'¼ SPEED':'REAL TIME');};
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&phase==='running')$('pause').click();last=0;});
 window.addEventListener('resize',draw);
 reset();requestAnimationFrame(frame);
