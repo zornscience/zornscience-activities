@@ -1,6 +1,6 @@
 # Spanish terminology choices
 
-Reference: the attached ZornScience Style Kit v1.6, sections 4 to 6. Mexican Spanish, tú, noun-phrase titles, unchanged chemistry and decimal points. This inventory records choices beyond the supplied fixed interface text and glossary. Full feedback and explanatory translations are in each activity's `data.js`. Existing Gas Laws Spanish wording is preserved.
+Reference: the ZornScience Style Kit v1.7, sections 4 to 6. Mexican Spanish, tú, noun-phrase titles, unchanged chemistry and decimal points. This inventory records choices beyond the supplied fixed interface text and glossary. Full feedback and explanatory translations are in each activity's `data.js`. Existing Gas Laws Spanish wording is preserved.
 
 ## Science terms and ion names
 
@@ -564,6 +564,95 @@ least common multiple | mínimo común múltiplo
 smallest whole-number ratio | relación de números enteros más pequeños
 mass balance / charge balance | balance de masa / balance de carga
 oxidation state (English text) | número de oxidación
+pulley / ideal pulley / frictionless pulley | polea / polea ideal / polea sin fricción
+string (massless, inextensible) | cuerda (sin masa, inextensible)
+string tension | tensión de la cuerda
+net driving force (readout label) | fuerza neta
+signed driving force | fuerza impulsora con signo
+free motion | movimiento libre
+travel limit / travel distance | límite de recorrido / distancia de recorrido
+weight difference | diferencia de pesos
+added mass | masa agregada
+brass discs / brass masses | discos de latón / masas de latón
+steel support stand | soporte de acero
+mechanics lab | laboratorio de mecánica
+perfectly elastic / perfectly inelastic (collision) | perfectamente elástica / perfectamente inelástica
+total momentum | cantidad de movimiento total
+internal energy | energía interna
+external impulse | impulso externo
+rolling resistance | resistencia a la rodadura
+catch-up collision | colisión por alcance
+head-on (collision) | de frente
+at rest | en reposo
+extension (of a spring) | elongación
+Hooke's law | ley de Hooke
+harmonic motion | movimiento armónico
+damping / damped motion | amortiguamiento / movimiento amortiguado
+amplitude | amplitud
+period (of an oscillation) / measured period | periodo / periodo medido
+cycle / peak (of an oscillation) | ciclo / pico
+equilibrium (position) | equilibrio
+oscillate / oscillation | oscilar / oscilación
+slotted masses | pesas ranuradas
+mass-spring system | sistema masa-resorte
+extension spring / helical spring | resorte de extensión / resorte helicoidal
+retort stand | soporte universal
+ruler | regla
+mechanical energy | energía mecánica
+elastic limit | límite elástico
+air resistance | resistencia del aire
+sine wave | onda senoidal
+inclined plane / adjustable inclined plane | plano inclinado / plano inclinado ajustable
+ramp / ramp angle | rampa / ángulo de la rampa
+contact surface | superficie de contacto
+wood on wood / felt on wood / smooth plastic on wood | madera sobre madera / fieltro sobre madera / plástico liso sobre madera
+downhill | cuesta abajo
+critical angle | ángulo crítico
+dry friction | fricción seca
+resolve (gravity, the weight) / gravity components | descomponer (la gravedad, el peso) / componentes de la gravedad
+tipping point (where the block first slips) | punto de deslizamiento
+end stop (padded) | tope final (acolchado)
+contact force | fuerza de contacto
+protractor | transportador
+hinge / hinged | bisagra / con bisagra
+track (1.20 m) | riel (de 1.20 m)
+STATIC / AT REST, KINETIC / SLIDING | ESTÁTICO / EN REPOSO, CINÉTICO / EN DESLIZAMIENTO
+The Simple Pendulum (activity title) | El péndulo simple
+(pendulum) bob / brass bob | esfera / esfera de latón
+pivot | pivote
+meter rule | regla de un metro
+angle scale | escala de ángulos
+release angle | ángulo de liberación
+oscillation / complete oscillation | oscilación / oscilación completa
+period (of oscillation) | periodo
+small-angle period / model period | periodo para ángulos pequeños / periodo del modelo
+restoring force / restoring effect | fuerza restauradora / efecto restaurador
+turning point | punto de retorno
+total mechanical energy | energía mecánica total
+zero gravity | gravedad cero
+point-mass bob | esfera puntual
+complete elliptic integral | integral elíptica completa
+fourth-order Runge-Kutta integrator | integrador de Runge-Kutta de cuarto orden
+Projectile Motion Vector Lab (lab title) | Laboratorio de vectores del movimiento de proyectiles
+the ball (the projectile in this lab) | el proyectil
+cannon | cañón
+ledge | cornisa
+cliff | acantilado
+launch (noun) | lanzamiento
+launch height / launch angle / launch speed | altura de lanzamiento / ángulo de lanzamiento / rapidez de lanzamiento
+velocity components | componentes de la velocidad
+horizontal velocity / vertical velocity | velocidad horizontal / velocidad vertical
+vx, vy (in sentences) | vx, vy (feminine: vx es pequeña, vy es negativa)
+highest point / top of the path | punto más alto / punto más alto de la trayectoria
+path | trayectoria
+range | alcance
+time in the air | tiempo en el aire
+landing / at landing | al llegar al suelo
+landing velocity | velocidad al llegar al suelo
+above / below horizontal | sobre la horizontal / bajo la horizontal
+straight up / straight down | verticalmente hacia arriba / verticalmente hacia abajo
+(the vy arrow) flips | cambia de sentido
+the cannon's pivot | el eje de giro del cañón
 
 ## Additional interface labels
 
@@ -1388,6 +1477,106 @@ Verified. Continue with the next step. | Verificado. Sigue con el siguiente paso
 Success! You balanced the reaction. | ¡Lo lograste! Balanceaste la reacción.
 token (draggable piece) | ficha
 Space (key) | la barra espaciadora
+The Atwood Machine (activity title) | La máquina de Atwood
+The Atwood apparatus | El aparato de Atwood
+Explore Newton's second law (instructions heading) | Exploración de la segunda ley de Newton
+Set the masses | Ajuste de las masas
+Left hanger / Right hanger | Portapesas izquierdo / Portapesas derecho
+▶ Release masses / Ⅱ Pause / ▶ Resume | ▶ Soltar las masas / Ⅱ Pausar / ▶ Reanudar
+↺ Reset position | ↺ Reiniciar posición
+⇄ Swap masses / Equal masses / Transfer 25 g → | ⇄ Intercambiar masas / Masas iguales / Pasar 25 g →
+Acceleration arrows / Gravity & tension arrows | Flechas de aceleración / Flechas de gravedad y tensión
+Playback speed | Ritmo de reproducción (avoids velocidad/rapidez for a non-physics setting)
+Real time · 1× / Slow motion · ¼× | Tiempo real · 1× / Cámara lenta · ¼×
+READY TO RELEASE / IN MOTION / PAUSED | LISTO PARA SOLTAR / EN MOVIMIENTO / EN PAUSA
+TRAVEL LIMIT / RESET TO REPEAT | LÍMITE DE RECORRIDO / REINICIA PARA REPETIR
+Travel complete | Recorrido completo
+SPEED (readout) | RAPIDEZ
+n/a (readout) | n/d
+← All ZornScience activities | ← Todas las actividades de ZornScience
+About the ideal model | Acerca del modelo ideal
+Collision Carts (activity title) | Carritos de colisión
+cart / dynamics cart | carrito / carrito de dinámica
+CART A (plate on the cart) | CARRITO A
+dynamics track / low-friction dynamics track | pista de dinámica / pista de dinámica de baja fricción
+end stop | tope
+bumper / magnetic bumpers | parachoques / parachoques magnéticos
+hook-and-loop pads | almohadillas de velcro
+magnetic (bumper menu option) | imanes
+slotted steel masses | pesas ranuradas de acero
+leveling feet | patas niveladoras
+Launch / Resume / Pause | Lanzar / Reanudar / Pausar
+Step +0.02 s | Avanzar +0.02 s
+slow motion | cámara lenta
+advance one frame | avanzar un cuadro
+Run complete | Corrida completa
+Starting velocity | Velocidad inicial
+Total mass | Masa total
+Try a setup | Prueba una configuración
+SHOW VECTORS | MOSTRAR VECTORES
+Separate scales | Escalas separadas
+READY TO LAUNCH / CARTS IN MOTION / PAUSED | LISTO PARA LANZAR / CARRITOS EN MOVIMIENTO / EN PAUSA
+AFTER COLLISION / REBOUND, JOINED | DESPUÉS DE LA COLISIÓN / REBOTE, UNIDOS
+PAUSED BEFORE END STOP | EN PAUSA ANTES DEL TOPE
++ RIGHT → | + DERECHA →
+Physics behind the simulation | La física detrás de la simulación
+Hooke's Law & Harmonic Motion (activity title) | Ley de Hooke y movimiento armónico
+Pull & release (button) / pull (noun) | Jalar y soltar / jalón
+Settle at equilibrium (button) | Llevar al equilibrio
+Release displacement | Desplazamiento al soltar
+Step 0.02 s | Avanzar 0.02 s
+Time speed (simulation rate) | Ritmo de la simulación
+Reset lab | Reiniciar laboratorio
+Show forces / Show spring constant | Mostrar fuerzas / Mostrar la constante del resorte
+Spring A · soft / B · medium / C · firm | Resorte A · suave / B · medio / C · rígido
+Damping: None · ideal spring / Light · air resistance / Strong · damped motion | Ninguno · resorte ideal / Ligero · resistencia del aire / Fuerte · movimiento amortiguado
+AT EQUILIBRIUM / OSCILLATING / HELD / PAUSED (bench state) | EN EQUILIBRIO / OSCILANDO / SUJETA / EN PAUSA
+Unloaded end | Extremo sin carga
+DIGITAL TIMER / SIMULATION TIME / s | CRONÓMETRO DIGITAL / TIEMPO SIMULADO / s
+Investigate (investigation menu) | Investiga
+Find the spring constant (investigation) | Obtención de la constante del resorte
+What to look for | Qué observar
+Physics behind the bench | La física del experimento
+Inclined Plane & Friction (activity title) | Plano inclinado y fricción
+Set up the ramp | Preparación de la rampa
+Block + added mass | Bloque + masa agregada
+Return block to top | Regresar el bloque arriba
+Show force arrows | Mostrar flechas de fuerza
+Resolve gravity | Descomponer la gravedad
+Slow motion (¼ speed) | Cámara lenta (¼ del tiempo real)
+LIVE APPARATUS | MONTAJE EN VIVO
+MECHANICS BENCH | MESA DE MECÁNICA
+ACCELERATION / SPEED / DISTANCE (readings) | ACELERACIÓN / RAPIDEZ / DISTANCIA
+● Normal / ● Weight / ● Friction (legend) | ● Fuerza normal / ● Peso / ● Fricción
+Explore the physics | Explora la física
+Ideal dry friction · No data saved | Fricción seca ideal · No se guardan datos
+Release bob / Release to start | Soltar la esfera / Suelta la esfera para empezar
+Bob mass / Bob speed (readout) | Masa de la esfera / Rapidez de la esfera
+Step +0.05 s | Avanzar +0.05 s
+Reset position | Reiniciar posición
+Adjust apparatus / Hide apparatus settings | Ajustar el aparato / Ocultar los ajustes del aparato
+setup (one pendulum's settings in a comparison) | montaje
+Double the mass / Double the length / Go to the Moon | Duplicar la masa / Duplicar la longitud / Ir a la Luna
+Free exploration | Exploración libre
+Playback speed / Real time / Slow motion | Ritmo de reproducción / Tiempo real / Cámara lenta
+EARTH / MOON / JUPITER / ZERO GRAVITY LABORATORY | LABORATORIO EN LA TIERRA / EN LA LUNA / EN JÚPITER / SIN GRAVEDAD
+READY TO RELEASE / OSCILLATING / PAUSED | LISTO PARA SOLTAR / OSCILANDO / EN PAUSA
+Outbound / Returning (halves of an oscillation) | Ida / Regreso
+dashed outline / dashed reference | contorno punteado / referencia punteada
+Launch / Launch again | Lanzar / Lanzar de nuevo
+Pause / Resume / Reset | Pausar / Reanudar / Reiniciar
+Pause at the top | Pausa en el punto más alto
+Snapshots along the path / snapshots | Instantáneas a lo largo de la trayectoria / instantáneas
+Show on the ball | Mostrar en el proyectil
+Launch settings / Custom settings | Ajustes de lanzamiento / Ajustes personalizados
+Start with a scenario (scenario) | Empieza con una situación (situación)
+Across, x / Height, y / Speed, abs(v) / Direction | Distancia horizontal, x / Altura, y / Rapidez, abs(v) / Dirección
+Distance across (range) | Distancia horizontal (alcance)
+Arrows: {list}. | Flechas: {list}.
+Rising / Falling | De subida / De bajada
+Launch from a ledge / Ground to ground at 45° / Horizontal launch from a cliff / Steep launch / Low and fast | Lanzamiento desde una cornisa / Del suelo al suelo a 45° / Lanzamiento horizontal desde un acantilado / Lanzamiento muy inclinado / Bajo y rápido
+Download flight data (CSV) | Descargar datos del vuelo (CSV)
+Predict. Observe. Explain. Nothing you enter leaves this tab. | Predice. Observa. Explica. Nada de lo que escribes sale de esta pestaña.
 
 ## Full sentence templates
 
@@ -1848,6 +2037,37 @@ Pair the same changing element. A rise in oxidation state means oxidation. | Jun
 Oxidation releases electrons. / Reduction accepts electrons. | En la oxidación se liberan electrones. / En la reducción se aceptan electrones.
 Smallest whole-number ratio. Total charge: {charge} on both sides. No H⁺ remains in this basic equation. | Relación de números enteros más pequeños. Carga total: {charge} en ambos lados. No queda H⁺ en esta ecuación en medio básico.
 Smallest whole-number ratio. Total charge: {charge} on both sides. You completed the half-reaction method. | Relación de números enteros más pequeños. Carga total: {charge} en ambos lados. Completaste el método de semirreacciones.
+Predict which side will move down. Select {button} and watch both acceleration arrows. | Predice qué lado va a bajar. Selecciona {button} y observa las dos flechas de aceleración.
+Left mass {m1} grams, right mass {m2} grams. {direction} {motion} | Masa izquierda de {m1} gramos, masa derecha de {m2} gramos. {direction} {motion}
+Acceleration {a} meters per second squared. | Aceleración de {a} metros por segundo al cuadrado.
+Right side accelerates down. / Left side accelerates down. | El lado derecho acelera hacia abajo. / El lado izquierdo acelera hacia abajo.
+Balanced: no acceleration. | Equilibrado: no hay aceleración.
+Travel limit reached. Reset to repeat. | Se alcanzó el límite de recorrido. Reinicia para repetir.
+CART {letter} | CARRITO {letter}
+The carts have rebounded. Total momentum and kinetic energy are unchanged. Compare each cart’s new velocity and momentum arrows. | Los carritos rebotaron. La cantidad de movimiento total y la energía cinética no cambian. Compara las nuevas flechas de velocidad y de cantidad de movimiento de cada carrito.
+The run paused before an end stop. An end-stop impact would exert an external impulse on the two-cart system. Reset to try another collision. | La corrida se pausó antes de un tope. Un impacto contra el tope ejercería un impulso externo sobre el sistema de dos carritos. Reinicia para probar otra colisión.
+{g} g total suspended mass | {g} g de masa suspendida en total
+This load: {f} N at {x} m extension. | Esta carga: {f} N con una elongación de {x} m.
+Measured period: {period} s (successive positive peaks). | Periodo medido: {period} s (picos positivos sucesivos).
+Weight: {w} N down. / Spring force: {s} N up. / Net force: {n} N (balanced). | Peso: {w} N hacia abajo. / Fuerza del resorte: {s} N hacia arriba. / Fuerza neta: {n} N (equilibrada).
+Net force: {n} N down (includes damping). | Fuerza neta: {n} N hacia abajo (incluye el amortiguamiento).
+{cm} centimeters from equilibrium, positive downward | {cm} centímetros desde el equilibrio, positivo hacia abajo
+k = {f} N / {x} m = {k} N/m. Ideal T = {period} s (no damping). | k = {f} N / {x} m = {k} N/m. T ideal = {period} s (sin amortiguamiento).
+Use **Settle at equilibrium** to stop motion. ... (instruction step with a bold button name, one template) | Usa **Llevar al equilibrio** para detener el movimiento. ...
+{surface}: μₛ = {mus}, μₖ = {muk}. Critical angle: {angle}°. g = 9.81 m/s². | {surface}: μₛ = {mus}, μₖ = {muk}. Ángulo crítico: {angle}°. g = 9.81 m/s².
+Static friction balances downhill gravity. | La fricción estática equilibra la gravedad cuesta abajo.
+Gravity overcomes kinetic friction. The block accelerates downhill. | La gravedad supera la fricción cinética. El bloque acelera cuesta abajo.
+{count} complete oscillation / {count} complete oscillations | {count} oscilación completa / {count} oscilaciones completas
+Total {energy} J | Total {energy} J
+Same scale for both setups. Dashed reference total: {reference} J. Brass bob total: {total} J. | Misma escala para los dos montajes. Total de la referencia punteada: {reference} J. Total de la esfera de latón: {total} J.
+At a turning point: greatest height and potential energy; speed reaches zero. | En un punto de retorno: la altura y la energía potencial son máximas; la rapidez llega a cero.
+Launch: {name}. (print line) | Situación de lanzamiento: {name}.
+{v} m/s right / left / up / down | {v} m/s hacia la derecha / hacia la izquierda / hacia arriba / hacia abajo
+{t} seconds, top of the path / {t} seconds, landed | {t} segundos, punto más alto de la trayectoria / {t} segundos, en el suelo
+Landed at {t} s, {x} m away. | Llegó al suelo a los {t} s, a {x} m de distancia.
+At {t} s the ball is {x} m across and {y} m high. | A los {t} s el proyectil está a {x} m en horizontal y a {y} m de altura.
+Velocity components versus time, 0 to {T} s. | Componentes de la velocidad contra tiempo, de 0 a {T} s.
+Reset to the launch. | De vuelta al lanzamiento.
 
 ## Agreement notes
 
@@ -1855,6 +2075,9 @@ Smallest whole-number ratio. Total charge: {charge} on both sides. You completed
 - VSEPR geometry names are feminine (lineal, trigonal plana, tetraédrica, piramidal trigonal, angular) so they agree with geometría and distribución in every Lewis builder sentence. The Lewis builder is a Chemistry activity, so it uses estructura de Lewis, not the AP term diagrama de Lewis.
 - Stoichiometry Coach and Limiting Reactant Visualizer use relación molar, the Chemistry page term, not the AP term razón molar.
 - Where a count would force agreement with a noun that changes, the Spanish template puts the count after a label (Reacciones: 2 de 4, Resueltos en esta sesión: 3), so one template is correct for every number.
+- Physics labs keep rapidez (speed, a number) and velocidad (velocity, with direction) separate in every label, readout and sentence. Settings that are not physics quantities avoid both words: Playback speed is Ritmo de reproducción and Time speed is Ritmo de la simulación.
+- In the Projectile lab, vx and vy are feminine in sentences because they stand for la velocidad horizontal and la velocidad vertical (vx es pequeña, vy es negativa).
+- The Simple Pendulum counts oscillations with separate singular and plural templates ({count} oscilación completa, {count} oscilaciones completas).
 
 ## Element-name spellings
 
