@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<meta name="description" content="Explore pH, design buffers and compare buffer capacity with water in the interactive ZornScience pH and Buffer Lab.">
+<title>pH &amp; Buffer Lab | ZornScience</title>
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.0">
+<link rel="stylesheet" href="lab.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.0.0" defer></script>
+<script src="data.js?v=1.0.0" defer></script>
+<script src="chem.js?v=1.0.0" defer></script>
+<script src="lab.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-header.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="zsa zsa-pb" data-zsa-activity="ph-buffer-lab">
+<header data-zsa-header class="zsa-pb-header">
+<div data-zsa-header-row>
+<div data-zsa-header-identity><a data-zsa-header-brand href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png" width="34" height="33" alt=""></a><h1>pH &amp; Buffer Lab</h1></div>
+<nav data-zsa-header-tools aria-label="Activity tools"><div><button class="zsa-btn" type="button" data-zsa-dialog-open="zsa-header-instructions" aria-haspopup="dialog" aria-controls="zsa-header-instructions">Instructions</button><button class="zsa-btn" type="button" data-zsa-chrome data-zsa-dialog-open="zsa-header-share" aria-label="Share activity" aria-haspopup="dialog" aria-controls="zsa-header-share"><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button></div></nav>
+</div>
+</header><dialog class="zsa-header-dialog" id="zsa-header-instructions" aria-labelledby="zsa-header-instructions-title"><div class="zsa-header-dialog-heading"><h2 id="zsa-header-instructions-title">Instructions</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close instructions" autofocus>Close</button></div><p class="zsa-pb-lede">Explore acids and bases, build a buffer, then add the same acid or base to water and a buffer. Compare the pH changes and find the buffer capacity.</p><ol><li>Choose a mode. The pH Explorer compares solutes at different concentrations.</li><li>Build a conjugate acid and base pair, then use Stress Test to compare water and buffer.</li><li>Add HCl or NaOH to both beakers. Record the curve and download your data.</li><li>Use Challenges to test buffer design and indicator choice.</li></ol></dialog><dialog class="zsa-header-dialog" id="zsa-header-share" aria-labelledby="zsa-header-share-title"><div class="zsa-header-dialog-heading"><h2 id="zsa-header-share-title">Share this activity</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close share options" autofocus>Close</button></div><p>Share a fresh activity. Your answers and experiment data are not included.</p><label for="zsa-header-share-url">Share link</label><div class="zsa-header-share-link"><input id="zsa-header-share-url" type="text" readonly spellcheck="false"><button class="zsa-btn" type="button" data-zsa-share-copy>Copy link</button></div><a data-zsa-share-email href="#">Email</a><p data-zsa-share-status role="status" aria-live="polite"></p></dialog>
+<noscript><p class="zsa-panel">This lab needs JavaScript. <span lang="es-MX">Este laboratorio necesita JavaScript.</span></p></noscript>
+<p class="zsa-pb-note">25 °C · Ideal solutions · [H₃O⁺][OH⁻] = Kw = 1.0 × 10⁻¹⁴ · pH + pOH = 14.00</p>
+<div class="zsa-pb-tabs" role="tablist" aria-label="Lab modes">
+<button class="zsa-btn" role="tab" id="tab-explore" aria-controls="panel-explore" aria-selected="true">pH Explorer</button>
+<button class="zsa-btn" role="tab" id="tab-buffer" aria-controls="panel-buffer" aria-selected="false" tabindex="-1">Buffer Builder</button>
+<button class="zsa-btn" role="tab" id="tab-stress" aria-controls="panel-stress" aria-selected="false" tabindex="-1">Stress Test</button>
+<button class="zsa-btn" role="tab" id="tab-challenge" aria-controls="panel-challenge" aria-selected="false" tabindex="-1">Challenges</button>
+</div>
+<section role="tabpanel" id="panel-explore" aria-labelledby="tab-explore">
+<div class="zsa-pb-layout">
+<section class="zsa-card" aria-labelledby="explore-title">
+<p class="zsa-eyebrow">1. Set up</p><h2 id="explore-title">Your solution</h2>
+<label for="solute">Solute</label><select id="solute"></select>
+<label for="concentration">Concentration (M)</label><input id="concentration" type="range" min="-7" max="0" step="0.01" value="-1" aria-describedby="concentration-value"><output id="concentration-value" for="concentration"></output>
+<p id="solute-info" class="zsa-pb-note"></p>
+<label class="zsa-pb-check"><input type="checkbox" id="method-toggle"> <span>Show student method</span></label>
+<details><summary>Strong acid reference</summary><p>Strong acids: HCl, HBr, HI, HNO₃, H₂SO₄, HClO₄. Not on the list? Treat it as weak.</p><p>H₂SO₄ is listed for classification only. It is not used in these pH calculations.</p></details>
+</section>
+<div>
+<section class="zsa-card" aria-labelledby="measure-title"><p class="zsa-eyebrow">2. Observe</p><h2 id="measure-title">Equilibrium measurements</h2>
+<dl class="zsa-pb-readouts"><div><dt>pH</dt><dd id="explore-ph"></dd></div><div><dt>pOH</dt><dd id="explore-poh"></dd></div><div><dt>[H₃O⁺]</dt><dd id="explore-h"></dd></div><div><dt>[OH⁻]</dt><dd id="explore-oh"></dd></div></dl>
+<div id="explore-scale"></div>
+<div class="zsa-pb-split"><div><h3>Particle view</h3><svg id="particles" viewBox="0 0 360 240" role="img" aria-labelledby="particles-desc"><title id="particles-desc"></title></svg></div><div><p id="ionized"></p><p id="particle-legend"></p><p class="zsa-pb-note">Schematic particles, not a count of solvent molecules. Very small ion fractions may be too small to draw.</p></div></div>
+</section>
+<section id="method" class="zsa-card" aria-labelledby="method-title" hidden><h2 id="method-title">Student method and exact answer</h2><div id="method-content"></div><p class="zsa-pb-note">Decimal places in pH equal significant figures in concentration. Readouts use two decimal places for two significant figures.</p></section>
+</div></div></section>
+<section role="tabpanel" id="panel-buffer" aria-labelledby="tab-buffer" hidden>
+<div class="zsa-pb-layout"><section class="zsa-card" aria-labelledby="builder-title"><p class="zsa-eyebrow">1. Set up</p><h2 id="builder-title">Build a buffer</h2>
+<label for="builder-pair">Conjugate pair</label><select id="builder-pair"></select>
+<label for="ha">[HA] (M)</label><input id="ha" type="range" min="-3" max="0" step="0.01" value="-1"><output id="ha-value" for="ha"></output>
+<label for="a">[A⁻] (M)</label><input id="a" type="range" min="-3" max="0" step="0.01" value="-1"><output id="a-value" for="a"></output>
+<p class="zsa-pb-note">HA and A⁻ label the acid and conjugate base, even when their actual charges differ.</p>
+<label for="nonbuffer">Compare a pair that is not a buffer</label><select id="nonbuffer"><option value="hcl">HCl / NaCl</option><option value="hno3">HNO₃ / KNO₃</option><option value="naoh">NaOH / NaCl</option></select><p id="nonbuffer-why"></p>
+</section><section class="zsa-card" aria-labelledby="hh-title"><p class="zsa-eyebrow">2. Predict and compare</p><h2 id="hh-title">Henderson-Hasselbalch</h2>
+<p class="zsa-pb-equation">pH = pKa + log <span class="zsa-pb-fraction"><span>[A⁻]</span><span>[HA]</span></span></p>
+<p id="hh-substitution"></p><dl class="zsa-pb-readouts"><div><dt>pH from method</dt><dd id="builder-hh"></dd></div><div><dt>Exact pH</dt><dd id="builder-exact"></dd></div></dl>
+<p id="buffer-range"></p><div id="builder-scale"></div><p id="builder-warning"></p><p id="pair-note" class="zsa-pb-note"></p>
+<button id="use-stress" class="zsa-btn zsa-btn--primary" type="button">Test this pair in Stress Test</button><p class="zsa-pb-note">Stress Test starts with equal amounts of acid and conjugate base. Set total concentration there.</p>
+</section></div></section>
+<section role="tabpanel" id="panel-stress" aria-labelledby="tab-stress" hidden>
+<div class="zsa-pb-layout"><section class="zsa-card" aria-labelledby="stress-title"><p class="zsa-eyebrow">1. Set up and add</p><h2 id="stress-title">Compare buffer capacity</h2>
+<label for="stress-pair">Buffer pair</label><select id="stress-pair"></select>
+<label for="capacity">Total buffer concentration (M)</label><input id="capacity" type="range" min="-2" max="0" step="0.01" value="-0.69897"><output id="capacity-value" for="capacity"></output>
+<p class="zsa-pb-note">Each beaker starts at 100.0 mL. The buffer starts with equal moles of HA and A⁻. Changing the pair or capacity starts a new experiment.</p>
+<h3>Add to both beakers</h3><p>HCl and NaOH are 0.10 M.</p>
+<div class="zsa-pb-additions"><button class="zsa-btn" id="acid-small" type="button">Add 0.1 mL HCl</button><button class="zsa-btn" id="acid-large" type="button">Add 1.0 mL HCl</button><button class="zsa-btn" id="base-small" type="button">Add 0.1 mL NaOH</button><button class="zsa-btn" id="base-large" type="button">Add 1.0 mL NaOH</button></div>
+<button id="stress-reset" class="zsa-btn" type="button">Reset experiment</button><p id="capacity-note"></p><p id="stress-reaction" class="zsa-panel" role="status"></p><p id="stress-status"></p>
+</section><div>
+<section class="zsa-card" aria-labelledby="beakers-title"><p class="zsa-eyebrow">2. Compare</p><h2 id="beakers-title">Water and buffer</h2><div class="zsa-pb-beakers">
+<div><h3>Pure water</h3><svg id="water-beaker" viewBox="0 0 230 140" role="img" aria-labelledby="water-desc"><title id="water-desc"></title></svg><p class="zsa-pb-meter" id="water-ph"></p></div>
+<div><h3>Buffer</h3><svg id="buffer-beaker" viewBox="0 0 230 140" role="img" aria-labelledby="buffer-desc"><title id="buffer-desc"></title></svg><p class="zsa-pb-meter" id="buffer-ph"></p></div></div><p id="stress-volumes"></p>
+</section>
+<section class="zsa-card" aria-labelledby="curve-title"><h2 id="curve-title">pH vs. volume added</h2><svg id="stress-graph" class="zsa-pb-graph" role="img" aria-labelledby="graph-desc"><title id="graph-desc"></title></svg><p class="zsa-pb-legend"><span class="zsa-pb-water-key"></span> <span>Water (dashed)</span><span class="zsa-pb-buffer-key"></span> <span>Buffer (solid)</span></p><p class="zsa-pb-note">Volume added is cumulative: HCl plus NaOH. Additions in either direction stay on the curve.</p></section>
+<section class="zsa-card" aria-labelledby="moles-title"><h2 id="moles-title">Moles in the buffer</h2><svg id="moles-chart" class="zsa-pb-bars" role="img" aria-labelledby="moles-desc"><title id="moles-desc"></title></svg><p id="moles-values"></p><p class="zsa-pb-note">Bars show equilibrium moles. Near exhaustion, equilibrium can regenerate a small amount of the depleted component.</p></section>
+</div></div>
+<section class="zsa-card" aria-labelledby="data-title"><h2 id="data-title">Data table</h2><div class="zsa-pb-actions"><button class="zsa-btn" id="copy-data" type="button">Copy data</button><button class="zsa-btn" id="download-data" type="button">Download CSV</button></div><p id="export-status" role="status"></p>
+<textarea id="copy-fallback" rows="5" readonly aria-label="Data to copy" hidden></textarea>
+<div class="zsa-pb-table-wrap" tabindex="0" role="region" aria-label="Experiment data"><table><caption id="data-caption"></caption><thead><tr><th scope="col">Addition</th><th scope="col">Volume added (mL)</th><th scope="col">HCl total (mL)</th><th scope="col">NaOH total (mL)</th><th scope="col">pH water</th><th scope="col">pH buffer</th></tr></thead><tbody id="data-body"></tbody></table></div></section>
+</section>
+<section role="tabpanel" id="panel-challenge" aria-labelledby="tab-challenge" hidden>
+<div class="zsa-pb-challenges">
+<section class="zsa-card" aria-labelledby="design-title"><p class="zsa-eyebrow">1. Design</p><h2 id="design-title">Make a buffer at pH X</h2><label for="target-ph">Target pH</label><select id="target-ph"><option>3.80</option><option selected>4.50</option><option>6.80</option><option>7.40</option><option>9.60</option><option>10.00</option></select>
+<p>Pick a pair with pKa within 1 of the target. Set [A⁻]/[HA] to reach the target within 0.05 pH.</p><label for="challenge-pair">Choose a conjugate pair</label><select id="challenge-pair"></select><label for="challenge-ratio">[A⁻]/[HA]</label><input type="number" id="challenge-ratio" min="0.001" max="1000" step="any" value="1"><button class="zsa-btn zsa-btn--primary" id="check-design" type="button">Check buffer</button><p id="design-feedback" role="status"></p></section>
+<section class="zsa-card" aria-labelledby="blood-title"><p class="zsa-eyebrow">2. Maintain</p><h2 id="blood-title">Keep the blood at 7.35 to 7.45</h2><p>Use H₂CO₃ / HCO₃⁻. Adjust [HCO₃⁻]/[H₂CO₃] to keep the model in the target range.</p><label for="blood-ratio">[HCO₃⁻]/[H₂CO₃]</label><input id="blood-ratio" type="range" min="1" max="25" step="0.1" value="5"><output id="blood-ratio-value" for="blood-ratio"></output><p id="blood-feedback" role="status"></p><p class="zsa-pb-note">This is a closed, ideal carbonate model at 25 °C with pKa 6.35. Real blood is an open system regulated by lungs and kidneys, with other buffers and a different temperature.</p></section>
+<section class="zsa-card" aria-labelledby="indicator-title"><p class="zsa-eyebrow">3. Detect</p><h2 id="indicator-title">Pick the indicator</h2><label for="equivalence-ph">Equivalence point pH</label><select id="equivalence-ph"><option>4.50</option><option>8.00</option><option selected>9.20</option><option>11.00</option></select><p>Choose the indicator with pKa closest to the equivalence point. Its transition range is approximately pKa ± 1.</p><label for="indicator">Indicator</label><select id="indicator"></select><button class="zsa-btn zsa-btn--primary" id="check-indicator" type="button">Check indicator</button><p id="indicator-feedback" role="status"></p><ul id="indicator-list"></ul></section>
+</div></section>
+<p class="zsa-sr-only" id="zsa-pb-live" aria-live="polite" aria-atomic="true"></p>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Explore. Compare. Explain. Nothing you enter leaves this tab.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><a data-zsa-chrome class="zsa-back" id="zsa-pb-back" href="https://zornscience.org/science/ap-chemistry/">← Back to the lesson</a></footer>
+</main></body></html>
