@@ -13,6 +13,8 @@
 
   var SVG = "http://www.w3.org/2000/svg";
   var fmt = M.fmt;
+  // One full template per sentence, translated through model.js (data.js holds the Spanish).
+  var tx = M.text;
   function $(id) { return root.querySelector("#zsa-cb-" + id); }
   function node(tag, cls, text) {
     var el = document.createElement(tag);
@@ -40,8 +42,8 @@
   for (var r0 = 0; r0 < M.ROWS; r0++) for (var c0 = 0; c0 < M.COLS; c0++) POINTS.push(M.point(c0, r0));
   var SLOTS = M.allSlots();
   var TOOLS = [
-    {id: "select", label: "Select and move"}, {id: "wire", label: "Wire"}, {id: "battery", label: "Battery"}, {id: "resistor", label: "Resistor"},
-    {id: "bulb", label: "Bulb"}, {id: "switch", label: "Switch"}, {id: "erase", label: "Erase"}
+    {id: "select", label: tx("Select and move")}, {id: "wire", label: tx("Wire")}, {id: "battery", label: tx("Battery")}, {id: "resistor", label: tx("Resistor")},
+    {id: "bulb", label: tx("Bulb")}, {id: "switch", label: tx("Switch")}, {id: "erase", label: tx("Erase")}
   ];
   function isPart(t) { return M.TYPES.indexOf(t) >= 0; }
 
@@ -229,14 +231,15 @@
   // What a screen reader hears on each spot.
   function labelSpots() {
     SLOTS.forEach(function (slot) {
-      var p = M.partAt(parts, slot), text = M.slotLabel(slot) + ": ";
-      if (!p) text += "empty";
+      var p = M.partAt(parts, slot), e = M.slotEnds(slot), text;
+      if (!p) text = tx("empty");
       else {
-        text += M.name(p) + (p.type === "wire" ? "" : ", " + M.setting(p));
-        if (p.type === "battery") text += ", + end at " + M.pointLabel(M.plus(p));
-        text += ", " + M.reading(p, res) + (p.id === selected ? ", selected" : "");
+        text = p.type === "wire" ? M.name(p) : tx("{name}, {setting}", {name: M.name(p), setting: M.setting(p)});
+        if (p.type === "battery") text = tx("{part}, + end at {point}", {part: text, point: M.pointLabel(M.plus(p))});
+        text = tx("{part}, {reading}", {part: text, reading: M.reading(p, res)});
+        if (p.id === selected) text = tx("{part}, selected", {part: text});
       }
-      spotEls[slot].setAttribute("aria-label", text);
+      spotEls[slot].setAttribute("aria-label", tx("{a} to {b}: {state}", {a: M.pointLabel(e.a), b: M.pointLabel(e.b), state: text}));
     });
   }
   if (typeof ResizeObserver !== "undefined") {
@@ -295,7 +298,7 @@
   }
   function warning() {
     var bad = res.islands.filter(function (i) { return i.error; })[0];
-    return bad ? (bad.error === "short" ? " Warning: short circuit." : " Warning: batteries in a loop of wires.") : "";
+    return bad ? " " + (bad.error === "short" ? tx("Warning: short circuit.") : tx("Warning: batteries in a loop of wires.")) : "";
   }
   function after(text) { announce(text + warning() + " " + M.meterSpoken(parts, res, meter)); }
   function placeAt(type, slot) {
@@ -304,13 +307,14 @@
     commit(M.place(parts, type, slot));
     var p = M.partAt(parts, slot);
     if (type !== "wire") { selected = p.id; update(); }
-    after(M.name(p) + " placed from " + M.slotLabel(slot) + (old ? ", replacing " + M.name(old) : "") + ".");
+    after(old ? tx("{name} placed from {slot}, replacing {old}.", {name: M.name(p), slot: M.slotLabel(slot), old: M.name(old)}) :
+      tx("{name} placed from {slot}.", {name: M.name(p), slot: M.slotLabel(slot)}));
   }
   function removeAt(slot) {
     var old = M.partAt(parts, slot);
     if (!old) return;
     commit(parts.filter(function (p) { return p !== old; }));
-    after(M.name(old) + " removed from " + M.slotLabel(slot) + ".");
+    after(tx("{name} removed from {slot}.", {name: M.name(old), slot: M.slotLabel(slot)}));
   }
   function moveTo(part, slot) {
     commit(parts.map(function (p) {
@@ -321,7 +325,7 @@
     }));
     selected = part.id;
     update();
-    after(M.name(part) + " moved to " + M.slotLabel(slot) + ".");
+    after(tx("{name} moved to {slot}.", {name: M.name(part), slot: M.slotLabel(slot)}));
   }
   function edit(id, change, words) {
     commit(parts.map(function (p) {
@@ -337,7 +341,7 @@
     if (id && meter.mode === "current") meter.part = id;
     update();
     var p = id && M.byId(parts, id);
-    if (p) announce("Selected " + M.name(p) + ", " + M.slotLabel(p.slot) + ": " + M.reading(p, res) + "." + (meter.mode === "current" ? " " + M.meterSpoken(parts, res, meter) : ""));
+    if (p) announce(tx("Selected {name}, {slot}: {reading}.", {name: M.name(p), slot: M.slotLabel(p.slot), reading: M.reading(p, res)}) + (meter.mode === "current" ? " " + M.meterSpoken(parts, res, meter) : ""));
   }
   $("undo").addEventListener("click", function () {
     if (!history.length) return;
@@ -345,13 +349,13 @@
     preset = "custom";
     showPreset();
     update();
-    after("Undone.");
+    after(tx("Undone."));
   });
   $("clear").addEventListener("click", function () {
     commit([]);
     meter.red = meter.black = null;
     update();
-    announce("Board cleared. Undo brings it back.");
+    announce(tx("Board cleared. Undo brings it back."));
   });
 
   // ---------- The palette ----------
@@ -379,7 +383,7 @@
     b.addEventListener("click", function () {
       if (drag && drag.done) { drag = null; return; }
       setTool(t.id);
-      announce(t.id === "select" ? "Select and move: tap a part to select it, or drag it." : t.id === "erase" ? "Erase: tap parts to remove them." : t.label + " picked. Tap a spot on the board to place it, or press Enter on a spot.");
+      announce(t.id === "select" ? tx("Select and move: tap a part to select it, or drag it.") : t.id === "erase" ? tx("Erase: tap parts to remove them.") : tx("{part} picked. Tap a spot on the board to place it, or press Enter on a spot.", {part: t.label}));
     });
     if (isPart(t.id)) b.addEventListener("pointerdown", function (e) { startDrag(e, t.id, b); });
   });
@@ -519,7 +523,7 @@
     } else if (e.key === "Enter" || e.key === " ") {
       if (isPart(tool)) placeAt(tool, slot);
       else if (tool === "erase") removeAt(slot);
-      else { var p = M.partAt(parts, slot); select(p ? p.id : null); if (!p) announce(M.slotLabel(slot) + " is empty. Pick a part first."); }
+      else { var p = M.partAt(parts, slot); select(p ? p.id : null); if (!p) announce(tx("{slot} is empty. Pick a part first.", {slot: M.slotLabel(slot)})); }
     } else if (e.key === "Delete" || e.key === "Backspace") removeAt(slot);
     else if (e.key === "Escape") { setTool("select"); select(null); }
     else return;
@@ -533,26 +537,27 @@
   // ---------- The multimeter ----------
   function option(value, text) { var o = node("option", "", text); o.value = value; return o; }
   ["red", "black"].forEach(function (k) {
-    $(k).appendChild(option("", "Not placed"));
+    $(k).appendChild(option("", tx("Not placed")));
     POINTS.forEach(function (pt) { $(k).appendChild(option(pt, M.pointLabel(pt))); });
     $(k).addEventListener("change", function () { setProbe(k, $(k).value || null); });
     $("place-" + k).addEventListener("click", function () {
       var on = tool !== "probe-" + k;
       setTool(on ? "probe-" + k : "select");
-      if (on) announce("Tap a point on the board for the " + k + " probe.");
+      if (on) announce(k === "red" ? tx("Tap a point on the board for the red probe.") : tx("Tap a point on the board for the black probe."));
     });
   });
   function setProbe(which, pt) {
     meter[which] = pt;
     update();
-    after((which === "red" ? "Red" : "Black") + " probe " + (pt ? "on " + M.pointLabel(pt) : "removed") + ".");
+    var red = which === "red";
+    after(pt ? tx(red ? "Red probe on {point}." : "Black probe on {point}.", {point: M.pointLabel(pt)}) : tx(red ? "Red probe removed." : "Black probe removed."));
   }
   $("swap").addEventListener("click", function () {
     var t = meter.red;
     meter.red = meter.black;
     meter.black = t;
     update();
-    after("Probes swapped.");
+    after(tx("Probes swapped."));
   });
   function setMode(mode) {
     meter.mode = mode;
@@ -562,7 +567,7 @@
     if (tool === "probe-red" || tool === "probe-black") setTool("select");
   }
   [["mode-v", "voltage"], ["mode-a", "current"]].forEach(function (m) {
-    $(m[0]).addEventListener("change", function () { setMode(m[1]); update(); announce((m[1] === "voltage" ? "Voltage mode. " : "Current mode. ") + M.meterSpoken(parts, res, meter)); });
+    $(m[0]).addEventListener("change", function () { setMode(m[1]); update(); announce(tx(m[1] === "voltage" ? "Voltage mode. {meter}" : "Current mode. {meter}", {meter: M.meterSpoken(parts, res, meter)})); });
   });
   $("target").addEventListener("change", function () {
     meter.part = $("target").value || null;
@@ -583,8 +588,8 @@
     if (key !== targetKey) {
       targetKey = key;
       clear($("target"));
-      $("target").appendChild(option("", "Choose a part"));
-      list.forEach(function (p) { $("target").appendChild(option(p.id, M.name(p) + ", " + M.slotLabel(p.slot))); });
+      $("target").appendChild(option("", tx("Choose a part")));
+      list.forEach(function (p) { $("target").appendChild(option(p.id, tx("{name}, {slot}", {name: M.name(p), slot: M.slotLabel(p.slot)}))); });
     }
     $("target").value = meter.part || "";
   }
@@ -604,15 +609,15 @@
     $("part").hidden = !p;
     if (!p) return;
     var r = res.parts[p.id];
-    $("part-title").textContent = M.name(p) + ", " + M.slotLabel(p.slot);
+    $("part-title").textContent = tx("{name}, {slot}", {name: M.name(p), slot: M.slotLabel(p.slot)});
     var words;
-    if (r.status === "short") words = "Short circuit: no reliable readings.";
-    else if (r.status === "loop") words = "This circuit cannot be solved.";
+    if (r.status === "short") words = tx("Short circuit: no reliable readings.");
+    else if (r.status === "loop") words = tx("This circuit cannot be solved.");
     else {
-      words = (r.voltage === null ? "No voltage reading" : "Voltage across: " + M.volts(Math.abs(r.voltage))) + ". Current: " + M.amps(Math.abs(r.current)) + ".";
-      if (p.type === "bulb" || p.type === "resistor") words += " Power: " + M.watts(r.power) + ".";
-      if (p.type === "battery") words += " Supplies " + M.watts(r.power) + ". The + end is at " + M.pointLabel(M.plus(p)) + ".";
-      if (p.type === "bulb") words += " Brightness: " + M.bright(r.brightness) + ".";
+      words = (r.voltage === null ? tx("No voltage reading.") : tx("Voltage across: {v}.", {v: M.volts(Math.abs(r.voltage))})) + " " + tx("Current: {a}.", {a: M.amps(Math.abs(r.current))});
+      if (p.type === "bulb" || p.type === "resistor") words += " " + tx("Power: {w}.", {w: M.watts(r.power)});
+      if (p.type === "battery") words += " " + tx("Supplies {w}. The + end is at {point}.", {w: M.watts(r.power), point: M.pointLabel(M.plus(p))});
+      if (p.type === "bulb") words += " " + tx("Brightness: {b}.", {b: M.bright(r.brightness)});
     }
     $("part-reading").textContent = words;
     $("part-volts-wrap").hidden = $("flip").hidden = p.type !== "battery";
@@ -620,21 +625,21 @@
     $("toggle").hidden = p.type !== "switch";
     if (p.type === "battery") $("part-volts").value = String(p.value);
     if (p.type === "resistor") $("part-ohms").value = String(p.value);
-    if (p.type === "switch") $("toggle").textContent = p.closed ? "Open switch" : "Close switch";
+    if (p.type === "switch") $("toggle").textContent = p.closed ? tx("Open switch") : tx("Close switch");
   }
   $("part-volts").addEventListener("change", function () {
     var v = Number($("part-volts").value);
-    edit(selected, function (q) { q.value = v; }, function (p) { return M.name(p) + " set to " + M.setting(p) + "."; });
+    edit(selected, function (q) { q.value = v; }, function (p) { return tx("{name} set to {setting}.", {name: M.name(p), setting: M.setting(p)}); });
   });
   $("part-ohms").addEventListener("change", function () {
     var v = Number($("part-ohms").value);
-    edit(selected, function (q) { q.value = v; }, function (p) { return M.name(p) + " set to " + M.setting(p) + "."; });
+    edit(selected, function (q) { q.value = v; }, function (p) { return tx("{name} set to {setting}.", {name: M.name(p), setting: M.setting(p)}); });
   });
   $("flip").addEventListener("click", function () {
-    edit(selected, function (q) { q.plus = q.plus === "a" ? "b" : "a"; }, function (p) { return M.name(p) + " flipped: the + end is now at " + M.pointLabel(M.plus(p)) + "."; });
+    edit(selected, function (q) { q.plus = q.plus === "a" ? "b" : "a"; }, function (p) { return tx("{name} flipped: the + end is now at {point}.", {name: M.name(p), point: M.pointLabel(M.plus(p))}); });
   });
   $("toggle").addEventListener("click", function () {
-    edit(selected, function (q) { q.closed = !q.closed; }, function (p) { return M.name(p) + (p.closed ? " closed." : " opened."); });
+    edit(selected, function (q) { q.closed = !q.closed; }, function (p) { return tx(p.closed ? "{name} closed." : "{name} opened.", {name: M.name(p)}); });
   });
   $("measure-v").addEventListener("click", function () {
     setMode("voltage");
@@ -662,7 +667,7 @@
     clear(body);
     var list = M.sorted(parts).filter(function (p) { return p.type !== "wire"; });
     if (!list.length) {
-      var tr0 = node("tr"), td0 = node("td", "", "No parts yet, other than wires.");
+      var tr0 = node("tr"), td0 = node("td", "", tx("No parts yet, other than wires."));
       td0.colSpan = 7;
       tr0.appendChild(td0);
       body.appendChild(tr0);
@@ -670,9 +675,9 @@
     }
     list.forEach(function (p) {
       var r = res.parts[p.id], tr = node("tr"), e = M.ends(p), cells;
-      var where = p.type === "battery" ? M.pointLabel(M.minus(p)) + " (−) to " + M.pointLabel(M.plus(p)) + " (+)" : M.pointLabel(e.a) + " to " + M.pointLabel(e.b);
-      if (r.status !== "ok") cells = [r.status === "short" ? "short circuit" : "cannot be solved", "", "", ""];
-      else cells = [r.voltage === null ? "no reading" : M.volts(Math.abs(r.voltage)), M.amps(Math.abs(r.current)), M.watts(Math.abs(r.power)), p.type === "bulb" ? M.bright(r.brightness) : ""];
+      var where = p.type === "battery" ? M.batteryWhere(p) : tx("{a} to {b}", {a: M.pointLabel(e.a), b: M.pointLabel(e.b)});
+      if (r.status !== "ok") cells = [r.status === "short" ? tx("short circuit") : tx("cannot be solved"), "", "", ""];
+      else cells = [r.voltage === null ? tx("no reading") : M.volts(Math.abs(r.voltage)), M.amps(Math.abs(r.current)), M.watts(Math.abs(r.power)), p.type === "bulb" ? M.bright(r.brightness) : ""];
       var th = node("th", "", M.name(p));
       th.scope = "row";
       tr.appendChild(th);
@@ -682,12 +687,12 @@
   }
 
   // ---------- Starting circuits ----------
-  M.PRESETS.forEach(function (s) { $("preset").appendChild(option(s.id, s.label)); });
-  $("preset").appendChild(option("custom", "Your own circuit"));
+  M.PRESETS.forEach(function (s) { $("preset").appendChild(option(s.id, tx(s.label))); });
+  $("preset").appendChild(option("custom", tx("Your own circuit")));
   function showPreset() {
     $("preset").value = preset;
     var sc = M.PRESETS.filter(function (s) { return s.id === preset; })[0];
-    $("preset-text").textContent = sc ? sc.text : "Your own circuit. Predict what the meter will read before you probe.";
+    $("preset-text").textContent = sc ? tx(sc.text) : tx("Your own circuit. Predict what the meter will read before you probe.");
   }
   function load(id, volts) {
     preset = id;
@@ -704,13 +709,13 @@
     history.push(M.copy(parts));
     load(sc.id);
     update();
-    announce(sc.label + ". " + sc.text + " " + M.insight(parts, res));
+    announce(tx("{label}. {text} {insight}", {label: tx(sc.label), text: tx(sc.text), insight: M.insight(parts, res)}));
   });
 
   // ---------- Check your thinking ----------
   M.QUESTIONS.forEach(function (q, i) {
     var fs = node("fieldset", "zsa-cb-question");
-    fs.appendChild(node("legend", "", (i + 1) + ". " + q.text + "..."));
+    fs.appendChild(node("legend", "", tx("{n}. {text}...", {n: i + 1, text: tx(q.text)})));
     q.choices.forEach(function (ch) {
       var lab = node("label", "zsa-cb-choice"), input = node("input");
       input.type = "radio";
@@ -718,7 +723,7 @@
       input.value = ch.id;
       input.dataset.question = q.id;
       lab.appendChild(input);
-      lab.appendChild(node("span", "", ch.text));
+      lab.appendChild(node("span", "", tx(ch.text)));
       fs.appendChild(lab);
     });
     $("questions").appendChild(fs);
@@ -728,17 +733,17 @@
     root.querySelectorAll("[data-question]:checked").forEach(function (input) { answers[input.dataset.question] = input.value; });
     var results = M.check(answers), box = $("feedback");
     clear(box);
-    box.appendChild(node("h3", "", "Your answers"));
+    box.appendChild(node("h3", "", tx("Your answers")));
     results.forEach(function (r, i) { box.appendChild(node("p", r.ok ? "zsa-cb-ok" : "zsa-cb-notyet", (i + 1) + ". " + (r.ok ? "✓ " : "") + r.text)); });
     box.hidden = false;
     var right = results.filter(function (r) { return r.ok; }).length;
-    announce(right + " of " + results.length + " correct. " + results.map(function (r, i) { return (i + 1) + ". " + r.text; }).join(" "));
+    announce(tx("{right} of {total} correct.", {right: right, total: results.length}) + " " + results.map(function (r, i) { return (i + 1) + ". " + r.text; }).join(" "));
   });
 
   // ---------- Reflection, printing and data ----------
   function printSummary() {
     var sc = M.PRESETS.filter(function (s) { return s.id === preset; })[0];
-    $("print-summary").textContent = "Circuit: " + (sc ? sc.label : "Your own circuit") + ". " + M.insight(parts, res) + " Multimeter: " + M.meterSpoken(parts, res, meter);
+    $("print-summary").textContent = tx("Circuit: {circuit}. {insight} Multimeter: {meter}", {circuit: sc ? tx(sc.label) : tx("Your own circuit"), insight: M.insight(parts, res), meter: M.meterSpoken(parts, res, meter)});
   }
   // A print copy of the reflection: a text area prints only its visible lines, a paragraph prints all of it.
   function mirrorReflection() { $("print-reflection").textContent = $("reflection").value; }
@@ -750,13 +755,13 @@
     var url = URL.createObjectURL(new Blob([M.csv(parts)], {type: "text/csv"}));
     var link = node("a");
     link.href = url;
-    link.download = "zornscience-circuit-readings.csv";
+    link.download = tx("zornscience-circuit-readings.csv");
     link.hidden = true;
     root.appendChild(link);
     link.click();
     root.removeChild(link);
     window.setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-    announce("Readings downloaded as zornscience-circuit-readings.csv: every part with its voltage, current, power and brightness.");
+    announce(tx("Readings downloaded as zornscience-circuit-readings.csv: every part with its voltage, current, power and brightness."));
   });
 
   // ---------- Deep links and the back link ----------

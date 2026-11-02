@@ -1,5 +1,5 @@
 # Circuit Builder
-Version: 1.0.1
+Version: 1.1.0
 
 An electric circuits lab for Physics. Students drag batteries, wires, resistors, switches and bulbs onto a grid and build their own circuits, or start from series and parallel circuits. A digital multimeter probes the voltage between any two points and the current through any part, bulbs glow by the power they use, and moving dots show the current flowing. A readings table lists every part, an insight line explains what the circuit is doing (including short circuits and open loops), six questions check the main ideas, and a reflection prints with the lab.
 
@@ -70,6 +70,7 @@ Suggested links (add `&from=` with the lesson's own URL):
 | File | What it holds |
 |---|---|
 | `index.html` | Page shell: the starting circuits, the parts palette, the board, the toolbar, the multimeter, the selected part, the insight, the readings table, the questions, the reflection and the live region. |
+| `data.js` | Every English string with its Mexican Spanish, for `../shared/zsa-i18n.js`. |
 | `model.js` | The model: points and spots, parts, the solver, measuring, the starting circuits, the text, the questions and the CSV. No page code. |
 | `lab.js` | The page: drawing the board and parts, the palette, dragging and tapping, the keyboard on the board, moving charge, the multimeter, the selected part, the table, undo, the questions, printing, the download and deep links. |
 | `lab.css` | Layout, colors and print styles, prefixed `zsa-cb-`. |
@@ -89,5 +90,9 @@ Suggested links (add `&from=` with the lesson's own URL):
 - The board is drawn at its real width so its labels keep their size on phones; its spots are at least 30 px apart at 320 px.
 - No sideways scrolling from 320 px (the readings table scrolls inside its own box), and every button, select, checkbox and radio label is at least 44 px.
 
+## Mexican Spanish
+Use `?lang=es` or the shared EN / ES header links. English is the default and the fallback. Every string students see or hear uses the activity's `data.js`: the instructions, the starting circuits, the parts palette, the board's spot names (for example "De D2 a E2: Foco 1, foco de 10 Ω, 3.00 V, 0.300 A, brillo de 25%"), the multimeter, the selected part's settings, the insight under the board, the readings table, the questions and their feedback, the reflection, the print summary, the CSV header and file name, every announcement, and the share link, which carries `?lang=es`. Every sentence is one full template with placeholders, filled in `model.js` and `lab.js`, so Spanish keeps its own word order. Part names, symbols, units, point names (A1 to G5), numbers and decimal points stay unchanged. In Spanish the download is `zornscience-lecturas-del-circuito.csv`. See `../SPANISH_TERMS.md` for choices beyond the Style Kit glossary.
+
 ## Changelog
+- 1.1.0: Mexican Spanish with `?lang=es` and the shared EN / ES header links.
 - 1.0.0: first version.

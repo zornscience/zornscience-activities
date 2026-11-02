@@ -50,6 +50,10 @@
   .zsa-cb-tool {flex-direction:column;justify-content:center;gap:2px;text-align:center;padding:6px 4px;font-size:15px;}
   .zsa-cb-tool[aria-pressed="true"] {padding:5px 3px;}
 }
+/* Spanish tool names are longer (Seleccionar y mover, Resistencia, Interruptor): the icon sits above the name at
+   every width, so the names fit the two- and three-column palettes on phones and tablets. */
+html[lang="es-MX"] .zsa-cb-tool {flex-direction:column;justify-content:center;gap:2px;text-align:center;padding:6px 4px;font-size:15px;}
+html[lang="es-MX"] .zsa-cb-tool[aria-pressed="true"] {padding:5px 3px;}
 
 /* The board */
 .zsa-cb-toolbar {display:flex;flex-wrap:wrap;align-items:center;gap:8px;}
