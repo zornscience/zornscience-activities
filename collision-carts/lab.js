@@ -7,6 +7,15 @@
   var P = null;
   root.dispatchEvent(new CustomEvent("zsa-cc:request-physics", {detail: {receive: function (value) { P = value; }}}));
   if (!P) return;
+  var i18n;
+  root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: function (api) { i18n = api; }}}));
+  // English is the fallback; data.js holds the Spanish for each full sentence template.
+  function t(text, values) {
+    values = values || {};
+    if (i18n) return i18n.text(text, values);
+    return text.replace(/\{(\w+)\}/g, function (m, k) { return values[k] === undefined ? m : values[k]; });
+  }
+  var spanish = !!i18n && i18n.lang === "es";
 
   var NS = "http://www.w3.org/2000/svg";
   function $(id) { return document.getElementById(id); }
@@ -31,9 +40,9 @@
       $("velocity-out" + i).textContent = fmt(state.v[i]) + " m/s";
     }
     var elastic = state.mode === "elastic";
-    $("mode-note").textContent = elastic ? "Carts rebound. Momentum and kinetic energy are conserved." : "Carts stick together. Momentum is conserved; kinetic energy can decrease.";
-    $("badge").textContent = elastic ? "MAGNETIC BUMPERS" : "HOOK & LOOP PADS";
-    $("observation").textContent = "Set up the carts, then launch. Positive velocity is to the right; negative velocity is to the left.";
+    $("mode-note").textContent = t(elastic ? "Carts rebound. Momentum and kinetic energy are conserved." : "Carts stick together. Momentum is conserved; kinetic energy can decrease.");
+    $("badge").textContent = t(elastic ? "MAGNETIC BUMPERS" : "HOOK & LOOP PADS");
+    $("observation").textContent = t("Set up the carts, then launch. Positive velocity is to the right; negative velocity is to the left.");
     render();
   }
 
@@ -48,8 +57,9 @@
     svg("circle", {cx: 30, cy: 256, r: 13}, wheels);
     svg("path", {d: "M-46 213L-36 204H38L46 213V247H-46Z", fill: "url(#" + (i ? "orange" : "blue") + ")", stroke: "#a4bcc6"}, g);
     svg("path", {d: "M-46 219H46M-38 243H37", stroke: "#082e46", opacity: ".5"}, g);
-    svg("rect", {x: -21, y: 222, width: 43, height: 17, rx: 2, fill: "#e5eceb"}, g);
-    svg("text", {x: 0, y: 234, fill: "#183646", "text-anchor": "middle", "font-size": 10, "font-weight": 700}, g, "CART " + (i ? "B" : "A"));
+    // The Spanish label (CARRITO A) is longer, so its plate is wider; English keeps its original plate.
+    svg("rect", spanish ? {x: -30, y: 222, width: 61, height: 17, rx: 2, fill: "#e5eceb"} : {x: -21, y: 222, width: 43, height: 17, rx: 2, fill: "#e5eceb"}, g);
+    svg("text", {x: 0, y: 234, fill: "#183646", "text-anchor": "middle", "font-size": 10, "font-weight": 700}, g, t("CART {letter}", {letter: i ? "B" : "A"}));
     for (var n = 0; n < Math.round((state.m[i] - 0.25) / 0.25); n++) {
       var w = svg("g", {transform: "translate(0 " + (-n * 7) + ")"}, g);
       svg("path", {d: "M-31 206L-22 197H30L36 206V212H-31Z", fill: "url(#steel)", stroke: "#c4d0d5", "stroke-width": ".6"}, w);
@@ -91,9 +101,9 @@
     $("momentum").textContent = fmt(state.m.reduce(function (p, m, j) { return p + m * state.v[j]; }, 0)) + " kg·m/s";
     $("energy").textContent = fmt(state.m.reduce(function (e, m, j) { return e + 0.5 * m * Math.pow(state.v[j], 2); }, 0)) + " J";
     $("time").textContent = fmt(state.t) + " s";
-    $("phase").textContent = state.ended ? "PAUSED BEFORE END STOP" : state.collided ? (state.mode === "elastic" ? "AFTER COLLISION / REBOUND" : "AFTER COLLISION / JOINED")
-      : running ? "CARTS IN MOTION" : state.t ? "PAUSED" : "READY TO LAUNCH";
-    $("launch").textContent = running ? "Ⅱ Pause" : state.ended ? "Run complete" : state.t ? "▶ Resume" : "▶ Launch";
+    $("phase").textContent = t(state.ended ? "PAUSED BEFORE END STOP" : state.collided ? (state.mode === "elastic" ? "AFTER COLLISION / REBOUND" : "AFTER COLLISION / JOINED")
+      : running ? "CARTS IN MOTION" : state.t ? "PAUSED" : "READY TO LAUNCH");
+    $("launch").textContent = t(running ? "Ⅱ Pause" : state.ended ? "Run complete" : state.t ? "▶ Resume" : "▶ Launch");
     $("launch").disabled = state.ended;
     $("step").disabled = state.ended || running;
   }
@@ -101,13 +111,13 @@
   function tick(dt) {
     var event = P.advance(state, dt);
     if (event === "collision") {
-      $("observation").textContent = state.mode === "elastic"
+      $("observation").textContent = t(state.mode === "elastic"
         ? "The carts have rebounded. Total momentum and kinetic energy are unchanged. Compare each cart’s new velocity and momentum arrows."
-        : "The hook-and-loop pads have joined the carts. Both now have the same velocity. Total momentum is unchanged; some kinetic energy becomes internal energy.";
+        : "The hook-and-loop pads have joined the carts. Both now have the same velocity. Total momentum is unchanged; some kinetic energy becomes internal energy.");
     }
     if (event === "end") {
       running = false;
-      $("observation").textContent = "The run paused before an end stop. An end-stop impact would exert an external impulse on the two-cart system. Reset to try another collision.";
+      $("observation").textContent = t("The run paused before an end stop. An end-stop impact would exert an external impulse on the two-cart system. Reset to try another collision.");
     }
     render();
   }

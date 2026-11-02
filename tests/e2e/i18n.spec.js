@@ -1,4 +1,5 @@
 "use strict";
+const fs = require("fs");
 const {test, expect} = require("@playwright/test");
 const activities = {
   "gas-laws":"Explorador de las leyes de los gases",
@@ -11,25 +12,31 @@ const activities = {
   "polyatomic-ion-trainer":"Práctica de iones poliatómicos",
   "stoichiometry-coach":"Práctica de estequiometría"
 };
-// Virtual labs: each has its own test below, since the shared walk above clicks hints these labs do not have.
+// Virtual labs (Chemistry and Physics): each has its own test below, since the shared walk above clicks hints these labs do not have.
 const labs = {
+  "atwood-machine":"La máquina de Atwood",
   "beers-law-lab":"Laboratorio de la ley de Beer con espectrofotómetro",
   "calorimetry-lab":"Laboratorio de calorimetría y entalpía",
   "chemical-bonding-lab":"Laboratorio de enlace químico",
+  "collision-carts":"Carritos de colisión",
   "electrochemistry-lab":"Constructor de celdas electroquímicas",
   "equilibrium-lab":"Explorador del equilibrio",
   "equilibrium-thermo-lab":"Selección de un laboratorio de química",
   "flame-test-lab":"Laboratorio virtual de prueba de llama",
   "gas-lab":"Laboratorio de leyes de los gases y TCM",
   "gravimetric-lab":"Análisis gravimétrico",
+  "hookes-law-lab":"Ley de Hooke y movimiento armónico",
+  "inclined-plane":"Plano inclinado y fricción",
   "iodine-clock-lab":"Laboratorio del reloj de yodo",
   "kinetics-lab":"Simulador de cinética y teoría de colisiones",
   "metals-lab":"Metales, no metales y metaloides",
   "net-ionic-lab":"Laboratorio de reacciones iónicas netas",
+  "pendulum-lab":"El péndulo simple",
+  "projectile-lab":"Laboratorio de vectores del movimiento de proyectiles",
   "redox-coach":"Práctica de balanceo de semirreacciones redox",
   "titration-lab":"Simulador virtual de titulación"
 };
-const english = /\b(?:ZornScience home|Practice|Reference|Feedback|Results|Start|Finish|Help|Options|Time|Show|Incorrect|Wrong|Recall|Cards|Card|Points|Streak|Selected|Unknown|Period|Group|Symbol|Block|Element|Copied|the|your|Choose|You|Hint|Another hint|Both hints|Correct|Not yet|No data|Across a period|Down a group|Common ion|Next question|End session|Time remaining|points|recalled|Question|Answer|Instructions|Share|Close|Copy link|Practice options|Valence electrons|Next element|Completion code|Ion name|Formula \+ charge|Show answer|Still learning|Start flashcards|Quiz game|Session complete|Element details|Atomic number|Color by|Find an element|Full screen|Gas Laws Sandbox|Particle model|Gas controls|Reset|Pause motion|Live graph|Absorbance|Transmittance|Wavelength|Spectrophotometer|Cuvette|Calibration|Standards|Blank|Measure|Concentration|Best-fit|Remove|Grating|Lamp|distilled|Calorimetry|Calorimeter|Experiment|Copper|Aluminum|Water|Heated|Simulated|Insulation|Probe|Trials|Measured|Specific heat|Neutralization|Prediction|Equilibrium Sandbox|Temperature|Pressure|vessel|Forward|Reverse|Advance|Resume|Download|shifts|Flame|Sample|Samples|Lithium|Sodium|Potassium|Strontium|Barium|Cesium|Chloride|Burner|Tested|Investigation|Tray|Volume|Speeds|Graphs|Investigations|Mixture|Container|piston|dots|Record point|Run sweep|Set up the lab|Make the change for me|Test in the lab|Solution|Playback|Stopped|Iodine|starch|beaker|endpoint|trial|challenge|Clock|Collision|Collisions|Catalyst|Activation|Successful|Running|Paused|Bounce|Earlier|Sandbox|Run|Energy|Titrant|Burette|Stopcock|Endpoint|Analyte|Equivalence|Refill|Indicator|Phenolphthalein|Hydrochloric|flask|drop|Bonding|Unknowns|Appearance|Conductivity|Melting|Malleability|cyclohexane|probes|scoopula|pestle|mortar|tongs|foil|Weigh|Stir|Lift|Immerse|rinse|Dispose|Load|Switch|plate|brittle|malleable|crystals|granules|solid|fresh|Repeat|Bench|Station|stations|watch glass|Copy|Link|simulation|portion|portions|Nonpolar|very high|Equipment|Heating|cooling|boat|Observation|cylinder|Sweep|luster|Flatten|fracture|Electrochemistry|Electrochemical|Cell Builder|cell|cells|Anode|Cathode|oxidation|reduction|electrode|electrodes|electrons|Galvanic|Electrolytic|spontaneous|half-cell|half-cells|Swap|salt bridge|voltmeter|circuit|Power supply|DC SUPPLY|OFF|STANDARD|Step once|Restart particles|Clear bench|Place|Silver|beakers|Run cell|Sample complete|Ready|Event|events|atoms|atom|deposited|transferred|lost|gains|loses|Slow|Fast|Animation|explanations|ions|bead|Observe|Explore|Particle key|Scope|agar gel|wires|meter|Calculated|Applied|Left|Right|Gravimetric|Gravimetry|Crucible|Desiccator|Oven|Weighing|Goggles|Filter paper|Funnel|Vacuum|Filtration|Precipitate|Supernatant|Sediment|Decant|Wash|Deionized|Carbonate|Moisture|Dry|Cool|Heat|Step|Reading|Reveal|Inspect|Evidence|Laboratory|lab|Prepare|Separate|Settle|overnight|Analysis|Analytical|Constant mass|Accelerated|Live|Identify|tester|waste|pipette|inspection|flattens|fractures|bubbles|solids|Nonmetal|Nonmetals|Metalloid|Metalloids|Strong|Weak|Open|Pour|Borosilicate|glass|acid|Reaction|Reagent|Reagents|mixing|Mixed|Settling|Settled|Glassware|Lead|Calcium|Iron|Nitrate|Sulfate|Hydroxide|colorless|Adding|Lowering|strip|Observing|replay|bottle|Reactants|Products|Half-Reaction|half-reactions|Balancer|Undo|Restart|species|multiplier|multiplied|Merge|Total charge|Cancel mode|medium|Acidic|Basic|Unassigned|Permanganate|iodide|yields|Selection|placed|Success|balanced|locked|current)\b/i;
+const english = /\b(?:ZornScience home|Practice|Reference|Feedback|Results|Start|Finish|Help|Options|Time|Show|Incorrect|Wrong|Recall|Cards|Card|Points|Streak|Selected|Unknown|Period|Group|Symbol|Block|Element|Copied|the|your|Choose|You|Hint|Another hint|Both hints|Correct|Not yet|No data|Across a period|Down a group|Common ion|Next question|End session|Time remaining|points|recalled|Question|Answer|Instructions|Share|Close|Copy link|Practice options|Valence electrons|Next element|Completion code|Ion name|Formula \+ charge|Show answer|Still learning|Start flashcards|Quiz game|Session complete|Element details|Atomic number|Color by|Find an element|Full screen|Gas Laws Sandbox|Particle model|Gas controls|Reset|Pause motion|Live graph|Absorbance|Transmittance|Wavelength|Spectrophotometer|Cuvette|Calibration|Standards|Blank|Measure|Concentration|Best-fit|Remove|Grating|Lamp|distilled|Calorimetry|Calorimeter|Experiment|Copper|Aluminum|Water|Heated|Simulated|Insulation|Probe|Trials|Measured|Specific heat|Neutralization|Prediction|Equilibrium Sandbox|Temperature|Pressure|vessel|Forward|Reverse|Advance|Resume|Download|shifts|Flame|Sample|Samples|Lithium|Sodium|Potassium|Strontium|Barium|Cesium|Chloride|Burner|Tested|Investigation|Tray|Volume|Speeds|Graphs|Investigations|Mixture|Container|piston|dots|Record point|Run sweep|Set up the lab|Make the change for me|Test in the lab|Solution|Playback|Stopped|Iodine|starch|beaker|endpoint|trial|challenge|Clock|Collision|Collisions|Catalyst|Activation|Successful|Running|Paused|Bounce|Earlier|Sandbox|Run|Energy|Titrant|Burette|Stopcock|Endpoint|Analyte|Equivalence|Refill|Indicator|Phenolphthalein|Hydrochloric|flask|drop|Bonding|Unknowns|Appearance|Conductivity|Melting|Malleability|cyclohexane|probes|scoopula|pestle|mortar|tongs|foil|Weigh|Stir|Lift|Immerse|rinse|Dispose|Load|Switch|plate|brittle|malleable|crystals|granules|solid|fresh|Repeat|Bench|Station|stations|watch glass|Copy|Link|simulation|portion|portions|Nonpolar|very high|Equipment|Heating|cooling|boat|Observation|cylinder|Sweep|luster|Flatten|fracture|Electrochemistry|Electrochemical|Cell Builder|cell|cells|Anode|Cathode|oxidation|reduction|electrode|electrodes|electrons|Galvanic|Electrolytic|spontaneous|half-cell|half-cells|Swap|salt bridge|voltmeter|circuit|Power supply|DC SUPPLY|OFF|STANDARD|Step once|Restart particles|Clear bench|Place|Silver|beakers|Run cell|Sample complete|Ready|Event|events|atoms|atom|deposited|transferred|lost|gains|loses|Slow|Fast|Animation|explanations|ions|bead|Observe|Explore|Particle key|Scope|agar gel|wires|meter|Calculated|Applied|Left|Right|Gravimetric|Gravimetry|Crucible|Desiccator|Oven|Weighing|Goggles|Filter paper|Funnel|Vacuum|Filtration|Precipitate|Supernatant|Sediment|Decant|Wash|Deionized|Carbonate|Moisture|Dry|Cool|Heat|Step|Reading|Reveal|Inspect|Evidence|Laboratory|lab|Prepare|Separate|Settle|overnight|Analysis|Analytical|Constant mass|Accelerated|Live|Identify|tester|waste|pipette|inspection|flattens|fractures|bubbles|solids|Nonmetal|Nonmetals|Metalloid|Metalloids|Strong|Weak|Open|Pour|Borosilicate|glass|acid|Reaction|Reagent|Reagents|mixing|Mixed|Settling|Settled|Glassware|Lead|Calcium|Iron|Nitrate|Sulfate|Hydroxide|colorless|Adding|Lowering|strip|Observing|replay|bottle|Reactants|Products|Half-Reaction|half-reactions|Balancer|Undo|Restart|species|multiplier|multiplied|Merge|Total charge|Cancel mode|medium|Acidic|Basic|Unassigned|Permanganate|iodide|yields|Selection|placed|Success|balanced|locked|current|Hanger|hangers|Pulley|Release|masses|Equal|Transfer|Acceleration|Gravity|tension|Slow motion|Real time|apparatus|String|Steel|Travel|accelerates|driving|Speed|weight|weights|Massless|frictionless|Brass|discs|motion|inertia|Carts?|Launch|Bumpers?|Momentum|Velocity|Kinetic energy|Track|Rebound|Joined|In motion|Hook|Pads|End stop|Setup|Hooke’s|Harmonic|Spring|Springs|Damping|damped|Slotted|Mass|Extension|Displacement|Equilibrium|Oscillating|oscillation|oscillate|Pull|Released|Net force|Amplitude|Position|Ruler|Retort|Timer|Pause|Force|Investigate|cycle|cycles|peak|peaks|Unloaded|Held|downward|upward|stand|hanging|pointer|soft|firm|Inclined|Plane|Ramp|Friction|Wood|Felt|Plastic|downhill|slide|sliding|slip|Kinetic|Static|Rest|Resolve|arrows|Critical|Mechanics|protractor|hinge|Surface|angle|Return|DISTANCE|Adjustable|tipping|Pendulum|pendulums|oscillations|bob|swing|Length|Moon|Earth|Jupiter|Potential|Outbound|Returning|Dashed|Moving|turning point|Double|Free exploration|restoring|pivot|Projectile|Cannon|ball|Launched|Snapshots|snapshot|flight|Highest|ledge|cliff|Landed|landing|Rising|Falling|arrow|above|below|straight|seconds|meters|Across|Height|Direction|Range|Custom|Steep|Ground|Components|component|vectors)\b/i;
 async function noEnglish(page) {
   const strings = await page.locator("body").evaluate(body => {
     const result = [];
@@ -38,8 +45,8 @@ async function noEnglish(page) {
       const n = walker.currentNode;
       if (!n.parentElement.closest("script, style, noscript")) result.push(n.textContent);
     }
-    body.querySelectorAll("[aria-label], [placeholder], [title], [alt]").forEach(el => {
-      for (const attr of ["aria-label", "placeholder", "title", "alt"]) if (el.hasAttribute(attr)) result.push(el.getAttribute(attr));
+    body.querySelectorAll("[aria-label], [placeholder], [title], [alt], [aria-valuetext]").forEach(el => {
+      for (const attr of ["aria-label", "placeholder", "title", "alt", "aria-valuetext"]) if (el.hasAttribute(attr)) result.push(el.getAttribute(attr));
     });
     return result.join("\n");
   });
@@ -1283,6 +1290,571 @@ test("redox-coach opens in Mexican Spanish and translates every step, feedback, 
   expect(email).toContain("Balancea semirreacciones redox paso a paso en medio ácido o básico con ZornScience.");
   expect(email).toContain("https://activities.zornscience.org/redox-coach/?lang=es");
   await expect(page.locator("#zsa-rx-share-facebook")).toHaveAttribute("href", "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent("https://activities.zornscience.org/redox-coach/?lang=es"));
+  await noEnglish(page);
+  expect(errors).toEqual([]);
+});
+
+test("atwood-machine opens in Mexican Spanish and translates the apparatus, motion, readouts, instructions and sharing", async ({page}) => {
+  const errors = [];
+  page.on("pageerror", e => errors.push(e.message));
+  page.on("console", m => { if (m.type() === "error" || m.type() === "warning") errors.push(m.text()); });
+  await page.clock.install();
+  await page.goto("/atwood-machine/?lang=es");
+  await expect(page.locator("html")).toHaveAttribute("lang", "es-MX");
+  await expect(page).toHaveTitle("La máquina de Atwood | ZornScience");
+  await expect(page.getByRole("link", {name:"ES Español", exact:true})).toHaveAttribute("aria-current", "true");
+  await expect(page.getByRole("heading", {level:1})).toHaveText("La máquina de Atwood");
+  await expect(page.locator("#state")).toHaveText("LISTO PARA SOLTAR");
+  await expect(page.locator("#direction")).toHaveText("El lado derecho acelera hacia abajo.");
+  await expect(page.locator("#a-value")).toHaveText("1.962 m/s²");
+  await expect(page.locator("#apparatus")).toHaveAccessibleName("Máquina de Atwood con dos portapesas colgantes Masa izquierda de 200 gramos, masa derecha de 300 gramos. El lado derecho acelera hacia abajo. Aceleración de 1.962 metros por segundo al cuadrado.");
+  await expect(page.getByLabel("Portapesas izquierdo · m₁")).toHaveValue("200");
+  await noEnglish(page);
+  // Instructions: the button name sits inside one full Spanish sentence.
+  await page.getByRole("button", {name:"Instrucciones", exact:true}).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toContainText("Exploración de la segunda ley de Newton");
+  await expect(dialog.locator("li").nth(1)).toHaveText("Predice qué lado va a bajar. Selecciona Soltar las masas y observa las dos flechas de aceleración.");
+  await expect(dialog).toContainText("La gravedad es 9.81 m/s².");
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+  // Share: the link keeps Spanish.
+  await page.getByRole("button", {name:"Compartir actividad", exact:true}).click();
+  await expect(page.locator("#zsa-th-share-url")).toHaveValue("https://activities.zornscience.org/atwood-machine/?lang=es");
+  const email = decodeURIComponent(await page.locator("#zsa-th-share-email").getAttribute("href"));
+  expect(email).toContain("subject=La máquina de Atwood | ZornScience");
+  expect(email).toContain("Explora la segunda ley de Newton con dos masas sobre una polea ideal.");
+  expect(email).toContain("https://activities.zornscience.org/atwood-machine/?lang=es");
+  await expect(page.locator("#zsa-th-share-panel")).toContainText("Comparte esta simulación. Cada enlace abre el aparato desde cero.");
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+  // Release, pause, resume and run to the travel limit with both kinds of arrows.
+  await page.getByLabel("Flechas de gravedad y tensión").check();
+  await page.getByRole("button", {name:"▶ Soltar las masas", exact:true}).click();
+  await page.clock.runFor(300);
+  await expect(page.locator("#state")).toHaveText("EN MOVIMIENTO");
+  await expect(page.locator("#release")).toHaveText("Ⅱ Pausar");
+  await noEnglish(page);
+  await page.locator("#release").click();
+  await expect(page.locator("#state")).toHaveText("EN PAUSA");
+  await expect(page.locator("#release")).toHaveText("▶ Reanudar");
+  await noEnglish(page);
+  await page.locator("#release").click();
+  await page.clock.runFor(3000);
+  await expect(page.locator("#state")).toHaveText("LÍMITE DE RECORRIDO / REINICIA PARA REPETIR");
+  await expect(page.locator("#release")).toHaveText("Recorrido completo");
+  await expect(page.locator("#direction")).toHaveText("Se alcanzó el límite de recorrido. Reinicia para repetir.");
+  await expect(page.locator("#v-value")).toHaveText("n/d");
+  await expect(page.locator("#scene-desc")).toHaveText("Masa izquierda de 200 gramos, masa derecha de 300 gramos. Se alcanzó el límite de recorrido. Reinicia para repetir. Terminó el movimiento libre.");
+  await noEnglish(page);
+  // Reset, equal masses, transfer, swap and slow motion.
+  await page.getByRole("button", {name:"↺ Reiniciar posición", exact:true}).click();
+  await page.getByRole("button", {name:"Masas iguales", exact:true}).click();
+  await expect(page.locator("#direction")).toHaveText("Equilibrado: no hay aceleración.");
+  await expect(page.locator("#insight")).toHaveText("Los pesos iguales se equilibran. Si se sueltan desde el reposo, los dos portapesas se quedan quietos.");
+  await noEnglish(page);
+  await page.getByRole("button", {name:"Pasar 25 g →", exact:true}).click();
+  await page.getByRole("button", {name:"⇄ Intercambiar masas", exact:true}).click();
+  await expect(page.locator("#direction")).toHaveText("El lado izquierdo acelera hacia abajo.");
+  await page.getByLabel("Ritmo de reproducción").selectOption({label:"Cámara lenta · ¼×"});
+  await page.locator("#release").click();
+  await page.clock.runFor(500);
+  await expect(page.locator("#insight")).toHaveText("La diferencia de pesos impulsa el movimiento; las dos masas aportan inercia.");
+  await page.locator(".model-note summary").click();
+  await expect(page.locator(".model-note")).toContainText("La fuerza neta que se muestra es la fuerza impulsora con signo sobre todo el sistema, (m₂ − m₁)g.");
+  await noEnglish(page);
+  // Narrow screens: no sideways scrolling.
+  for (const width of [320, 390]) {
+    await page.setViewportSize({width, height:844});
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), "at " + width).toBeLessThanOrEqual(0);
+  }
+  expect(errors).toEqual([]);
+});
+
+test("collision-carts opens in Mexican Spanish and translates the setup, the collisions, the end stop and sharing", async ({page}) => {
+  const errors = [];
+  page.on("pageerror", e => errors.push(e.message));
+  await page.clock.install();
+  await page.goto("/collision-carts/?lang=es");
+  await expect(page.locator("html")).toHaveAttribute("lang", "es-MX");
+  await expect(page).toHaveTitle("Carritos de colisión | ZornScience");
+  await expect(page.getByRole("link", {name:"ES Español", exact:true})).toHaveAttribute("aria-current", "true");
+  await expect(page.getByRole("heading", {level:1})).toHaveText("Carritos de colisión");
+  const track = page.getByRole("img", {name:"Dos carritos de dinámica sobre una pista de laboratorio de aluminio"});
+  await expect(track.locator("#cart0 text").first()).toHaveText("CARRITO A");
+  await expect(track.locator("#vectors text")).toHaveText(["vA 0.80", "vB = 0"]);
+  await expect(page.locator("#phase")).toHaveText("LISTO PARA LANZAR");
+  await expect(page.locator("#badge")).toHaveText("PARACHOQUES MAGNÉTICOS");
+  await expect(page.locator("#mode-note")).toHaveText("Los carritos rebotan. Se conservan la cantidad de movimiento y la energía cinética.");
+  await expect(page.locator("#observation")).toHaveText("Prepara los carritos y luego lánzalos. La velocidad positiva es hacia la derecha; la velocidad negativa es hacia la izquierda.");
+  await expect(page.locator("#momentum")).toHaveText("0.40 kg·m/s");
+  await expect(page.locator("#energy")).toHaveText("0.16 J");
+  await noEnglish(page);
+  // Instructions and the share panel, whose link keeps Spanish.
+  await page.getByRole("button", {name:"Instrucciones", exact:true}).click();
+  await expect(page.getByRole("dialog")).toContainText("Exploración de la conservación de la cantidad de movimiento");
+  await expect(page.getByRole("dialog")).toContainText("La cantidad de movimiento depende tanto de la masa como de la velocidad.");
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", {name:"Compartir actividad", exact:true}).click();
+  await expect(page.locator("#zsa-th-share-url")).toHaveValue("https://activities.zornscience.org/collision-carts/?lang=es");
+  const email = decodeURIComponent(await page.locator("#zsa-th-share-email").getAttribute("href"));
+  expect(email).toContain("subject=Carritos de colisión | ZornScience");
+  expect(email).toContain("Explora la conservación de la cantidad de movimiento con dos carritos que chocan.");
+  expect(email).toContain("https://activities.zornscience.org/collision-carts/?lang=es");
+  await expect(page.locator("#zsa-th-share-panel")).toContainText("Comparte el laboratorio desde cero. Cada enlace abre una pista nueva.");
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+  // Step to the elastic collision: the velocities swap.
+  const step = page.getByRole("button", {name:"Avanzar +0.02 s", exact:true});
+  await step.click();
+  await expect(page.locator("#phase")).toHaveText("EN PAUSA");
+  await expect(page.locator("#launch")).toHaveText("▶ Reanudar");
+  for (let i = 1; i < 86; i++) await step.click();
+  await expect(page.locator("#phase")).toHaveText("DESPUÉS DE LA COLISIÓN / REBOTE");
+  await expect(page.locator("#observation")).toHaveText("Los carritos rebotaron. La cantidad de movimiento total y la energía cinética no cambian. Compara las nuevas flechas de velocidad y de cantidad de movimiento de cada carrito.");
+  await page.getByLabel("Cantidad de movimiento p").check();
+  await expect(track.locator("#vectors text")).toHaveText(["vA = 0", "pA = 0", "vB 0.80", "pB 0.40"]);
+  await noEnglish(page);
+  // Inelastic heavy-light preset: the carts join.
+  await page.getByLabel("Prueba una configuración").selectOption("heavy");
+  await page.getByLabel("Tipo de parachoques").selectOption("inelastic");
+  await expect(page.locator("#badge")).toHaveText("ALMOHADILLAS DE VELCRO");
+  await expect(page.locator("#mode-note")).toHaveText("Los carritos se quedan unidos. Se conserva la cantidad de movimiento; la energía cinética puede disminuir.");
+  for (let j = 0; j < 90; j++) await step.click();
+  await expect(page.locator("#phase")).toHaveText("DESPUÉS DE LA COLISIÓN / UNIDOS");
+  await expect(page.locator("#observation")).toHaveText("Las almohadillas de velcro unieron los carritos. Ahora los dos tienen la misma velocidad. La cantidad de movimiento total no cambia; parte de la energía cinética se convierte en energía interna.");
+  await expect(page.locator("#v0")).toHaveText("0.64 m/s");
+  await expect(page.locator("#energy")).toHaveText("0.26 J");
+  await noEnglish(page);
+  // The run pauses before the end stop.
+  for (let k = 0; k < 200 && await step.isEnabled(); k++) await step.click();
+  await expect(page.locator("#phase")).toHaveText("EN PAUSA ANTES DEL TOPE");
+  await expect(page.getByRole("button", {name:"Corrida completa", exact:true})).toBeDisabled();
+  await expect(page.locator("#observation")).toHaveText("La corrida se pausó antes de un tope. Un impacto contra el tope ejercería un impulso externo sobre el sistema de dos carritos. Reinicia para probar otra colisión.");
+  await noEnglish(page);
+  // Reset, launch in real time and pause.
+  await page.getByRole("button", {name:"↺ Reiniciar", exact:true}).click();
+  await expect(page.locator("#phase")).toHaveText("LISTO PARA LANZAR");
+  await page.getByRole("button", {name:"▶ Lanzar", exact:true}).click();
+  await page.clock.runFor(500);
+  await expect(page.locator("#phase")).toHaveText("CARRITOS EN MOVIMIENTO");
+  await noEnglish(page);
+  await page.getByRole("button", {name:"Ⅱ Pausar", exact:true}).click();
+  await expect(page.locator("#phase")).toHaveText("EN PAUSA");
+  await page.locator(".model-note summary").click();
+  await expect(page.locator(".model-note")).toContainText("La física detrás de la simulación");
+  await expect(page.locator(".model-note")).toContainText("v′A = [(mA − mB)vA + 2mBvB] / (mA + mB)");
+  await noEnglish(page);
+  expect(errors).toEqual([]);
+});
+
+test("hookes-law-lab opens in Mexican Spanish and translates the spring, motion, graphs, forces and sharing", async ({page}) => {
+  const errors = [];
+  page.on("pageerror", e => errors.push(e.message));
+  page.on("console", m => { if (m.type() === "error" || m.type() === "warning") errors.push(m.text()); });
+  await page.clock.install();
+  await page.goto("/hookes-law-lab/?lang=es");
+  await expect(page.locator("html")).toHaveAttribute("lang", "es-MX");
+  await expect(page).toHaveTitle("Ley de Hooke y movimiento armónico | ZornScience");
+  await expect(page.getByRole("heading", {level:1})).toHaveText("Ley de Hooke y movimiento armónico");
+  await expect(page.getByRole("link", {name:"ES Español", exact:true})).toHaveAttribute("aria-current", "true");
+  await expect(page.locator("#total")).toHaveText("200 g de masa suspendida en total");
+  await expect(page.locator("#state")).toHaveText("EN EQUILIBRIO");
+  await expect(page.locator("#pause")).toHaveText("▶ Reanudar");
+  await expect(page.locator("#plot-title")).toHaveText("Fuerza contra elongación");
+  await expect(page.locator("#period-read")).toHaveText("Esta carga: 1.962 N con una elongación de 0.0981 m.");
+  await expect(page.locator("#prompt")).toHaveText("Usa el mismo resorte. Agrega 50 g a la vez. ¿Qué le pasa a la elongación cuando el peso total se duplica?");
+  await expect(page.locator("#status")).toHaveText("En equilibrio. Agrega masa para estirar el resorte, o jala y suelta para que empiece a oscilar.");
+  await expect(page.getByRole("img", {name:/^Fuerza en equilibrio contra elongación Una línea recta que pasa por el origen representa la ley de Hooke\./})).toBeVisible();
+  await expect(page.locator("#grid text").filter({hasText:"Fuerza (N)"})).toHaveCount(1);
+  await expect(page.locator("#grid text").filter({hasText:"Elongación (m)"})).toHaveCount(1);
+  await expect(page.locator("#weights text")).toHaveText("200 g en total");
+  await expect(page.getByRole("slider", {name:"Desplazamiento de la masa, en centímetros desde el equilibrio"})).toHaveAttribute("aria-valuetext", "0.0 centímetros desde el equilibrio, positivo hacia abajo");
+  await noEnglish(page);
+  // Instructions: the steps with a bold button name are full Spanish sentences.
+  await page.getByRole("button", {name:"Instrucciones", exact:true}).click();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toContainText("Exploración de un resorte en movimiento");
+  await expect(dialog.locator("li").nth(1)).toHaveText(/^Usa Llevar al equilibrio para detener el movimiento\. La gráfica de fuerza contra elongación/);
+  await expect(dialog.locator("li").nth(1).locator("strong")).toHaveText("Llevar al equilibrio");
+  await expect(dialog.locator("li").nth(2)).toHaveText("Elige un desplazamiento y luego presiona Jalar y soltar, o arrastra el portapesas y suéltalo. Las flechas del teclado sobre el portapesas también ajustan su desplazamiento; Enter lo suelta.");
+  await expect(dialog.locator("li").nth(2).locator("strong")).toHaveText("Jalar y soltar");
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+  // Share: the link keeps Spanish.
+  await page.getByRole("button", {name:"Compartir actividad", exact:true}).click();
+  await expect(page.locator("#zsa-th-share-url")).toHaveValue("https://activities.zornscience.org/hookes-law-lab/?lang=es");
+  const email = decodeURIComponent(await page.locator("#zsa-th-share-email").getAttribute("href"));
+  expect(email).toContain("subject=Ley de Hooke y movimiento armónico | ZornScience");
+  expect(email).toContain("Explora la elongación de un resorte y el movimiento armónico simple en una mesa de laboratorio virtual.");
+  expect(email).toContain("https://activities.zornscience.org/hookes-law-lab/?lang=es");
+  await expect(page.locator("#zsa-th-share-panel")).toContainText("Comparte el laboratorio desde cero. Cada enlace abre una mesa nueva.");
+  await page.getByRole("button", {name:"Copiar enlace", exact:true}).click();
+  await expect(page.locator("#zsa-th-share-status")).toHaveText(/^Enlace (copiado|seleccionado)\./);
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+  // Masses, springs, the spring constant and forces.
+  await page.getByRole("button", {name:"+ 50 g", exact:true}).click();
+  await page.getByLabel("Resorte de extensión").selectOption("10");
+  await expect(page.locator("#status")).toHaveText("Configuración nueva en equilibrio. Jala y suelta para comparar su movimiento.");
+  await page.getByLabel("Mostrar la constante del resorte").check();
+  await expect(page.locator("#constant")).toHaveText("k = 2.453 N / 0.2453 m = 10 N/m. T ideal = 0.993 s (sin amortiguamiento).");
+  await page.getByLabel("Mostrar fuerzas").check();
+  await expect(page.locator("#force-description")).toHaveText("Peso: 2.453 N hacia abajo. Fuerza del resorte: 2.453 N hacia arriba. Fuerza neta: 0.000 N (equilibrada).");
+  await expect(page.locator("#force-arrows text")).toHaveText(["mg", "Resorte"]);
+  await noEnglish(page);
+  // Motion: release, measure the period, pause, step, slow motion.
+  await page.getByLabel("Resorte de extensión").selectOption("20");
+  await page.getByLabel("Pesas ranuradas").fill("150");
+  await page.getByRole("button", {name:"Jalar y soltar", exact:true}).click();
+  await expect(page.locator("#status")).toHaveText("Se soltó la masa. Compara los picos en la gráfica o pausa para observar el resorte.");
+  await expect(page.locator("#state")).toHaveText("OSCILANDO");
+  await expect(page.locator("#pause")).toHaveText("Ⅱ Pausar");
+  await expect(page.locator("#plot-title")).toHaveText("Posición contra tiempo");
+  await expect(page.locator("#plot-scale")).toHaveText("Unos cuatro ciclos");
+  await expect(page.getByRole("img", {name:"Desplazamiento desde el equilibrio contra tiempo El desplazamiento positivo es hacia abajo. Los corchetes marcan el tiempo entre los picos medidos."})).toBeVisible();
+  await expect(page.locator("#grid text").filter({hasText:"Desplazamiento (cm), + hacia abajo"})).toHaveCount(1);
+  await expect(page.locator("#grid text").filter({hasText:"Tiempo (s)"})).toHaveCount(1);
+  await page.clock.runFor(2500);
+  await expect(page.locator("#period-read")).toHaveText("Periodo medido: 0.628 s (picos positivos sucesivos).");
+  await expect(page.locator("#force-description")).toHaveText(/^Peso: 1\.962 N hacia abajo\. Fuerza del resorte: \d\.\d{3} N hacia (arriba|abajo)\. Fuerza neta: \d\.\d{3} N hacia (arriba|abajo)\.$/);
+  await noEnglish(page);
+  await page.getByRole("button", {name:"Ⅱ Pausar", exact:true}).click();
+  await expect(page.locator("#state")).toHaveText("EN PAUSA");
+  await page.getByRole("button", {name:"Avanzar 0.02 s", exact:true}).click();
+  await page.getByLabel("Ritmo de la simulación").selectOption("0.25");
+  await expect(page.getByLabel("Ritmo de la simulación").locator("option:checked")).toHaveText("¼× cámara lenta");
+  await noEnglish(page);
+  await page.getByLabel("Amortiguamiento", {exact:true}).selectOption("0.12");
+  await page.getByRole("button", {name:"Jalar y soltar", exact:true}).click();
+  await page.clock.runFor(500);
+  await expect(page.locator("#force-description")).toHaveText(/\(incluye el amortiguamiento\)\.$/);
+  await expect(page.locator("#period-read")).toHaveText("Espera dos picos positivos para medir un ciclo completo.");
+  await page.getByRole("button", {name:"Llevar al equilibrio", exact:true}).click();
+  await expect(page.locator("#status")).toHaveText("En equilibrio: la fuerza del resorte es igual al peso. Usa k = mg / elongación (en metros).");
+  await expect(page.locator("#period-read")).toHaveText("Jala y suelta para ver la onda y medir su periodo.");
+  await page.getByRole("button", {name:"▶ Reanudar", exact:true}).click();
+  await expect(page.locator("#status")).toHaveText("La masa está en reposo. Usa Jalar y soltar para iniciar una oscilación.");
+  await noEnglish(page);
+  // A zero pull, then the keyboard on the hanger.
+  await page.getByLabel("Desplazamiento al soltar").fill("0");
+  await page.getByRole("button", {name:"Jalar y soltar", exact:true}).click();
+  await expect(page.locator("#status")).toHaveText("Desplazamiento cero: la masa se queda en equilibrio. Elige un jalón distinto de cero para que empiece a oscilar.");
+  await page.locator("#hanger").focus();
+  await page.keyboard.press("ArrowDown");
+  await expect(page.locator("#hanger")).toHaveAttribute("aria-valuetext", "0.5 centímetros desde el equilibrio, positivo hacia abajo");
+  await noEnglish(page);
+  // Graph buttons and every investigation.
+  await page.getByRole("button", {name:"Fuerza y elongación", exact:true}).click();
+  await expect(page.locator("#plot-note")).toHaveText("La línea muestra la relación ideal en equilibrio, F = kΔL. El punto marca esta carga en reposo, aunque la masa esté oscilando. Pendiente = fuerza / elongación en metros.");
+  await page.getByRole("button", {name:"Posición y tiempo", exact:true}).click();
+  await expect(page.locator("#plot-note")).toHaveText("El cero es la posición de equilibrio. El desplazamiento positivo es hacia abajo en el aparato y arriba del cero en esta gráfica. Pausar congela ambas vistas.");
+  for (const [value, label] of [["mass", "Masa y periodo"], ["amplitude", "Amplitud y periodo"], ["damping", "Amortiguamiento y movimiento"]]) {
+    await page.getByLabel("Investiga").selectOption(value);
+    await expect(page.getByLabel("Investiga").locator("option:checked")).toHaveText(label);
+    await page.getByText("Qué observar", {exact:true}).click();
+    await noEnglish(page);
+  }
+  await expect(page.locator("#hint")).toHaveText("El amortiguamiento quita energía mecánica. Los picos se reducen hacia el equilibrio. Usa la opción sin amortiguamiento cuando pruebes la fórmula ideal del periodo.");
+  await page.locator(".model-note summary").click();
+  await expect(page.locator(".model-note")).toContainText("Los resortes reales tienen masa y un límite elástico");
+  await page.getByRole("button", {name:"Reiniciar laboratorio", exact:true}).click();
+  await expect(page.locator("#status")).toHaveText("Laboratorio desde cero. Agrega masa o jala y suelta para empezar.");
+  await noEnglish(page);
+  // Narrow screens: no sideways scrolling and a 44 px language toggle.
+  for (const width of [320, 390]) {
+    await page.setViewportSize({width, height:844});
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
+    const box = await page.getByRole("link", {name:"ES Español", exact:true}).boundingBox();
+    expect(box.width).toBeGreaterThanOrEqual(44);
+    expect(box.height).toBeGreaterThanOrEqual(44);
+  }
+  expect(errors).toEqual([]);
+});
+
+test("inclined-plane opens in Mexican Spanish and translates the ramp, the forces, every state and sharing", async ({page}) => {
+  const errors = [];
+  page.on("pageerror", e => errors.push(e.message));
+  await page.clock.install();
+  await page.goto("/inclined-plane/?lang=es");
+  await expect(page.locator("html")).toHaveAttribute("lang", "es-MX");
+  await expect(page).toHaveTitle("Plano inclinado y fricción | ZornScience");
+  await expect(page.getByRole("heading", {level:1})).toHaveText("Plano inclinado y fricción");
+  await expect(page.getByRole("link", {name:"ES Español", exact:true})).toHaveAttribute("aria-current", "true");
+  await page.clock.runFor(200);
+  await expect(page.locator("#state")).toHaveText("ESTÁTICO / EN REPOSO");
+  await expect(page.locator("#explanation")).toHaveText("La fricción estática equilibra la gravedad cuesta abajo.");
+  await expect(page.getByLabel("Superficie de contacto")).toHaveValue("wood");
+  await expect(page.locator("#coefficients")).toHaveText("Madera sobre madera: μₛ = 0.45, μₖ = 0.30. Ángulo crítico: 24.2°. g = 9.81 m/s².");
+  await expect(page.locator("#vectors")).toContainText("fₛ 1.68 N");
+  await expect(page.locator("#vectors")).toContainText("mg sin θ");
+  await expect(page.getByRole("img", {name:"Bloque de madera sobre una rampa de laboratorio ajustable"})).toBeVisible();
+  await expect(page.locator(".readings")).toContainText("ACELERACIÓN");
+  await expect(page.locator(".legend")).toHaveText(/● Fuerza normal\s*● Peso\s*● Fricción\s*┄ Componentes de la gravedad/);
+  await noEnglish(page);
+  // Instructions and the share panel, whose link and email keep Spanish.
+  await page.getByRole("button", {name:"Instrucciones", exact:true}).click();
+  await expect(page.getByRole("dialog")).toContainText("Búsqueda del punto de deslizamiento");
+  await expect(page.getByRole("dialog")).toContainText("Justo cuando empieza el deslizamiento, μₛ = tan θ.");
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", {name:"Compartir actividad", exact:true}).click();
+  await expect(page.locator("#zsa-th-share-url")).toHaveValue("https://activities.zornscience.org/inclined-plane/?lang=es");
+  const email = decodeURIComponent(await page.locator("#zsa-th-share-email").getAttribute("href"));
+  expect(email).toContain("subject=Plano inclinado y fricción | ZornScience");
+  expect(email).toContain("Explora la fricción con una rampa ajustable y flechas de fuerza en tiempo real.");
+  expect(email).toContain("https://activities.zornscience.org/inclined-plane/?lang=es");
+  await expect(page.locator("#zsa-th-share-panel")).toContainText("Comparte el laboratorio desde cero. Cada enlace abre una rampa nueva.");
+  await page.getByRole("button", {name:"Copiar enlace", exact:true}).click();
+  await expect(page.locator("#zsa-th-share-status")).toHaveText(/^(Enlace copiado\.|Enlace seleccionado\. Presiona Ctrl\+C, o Command\+C en una Mac, para copiarlo\.)$/);
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+  // Raise the ramp past the critical angle: the block slides and kinetic friction takes over.
+  await page.getByLabel("Ángulo de la rampa").fill("30");
+  await page.clock.runFor(200);
+  await expect(page.locator("#state")).toHaveText("CINÉTICO / EN DESLIZAMIENTO");
+  await expect(page.locator("#explanation")).toHaveText("La gravedad supera la fricción cinética. El bloque acelera cuesta abajo.");
+  await expect(page.locator("#accel")).toHaveText("2.36 m/s²");
+  await expect(page.locator("#vectors")).toContainText("fₖ 1.27 N");
+  await noEnglish(page);
+  // Pause and resume.
+  await page.getByRole("button", {name:"Pausar", exact:true}).click();
+  await expect(page.getByRole("button", {name:"Reanudar", exact:true})).toHaveAttribute("aria-pressed", "true");
+  await noEnglish(page);
+  await page.getByRole("button", {name:"Reanudar", exact:true}).click();
+  await expect(page.getByRole("button", {name:"Pausar", exact:true})).toHaveAttribute("aria-pressed", "false");
+  // The end stop hides the arrows.
+  await page.clock.runFor(5000);
+  await expect(page.locator("#state")).toHaveText("TOPE FINAL");
+  await expect(page.locator("#explanation")).toHaveText("Regresa el bloque a la parte de arriba para repetir.");
+  await expect(page.locator("#distance")).toHaveText("1.20 m");
+  await noEnglish(page);
+  await page.getByRole("button", {name:"Regresar el bloque arriba", exact:true}).click();
+  await page.getByLabel("Superficie de contacto").selectOption("felt");
+  await page.clock.runFor(200);
+  await expect(page.locator("#state")).toHaveText("ESTÁTICO / EN REPOSO");
+  await expect(page.locator("#coefficients")).toHaveText("Fieltro sobre madera: μₛ = 0.65, μₖ = 0.48. Ángulo crítico: 33.0°. g = 9.81 m/s².");
+  await page.getByLabel("Superficie de contacto").selectOption("plastic");
+  await expect(page.locator("#coefficients")).toHaveText("Plástico liso sobre madera: μₛ = 0.25, μₖ = 0.16. Ángulo crítico: 14.0°. g = 9.81 m/s².");
+  await page.getByLabel("Descomponer la gravedad").uncheck();
+  await page.getByLabel("Cámara lenta (¼ del tiempo real)").check();
+  await page.getByLabel("Mostrar flechas de fuerza").uncheck();
+  await page.locator(".model-note summary").click();
+  await expect(page.locator(".model-note")).toContainText("El bloque se detiene en un tope final acolchado");
+  await expect(page.locator(".zsa-footer")).toContainText("Fricción seca ideal · No se guardan datos");
+  await noEnglish(page);
+  expect(errors).toEqual([]);
+});
+
+test("pendulum-lab opens in Mexican Spanish and translates comparisons, the swing, energy, instructions and sharing", async ({page}) => {
+  const errors = [];
+  page.on("pageerror", e => errors.push(e.message));
+  await page.clock.install();
+  await page.goto("/pendulum-lab/?lang=es");
+  await expect(page.locator("html")).toHaveAttribute("lang", "es-MX");
+  await expect(page).toHaveTitle("El péndulo simple | ZornScience");
+  await expect(page.getByRole("link", {name:"ES Español", exact:true})).toHaveAttribute("aria-current", "true");
+  await expect(page.locator("#world-badge")).toHaveText("LABORATORIO EN LA TIERRA");
+  await expect(page.locator("#state")).toHaveText("LISTO PARA SOLTAR");
+  await expect(page.locator("#release")).toHaveText("▶ Soltar la esfera");
+  await expect(page.locator("#cycles")).toHaveText("0 oscilaciones completas");
+  await expect(page.locator("#total")).toHaveText("Total 0.067 J");
+  await expect(page.locator("#status")).toHaveText("Listo para soltar. Al cambiar los ajustes, el movimiento se reinicia.");
+  await expect(page.getByRole("img", {name:/^Péndulo de laboratorio/})).toBeVisible();
+  await expect(page.getByLabel("Masa de la esfera")).toHaveAttribute("aria-valuetext", "200 g");
+  await noEnglish(page);
+  // Instructions and the share panel, whose link keeps Spanish.
+  await page.getByRole("button", {name:"Instrucciones", exact:true}).click();
+  await expect(page.getByRole("dialog")).toContainText("Selecciona Soltar la esfera. Observa cómo la energía cambia entre energía potencial en los extremos y energía cinética en la parte más baja.");
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", {name:"Compartir actividad", exact:true}).click();
+  await expect(page.locator("#zsa-th-share-url")).toHaveValue("https://activities.zornscience.org/pendulum-lab/?lang=es");
+  const email = decodeURIComponent(await page.locator("#zsa-th-share-email").getAttribute("href"));
+  expect(email).toContain("subject=El péndulo simple | ZornScience");
+  expect(email).toContain("Explora el movimiento y la energía de un péndulo en la Tierra, la Luna y Júpiter.");
+  expect(email).toContain("https://activities.zornscience.org/pendulum-lab/?lang=es");
+  await noEnglish(page);
+  await page.getByRole("button", {name:"Cerrar opciones para compartir", exact:true}).click();
+  // A comparison: prediction first, then the result once the bobs move.
+  await page.getByRole("button", {name:"Duplicar la masa", exact:true}).click();
+  await expect(page.locator("#challenge")).toHaveText("Contorno punteado: montaje original en la Tierra (0.60 m, 100 g, 15°). Esfera de latón: tu montaje modificado. Los dos empiezan al mismo tiempo.");
+  await expect(page.locator("#comparison-result")).toHaveText("Solo cambia la masa: 100 g → 200 g. La longitud, la gravedad y el ángulo son iguales. Predice: ¿la esfera más pesada oscilará más rápido?");
+  await expect(page.locator("#energy-scale")).toHaveText(/^Misma escala para los dos montajes\. Total de la referencia punteada: 0\.020 J\. Total de la esfera de latón: 0\.040 J\.$/);
+  await noEnglish(page);
+  await page.getByRole("button", {name:"Avanzar +0.05 s", exact:true}).click();
+  await expect(page.locator("#status")).toHaveText("Se avanzaron 0.05 segundos de tiempo de simulación.");
+  await expect(page.locator("#comparison-result")).toHaveText("Mismo periodo, el doble de energía. La referencia punteada y la esfera de latón se mueven juntas: la masa adicional aumenta tanto la inercia como la fuerza de gravedad.");
+  await expect(page.locator("#state")).toHaveText("EN PAUSA");
+  await expect(page.locator("#release")).toHaveText("▶ Reanudar");
+  await expect(page.locator("#cycle-phase")).toHaveText("Ida: hacia el lado opuesto");
+  await expect(page.locator("#energy-cue")).toHaveText("Bajando: la energía potencial se transfiere a energía cinética. La esfera se acelera.");
+  for (let i = 0; i < 31; i++) await page.locator("#step").click();
+  await expect(page.locator("#cycles")).toHaveText("1 oscilación completa");
+  await noEnglish(page);
+  await page.getByRole("button", {name:"Duplicar la longitud", exact:true}).click();
+  await expect(page.locator("#comparison-result")).toHaveText("Solo cambia la longitud: 0.60 m → 1.20 m. La masa, la gravedad y el ángulo son iguales. Predice: ¿duplicar la longitud duplicará el periodo?");
+  await page.locator("#step").click();
+  await expect(page.locator("#comparison-result")).toHaveText("El doble de longitud da √2 ≈ 1.41 veces el periodo. El péndulo de latón más largo tarda más en regresar.");
+  await page.getByRole("button", {name:"Ir a la Luna", exact:true}).click();
+  await expect(page.locator("#world-badge")).toHaveText("LABORATORIO EN LA LUNA");
+  await expect(page.locator("#comparison-result")).toHaveText("Solo cambia la gravedad: Tierra → Luna. La masa, la longitud y el ángulo son iguales. Predice: ¿qué péndulo regresará primero?");
+  await page.locator("#step").click();
+  await expect(page.locator("#comparison-result")).toHaveText("La esfera de latón en la Luna tiene un periodo de aproximadamente 2.46 veces el de la Tierra. Una gravedad más débil produce un efecto restaurador más débil.");
+  await noEnglish(page);
+  // Free exploration, release, pause and reset.
+  await page.getByRole("button", {name:"Exploración libre", exact:true}).click();
+  await expect(page.locator("#challenge")).toHaveText("Exploración libre: cambia una variable a la vez. Predice, suelta y luego compara.");
+  await expect(page.locator("#energy-scale")).toHaveText("Las dos barras usan la misma escala en joules. La energía mecánica total se mantiene constante.");
+  await page.locator("#release").click();
+  await expect(page.locator("#status")).toHaveText("La esfera se soltó. Observa un viaje completo de ida y vuelta.");
+  await expect(page.locator("#release")).toHaveText("Ⅱ Pausar");
+  await page.clock.runFor(400);
+  await expect(page.locator("#state")).toHaveText("OSCILANDO");
+  await expect(page.locator("#energy-cue")).toHaveText(/^(Bajando|Subiendo|En la parte más baja|En un punto de retorno):/);
+  await noEnglish(page);
+  await page.locator("#release").click();
+  await expect(page.locator("#status")).toHaveText("Movimiento en pausa. Avanza paso a paso para examinar la oscilación.");
+  await page.getByRole("button", {name:"↺ Reiniciar posición", exact:true}).click();
+  await expect(page.locator("#status")).toHaveText("La esfera volvió a la posición inicial. Lista para repetir.");
+  await expect(page.locator("#cycle-phase")).toHaveText("Suelta la esfera para empezar");
+  // Other worlds, zero gravity and a zero release angle.
+  await page.locator("#world").selectOption("24.79");
+  await expect(page.locator("#world-badge")).toHaveText("LABORATORIO EN JÚPITER");
+  await page.locator("#world").selectOption("0");
+  await expect(page.locator("#world-badge")).toHaveText("LABORATORIO SIN GRAVEDAD");
+  await expect(page.locator("#period")).toHaveText("Sin oscilación");
+  await expect(page.locator("#insight")).toHaveText("Sin gravedad no hay fuerza restauradora. Una esfera que se suelta desde el reposo se queda donde está.");
+  await expect(page.locator("#energy-cue")).toHaveText("Gravedad cero: no hay energía potencial gravitacional ni movimiento desde el reposo.");
+  await page.locator("#release").click();
+  await expect(page.locator("#status")).toHaveText("En gravedad cero no hay fuerza restauradora. La esfera se queda en reposo.");
+  await noEnglish(page);
+  await page.locator("#world").selectOption("9.81");
+  await page.locator("#angle").fill("0");
+  await expect(page.locator("#insight")).toHaveText("La esfera está en equilibrio. Elige un ángulo de liberación para iniciar una oscilación.");
+  await expect(page.locator("#energy-cue")).toHaveText("En reposo en la parte más baja: las dos energías son cero.");
+  await page.locator("#release").click();
+  await expect(page.locator("#status")).toHaveText("Elige un ángulo mayor que 0° para que la esfera oscile.");
+  await noEnglish(page);
+  // The phone layout's settings toggle.
+  await page.setViewportSize({width:390, height:844});
+  await page.getByRole("button", {name:"Ajustar el aparato", exact:true}).click();
+  await expect(page.locator("#settings-toggle")).toHaveText("Ocultar los ajustes del aparato");
+  await noEnglish(page);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
+  expect(errors).toEqual([]);
+});
+
+test("projectile-lab opens in Mexican Spanish and translates the flight, vectors, graph, results, questions, CSV and printing", async ({page}) => {
+  const errors = [];
+  page.on("pageerror", e => errors.push(e.message));
+  await page.clock.install({time: new Date("2026-10-18T12:00:00")});
+  await page.clock.pauseAt(new Date("2026-10-18T12:00:01"));
+  await page.goto("/projectile-lab/?lang=es&show=v,c,a,s&pausetop=1");
+  await expect(page.locator("html")).toHaveAttribute("lang", "es-MX");
+  await expect(page).toHaveTitle("Laboratorio de vectores del movimiento de proyectiles | ZornScience");
+  await expect(page.getByRole("link", {name:"ES Español", exact:true})).toHaveAttribute("aria-current", "true");
+  await expect(page.getByRole("heading", {level:1})).toHaveText("Laboratorio de vectores del movimiento de proyectiles");
+  await expect(page.locator("#zsa-pj-launch-parts")).toHaveText("En el lanzamiento: vx = 11.57 m/s, vy = 13.79 m/s.");
+  await expect(page.getByRole("slider", {name:"Ángulo de lanzamiento, θ"})).toHaveAttribute("aria-valuetext", "50 grados sobre la horizontal");
+  await expect(page.locator("#zsa-pj-vy-value")).toHaveText("13.79 m/s hacia arriba");
+  await expect(page.locator("#zsa-pj-insight")).toHaveText(/^En el lanzamiento, vx = 11\.57 m\/s y vy = 13\.79 m\/s\. ¿Qué componente crees/);
+  await expect(page.getByRole("checkbox", {name:"Componentes, vx y vy"})).toBeChecked();
+  await expect(page.getByRole("img", {name:/^Cañón sobre una cornisa de 15 m, apuntando a 50° sobre la horizontal/})).toBeVisible();
+  await expect(page.getByRole("img", {name:"Componentes de la velocidad contra tiempo, de 0 a 3.65 s. vx es una línea horizontal en 11.57 m/s. vy es una línea recta que baja de 13.79 m/s a −22.00 m/s, con pendiente de −9.80 m/s², y cruza el cero a los 1.41 s, en el punto más alto de la trayectoria."})).toBeVisible();
+  await expect(page.locator("#zsa-pj-graph text.zsa-pj-gaxis")).toHaveText(["Tiempo (s)", "Velocidad (m/s)"]);
+  await expect(page.locator("#zsa-pj-r-time")).toHaveText("?");
+  await noEnglish(page);
+  // Instructions and the share panel, whose link keeps Spanish.
+  await page.getByRole("button", {name:"Instrucciones", exact:true}).click();
+  await expect(page.getByRole("dialog")).toContainText("Usa las instantáneas y la gráfica de componentes para explicar el movimiento.");
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", {name:"Compartir actividad", exact:true}).click();
+  await expect(page.locator("#zsa-header-share-url")).toHaveValue("https://activities.zornscience.org/projectile-lab/?lang=es");
+  const email = decodeURIComponent(await page.locator("[data-zsa-share-email]").getAttribute("href"));
+  expect(email).toContain("subject=Laboratorio de vectores del movimiento de proyectiles | ZornScience");
+  expect(email).toContain("body=https://activities.zornscience.org/projectile-lab/?lang=es");
+  await noEnglish(page);
+  await page.keyboard.press("Escape");
+  // Launch, pause at the top, then land.
+  await page.getByRole("button", {name:"Lanzar", exact:true}).click();
+  await page.clock.runFor(100);
+  await expect(page.locator("#zsa-pj-live")).toHaveText("Lanzado a 18.0 m/s, a 50° sobre la horizontal, desde 15 m. vx = 11.57 m/s, vy = 13.79 m/s.");
+  await page.clock.runFor(500);
+  await expect(page.getByRole("button", {name:"Pausar", exact:true})).toBeVisible();
+  await expect(page.locator("#zsa-pj-insight")).toHaveText(/^De subida: vy es positiva \(hacia arriba\) y disminuye 9\.8 m\/s cada segundo/);
+  await noEnglish(page);
+  await page.clock.runFor(1500);
+  await expect(page.locator("#zsa-pj-live")).toHaveText("En pausa en el punto más alto. Punto más alto de la trayectoria a los 1.41 s, a 24.70 m de altura. vy es 0 m/s; vx sigue siendo 11.57 m/s; la aceleración sigue siendo de 9.80 m/s² hacia abajo.");
+  await expect(page.getByRole("button", {name:"Reanudar", exact:true})).toBeVisible();
+  await expect(page.getByRole("slider", {name:"Tiempo"})).toHaveAttribute("aria-valuetext", "1.41 segundos, punto más alto de la trayectoria");
+  await expect(page.locator("#zsa-pj-insight")).toHaveText("En el punto más alto: vy es cero, pero vx sigue siendo 11.57 m/s, así que el proyectil sigue moviéndose de lado. La aceleración sigue siendo de 9.8 m/s² hacia abajo, incluso aquí.");
+  await expect(page.locator("#zsa-pj-dir-value")).toHaveText("horizontalmente hacia la derecha");
+  await expect(page.locator("#zsa-pj-scene-desc")).toHaveText(/en el punto más alto de su trayectoria, moviéndose a 11\.57 m\/s horizontalmente hacia la derecha\. Flechas: velocidad, vx 11\.57 m\/s y vy 0\.00 m\/s, aceleración de 9\.80 m\/s² hacia abajo\. Instantáneas cada 0\.5 s\.$/);
+  await noEnglish(page);
+  await page.getByRole("button", {name:"Reanudar", exact:true}).click();
+  await page.clock.runFor(1000);
+  await expect(page.locator("#zsa-pj-insight")).toHaveText(/^De bajada: vy es negativa \(hacia abajo\)/);
+  await page.clock.runFor(3000);
+  await expect(page.locator("#zsa-pj-live")).toHaveText("Llegó al suelo a los 3.65 s, a 42.26 m de distancia. vx = 11.57 m/s, igual que en el lanzamiento. vy = −22.00 m/s.");
+  await expect(page.getByRole("button", {name:"Lanzar de nuevo", exact:true})).toBeVisible();
+  await expect(page.locator("#zsa-pj-r-height")).toHaveText("24.70 m a los 1.41 s");
+  await expect(page.locator("#zsa-pj-r-landing")).toHaveText("24.86 m/s, 62° bajo la horizontal");
+  await expect(page.locator("#zsa-pj-results-note")).toHaveText("vx al llegar al suelo: 11.57 m/s, igual que en el lanzamiento. vy al llegar al suelo: −22.00 m/s.");
+  await expect(page.locator("#zsa-pj-insight")).toHaveText(/^Llegó al suelo después de 3\.65 s\. vx se mantuvo en 11\.57 m\/s todo el tiempo\./);
+  await expect(page.locator("#zsa-pj-scale-note")).toHaveText(/^Las flechas de velocidad están a escala entre sí: la más larga es la rapidez al llegar al suelo, 24\.9 m\/s\./);
+  await noEnglish(page);
+  // Questions: blank, then one right and one wrong answer.
+  await page.getByRole("button", {name:"Revisar mis respuestas", exact:true}).click();
+  const fb = page.locator("#zsa-pj-feedback");
+  await expect(fb.locator("h3")).toHaveText("Tus respuestas");
+  await expect(fb.locator("p")).toHaveText(Array.from({length:5}, (_, i) => (i + 1) + ". Todavía no hay respuesta."));
+  await expect(page.getByRole("group", {name:"1. En el punto más alto de su trayectoria, la velocidad del proyectil es..."})).toBeVisible();
+  await page.getByLabel("horizontal, igual a vx en el lanzamiento.").check();
+  await page.getByLabel("cambia en una cantidad que depende del ángulo de lanzamiento.").check();
+  await page.getByRole("button", {name:"Revisar mis respuestas", exact:true}).click();
+  await expect(fb.locator("p").first()).toHaveText("1. ✓ Sí. En el punto más alto vy es cero, así que solo queda vx, que no ha cambiado desde el lanzamiento.");
+  await expect(fb.locator("p").nth(3)).toHaveText(/^4\. Todavía no\. Prueba dos ángulos/);
+  await page.clock.runFor(100);
+  await expect(page.locator("#zsa-pj-live")).toHaveText(/^Correctas: 1 de 5\. 1\. Sí\./);
+  await noEnglish(page);
+  // CSV header and its announcement.
+  const download = page.waitForEvent("download");
+  await page.getByRole("button", {name:"Descargar datos del vuelo (CSV)", exact:true}).click();
+  const file = await download;
+  expect(file.suggestedFilename()).toBe("zornscience-projectile-data.csv");
+  expect(fs.readFileSync(await file.path(), "utf8").split("\n")[0]).toBe("Tiempo (s),x (m),y (m),vx (m/s),vy (m/s),Rapidez (m/s),ax (m/s^2),ay (m/s^2)");
+  await page.clock.runFor(100);
+  await expect(page.locator("#zsa-pj-live")).toHaveText("Datos del vuelo descargados como zornscience-projectile-data.csv: tiempo, posición, componentes de la velocidad, rapidez y aceleración cada 0.05 s.");
+  // The print line.
+  await page.emulateMedia({media:"print"});
+  await expect(page.locator("#zsa-pj-print-summary")).toHaveText("Situación de lanzamiento: Lanzamiento desde una cornisa. h₀ = 15 m, θ = 50°, v₀ = 18.0 m/s (vx = 11.57 m/s, vy = 13.79 m/s). Se muestra en t = 3.65 s. Tiempo en el aire 3.65 s, punto más alto 24.70 m, alcance 42.26 m.");
+  await page.emulateMedia({media:"screen"});
+  // A scenario, Reset, custom settings and a launch with no flight.
+  await page.getByLabel("Empieza con una situación").selectOption("cliff");
+  await page.clock.runFor(100);
+  await expect(page.locator("#zsa-pj-live")).toHaveText("Lanzamiento horizontal desde un acantilado. Disparado en horizontal desde un acantilado de 40 m. vy empieza en cero y solo crece.");
+  await expect(page.locator("#zsa-pj-results-note")).toHaveText("Lanza para averiguarlo. Primero predice: ¿qué tan lejos llegará y con qué rapidez chocará con el suelo?");
+  await expect(page.getByRole("img", {name:/con pendiente de −9\.80 m\/s²\.$/})).toBeVisible();
+  await page.getByRole("button", {name:"Lanzar", exact:true}).click();
+  await page.clock.runFor(1000);
+  await page.getByRole("button", {name:"Reiniciar", exact:true}).click();
+  await page.clock.runFor(100);
+  await expect(page.locator("#zsa-pj-live")).toHaveText("De vuelta al lanzamiento.");
+  await noEnglish(page);
+  for (const [id, value] of [["h0", "0"], ["angle", "0"]]) {
+    await page.locator("#zsa-pj-" + id).evaluate((el, v) => { el.value = v; el.dispatchEvent(new Event("input", {bubbles:true})); }, value);
+  }
+  await expect(page.getByLabel("Empieza con una situación")).toHaveValue("custom");
+  await expect(page.locator("#zsa-pj-scenario option:checked")).toHaveText("Ajustes personalizados");
+  await expect(page.locator("#zsa-pj-scenario-text")).toHaveText("Tu propio lanzamiento. Predice qué hará cada flecha antes de disparar.");
+  await expect(page.locator("#zsa-pj-insight")).toHaveText("Lanzado a ras del suelo, el proyectil no pasa tiempo en el aire. Aumenta el ángulo o la altura de lanzamiento.");
+  await expect(page.locator("#zsa-pj-results-note")).toHaveText("No hay vuelo: aumenta el ángulo o la altura de lanzamiento.");
+  await expect(page.getByRole("img", {name:"Componentes de la velocidad contra tiempo: no hay vuelo que graficar."})).toBeAttached();
+  await expect(page.locator("#zsa-pj-scene-desc")).toHaveText("Cañón en el suelo, apuntando a 0° sobre la horizontal, con una rapidez de lanzamiento de 12.0 m/s. El proyectil no puede despegar del suelo.");
+  await expect(page.locator("#zsa-pj-dir-value")).toHaveText("horizontalmente hacia la derecha");
   await noEnglish(page);
   expect(errors).toEqual([]);
 });

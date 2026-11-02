@@ -4,16 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.0.1">
+<meta name="zsa-version" content="1.1.0">
 <meta name="description" content="Fire a cannon from any height, angle and speed, and watch live velocity and acceleration vectors on the projectile, from ZornScience.">
 <title>Projectile Motion Vector Lab | ZornScience</title>
 <link rel="icon" href="../favicon.png" type="image/png">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.1">
-<link rel="stylesheet" href="lab.css?v=1.0.1">
-<script src="../shared/zsa-embed.js?v=1.0.1" defer></script>
-<script src="model.js?v=1.0.1" defer></script>
-<script src="lab.js?v=1.0.1" defer></script>
-<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.1"><script src="../shared/zsa-header.js?v=1.0.1" defer></script></head>
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.1.0">
+<link rel="stylesheet" href="lab.css?v=1.1.0">
+<script src="../shared/zsa-embed.js?v=1.1.0" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.1.0" defer></script>
+<script src="data.js?v=1.1.0" defer></script>
+<script src="model.js?v=1.1.0" defer></script>
+<script src="lab.js?v=1.1.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.1.0"><script src="../shared/zsa-header.js?v=1.1.0" defer></script></head>
 <body>
 <main class="zsa zsa-pj" data-zsa-activity="projectile-lab">
 <header data-zsa-header class="zsa-pj-header">
@@ -22,7 +24,7 @@
 <nav data-zsa-header-tools aria-label="Activity tools"><div><button class="zsa-btn" type="button" data-zsa-dialog-open="zsa-header-instructions" aria-haspopup="dialog" aria-controls="zsa-header-instructions">Instructions</button><button class="zsa-btn" type="button" data-zsa-chrome data-zsa-dialog-open="zsa-header-share" aria-label="Share activity" aria-haspopup="dialog" aria-controls="zsa-header-share"><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button><button class="zsa-btn zsa-pj-print" id="zsa-pj-print" type="button">Print lab</button></div></nav>
 </div>
 </header><dialog class="zsa-header-dialog" id="zsa-header-instructions" aria-labelledby="zsa-header-instructions-title"><div class="zsa-header-dialog-heading"><h2 id="zsa-header-instructions-title">Instructions</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close instructions" autofocus>Close</button></div><p class="zsa-pj-lede">Fire the cannon and turn on the vectors. Watch which part of the velocity changes during the flight, and which part never does.</p><ol><li>Set the launch conditions and choose which vectors to display.</li><li>Launch the projectile and compare horizontal and vertical velocity as it moves.</li><li>Use snapshots and the components graph to explain the motion. Use Print lab to save your observations.</li></ol></dialog><dialog class="zsa-header-dialog" id="zsa-header-share" aria-labelledby="zsa-header-share-title"><div class="zsa-header-dialog-heading"><h2 id="zsa-header-share-title">Share this activity</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close share options" autofocus>Close</button></div><p>Share a fresh activity. Your answers and experiment data are not included.</p><label for="zsa-header-share-url">Share link</label><div class="zsa-header-share-link"><input id="zsa-header-share-url" type="text" readonly spellcheck="false"><button class="zsa-btn" type="button" data-zsa-share-copy>Copy link</button></div><a data-zsa-share-email href="#">Email</a><p data-zsa-share-status role="status" aria-live="polite"></p></dialog>
-<noscript><p class="zsa-panel">This lab needs JavaScript. Enable it to fire the cannon and draw the vectors.</p></noscript>
+<noscript><p class="zsa-panel">This lab needs JavaScript. Enable it to fire the cannon and draw the vectors. <span lang="es-MX">Este laboratorio necesita JavaScript. Actívalo para disparar el cañón y dibujar los vectores.</span></p></noscript>
 <p class="zsa-pj-print-only" id="zsa-pj-print-summary"></p>
 <div class="zsa-pj-layout">
 <aside class="zsa-pj-side" aria-label="Launch settings">

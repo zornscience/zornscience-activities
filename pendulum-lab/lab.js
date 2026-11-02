@@ -1,6 +1,11 @@
 (function () {
   "use strict";
   const $ = id => document.getElementById(id);
+  const root = document.querySelector('[data-zsa-activity="pendulum-lab"]');
+  let i18n;
+  if (root) root.dispatchEvent(new CustomEvent('zsa:request-i18n', {detail: {receive: api => { i18n = api; }}}));
+  // English is the fallback; data.js holds the Spanish for each full sentence template.
+  const tr = (text, values) => i18n ? i18n.text(text, values) : text.replace(/\{(\w+)\}/g, (m, k) => values && values[k] !== undefined ? values[k] : m);
   const svg = $('apparatus'), ns = 'http://www.w3.org/2000/svg', h = 1 / 240;
   let L, m, g, A, theta, w, t, running = false, started = false;
   let acc = 0, last = 0, dragging = false, side = 1, reference = null, experiment = '';
@@ -31,7 +36,7 @@
   function energy(mass, gravity, length, amplitude) { return mass * gravity * length * (1 - Math.cos(amplitude)); }
   function setRunning(value) {
     running = value;
-    $('release').textContent = running ? 'Ⅱ Pause' : started ? '▶ Resume' : '▶ Release bob';
+    $('release').textContent = tr(running ? 'Ⅱ Pause' : started ? '▶ Resume' : '▶ Release bob');
     $('step').disabled = running || !g || !A;
   }
   function reset() {
@@ -43,7 +48,7 @@
     reference = null; experiment = '';
     $('reference').setAttribute('hidden', '');
     $('comparison-result').hidden = true;
-    $('challenge').textContent = 'Free exploration: change one variable at a time. Predict, release, then compare.';
+    $('challenge').textContent = tr('Free exploration: change one variable at a time. Predict, release, then compare.');
     document.querySelectorAll('.experiment-buttons button').forEach(button => button.setAttribute('aria-pressed', String(button.id === 'free-explore')));
   }
   function setup() {
@@ -52,12 +57,13 @@
     $('mass-value').textContent = Math.round(m * 1000) + ' g';
     $('angle-value').textContent = $('angle').value + '°';
     ['length', 'mass', 'angle'].forEach(id => $(id).setAttribute('aria-valuetext', $(id + '-value').textContent));
-    $('world-badge').textContent = $('world').selectedOptions[0].textContent.split(' ·')[0].toUpperCase() + ' LABORATORY';
-    $('period').textContent = g ? (2 * Math.PI * Math.sqrt(L / g)).toFixed(3) + ' s' : 'No oscillation';
+    // The badge is built from the English option name, then translated as a whole label.
+    $('world-badge').textContent = tr({'9.81': 'EARTH', '1.62': 'MOON', '24.79': 'JUPITER', '0': 'ZERO GRAVITY'}[$('world').value] + ' LABORATORY');
+    $('period').textContent = g ? (2 * Math.PI * Math.sqrt(L / g)).toFixed(3) + ' s' : tr('No oscillation');
     const actual = period(L, g, A);
-    $('actual').textContent = actual ? actual.toFixed(3) + ' s' : 'No oscillation';
-    $('insight').textContent = !g ? 'Without gravity there is no restoring force. A bob released from rest stays where it is.' : !A ? 'The bob is at equilibrium. Choose a release angle to start an oscillation.' : 'Length is measured from the pivot to the center of the bob. Watch how long a full return trip takes.';
-    $('status').textContent = 'Ready to release. Settings changes restart the motion.';
+    $('actual').textContent = actual ? actual.toFixed(3) + ' s' : tr('No oscillation');
+    $('insight').textContent = tr(!g ? 'Without gravity there is no restoring force. A bob released from rest stays where it is.' : !A ? 'The bob is at equilibrium. Choose a release angle to start an oscillation.' : 'Length is measured from the pivot to the center of the bob. Watch how long a full return trip takes.');
+    $('status').textContent = tr('Ready to release. Settings changes restart the motion.');
     reset();
   }
   function draw() {
@@ -78,21 +84,21 @@
       $(id).max = scale; $(id).value = i ? ke : pe;
       $(id + '-value').textContent = (i ? ke : pe).toFixed(3) + ' J';
     });
-    $('total').textContent = 'Total ' + E.toFixed(3) + ' J';
-    $('energy-scale').textContent = reference ? 'Same scale for both setups. Dashed reference total: ' + refEnergy.toFixed(3) + ' J. Brass bob total: ' + E.toFixed(3) + ' J.' : 'Both bars use the same joule scale. Total mechanical energy stays constant.';
-    $('energy-cue').textContent = !g ? 'Zero gravity: no gravitational potential energy and no motion from rest.' : !A ? 'At rest at the bottom: both energies are zero.' : Math.abs(theta) / A > .98 ? 'At a turning point: greatest height and potential energy; speed reaches zero.' : Math.abs(theta) / A < .12 ? 'At the bottom: lowest potential energy and greatest kinetic energy and speed.' : theta * w < 0 ? 'Moving down: potential energy transfers to kinetic energy. The bob speeds up.' : 'Moving up: kinetic energy transfers to potential energy. The bob slows down.';
+    $('total').textContent = tr('Total {energy} J', {energy: E.toFixed(3)});
+    $('energy-scale').textContent = reference ? tr('Same scale for both setups. Dashed reference total: {reference} J. Brass bob total: {total} J.', {reference: refEnergy.toFixed(3), total: E.toFixed(3)}) : tr('Both bars use the same joule scale. Total mechanical energy stays constant.');
+    $('energy-cue').textContent = tr(!g ? 'Zero gravity: no gravitational potential energy and no motion from rest.' : !A ? 'At rest at the bottom: both energies are zero.' : Math.abs(theta) / A > .98 ? 'At a turning point: greatest height and potential energy; speed reaches zero.' : Math.abs(theta) / A < .12 ? 'At the bottom: lowest potential energy and greatest kinetic energy and speed.' : theta * w < 0 ? 'Moving down: potential energy transfers to kinetic energy. The bob speeds up.' : 'Moving up: kinetic energy transfers to potential energy. The bob slows down.');
     $('velocity').textContent = (Math.abs(w) * L).toFixed(3) + ' m/s';
     $('theta').textContent = (theta * 180 / Math.PI).toFixed(1) + '°';
     $('clock').textContent = t.toFixed(2) + ' s';
-    $('state').textContent = running ? 'OSCILLATING' : started ? 'PAUSED' : 'READY TO RELEASE';
+    $('state').textContent = tr(running ? 'OSCILLATING' : started ? 'PAUSED' : 'READY TO RELEASE');
     const T = period(L, g, A), fraction = T ? t / T : 0, count = Math.floor(fraction);
-    $('cycles').textContent = count + ' complete oscillation' + (count === 1 ? '' : 's');
+    $('cycles').textContent = tr(count === 1 ? '{count} complete oscillation' : '{count} complete oscillations', {count: count});
     $('cycle').value = fraction - count;
-    $('cycle-phase').textContent = !T ? 'No oscillation' : !started ? 'Release to start' : fraction % 1 < .5 ? 'Outbound: toward the opposite side' : 'Returning: toward the starting side';
+    $('cycle-phase').textContent = tr(!T ? 'No oscillation' : !started ? 'Release to start' : fraction % 1 < .5 ? 'Outbound: toward the opposite side' : 'Returning: toward the starting side');
     if (reference) {
       $('comparison-result').hidden = false;
       const labels = {mass: 'Only mass changes: 100 g → 200 g. Length, gravity and angle match. Predict: will the heavier bob swing faster?', length: 'Only length changes: 0.60 m → 1.20 m. Mass, gravity and angle match. Predict: will doubling length double the period?', moon: 'Only gravity changes: Earth → Moon. Mass, length and angle match. Predict: which pendulum will return first?'};
-      $('comparison-result').textContent = started ? experiment === 'mass' ? 'Same period, twice the energy. The dashed reference and brass bob stay together: extra mass increases both inertia and gravitational force.' : experiment === 'length' ? 'Twice the length gives √2 ≈ 1.41 times the period. The longer brass pendulum takes longer to return.' : 'The brass bob on the Moon has about 2.46 times Earth’s period. Weaker gravity gives a weaker restoring effect.' : labels[experiment];
+      $('comparison-result').textContent = tr(started ? experiment === 'mass' ? 'Same period, twice the energy. The dashed reference and brass bob stay together: extra mass increases both inertia and gravitational force.' : experiment === 'length' ? 'Twice the length gives √2 ≈ 1.41 times the period. The longer brass pendulum takes longer to return.' : 'The brass bob on the Moon has about 2.46 times Earth’s period. Weaker gravity gives a weaker restoring effect.' : labels[experiment]);
     }
   }
   function integrate(q, v, length, gravity, dt) {
@@ -115,19 +121,19 @@
   $('settings-toggle').addEventListener('click', () => {
     const open = $('settings-toggle').getAttribute('aria-expanded') !== 'true';
     $('settings-toggle').setAttribute('aria-expanded', String(open));
-    $('settings-toggle').textContent = open ? 'Hide apparatus settings' : 'Adjust apparatus';
+    $('settings-toggle').textContent = tr(open ? 'Hide apparatus settings' : 'Adjust apparatus');
   });
   $('release').addEventListener('click', () => {
-    if (!g || !A) { $('status').textContent = !g ? 'No restoring force in zero gravity. The bob remains at rest.' : 'Choose an angle above 0° to make the bob swing.'; return; }
+    if (!g || !A) { $('status').textContent = tr(!g ? 'No restoring force in zero gravity. The bob remains at rest.' : 'Choose an angle above 0° to make the bob swing.'); return; }
     started = true; setRunning(!running);
-    $('status').textContent = running ? 'Released. Watch for a complete return trip.' : 'Motion paused. Step forward to inspect the swing.'; draw();
+    $('status').textContent = tr(running ? 'Released. Watch for a complete return trip.' : 'Motion paused. Step forward to inspect the swing.'); draw();
   });
   $('step').addEventListener('click', () => {
     if (running || !g || !A) return;
     started = true; for (let i = 0; i < 12; i++) step(h);
-    setRunning(false); draw(); $('status').textContent = 'Advanced 0.05 seconds of simulation time.';
+    setRunning(false); draw(); $('status').textContent = tr('Advanced 0.05 seconds of simulation time.');
   });
-  $('reset').addEventListener('click', () => { reset(); $('status').textContent = 'Returned to the starting position. Ready to repeat.'; });
+  $('reset').addEventListener('click', () => { reset(); $('status').textContent = tr('Returned to the starting position. Ready to repeat.'); });
   ['mass', 'length', 'moon'].forEach(kind => $('compare-' + kind).addEventListener('click', () => {
     experiment = kind; side = 1;
     reference = {L: .6, m: .1, g: 9.81, theta: 15 * Math.PI / 180, w: 0};
@@ -135,7 +141,7 @@
     $('world').value = kind === 'moon' ? '1.62' : '9.81'; $('angle').value = '15';
     $('reference').removeAttribute('hidden');
     document.querySelectorAll('.experiment-buttons button').forEach(button => button.setAttribute('aria-pressed', String(button.id === 'compare-' + kind)));
-    $('challenge').textContent = 'Dashed outline: original Earth setup (0.60 m, 100 g, 15°). Brass bob: your changed setup. Both start together.';
+    $('challenge').textContent = tr('Dashed outline: original Earth setup (0.60 m, 100 g, 15°). Brass bob: your changed setup. Both start together.');
     setup();
   }));
   $('free-explore').addEventListener('click', () => { clearComparison(); setup(); });
@@ -151,7 +157,7 @@
   svg.addEventListener('pointercancel', () => { dragging = false; });
   document.addEventListener('visibilitychange', () => {
     last = 0; acc = 0;
-    if (document.hidden && running) { setRunning(false); draw(); $('status').textContent = 'Paused while this tab was hidden. Resume when ready.'; }
+    if (document.hidden && running) { setRunning(false); draw(); $('status').textContent = tr('Paused while this tab was hidden. Resume when ready.'); }
   });
   setup(); requestAnimationFrame(frame);
 }());
