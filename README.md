@@ -7,7 +7,8 @@ A full round ends with a completion code that students paste into Google Classro
 ## Layout
 
 ```
-index.html                 landing page listing the activities, grouped by subject
+index.html                 landing page listing the activities, grouped by subject (English and Mexican Spanish)
+home.js                    the landing page's Mexican Spanish, for shared/zsa-i18n.js
 home.css                   landing page styles (subject sections and the activity card grid)
 favicon.png                ZornScience logo, the landing page icon
 .nojekyll                  tells GitHub Pages to serve files as they are

@@ -1850,6 +1850,12 @@ Read the scale / Explain the slope | Lectura de la escala / Explicación de la p
 Heating water / Burning candle / Gas production (curved) | Calentamiento de agua / Vela encendida / Producción de gas (curva)
 Reading Graphs (lesson link) / ← Reading Graphs lesson | Lectura de gráficas / ← Lección de lectura de gráficas
 zornscience-graph (download name) | zornscience-grafica
+Practice Activities (landing page) | Actividades de práctica
+Jump to a subject / Atoms and bonding / Test prep / Lab tools | Ir a un tema / Átomos y enlaces / Preparación para exámenes / Herramientas de laboratorio
+Atoms, ions and bonding / Reactions and stoichiometry / Lab tools and quantitative skills | Átomos, iones y enlaces / Reacciones y estequiometría / Herramientas de laboratorio y habilidades cuantitativas
+Reference / Timed quiz / Untimed / Lab tool / Your own data (landing page tags) | Consulta / Cuestionario cronometrado / Sin límite de tiempo / Herramienta de laboratorio / Tus propios datos
+For teachers / Check completion codes | Para docentes / Revisar códigos de finalización (en inglés)
+AP Chemistry · (topic) | Química AP · (tema)
 
 ## Full sentence templates
 
@@ -2416,6 +2422,7 @@ Row {row}: {x} = {xValue}, {y} = {yValue} | Fila {row}: {x} = {xValue}, {y} = {y
 - The Virtual Lab Graphing Tool's English counts some things in the plural even for one point (1 measurements plotted). Spanish uses the singular through separate templates whose count is filled as {one}, which read exactly the same in English.
 - DRY MIX is an English mnemonic. Spanish states the rule instead (Qué va en cada eje: lo que cambias va en x y lo que mides va en y).
 - Student variable names are filled into sentences without an article (Cuando Tiempo aumenta), since they can be any word a student types.
+- The landing page uses each activity's own Spanish title and the Style Kit's Appendix A lesson titles where one exists (Enlace iónico, Enlace covalente, Movimiento lineal, Dinámica en 2D, Conservación de la cantidad de movimiento, Segunda ley de Newton, Ley de Beer, Lectura de gráficas). The ACT activities keep their English names, followed by " (en inglés)", since the exam is given only in English.
 
 ## Element-name spellings
 

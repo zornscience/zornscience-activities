@@ -42,5 +42,11 @@
 .zsa-home-teachers p {margin:0;font-size:var(--zsa-text-sm);max-width:60ch;}
 .zsa-home-teachers .zsa-btn {display:inline-flex;align-items:center;min-height:var(--zsa-tap);text-decoration:none;font-weight:500;}
 
+/* The EN / ES links (added by shared/zsa-i18n.js) sit at the right end of the hero. */
+.zsa-home-hero {flex-wrap:wrap;}
+.zsa-home-hero .zsa-languages {margin-left:auto;}
+
 @media(max-width:480px) {.zsa-home-hero {gap:12px;}}
+/* On phones the logo and the EN / ES links share the first row, and the title takes the full second row. */
+@media(max-width:599px) {.zsa-home-hero .zsa-languages {order:1;} .zsa-home-hero h1 {order:2;flex-basis:100%;}}
 .zsa-home-teachers a.zsa-btn--primary {color:var(--zsa-white);}
