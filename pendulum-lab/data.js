@@ -28,7 +28,7 @@
   "Share options opened.": "Se abrieron las opciones para compartir.",
   "Use Copy link or email instead.": "Usa Copiar enlace o el correo electrónico.",
   "Explore pendulum motion and energy on Earth, the Moon and Jupiter.": "Explora el movimiento y la energía de un péndulo en la Tierra, la Luna y Júpiter.",
-  "Explore oscillations & energy": "Explora las oscilaciones y la energía",
+  "Explore oscillations & energy": "Exploración de las oscilaciones y la energía",
   "Choose a one-variable comparison and make a prediction. The dashed outline is the original pendulum; the brass bob is the changed setup. Release both together to compare their motion.": "Elige una comparación de una sola variable y haz una predicción. El contorno punteado es el péndulo original; la esfera de latón es el montaje modificado. Suelta los dos al mismo tiempo para comparar su movimiento.",
   "Select {button}. Watch the energy move between potential energy at the ends and kinetic energy at the bottom.": "Selecciona {button}. Observa cómo la energía cambia entre energía potencial en los extremos y energía cinética en la parte más baja.",
   "Release bob": "Soltar la esfera",
