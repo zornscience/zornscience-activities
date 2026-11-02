@@ -1,6 +1,6 @@
 # Faraday’s Law · Magnet Drop
 
-Version: 1.1.0
+Version: 1.2.0
 
 Static HTML, CSS and Canvas; all assets are local. No accounts, network requests, storage, or student data entry.
 
@@ -19,3 +19,7 @@ Students should explain (1) why a changing flux, rather than just the presence o
 Observe starts without overlays to limit simultaneous representations. Explain connects the apparatus to a fixed ring, current direction, induced field and force vectors. Replay freezes simulated time without suggesting that a physically stationary magnet generates a current. Optional prediction prompts encourage controlled comparisons without quizzes, response fields or recorded data. Mobile shows the bench and visualization presets first. Labels, text equivalents and keyboard controls complement the canvas.
 
 Design informed by PhET's research on engaged exploration: https://phet.colorado.edu/publications/prst-per-2010.pdf . The implementation has been checked functionally, not evaluated for learning gains in a classroom.
+
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the fallback. All student text uses the activity's `data.js`: instructions, labels, the tube menu and notes, buttons, run states, the replay time and its spoken value, the fixed ring's flux and current explanations, observations, exploration prompts, the canvas labels and the canvas's spoken description, the model note, the title and accessible labels, and the share title, description and status messages. Every sentence is one full template with placeholders, so Spanish keeps its own word order; the goal and the three instruction steps with a bold button name are each rebuilt from one template around the bold words. In Spanish the share link carries `?lang=es`. Symbols, equations, numbers, units, pole letters (N, S) and decimal points stay unchanged. Settings that are not physics quantities avoid velocidad and rapidez (Cámara lenta · ¼ del tiempo real). The language links reload the page, so a drop in progress starts over. See `../SPANISH_TERMS.md` for choices beyond the Style Kit glossary.

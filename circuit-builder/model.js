@@ -8,6 +8,18 @@
 // (In Node, for the unit tests, it is module.exports.)
 (function () {
   "use strict";
+  // Every sentence is one full template, translated by ../shared/zsa-i18n.js when the page has it (data.js holds the
+  // Spanish). In Node, and in English, the template is filled as written.
+  var i18n;
+  if (typeof document !== "undefined") {
+    var host = document.querySelector('[data-zsa-activity="circuit-builder"]');
+    if (host) host.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: function (api) { i18n = api; }}}));
+  }
+  function tx(text, values) {
+    values = values || {};
+    if (i18n) return i18n.text(text, values);
+    return text.replace(/\{(\w+)\}/g, function (m, k) { return values[k] === undefined ? m : values[k]; });
+  }
 
   // The board: COLS x ROWS connection points, columns A to G and rows 1 to 5.
   var COLS = 7, ROWS = 5, LETTERS = "ABCDEFG";
@@ -52,7 +64,7 @@
     }
     return out;
   }
-  function slotLabel(slot) { var e = slotEnds(slot); return pointLabel(e.a) + " to " + pointLabel(e.b); }
+  function slotLabel(slot) { var e = slotEnds(slot); return tx("{a} to {b}", {a: pointLabel(e.a), b: pointLabel(e.b)}); }
   // The spot joining two neighboring points, or null.
   function slotBetween(p1, p2) {
     var a = coords(p1), b = coords(p2);
@@ -89,19 +101,19 @@
   function joins(part) { return part.type === "wire" || (part.type === "switch" && part.closed); }
   // "Bulb 1": the type and number (ids like B1 would read like the point B1).
   function number(part) { return part.id.slice(1); }
-  function name(part) { return NAMES[part.type] + " " + number(part); }
+  function name(part) { return tx(NAMES[part.type] + " {n}", {n: number(part)}); }
   // Parts of one type as "Bulbs 1 and 2"; mixed types by name.
   function names(list_) {
     if (list_.length === 1) return name(list_[0]);
     var same = list_.every(function (p) { return p.type === list_[0].type; });
-    return same ? PLURALS[list_[0].type] + " " + list(list_.map(number)) : list(list_.map(name));
+    return same ? tx(PLURALS[list_[0].type] + " {list}", {list: list(list_.map(number))}) : list(list_.map(name));
   }
   function setting(part) {
     if (part.type === "battery") return fmt(part.value, 1) + " V";
     if (part.type === "resistor") return fmt(part.value, 0) + " Ω";
-    if (part.type === "bulb") return BULB.ohms + " Ω bulb";
-    if (part.type === "switch") return part.closed ? "closed" : "open";
-    return "wire";
+    if (part.type === "bulb") return tx("{ohms} Ω bulb", {ohms: BULB.ohms});
+    if (part.type === "switch") return part.closed ? tx("closed") : tx("open");
+    return tx("wire");
   }
   // Copies parts (for undo and presets) so later edits never reach a saved list.
   function copy(parts) { return parts.map(function (p) { var o = {}; Object.keys(p).forEach(function (k) { o[k] = p[k]; }); return o; }); }
@@ -380,52 +392,56 @@
   function bright(b) {
     if (b === null || b === undefined) return "";
     if (b <= 0) return "0%";
-    return b < 0.005 ? "less than 1%" : Math.round(b * 100) + "%";
+    return b < 0.005 ? tx("less than 1%") : Math.round(b * 100) + "%";
   }
   function list(words) {
-    return words.length < 2 ? words.join("") : words.slice(0, -1).join(", ") + " and " + words[words.length - 1];
+    return words.length < 2 ? words.join("") : tx("{first} and {last}", {first: words.slice(0, -1).join(", "), last: words[words.length - 1]});
   }
   // One part with its readings, for the spot's spoken label and the parts table.
   function reading(part, res) {
     var r = res.parts[part.id];
-    if (r.status === "short") return "short circuit";
-    if (r.status === "loop") return "cannot be solved";
+    if (r.status === "short") return tx("short circuit");
+    if (r.status === "loop") return tx("cannot be solved");
     var out = [];
-    if (part.type !== "wire" && !(part.type === "switch" && part.closed)) out.push(r.voltage === null ? "no voltage reading" : volts(Math.abs(r.voltage)));
+    if (part.type !== "wire" && !(part.type === "switch" && part.closed)) out.push(r.voltage === null ? tx("no voltage reading") : volts(Math.abs(r.voltage)));
     out.push(amps(Math.abs(r.current)));
-    if (part.type === "bulb") out.push(bright(r.brightness) + " brightness");
+    if (part.type === "bulb") out.push(tx("{b} brightness", {b: bright(r.brightness)}));
     return out.join(", ");
   }
+  // Where a battery sits, its − end first.
+  function batteryWhere(part) { return tx("{minus} (−) to {plus} (+)", {minus: pointLabel(minus(part)), plus: pointLabel(plus(part))}); }
   function describePart(part, res) {
     var e = ends(part), where;
-    if (part.type === "battery") where = pointLabel(minus(part)) + " (−) to " + pointLabel(plus(part)) + " (+)";
-    else where = pointLabel(e.a) + " to " + pointLabel(e.b);
+    if (part.type === "battery") where = batteryWhere(part);
+    else where = tx("{a} to {b}", {a: pointLabel(e.a), b: pointLabel(e.b)});
     var label = name(part) + (part.type === "wire" ? "" : ", " + setting(part)) + ", " + where;
     return res ? label + ": " + reading(part, res) : label;
   }
 
   // What the circuit is doing, under the board.
   function insight(parts, res) {
-    if (!parts.length) return "The board is empty. Drag a battery, wires and a bulb onto it, or start with one of the circuits.";
+    if (!parts.length) return tx("The board is empty. Drag a battery, wires and a bulb onto it, or start with one of the circuits.");
     var bats = sorted(parts).filter(function (p) { return p.type === "battery"; });
-    if (!bats.length) return "There is no battery, so nothing pushes charge around the circuit. Add a battery.";
+    if (!bats.length) return tx("There is no battery, so nothing pushes charge around the circuit. Add a battery.");
     var bad = res.islands.filter(function (i) { return i.error; })[0];
     function named(ids) { return names(ids.map(function (id) { return byId(parts, id); })); }
-    if (bad && bad.error === "short") return "Short circuit! " + named(bad.culprits) + (bad.culprits.length > 1 ? " have their" : " has its") +
-      " + and − ends joined by wires alone, with nothing to slow the charge, so a huge current would flow and the battery would get hot. Remove a wire or put a bulb in the path.";
-    if (bad) return named(bad.culprits) + " are joined in a loop with only wires between them, which this lab cannot solve. Put a bulb or resistor in that loop, or remove a battery.";
+    if (bad && bad.error === "short") return tx(bad.culprits.length > 1 ?
+      "Short circuit! {names} have their + and − ends joined by wires alone, with nothing to slow the charge, so a huge current would flow and the battery would get hot. Remove a wire or put a bulb in the path." :
+      "Short circuit! {names} has its + and − ends joined by wires alone, with nothing to slow the charge, so a huge current would flow and the battery would get hot. Remove a wire or put a bulb in the path.", {names: named(bad.culprits)});
+    if (bad) return tx("{names} are joined in a loop with only wires between them, which this lab cannot solve. Put a bulb or resistor in that loop, or remove a battery.", {names: named(bad.culprits)});
     var supplied = 0, used = 0, flowing = bats.filter(function (b) { return Math.abs(res.parts[b.id].current) > 1e-6; });
     parts.forEach(function (p) { var r = res.parts[p.id]; if (p.type === "battery") supplied += r.power; else used += r.power || 0; });
     if (!flowing.length) {
       var open = parts.some(function (p) { return p.type === "switch" && !p.closed; });
-      return "No current: there is no complete loop. Charge needs an unbroken path from the battery's + end, through the parts, back to its − end." + (open ? " Is a switch open?" : "");
+      return open ? tx("No current: there is no complete loop. Charge needs an unbroken path from the battery's + end, through the parts, back to its − end. Is a switch open?") :
+        tx("No current: there is no complete loop. Charge needs an unbroken path from the battery's + end, through the parts, back to its − end.");
     }
     var text;
     if (bats.length === 1) {
       var i = Math.abs(res.parts[bats[0].id].current);
-      text = name(bats[0]) + " pushes " + amps(i) + " through the circuit, a total resistance of " + fmt(bats[0].value / i, 1) + " Ω.";
-    } else text = "The batteries push " + list(flowing.map(function (b) { return amps(Math.abs(res.parts[b.id].current)) + " from " + name(b); })) + ".";
-    text += " The bulbs and resistors use " + watts(used) + ", all of the " + watts(supplied) + " the batter" + (bats.length === 1 ? "y supplies." : "ies supply.");
+      text = tx("{name} pushes {current} through the circuit, a total resistance of {ohms} Ω.", {name: name(bats[0]), current: amps(i), ohms: fmt(bats[0].value / i, 1)});
+    } else text = tx("The batteries push {list}.", {list: list(flowing.map(function (b) { return tx("{current} from {name}", {current: amps(Math.abs(res.parts[b.id].current)), name: name(b)}); }))});
+    text += " " + tx(bats.length === 1 ? "The bulbs and resistors use {used}, all of the {supplied} the battery supplies." : "The bulbs and resistors use {used}, all of the {supplied} the batteries supply.", {used: watts(used), supplied: watts(supplied)});
     var bulbs = sorted(parts).filter(function (p) { return p.type === "bulb"; });
     if (bulbs.length) {
       var lit = bulbs.filter(function (b) { return res.parts[b.id].brightness >= 0.005; });
@@ -433,9 +449,9 @@
       if (lit.length) {
         var top = Math.max.apply(null, lit.map(function (b) { return res.parts[b.id].brightness; }));
         var best = lit.filter(function (b) { return Math.abs(res.parts[b.id].brightness - top) < 0.005; });
-        text += " " + (lit.length === 1 ? "Lit: " : best.length === lit.length ? "Equally bright: " : "Brightest: ") + names(best) + " at " + bright(top) + ".";
+        text += " " + tx(lit.length === 1 ? "Lit: {names} at {b}." : best.length === lit.length ? "Equally bright: {names} at {b}." : "Brightest: {names} at {b}.", {names: names(best), b: bright(top)});
       }
-      if (dark.length) text += " Dark: " + names(dark) + ".";
+      if (dark.length) text += " " + tx("Dark: {names}.", {names: names(dark)});
     }
     return text;
   }
@@ -451,19 +467,21 @@
   function meterText(parts, res, meter) {
     if (meter.mode === "current") {
       var c = current(parts, res, meter.part);
-      if (!c.ok) return {display: "", caption: NO_READING[c.reason]};
+      if (!c.ok) return {display: "", caption: tx(NO_READING[c.reason])};
       var p = byId(parts, meter.part);
-      return {display: amps(c.value), caption: "Through " + name(p) + (c.value > 1e-6 ? ", flowing from " + pointLabel(c.from) + " to " + pointLabel(c.to) + "." : ". No current flows.")};
+      return {display: amps(c.value), caption: c.value > 1e-6 ? tx("Through {name}, flowing from {from} to {to}.", {name: name(p), from: pointLabel(c.from), to: pointLabel(c.to)}) :
+        tx("Through {name}. No current flows.", {name: name(p)})};
     }
     var v = voltage(parts, res, meter.red, meter.black);
-    if (!v.ok) return {display: "", caption: NO_READING[v.reason]};
-    var part = across(parts, meter.red, meter.black);
-    return {display: volts(v.value), caption: "Red at " + pointLabel(meter.red) + ", black at " + pointLabel(meter.black) + (part ? ": across " + name(part) + "." : ".")};
+    if (!v.ok) return {display: "", caption: tx(NO_READING[v.reason])};
+    var part = across(parts, meter.red, meter.black), at = {red: pointLabel(meter.red), black: pointLabel(meter.black)};
+    if (part) at.name = name(part);
+    return {display: volts(v.value), caption: part ? tx("Red at {red}, black at {black}: across {name}.", at) : tx("Red at {red}, black at {black}.", at)};
   }
   // Spoken label for the meter reading.
   function meterSpoken(parts, res, meter) {
     var t = meterText(parts, res, meter);
-    return t.display ? "Meter reads " + t.display + ". " + t.caption : t.caption;
+    return t.display ? tx("Meter reads {display}. {caption}", {display: t.display, caption: t.caption}) : t.caption;
   }
 
   // ---------- Check your thinking ----------
@@ -508,18 +526,18 @@
   function check(answers) {
     return QUESTIONS.map(function (q) {
       var pick = answers[q.id];
-      if (!pick) return {id: q.id, ok: false, text: "No answer yet."};
+      if (!pick) return {id: q.id, ok: false, text: tx("No answer yet.")};
       var c = q.choices.filter(function (ch) { return ch.id === pick; })[0];
-      return {id: q.id, ok: pick === q.answer, text: c.feedback};
+      return {id: q.id, ok: pick === q.answer, text: tx(c.feedback)};
     });
   }
 
   // Every part with its readings, plain minus signs for spreadsheets. Voltage is volts at From minus volts at To;
   // current is amps from From to To.
   function csv(parts) {
-    var res = solve(parts), rows = ["Part,From,To,Setting,Voltage (V),Current (A),Power (W),Brightness (%)"];
+    var res = solve(parts), rows = [tx("Part,From,To,Setting,Voltage (V),Current (A),Power (W),Brightness (%)")];
     sorted(parts).forEach(function (p) {
-      var r = res.parts[p.id], e = ends(p), bad = r.status === "short" ? "short circuit" : r.status === "loop" ? "cannot be solved" : null;
+      var r = res.parts[p.id], e = ends(p), bad = r.status === "short" ? tx("short circuit") : r.status === "loop" ? tx("cannot be solved") : null;
       rows.push([name(p), pointLabel(e.a), pointLabel(e.b), setting(p),
         bad || (r.voltage === null ? "" : plain(r.voltage, 4)), bad || plain(r.current, 4), bad || plain(r.power, 4),
         p.type === "bulb" && !bad ? plain(r.brightness * 100, 1) : ""].join(","));
@@ -535,7 +553,7 @@
     ohms: ohms, joins: joins, name: name, names: names, number: number, setting: setting, copy: copy, sorted: sorted, solveLinear: solveLinear, solve: solve, plus: plus, minus: minus,
     voltage: voltage, across: across, current: current, preset: preset, defaultMeter: defaultMeter,
     fmt: fmt, plain: plain, volts: volts, amps: amps, watts: watts, bright: bright, reading: reading, describePart: describePart,
-    insight: insight, meterText: meterText, meterSpoken: meterSpoken, check: check, csv: csv
+    insight: insight, meterText: meterText, meterSpoken: meterSpoken, check: check, csv: csv, text: tx, batteryWhere: batteryWhere
   };
   if (typeof document !== "undefined") {
     var root = document.querySelector('[data-zsa-activity="circuit-builder"]');

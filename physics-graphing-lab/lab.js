@@ -1,7 +1,8 @@
 // Physics Graphing Lab: the page. Settings, the motion track and readouts, playback and scrubbing, the three linked
 // graphs, prediction sketches (pointer or keyboard), reveal and compare, the insight text, the reflection, printing,
 // CSV export, deep links and the live region. The physics and the feedback text are in physics.js, reached through
-// a "zsa-pg:request-model" event on the root (no globals).
+// a "zsa-pg:request-model" event on the root (no globals). Every student-facing sentence is one full template, filled
+// through tr() from data.js, so Spanish keeps its own word order.
 (function () {
   "use strict";
   var root = document.querySelector('[data-zsa-activity="physics-graphing-lab"]');
@@ -9,6 +10,14 @@
   var M;
   root.dispatchEvent(new CustomEvent("zsa-pg:request-model", {detail: {receive: function (value) { M = value; }}}));
   if (!M) return;
+  var i18n;
+  root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: function (api) { i18n = api; }}}));
+  // tr, not t: t is the run's time in seconds.
+  function tr(text, values) {
+    values = values || {};
+    if (i18n) return i18n.text(text, values);
+    return text.replace(/\{(\w+)\}/g, function (m, k) { return values[k] === undefined ? m : values[k]; });
+  }
 
   var SVG = "http://www.w3.org/2000/svg";
   function $(id) { return root.querySelector("#zsa-pg-" + id); }
@@ -41,11 +50,11 @@
 
   // ---------- Settings ----------
   M.SCENARIOS.forEach(function (s) {
-    var o = node("option", "", s.label);
+    var o = node("option", "", tr(s.label));
     o.value = s.id;
     $("scenario").appendChild(o);
   });
-  var customOption = node("option", "", "Custom settings");
+  var customOption = node("option", "", tr("Custom settings"));
   customOption.value = "custom";
   $("scenario").appendChild(customOption);
   var SLIDERS = [["x0", "m", 1], ["v0", "m/s", 1], ["a", "m/s²", 1]];
@@ -59,7 +68,7 @@
     });
     $("scenario").value = scenario;
     var sc = M.SCENARIOS.filter(function (s) { return s.id === scenario; })[0];
-    $("scenario-text").textContent = sc ? sc.text : "Custom motion: use your settings to explain the graphs.";
+    $("scenario-text").textContent = sc ? tr(sc.text) : tr("Custom motion: use your settings to explain the graphs.");
   }
 
   // ---------- The track ----------
@@ -83,7 +92,7 @@
       if ((i - zero) % every === 0) g.appendChild(svg("text", {x: X(n), y: 116, "text-anchor": "middle", class: "zsa-pg-track-label"}, M.fmt(n, d) + " m"));
     });
     g.appendChild(svg("line", {x1: X(0), y1: 26, x2: X(0), y2: 96, class: "zsa-pg-track-origin"}));
-    g.appendChild(svg("text", {x: X(0), y: 18, "text-anchor": "middle", class: "zsa-pg-track-label"}, "origin"));
+    g.appendChild(svg("text", {x: X(0), y: 18, "text-anchor": "middle", class: "zsa-pg-track-label"}, tr("origin")));
     var cart = svg("g", {class: "zsa-pg-cart"});
     cart.appendChild(svg("rect", {x: -10, y: 47, width: 20, height: 13, rx: 4, class: "zsa-pg-cart-top"}));
     cart.appendChild(svg("rect", {x: -21, y: 56, width: 42, height: 22, rx: 6, class: "zsa-pg-cart-body"}));
@@ -110,7 +119,8 @@
       var dir = st.v > 0 ? 1 : -1, end = cx + dir * 40;
       track.arrow.setAttribute("d", "M" + cx + " 38H" + end + "M" + (end - dir * 8) + " 32L" + end + " 38L" + (end - dir * 8) + " 44");
     } else track.arrow.setAttribute("d", "");
-    var where = "Cart at " + M.fmt(st.x) + " m, " + (Math.abs(st.v) > 0.005 ? "moving " + (st.v > 0 ? "right" : "left") + " at " + M.fmt(Math.abs(st.v)) + " m/s" : "at rest") + ", at " + M.fmt(t) + " s.";
+    var values = {x: M.fmt(st.x), v: M.fmt(Math.abs(st.v)), t: M.fmt(t)};
+    var where = tr(Math.abs(st.v) > 0.005 ? (st.v > 0 ? "Cart at {x} m, moving right at {v} m/s, at {t} s." : "Cart at {x} m, moving left at {v} m/s, at {t} s.") : "Cart at {x} m, at rest, at {t} s.", values);
     $("track-desc").textContent = where;
   }
 
@@ -121,10 +131,10 @@
   M.GRAPHS.forEach(function (g) {
     var fig = node("figure", "zsa-pg-graph zsa-pg-graph-" + g.key);
     var cap = node("figcaption");
-    var h = node("h3", "", g.name + " ");
+    var h = node("h3", "", tr(g.name) + " ");
     h.appendChild(node("span", "zsa-pg-unit", "(" + g.unit + ")"));
     cap.appendChild(h);
-    cap.appendChild(node("p", "zsa-pg-graph-sub", g.sub));
+    cap.appendChild(node("p", "zsa-pg-graph-sub", tr(g.sub)));
     fig.appendChild(cap);
     var el = svg("svg", {viewBox: "0 0 " + W + " " + H, class: "zsa-pg-svg", role: "img", "aria-labelledby": "zsa-pg-desc-" + g.key, focusable: "false"});
     el.appendChild(svg("title", {id: "zsa-pg-desc-" + g.key}));
@@ -153,7 +163,7 @@
       axes.appendChild(svg("text", {x: GX(k), y: B + 16, "text-anchor": "middle", class: "zsa-pg-tick"}, String(k)));
     }
     axes.appendChild(svg("line", {x1: L, y1: T, x2: L, y2: B, class: "zsa-pg-axis"}));
-    axes.appendChild(svg("text", {x: (L + R) / 2, y: H - 6, "text-anchor": "middle", class: "zsa-pg-axis-label"}, "Time (s)"));
+    axes.appendChild(svg("text", {x: (L + R) / 2, y: H - 6, "text-anchor": "middle", class: "zsa-pg-axis-label"}, tr("Time (s)")));
     el.appendChild(axes);
 
     var marks = svg("g", {"aria-hidden": "true"});
@@ -162,8 +172,8 @@
       for (var i = 0; i <= 100; i++) line.push(GX(i / 10).toFixed(2) + "," + Y(at(i / 10)[key]).toFixed(2));
       marks.appendChild(svg("polyline", {points: line.join(" "), class: "zsa-pg-model zsa-pg-model-" + key}));
     } else if (!pts.length) {
-      marks.appendChild(svg("text", {x: (L + R) / 2, y: T + (B - T) / 2 - 8, "text-anchor": "middle", class: "zsa-pg-empty"}, "Sketch your prediction"));
-      marks.appendChild(svg("text", {x: (L + R) / 2, y: T + (B - T) / 2 + 12, "text-anchor": "middle", class: "zsa-pg-empty zsa-pg-empty-sub"}, "Drag across the graph"));
+      marks.appendChild(svg("text", {x: (L + R) / 2, y: T + (B - T) / 2 - 8, "text-anchor": "middle", class: "zsa-pg-empty"}, tr("Sketch your prediction")));
+      marks.appendChild(svg("text", {x: (L + R) / 2, y: T + (B - T) / 2 + 12, "text-anchor": "middle", class: "zsa-pg-empty zsa-pg-empty-sub"}, tr("Drag across the graph")));
     }
     if (pts.length) {
       // Predicted values beyond the scale (only typed ones can be) are drawn at its edge with an arrowhead.
@@ -183,13 +193,19 @@
     el.appendChild(marks);
 
     // The spoken description, and a visible note when the scale was stretched or a value is off it.
-    var words = g.name + " versus time graph, 0 to 10 seconds, " + g.unit + " from " + M.fmt(s.lo, d) + " to " + M.fmt(s.hi, d) + ". ";
-    words += visible() ? "Model: " + M.describe(x0, v0, a, key) : "The model is hidden until you reveal it.";
-    if (pts.length) words += " Your prediction: " + pts.length + (pts.length === 1 ? " point" : " points") + " from " + M.fmt(pts[0][0], 1) + " to " + M.fmt(pts[pts.length - 1][0], 1) + " s.";
+    var TITLES = {
+      x: "Position versus time graph, 0 to 10 seconds, m from {lo} to {hi}.",
+      v: "Velocity versus time graph, 0 to 10 seconds, m/s from {lo} to {hi}.",
+      a: "Acceleration versus time graph, 0 to 10 seconds, m/s² from {lo} to {hi}."
+    };
+    var words = tr(TITLES[key], {lo: M.fmt(s.lo, d), hi: M.fmt(s.hi, d)}) + " ";
+    words += visible() ? tr("Model: {description}", {description: M.describe(x0, v0, a, key)}) : tr("The model is hidden until you reveal it.");
+    if (pts.length) words += " " + tr(pts.length === 1 ? "Your prediction: {count} point from {from} to {to} s." : "Your prediction: {count} points from {from} to {to} s.",
+      {count: pts.length, from: M.fmt(pts[0][0], 1), to: M.fmt(pts[pts.length - 1][0], 1)});
     $("desc-" + key).textContent = words;
     var notes = [];
-    if (s.off.length) notes.push("Off the scale: " + s.off.map(function (p) { return M.fmt(p[1], 2).replace(/\.?0+$/, "") + " " + g.unit + " at " + M.fmt(p[0], 0) + " s"; }).join(", ") + ". Shown at the edge.");
-    else if (s.stretched) notes.push("The scale is stretched to show your prediction.");
+    if (s.off.length) notes.push(tr("Off the scale: {values}. Shown at the edge.", {values: s.off.map(function (p) { return tr("{value} {unit} at {t} s", {value: M.fmt(p[1], 2).replace(/\.?0+$/, ""), unit: g.unit, t: M.fmt(p[0], 0)}); }).join(", ")}));
+    else if (s.stretched) notes.push(tr("The scale is stretched to show your prediction."));
     gr.note.textContent = notes.join(" ");
     gr.note.hidden = !notes.length;
   }
@@ -223,7 +239,7 @@
     $("v-value").textContent = M.fmt(st.v) + " m/s";
     $("a-value").textContent = M.fmt(a) + " m/s²";
     $("time").value = String(t);
-    $("time").setAttribute("aria-valuetext", M.fmt(t, 1) + " seconds");
+    $("time").setAttribute("aria-valuetext", tr("{t} seconds", {t: M.fmt(t, 1)}));
     moveCart(st);
     moveCursors(st);
   }
@@ -232,7 +248,7 @@
   // One animation loop at most: frameId is the pending frame, cancelled on every pause, reset, scrub or change, and a
   // new frame is only requested when none is pending.
   var playing = false, frameId = 0, last = 0;
-  function playLabel() { $("play").textContent = playing ? "Pause" : t >= END ? "Replay" : "Run motion"; }
+  function playLabel() { $("play").textContent = tr(playing ? "Pause" : t >= END ? "Replay" : "Run motion"); }
   function stop() {
     playing = false;
     if (frameId) window.cancelAnimationFrame(frameId);
@@ -256,7 +272,7 @@
     if (t >= END) {
       stop();
       var st = at(END);
-      announce("The run is complete at 10 s. Position " + M.fmt(st.x) + " m, velocity " + M.fmt(st.v) + " m/s.");
+      announce(tr("The run is complete at 10 s. Position {x} m, velocity {v} m/s.", {x: M.fmt(st.x), v: M.fmt(st.v)}));
     } else frameId = window.requestAnimationFrame(tick);
   }
   $("play").addEventListener("click", function () { if (playing) stop(); else play(); });
@@ -284,7 +300,7 @@
     scenario = sc.id; x0 = sc.x0; v0 = sc.v0; a = sc.a;
     showSettings();
     restart();
-    announce(sc.label + ". " + sc.text);
+    announce(tr("{label}. {text}", {label: tr(sc.label), text: tr(sc.text)}));
   });
   SLIDERS.forEach(function (s) {
     $(s[0]).addEventListener("input", function () {
@@ -299,8 +315,8 @@
     ["explore", "predict"].forEach(function (id) { $(id).setAttribute("aria-pressed", String(id === m)); });
     restart();
   }
-  $("explore").addEventListener("click", function () { setMode("explore"); announce("Explore. The model is shown on every graph."); });
-  $("predict").addEventListener("click", function () { setMode("predict"); announce("Predict and compare. The model is hidden. Sketch on each graph or enter values, then reveal and compare."); });
+  $("explore").addEventListener("click", function () { setMode("explore"); announce(tr("Explore. The model is shown on every graph.")); });
+  $("predict").addEventListener("click", function () { setMode("predict"); announce(tr("Predict and compare. The model is hidden. Sketch on each graph or enter values, then reveal and compare.")); });
 
   // ---------- Predictions ----------
   // A new point replaces any point within 0.12 s of it; a typed value that is replaced also leaves its box.
@@ -345,7 +361,7 @@
   // The keyboard predictions: a fieldset per graph, one box per time.
   M.GRAPHS.forEach(function (g) {
     var fs = node("fieldset", "zsa-pg-inputset");
-    fs.appendChild(node("legend", "", g.name + " (" + g.unit + ")"));
+    fs.appendChild(node("legend", "", tr("{name} ({unit})", {name: tr(g.name), unit: g.unit})));
     var row = node("div", "zsa-pg-inputrow");
     M.PREDICTION_TIMES.forEach(function (time) {
       var lab = node("label", "zsa-pg-inputcell");
@@ -355,7 +371,7 @@
       input.step = "any";
       input.dataset.key = g.key;
       input.dataset.time = String(time);
-      input.setAttribute("aria-label", "Predicted " + g.name.toLowerCase() + " at " + time + " s, in " + g.unit);
+      input.setAttribute("aria-label", tr({x: "Predicted position at {t} s, in m", v: "Predicted velocity at {t} s, in m/s", a: "Predicted acceleration at {t} s, in m/s²"}[g.key], {t: time}));
       lab.appendChild(input);
       row.appendChild(lab);
     });
@@ -376,32 +392,32 @@
     revealed = true;
     var box = $("feedback");
     while (box.firstChild) box.removeChild(box.firstChild);
-    box.appendChild(node("h3", "", "Compare your prediction with the model"));
+    box.appendChild(node("h3", "", tr("Compare your prediction with the model")));
     var spoken = [];
     M.GRAPHS.forEach(function (g) {
       var r = M.compare(x0, v0, a, g.key, sorted(g.key));
       box.appendChild(node("p", "zsa-pg-fb-" + r.level, r.text));
       spoken.push(r.text);
     });
-    box.appendChild(node("p", "zsa-pg-small", "This compares the values you drew or entered with the model. It is a rough guide, not a grade. Use Clear predictions to try again."));
+    box.appendChild(node("p", "zsa-pg-small", tr("This compares the values you drew or entered with the model. It is a rough guide, not a grade. Use Clear predictions to try again.")));
     box.hidden = false;
     redraw();
     box.focus();
-    announce("Model revealed. " + spoken.join(" "));
+    announce(tr("Model revealed.") + " " + spoken.join(" "));
   });
   $("clear").addEventListener("click", function () {
     stop();
     revealed = false;
     clearPredictions();
     redraw();
-    announce("Predictions cleared. The model is hidden.");
+    announce(tr("Predictions cleared. The model is hidden."));
   });
 
   // ---------- Reflection, printing and data ----------
   function printSummary() {
-    var name = scenario === "custom" ? "Custom settings" : M.SCENARIOS.filter(function (s) { return s.id === scenario; })[0].label;
-    $("print-summary").textContent = "Experiment: " + name + ". x₀ = " + M.fmt(x0, 1) + " m, v₀ = " + M.fmt(v0, 1) + " m/s, a = " + M.fmt(a, 1) + " m/s². " +
-      (mode === "explore" ? "Explore mode." : revealed ? "Prediction compared with the model." : "Prediction (model not yet revealed).");
+    var name = tr(scenario === "custom" ? "Custom settings" : M.SCENARIOS.filter(function (s) { return s.id === scenario; })[0].label);
+    $("print-summary").textContent = tr("Experiment: {name}. x₀ = {x0} m, v₀ = {v0} m/s, a = {a} m/s².", {name: name, x0: M.fmt(x0, 1), v0: M.fmt(v0, 1), a: M.fmt(a, 1)}) + " " +
+      tr(mode === "explore" ? "Explore mode." : revealed ? "Prediction compared with the model." : "Prediction (model not yet revealed).");
   }
   // A print copy of the reflection: a text area prints only its visible lines, a paragraph prints all of it.
   function mirrorReflection() { $("print-reflection").textContent = $("reflection").value; }
@@ -419,7 +435,7 @@
     link.click();
     root.removeChild(link);
     window.setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-    announce("Motion data downloaded as zornscience-motion-data.csv: time, position, velocity and acceleration every 0.1 s.");
+    announce(tr("Motion data downloaded as zornscience-motion-data.csv: time, position, velocity and acceleration every 0.1 s."));
   });
 
   // ---------- Deep links and the back link ----------

@@ -653,6 +653,118 @@ above / below horizontal | sobre la horizontal / bajo la horizontal
 straight up / straight down | verticalmente hacia arriba / verticalmente hacia abajo
 (the vy arrow) flips | cambia de sentido
 the cannon's pivot | el eje de giro del cañón
+battery (circuit part) | pila
+wire (circuit part) | cable
+switch / open switch / closed switch | interruptor / interruptor abierto / interruptor cerrado
+series / parallel (circuit) | en serie / en paralelo
+branch (parallel circuit) | rama
+complete loop / loop (closed circuit) | circuito cerrado completo / circuito cerrado
+short circuit | cortocircuito
+voltage / voltage across a part | voltaje / voltaje entre los extremos de la pieza
+current through a part | corriente que pasa por la pieza
+conventional current | corriente convencional
+power (electrical) | potencia
+brightness (bulb) | brillo
+ideal battery | pila ideal
+total resistance | resistencia total
++ end / − end (battery) | extremo + / extremo −
+probe (multimeter) / red probe / black probe | punta / punta roja / punta negra
+multimeter / meter (in sentences) | multímetro
+voltage mode / current mode | modo de voltaje / modo de corriente
+electric field / electric field strength | campo eléctrico / intensidad del campo
+electric potential / electric potential energy | potencial eléctrico / energía potencial eléctrica
+voltage / voltage reading | voltaje / lectura de voltaje
+point charge / point-charge model | carga puntual / modelo de carga puntual
+positive charge / negative charge / like charges / opposite charges | carga positiva / carga negativa / cargas iguales / cargas opuestas
+test charge | carga de prueba
+quadrupole | cuadrupolo
+equipotential (noun) / equipotential contour | línea equipotencial / curva equipotencial
+contour (equal-voltage line) / contour spacing | curva / separación entre curvas
+negative gradient of potential | gradiente negativo del potencial
+reference at infinity | referencia en el infinito
+conductive paper / conductive sheet | papel conductor / hoja conductora
+electrode / fixed-voltage electrodes | electrodo / electrodos de voltaje fijo
+thumbtack | tachuela
+nonzero | distinto de cero
+nanocoulombs (spoken unit) | nanocoulombs
+volts (spoken unit) | volts
+Faraday's law | ley de Faraday
+magnet / neodymium magnet | imán / imán de neodimio
+magnetic flux / flux | flujo magnético / flujo
+changing flux | flujo que cambia
+induced current / induced field / induced magnetic field | corriente inducida / campo inducido / campo magnético inducido
+current loop / conducting loops | espira de corriente / espiras conductoras
+circulating currents / local currents | corrientes circulantes / corrientes locales
+clockwise / counterclockwise (viewed from above) | en el sentido de las manecillas del reloj / en sentido contrario al de las manecillas del reloj (vista desde arriba)
+magnetic braking / braking force / braking | frenado magnético / fuerza de frenado / frenado
+magnetic drag | arrastre magnético
+magnetic moment | momento magnético
+poles (of a magnet), reverse the poles | polos, invertir los polos
+N down / S down (pole letters stay N and S) | N abajo / S abajo
+ferromagnetic | ferromagnético
+insulator / insulating | aislante
+electromagnetic induction | inducción electromagnética
+copper tube / plastic tube / slotted copper | tubo de cobre / tubo de plástico / cobre con ranura
+lengthwise slot | ranura a lo largo (del tubo)
+tube wall / conducting wall | pared del tubo / pared conductora
+fixed ring (a slice of the tube wall) | anillo fijo
+magnet drop | caída del imán
+acceleration versus time graph | gráfica de aceleración contra tiempo
+initial position / initial velocity | posición inicial / velocidad inicial
+point object | objeto puntual
+origin (of the position axis) | origen
+turn around, reverse direction (the cart) | cambiar de sentido
+speeds up / slows down (the cart) | su rapidez aumenta / su rapidez disminuye
+crosses zero (velocity) | pasa por cero
+curvature (of a graph) | curvatura
+off the scale (graph value) | fuera de la escala
+Snell's law | ley de Snell
+refraction / refracted ray | refracción / rayo refractado
+incident ray / transmitted ray / reflected ray | rayo incidente / rayo transmitido / rayo reflejado
+the normal (line) / dashed normal | la normal / la normal punteada
+angle of incidence | ángulo de incidencia
+refractive index / custom index | índice de refracción / índice personalizado
+higher-index medium / lower-index medium | medio de mayor índice / medio de menor índice
+bend (of a ray) / bends toward, away from the normal | desviación / se acerca a la normal, se aleja de la normal
+light speed (v = c/n) | rapidez de la luz
+surrounding medium | medio que lo rodea
+interface (optical) | interfaz
+radial entry | entrada radial
+grazes the surface | roza la superficie
+evanescent fields | campos evanescentes
+lossless, isotropic materials | materiales sin pérdidas e isótropos
+optical bench / optical breadboard | banco óptico / mesa óptica
+optical block / rectangular block / semicircular block | bloque óptico / bloque rectangular / bloque semicircular
+acrylic / glass / diamond | acrílico / vidrio / diamante
+laser | láser
+beam | haz
+Standing Waves on a String (activity title) | Ondas estacionarias en una cuerda
+loop (of a standing wave) / number of loops | segmento / número de segmentos
+oscillator / vibrator (mechanical) | oscilador / vibrador
+drive (the driving signal) / drive amplitude / driving frequency | excitación / amplitud de excitación / frecuencia de excitación
+no drive / nonzero drive | sin excitación / una excitación mayor que cero
+resonance / resonance frequencies / between resonances | resonancia / frecuencias de resonancia / entre resonancias
+tuned / detuned (resonance readout) | sintonizada / desintonizada
+tune (the generator, a harmonic) / fine tune | sintonizar / ajuste fino
+fundamental f₁ (readout) | FUNDAMENTAL f₁
+nearest harmonic / nearest resonance | armónico más cercano / resonancia más cercana
+frequency ratio | razón de frecuencias
+wave speed (readout) | rapidez de la onda
+hanging mass / vibrating length / string density | masa colgante / longitud de vibración / densidad de la cuerda
+light / medium / heavy cord | cuerda ligera / cuerda media / cuerda pesada
+stationary nodes (not moving) | nodos inmóviles
+neighboring nodes / adjacent nodes | nodos vecinos / nodos adyacentes
+crest | cresta
+transverse motion | movimiento transversal
+motion envelope | envolvente del movimiento
+strobe lock / strobe phase | bloqueo estroboscópico / fase de la luz estroboscópica
+synchronized phase | fase sincronizada
+string point (one tracked point) | punto de la cuerda
+modal sum / modes | suma de modos / modos
+damping ratio | coeficiente de amortiguamiento
+transients | transitorios
+alias (display sampling) | efectos de muestreo (aliasing)
+screen refresh rate | frecuencia de actualización de pantalla
 
 ## Additional interface labels
 
@@ -1577,6 +1689,125 @@ Rising / Falling | De subida / De bajada
 Launch from a ledge / Ground to ground at 45° / Horizontal launch from a cliff / Steep launch / Low and fast | Lanzamiento desde una cornisa / Del suelo al suelo a 45° / Lanzamiento horizontal desde un acantilado / Lanzamiento muy inclinado / Bajo y rápido
 Download flight data (CSV) | Descargar datos del vuelo (CSV)
 Predict. Observe. Explain. Nothing you enter leaves this tab. | Predice. Observa. Explica. Nada de lo que escribes sale de esta pestaña.
+Circuit Builder (activity title) | Constructor de circuitos
+circuit board / board | tablero de circuitos / tablero
+spot (place between two dots) | lugar
+part (circuit component) | pieza
+component | componente
+Parts (palette) | Piezas
+Select and move / Erase (tools) | Seleccionar y mover / Borrar
+Show current flow | Mostrar el flujo de corriente
+Clear board | Vaciar el tablero
+Tap board (place a probe) | Tocar el tablero
+Swap probes | Intercambiar las puntas
+Not placed (probe) | Sin colocar
+Current through (meter target) | Corriente a través de
+Flip battery | Voltear la pila
+Close switch / Open switch | Cerrar el interruptor / Abrir el interruptor
+Measure voltage across it / Measure current through it | Medir el voltaje entre sus extremos / Medir la corriente que pasa por la pieza
+Readings for every part / Readings table | Lecturas de cada pieza / Tabla de lecturas
+Part, Where, Setting, Voltage, Current, Power, Brightness (table) | Pieza, Ubicación, Ajuste, Voltaje, Corriente, Potencia, Brillo
+Download readings (CSV) | Descargar lecturas (CSV)
+zornscience-circuit-readings.csv (file name) | zornscience-lecturas-del-circuito.csv
+{ohms} Ω bulb (setting) | foco de {ohms} Ω
+One bulb / Two bulbs in series / Two bulbs in parallel | Un foco / Dos focos en serie / Dos focos en paralelo
+Three bulbs in series / Three bulbs in parallel | Tres focos en serie / Tres focos en paralelo
+Series and parallel side by side / One bulb, then two in parallel | Serie y paralelo lado a lado / Un foco y luego dos en paralelo
+Parallel with a switch / Resistors share the voltage | Paralelo con un interruptor / Las resistencias se reparten el voltaje
+Empty board / Your own circuit | Tablero vacío / Tu propio circuito
+Lit / Equally bright / Brightest / Dark (insight labels) | Con luz / Brillo igual / Mayor brillo / Sin luz
+Warning: short circuit. | Atención: cortocircuito.
+Equipotential & Electric Field Mapping (activity title) | Líneas equipotenciales y mapeo de campos eléctricos
+Map the invisible (instructions heading) | Mapeo de lo invisible
+probe / red probe / voltage probe | punta / punta roja / punta del voltímetro
+digital voltmeter | voltímetro digital
+Charge tray | Charola de cargas
+Arrange the charges | Acomodo de las cargas
+Explore a question / Choose an exploration | Explora una pregunta / Elige una exploración
+Reveal & explain | Revelar y explicar
+Remove selected | Quitar la seleccionada
+Show on the grid | Mostrar en la cuadrícula
+Field arrow at probe / Field arrows across grid | Flecha del campo en la punta / Flechas del campo en toda la cuadrícula
+Equipotential through probe | Línea equipotencial por la punta
+Potential color map | Mapa de color del potencial
+Mapping grid / 5 cm grid | Cuadrícula de mapeo / Cuadrícula de 5 cm
+POINT-CHARGE SANDBOX | SIMULADOR DE CARGAS PUNTUALES
+CONDUCTIVE-PAPER STYLE GRID | CUADRÍCULA ESTILO PAPEL CONDUCTOR
+∞ REFERENCE (meter terminal) | ∞ REFERENCIA
+V DC, COM, V Ω, OL (meter markings) | unchanged, as printed on a real meter
+Gold arrow / Dashed line (map key) | Flecha dorada / Línea punteada
+Faraday's Law · Magnet Drop (activity title) | Ley de Faraday · Caída del imán
+Magnet strength | Intensidad del imán
+Tube material | Material del tubo
+Copper · intact / Copper · lengthwise slot / Plastic · insulating | Cobre · intacto / Cobre · ranura a lo largo / Plástico · aislante
+See the invisible (panel heading) | Visualización de lo invisible
+Tube cutaway | Corte del tubo
+Force arrows | Flechas de fuerza
+Observe / Explain (view presets) | Observar / Explicar
+Visualization presets | Vistas predefinidas
+Release magnets / Release again | Soltar los imanes / Soltar de nuevo
+Inspect the drop (replay slider) / Ready | Revisar la caída / Lista
+Slow motion · ¼ speed / ¼ SPEED / REAL TIME | Cámara lenta · ¼ del tiempo real / ¼ DEL TIEMPO REAL / TIEMPO REAL
+MAGNETS FALLING / BOTH MAGNETS CAUGHT / PAUSED · SIMULATED TIME FROZEN | IMANES EN CAÍDA / AMBOS IMANES ATRAPADOS / EN PAUSA · TIEMPO SIMULADO DETENIDO
+soft catch tray | charola suave para atrapar (el imán)
+Held in two retort clamps | Sujeto con dos pinzas al soporte
+Free-fall comparison / IDENTICAL MAGNET | Comparación en caída libre / IMÁN IDÉNTICO
+LENZ'S LAW IN ACTION | LA LEY DE LENZ EN ACCIÓN
+Break the current loop / Reverse the poles (prompts) | Romper la espira de corriente / Invertir los polos
+Exploration prompts | Sugerencias para explorar
+How the model works | Funcionamiento del modelo
+Your goal: | Tu objetivo:
+Physics Graphing Lab (activity title) | Laboratorio de gráficas de física
+Lab mode | Modo del laboratorio
+Explore / Predict and compare (modes) | Explorar / Predecir y comparar
+Explore mode. (print line) | Modo de exploración.
+Experiment settings | Ajustes del experimento
+1. Set the motion / 2. Watch it move / 3. Connect the graphs / 4. Make sense of it | 1. Ajusta el movimiento / 2. Observa cómo se mueve / 3. Conecta las gráficas / 4. Dale sentido
+The motion track | La pista del movimiento
+Run motion / Pause / Replay / Reset | Iniciar el movimiento / Pausar / Repetir / Reiniciar
+Reveal and compare / Clear predictions | Revelar y comparar / Borrar predicciones
+Sketch your prediction / Drag across the graph | Dibuja tu predicción / Arrastra sobre la gráfica
+sketch (a prediction drawn on a graph) | dibujo
+Download motion data (CSV) | Descargar datos del movimiento (CSV)
+Cruise to the right / Speed up to the right / Slow to a stop / Turn around / Speed up to the left / Stay at rest (scenarios) | Avance constante a la derecha / Cada vez más rápido a la derecha / Frenado hasta detenerse / Cambio de sentido / Cada vez más rápido a la izquierda / En reposo
+Slope = velocity / Slope = acceleration / Changes velocity (graph captions) | Pendiente = velocidad / Pendiente = aceleración / Cambia la velocidad
+trials (runs of the cart, compared) | corridas
+Snell's Law & Refraction (activity title) | Ley de Snell y refracción
+Follow the light (instructions heading) | El recorrido de la luz
+Laser on / Laser off | Láser encendido / Láser apagado
+Set to critical angle | Ir al ángulo crítico
+Just below / Just above (critical angle) | Justo por debajo / Justo por encima
+Snap to normal | Alinear con la normal
+Zoom to entry / Full bench | Acercar a la entrada / Banco completo
+Angle guides / Show measurements | Guías de ángulos / Mostrar mediciones
+Reset bench ↺ | Reiniciar banco ↺
+Virtual protractor | Transportador virtual
+PROTRACTOR PARKED / PROTRACTOR SNAPPED | TRANSPORTADOR GUARDADO / TRANSPORTADOR ALINEADO
+Try an investigation | Prueba una investigación
+1. Measure the bend / 2. Compare materials / 3. Find the threshold | 1. Mide la desviación / 2. Compara materiales / 3. Encuentra el umbral
+Custom material / Custom medium | Material personalizado / Medio personalizado
+Measure θ₂ / Find θc (hidden readouts) | Mide θ₂ / Encuentra θc
+None (no critical angle) | Ninguno
+Solid / Dashed / Arrows (ray key) | Continuo / Punteado / Flechas
+01 / SIGNAL GENERATOR | 01 / GENERADOR DE SEÑALES
+02 / STRING & TENSION | 02 / CUERDA Y TENSIÓN
+VIBRATOR / PULLEY / MASS HANGER | VIBRADOR / POLEA / PORTAPESAS
+WAVES LABORATORY / WAVES & RESONANCE | LABORATORIO DE ONDAS / ONDAS Y RESONANCIA
+Standing-wave apparatus / Standing-wave lab bench | Aparato de ondas estacionarias / Mesa de laboratorio de ondas estacionarias
+▶ Start oscillator / ■ Stop oscillator | ▶ Encender el oscilador / ■ Apagar el oscilador
+Strobe lock: on / Strobe lock: off | Bloqueo estroboscópico: encendido / Bloqueo estroboscópico: apagado
+OSCILLATOR OFF / STROBE LOCKED / SLOW MOTION (badge) | OSCILADOR APAGADO / LUZ ESTROBOSCÓPICA SINCRONIZADA / CÁMARA LENTA
+SLOW MOTION · 1/40 SPEED | CÁMARA LENTA · 1/40 DEL TIEMPO REAL
+STROBE · SYNCHRONIZED PHASE | LUZ ESTROBOSCÓPICA · FASE SINCRONIZADA
+READY TO DRIVE THE STRING | LISTO PARA HACER VIBRAR LA CUERDA
+Label nodes & antinodes / Show motion envelope / Track one string point | Marcar nodos y antinodos / Mostrar la envolvente del movimiento / Seguir un punto de la cuerda
+Place cursors on adjacent nodes | Colocar los cursores en nodos adyacentes
+CURSOR SEPARATION | SEPARACIÓN DE LOS CURSORES
+Ruler cursor {letter} | Cursor {letter} de la regla
+Find the harmonics (instructions heading) | Búsqueda de los armónicos
+1 · Find harmonics / 2 · Measure wavelength / 3 · Change tension | 1 · Busca armónicos / 2 · Mide la longitud de onda / 3 · Cambia la tensión
+Measure the string | Medición de la cuerda
+Why does this happen? | ¿Por qué pasa esto?
 
 ## Full sentence templates
 
@@ -2068,6 +2299,50 @@ Landed at {t} s, {x} m away. | Llegó al suelo a los {t} s, a {x} m de distancia
 At {t} s the ball is {x} m across and {y} m high. | A los {t} s el proyectil está a {x} m en horizontal y a {y} m de altura.
 Velocity components versus time, 0 to {T} s. | Componentes de la velocidad contra tiempo, de 0 a {T} s.
 Reset to the launch. | De vuelta al lanzamiento.
+{a} to {b} (spot or part ends, in sentences) | de {a} a {b}
+{a} to {b}: {state} (spot name) | De {a} a {b}: {state}
+{part}, selected (spot name) | {part}, pieza seleccionada
+{name} placed from {slot}. | Se colocó {name} {slot}.
+{name} removed from {slot}. / {name} moved to {slot}. | Se quitó {name} del lugar {slot}. / Se movió {name} al lugar {slot}.
+{name} pushes {current} through the circuit, a total resistance of {ohms} Ω. | {name} empuja {current} por el circuito, con una resistencia total de {ohms} Ω.
+Lit: {names} at {b}. | Con luz: {names}, al {b}.
+Meter reads {display}. {caption} | El multímetro marca {display}. {caption}
+Red at {red}, black at {black}: across {name}. | Roja en {red}, negra en {black}: entre los extremos de {name}.
+Through {name}, flowing from {from} to {to}. | A través de {name}, circulando de {from} a {to}.
+{name} set to {setting}. / {name} closed. / {name} opened. | Ajustaste {name} a {setting}. / Cerraste {name}. / Abriste {name}.
+Start with an optional exploration in {strong}, or build your own arrangement. Predict what will happen before selecting Reveal & explain. | Empieza con una exploración opcional en {strong} o arma tu propio acomodo. Predice qué va a pasar antes de seleccionar Revelar y explicar.
+Positive charge {q} nanocoulombs at {x}, {y} centimeters. Use arrow keys to move. | Carga positiva de {q} nanocoulombs en {x}, {y} centímetros. Usa las flechas para moverla.
+Voltage probe, {v} volts. Use arrow keys to move. | Punta del voltímetro, {v} volts. Usa las flechas para moverla.
+Electric field: {e} V/m | Campo eléctrico: {e} V/m
+Probe reads {v} V. | La punta marca {v} V.
+Near-zero voltage can still have a nonzero electric field. | Un voltaje casi cero todavía puede tener un campo eléctrico distinto de cero.
+V = 0 does not imply E = 0. | V = 0 no implica E = 0.
+Reverse poles · {pole} down | Invertir polos · {pole} abajo
+{t} seconds into the drop | {t} segundos desde el inicio de la caída
+Approaching the ring: flux is increasing. / Leaving the ring: flux is decreasing. | El imán se acerca al anillo: el flujo aumenta. / El imán se aleja del anillo: el flujo disminuye.
+The induced field points down; conventional current is clockwise viewed from above. | El campo inducido apunta hacia abajo; la corriente convencional va en el sentido de las manecillas del reloj, vista desde arriba.
+At the ring: flux is near its maximum. Its rate of change passes through zero, and the current reverses as the magnet passes. | En el anillo: el flujo está cerca de su máximo. Su razón de cambio pasa por cero y la corriente se invierte cuando pasa el imán.
+{label} explain how changing magnetic flux creates a current and why that current slows a falling magnet. | {label} explicar cómo un flujo magnético que cambia crea una corriente y por qué esa corriente frena a un imán que cae.
+Cart at {x} m, moving right at {v} m/s, at {t} s. | Carrito en {x} m, moviéndose a la derecha a {v} m/s, a los {t} s.
+Position versus time graph, 0 to 10 seconds, m from {lo} to {hi}. | Gráfica de posición contra tiempo, de 0 a 10 segundos, en m de {lo} a {hi}.
+Off the scale: {values}. Shown at the edge. | Fuera de la escala: {values}. Se muestran en el borde.
+{name}: Your drawn values closely follow the model. | {name}: Tus valores dibujados siguen de cerca al modelo.
+The cart speeds up when velocity and acceleration have the same sign, and slows down when their signs differ. | La rapidez del carrito aumenta cuando la velocidad y la aceleración tienen el mismo signo, y disminuye cuando sus signos son distintos.
+The run is complete at 10 s. Position {x} m, velocity {v} m/s. | La corrida terminó a los 10 s. Posición: {x} m. Velocidad: {v} m/s.
+Experiment: {name}. x₀ = {x0} m, v₀ = {v0} m/s, a = {a} m/s². (print line) | Experimento: {name}. x₀ = {x0} m, v₀ = {v0} m/s, a = {a} m/s².
+{n} degrees from the normal | {n} grados desde la normal
+First flat surface: n₁ = {n1} (incident), n₂ = {n2} (other side) | Primera superficie plana: n₁ = {n1} (incidente), n₂ = {n2} (otro lado)
+Rectangular {block} block in {medium}. Incidence {angle} degrees. {result} | Bloque rectangular de {block} en {medium}. Incidencia de {angle} grados. {result}
+At {angle}°, the transmitted ray runs along the surface. | A {angle}°, el rayo transmitido corre a lo largo de la superficie.
+Light bends toward the normal as it enters the higher-index medium. | La luz se acerca a la normal al entrar al medio de mayor índice.
+Transmission would require sin θ₂ = {value} > 1. No real refracted angle exists: total internal reflection. | La transmisión requeriría sin θ₂ = {value} > 1. No existe un ángulo refractado real: hay reflexión interna total.
+Open {investigation} for short exploration prompts. ... Use {below} and {above} ... (instructions paragraph, one template) | Abre {investigation} para ver indicaciones breves de exploración. ... Usa {below} y {above} ...
+HARMONIC {n} · {n} LOOP / HARMONIC {n} · {n} LOOPS | ARMÓNICO {n} · {n} SEGMENTO / ARMÓNICO {n} · {n} SEGMENTOS
+TENSION {t} N | TENSIÓN {t} N
+Harmonic {n}: {nodes} nodes, {n} antinodes. Adjacent nodes are {spacing} m apart; wavelength is {wavelength} m. | Armónico {n}. Nodos: {nodes}. Antinodos: {n}. Los nodos adyacentes están a {spacing} m uno del otro; la longitud de onda es {wavelength} m.
+Nearest resonance: {f} Hz · increase by {delta} Hz / decrease by {delta} Hz | Resonancia más cercana: {f} Hz · sube {delta} Hz / baja {delta} Hz
+Neighboring nodes: Δx = {dx} m = λ/2. Your measured wavelength is λ = 2Δx = {wavelength} m. | Nodos vecinos: Δx = {dx} m = λ/2. La longitud de onda que mediste es λ = 2Δx = {wavelength} m.
+Motion is shown at 1/40 speed. | El movimiento se muestra a 1/40 del tiempo real.
 
 ## Agreement notes
 
@@ -2078,6 +2353,8 @@ Reset to the launch. | De vuelta al lanzamiento.
 - Physics labs keep rapidez (speed, a number) and velocidad (velocity, with direction) separate in every label, readout and sentence. Settings that are not physics quantities avoid both words: Playback speed is Ritmo de reproducción and Time speed is Ritmo de la simulación. The Iodine Clock Lab uses Ritmo de reproducción too, so in Chemistry velocidad keeps its reaction-rate meaning.
 - In the Projectile lab, vx and vy are feminine in sentences because they stand for la velocidad horizontal and la velocidad vertical (vx es pequeña, vy es negativa).
 - The Simple Pendulum counts oscillations with separate singular and plural templates ({count} oscilación completa, {count} oscilaciones completas).
+- Standing Waves on a String puts its counts after labels (Nodos: 4. Antinodos: 3.) and gives LOOP / LOOPS separate singular and plural templates. Circuit Builder's insight labels (Con luz, Brillo igual, Mayor brillo, Sin luz) avoid agreeing with foco, pila or resistencia.
+- Spelled-out units stay as the Style Kit writes them (volts, hertz, newtons, nanocoulombs), while centimeters is spelled centímetros, as earlier labs spelled gramos and metros.
 
 ## Element-name spellings
 

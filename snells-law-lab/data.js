@@ -1,0 +1,170 @@
+(function () {
+  "use strict";
+  // Snell's Law & Refraction: every English string with its Mexican Spanish translation, for ../shared/zsa-i18n.js.
+  // English is the default and the fallback. Symbols, numbers, units and decimal points stay exactly as written.
+  var root = document.querySelector('[data-zsa-activity="snells-law-lab"]');
+  if (!root) return;
+  var i18n;
+  root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail:{receive:function (api) { i18n = api; }}}));
+  if (!i18n) return;
+  var copy = {title:"Snell’s Law & Refraction", es:{
+  // Header, instructions and share
+  "Snell’s Law & Refraction": "Ley de Snell y refracción",
+  "ZornScience home": "Inicio de ZornScience",
+  "Activity links": "Enlaces de la actividad",
+  "Instructions": "Instrucciones",
+  "Share": "Compartir",
+  "Share activity": "Compartir actividad",
+  "Share this activity": "Compartir esta actividad",
+  "Close share options": "Cerrar opciones para compartir",
+  "Close instructions": "Cerrar instrucciones",
+  "Share this optical bench. Each link opens a fresh simulation.": "Comparte este banco óptico. Cada enlace abre una simulación nueva.",
+  "Share link": "Enlace para compartir",
+  "Copy link": "Copiar enlace",
+  "Email": "Correo electrónico",
+  "More share options": "Más opciones para compartir",
+  "Link copied.": "Enlace copiado.",
+  "Link selected. Press Ctrl+C, or Command+C on a Mac, to copy it.": "Enlace seleccionado. Presiona Ctrl+C, o Command+C en una Mac, para copiarlo.",
+  "Share options opened.": "Se abrieron las opciones para compartir.",
+  "Use Copy link or email instead.": "Usa Copiar enlace o el correo electrónico.",
+  "Explore refraction and total internal reflection with a laser and optical blocks.": "Explora la refracción y la reflexión interna total con un láser y bloques ópticos.",
+  "Follow the light": "El recorrido de la luz",
+  "Start with the rectangular block.": "Empieza con el bloque rectangular.",
+  "Drag the laser, or use the incidence slider, to aim at the center of the top face. Angles are measured from the dashed normal, perpendicular to the surface.": "Arrastra el láser, o usa el control deslizante de incidencia, para apuntar al centro de la cara superior. Los ángulos se miden desde la normal punteada, perpendicular a la superficie.",
+  "Measure the bend.": "Mide la desviación.",
+  "Drag the transparent protractor onto the point where the ray meets the block. It snaps into position with its zero line on the normal. The Snap to normal button does the same thing. Toggle angle labels to compare your measurements.": "Arrastra el transportador transparente al punto donde el rayo llega al bloque. Se acomoda en su lugar con la línea del cero sobre la normal. El botón Alinear con la normal hace lo mismo. Activa o desactiva las etiquetas de los ángulos para comparar tus mediciones.",
+  "Change the materials.": "Cambia los materiales.",
+  "Compare acrylic, glass, water and diamond, or choose a custom index. Watch both the entry and exit rays. Water represents a water-filled cell with ideal, optically negligible walls.": "Compara acrílico, vidrio, agua y diamante, o elige un índice personalizado. Observa el rayo de entrada y el de salida. El agua representa una celda llena de agua con paredes ideales y ópticamente despreciables.",
+  "Find total internal reflection.": "Encuentra la reflexión interna total.",
+  "Choose the semicircular block. The laser enters the curved face along a radius without bending and meets the flat face from inside. Select a block with a higher index than its surroundings and slowly increase the angle through the critical angle.": "Elige el bloque semicircular. El láser entra por la cara curva a lo largo de un radio sin desviarse y llega a la cara plana desde adentro. Selecciona un bloque con un índice mayor que el de su entorno y aumenta poco a poco el ángulo hasta pasar el ángulo crítico.",
+  "Open {investigation} for short exploration prompts. Turn off {measurements} to use the protractor before revealing the calculated angles. Use {zoom} to read the protractor on a small screen. The dashed secondary ray is reflected light. Use {below} and {above} to compare the critical-angle boundary while keeping materials fixed.": "Abre {investigation} para ver indicaciones breves de exploración. Desactiva {measurements} para usar el transportador antes de mostrar los ángulos calculados. Usa {zoom} para leer el transportador en una pantalla pequeña. El rayo secundario punteado es luz reflejada. Usa {below} y {above} para comparar el límite del ángulo crítico sin cambiar los materiales.",
+  "Try this:": "Prueba esto:",
+  "Compare air → glass at 45° with glass → air at 45°. What happens to the transmitted beam?": "Compara aire → vidrio a 45° con vidrio → aire a 45°. ¿Qué le pasa al haz transmitido?",
+  "Use the controls with a keyboard or drag the equipment with a mouse or touch. This simulation does not collect observations. In a real lab, never look into a laser beam or aim it toward anyone’s eyes.": "Usa los controles con el teclado o arrastra el equipo con el mouse o con el dedo. Esta simulación no recopila observaciones. En un laboratorio real, nunca mires directamente un haz láser ni lo apuntes hacia los ojos de nadie.",
+  // Controls
+  "Experiment controls": "Controles del experimento",
+  "01 / THE APPARATUS": "01 / EL APARATO",
+  "Block geometry": "Forma del bloque",
+  "Rectangular block": "Bloque rectangular",
+  "Refraction at two faces": "Refracción en dos caras",
+  "Semicircular block": "Bloque semicircular",
+  "Explore internal reflection": "Explora la reflexión interna",
+  "02 / THE MATERIALS": "02 / LOS MATERIALES",
+  "Optical block": "Bloque óptico",
+  "Acrylic": "Acrílico",
+  "Glass": "Vidrio",
+  "Water": "Agua",
+  "Diamond": "Diamante",
+  "Air": "Aire",
+  "Custom material": "Material personalizado",
+  "Custom medium": "Medio personalizado",
+  "Custom block index (1-3)": "Índice personalizado del bloque (1-3)",
+  "Surrounding medium": "Medio que lo rodea",
+  "Custom surrounding index (1-3)": "Índice personalizado del medio (1-3)",
+  // Bench
+  "LASER + OPTICAL BLOCK": "LÁSER + BLOQUE ÓPTICO",
+  "The refraction bench": "El banco de refracción",
+  "The internal reflection bench": "El banco de reflexión interna",
+  "Laser on": "Láser encendido",
+  "Laser off": "Láser apagado",
+  "Try an investigation": "Prueba una investigación",
+  "Investigation starting points": "Puntos de partida de las investigaciones",
+  "1. Measure the bend": "1. Mide la desviación",
+  "2. Compare materials": "2. Compara materiales",
+  "3. Find the threshold": "3. Encuentra el umbral",
+  "Choose a starting point, then explore freely. Predict what will happen before changing a control.": "Elige un punto de partida y luego explora libremente. Predice qué va a pasar antes de cambiar un control.",
+  "Measure: which angle is smaller, θ₁ or θ₂? Read θ₂ from the normal with the protractor, then reveal measurements to check. What would you get if you measured from the surface instead?": "Mide: ¿qué ángulo es menor, θ₁ o θ₂? Lee θ₂ desde la normal con el transportador y luego muestra las mediciones para revisar. ¿Qué obtendrías si midieras desde la superficie?",
+  "Predict: at the same incidence angle, will diamond bend light more or less than glass? Change only the block material and compare. Then match the two indices: does a visible boundary always bend light?": "Predice: con el mismo ángulo de incidencia, ¿el diamante desviará la luz más o menos que el vidrio? Cambia solo el material del bloque y compara. Luego iguala los dos índices: ¿una frontera visible siempre desvía la luz?",
+  "Predict: as you increase the angle inside glass, what happens to the transmitted ray? Find the boundary, then reveal measurements and compare Just below with Just above. Would this happen from air into glass?": "Predice: al aumentar el ángulo dentro del vidrio, ¿qué le pasa al rayo transmitido? Encuentra el límite, luego muestra las mediciones y compara Justo por debajo con Justo por encima. ¿Pasaría esto del aire al vidrio?",
+  "Change materials ↓": "Cambiar materiales ↓",
+  "{from} → {to}": "{from} → {to}",
+  "First flat surface: n₁ = {n1} (incident), n₂ = {n2} (other side)": "Primera superficie plana: n₁ = {n1} (incidente), n₂ = {n2} (otro lado)",
+  "TOP VIEW / OPTICAL BREADBOARD": "VISTA SUPERIOR / MESA ÓPTICA",
+  "RECTANGULAR BLOCK": "BLOQUE RECTANGULAR",
+  "SEMICIRCULAR BLOCK": "BLOQUE SEMICIRCULAR",
+  "Laser refraction apparatus": "Aparato de refracción con láser",
+  "A laser aimed at a glass block on an optical breadboard.": "Un láser que apunta a un bloque de vidrio sobre una mesa óptica.",
+  "Rectangular {block} block in {medium}. Incidence {angle} degrees. {result}": "Bloque rectangular de {block} en {medium}. Incidencia de {angle} grados. {result}",
+  "Semicircular {block} block in {medium}. Incidence {angle} degrees. {result}": "Bloque semicircular de {block} en {medium}. Incidencia de {angle} grados. {result}",
+  "Total internal reflection.": "Reflexión interna total.",
+  "Refraction {angle} degrees.": "Refracción de {angle} grados.",
+  "Use the protractor to measure refraction from the normal.": "Usa el transportador para medir la refracción desde la normal.",
+  "Laser angle": "Ángulo del láser",
+  "{angle} degrees from the normal": "{angle} grados desde la normal",
+  "LASER": "LÁSER",
+  "Virtual protractor: drag to the beam entry point, or press Enter to snap to normal": "Transportador virtual: arrástralo al punto de entrada del haz o presiona Enter para alinearlo con la normal",
+  "VIRTUAL PROTRACTOR": "TRANSPORTADOR VIRTUAL",
+  "ZORNSCIENCE / OPTICS": "ZORNSCIENCE / ÓPTICA",
+  "Solid: incident & transmitted · Dashed: reflected · Arrows: light direction": "Continuo: incidente y transmitido · Punteado: reflejado · Flechas: dirección de la luz",
+  "REFRACTION": "REFRACCIÓN",
+  "TOTAL INTERNAL REFLECTION": "REFLEXIÓN INTERNA TOTAL",
+  "AT THE CRITICAL ANGLE": "EN EL ÁNGULO CRÍTICO",
+  "LASER OFF": "LÁSER APAGADO",
+  "PROTRACTOR PARKED · DRAG TO THE ENTRY POINT": "TRANSPORTADOR GUARDADO · ARRÁSTRALO AL PUNTO DE ENTRADA",
+  "PROTRACTOR SNAPPED · ZERO ALIGNED TO NORMAL": "TRANSPORTADOR ALINEADO · CERO SOBRE LA NORMAL",
+  // Aiming and readings
+  "AIM THE LASER · ANGLES FROM THE NORMAL": "APUNTA EL LÁSER · ÁNGULOS DESDE LA NORMAL",
+  "Angle of incidence": "Ángulo de incidencia",
+  "Set to critical angle": "Ir al ángulo crítico",
+  "Explore the critical angle": "Explora el ángulo crítico",
+  "Just below": "Justo por debajo",
+  "Just above": "Justo por encima",
+  "No critical angle in this direction: n₁ ≤ n₂.": "No hay ángulo crítico en esta dirección: n₁ ≤ n₂.",
+  "Increase the angle slowly. Can you find when transmission stops?": "Aumenta el ángulo poco a poco. ¿Puedes encontrar cuándo deja de transmitirse la luz?",
+  "Critical angle is above the 80° aiming range.": "El ángulo crítico está por encima del rango de 80° para apuntar.",
+  "At {angle}°, the transmitted ray runs along the surface.": "A {angle}°, el rayo transmitido corre a lo largo de la superficie.",
+  "Zoom to entry": "Acercar a la entrada",
+  "Full bench": "Banco completo",
+  "Snap to normal": "Alinear con la normal",
+  "Protractor": "Transportador",
+  "Angle guides": "Guías de ángulos",
+  "Show measurements": "Mostrar mediciones",
+  "Reset bench ↺": "Reiniciar banco ↺",
+  "Measure first: center the protractor at the entry point and read from 0° on the dashed normal. Reveal measurements to check your reasoning.": "Mide primero: centra el transportador en el punto de entrada y lee desde 0° sobre la normal punteada. Muestra las mediciones para revisar tu razonamiento.",
+  "Live ray measurements": "Mediciones del rayo en vivo",
+  "INCIDENCE · θ₁": "INCIDENCIA · θ₁",
+  "REFRACTION · θ₂": "REFRACCIÓN · θ₂",
+  "CRITICAL ANGLE": "ÁNGULO CRÍTICO",
+  "No transmitted ray": "No hay rayo transmitido",
+  "Measure θ₂": "Mide θ₂",
+  "None": "Ninguno",
+  "Find θc": "Encuentra θc",
+  "Connect the rays to Snell’s law": "Relaciona los rayos con la ley de Snell",
+  "n is the refractive index: a larger n means a lower light speed (v = c/n). Angles use the normal, not the surface.": "n es el índice de refracción: una n mayor significa una menor rapidez de la luz (v = c/n). Los ángulos se miden desde la normal, no desde la superficie.",
+  "Reveal measurements after using the protractor to see the numerical substitution.": "Muestra las mediciones después de usar el transportador para ver la sustitución numérica.",
+  "Transmission would require sin θ₂ = {value} > 1. No real refracted angle exists: total internal reflection.": "La transmisión requeriría sin θ₂ = {value} > 1. No existe un ángulo refractado real: hay reflexión interna total.",
+  "{n1} × sin({a1}°) = {n2} × sin({a2}°). Both sides ≈ {value} (using unrounded angles).": "{n1} × sin({a1}°) = {n2} × sin({a2}°). Ambos lados ≈ {value} (con ángulos sin redondear).",
+  // Explanations
+  "Beyond the critical angle, all light reflects back into the incident medium. No beam crosses the flat surface.": "Más allá del ángulo crítico, toda la luz se refleja de vuelta hacia el medio incidente. Ningún haz cruza la superficie plana.",
+  "Matching indices: light crosses the boundary without bending.": "Índices iguales: la luz cruza la frontera sin desviarse.",
+  "Along the normal, light changes speed but does not change direction.": "A lo largo de la normal, la luz cambia de rapidez pero no de dirección.",
+  "At the critical angle, the transmitted ray grazes the surface. Increase the angle to see total internal reflection.": "En el ángulo crítico, el rayo transmitido roza la superficie. Aumenta el ángulo para ver la reflexión interna total.",
+  "Light bends toward the normal as it enters the higher-index medium.": "La luz se acerca a la normal al entrar al medio de mayor índice.",
+  "Light bends away from the normal as it enters the lower-index medium.": "La luz se aleja de la normal al entrar al medio de menor índice.",
+  "Just below the critical angle, some light still transmits.": "Justo por debajo del ángulo crítico, todavía se transmite algo de luz.",
+  "The curved face gives radial entry with no initial bend.": "La cara curva da una entrada radial sin desviación inicial.",
+  "At the parallel exit face, the outgoing ray is parallel to the incoming ray.": "En la cara de salida paralela, el rayo saliente es paralelo al rayo entrante.",
+  "The laser is off. Turn it on to trace the ray through the apparatus.": "El láser está apagado. Enciéndelo para seguir el rayo a través del aparato.",
+  // Model note and footer
+  "The physics behind the bench": "La física del banco",
+  "Angles are measured from the normal at the first flat interface. Total internal reflection occurs only when n₁ > n₂ and θ₁ exceeds arcsin(n₂/n₁). At the critical angle, the refracted ray travels along the surface.": "Los ángulos se miden desde la normal en la primera interfaz plana. La reflexión interna total ocurre solo cuando n₁ > n₂ y θ₁ es mayor que arcsin(n₂/n₁). En el ángulo crítico, el rayo refractado viaja a lo largo de la superficie.",
+  "The rectangular block traces the primary ray through each face, including side exits and internal reflections. A faint ray shows reflection at the first interface. The semicircular block uses radial entry so its curved face does not change the incidence angle at the flat face. Water is an ideal water cell; the same geometry is used for the virtual diamond block.": "El bloque rectangular sigue el rayo principal a través de cada cara, incluidas las salidas laterales y las reflexiones internas. Un rayo tenue muestra la reflexión en la primera interfaz. El bloque semicircular usa entrada radial, así que su cara curva no cambia el ángulo de incidencia en la cara plana. El agua es una celda de agua ideal; la misma forma se usa para el bloque virtual de diamante.",
+  "Indices are approximate values for red light: air 1.000, water 1.333, acrylic 1.490, glass 1.500, diamond 2.417. The model uses uniform, lossless, isotropic materials and a fixed 650 nm laser. Beam width, brightness and equipment proportions are illustrative; secondary reflections, dispersion and evanescent fields are omitted. Arrowheads indicate propagation direction. The dashed secondary ray is reflected light; the solid outgoing ray is transmitted light. At the critical angle the surface ray shows the limiting direction, not transmitted power.": "Los índices son valores aproximados para luz roja: aire 1.000, agua 1.333, acrílico 1.490, vidrio 1.500, diamante 2.417. El modelo usa materiales uniformes, sin pérdidas e isótropos, y un láser fijo de 650 nm. El ancho del haz, el brillo y las proporciones del equipo son ilustrativos; se omiten las reflexiones secundarias, la dispersión y los campos evanescentes. Las puntas de flecha indican la dirección de propagación. El rayo secundario punteado es luz reflejada; el rayo saliente continuo es luz transmitida. En el ángulo crítico, el rayo sobre la superficie muestra la dirección límite, no la potencia transmitida.",
+  "ZornScience · Explore. Observe. Explain.": "ZornScience · Explora. Observa. Explica.",
+  "Virtual lab · No data entry or saving": "Laboratorio virtual · Sin captura ni guardado de datos"
+}};
+  i18n.configure(copy);
+  if (i18n.lang !== "es") return;
+  // The instructions paragraph after the list holds five bold control names inside its sentences. Rebuild it from one
+  // full template around those names, so Spanish keeps its own word order.
+  var note = root.querySelector("#zsa-th-instructions ol + p"), bold = note ? note.querySelectorAll("strong") : [];
+  if (bold.length === 5) {
+    var keys = ["investigation", "measurements", "zoom", "below", "above"], nodes = [];
+    i18n.text("Open {investigation} for short exploration prompts. Turn off {measurements} to use the protractor before revealing the calculated angles. Use {zoom} to read the protractor on a small screen. The dashed secondary ray is reflected light. Use {below} and {above} to compare the critical-angle boundary while keeping materials fixed.")
+      .split(/\{(\w+)\}/).forEach(function (part, i) {
+        if (i % 2) nodes.push(bold[keys.indexOf(part)]);
+        else if (part) nodes.push(document.createTextNode(part));
+      });
+    note.replaceChildren.apply(note, nodes);
+  }
+}());

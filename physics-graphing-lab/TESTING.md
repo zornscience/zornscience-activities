@@ -1,5 +1,5 @@
 # Verification record
-Version: 1.0.1
+Version: 1.1.0
 Date: 2026-10-18
 Reviewer: Claude (built and tested 1.0.0)
 
@@ -28,6 +28,9 @@ PASS means the check was run on version 1.0.0 as committed and passed. Browser c
 | Console and CSP | PASS | Every browser test fails on any console error or warning, page error or CSP violation (the CSV download included). |
 | House rules | PASS | `tests/unit/static.test.js` with the rest of the site (strict IIFE, no innerHTML or inline styles, one CSP, no en or em dashes, versions agree). |
 | Visual check | PASS | Screenshots at 1366 and 390 px in Explore and Predict reviewed by eye: graphs, track, readouts and the off-scale note. |
+
+## Spanish verification
+`tests/e2e/i18n.spec.js` opens the lab with `?lang=es` and checks the page text and accessible attributes (including slider values) for leftover English in every state: each scenario, custom settings, a run on a fake clock with Pause and Replay, the time slider, Predict and compare with a sketch drawn by pointer and values typed off the scale, Reveal and compare with its feedback, Clear predictions, the instructions and share dialogs (share link with `?lang=es`), the CSV header and the print summary with a reflection. English text, spoken descriptions, the CSV and share links were compared with version 1.0.1 through the same states and are identical. The Spanish layout was checked at 320 and 390 px with no sideways scrolling and a 44 px language toggle.
 
 ## Not tested
 Real screen readers (NVDA, VoiceOver, ChromeVox), Firefox, Safari, real touch screens (touch was simulated with pointer events), Chromebooks and phones, printing to paper (print media was emulated), and the live site.
