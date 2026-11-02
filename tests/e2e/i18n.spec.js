@@ -3040,7 +3040,7 @@ test("landing page opens in Mexican Spanish with Spanish activity names and link
     if (slug === "equilibrium-thermo-lab") continue; // a chooser page, not listed on the landing page
     const link = page.locator(".zsa-home-card h3 a").filter({hasText:new RegExp("^" + title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "$")});
     await expect(link, slug).toHaveCount(1);
-    await expect(link, slug).toHaveAttribute("href", new RegExp("/" + slug + "/\\?lang=es$"));
+    await expect(link, slug).toHaveAttribute("href", slug + "/?lang=es");
   }
   // The ACT activities and the teacher code checker have no Spanish version.
   for (const name of ["ACT Practice", "ACT Question Generator"]) {

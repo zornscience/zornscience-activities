@@ -163,10 +163,17 @@
   "Activities marked with a completion code end a full round with a code that students can paste into Google Classroom.": "Las actividades marcadas con código de finalización terminan una ronda completa con un código que los estudiantes pueden pegar en Google Classroom.",
   "Check completion codes": "Revisar códigos de finalización (en inglés)"
 }};
+  // configure() rewrites every link as an absolute URL. The landing page keeps its links exactly as written, adding
+  // only lang=es in Spanish, so English links are unchanged.
+  var links = Array.from(root.querySelectorAll("a[href]")).map(function (a) { return [a, a.getAttribute("href")]; });
   i18n.configure(copy);
+  links.forEach(function (pair) {
+    var href = pair[1], local = !/^(?:[a-z]+:|\/\/|#)/i.test(href);
+    pair[0].setAttribute("href", local && i18n.lang === "es" ? href + (href.indexOf("?") >= 0 ? "&" : "?") + "lang=es" : href);
+  });
   if (i18n.lang !== "es") return;
   // The ACT activities have no Spanish version: their names stay in English, followed by " (en inglés)".
-  root.querySelectorAll('.zsa-home-card h3 a[href*="/act/"], .zsa-home-card h3 a[href*="/act-question-generator/"]').forEach(function (a) {
+  root.querySelectorAll('.zsa-home-card h3 a[href^="act/"], .zsa-home-card h3 a[href^="act-question-generator/"]').forEach(function (a) {
     a.parentNode.appendChild(document.createTextNode(" (en inglés)"));
   });
 }());
