@@ -2637,9 +2637,10 @@ async function pageText(page, skip) {
   }, skip);
 }
 
-const calculatorEnglish = /\b(?:Fullscreen|Exit|Guided|History|calculations|calculator|keypad|keyboard|exercise|Nice work|Sequence|Free practice|Start again|Statistics|Coordinate|conversion|Random|Minimum|Maximum|Generate|Save data|Data values|First value|Second value|Calculate|Numbers|Math operations|arrow|arrows|SYNTAX|DOMAIN|DIVIDE|OVERFLOW|INSUFFICIENT|NO DATA|VALUE|Select|Convert|Attach|settings|memory|habit|Fractions|Powers|roots|trig|Order matters|possibilities|Logs|guesswork|Find|Press|SCIENTIFIC|PRACTICE|Ready when|About this|SKILL|Small exercises|Useful habits|test day|whole numbers|finite|radius|frequency|pair per line|Clear history|entry|All activities)\b/i;
+const calculatorEnglish = /\b(?:Fullscreen|Exit|Guided|History|calculations|calculator|keypad|keyboard|exercise|Nice work|Sequence|Free practice|Start again|Statistics|Coordinate|conversion|Random|Minimum|Maximum|Generate|Save data|Data values|First value|Second value|Calculate|Numbers|Math operations|arrow|arrows|Select|Convert|Attach|settings|memory|habit|Fractions|Powers|roots|trig|Order matters|possibilities|Logs|guesswork|Find|Press|SCIENTIFIC|PRACTICE|Ready when|About this|SKILL|Small exercises|Useful habits|test day|whole numbers|finite|radius|frequency|pair per line|Clear history|entry|All activities)\b/i;
 async function noCalculatorEnglish(page) {
-  const text = await pageText(page, "#keypad, #indicators");
+  // The display's error words stay in English, as a real calculator shows them.
+  const text = (await pageText(page, "#keypad, #indicators")).replace(/DOMAIN \/ OVERFLOW|SYNTAX|DOMAIN|DIVIDE BY 0|INSUFFICIENT DATA|NO DATA|ENTER OP \+ VALUE/g, "");
   expect(text).not.toMatch(english);
   expect(text).not.toMatch(calculatorEnglish);
 }
@@ -2732,13 +2733,13 @@ test("scientific-calculator opens in Mexican Spanish and translates the exercise
   await page.keyboard.type("2.5*2"); await page.keyboard.press("Enter");
   await expect(answer).toHaveText("5");
   await page.keyboard.type("2+*3"); await page.keyboard.press("Enter");
-  await expect(answer).toHaveText("SINTAXIS");
+  await expect(answer).toHaveText("SYNTAX");
   await page.keyboard.press("Escape"); await page.keyboard.press("Escape");
   await page.keyboard.type("1/0"); await page.keyboard.press("Enter");
-  await expect(answer).toHaveText("DIVISIÓN ENTRE 0");
+  await expect(answer).toHaveText("DIVIDE BY 0");
   await noCalculatorEnglish(page);
   for (const k of ["CLEAR", "CLEAR", "2nd", "÷"]) await key(k);
-  await expect(answer).toHaveText("ESCRIBE OP + VALOR");
+  await expect(answer).toHaveText("ENTER OP + VALUE");
   await page.locator("#reset").click();
 
   // Statistics: a mode, the data dialog with an error, then a mean from decimal data.
@@ -2746,7 +2747,7 @@ test("scientific-calculator opens in Mexican Spanish and translates the exercise
   await expect(answer).toHaveText("Elige un modo estadístico");
   await key("ENTER");
   await key("STATVAR");
-  await expect(answer).toHaveText("SIN DATOS");
+  await expect(answer).toHaveText("NO DATA");
   await key("DATA");
   await expect(page.locator("#modal-title")).toHaveText("Estadística · 1-VAR");
   await expect(page.locator("#data-instructions")).toHaveText("Escribe un valor por línea. Repite un valor para darle una frecuencia mayor que uno.");

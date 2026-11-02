@@ -89,20 +89,14 @@
   "down": "abajo",
   "left": "izquierda",
   "right": "derecha",
-  // Calculator display: menu prompts and error messages
+  // Calculator display: menu prompts. The error words (SYNTAX, DOMAIN, DIVIDE BY 0, DOMAIN / OVERFLOW, NO DATA,
+  // INSUFFICIENT DATA, ENTER OP + VALUE) stay in English, as a real calculator shows them.
   "Select with arrows + ENTER": "Elige con flechas + ENTER",
   "Choose a statistics mode": "Elige un modo estadístico",
   "Select a statistic to display": "Elige una estadística para mostrar",
   "Convert rectangular ↔ polar": "Convierte rectangulares ↔ polares",
   "Attach a unit or display DMS": "Agrega una unidad o muestra DMS",
   "Reset settings, memory and entry?": "¿Restablecer ajustes, memoria y entrada?",
-  "SYNTAX": "SINTAXIS",
-  "DOMAIN": "DOMINIO",
-  "DIVIDE BY 0": "DIVISIÓN ENTRE 0",
-  "DOMAIN / OVERFLOW": "DOMINIO / DESBORDAMIENTO",
-  "NO DATA": "SIN DATOS",
-  "INSUFFICIENT DATA": "DATOS INSUFICIENTES",
-  "ENTER OP + VALUE": "ESCRIBE OP + VALOR",
   // Guided practice
   "Fractions, made simple": "Fracciones sin complicaciones",
   "Add fractions & convert to decimals": "Suma fracciones y conviértelas a decimales",
