@@ -1,5 +1,5 @@
 # Physics Graphing Lab
-Version: 1.0.1
+Version: 1.1.0
 
 A lab for one-dimensional motion with constant acceleration. A cart moves along a labeled track for 10 seconds while its position, velocity and acceleration graphs grow together. Students explore the model, or sketch their own predictions first and then reveal and compare. The page ends with an explanation prompt that prints with the graphs.
 
@@ -87,6 +87,7 @@ Suggested links (add `&from=` with the lesson's own URL):
 | File | What it holds |
 |---|---|
 | `index.html` | Page shell: mode bar, settings, track and playback, prediction bar, graphs, keyboard predictions, reflection and the live region. |
+| `data.js` | Every student-facing English string and template with its Mexican Spanish, for `../shared/zsa-i18n.js`. |
 | `physics.js` | The model, scenarios, slider ranges, graph scales, the comparison, insight text, spoken descriptions, number formatting and the CSV. No page code. |
 | `lab.js` | The page: drawing the track and graphs, playback, predictions, reveal, printing, the download and deep links. |
 | `lab.css` | Layout, graph colors and print styles, prefixed `zsa-pg-`. |
@@ -102,5 +103,9 @@ Suggested links (add `&from=` with the lesson's own URL):
 - The graphs sit three across wherever each can be 250 px wide, otherwise they wrap.
 - No sideways scrolling from 320 px, and every button, select, slider, box and summary is at least 44 px.
 
+## Mexican Spanish
+Use `?lang=es` or the shared EN / ES header links. English is the default and the fallback. The instructions, settings, the six scenarios, readouts, slider values, graph titles, axes and spoken descriptions, the off-scale notes, prediction feedback, the insight text, the reflection, the print summary, the CSV header and every announcement come from `data.js`, and every sentence is one full template with placeholders, so Spanish keeps its own word order. The share link carries `?lang=es` in Spanish. Symbols, units, numbers and decimal points stay unchanged. Speed words follow the Style Kit: rapidez for speed and velocidad for velocity, kept separate. The language links reload the page, so predictions and the reflection start over. See `../SPANISH_TERMS.md` for choices beyond the supplied glossary.
+
 ## Changelog
 - 1.0.0: first version in the repository, ported from the handoff build with the changes above.
+- 1.1.0: Mexican Spanish with `?lang=es` and the shared EN / ES header links. The model's text and the CSV header are full templates in `physics.js`; in Node and in English their output is unchanged.
