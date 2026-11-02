@@ -1,4 +1,4 @@
-# Iodine Clock Lab · v1.1.0
+# Iodine Clock Lab · v1.1.1
 
 Self-contained simulation of the supplied U8.A1 Summative Lab Iodine Clock handout. Uses existing shared ZornScience branding, local font, logo, embed support, and a copy of the equilibrium lab's share behavior. No student data entry, storage, accounts, network requests, export, or completion codes.
 
@@ -26,6 +26,7 @@ Use `?lang=es` or the shared EN / ES header links. English is the fallback, and 
 
 ## Changelog
 
+- 1.1.1: The Spanish instructions call the playback speed "ritmo de reproducción", matching the Physics labs, so velocidad keeps its rate meaning.
 - 1.1.0: Mexican Spanish with `?lang=es` and the shared EN / ES header links.
 
-Version: 1.1.0
+Version: 1.1.1

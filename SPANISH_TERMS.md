@@ -2075,7 +2075,7 @@ Reset to the launch. | De vuelta al lanzamiento.
 - VSEPR geometry names are feminine (lineal, trigonal plana, tetraédrica, piramidal trigonal, angular) so they agree with geometría and distribución in every Lewis builder sentence. The Lewis builder is a Chemistry activity, so it uses estructura de Lewis, not the AP term diagrama de Lewis.
 - Stoichiometry Coach and Limiting Reactant Visualizer use relación molar, the Chemistry page term, not the AP term razón molar.
 - Where a count would force agreement with a noun that changes, the Spanish template puts the count after a label (Reacciones: 2 de 4, Resueltos en esta sesión: 3), so one template is correct for every number.
-- Physics labs keep rapidez (speed, a number) and velocidad (velocity, with direction) separate in every label, readout and sentence. Settings that are not physics quantities avoid both words: Playback speed is Ritmo de reproducción and Time speed is Ritmo de la simulación.
+- Physics labs keep rapidez (speed, a number) and velocidad (velocity, with direction) separate in every label, readout and sentence. Settings that are not physics quantities avoid both words: Playback speed is Ritmo de reproducción and Time speed is Ritmo de la simulación. The Iodine Clock Lab uses Ritmo de reproducción too, so in Chemistry velocidad keeps its reaction-rate meaning.
 - In the Projectile lab, vx and vy are feminine in sentences because they stand for la velocidad horizontal and la velocidad vertical (vx es pequeña, vy es negativa).
 - The Simple Pendulum counts oscillations with separate singular and plural templates ({count} oscilación completa, {count} oscilaciones completas).
 
