@@ -1719,6 +1719,7 @@ Lit / Equally bright / Brightest / Dark (insight labels) | Con luz / Brillo igua
 Warning: short circuit. | Atención: cortocircuito.
 Equipotential & Electric Field Mapping (activity title) | Líneas equipotenciales y mapeo de campos eléctricos
 Map the invisible (instructions heading) | Mapeo de lo invisible
+Explore oscillations & energy (instructions heading) | Exploración de las oscilaciones y la energía
 probe / red probe / voltage probe | punta / punta roja / punta del voltímetro
 digital voltmeter | voltímetro digital
 Charge tray | Charola de cargas

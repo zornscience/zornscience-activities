@@ -3,7 +3,7 @@ Buildless ZornScience simulation. Open index.html through a static web server.
 Adjust mass, pivot-to-center length, release angle, gravity and playback speed. Live energy bars and period predictions; no data recording or storage.
 Physics: fixed-step RK4 for the full nonlinear pendulum; actual period computed by arithmetic-geometric mean. Zero gravity releases from rest with no motion.
 
-Version: 1.2.0
+Version: 1.2.1
 
 Learning goals: identify the effects of mass, length and gravity on period; distinguish a half swing from a complete oscillation; explain kinetic/potential energy transfer and conservation.
 
@@ -14,3 +14,5 @@ Accessibility: keyboard sliders with units, paused step control, motion only on 
 ## Mexican Spanish
 
 Use `?lang=es` or the shared EN / ES header links. English is the fallback. All student text, the instructions, comparison buttons and predictions, slider labels, gravity and playback options, SVG labels and description, energy cues, status messages, cycle progress, readouts, the explanation, the model note, accessible labels and the share title, description, status and link use the activity's `data.js`. Every sentence is one full template with placeholders, so Spanish keeps its own word order. In Spanish the share link carries `?lang=es`. Symbols, numbers, units and decimal points stay unchanged. Speed is rapidez (the bob speed readout), never velocidad. The language links reload the page, so a swing in progress starts over. See `../SPANISH_TERMS.md` for choices beyond the Style Kit glossary.
+
+In 1.2.1 the Spanish instructions heading is a noun phrase, Exploración de las oscilaciones y la energía, following the Style Kit's title rule.

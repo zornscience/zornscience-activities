@@ -1,6 +1,6 @@
 # Verification
 
-Version: 1.2.0
+Version: 1.2.1
 
 - `tests/e2e/pendulum-lab.spec.js`: periods on Earth, the Moon and in zero gravity, mass and length changes, energy conservation, the three controlled comparisons, cycle counting, paused stepping, dragging and the mobile settings disclosure.
 - `node --test tests/unit/static.test.js tests/unit/i18n.test.js`: versions, asset queries, markup and language module.
