@@ -25,7 +25,7 @@ test('builder has HH fraction, effective range and nonbuffer explanations',async
  await page.locator('#use-stress').click();await expect(page.locator('#panel-stress')).toBeVisible();await expect(page.locator('#stress-pair')).toHaveValue('phosphate');
 });
 test('stress reference, stoichiometry, depletion, reversal, data and reset',async({page})=>{
- await page.goto('/ph-buffer-lab/?mode=stress&pair=acetate');await expect(page.locator('#buffer-ph')).toHaveText('pH 4.74');await page.locator('#acid-large').click();
+ await page.goto('/ph-buffer-lab/?mode=stress&pair=acetate&capacity=0.20');await expect(page.locator('#buffer-ph')).toHaveText('pH 4.74');await page.locator('#acid-large').click();
  await expect(page.locator('#water-ph')).toHaveText('pH 3.00');await expect(page.locator('#buffer-ph')).toHaveText('pH 4.73');await expect(page.locator('#stress-reaction')).toContainText('A⁻ + H₃O⁺ → HA + H₂O');
  await slide(page,'capacity',-2);await expect(page.locator('#data-body tr')).toHaveCount(1);
  await page.locator('#acid-large').evaluate(el=>{for(let i=0;i<8;i++)el.click();});await expect(page.locator('#stress-status')).toContainText('nearly exhausted');
@@ -66,4 +66,35 @@ test('Spanish dynamic feedback, CSV, share dialog, embed mode and index card',as
  await page.getByRole('button',{name:'Compartir actividad'}).click();await expect(page.locator('#zsa-header-share-url')).toHaveValue('https://activities.zornscience.org/ph-buffer-lab/?lang=es');await page.keyboard.press('Escape');
  await page.goto('/ph-buffer-lab/?embed=1');await expect(page.locator('.zsa-back')).toBeHidden();await expect(page.locator('footer')).toBeHidden();
  await page.goto('/?lang=es');await expect(page.getByRole('link',{name:'Laboratorio de pH y soluciones amortiguadoras'})).toHaveAttribute('href',/ph-buffer-lab\/\?lang=es/);
+});
+test('shortcut accepts the acetic acid lesson and the 5 percent boundary in both languages',async({page})=>{
+ for(const lang of ['en','es']){
+  for(const [c,percent,accepted]of [['0.10','1.34',true],['0.0072','5.00',true],['0.0069','5.11',false]]){
+   await page.goto('/ph-buffer-lab/?mode=explore&solute=acetic&concentration='+c+'&method=1&lang='+lang);
+   await expect(page.locator('#method-content')).toContainText(percent+'%');
+   await expect(page.locator('#method-content')).toContainText(lang==='en'?(accepted?'Yes, close enough. The shortcut and the exact pH agree within about 0.01.':'No. The shortcut is unreliable here. Use the exact equilibrium result.'):(accepted?'Sí, es suficientemente cercano.':'No. La aproximación no es confiable aquí.'));
+   if(c==='0.10')await expect(page.locator('#method-content')).toContainText(lang==='en'?'Student pH = 2.87; exact pH = 2.88.':'2.87');
+   await expect(page.locator('#explore-ph')).toHaveText(/\d+\.\d{2}/);
+  }
+ }
+});
+test('default 0.020 M buffer exhausts at 10 mL, with six addition buttons and integer graph ticks',async({page})=>{
+ for(const lang of ['en','es']){
+  await page.goto('/ph-buffer-lab/?mode=stress&pair=acetate&lang='+lang);
+  await expect(page.locator('#capacity-value')).toHaveText('2.0 × 10⁻² M');
+  await expect(page.locator('#capacity-note')).toContainText('10.00 mL');
+  await expect(page.locator('.zsa-pb-additions button')).toHaveCount(6);
+  await expect(page.locator('#acid-bulk')).toHaveText(lang==='en'?'Add 5.0 mL HCl':'Agregar 5.0 mL de HCl');
+  await expect(page.locator('#base-bulk')).toHaveText(lang==='en'?'Add 5.0 mL NaOH':'Agregar 5.0 mL de NaOH');
+  for(const direction of ['acid','base']){
+   await page.locator('#stress-reset').click();
+   await page.locator('#'+direction+'-bulk').click();await page.locator('#'+direction+'-bulk').click();
+   await expect(page.locator('#data-body tr').last().locator('td').nth(1)).toHaveText('10.00');
+   await expect(page.locator('#stress-status')).toContainText(lang==='en'?'nearly exhausted':'casi agotado');
+   await page.locator('#'+direction+'-bulk').click();
+   await expect(page.locator('#data-body tr').last().locator('td').nth(1)).toHaveText('15.00');
+   const labels=await page.locator('#stress-graph text[y="288"]').allTextContents();
+   expect(labels).toEqual(['0','5','10','15']);
+  }
+ }
 });

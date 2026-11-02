@@ -1,6 +1,6 @@
 # pH & Buffer Lab
 
-Version: 1.0.0
+Version: 1.0.1
 
 A static Chemistry and AP Chemistry activity with four modes: pH Explorer, Buffer Builder, Stress Test, and Challenges. It uses the existing ZornScience header, dialogs, footer, Inter font, shared styles, language module, safe lesson return links, and embed behavior. There is no build step, account, storage, tracking, completion code, or external request. All four modes work offline after the page and its local assets have loaded.
 
@@ -19,7 +19,7 @@ Parameters combine. Unknown, nonfinite, and out-of-range values fall back to def
 | `pair` | `acetate` (default), `phosphate`, `ammonium`, `carbonate`. Presets the Builder, Stress Test, and buffer design challenge. |
 | `ha` | Builder acid concentration from `0.001` to `1` M, default `0.10`. |
 | `a` | Builder conjugate base concentration from `0.001` to `1` M, default `0.10`. |
-| `capacity` | Stress Test total concentration, `[HA] + [A⁻]`, from `0.010` to `1.0` M, default `0.20`. The initial components each contain half of this concentration. |
+| `capacity` | Stress Test total concentration, `[HA] + [A⁻]`, from `0.010` to `1.0` M, default `0.020`. The initial components each contain half of this concentration. |
 | `lang` | `es` for Mexican Spanish; English otherwise. The shared EN / ES links preserve URL settings. Switching language starts a fresh experiment. |
 | `from` | URL-encoded lesson URL for “Back to the lesson”. Only HTTPS URLs on exactly `zornscience.org`, without credentials or a nondefault port, are accepted, matching the neighboring labs. Default: `https://zornscience.org/science/ap-chemistry/`. |
 | `embed` | `1` uses the shared embed mode, hiding chrome and sending the shared `zsa:resize` messages. |
@@ -45,13 +45,13 @@ Buffer pairs use the listed rounded pKa constants: acetate 4.74, phosphate 7.21,
 
 Stress Test first tracks neutralization equivalents from all strong-acid and strong-base additions. The fixed spectator charge, conserved buffer family, and new total volume then determine full equilibrium. This handles exhaustion, hydrolysis at exhaustion, excess strong reagent, reversal, and polyprotic neighboring equilibria continuously. The moles bars show final equilibrium quantities. The reaction panel reports stoichiometric conversion; these two quantities intentionally differ near exhaustion. Phosphate's neighboring equilibria can soften its pH change after the selected pair is depleted.
 
-The default buffer starts with 0.10 M acid and 0.10 M conjugate base in 100.0 mL. After 1.0 mL of 0.10 M HCl, water has pH 3.00 and acetate has pH 4.73, from 4.74. The concentration control sets total buffer concentration, not each component separately.
+The default buffer starts with 0.010 M acid and 0.010 M conjugate base in 100.0 mL, for a total concentration of 0.020 M. Either component is consumed after 10.0 mL of the corresponding 0.10 M reagent. Buttons add 0.1, 1.0 or 5.0 mL of HCl or NaOH to both beakers. With `capacity=0.20`, the original reference remains available: after 1.0 mL of 0.10 M HCl, water has pH 3.00 and acetate has pH 4.73, from 4.74. The concentration control sets total buffer concentration, not each component separately.
 
-Henderson-Hasselbalch and square-root calculations are student methods. Exact readouts include equilibrium corrections. The Explorer checks the requested approximately 1% criterion; it warns when ionization or water makes the method unreliable. The Builder shades pKa ± 1 and warns about extreme ratios. Stress Test warns when either stoichiometric component is at or below 1% of the total. Strong-acid reference H₂SO₄ is never a calculation option.
+Henderson-Hasselbalch and square-root calculations are student methods. Exact readouts include equilibrium corrections. The Explorer accepts the square-root shortcut when x/C is at most 5%, including the lessons' approximately 1% example, and warns above 5%. Both the shortcut and exact pH remain visible; the separate water-autoionization note remains unchanged. The Builder shades pKa ± 1 and warns about extreme ratios. Stress Test warns when either stoichiometric component is at or below 1% of the total. Strong-acid reference H₂SO₄ is never a calculation option.
 
 ## Stable labels and data
 
-Worksheets can refer to “Concentration (M)”, “[HA] (M)”, “[A⁻] (M)”, “Total buffer concentration (M)”, “pH vs. volume added”, “Moles in the buffer”, and “Data table”. The table logs the initial state and every addition, with cumulative volume, separate HCl and NaOH totals, and both pH values. The x axis is cumulative added volume, including mixed additions. The table is the exact accessible counterpart of the graph.
+Worksheets can refer to “Concentration (M)”, “[HA] (M)”, “[A⁻] (M)”, “Total buffer concentration (M)”, “pH vs. volume added”, “Moles in the buffer”, and “Data table”. The table logs the initial state and every addition, with cumulative volume, separate HCl and NaOH totals, and both pH values. The x axis is cumulative added volume, including mixed additions, with whole-number tick labels. The table is the exact accessible counterpart of the graph.
 
 Copy data exports tab-separated columns with a selectable fallback. Download CSV exports UTF-8 with the same localized headers and readings as the table. CSV columns are: Addition, Volume added (mL), HCl total (mL), NaOH total (mL), pH water, pH buffer. Changing Stress Test setup resets the experiment; changing tabs preserves it. Builder's test button copies the pair and explicitly starts a fresh equal-component experiment.
 

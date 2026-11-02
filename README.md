@@ -41,7 +41,7 @@ stoichiometry-coach/       Stoichiometry Coach, v1.0.0 (conversion factor setups
 atwood-machine/           The Atwood Machine, v1.1.0 (ideal pulley, adjustable masses and live vectors; no data recording; English and Mexican Spanish)
 physics-graphing-lab/      Physics Graphing Lab, v1.1.0 (a cart with linked position, velocity and acceleration graphs; English and Mexican Spanish)
 collision-carts/           Collision Carts, v1.1.0 (two carts on a track, elastic and inelastic collisions, live velocity and momentum vectors; English and Mexican Spanish)
-ph-buffer-lab/             pH & Buffer Lab, v1.0.0 (pH exploration, buffer design, capacity experiments and challenges; English and Mexican Spanish)
+ph-buffer-lab/             pH & Buffer Lab, v1.0.1 (pH exploration, buffer design, capacity experiments and challenges; English and Mexican Spanish)
 titration-lab/             Virtual Titration Simulator, v1.0.0 (burette, indicators and a live pH curve for strong and weak acids and bases)
 kinetics-lab/              Kinetics and Collision Theory Sandbox, v1.0.0 (colliding particles, temperature, concentration, activation energy and a catalyst, with a live concentration graph)
 redox-coach/              Redox Half-Reaction Balancer Coach, v1.2.0 (manual phase-by-phase balancing in acidic and basic media; English and Mexican Spanish)
