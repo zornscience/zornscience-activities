@@ -765,6 +765,31 @@ damping ratio | coeficiente de amortiguamiento
 transients | transitorios
 alias (display sampling) | efectos de muestreo (aliasing)
 screen refresh rate | frecuencia de actualización de pantalla
+scatter plot | gráfica de dispersión
+y-intercept, b (results label) | ordenada al origen, b (the existing intercept term)
+line of best fit / best-fit line / linear best fit | línea de mejor ajuste
+fitted line | línea ajustada
+least-squares linear regression | regresión lineal por mínimos cuadrados
+R squared (spoken) | R al cuadrado
+extrapolation / estimate | extrapolación / estimación
+measured range | intervalo medido
+independent variable / dependent variable | variable independiente / variable dependiente
+axis label / label (a graph or a variable) | rótulo del eje / rotular
+lab write-up / lab report | reporte de laboratorio
+causation | causalidad
+y-units / x-unit | unidades de y / unidad de x
+order of operations | jerarquía de operaciones
+angle mode | modo de ángulo
+second function (calculator) | segunda función
+natural logarithm / base 10 logarithm | logaritmo natural / logaritmo base 10
+inverse (function) | función inversa
+combinations | combinaciones
+random integer | entero aleatorio
+coordinate conversion / rectangular / polar | conversión de coordenadas / rectangulares / polares
+statistics mode (calculator) | modo estadístico
+calculator keys / computer keyboard | teclas de la calculadora / teclado
+display errors SYNTAX / DOMAIN / DIVIDE BY 0 / OVERFLOW / NO DATA / INSUFFICIENT DATA | SINTAXIS / DOMINIO / DIVISIÓN ENTRE 0 / DESBORDAMIENTO / SIN DATOS / DATOS INSUFICIENTES
+history (of calculations) | historial
 
 ## Additional interface labels
 
@@ -1809,6 +1834,22 @@ Find the harmonics (instructions heading) | Búsqueda de los armónicos
 1 · Find harmonics / 2 · Measure wavelength / 3 · Change tension | 1 · Busca armónicos / 2 · Mide la longitud de onda / 3 · Cambia la tensión
 Measure the string | Medición de la cuerda
 Why does this happen? | ¿Por qué pasa esto?
+Scientific Calculator Practice | Práctica con la calculadora científica
+Let’s make it click. (practice heading) | Calculadora sin misterios.
+Your keyboard works here (instructions heading) | Uso del teclado
+Fractions, made simple / Powers & roots / Get an angle on trig | Fracciones sin complicaciones / Potencias y raíces / Trigonometría desde otro ángulo
+Order matters / Count the possibilities / Logs without the guesswork | La importancia del orden / Conteo de posibilidades / Logaritmos sin adivinar
+A good test-day habit | Un buen hábito para el día del examen
+ZornScience SCIENTIFIC / CALCULATOR PRACTICE (printed on the calculator body) | ZornScience CIENTÍFICA / PRÁCTICA DE CALCULADORA
+up arrow / down arrow / left arrow / right arrow | Flecha arriba / Flecha abajo / Flecha izquierda / Flecha derecha
+Virtual Lab Graphing Tool | Herramienta de gráficas para el laboratorio virtual
+Set up your data / See the relationship / Read your best-fit line | Preparación de tus datos / Visualización de la relación / Lectura de tu línea de mejor ajuste
+Before you turn it in / A little graphing help | Revisión antes de entregar / Un poco de ayuda para graficar
+Remember DRY MIX (graphing help heading) | Qué va en cada eje
+Read the scale / Explain the slope | Lectura de la escala / Explicación de la pendiente
+Heating water / Burning candle / Gas production (curved) | Calentamiento de agua / Vela encendida / Producción de gas (curva)
+Reading Graphs (lesson link) / ← Reading Graphs lesson | Lectura de gráficas / ← Lección de lectura de gráficas
+zornscience-graph (download name) | zornscience-grafica
 
 ## Full sentence templates
 
@@ -2344,6 +2385,20 @@ Harmonic {n}: {nodes} nodes, {n} antinodes. Adjacent nodes are {spacing} m apart
 Nearest resonance: {f} Hz · increase by {delta} Hz / decrease by {delta} Hz | Resonancia más cercana: {f} Hz · sube {delta} Hz / baja {delta} Hz
 Neighboring nodes: Δx = {dx} m = λ/2. Your measured wavelength is λ = 2Δx = {wavelength} m. | Nodos vecinos: Δx = {dx} m = λ/2. La longitud de onda que mediste es λ = 2Δx = {wavelength} m.
 Motion is shown at 1/40 speed. | El movimiento se muestra a 1/40 del tiempo real.
+Step {step} / {total} · Press {key} | Paso {step} / {total} · Presiona {key}
+✓ Nice work! {after} | ✓ ¡Buen trabajo! {after}
+Statistics · {mode} | Estadística · {mode}
+Enter radius and angle in {mode}. | Escribe el radio y el ángulo en {mode}.
+Press [Fullscreen] for a calculator-only view ...; use [Exit fullscreen] to return to practice. (instructions paragraph, one template, [brackets] mark bold) | Presiona [Pantalla completa] para ver solo la calculadora ...; usa [Salir de pantalla completa] para volver a la práctica.
+{count} point / {count} points | {count} punto / {count} puntos
+Not plotted: row {rows}. / Not plotted: rows {rows}. ... | Sin graficar: fila {rows}. / Sin graficar: filas {rows}. ...
+{count} measurements plotted. Blue points: your measurements. / {one} ... | {count} mediciones graficadas. Puntos azules: tus mediciones. / {one} medición graficada. Punto azul: tu medición.
+Scatter plot of {y} versus {x}. {count} data points. Linear best fit: {equation}. R squared {r2}. ... | Gráfica de dispersión de {y} contra {x}. {count} puntos de datos. Línea de mejor ajuste: {equation}. R al cuadrado: {r2}. ...
+As {x} increases, the fitted line for {y} increases. Slope tells you the change in y per unit of x. | Cuando {x} aumenta, la línea ajustada de {y} aumenta. La pendiente te dice el cambio en y por cada unidad de x.
+{y} ≈ {yValue} at {x} = {xValue}. Extrapolation: outside your measured range; use caution. | {y} ≈ {yValue} cuando {x} = {xValue}. Extrapolación: está fuera de tu intervalo medido; úsala con cuidado.
+Line {line}: expected exactly two columns, separated by commas or tabs. | Línea {line}: se esperaban exactamente dos columnas, separadas por comas o tabulaciones.
+Row {row}: {x} = {xValue}, {y} = {yValue} | Fila {row}: {x} = {xValue}, {y} = {yValue}
+{format} download ready. | Tu descarga en {format} está lista.
 
 ## Agreement notes
 
@@ -2356,6 +2411,11 @@ Motion is shown at 1/40 speed. | El movimiento se muestra a 1/40 del tiempo real
 - The Simple Pendulum counts oscillations with separate singular and plural templates ({count} oscilación completa, {count} oscilaciones completas).
 - Standing Waves on a String puts its counts after labels (Nodos: 4. Antinodos: 3.) and gives LOOP / LOOPS separate singular and plural templates. Circuit Builder's insight labels (Con luz, Brillo igual, Mayor brillo, Sin luz) avoid agreeing with foco, pila or resistencia.
 - Spelled-out units stay as the Style Kit writes them (volts, hertz, newtons, nanocoulombs), while centimeters is spelled centímetros, as earlier labs spelled gramos and metros.
+- Scientific Calculator Practice keeps every key label, menu item and display symbol as printed on a real scientific calculator (2nd, DRG, LOG, LN, SIN, ENTER, DATA, STATVAR, DEG, RAD, nPr, nCr, 1-VAR and the statistics names). Only the words around them are translated, including the menu prompts and error words on the display. Arrow keys in a lesson's key sequence read derecha, izquierda, arriba and abajo.
+- The calculator is la calculadora (feminine), so its ready line reads Lista cuando tú lo estés.
+- The Virtual Lab Graphing Tool's English counts some things in the plural even for one point (1 measurements plotted). Spanish uses the singular through separate templates whose count is filled as {one}, which read exactly the same in English.
+- DRY MIX is an English mnemonic. Spanish states the rule instead (Qué va en cada eje: lo que cambias va en x y lo que mides va en y).
+- Student variable names are filled into sentences without an article (Cuando Tiempo aumenta), since they can be any word a student types.
 
 ## Element-name spellings
 
