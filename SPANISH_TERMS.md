@@ -2412,7 +2412,7 @@ Row {row}: {x} = {xValue}, {y} = {yValue} | Fila {row}: {x} = {xValue}, {y} = {y
 - Standing Waves on a String puts its counts after labels (Nodos: 4. Antinodos: 3.) and gives LOOP / LOOPS separate singular and plural templates. Circuit Builder's insight labels (Con luz, Brillo igual, Mayor brillo, Sin luz) avoid agreeing with foco, pila or resistencia.
 - Spelled-out units stay as the Style Kit writes them (volts, hertz, newtons, nanocoulombs), while centimeters is spelled centímetros, as earlier labs spelled gramos and metros.
 - Scientific Calculator Practice keeps every key label, menu item and display symbol as printed on a real scientific calculator (2nd, DRG, LOG, LN, SIN, ENTER, DATA, STATVAR, DEG, RAD, nPr, nCr, 1-VAR and the statistics names). The error words on the display (SYNTAX, DOMAIN, DIVIDE BY 0 and the rest) also stay in English, as a real calculator shows them. Only the words around them are translated, including the menu prompts on the display. Arrow keys in a lesson's key sequence read derecha, izquierda, arriba and abajo.
-- The calculator is la calculadora (feminine), so its ready line reads Lista cuando tú lo estés.
+- The calculator's ready line reads Cuando quieras, which avoids agreeing with la calculadora.
 - The Virtual Lab Graphing Tool's English counts some things in the plural even for one point (1 measurements plotted). Spanish uses the singular through separate templates whose count is filled as {one}, which read exactly the same in English.
 - DRY MIX is an English mnemonic. Spanish states the rule instead (Qué va en cada eje: lo que cambias va en x y lo que mides va en y).
 - Student variable names are filled into sentences without an article (Cuando Tiempo aumenta), since they can be any word a student types.
