@@ -1,6 +1,6 @@
 # Scientific Calculator Practice
 
-Version: 1.2.1
+Version: 1.2.2
 Independent browser-local scientific calculator practice tool. Files are served directly from this folder by GitHub Pages. No accounts, analytics, server calculations, or external runtime dependencies.
 
 Includes reference keypad placement, arithmetic with precedence and implicit multiplication, mixed fractions, powers and roots, logs, inverse and hyperbolic trigonometry, angle units and DMS, probability, 5 memory variables, scientific and engineering notation, fixed decimals, statistics and linear regression, coordinate conversion, history, keyboard input and six guided lessons.
@@ -19,3 +19,4 @@ Use `?lang=es` or the shared EN / ES header links. English is the default and th
 
 - 1.2.0: Mexican Spanish with `?lang=es` and the shared EN / ES header links. English text is unchanged.
 - 1.2.1: The error words on the calculator display stay in English in Spanish too, as a real calculator shows them.
+- 1.2.2: The Spanish ready line under the calculator reads Cuando quieras.

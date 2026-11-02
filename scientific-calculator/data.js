@@ -27,7 +27,7 @@
   "Calculator keypad and display": "Teclado y pantalla de la calculadora",
   "SCIENTIFIC": "CIENTÍFICA",
   "ZORNSCIENCE · CALCULATOR PRACTICE": "ZORNSCIENCE · PRÁCTICA DE CALCULADORA",
-  "Ready when you are": "Lista cuando tú lo estés",
+  "Ready when you are": "Cuando quieras",
   "Reset calculator ↺": "Reiniciar la calculadora ↺",
   "Guided practice": "Práctica guiada",
   "History": "Historial",
