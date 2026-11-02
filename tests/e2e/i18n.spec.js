@@ -42,6 +42,11 @@ const labs = {
   "standing-waves-lab":"Ondas estacionarias en una cuerda",
   "titration-lab":"Simulador virtual de titulación"
 };
+// Tools (the calculator and the graphing tool) also have their own tests below and join the narrow-screen header check.
+const tools = {
+  "scientific-calculator":"Práctica con la calculadora científica",
+  "virtual-lab-graphing":"Herramienta de gráficas para el laboratorio virtual"
+};
 const english = /\b(?:ZornScience home|Practice|Reference|Feedback|Results|Start|Finish|Help|Options|Time|Show|Incorrect|Wrong|Recall|Cards|Card|Points|Streak|Selected|Unknown|Period|Group|Symbol|Block|Element|Copied|the|your|Choose|You|Hint|Another hint|Both hints|Correct|Not yet|No data|Across a period|Down a group|Common ion|Next question|End session|Time remaining|points|recalled|Question|Answer|Instructions|Share|Close|Copy link|Practice options|Valence electrons|Next element|Completion code|Ion name|Formula \+ charge|Show answer|Still learning|Start flashcards|Quiz game|Session complete|Element details|Atomic number|Color by|Find an element|Full screen|Gas Laws Sandbox|Particle model|Gas controls|Reset|Pause motion|Live graph|Absorbance|Transmittance|Wavelength|Spectrophotometer|Cuvette|Calibration|Standards|Blank|Measure|Concentration|Best-fit|Remove|Grating|Lamp|distilled|Calorimetry|Calorimeter|Experiment|Copper|Aluminum|Water|Heated|Simulated|Insulation|Probe|Trials|Measured|Specific heat|Neutralization|Prediction|Equilibrium Sandbox|Temperature|Pressure|vessel|Forward|Reverse|Advance|Resume|Download|shifts|Flame|Sample|Samples|Lithium|Sodium|Potassium|Strontium|Barium|Cesium|Chloride|Burner|Tested|Investigation|Tray|Volume|Speeds|Graphs|Investigations|Mixture|Container|piston|dots|Record point|Run sweep|Set up the lab|Make the change for me|Test in the lab|Solution|Playback|Stopped|Iodine|starch|beaker|endpoint|trial|challenge|Clock|Collision|Collisions|Catalyst|Activation|Successful|Running|Paused|Bounce|Earlier|Sandbox|Run|Energy|Titrant|Burette|Stopcock|Endpoint|Analyte|Equivalence|Refill|Indicator|Phenolphthalein|Hydrochloric|flask|drop|Bonding|Unknowns|Appearance|Conductivity|Melting|Malleability|cyclohexane|probes|scoopula|pestle|mortar|tongs|foil|Weigh|Stir|Lift|Immerse|rinse|Dispose|Load|Switch|plate|brittle|malleable|crystals|granules|solid|fresh|Repeat|Bench|Station|stations|watch glass|Copy|Link|simulation|portion|portions|Nonpolar|very high|Equipment|Heating|cooling|boat|Observation|cylinder|Sweep|luster|Flatten|fracture|Electrochemistry|Electrochemical|Cell Builder|cell|cells|Anode|Cathode|oxidation|reduction|electrode|electrodes|electrons|Galvanic|Electrolytic|spontaneous|half-cell|half-cells|Swap|salt bridge|voltmeter|circuit|Power supply|DC SUPPLY|OFF|STANDARD|Step once|Restart particles|Clear bench|Place|Silver|beakers|Run cell|Sample complete|Ready|Event|events|atoms|atom|deposited|transferred|lost|gains|loses|Slow|Fast|Animation|explanations|ions|bead|Observe|Explore|Particle key|Scope|agar gel|wires|meter|Calculated|Applied|Left|Right|Gravimetric|Gravimetry|Crucible|Desiccator|Oven|Weighing|Goggles|Filter paper|Funnel|Vacuum|Filtration|Precipitate|Supernatant|Sediment|Decant|Wash|Deionized|Carbonate|Moisture|Dry|Cool|Heat|Step|Reading|Reveal|Inspect|Evidence|Laboratory|lab|Prepare|Separate|Settle|overnight|Analysis|Analytical|Constant mass|Accelerated|Live|Identify|tester|waste|pipette|inspection|flattens|fractures|bubbles|solids|Nonmetal|Nonmetals|Metalloid|Metalloids|Strong|Weak|Open|Pour|Borosilicate|glass|acid|Reaction|Reagent|Reagents|mixing|Mixed|Settling|Settled|Glassware|Lead|Calcium|Iron|Nitrate|Sulfate|Hydroxide|colorless|Adding|Lowering|strip|Observing|replay|bottle|Reactants|Products|Half-Reaction|half-reactions|Balancer|Undo|Restart|species|multiplier|multiplied|Merge|Total charge|Cancel mode|medium|Acidic|Basic|Unassigned|Permanganate|iodide|yields|Selection|placed|Success|balanced|locked|current|Hanger|hangers|Pulley|Release|masses|Equal|Transfer|Acceleration|Gravity|tension|Slow motion|Real time|apparatus|String|Steel|Travel|accelerates|driving|Speed|weight|weights|Massless|frictionless|Brass|discs|motion|inertia|Carts?|Launch|Bumpers?|Momentum|Velocity|Kinetic energy|Track|Rebound|Joined|In motion|Hook|Pads|End stop|Setup|Hooke’s|Harmonic|Spring|Springs|Damping|damped|Slotted|Mass|Extension|Displacement|Equilibrium|Oscillating|oscillation|oscillate|Pull|Released|Net force|Amplitude|Position|Ruler|Retort|Timer|Pause|Force|Investigate|cycle|cycles|peak|peaks|Unloaded|Held|downward|upward|stand|hanging|pointer|soft|firm|Inclined|Plane|Ramp|Friction|Wood|Felt|Plastic|downhill|slide|sliding|slip|Kinetic|Static|Rest|Resolve|arrows|Critical|Mechanics|protractor|hinge|Surface|angle|Return|DISTANCE|Adjustable|tipping|Pendulum|pendulums|oscillations|bob|swing|Length|Moon|Earth|Jupiter|Potential|Outbound|Returning|Dashed|Moving|turning point|Double|Free exploration|restoring|pivot|Projectile|Cannon|ball|Launched|Snapshots|snapshot|flight|Highest|ledge|cliff|Landed|landing|Rising|Falling|arrow|above|below|straight|seconds|meters|Across|Height|Direction|Range|Custom|Steep|Ground|Components|component|vectors|Circuit Builder|Battery|Batteries|Bulb|Bulbs|Wire|Resistor|Resistors|Switches|Multimeter|Voltage|Brightness|Readings|Short circuit|Lit|Dark|Brightest|Equally bright|Flip|Swap probes|Clear board|Undone|Tap board|Not placed|removed|moved|empty|loop|branch|branches|parallel|Supplies|pushes|Meter reads|Through|flowing|Choose a part|Your own circuit|Empty board|Erase|Where|Setting|Power|closed|opened|Equipotential|Equipotentials|Contour|contours|Charge tray|charge|charges|Quadrupole|Dipole|Like charges|Positive|Negative|Configuration|Grid|Mapping|Electric|field|infinity|Predict|nonzero|point charge|thumbtacks|centimeters|Arrange|Gold|workbench|Drag|None|added|Magnet|magnets|Tube|Eddy|Induced|flux|Slot|braking|Neodymium|Cutaway|Ring|poles|Strength|Explain|Caught|clamps|trays|insulating|insulator|conventional|clockwise|counterclockwise|Approaching|Leaving|Faraday’s|Lenz’s|frozen|wall|loops|graph|Sketch|Predicted|versus|slope|origin|curve|Cruise|steady|scale|edge|keyboard|Three views|Lab mode|Initial|Stay at rest|Turn around|Speed up|Slow to a stop|turns around|crosses zero|whole time|point object|rough guide|grade|Snell’s|Refraction|Laser|Incidence|Acrylic|Diamond|Air|beam|rays|Breadboard|Surrounding|degrees|Snap|Zoom|threshold|Just below|Just above|transmitted|reflected|incident|Optical|Angle guides|Full bench|bends|Matching indices|Standing|Harmonics|Oscillator|Strobe|Generator|Vibrator|Tuned|Detuned|Resonance|Resonances|Antinode|Antinodes|Node|Nodes|Envelope|Drive|Frequency|neighboring|Adjacent|crests|density|cord|Vibrating)\b/i;
 async function noEnglish(page) {
   const strings = await page.locator("body").evaluate(body => {
@@ -2615,6 +2620,410 @@ test("standing-waves-lab opens in Mexican Spanish and translates the apparatus, 
   expect(errors).toEqual([]);
 });
 
+// The page's text and accessible attributes, leaving out one part (the calculator's keypad, whose labels stay as printed).
+async function pageText(page, skip) {
+  return page.locator("body").evaluate((body, skip) => {
+    const result = [];
+    const walker = document.createTreeWalker(body, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) {
+      const n = walker.currentNode;
+      if (!n.parentElement.closest("script, style, noscript") && !(skip && n.parentElement.closest(skip))) result.push(n.textContent);
+    }
+    body.querySelectorAll("[aria-label], [placeholder], [title], [alt], [aria-valuetext]").forEach(el => {
+      if (skip && el.closest(skip)) return;
+      for (const attr of ["aria-label", "placeholder", "title", "alt", "aria-valuetext"]) if (el.hasAttribute(attr)) result.push(el.getAttribute(attr));
+    });
+    return result.join("\n");
+  }, skip);
+}
+
+const calculatorEnglish = /\b(?:Fullscreen|Exit|Guided|History|calculations|calculator|keypad|keyboard|exercise|Nice work|Sequence|Free practice|Start again|Statistics|Coordinate|conversion|Random|Minimum|Maximum|Generate|Save data|Data values|First value|Second value|Calculate|Numbers|Math operations|arrow|arrows|SYNTAX|DOMAIN|DIVIDE|OVERFLOW|INSUFFICIENT|NO DATA|VALUE|Select|Convert|Attach|settings|memory|habit|Fractions|Powers|roots|trig|Order matters|possibilities|Logs|guesswork|Find|Press|SCIENTIFIC|PRACTICE|Ready when|About this|SKILL|Small exercises|Useful habits|test day|whole numbers|finite|radius|frequency|pair per line|Clear history|entry|All activities)\b/i;
+async function noCalculatorEnglish(page) {
+  const text = await pageText(page, "#keypad, #indicators");
+  expect(text).not.toMatch(english);
+  expect(text).not.toMatch(calculatorEnglish);
+}
+async function calculatorKeys(page) {
+  return page.locator("#keypad").evaluate(pad => Array.from(pad.querySelectorAll(".key")).map(cell => [cell.querySelector("span").textContent, cell.querySelector("button").textContent, cell.querySelector("button").title]));
+}
+
+test("scientific-calculator opens in Mexican Spanish and translates the exercises, dialogs, display messages and sharing, with key labels unchanged", async ({page}) => {
+  const errors = [];
+  page.on("pageerror", e => errors.push(e.message));
+  page.on("console", m => { if (m.type() === "error" || m.type() === "warning") errors.push(m.text()); });
+  await page.goto("/scientific-calculator/");
+  const englishKeys = await calculatorKeys(page);
+  await page.goto("/scientific-calculator/?lang=es");
+  await expect(page.locator("html")).toHaveAttribute("lang", "es-MX");
+  await expect(page).toHaveTitle("Práctica con la calculadora científica | ZornScience");
+  await expect(page.getByRole("link", {name:"ES Español", exact:true})).toHaveAttribute("aria-current", "true");
+  await expect(page.getByRole("heading", {level:1})).toHaveText("Práctica con la calculadora científica");
+  // Key labels stay as printed on the calculator, in both languages.
+  expect(await calculatorKeys(page)).toEqual(englishKeys);
+  expect(englishKeys.map(k => k[1])).toEqual(expect.arrayContaining(["2nd", "DRG", "LOG", "LN", "SIN", "COS", "TAN", "ENTER", "DATA", "STATVAR", "(−)"]));
+  await expect(page.locator('[data-key="up"]')).toHaveAttribute("aria-label", "Flecha arriba");
+  await expect(page.locator('[data-key="right"]')).toHaveAttribute("aria-label", "Flecha derecha");
+  await expect(page.locator(".calc-bottom")).toHaveText("ZORNSCIENCE · PRÁCTICA DE CALCULADORA");
+  await expect(page.locator("#indicators")).toHaveText("DEG");
+  await noCalculatorEnglish(page);
+
+  async function key(k) { await page.locator("[data-key]").evaluateAll((elements, k) => elements.find(e => e.dataset.key === k).click(), k); }
+  const answer = page.locator("#answer"), detail = page.locator("#lesson-detail");
+
+  // All six guided exercises, with the step prompt and the key sequence.
+  const lessons = [
+    ["Fracciones sin complicaciones", ["1", "A b/c", "2", "+", "3", "A b/c", "4", "ENTER"], "Deberías ver 1 1/4. Presiona 2nd → PRB (F↔D) para ver 1.25."],
+    ["Potencias y raíces", ["2nd", "x²", "1", "4", "4", ")", "ENTER"], "√144 = 12. Prueba 12 → x² → ENTER para regresar a 144."],
+    ["Trigonometría desde otro ángulo", ["SIN", "3", "0", ")", "ENTER"], "sin(30°) = 0.5. Prueba 2nd → SIN → 0.5 → ) → ENTER para la función inversa."],
+    ["La importancia del orden", ["6", "×", "(", "4", "+", "3", ")", "ENTER"], "El resultado es 42. Sin paréntesis, 6 × 4 + 3 da 27."],
+    ["Conteo de posibilidades", ["5", "PRB", "right", "ENTER", "2", "ENTER"], "5 nCr 2 = 10 parejas posibles. Usa nPr cuando importa el orden de la elección."],
+    ["Logaritmos sin adivinar", ["LOG", "1", "0", "0", "0", ")", "ENTER"], "log(1000) = 3 porque 10³ = 1000."]
+  ];
+  for (let i = 0; i < lessons.length; i++) {
+    const [title, sequence, after] = lessons[i];
+    await page.locator(".lesson").nth(i).click();
+    await expect(detail.locator("b")).toHaveText(title);
+    await expect(detail.locator(".steps")).toHaveText("Paso 1 / " + sequence.length + " · Presiona " + sequence[0]);
+    await noCalculatorEnglish(page);
+    for (const [n, k] of sequence.entries()) {
+      if (i === 4 && n === 2) {
+        await expect(detail.locator(".steps")).toHaveText("Paso 3 / 6 · Presiona derecha");
+        await expect(detail.locator(".lesson-sequence")).toHaveText("5 → PRB → derecha → ENTER → 2 → ENTER");
+        await expect(answer).toHaveText("Elige con flechas + ENTER");
+      }
+      await key(k);
+    }
+    await expect(detail.locator("p").first()).toHaveText("✓ ¡Buen trabajo! " + after);
+    await expect(detail.locator(".steps")).toHaveText("Práctica completa");
+    await noCalculatorEnglish(page);
+  }
+  // A completed sequence with a wrong answer.
+  await page.locator(".lesson").nth(3).click();
+  for (const k of ["6", "×", "(", "4", "+", "3", "+", "1", ")", "ENTER"]) await key(k);
+  await expect(answer).toHaveText("48");
+  await expect(detail.locator("p").first()).toHaveText("Secuencia completa. Revisa lo que escribiste e inténtalo de nuevo.");
+  await page.getByRole("button", {name:"Empezar de nuevo", exact:true}).click();
+  await expect(detail.locator("p").first()).toHaveText("Calcula 6 × (4 + 3). Los paréntesis hacen que la suma se haga primero.");
+  await page.getByRole("button", {name:"Práctica libre", exact:true}).click();
+  await expect(detail).toBeHidden();
+
+  // History.
+  await page.getByRole("button", {name:/^Historial/}).click();
+  await expect(page.getByRole("heading", {name:"Tus cálculos", exact:true})).toBeVisible();
+  await expect(page.locator("#history-list button")).toHaveCount(7);
+  await noCalculatorEnglish(page);
+  await page.getByRole("button", {name:"Borrar el historial", exact:true}).click();
+  await expect(page.locator("#count")).toHaveText("0");
+
+  // Instructions, with the bold key names inside one full sentence.
+  await page.getByRole("button", {name:"Instrucciones", exact:true}).click();
+  await expect(page.locator("#modal-title")).toHaveText("Uso del teclado");
+  await expect(page.locator("#zsa-calc-help-intro")).toContainText("Presiona Pantalla completa para ver solo la calculadora en toda tu pantalla; usa Salir de pantalla completa para volver a la práctica.");
+  await expect(page.locator("#zsa-calc-help-intro b")).toHaveText(["Pantalla completa", "Salir de pantalla completa"]);
+  await expect(page.locator("#zsa-calc-help-second b")).toHaveText("2nd");
+  await expect(page.locator("#modal-body")).toContainText("Enter o = Calcular / elegir una opción del menú");
+  await noCalculatorEnglish(page);
+  await page.getByRole("button", {name:"Cerrar", exact:true}).click();
+  await expect(page.locator("#modal")).toBeHidden();
+
+  // Decimal input from the keyboard, and errors on the display.
+  await page.locator("#reset").click();
+  await page.locator(".calculator").focus();
+  await page.keyboard.type("2.5*2"); await page.keyboard.press("Enter");
+  await expect(answer).toHaveText("5");
+  await page.keyboard.type("2+*3"); await page.keyboard.press("Enter");
+  await expect(answer).toHaveText("SINTAXIS");
+  await page.keyboard.press("Escape"); await page.keyboard.press("Escape");
+  await page.keyboard.type("1/0"); await page.keyboard.press("Enter");
+  await expect(answer).toHaveText("DIVISIÓN ENTRE 0");
+  await noCalculatorEnglish(page);
+  for (const k of ["CLEAR", "CLEAR", "2nd", "÷"]) await key(k);
+  await expect(answer).toHaveText("ESCRIBE OP + VALOR");
+  await page.locator("#reset").click();
+
+  // Statistics: a mode, the data dialog with an error, then a mean from decimal data.
+  for (const k of ["2nd", "DATA"]) await key(k);
+  await expect(answer).toHaveText("Elige un modo estadístico");
+  await key("ENTER");
+  await key("STATVAR");
+  await expect(answer).toHaveText("SIN DATOS");
+  await key("DATA");
+  await expect(page.locator("#modal-title")).toHaveText("Estadística · 1-VAR");
+  await expect(page.locator("#data-instructions")).toHaveText("Escribe un valor por línea. Repite un valor para darle una frecuencia mayor que uno.");
+  await expect(page.getByRole("textbox", {name:"Valores de los datos", exact:true})).toBeVisible();
+  await page.locator("#dataset").fill("2\n4.5\nx");
+  await page.getByRole("button", {name:"Guardar datos", exact:true}).click();
+  await expect(page.locator("#data-error")).toHaveText("Revisa los valores. Usa un número o un par x, y por línea.");
+  await noCalculatorEnglish(page);
+  await page.locator("#dataset").fill("2\n4.5\n6");
+  await page.getByRole("button", {name:"Guardar datos", exact:true}).click();
+  await key("STATVAR");
+  await expect(answer).toHaveText("Elige una estadística para mostrar");
+  for (const k of ["right", "ENTER"]) await key(k);
+  await expect(answer).toHaveText("4.166666667");
+  for (const k of ["2nd", "DATA", "right", "ENTER", "DATA"]) await key(k);
+  await expect(page.locator("#data-instructions")).toHaveText("Escribe un par x, y por línea.");
+  await page.locator("#dataset").fill("1, 2.5\n2, 4.5");
+  await page.getByRole("button", {name:"Guardar datos", exact:true}).click();
+  await key("STATVAR");
+  for (let i = 0; i < 14; i++) await key("right");
+  await key("ENTER");
+  await expect(answer).toHaveText("1");
+
+  // Coordinates, with an error and decimal input.
+  await page.locator("#reset").click();
+  for (const k of ["2nd", "° ′ ″"]) await key(k);
+  await expect(answer).toHaveText("Convierte rectangulares ↔ polares");
+  await key("ENTER");
+  await expect(page.locator("#modal-title")).toHaveText("Conversión de coordenadas");
+  await expect(page.locator("#coord-instructions")).toHaveText("Escribe los valores de x y de y.");
+  await page.getByRole("button", {name:"Calcular", exact:true}).click();
+  await expect(page.locator("#coord-error")).toHaveText("Escribe dos números finitos.");
+  await noCalculatorEnglish(page);
+  await page.getByLabel("Primer valor").fill("1.5");
+  await page.getByLabel("Segundo valor").fill("2");
+  await page.getByRole("button", {name:"Calcular", exact:true}).click();
+  await expect(answer).toHaveText("2.5");
+  for (const k of ["2nd", "° ′ ″", "right", "right", "ENTER"]) await key(k);
+  await expect(page.locator("#coord-instructions")).toHaveText("Escribe el radio y el ángulo en DEG.");
+  await page.getByRole("button", {name:"Cerrar", exact:true}).click();
+
+  // Probability, a random integer and the angle menu.
+  await key("PRB");
+  await expect(answer).toHaveText("Elige con flechas + ENTER");
+  for (const k of ["right", "right", "right", "right", "ENTER"]) await key(k);
+  await expect(page.locator("#modal-title")).toHaveText("Entero aleatorio");
+  await page.getByLabel("Mínimo").fill("5");
+  await page.getByLabel("Máximo").fill("1");
+  await page.getByRole("button", {name:"Generar", exact:true}).click();
+  await expect(page.locator("#random-error")).toHaveText("Usa números enteros con máximo ≥ mínimo.");
+  await noCalculatorEnglish(page);
+  await page.getByLabel("Mínimo").fill("3");
+  await page.getByLabel("Máximo").fill("3");
+  await page.getByRole("button", {name:"Generar", exact:true}).click();
+  await key("ENTER");
+  await expect(answer).toHaveText("3");
+  await key("° ′ ″");
+  await expect(answer).toHaveText("Agrega una unidad o muestra DMS");
+  await key("CLEAR");
+  for (const k of ["2nd", "0"]) await key(k);
+  await expect(answer).toHaveText("¿Restablecer ajustes, memoria y entrada?");
+  await noCalculatorEnglish(page);
+  await key("CLEAR");
+
+  // Fullscreen and back, then sharing with a Spanish link.
+  await page.getByRole("button", {name:"Pantalla completa", exact:true}).click();
+  await expect(page.getByRole("button", {name:"Salir de la calculadora en pantalla completa", exact:true})).toHaveText("Salir de pantalla completa");
+  await page.getByRole("button", {name:"Salir de la calculadora en pantalla completa", exact:true}).click();
+  await page.getByRole("button", {name:"Compartir", exact:true}).click();
+  await expect(page.locator("#modal-title")).toHaveText("Compartir esta actividad");
+  await expect(page.getByLabel("Enlace de la actividad")).toHaveValue("https://activities.zornscience.org/scientific-calculator/?lang=es");
+  await page.getByRole("button", {name:"Copiar enlace", exact:true}).click();
+  await expect(page.locator("#share-status")).toHaveText(/^(Enlace copiado\.|Selecciona y copia el enlace de la actividad\.)$/);
+  await noCalculatorEnglish(page);
+  await page.getByRole("button", {name:"Cerrar", exact:true}).click();
+
+  for (const width of [320, 390]) {
+    await page.setViewportSize({width, height:844});
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), "at " + width).toBeLessThanOrEqual(0);
+    const box = await page.getByRole("link", {name:"ES Español", exact:true}).boundingBox();
+    expect(box.width).toBeGreaterThanOrEqual(44);
+    expect(box.height).toBeGreaterThanOrEqual(44);
+  }
+  await page.getByRole("link", {name:"EN English", exact:true}).click();
+  await expect(page).toHaveTitle("Scientific Calculator Practice | ZornScience");
+  await expect(page.locator(".lesson").first()).toContainText("Fractions, made simple");
+  expect(errors).toEqual([]);
+});
+
+const graphingEnglish = /\b(?:Measurements?|measured|scatter|plot|plotted|best-fit|best fit|fitted|Slope|intercept|Extrapolation|Estimate|Paste|Import|Imported|Lesson example|Add row|Clear data|row|rows|Undefined|squared|Your lab data|Start with|Remember|Numbers only|Unit|Graph title|Heating|candle|Gas production|Choose CSV|Print graph|write-up|lab report|scale|origin|zero|tab|DRY MIX|Hydrogen|over time|units?|pairs?|Enter|valid|range|relationship|trend|summarizes|causation|linear|Least-squares|Before you turn|graphing help|Reading Graphs|data table|axes|axis)\b/i;
+async function noGraphingEnglish(page) {
+  const text = await pageText(page, null);
+  expect(text).not.toMatch(english);
+  expect(text).not.toMatch(graphingEnglish);
+}
+
+test("virtual-lab-graphing opens in Mexican Spanish and translates the data table, examples, fit results, errors, the graph, downloads and sharing", async ({page}) => {
+  const errors = [];
+  page.on("pageerror", e => errors.push(e.message));
+  page.on("console", m => { if (m.type() === "error" || m.type() === "warning") errors.push(m.text()); });
+  const id = name => "#zsa-vlg-" + name;
+  await page.goto("/virtual-lab-graphing/?lang=es");
+  await expect(page.locator("html")).toHaveAttribute("lang", "es-MX");
+  await expect(page).toHaveTitle("Herramienta de gráficas para el laboratorio virtual | ZornScience");
+  await expect(page.getByRole("link", {name:"ES Español", exact:true})).toHaveAttribute("aria-current", "true");
+  await expect(page.getByRole("heading", {level:1})).toHaveText("Herramienta de gráficas para el laboratorio virtual");
+  await expect(page.locator(id("pointcount"))).toHaveText("0 puntos");
+  await expect(page.locator(id("chart"))).toContainText("Empieza con tus mediciones");
+  await expect(page.locator(id("chart"))).toContainText("Escribe pares de valores x, y, o carga un ejemplo de la lección.");
+  await expect(page.getByLabel("Título de la gráfica")).toHaveAttribute("placeholder", "p. ej., Temperatura del agua a lo largo del tiempo");
+  await expect(page.getByRole("textbox", {name:"Valor de x, fila 1", exact:true})).toBeVisible();
+  await expect(page.getByRole("button", {name:"Quitar la fila 1", exact:true})).toBeVisible();
+  await page.locator(".zsa-vlg-guide summary").click();
+  await page.locator(".zsa-vlg-import summary").click();
+  await expect(page.locator(id("paste"))).toHaveAttribute("placeholder", "Tiempo (min),Temperatura (°C)\n0,20\n1,35\n2,50");
+  await noGraphingEnglish(page);
+
+  // A lesson example: labels, the fit, the trend, readings and the spoken graph.
+  await page.getByLabel("Prueba un ejemplo de la lección").selectOption("water");
+  await expect(page.locator(id("example") + " option:checked")).toHaveText("Calentamiento de agua");
+  await page.getByRole("button", {name:"Cargar", exact:true}).click();
+  await expect(page.getByLabel("Título de la gráfica")).toHaveValue("Temperatura del agua a lo largo del tiempo");
+  await expect(page.locator(id("xheading"))).toHaveText("Tiempo (min)");
+  await expect(page.locator(id("yheading"))).toHaveText("Temperatura (°C)");
+  await expect(page.locator(id("pointcount"))).toHaveText("6 puntos");
+  await expect(page.locator(id("equation"))).toHaveText("y = 15x + 20");
+  await expect(page.locator(id("slope"))).toHaveText("15 °C / min");
+  await expect(page.locator(id("intercept"))).toHaveText("20 °C");
+  await expect(page.locator(id("fit-message"))).toHaveText("Regresión lineal por mínimos cuadrados, calculada con todos los pares de datos completos.");
+  await expect(page.locator(id("trend"))).toHaveText("Cuando Tiempo aumenta, la línea ajustada de Temperatura aumenta. La pendiente te dice el cambio en y por cada unidad de x.");
+  await expect(page.locator(id("chartnote"))).toHaveText("6 mediciones graficadas. Línea punteada: línea de mejor ajuste en tu intervalo medido de x.");
+  await expect(page.locator(id("live"))).toHaveText("6 puntos graficados.");
+  await expect(page.getByRole("img", {name:/^Temperatura del agua a lo largo del tiempo/})).toHaveAccessibleName("Temperatura del agua a lo largo del tiempo Gráfica de dispersión de Temperatura (°C) contra Tiempo (min). 6 puntos de datos. Línea de mejor ajuste: y = 15x + 20. R al cuadrado: 1. Las mediciones están en la tabla de datos.");
+  await expect(page.locator(id("chart") + " svg text").filter({hasText:/^Mediciones$/})).toHaveCount(1);
+  await expect(page.locator(id("chart"))).toContainText("ZornScience · 6 puntos");
+  await expect(page.locator(id("chart") + " circle title").first()).toHaveText("Fila 1: Tiempo (min) = 0, Temperatura (°C) = 20");
+  const reading = page.locator(id("prediction"));
+  await page.getByLabel("Lee la línea en x =").fill("2.5");
+  await expect(reading).toHaveText("Temperatura (°C) ≈ 57.5 cuando Tiempo (min) = 2.5. Es una estimación a partir de la línea ajustada, no una medición exacta.");
+  await page.getByLabel("Lee la línea en x =").fill("1.2e1");
+  await expect(reading).toHaveText("Temperatura (°C) ≈ 200 cuando Tiempo (min) = 12. Extrapolación: está fuera de tu intervalo medido; úsala con cuidado.");
+  await page.getByLabel("Lee la línea en x =").fill("2,5");
+  await expect(reading).toHaveText("Escribe un número válido para x.");
+  await noGraphingEnglish(page);
+  await page.getByRole("checkbox", {name:"Línea de mejor ajuste"}).uncheck();
+  await expect(page.locator(id("fit-message"))).toHaveText("La línea de mejor ajuste está desactivada. La gráfica de dispersión muestra solo tus mediciones.");
+  await expect(page.locator(id("chartnote"))).toHaveText("6 mediciones graficadas. Puntos azules: tus mediciones.");
+  await expect(page.getByRole("img", {name:/^Temperatura del agua/})).toHaveAccessibleName(/No se muestra una línea ajustada\. Las mediciones están en la tabla de datos\.$/);
+  await page.getByRole("checkbox", {name:"Línea de mejor ajuste"}).check();
+  await page.getByRole("checkbox", {name:"Incluir el cero en los ejes"}).uncheck();
+  await noGraphingEnglish(page);
+
+  // The curved example, behind a Spanish confirmation.
+  let confirmText = "";
+  page.once("dialog", dialog => { confirmText = dialog.message(); dialog.accept(); });
+  await page.getByLabel("Prueba un ejemplo de la lección").selectOption("gas");
+  await page.getByRole("button", {name:"Cargar", exact:true}).click();
+  expect(confirmText).toBe("¿Reemplazar la tabla de datos actual? Si quieres conservarla, primero descarga el CSV.");
+  await expect(page.getByRole("checkbox", {name:"Línea de mejor ajuste"})).not.toBeChecked();
+  await expect(page.locator(id("live"))).toHaveText("Ejemplo de la lección cargado. Este patrón se curva y luego se nivela; una línea recta no lo describe bien.");
+  await expect(page.getByLabel("Variable del eje y")).toHaveValue("Volumen de gas");
+  await noGraphingEnglish(page);
+  page.once("dialog", dialog => dialog.accept());
+  await page.getByLabel("Prueba un ejemplo de la lección").selectOption("candle");
+  await page.getByRole("button", {name:"Cargar", exact:true}).click();
+  await expect(page.locator(id("equation"))).toHaveText("y = -2.5x + 20");
+  await expect(page.locator(id("trend"))).toHaveText("Cuando Tiempo aumenta, la línea ajustada de Altura de la vela disminuye. La pendiente te dice el cambio en y por cada unidad de x.");
+
+  // Clearing, then typed pairs with an invalid row, one point, identical x and constant y.
+  page.once("dialog", dialog => dialog.accept());
+  await page.getByRole("button", {name:"Borrar datos", exact:true}).click();
+  await expect(page.locator(id("live"))).toHaveText("Datos borrados. Se conservaron los rótulos de los ejes.");
+  await page.getByRole("textbox", {name:"Valor de x, fila 1", exact:true}).fill("0");
+  await page.getByRole("textbox", {name:"Valor de y, fila 1", exact:true}).fill("0");
+  await page.getByRole("textbox", {name:"Valor de x, fila 2", exact:true}).fill("2e-3");
+  await expect(page.locator(id("data-error"))).toHaveText("Sin graficar: fila 2. Escribe los valores de x y de y como números (de magnitud entre 1e-100 y 1e100, o cero).");
+  await expect(page.locator(id("pointcount"))).toHaveText("1 punto");
+  await expect(page.locator(id("chartnote"))).toHaveText("1 medición graficada. Se excluyen las filas incompletas o no válidas. Punto azul: tu medición.");
+  await expect(page.locator(id("fit-message"))).toHaveText("Agrega al menos dos puntos completos para obtener una línea de mejor ajuste.");
+  await expect(page.locator(id("chart"))).toContainText("ZornScience · 1 punto");
+  await expect(page.locator(id("live"))).toHaveText("1 punto graficado. Algunas filas necesitan atención.");
+  await page.getByRole("textbox", {name:"Valor de x, fila 3", exact:true}).fill("1,5");
+  await expect(page.locator(id("data-error"))).toHaveText("Sin graficar: filas 2, 3. Escribe los valores de x y de y como números (de magnitud entre 1e-100 y 1e100, o cero).");
+  await page.getByRole("textbox", {name:"Valor de x, fila 3", exact:true}).fill("");
+  await page.getByRole("textbox", {name:"Valor de y, fila 2", exact:true}).fill("4e-3");
+  await expect(page.locator(id("equation"))).toHaveText("y = 2x + 0");
+  await noGraphingEnglish(page);
+  await page.getByRole("button", {name:"+ Agregar fila", exact:true}).click();
+  await expect(page.getByRole("textbox", {name:"Valor de x, fila 6", exact:true})).toBeFocused();
+  await page.getByRole("button", {name:"Quitar la fila 6", exact:true}).click();
+  await page.getByRole("textbox", {name:"Valor de x, fila 2", exact:true}).fill("0");
+  await expect(page.locator(id("fit-message"))).toHaveText("Todos los valores de x son iguales. Un conjunto vertical de puntos no tiene una única línea de mejor ajuste y = mx + b.");
+  await noGraphingEnglish(page);
+
+  // Paste and file import, with errors.
+  page.once("dialog", dialog => dialog.accept());
+  await page.getByLabel("Datos en dos columnas").fill("Tiempo (s),Masa (g)\n0,4\n2.5,4\n4,4");
+  await page.getByRole("button", {name:"Usar los datos pegados", exact:true}).click();
+  await expect(page.locator(id("r2"))).toHaveText("Indefinido (y constante)");
+  await expect(page.locator(id("live"))).toHaveText("Se importaron 3 puntos.");
+  await expect(page.locator("#zsa-vlg-svg-desc")).toContainText("R al cuadrado indefinido porque y es constante.");
+  await expect(page.locator(id("chart"))).toContainText("y = 0x + 4; R² = indefinido");
+  for (const [text, message] of [["0,1\n2,bad", "Línea 2: usa números de magnitud entre 1e-100 y 1e100, o cero."], ["1,2,3", "Línea 1: se esperaban exactamente dos columnas, separadas por comas o tabulaciones."],
+    ["x,y", "Agrega al menos un par de datos debajo del encabezado."], ['"1,2', "A un valor del CSV entre comillas le falta la comilla de cierre."], ['"1"x,2', "Hay texto inesperado después de un valor del CSV entre comillas."]]) {
+    await page.getByLabel("Datos en dos columnas").fill(text);
+    await page.getByRole("button", {name:"Usar los datos pegados", exact:true}).click();
+    await expect(page.locator(id("import-error"))).toHaveText(message);
+  }
+  await page.getByLabel("Datos en dos columnas").fill("5,7");
+  page.once("dialog", dialog => dialog.accept());
+  await page.getByRole("button", {name:"Usar los datos pegados", exact:true}).click();
+  await expect(page.locator(id("live"))).toHaveText("Se importó 1 punto.");
+  page.once("dialog", dialog => dialog.accept());
+  await page.locator(id("file")).setInputFiles({name:"datos.csv", mimeType:"text/csv", buffer:Buffer.from("Longitud (cm),Fuerza (N)\n1,2\n2,4\n3,6")});
+  await expect(page.locator(id("equation"))).toHaveText("y = 2x + 0");
+  await expect(page.getByLabel("Variable del eje x")).toHaveValue("Longitud");
+  await page.locator(id("file")).setInputFiles({name:"grande.csv", mimeType:"text/csv", buffer:Buffer.alloc(1000001, "1")});
+  await expect(page.locator(id("import-error"))).toHaveText("Elige un archivo de menos de 1 MB.");
+  await noGraphingEnglish(page);
+
+  // Downloads: Spanish CSV header and file names without accent marks.
+  page.once("dialog", dialog => dialog.accept());
+  await page.getByLabel("Prueba un ejemplo de la lección").selectOption("water");
+  await page.getByRole("button", {name:"Cargar", exact:true}).click();
+  let downloaded = page.waitForEvent("download");
+  await page.getByRole("button", {name:"CSV", exact:true}).click();
+  let file = await downloaded;
+  expect(file.suggestedFilename()).toBe("Temperatura-del-agua-a-lo-largo-del-tiempo.csv");
+  const csv = fs.readFileSync(await file.path(), "utf8");
+  expect(csv.split("\r\n")[0]).toBe('"Tiempo (min)","Temperatura (°C)"');
+  expect(csv.split("\r\n")[5]).toBe("4,80");
+  await expect(page.locator(id("live"))).toHaveText("Tu descarga en CSV está lista.");
+  await page.getByLabel("Título de la gráfica").fill("Posición del carrito");
+  downloaded = page.waitForEvent("download");
+  await page.getByRole("button", {name:"SVG", exact:true}).click();
+  file = await downloaded;
+  expect(file.suggestedFilename()).toBe("Posicion-del-carrito.svg");
+  const svg = fs.readFileSync(await file.path(), "utf8");
+  for (const text of ["Posición del carrito", "Mediciones", "y = 15x + 20; R² = 1", "Tiempo (min)", "ZornScience · 6 puntos", "Gráfica de dispersión de Temperatura (°C) contra Tiempo (min)."]) expect(svg).toContain(text);
+  await page.getByLabel("Título de la gráfica").fill("");
+  await page.getByLabel("Variable del eje x").fill("");
+  await expect(page.locator(id("chart") + " svg > text").first()).toHaveText("Tus datos de laboratorio");
+  await expect(page.locator(id("chart"))).toContainText("Recuerda nombrar ambos ejes");
+  downloaded = page.waitForEvent("download");
+  await page.getByRole("button", {name:"Descargar PNG", exact:true}).click();
+  file = await downloaded;
+  expect(file.suggestedFilename()).toBe("zornscience-grafica.png");
+  await expect(page.locator(id("live"))).toHaveText("Tu descarga en PNG está lista.");
+  await noGraphingEnglish(page);
+
+  // Instructions and sharing, whose link keeps Spanish.
+  await page.getByRole("button", {name:"Instrucciones", exact:true}).click();
+  await expect(page.getByRole("dialog")).toContainText("Activa Línea de mejor ajuste cuando los puntos sigan una tendencia aproximadamente recta.");
+  await expect(page.getByRole("button", {name:"Cerrar el cuadro de diálogo", exact:true})).toBeVisible();
+  await noGraphingEnglish(page);
+  await page.keyboard.press("Escape");
+  await page.getByRole("button", {name:"Compartir", exact:true}).click();
+  await expect(page.locator(id("dialog-title"))).toHaveText("Compartir esta actividad");
+  await expect(page.getByLabel("Enlace de la actividad")).toHaveValue("https://activities.zornscience.org/virtual-lab-graphing/?lang=es");
+  await page.getByRole("button", {name:"Copiar enlace", exact:true}).click();
+  await expect(page.locator(id("share-status"))).toHaveText(/^(Enlace copiado\.|El enlace está seleccionado\. Presiona Ctrl\+C, o Command\+C en una Mac, para copiarlo\.)$/);
+  await noGraphingEnglish(page);
+  await page.keyboard.press("Escape");
+
+  for (const width of [320, 390]) {
+    await page.setViewportSize({width, height:844});
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), "at " + width).toBeLessThanOrEqual(0);
+    const box = await page.getByRole("link", {name:"ES Español", exact:true}).boundingBox();
+    expect(box.width).toBeGreaterThanOrEqual(44);
+    expect(box.height).toBeGreaterThanOrEqual(44);
+  }
+  await page.getByRole("link", {name:"EN English", exact:true}).click();
+  await expect(page).toHaveTitle("Virtual Lab Graphing Tool | ZornScience");
+  await expect(page.locator(id("pointcount"))).toHaveText("0 points");
+  expect(errors).toEqual([]);
+});
+
 test("Spanish ion round translates hints, feedback, review and completion codes", async ({page}) => {
   await page.goto("/ion-charge-trainer/?lang=es");
   const work = page.locator("#zsa-ict-work");
@@ -2668,7 +3077,7 @@ test("Spanish follows links between activities and English is the fallback", asy
 });
 
 test("Spanish activity headers fit narrow screens", async ({page}) => {
-  for (const slug of Object.keys(activities).concat(Object.keys(labs))) {
+  for (const slug of Object.keys(activities).concat(Object.keys(labs), Object.keys(tools))) {
     for (const width of [320, 390]) {
       await page.setViewportSize({width, height:844});
       await page.goto("/" + slug + "/?lang=es");

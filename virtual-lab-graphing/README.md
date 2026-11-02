@@ -1,6 +1,6 @@
 # Virtual Lab Graphing Tool
 
-Version: 1.1.1
+Version: 1.2.0
 
 An open-ended lab-report tool for the [Reading Graphs lesson](https://zornscience.org/science/quantitative-skills/graphs-and-change/reading-graphs/). Students enter their own x/y measurements, label variables and units, and download a graph. This tool uses the shared design tokens and embed shell; it does not use quiz rounds or issue completion codes.
 
@@ -33,7 +33,12 @@ Open `/virtual-lab-graphing/?embed=1` to hide site logo, lesson link and footer 
 
 The compact header names the activity beside the ZornScience logo. Instructions opens a keyboard-accessible dialog with the workflow and data-saving reminders. Share copies the canonical activity URL, without measurements or query parameters; if clipboard access fails, it selects the URL for manual copying. Both controls remain available in embedded lessons. Escape closes the dialog and focus returns to the opening button.
 
+## Mexican Spanish
+
+Use `?lang=es` or the shared EN / ES header links. English is the default and the fallback. `data.js` holds every student-facing string with its Mexican Spanish for `../shared/zsa-i18n.js`: the instructions, labels, placeholders, buttons, the lesson examples (their titles and variable names fill the graph, the table headers and the CSV header in Spanish), validation and import errors, the fit results and trend sentence, the reading at x, the graph's own text (empty state, legend, footer and spoken description), the downloads' announcements and the share text. Every sentence is one full template with placeholders, so Spanish keeps its own word order; a few English templates fill the count as `{one}` so Spanish can use the singular for one point while the English text stays exactly as before. Symbols, units, variables, numbers, the equation and decimal points are unchanged, and data entry, paste and CSV import accept exactly the same input in both languages (decimal points, never decimal commas). In Spanish, download file names drop accent marks from the graph title (Posición becomes Posicion) and an untitled graph downloads as `zornscience-grafica`. The share link carries `?lang=es` in Spanish. The language links reload the page, so the data table starts over: download CSV first. See `../SPANISH_TERMS.md` for choices beyond the supplied glossary.
+
 ## Changelog
 
+- 1.2.0: Mexican Spanish with `?lang=es` and the shared EN / ES header links. English text, the CSV and download names are unchanged.
 - 1.1.0: Replace the intro banner with an activity header, instructions and link sharing.
 - 1.0.0: Initial student graphing tool and Reading Graphs integration block.

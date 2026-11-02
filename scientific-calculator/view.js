@@ -6,6 +6,10 @@
   const toolbar = document.querySelector('.fullscreen-toolbar');
   const modal = document.getElementById('modal');
   let active = false;
+  // Words and the share link come from the shared language module (data.js holds the Spanish).
+  let i18n;
+  body.dispatchEvent(new CustomEvent('zsa:request-i18n', {detail: {receive(api) { i18n = api; }}}));
+  function tr(text) { return i18n ? i18n.text(text) : text; }
   let requesting = false;
 
   function update(value) {
@@ -44,20 +48,20 @@
     }
   }, true);
   document.getElementById('share').addEventListener('click', function () {
-    document.getElementById('modal-title').textContent = 'Share this activity';
+    document.getElementById('modal-title').textContent = tr('Share this activity');
     document.getElementById('modal-body').replaceChildren(document.getElementById('dialog-share').content.cloneNode(true));
     const input = document.getElementById('share-url');
     const status = document.getElementById('share-status');
-    input.value = 'https://activities.zornscience.org/scientific-calculator/';
+    input.value = i18n ? i18n.url('https://activities.zornscience.org/scientific-calculator/') : 'https://activities.zornscience.org/scientific-calculator/';
     document.getElementById('copy-link').addEventListener('click', async function () {
       try {
         if (!navigator.clipboard) throw new Error('Clipboard unavailable');
         await navigator.clipboard.writeText(input.value);
-        status.textContent = 'Link copied.';
+        status.textContent = tr('Link copied.');
       } catch (_) {
         input.focus();
         input.select();
-        status.textContent = 'Select and copy the activity link.';
+        status.textContent = tr('Select and copy the activity link.');
       }
     });
     modal.showModal();

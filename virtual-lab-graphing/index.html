@@ -4,17 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.1.1">
+<meta name="zsa-version" content="1.2.0">
 <meta name="description" content="Turn your lab data into a scatter plot with a line of best fit. Label axes, explore slope, and download a graph for your lab write-up.">
 <title>Virtual Lab Graphing Tool | ZornScience</title>
 <link rel="canonical" href="https://activities.zornscience.org/virtual-lab-graphing/">
 <link rel="icon" href="../favicon.png" type="image/png">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.1.1">
-<link rel="stylesheet" href="graphing.css?v=1.1.1">
-<script src="model.js?v=1.1.1" defer></script>
-<script src="graphing.js?v=1.1.1" defer></script>
-<script src="../shared/zsa-embed.js?v=1.1.1" defer></script>
-<link rel="stylesheet" href="../shared/zsa-header.css?v=1.1.1"></head>
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.2.0">
+<link rel="stylesheet" href="graphing.css?v=1.2.0">
+<script src="../shared/zsa-i18n.js?v=1.2.0" defer></script>
+<script src="data.js?v=1.2.0" defer></script>
+<script src="model.js?v=1.2.0" defer></script>
+<script src="graphing.js?v=1.2.0" defer></script>
+<script src="../shared/zsa-embed.js?v=1.2.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.2.0"></head>
 <body>
 <main class="zsa zsa-vlg" data-zsa-activity="virtual-lab-graphing">
 <header data-zsa-header class="zsa-vlg-header">
@@ -33,7 +35,7 @@
 </div>
 <div id="zsa-vlg-share-content" hidden><p>Share a fresh graphing tool with your students or classmates. Your measurements are not included.</p><label for="zsa-vlg-share-url">Activity link</label><div class="zsa-vlg-sharelink"><input id="zsa-vlg-share-url" type="text" readonly spellcheck="false" value="https://activities.zornscience.org/virtual-lab-graphing/"><button class="zsa-btn zsa-btn--primary" id="zsa-vlg-copy-link">Copy link</button></div><p id="zsa-vlg-share-status" role="status" aria-live="polite"></p></div>
 </dialog>
-<noscript><p class="zsa-panel">Enable JavaScript to enter data and plot your graph. Your data is processed only in your browser.</p></noscript>
+<noscript><p class="zsa-panel">Enable JavaScript to enter data and plot your graph. Your data is processed only in your browser. <span lang="es-MX">Activa JavaScript para escribir tus datos y hacer tu gráfica. Tus datos se procesan solo en tu navegador.</span></p></noscript>
 <div class="zsa-vlg-workspace">
 <section class="zsa-vlg-editor zsa-vlg-card" aria-labelledby="zsa-vlg-data-title">
 <div class="zsa-vlg-sectionhead"><span class="zsa-vlg-step">01</span><div><h2 id="zsa-vlg-data-title">Set up your data</h2><p>Independent on x. Dependent on y.</p></div></div>

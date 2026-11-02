@@ -5,6 +5,18 @@
   var model;
   root.dispatchEvent(new CustomEvent("zsa-vlg:request-model", {detail:{receive:function (api) {model = api;}}}));
   if (!model) return;
+  // Words come from data.js through the shared language module. Every sentence is one full template, so Spanish keeps
+  // its own word order. Templates whose count is filled as {one} read the same as {count} in English; they let
+  // Spanish use the singular for one point without changing the English text.
+  var i18n;
+  root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail:{receive:function (api) {i18n = api;}}}));
+  var spanish = !!i18n && i18n.lang === "es";
+  function say(text, values) {
+    values = values || {};
+    if (i18n) return i18n.text(text, values);
+    return text.replace(/\{(\w+)\}/g, function (m, k) { return values[k] === undefined ? m : values[k]; });
+  }
+  function counted(many, one, count) {return count === 1 ? say(one, {one:count}) : say(many, {count:count});}
   function el(id) {return document.getElementById("zsa-vlg-" + id);}
   var tbody = el("rows"), points = [], result = null, svg = null, timer;
   var fields = ["title", "xname", "xunit", "yname", "yunit"];
@@ -13,6 +25,7 @@
     candle:{title:"Candle height over time",xname:"Time",xunit:"h",yname:"Candle height",yunit:"cm",rows:[[0,20],[1,17.5],[2,15],[3,12.5],[4,10],[6,5],[8,0]]},
     gas:{title:"Hydrogen gas produced over time",xname:"Time",xunit:"s",yname:"Gas volume",yunit:"mL",rows:[[0,0],[20,30],[40,45],[60,53],[100,59],[140,60],[180,60]]}
   };
+  Object.keys(examples).forEach(function (key) {["title","xname","yname"].forEach(function (f) {examples[key][f] = say(examples[key][f]);});});
   function speak(text) {el("live").textContent = text;}
   function value(name) {return el(name).value.trim();}
   function label(axis) {var name = value(axis+"name") || axis; var unit = value(axis+"unit"); return name + (unit ? " ("+unit+")" : "");}
@@ -20,8 +33,8 @@
   function renumber() {
     Array.from(tbody.rows).forEach(function (tr, i) {
       tr.cells[0].textContent = i+1;
-      tr.querySelectorAll("input").forEach(function (input, j) {input.setAttribute("aria-label", (j ? "y" : "x") + " value, row " + (i+1));});
-      tr.querySelector("button").setAttribute("aria-label", "Remove row " + (i+1));
+      tr.querySelectorAll("input").forEach(function (input, j) {input.setAttribute("aria-label", say(j ? "y value, row {row}" : "x value, row {row}", {row:i+1}));});
+      tr.querySelector("button").setAttribute("aria-label", say("Remove row {row}", {row:i+1}));
     });
     el("add").disabled = tbody.rows.length >= model.limit;
   }
@@ -43,7 +56,7 @@
   }
   function replaceRows(data) {tbody.replaceChildren();data.forEach(addRow);if (!data.length) for (var i=0;i<5;i++) addRow();}
   function hasData() {return rows().some(function (r) {return r.some(function (s) {return s.trim();});});}
-  function replaceOK() {return !hasData() || window.confirm("Replace the current data table? Download CSV first if you want to keep it.");}
+  function replaceOK() {return !hasData() || window.confirm(say("Replace the current data table? Download CSV first if you want to keep it."));}
   function node(tag, attrs, text) {
     var n = document.createElementNS("http://www.w3.org/2000/svg",tag);
     Object.keys(attrs || {}).forEach(function (key) {n.setAttribute(key,attrs[key]);});
@@ -51,7 +64,7 @@
     return n;
   }
   function draw() {
-    var title = value("title") || "Your lab data", xLabel = label("x"), yLabel = label("y");
+    var title = value("title") || say("Your lab data"), xLabel = label("x"), yLabel = label("y");
     var xa = model.axis(points.map(function (p) {return p.x;}),el("zero").checked);
     var ya = model.axis(points.map(function (p) {return p.y;}),el("zero").checked);
     var left = 110, top = 82, width = 610, height = 362;
@@ -59,7 +72,12 @@
     function py(y) {return top + height - (y-ya.min)/(ya.max-ya.min)*height;}
     svg = node("svg",{viewBox:"0 0 800 560",width:800,height:560,role:"img","aria-labelledby":"zsa-vlg-svg-title zsa-vlg-svg-desc"});
     svg.appendChild(node("title",{id:"zsa-vlg-svg-title"},title));
-    svg.appendChild(node("desc",{id:"zsa-vlg-svg-desc"},"Scatter plot of "+yLabel+" versus "+xLabel+". "+points.length+" data points. "+(result&&!result.error&&el("fit").checked ? "Linear best fit: "+equation()+". R squared "+(result.r2===null?"undefined for constant y":model.format(result.r2))+"." : "No fitted line shown.")+" The measurements are available in the data table."));
+    var described = {y:yLabel, x:xLabel, count:points.length, one:points.length, equation:result&&!result.error ? equation() : "", r2:result&&!result.error&&result.r2!==null ? model.format(result.r2) : ""};
+    var fitShown = result&&!result.error&&el("fit").checked, one = points.length === 1;
+    svg.appendChild(node("desc",{id:"zsa-vlg-svg-desc"},say(!fitShown ?
+      (one ? "Scatter plot of {y} versus {x}. {one} data points. No fitted line shown. The measurements are available in the data table." : "Scatter plot of {y} versus {x}. {count} data points. No fitted line shown. The measurements are available in the data table.") :
+      result.r2===null ? "Scatter plot of {y} versus {x}. {count} data points. Linear best fit: {equation}. R squared undefined for constant y. The measurements are available in the data table." :
+        "Scatter plot of {y} versus {x}. {count} data points. Linear best fit: {equation}. R squared {r2}. The measurements are available in the data table.", described)));
     svg.appendChild(node("rect",{width:800,height:560,fill:"white"}));
     function text(x,y,content,attrs) {var t=node("text",Object.assign({x:x,y:y,fill:"#334155","font-family":"Arial, sans-serif","font-size":14},attrs||{}),content);svg.appendChild(t);return t;}
     function line(x1,y1,x2,y2,attrs) {svg.appendChild(node("line",Object.assign({x1:x1,y1:y1,x2:x2,y2:y2,stroke:"#e1e8f2","stroke-width":1},attrs||{})));}
@@ -77,73 +95,79 @@
       var xMin=Math.min.apply(null,points.map(function(p){return p.x;})),xMax=Math.max.apply(null,points.map(function(p){return p.x;}));
       plot.appendChild(node("line",{x1:px(xMin),y1:py(result.predict(xMin)),x2:px(xMax),y2:py(result.predict(xMax)),stroke:"#bf5b16","stroke-width":2.5,"stroke-dasharray":"8 5"}));
     }
-    points.forEach(function (p) {var circle=node("circle",{cx:px(p.x),cy:py(p.y),r:4.5,fill:"#1d4ed8",stroke:"white","stroke-width":1.5});circle.appendChild(node("title",{},"Row "+p.row+": "+xLabel+" = "+p.x+", "+yLabel+" = "+p.y));plot.appendChild(circle);});
+    points.forEach(function (p) {var circle=node("circle",{cx:px(p.x),cy:py(p.y),r:4.5,fill:"#1d4ed8",stroke:"white","stroke-width":1.5});circle.appendChild(node("title",{},say("Row {row}: {x} = {xValue}, {y} = {yValue}",{row:p.row,x:xLabel,xValue:p.x,y:yLabel,yValue:p.y})));plot.appendChild(circle);});
     text(415,503,xLabel,{"text-anchor":"middle","font-size":16,fill:"#0b2a5b",textLength:Math.min(xLabel.length*8,610),lengthAdjust:"spacingAndGlyphs"});
     text(28,265,yLabel,{"text-anchor":"middle","font-size":16,fill:"#0b2a5b",transform:"rotate(-90 28 265)",textLength:Math.min(yLabel.length*8,362),lengthAdjust:"spacingAndGlyphs"});
-    svg.appendChild(node("circle",{cx:110,cy:62,r:4,fill:"#1d4ed8"}));text(122,67,"Measurements",{"font-size":12});
-    if (result&&!result.error&&el("fit").checked) {line(245,62,270,62,{stroke:"#bf5b16","stroke-width":2,"stroke-dasharray":"6 4"});text(279,67,equation()+"; R² = "+(result.r2===null?"undefined":model.format(result.r2)),{"font-size":12});}
-    if (!points.length) {text(415,235,"Start with your measurements",{"text-anchor":"middle","font-size":21,fill:"#0b2a5b"});text(415,267,"Enter x and y pairs, or load a lesson example.",{"text-anchor":"middle","font-size":14});}
-    text(110,540,"ZornScience · "+points.length+" points",{"font-size":11,fill:"#526178"});
-    if (points.length && (!value("xname") || !value("yname"))) text(720,540,"Remember to name both axes",{"text-anchor":"end","font-size":11,fill:"#526178"});
+    svg.appendChild(node("circle",{cx:110,cy:62,r:4,fill:"#1d4ed8"}));text(122,67,say("Measurements"),{"font-size":12});
+    if (result&&!result.error&&el("fit").checked) {line(245,62,270,62,{stroke:"#bf5b16","stroke-width":2,"stroke-dasharray":"6 4"});text(279,67,equation()+"; R² = "+(result.r2===null?say("undefined"):model.format(result.r2)),{"font-size":12});}
+    if (!points.length) {text(415,235,say("Start with your measurements"),{"text-anchor":"middle","font-size":21,fill:"#0b2a5b"});text(415,267,say("Enter x and y pairs, or load a lesson example."),{"text-anchor":"middle","font-size":14});}
+    text(110,540,counted("ZornScience · {count} points","ZornScience · {one} points",points.length),{"font-size":11,fill:"#526178"});
+    if (points.length && (!value("xname") || !value("yname"))) text(720,540,say("Remember to name both axes"),{"text-anchor":"end","font-size":11,fill:"#526178"});
     el("chart").replaceChildren(svg);
   }
   function equation() {return "y = "+model.format(result.slope)+"x "+(result.intercept<0?"− ":"+ ")+model.format(Math.abs(result.intercept));}
   function predict() {
     var output=el("prediction"),x=model.number(value("predict-x")); output.textContent="";
     if (!value("predict-x")||!result||result.error||!el("fit").checked) return;
-    if (x===null) {output.textContent="Enter a valid number for x.";return;}
+    if (x===null) {output.textContent=say("Enter a valid number for x.");return;}
     var y=result.predict(x);
-    if (!Number.isFinite(y)) {output.textContent="This prediction is outside the supported numeric range.";return;}
+    if (!Number.isFinite(y)) {output.textContent=say("This prediction is outside the supported numeric range.");return;}
     var min=Math.min.apply(null,points.map(function(p){return p.x;})),max=Math.max.apply(null,points.map(function(p){return p.x;}));
-    output.textContent=label("y")+" ≈ "+model.format(y)+" at "+label("x")+" = "+model.format(x)+". "+(x<min||x>max?"Extrapolation: outside your measured range; use caution.":"Estimate from the fitted line, not an exact measurement.");
+    output.textContent=say(x<min||x>max?"{y} ≈ {yValue} at {x} = {xValue}. Extrapolation: outside your measured range; use caution.":"{y} ≈ {yValue} at {x} = {xValue}. Estimate from the fitted line, not an exact measurement.",{y:label("y"),yValue:model.format(y),x:label("x"),xValue:model.format(x)});
   }
   function update() {
     var data=model.pairs(rows()); points=data.points; result=model.fit(points);
-    el("pointcount").textContent=points.length+" point"+(points.length===1?"":"s");
+    el("pointcount").textContent=points.length===1?say("{count} point",{count:1}):say("{count} points",{count:points.length});
     el("xheading").textContent=label("x");el("yheading").textContent=label("y");
     Array.from(tbody.rows).forEach(function(tr,i){tr.querySelectorAll("input").forEach(function(input){input.setAttribute("aria-invalid",data.errors.indexOf(i+1)>=0?"true":"false");});});
-    el("data-error").textContent=data.errors.length?"Not plotted: row"+(data.errors.length>1?"s ":" ")+data.errors.join(", ")+". Enter both x and y as numbers (magnitude from 1e-100 to 1e100, or zero).":"";
+    el("data-error").textContent=data.errors.length?say(data.errors.length>1?"Not plotted: rows {rows}. Enter both x and y as numbers (magnitude from 1e-100 to 1e100, or zero).":"Not plotted: row {rows}. Enter both x and y as numbers (magnitude from 1e-100 to 1e100, or zero).",{rows:data.errors.join(", ")}):"";
     ["png","svg","csv","print"].forEach(function(id){el(id).disabled=!points.length;});
     var show=el("fit").checked&&!result.error;el("stats").hidden=!show;
-    el("fit-message").textContent=!el("fit").checked?"Best-fit line is off. The scatter plot shows your measurements only.":result.error||"Least-squares linear regression, calculated from all complete data pairs.";
+    el("fit-message").textContent=!el("fit").checked?say("Best-fit line is off. The scatter plot shows your measurements only."):result.error||say("Least-squares linear regression, calculated from all complete data pairs.");
     if (show) {
-      var yu=value("yunit"),xu=value("xunit"),units=yu&&xu?yu+" / "+xu:"y-units / x-unit";
+      var yu=value("yunit"),xu=value("xunit"),units=yu&&xu?yu+" / "+xu:say("y-units / x-unit");
       el("equation").textContent=equation();el("slope").textContent=model.format(result.slope)+" "+units;
       el("intercept").textContent=model.format(result.intercept)+(yu?" "+yu:"");
-      el("r2").textContent=result.r2===null?"Undefined (constant y)":model.format(result.r2);
-      el("trend").textContent="As "+(value("xname")||"x")+" increases, the fitted line for "+(value("yname")||"y")+(result.slope>0?" increases.":result.slope<0?" decreases.":" stays constant.")+" Slope tells you the change in y per unit of x.";
+      el("r2").textContent=result.r2===null?say("Undefined (constant y)"):model.format(result.r2);
+      el("trend").textContent=say(result.slope>0?"As {x} increases, the fitted line for {y} increases. Slope tells you the change in y per unit of x.":result.slope<0?"As {x} increases, the fitted line for {y} decreases. Slope tells you the change in y per unit of x.":"As {x} increases, the fitted line for {y} stays constant. Slope tells you the change in y per unit of x.",{x:value("xname")||"x",y:value("yname")||"y"});
     }
-    el("chartnote").textContent=points.length ? points.length+" measurements plotted. "+(data.errors.length?"Incomplete or invalid rows are excluded. ":"")+(show?"Dashed line: linear best fit over your measured x range.":"Blue points: your measurements.") : "Add at least two complete points to explore a line of best fit.";
-    draw();predict();clearTimeout(timer);timer=setTimeout(function(){speak(points.length+" points plotted. "+(data.errors.length?"Some rows need attention.":""));},650);
+    var NOTES = data.errors.length ?
+      (show ? ["{count} measurements plotted. Incomplete or invalid rows are excluded. Dashed line: linear best fit over your measured x range.", "{one} measurements plotted. Incomplete or invalid rows are excluded. Dashed line: linear best fit over your measured x range."] :
+        ["{count} measurements plotted. Incomplete or invalid rows are excluded. Blue points: your measurements.", "{one} measurements plotted. Incomplete or invalid rows are excluded. Blue points: your measurements."]) :
+      (show ? ["{count} measurements plotted. Dashed line: linear best fit over your measured x range.", "{one} measurements plotted. Dashed line: linear best fit over your measured x range."] :
+        ["{count} measurements plotted. Blue points: your measurements.", "{one} measurements plotted. Blue points: your measurements."]);
+    el("chartnote").textContent=points.length ? counted(NOTES[0],NOTES[1],points.length) : say("Add at least two complete points to explore a line of best fit.");
+    draw();predict();clearTimeout(timer);timer=setTimeout(function(){speak(data.errors.length?counted("{count} points plotted. Some rows need attention.","{one} points plotted. Some rows need attention.",points.length):counted("{count} points plotted. ","{one} points plotted. ",points.length));},650);
   }
   fields.forEach(function(id){el(id).addEventListener("input",update);});
   ["fit","zero"].forEach(function(id){el(id).addEventListener("change",update);});
   el("predict-x").addEventListener("input",predict);
   el("add").addEventListener("click",function(){addRow();tbody.lastElementChild.querySelector("input").focus();});
-  el("clear").addEventListener("click",function(){if(!replaceOK())return;replaceRows([]);el("predict-x").value="";update();speak("Data cleared. Axis labels kept.");});
-  el("load").addEventListener("click",function(){if(!replaceOK())return;var example=examples[value("example")];fields.forEach(function(id){el(id).value=example[id];});replaceRows(example.rows);el("predict-x").value="";el("fit").checked=value("example")!=="gas";el("import-error").textContent="";update();speak("Lesson example loaded. "+(value("example")==="gas"?"This pattern curves and levels off; a straight line is not a good description.":""));});
+  el("clear").addEventListener("click",function(){if(!replaceOK())return;replaceRows([]);el("predict-x").value="";update();speak(say("Data cleared. Axis labels kept."));});
+  el("load").addEventListener("click",function(){if(!replaceOK())return;var example=examples[value("example")];fields.forEach(function(id){el(id).value=example[id];});replaceRows(example.rows);el("predict-x").value="";el("fit").checked=value("example")!=="gas";el("import-error").textContent="";update();speak(say(value("example")==="gas"?"Lesson example loaded. This pattern curves and levels off; a straight line is not a good description.":"Lesson example loaded. "));});
   function importText(text) {
     try {var parsed=model.parse(text);if(!replaceOK())return;
       if(parsed.labels) parsed.labels.forEach(function(s,i){var l=model.splitLabel(s),a=i?"y":"x";el(a+"name").value=l.name;el(a+"unit").value=l.unit;});
-      replaceRows(parsed.rows);el("import-error").textContent="";update();speak("Imported "+parsed.rows.length+" points.");
+      replaceRows(parsed.rows);el("import-error").textContent="";update();speak(parsed.rows.length===1?say("Imported {one} points.",{one:1}):say("Imported {count} points.",{count:parsed.rows.length}));
     } catch(error) {el("import-error").textContent=error.message;}
   }
   el("import").addEventListener("click",function(){importText(el("paste").value);});
-  el("file").addEventListener("change",function(){var file=this.files[0];if(!file)return;if(file.size>1000000){el("import-error").textContent="Choose a file smaller than 1 MB.";this.value="";return;}var reader=new FileReader();reader.onload=function(){importText(String(reader.result));};reader.onerror=function(){el("import-error").textContent="This file could not be read. Try pasting the data instead.";};reader.readAsText(file);this.value="";});
-  function download(href,extension) {var a=document.createElement("a");a.href=href;a.download=(value("title").replace(/[^a-z0-9_-]+/gi,"-").slice(0,70)||"zornscience-graph")+"."+extension;root.appendChild(a);a.click();a.remove();speak(extension.toUpperCase()+" download ready.");}
+  el("file").addEventListener("change",function(){var file=this.files[0];if(!file)return;if(file.size>1000000){el("import-error").textContent=say("Choose a file smaller than 1 MB.");this.value="";return;}var reader=new FileReader();reader.onload=function(){importText(String(reader.result));};reader.onerror=function(){el("import-error").textContent=say("This file could not be read. Try pasting the data instead.");};reader.readAsText(file);this.value="";});
+  function download(href,extension) {var a=document.createElement("a");a.href=href;var name=value("title");if(spanish)name=name.normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+    a.download=(name.replace(/[^a-z0-9_-]+/gi,"-").slice(0,70)||say("zornscience-graph"))+"."+extension;root.appendChild(a);a.click();a.remove();speak(say("{format} download ready.",{format:extension.toUpperCase()}));}
   function svgSource() {return new XMLSerializer().serializeToString(svg);}
   el("svg").addEventListener("click",function(){download("data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svgSource()),"svg");});
   el("csv").addEventListener("click",function(){download("data:text/csv;charset=utf-8,"+encodeURIComponent(model.csv(points,[label("x"),label("y")])),"csv");});
   el("png").addEventListener("click",function(){
     var image=new Image(),button=el("png");button.disabled=true;
-    image.onload=function(){try{var canvas=document.createElement("canvas");canvas.width=2400;canvas.height=1680;var ctx=canvas.getContext("2d");ctx.drawImage(image,0,0,2400,1680);download(canvas.toDataURL("image/png"),"png");}catch(error){speak("PNG could not be created. Try downloading SVG or printing the graph.");}button.disabled=!points.length;};
-    image.onerror=function(){button.disabled=!points.length;speak("PNG could not be created. Try downloading SVG or printing the graph.");};
+    image.onload=function(){try{var canvas=document.createElement("canvas");canvas.width=2400;canvas.height=1680;var ctx=canvas.getContext("2d");ctx.drawImage(image,0,0,2400,1680);download(canvas.toDataURL("image/png"),"png");}catch(error){speak(say("PNG could not be created. Try downloading SVG or printing the graph."));}button.disabled=!points.length;};
+    image.onerror=function(){button.disabled=!points.length;speak(say("PNG could not be created. Try downloading SVG or printing the graph."));};
     image.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(svgSource());
   });
   el("print").addEventListener("click",function(){window.print();});
   var dialog=el("dialog"), opener=null;
   function openDialog(kind,button) {
-    opener=button;el("dialog-title").textContent=kind==="share"?"Share this activity":"Instructions";
+    opener=button;el("dialog-title").textContent=say(kind==="share"?"Share this activity":"Instructions");
     el("instructions-content").hidden=kind!=="instructions";el("share-content").hidden=kind!=="share";el("share-status").textContent="";
     dialog.showModal();
   }
@@ -153,8 +177,9 @@
   dialog.addEventListener("close",function(){if(opener)opener.focus();});
   el("copy-link").addEventListener("click",async function(){
     var input=el("share-url");
-    try {if(!navigator.clipboard||!navigator.clipboard.writeText)throw Error("Clipboard unavailable");await navigator.clipboard.writeText(input.value);el("share-status").textContent="Link copied.";}
-    catch(error){input.focus();input.select();el("share-status").textContent="The link is selected. Press Ctrl+C, or Command+C on a Mac, to copy it.";}
+    try {if(!navigator.clipboard||!navigator.clipboard.writeText)throw Error("Clipboard unavailable");await navigator.clipboard.writeText(input.value);el("share-status").textContent=say("Link copied.");}
+    catch(error){input.focus();input.select();el("share-status").textContent=say("The link is selected. Press Ctrl+C, or Command+C on a Mac, to copy it.");}
   });
+  if (i18n) el("share-url").value=i18n.url(el("share-url").value);
   replaceRows([]);update();
 }());
