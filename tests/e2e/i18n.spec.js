@@ -3025,6 +3025,49 @@ test("virtual-lab-graphing opens in Mexican Spanish and translates the data tabl
   expect(errors).toEqual([]);
 });
 
+test("landing page opens in Mexican Spanish with Spanish activity names and links, and keeps the ACT activities in English", async ({page}) => {
+  const errors = [];
+  page.on("pageerror", e => errors.push(e.message));
+  page.on("console", m => { if (m.type() === "error" || m.type() === "warning") errors.push(m.text()); });
+  await page.goto("/?lang=es");
+  await expect(page.locator("html")).toHaveAttribute("lang", "es-MX");
+  await expect(page).toHaveTitle("Actividades de práctica | ZornScience");
+  await expect(page.getByRole("heading", {level:1})).toHaveText("Actividades de práctica");
+  await expect(page.getByRole("link", {name:"ES Español", exact:true})).toHaveAttribute("aria-current", "true");
+  await expect(page.getByRole("navigation", {name:"Ir a un tema"})).toBeVisible();
+  // Every activity's card uses its own Spanish title and opens it in Spanish.
+  for (const [slug, title] of Object.entries({...activities, ...labs, ...tools})) {
+    if (slug === "equilibrium-thermo-lab") continue; // a chooser page, not listed on the landing page
+    const link = page.locator(".zsa-home-card h3 a").filter({hasText:new RegExp("^" + title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "$")});
+    await expect(link, slug).toHaveCount(1);
+    await expect(link, slug).toHaveAttribute("href", slug + "/?lang=es");
+  }
+  // The ACT activities and the teacher code checker have no Spanish version.
+  for (const name of ["ACT Practice", "ACT Question Generator"]) {
+    await expect(page.locator(".zsa-home-card h3").filter({has:page.getByRole("link", {name, exact:true})})).toHaveText(name + " (en inglés)");
+  }
+  await expect(page.getByRole("link", {name:"Revisar códigos de finalización (en inglés)", exact:true})).toBeVisible();
+  const text = (await pageText(page, null)).replace(/ACT Practice|ACT Question Generator/g, "");
+  expect(text).not.toMatch(english);
+  expect(text).not.toMatch(/\b(?:Atoms|Reactions|Physics|Test prep|Lab tools|Jump|Explore|Build|Choose|Watch|Learn|Simulation|Virtual lab|Timed quiz|Untimed|questions|Your own data|teachers|Activities|activity|lesson|login|device)\b/i);
+  // The gas laws card goes to the Spanish version.
+  await page.getByRole("link", {name:"Explorador de las leyes de los gases", exact:true}).click();
+  await expect(page).toHaveTitle("Explorador de las leyes de los gases | ZornScience");
+  await page.goBack();
+  for (const width of [320, 390]) {
+    await page.setViewportSize({width, height:844});
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), "at " + width).toBeLessThanOrEqual(0);
+    const box = await page.getByRole("link", {name:"ES Español", exact:true}).boundingBox();
+    expect(box.width).toBeGreaterThanOrEqual(44);
+    expect(box.height).toBeGreaterThanOrEqual(44);
+  }
+  await page.getByRole("link", {name:"EN English", exact:true}).click();
+  await expect(page).toHaveTitle("Practice Activities | ZornScience");
+  await expect(page.getByRole("link", {name:"ACT Practice", exact:true})).toBeVisible();
+  await expect(page.locator(".zsa-home-card h3").filter({hasText:/^ACT Practice/})).toHaveText("ACT Practice");
+  expect(errors).toEqual([]);
+});
+
 test("Spanish ion round translates hints, feedback, review and completion codes", async ({page}) => {
   await page.goto("/ion-charge-trainer/?lang=es");
   const work = page.locator("#zsa-ict-work");
