@@ -29,7 +29,7 @@
   "Share options opened.": "Se abrieron las opciones para compartir.",
   "Use Copy link or email instead.": "Usa Copiar enlace o el correo electrónico.",
   "Explore electric potential and electric fields with movable charges and a virtual probe.": "Explora el potencial eléctrico y los campos eléctricos con cargas que puedes mover y una punta virtual.",
-  "Map the invisible": "Mapea lo invisible",
+  "Map the invisible": "Mapeo de lo invisible",
   "Start with an optional exploration in {strong}, or build your own arrangement. Predict what will happen before selecting Reveal & explain.": "Empieza con una exploración opcional en {strong} o arma tu propio acomodo. Predice qué va a pasar antes de seleccionar Revelar y explicar.",
   "Drag a positive or negative charge from the tray onto the paper, or press its Add button. Move charges to change the field.": "Arrastra una carga positiva o negativa de la charola al papel, o presiona su botón para agregarla. Mueve las cargas para cambiar el campo.",
   "Drag the red probe tip across the grid. The voltmeter reads electric potential relative to infinity. Click the grid to move the probe there.": "Arrastra la punta roja por la cuadrícula. El voltímetro mide el potencial eléctrico respecto al infinito. Haz clic en la cuadrícula para mover la punta ahí.",

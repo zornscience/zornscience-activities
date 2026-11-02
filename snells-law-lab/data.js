@@ -28,7 +28,7 @@
   "Share options opened.": "Se abrieron las opciones para compartir.",
   "Use Copy link or email instead.": "Usa Copiar enlace o el correo electrónico.",
   "Explore refraction and total internal reflection with a laser and optical blocks.": "Explora la refracción y la reflexión interna total con un láser y bloques ópticos.",
-  "Follow the light": "Sigue la luz",
+  "Follow the light": "El recorrido de la luz",
   "Start with the rectangular block.": "Empieza con el bloque rectangular.",
   "Drag the laser, or use the incidence slider, to aim at the center of the top face. Angles are measured from the dashed normal, perpendicular to the surface.": "Arrastra el láser, o usa el control deslizante de incidencia, para apuntar al centro de la cara superior. Los ángulos se miden desde la normal punteada, perpendicular a la superficie.",
   "Measure the bend.": "Mide la desviación.",

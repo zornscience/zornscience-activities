@@ -1718,7 +1718,7 @@ Empty board / Your own circuit | Tablero vacío / Tu propio circuito
 Lit / Equally bright / Brightest / Dark (insight labels) | Con luz / Brillo igual / Mayor brillo / Sin luz
 Warning: short circuit. | Atención: cortocircuito.
 Equipotential & Electric Field Mapping (activity title) | Líneas equipotenciales y mapeo de campos eléctricos
-Map the invisible (instructions heading) | Mapea lo invisible
+Map the invisible (instructions heading) | Mapeo de lo invisible
 probe / red probe / voltage probe | punta / punta roja / punta del voltímetro
 digital voltmeter | voltímetro digital
 Charge tray | Charola de cargas
@@ -1773,7 +1773,7 @@ Cruise to the right / Speed up to the right / Slow to a stop / Turn around / Spe
 Slope = velocity / Slope = acceleration / Changes velocity (graph captions) | Pendiente = velocidad / Pendiente = aceleración / Cambia la velocidad
 trials (runs of the cart, compared) | corridas
 Snell's Law & Refraction (activity title) | Ley de Snell y refracción
-Follow the light (instructions heading) | Sigue la luz
+Follow the light (instructions heading) | El recorrido de la luz
 Laser on / Laser off | Láser encendido / Láser apagado
 Set to critical angle | Ir al ángulo crítico
 Just below / Just above (critical angle) | Justo por debajo / Justo por encima
