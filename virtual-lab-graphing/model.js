@@ -1,5 +1,17 @@
 (function () {
   "use strict";
+  // Words come from data.js through the shared language module. In Node (the unit tests) and in English, each
+  // template is filled as written. Every sentence is one full template, so Spanish keeps its own word order.
+  var i18n;
+  if (typeof document !== "undefined") {
+    var host = document.querySelector('[data-zsa-activity="virtual-lab-graphing"]');
+    if (host) host.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: function (api) { i18n = api; }}}));
+  }
+  function t(text, values) {
+    values = values || {};
+    if (i18n) return i18n.text(text, values);
+    return text.replace(/\{(\w+)\}/g, function (m, k) { return values[k] === undefined ? m : values[k]; });
+  }
   var LIMIT = 500;
   function number(value) {
     var text = String(value).trim().replace(/−/g, "-");
@@ -21,11 +33,11 @@
   }
   // Center and scale both axes before least squares, so large offsets and small ranges stay usable.
   function fit(points) {
-    if (points.length < 2) return {error:"Add at least two complete points for a best-fit line."};
+    if (points.length < 2) return {error:t("Add at least two complete points for a best-fit line.")};
     var x0 = points[0].x, y0 = points[0].y;
     var xs = Math.max.apply(null, points.map(function (p) { return Math.abs(p.x - x0); }));
     var ys = Math.max.apply(null, points.map(function (p) { return Math.abs(p.y - y0); }));
-    if (!xs) return {error:"All x values are the same. A vertical set of points has no unique best-fit line y = mx + b."};
+    if (!xs) return {error:t("All x values are the same. A vertical set of points has no unique best-fit line y = mx + b.")};
     var sy = ys || 1, n = points.length;
     var dx = points.map(function (p) { return (p.x - x0) / xs; });
     var dy = points.map(function (p) { return (p.y - y0) / sy; });
@@ -37,7 +49,7 @@
     var centerX = x0 + mx * xs, centerY = y0 + my * sy;
     var intercept = centerY - slope * centerX;
     var r2 = yy ? Math.min(1, Math.max(0, xy * xy / (xx * yy))) : null;
-    if (![slope, intercept].every(Number.isFinite)) return {error:"This data range is too extreme for a reliable fit. Rescale the units and try again."};
+    if (![slope, intercept].every(Number.isFinite)) return {error:t("This data range is too extreme for a reliable fit. Rescale the units and try again.")};
     return {slope:slope, intercept:intercept, r2:r2, centerX:centerX, centerY:centerY, n:n,
       predict:function (x) { return centerY + slope * (x - centerX); }};
   }
@@ -79,7 +91,7 @@
   // Quoted CSV and tab-separated spreadsheet data, including escaped quote characters.
   function parse(text) {
     text = text.replace(/^\uFEFF/, "").replace(/\r\n?/g, "\n");
-    if (text.length > 1000000) throw Error("Choose a file smaller than 1 MB.");
+    if (text.length > 1000000) throw Error(t("Choose a file smaller than 1 MB."));
     var delimiter = text.split("\n")[0].indexOf("\t") >= 0 ? "\t" : ",";
     var rows = [], row = [], cell = "", quoted = false, closed = false;
     function finishCell() { row.push(cell.trim()); cell = ""; closed = false; }
@@ -93,18 +105,18 @@
       } else if (c === delimiter) finishCell();
       else if (c === "\n") finishRow();
       else if (c === '"' && !cell.trim() && !closed) {quoted = true; cell = "";}
-      else if (closed && c.trim()) throw Error("Unexpected text after a quoted CSV value.");
+      else if (closed && c.trim()) throw Error(t("Unexpected text after a quoted CSV value."));
       else cell += c;
     }
-    if (quoted) throw Error("A quoted CSV value is missing its closing quote.");
+    if (quoted) throw Error(t("A quoted CSV value is missing its closing quote."));
     finishRow();
-    if (!rows.length) throw Error("Paste or choose a table with two columns of data.");
-    rows.forEach(function (r, i) {if (r.length !== 2) throw Error("Line " + (i+1) + ": expected exactly two columns, separated by commas or tabs.");});
+    if (!rows.length) throw Error(t("Paste or choose a table with two columns of data."));
+    rows.forEach(function (r, i) {if (r.length !== 2) throw Error(t("Line {line}: expected exactly two columns, separated by commas or tabs.", {line: i+1}));});
     var labels = null;
     if (number(rows[0][0]) === null && number(rows[0][1]) === null && rows[0][0] && rows[0][1]) labels = rows.shift();
-    if (!rows.length) throw Error("Add at least one data pair below the header.");
-    if (rows.length > LIMIT) throw Error("Please import at most 500 points.");
-    rows.forEach(function (r, i) { if (number(r[0]) === null || number(r[1]) === null) throw Error("Line " + (i+1+(labels?1:0)) + ": use numbers with magnitude from 1e-100 to 1e100, or zero."); });
+    if (!rows.length) throw Error(t("Add at least one data pair below the header."));
+    if (rows.length > LIMIT) throw Error(t("Please import at most 500 points."));
+    rows.forEach(function (r, i) { if (number(r[0]) === null || number(r[1]) === null) throw Error(t("Line {line}: use numbers with magnitude from 1e-100 to 1e100, or zero.", {line: i+1+(labels?1:0)})); });
     return {rows:rows, labels:labels};
   }
   function csv(points, labels) {
