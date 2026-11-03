@@ -18,8 +18,9 @@ Implemented `/free-energy-lab/` with all six modes, English and Mexican Spanish,
 - `tests/unit/free-energy-lab.test.js`
 - `tests/e2e/free-energy-lab.spec.js`
 - `SPANISH_TERMS.md`, appended Free Energy Lab terminology only
+- Root `index.html`, `home.js` and `README.md`, English/Spanish catalog entry and activity inventory
 
-The requested `/reaction-energy-lab/` reference is absent from this checkout. The implementation follows `/equilibrium-k-lab/` and `/solutions-lab/`. Inter, header, instructions/share dialogs, footer, embed behavior, i18n, CSP and versioned assets use their existing conventions. The site has no build step and the lab makes no runtime network requests. Its initial HTML, scripts, styles, font and icon are local assets.
+The implementation follows the shared conventions of `/reaction-energy-lab/`, `/equilibrium-k-lab/` and `/solutions-lab/`. Inter, header, instructions/share dialogs, footer, embed behavior, i18n, CSP and versioned assets use their existing conventions. The site has no build step and the lab makes no runtime network requests. Its initial HTML, scripts, styles, font and icon are local assets.
 
 ## Parameter examples
 
@@ -109,8 +110,8 @@ Read the supplied `ZornScience Style Kit-1.pdf`, sections 1, 4, 5, 6 and 7. Bran
 - Final Free Energy Lab browser suite: 20 passed, including all twelve English/Spanish mode checks at 360 px, contrast/accessibility, offline use, keyboard controls, safe URLs, dialogs, exports and screenshots. The shared-shell Spanish regression check also passed after its assertions were expanded. Final targeted checks passed for the staged entropy flow, reference-data exports, refreshed DS screenshots, and both K line-style legends.
 - Final repository static checks: 6 passed. No shared files changed, and `git diff --check` is clean.
 - Repository unit run: 275 of 276 passed initially with the temporary PHP runtime. The remaining existing WordPress test required iconv; after enabling that extension, both ACT History tests passed. The final model/static rerun also passed after the last changes.
-- Quick parity against the clean starting HEAD (`40dbd91`): 5 scenarios, 984 compared states, 936 screenshot pairs, no differences. This compares the user's actual starting checkout; its `origin/main` reference is older.
-- Full browser verification covered all 575 current cases across the original run and a targeted resume after the environment reconnected: 557 passed, 17 failed in unchanged existing activities, and one additional existing Lewis AP routing test stalled beyond its 400-second limit and was stopped. The resumed run recorded 24 passes and that stopped worker. No Free Energy Lab test failed in the final checks.
+- Quick parity against the clean starting HEAD (`40dbd91`): 5 scenarios, 984 compared states, 936 screenshot pairs, no differences. This comparison used the original starting checkout before the branch was updated to include Reaction Energy Lab.
+- Full browser verification covered 575 cases across the original run and a targeted resume after the environment reconnected: 557 passed, 17 failed in unchanged existing activities, and one additional existing Lewis AP routing test stalled beyond its 400-second limit and was stopped. The resumed run recorded 24 passes and that stopped worker. No Free Energy Lab test failed in the final checks.
 
 Checks used the system Chromium through a temporary Playwright configuration, plus a temporary PHP runtime outside the repository. No runtime or development dependencies were added to the repository.
 
@@ -151,3 +152,7 @@ The wider repository suite is not fully green. The isolated Free Energy Lab chec
 | Kinetic vs Thermodynamic Control | [English](screenshots/control-en.png) | [Español](screenshots/control-es.png) |
 | ΔG° and K | [English](screenshots/k-en.png) | [Español](screenshots/k-es.png) |
 | Dissolving and Coupled Reactions | [English](screenshots/coupled-en.png) | [Español](screenshots/coupled-es.png) |
+
+## Merge preparation
+
+Updated the branch onto main commit `ada7f0c`, preserving the Reaction Energy Lab glossary section. Reviewed its shared shell, event-based model API, superscript/scientific notation and round-tick conventions. Added the Free Energy Lab home catalog entry in English and Spanish. The broader local test results above describe the original `40dbd91` base; focused validation on the updated branch passed: 23 browser/accessibility tests, 18 model/static tests, and the English/Spanish catalog link checks. Shared files remain unchanged.

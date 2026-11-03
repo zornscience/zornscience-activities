@@ -41,8 +41,10 @@ The browser suite needs Chromium installed through Playwright or an equivalent c
 - Final repository static checks: 6 passed; whitespace/diff checks clean.
 - Full unit run: 275 of 276 passed; enabling the missing iconv extension in the temporary PHP runtime resolved the remaining existing test, with both ACT History tests passing on retry. The final model/static rerun passed.
 - Quick parity against starting HEAD 40dbd91: 5 scenarios, 984 compared states, 936 screenshot pairs, no differences.
-- Full browser verification covered all 575 current cases across the original run and a targeted resume after the environment reconnected: 557 passed, 17 failed in unchanged existing activities, and one additional existing Lewis AP routing test stalled beyond its 400-second limit and was stopped. The resumed run recorded 24 passes and that stopped worker. No Free Energy Lab test failed in the final checks.
+- Full browser verification covered 575 cases across the original run and a targeted resume after the environment reconnected: 557 passed, 17 failed in unchanged existing activities, and one additional existing Lewis AP routing test stalled beyond its 400-second limit and was stopped. The resumed run recorded 24 passes and that stopped worker. No Free Energy Lab test failed in the final checks.
 
 A temporary configuration outside the repository selected the installed system Chromium. PHP and the needed extensions were extracted into temporary tooling outside the repository. Shared files and package dependencies are unchanged.
 
 The existing browser failures and the stopped Lewis AP routing test are listed in [REPORT.md](REPORT.md). No shared files or other activities were changed to address those existing checks.
+
+The original broad-run results above use base `40dbd91`. Before the PR, the branch was updated to `ada7f0c` to include Reaction Energy Lab and its glossary entries, and focused validation on that base passed: 23 browser/accessibility tests, 18 model/static tests, and the English/Spanish catalog link checks.

@@ -72,6 +72,6 @@ The Data table describes the current mode. Copy data follows the displayed table
 
 `chem.js` is DOM-independent and exports CommonJS for tests. In the browser it answers `zsa-fe:request-model` with `event.detail.receive(api)`. `lab.js` creates views with DOM methods. `data.js` configures the unchanged shared i18n module. The shell uses shared header dialogs, Inter, base and header CSS, i18n and embed scripts, one CSP, and versioned assets.
 
-Reviewed against the supplied ZornScience Style Kit sections 1, 4, 5, 6 and 7. New terminology is recorded in `../SPANISH_TERMS.md`. No shared files, WordPress content, worksheets, or PDFs are changed. The requested Reaction Energy Lab reference is absent from this checkout; Equilibrium Constant Lab and Solutions Lab provide the implementation references.
+Reviewed against the supplied ZornScience Style Kit sections 1, 4, 5, 6 and 7. New terminology is recorded in `../SPANISH_TERMS.md`. No shared files, WordPress content, worksheets, or PDFs are changed. The shared shell, model API, scientific notation and graph conventions were checked against Reaction Energy Lab, Equilibrium Constant Lab and Solutions Lab. The home catalog includes the activity in both languages.
 
 See [TESTING.md](TESTING.md) for checks and [REPORT.md](REPORT.md) for the delivery report, numerical notes and screenshots. ZornScience, CC BY-NC-SA 4.0. Local Inter font, SIL OFL 1.1.
