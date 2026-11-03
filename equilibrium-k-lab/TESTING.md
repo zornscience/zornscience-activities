@@ -77,3 +77,7 @@ Reviewed the supplied Style Kit v1.8, sections 1, 4, 5, 6 and 7. Corrected Spani
 - The safe parser accepts U+2013 as an input minus sign without publishing that character in activity source or documentation. No em dashes or shared-file changes were introduced.
 
 Manual checks: enter a wrong coefficient that happens to give the correct number at one x, and verify rejection. Complete C/E symbolically and numerically. Check the given-value, square-root, small-x and failed-shortcut solve steps. In Ksp, verify +s/+2s and the symbolic E row, preserve 0.050, test both passing and failing common-ion shortcuts, and inspect CSV precision.
+
+## Pull request parity scope
+
+This fix intentionally changes the Equilibrium Constant Lab interface and the Solutions Lab dilution table. The PR uses the repository's `behavior-change` label, as described in `.github/workflows/test.yml`, to skip a pixel/DOM equality comparison with the old interface. Full unit/browser CI still runs; the dedicated regressions above verify the requested new behavior.
