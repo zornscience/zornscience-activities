@@ -13,11 +13,11 @@ npm run test:unit
 npm run test:browser
 ```
 
-The new unit file contains ten tests covering all requested lesson values, exact extent bounds, nonnegative compositions, stoichiometric conservation, equal equilibrium rates, omitted solids, temperature direction, strict 5% acceptance, reaction cancellation, common-ion source counts and Ksp mass action. The CaF₂ common-ion rounding difference is explicitly documented in README.md and tested against the exact root.
+The new unit file contains fifteen tests covering all requested lesson values, exact extent bounds, nonnegative compositions, stoichiometric conservation, equal equilibrium rates, omitted solids, temperature direction, strict 5% acceptance, reaction cancellation, common-ion source counts and Ksp mass action. The CaF₂ common-ion rounding difference is explicitly documented in README.md and tested against the exact root.
 
-Seven browser tests cover the five modes, URL initialization and fallback, safe return links, language restart, shared dialogs and focus return, embed chrome, numeric guided rows, requested hints, molarity warnings, K-rule cancellation, common-ion comparisons, clipboard fallback and CSV. Both languages run offline after assets load. Every mode has axe-core WCAG 2 A/AA and 2.1 AA checks, a page-width check at 1366 px and 360 px, and keyboard tab checks. Screenshots are regenerated under `equilibrium-k-lab/screenshots/`.
+Ten browser tests cover the five modes, URL initialization and fallback, safe return links, language restart, shared dialogs and focus return, embed chrome, symbolic and numeric guided rows, requested hints, molarity warnings, K-rule cancellation, common-ion comparisons, clipboard fallback and CSV. Both languages run offline after assets load. Every mode has axe-core WCAG 2 A/AA and 2.1 AA checks, a page-width check at 1366 px and 360 px, and keyboard tab checks. Screenshots are regenerated under `equilibrium-k-lab/screenshots/`.
 
-This environment has system Chromium at `/usr/bin/chromium` rather than Playwright's downloaded browser. Browser verification uses a temporary configuration derived from `playwright.config.js`, with only `launchOptions.executablePath` and `--no-sandbox` added. The temporary configuration is removed before delivery. The repository's configuration and shared files are unchanged.
+This environment has system Chromium at `/usr/bin/chromium` rather than Playwright's downloaded browser. Browser verification uses a temporary configuration derived from `playwright.config.js`, with only `launchOptions.executablePath` and `--no-sandbox` added. The temporary configuration stays outside the repository. The repository's configuration and shared files are unchanged.
 
 Initial delivery verification (1.0.0):
 
@@ -48,7 +48,7 @@ Reviewed the supplied Style Kit v1.8, sections 1, 4, 5, 6 and 7. Corrected Spani
 2. Explore HI from 0.200 M H₂ and I₂. Run to equilibrium and inspect the curves, equal rates and Data table. Compare the final 0.0444 M, 0.0444 M and 0.311 M values.
 3. Select A ⇌ B and particles. At K = 4 and total 1.0 mol, verify 2 A and 8 B. In K magnitude, test both endpoints and confirm tiny products remain at K = 1e-4. For X₂ + Y₂ ⇌ 2XY, inspect the stoichiometric particle counts.
 4. In Q vs K, predict before revealing. Add and remove different species, halve and double volume, and run after each stress. After a run, confirm the next stress starts from the displayed mixture. Heat and cool N₂O₄: only K changes instantly. SO₃ states its exothermic direction but has no numeric temperature control.
-5. Complete a guided table. Wrong rows stay open; correct rows unlock only the next row. Hints remain hidden until requested. Run both the NO shortcut and failing N₂O₄ shortcut. Confirm 0.32% and 22.36%, strict less than 5%, and exact answers.
+5. Complete a guided table. Wrong rows stay open; correct rows unlock only the next row. Hints remain hidden until requested. Run both the NO shortcut and failing N₂O₄ shortcut. Confirm 0.32% and 22%, strict less than 5%, and exact answers.
 6. Choose a moles problem and deliberately enter moles as molarity. Confirm the warning. Then divide by volume and complete the table. The direct PCl₅ quotient flags 0.00889 if used for K.
 7. Reverse K = 0.0600, halve coefficients for K = 250, and combine reaction steps. Verify cancellation and both the target and combined K checks.
 8. Compare AgCl and Ag₂CrO₄, and compare pure water with the supplied NaCl, NaI and calcium nitrate common-ion solutions. Test a nonmatching source. The ideal model leaves solubility unchanged for a source with no common ion.
@@ -66,3 +66,14 @@ Reviewed the supplied Style Kit v1.8, sections 1, 4, 5, 6 and 7. Corrected Spani
 | ICE/RICE | [English](screenshots/ice-en.png) | [Español](screenshots/ice-es.png) |
 | K Rules | [English](screenshots/rules-en.png) | [Español](screenshots/rules-es.png) |
 | Ksp and Common Ion | [English](screenshots/ksp-en.png) | [Español](screenshots/ksp-es.png) |
+
+## Algebra and display fix verification (1.0.1)
+
+- Chemistry: 15 tests passed, including parser syntax and rejection cases, the complete N₂O₄ RICE example, numeric alternatives, reverse-direction signs, significant-figure formatting, nice ticks, and common-ion shortcut validity.
+- Browser: 10 Equilibrium Constant Lab tests and 16 Solutions Lab tests passed. The follow-up Equilibrium run also checks the final numeric/K table at 360 px with axe in both languages.
+- Solutions model: 13 tests passed. Repository static checks: 6 passed.
+- CSV regression: CaF₂ exports the unrounded 0.000021494266... result while the UI shows 2.1 × 10⁻⁵ M. Serial dilution displays 0.00200 in both mole columns and exports 0.0019999999999999996.
+- New screenshots: `ice-mid-problem-en.png`, `ice-mid-problem-es.png`, `ksp-common-ion-en.png`, and `ksp-common-ion-es.png`. The five-mode baseline screenshots were refreshed too.
+- The safe parser accepts U+2013 as an input minus sign without publishing that character in activity source or documentation. No em dashes or shared-file changes were introduced.
+
+Manual checks: enter a wrong coefficient that happens to give the correct number at one x, and verify rejection. Complete C/E symbolically and numerically. Check the given-value, square-root, small-x and failed-shortcut solve steps. In Ksp, verify +s/+2s and the symbolic E row, preserve 0.050, test both passing and failing common-ion shortcuts, and inspect CSV precision.

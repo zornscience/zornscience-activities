@@ -53,9 +53,9 @@ All interface and dynamic feedback translations are in `data.js`.
 All requested numerical reference cases are covered by the unit tests. Calculations retain unrounded values internally.
 
 - CaF₂ in 0.020 M Ca(NO₃)₂: exact s = 2.149426618e-5 M, which rounds to 2.1e-5 M at two significant figures. The supplied lesson value is 2.2e-5 M. The exact calculation is retained.
-- The supplied 7.10 HI concentration, 0.707 M, is rounded. It produces Q = 49.9849 initially and 24.99245 after raising H₂ to 0.200 M. These round to 50.0 and 25.0 at three significant figures. The rounded initial mixture has a very small predicted shift right because Q is slightly below 50. The UI retains six significant figures in Q/K readouts so the comparison remains visible.
+- The supplied 7.10 HI concentration, 0.707 M, is rounded. It produces Q = 49.9849 initially and 24.99245 after raising H₂ to 0.200 M. These round to 50.0 and 25.0 at three significant figures. The rounded initial mixture has a very small predicted shift right because Q is slightly below 50. The UI now uses three significant figures for Q/K readouts and explains comparisons that differ only in hidden digits.
 - H₂/I₂ exact x = 0.1555555556 M, remaining reactants = 0.0444444444 M, HI = 0.3111111111 M. The supplied rounded results agree. The supplied equilibrium HI data produce K = 49.37910884, rounding to 49.4.
-- NO shortcut [NO] = 0.001264911 M and percent = 0.316227766%, rounding to 0.0013 M and 0.32%. Exact [NO] agrees at two significant figures.
+- NO shortcut [NO] = 0.001264911 M and percent = 0.316227766%, rounding to 0.00126 M and 0.32% with the revised display. Both methods still agree at the original lesson's two significant figures.
 - Pure-water PbI₂ s = 1.348099750e-3 M and AgCl s = 1.341640786e-5 M, agreeing with the supplied two-significant-figure values. Using the supplied rounded CaF₂ s = 2.1e-4 M reconstructs Ksp = 3.7044e-11, rounding to 3.7e-11.
 - Curves use a labeled illustrative relaxation time while conserving stoichiometry and ending at the exact bisection solution. Forward/reverse elementary-step rate products are illustrative and satisfy K = kf/kr. They are not measured overall rate laws.
 - Temperature calculations use only the supplied numeric N₂O₄ ΔH. SO₃ is labeled exothermic but has no numerical temperature control, because a numeric ΔH was not supplied.
@@ -97,3 +97,24 @@ Reviewed the supplied ZornScience Style Kit v1.8 (November 2, 2026), sections 1,
 | 7, scope | Activity, tests, docs and repo glossary only. No WordPress changes, PDFs or changes to the Style Kit master. |
 
 The three added glossary entries are velocidad de reacción directa, velocidad de reacción inversa and perturbación. All ten screenshots were refreshed after the corrections. The shared shell was checked against both `/ph-buffer-lab/` and `/solutions-lab/` after rebasing onto the latest main. Both use the same shared header/dialogs, local Inter, CSP, localization, embed behavior and event-based chemistry API.
+
+## Algebra, notation and Solutions fixes
+
+Equilibrium Constant Lab remains at the requested version 1.0.1. Solutions Lab is 1.0.2.
+
+- C/E text inputs accept safe linear algebra and numeric alternatives. Checks compare constants and coefficients, with signs following the actual shift. No dynamic code evaluation is used.
+- Solve for x is now a separate step. Given-value problems show the equilibrium relation, HI shows the square-root rearrangement, small-x problems show the shortcut and strict 5% check, and other cases use exact equilibrium. The final table contains numeric concentrations and K. The N₂O₄ RICE example yields x = 0.0200 and K = 0.0200.
+- Scientific notation, significant figures and lesson-style expressions now apply across controls, readouts, tables, bars and graphs. Kp species are subscripts; no fraction is shown for an empty denominator. Legends include color swatches with solid line/dashed line labels, and axes use round ticks. CSV retains full precision while Copy data follows the displayed values.
+- Ksp C entries have plus signs. E entries show expressions above their numeric values. Common-ion trailing zeros are preserved. CaF₂ in 0.020 M calcium nitrate shows Shortcut: s ≈ 2.2 × 10⁻⁵ M (0.020 + s ≈ 0.020). Exact: 2.1 × 10⁻⁵ M. The common-ion 5% check is 0.11%, so the shortcut passes. A 1.0 × 10⁻⁷ M chloride case fails and retains the exact result.
+- Solutions Lab Dilute formats mole columns with the same significant figures as its readouts. The reproduced raw value 0.0019999999999999996 displays as 0.00200 and remains unrounded in CSV.
+
+Changed files: equilibrium-k-lab/chem.js, lab.js, data.js, lab.css, README.md, TESTING.md, REPORT.md and screenshots; SPANISH_TERMS.md; both activity e2e specs and the equilibrium unit spec; solutions-lab/lab.js, index.html, README.md and TESTING.md. Shared files and repository configuration are unchanged.
+
+New Spanish terms: expresión lineal; término constante; coeficiente de x; resolución de x; paso de la raíz cuadrada; notación científica; línea continua; línea discontinua. Every new UI string is in data.js.
+
+Verification: 15 equilibrium model tests, 13 Solutions model tests, six repository static checks, and 26 browser tests across both activities pass. These targeted checks supersede the older focused counts above; historical full-suite results remain labeled as initial-delivery results.
+
+| Requested screenshot | English | Mexican Spanish |
+| --- | --- | --- |
+| ICE/RICE mid-problem | [English](screenshots/ice-mid-problem-en.png) | [Español](screenshots/ice-mid-problem-es.png) |
+| Ksp with common ion | [English](screenshots/ksp-common-ion-en.png) | [Español](screenshots/ksp-common-ion-es.png) |
