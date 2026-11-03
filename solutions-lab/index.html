@@ -4,18 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.0.0">
+<meta name="zsa-version" content="1.0.1">
 <meta name="description" content="Make solutions, dilute stock solutions and explore solubility curves in the ZornScience Solutions Lab.">
 <title>Solutions Lab | ZornScience</title>
 <link rel="icon" href="../favicon.png" type="image/png">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
-<link rel="stylesheet" href="lab.css?v=1.0.0">
-<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
-<script src="../shared/zsa-i18n.js?v=1.0.0" defer></script>
-<script src="data.js?v=1.0.0" defer></script>
-<script src="chem.js?v=1.0.0" defer></script>
-<script src="lab.js?v=1.0.0" defer></script>
-<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.0"><script src="../shared/zsa-header.js?v=1.0.0" defer></script></head>
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.1">
+<link rel="stylesheet" href="lab.css?v=1.0.1">
+<script src="../shared/zsa-embed.js?v=1.0.1" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.0.1" defer></script>
+<script src="data.js?v=1.0.1" defer></script>
+<script src="chem.js?v=1.0.1" defer></script>
+<script src="lab.js?v=1.0.1" defer></script>
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.1"><script src="../shared/zsa-header.js?v=1.0.1" defer></script></head>
 <body>
 <main class="zsa zsa-sl" data-zsa-activity="solutions-lab">
 <header data-zsa-header class="zsa-sl-header">
@@ -80,7 +80,7 @@
 <label class="zsa-sl-check"><input type="checkbox" id="gentle"><span>Cool gently (no crystals)</span></label><button class="zsa-btn" id="seed" type="button">Drop in a seed crystal</button><p id="gas-note" class="zsa-sl-note" hidden>Gases are less soluble in warm water because faster moving gas particles escape the liquid more easily.</p>
 <button class="zsa-btn" id="curve-reset" type="button">Start over</button>
 <svg id="beaker" viewBox="0 0 300 230" role="img" aria-label="Beaker holding 100 g of water"></svg><p id="curve-status" role="status" aria-live="polite"></p>
-</section><section class="zsa-card" aria-labelledby="curve-title"><p class="zsa-eyebrow">2. Read the graph</p><h2 id="curve-title">Solubility curve</h2><svg id="curve-graph" viewBox="0 0 650 490" role="img" aria-label="Solubility curve"></svg><div id="curve-legend" class="zsa-sl-legend"></div><details><summary>Curve values</summary><div id="curve-reference" class="zsa-sl-table-wrap" tabindex="0" role="region" aria-label="Solubility reference data"></div></details><p class="zsa-sl-note">Below the curve: unsaturated. On the curve (±1 g): saturated. Above the curve: supersaturated.</p><p class="zsa-sl-note">The point shows total mass added. When solid remains, the liquid is saturated even though the total-mass point is above the curve. Only dissolved excess makes a supersaturated solution.</p><dl class="zsa-sl-readouts" id="curve-readouts" aria-live="polite" aria-atomic="true"></dl></section></div></section>
+</section><section class="zsa-card" aria-labelledby="curve-title"><p class="zsa-eyebrow">2. Read the graph</p><h2 id="curve-title">Solubility curve</h2><svg id="curve-graph" viewBox="0 0 650 490" role="img" aria-label="Solubility curve"></svg><div id="curve-legend" class="zsa-sl-legend"></div><details><summary>Curve values</summary><div id="curve-reference" class="zsa-sl-table-wrap" tabindex="0" role="region" aria-label="Solubility reference data"></div></details><p class="zsa-sl-note">Below the curve: unsaturated. On the curve (±1 g): saturated. Above the curve: supersaturated.</p><p class="zsa-sl-note">The point shows the dissolved amount. Solid on the bottom means the solution is saturated. Only dissolved excess without solid makes a supersaturated solution.</p><dl class="zsa-sl-readouts" id="curve-readouts" aria-live="polite" aria-atomic="true"></dl></section></div></section>
 <section role="tabpanel" id="panel-challenge" aria-labelledby="tab-challenge" hidden><p class="zsa-panel">Start with the fixed challenges. Check your finished experiment or enter an answer. Use hints when you need them.</p><button class="zsa-btn" id="new-challenges" type="button">New numbers</button><div class="zsa-sl-challenges" id="challenges"></div></section>
 <section class="zsa-card" id="data-section" aria-labelledby="data-title"><h2 id="data-title">Data table</h2><div class="zsa-sl-actions"><button class="zsa-btn" id="copy-data" type="button">Copy data</button><button class="zsa-btn" id="download-data" type="button">Download CSV</button></div><p id="export-status" role="status"></p><textarea id="copy-fallback" rows="5" readonly aria-label="Data to copy" hidden></textarea><div class="zsa-sl-table-wrap" tabindex="0" role="region" aria-label="Experiment data"><table><caption id="data-caption"></caption><thead id="data-head"></thead><tbody id="data-body"></tbody></table></div></section>
 <p class="zsa-sr-only" id="lab-live" aria-live="polite" aria-atomic="true"></p>

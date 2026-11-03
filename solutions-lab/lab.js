@@ -130,7 +130,7 @@
     drawFlask("dilute",stock.id,d.fill,vol,concentration,d.stage===2);
     $("dilute-results").hidden=d.stage!==2;
     if(diluted){var a=diluted;$("dilute-equation").textContent=M.sig(a.m1,stock.digits)+" M × "+M.sig(a.v1,a.v1Digits)+" mL = M₂ × "+M.FLASKS[a.v2]+" mL → M₂ = "+a.displayed+" M";
-      readouts("dilute-readouts",[["Moles before (mol)",M.sig(a.before,6)],["Moles after (mol)",M.sig(a.after,6)],["Water added (mL)",f(a.water,Math.min(usingCylinder?1:2,M.FLASKS[a.v2].split(".")[1].length))],["Molarity (M)",a.displayed]]);
+      readouts("dilute-readouts",[["Moles before (mol)",M.sig(a.before,a.digits)],["Moles after (mol)",M.sig(a.after,a.digits)],["Water added (mL)",f(a.water,Math.min(usingCylinder?1:2,M.FLASKS[a.v2].split(".")[1].length))],["Molarity (M)",a.displayed]]);
       put("dilute-checks","Quick checks: M₂ < M₁ and V₂ > V₁. Both are true. Moles before = moles after.");}
     $("particle-wrap").hidden=!$("particle-toggle").checked;drawParticles();
   }
@@ -144,21 +144,21 @@
   on("serial-stock",function(){if(!diluted)return;addStock(diluted,t("Step {step}: {m} M {formula}",{step:diluted.step,m:diluted.displayed,formula:stock.id==="cuso4"?"CuSO₄":M.SOLUTES[stock.id].formula}));syncURL();say(t("The diluted solution is now the stock. Measure a new aliquot."));});
   var curveColors=["#1d4ed8","#b91c1c","#15803d","#9333b9","#9a4d00","#0f766e"];
   function graph(){var el=$("curve-graph"),max=curve.id==="kno3"||curve.added>150?250:150;el.replaceChildren();var left=76,top=25,w=540,h=365,x=function(n){return left+n*w/100;},y=function(n){return top+h-n*h/max;};
-    el.setAttribute("aria-label",t("Solubility curve. {formula} at {temp} °C: {mass} g added; solubility {limit} g per 100 g H₂O. Point: {state}.",{formula:M.FORMULAS[curve.id],temp:curve.temp,mass:curve.added,limit:f(M.solubility(curve.id,curve.temp),1),state:t(M.classify(curve.id,curve.temp,curve.added))}));
+    el.setAttribute("aria-label",t("Solubility curve. {formula} at {temp} °C: {mass} g dissolved; solubility {limit} g per 100 g H₂O. Solution state: {state}.",{formula:M.FORMULAS[curve.id],temp:curve.temp,mass:f(curve.dissolved,1),limit:f(M.solubility(curve.id,curve.temp),1),state:t(M.solutionState(curve))}));
     var defs=svg("defs"),clip=svg("clipPath",{id:"curve-clip"});clip.appendChild(svg("rect",{x:left,y:top,width:w,height:h}));defs.appendChild(clip);el.appendChild(defs);
     for(var xx=0;xx<=100;xx+=10){el.appendChild(svg("line",{x1:x(xx),x2:x(xx),y1:top,y2:top+h,stroke:"#d6e2f5"}));el.appendChild(svg("text",{x:x(xx),y:top+h+24,"text-anchor":"middle"},xx));}
-    for(var yy=0;yy<=max;yy+=10){el.appendChild(svg("line",{x1:left,x2:left+w,y1:y(yy),y2:y(yy),stroke:"#d6e2f5"}));if(yy%30===0||yy===250)el.appendChild(svg("text",{x:left-10,y:y(yy)+5,"text-anchor":"end"},yy));}
+    for(var yy=0;yy<=max;yy+=10){el.appendChild(svg("line",{x1:left,x2:left+w,y1:y(yy),y2:y(yy),stroke:"#d6e2f5"}));if(yy%(max===250?50:30)===0)el.appendChild(svg("text",{x:left-10,y:y(yy)+5,"text-anchor":"end"},yy));}
     $("curve-legend").replaceChildren();Object.keys(M.CURVES).forEach(function(id,i){var points=M.CURVES[id].map(function(n,j){return x(j*10)+","+y(n);}).join(" ");
       el.appendChild(svg("polyline",{points:points,fill:"none",stroke:curveColors[i],"stroke-width":id===curve.id?4:1.5,"stroke-dasharray":id===curve.id?"none":(i+2)+" 3","clip-path":"url(#curve-clip)"}));
       var key=node("span",undefined,"zsa-sl-key"),swatch=svg("svg",{viewBox:"0 0 30 12","aria-hidden":"true"});swatch.appendChild(svg("line",{x1:0,x2:30,y1:6,y2:6,stroke:curveColors[i],"stroke-width":3,"stroke-dasharray":id===curve.id?"none":(i+2)+" 3"}));key.append(swatch,node("span",id==="nh3"?t("NH₃ (gas)"):M.FORMULAS[id]));$("curve-legend").appendChild(key);});
-    el.appendChild(svg("circle",{cx:x(curve.temp),cy:y(curve.added),r:7,fill:"#0b2a5b",stroke:"white","stroke-width":2}));
+    el.appendChild(svg("circle",{cx:x(curve.temp),cy:y(curve.dissolved),r:7,fill:"#0b2a5b",stroke:"white","stroke-width":2}));
     el.appendChild(svg("text",{x:left+w/2,y:445,"text-anchor":"middle"},t("Temperature (°C)")));
     el.appendChild(svg("text",{x:18,y:top+h/2,transform:"rotate(-90 18 "+(top+h/2)+")","text-anchor":"middle"},t("Solubility (g solute per 100 g H₂O)")));
   }
-  function renderCurve(){var limit=M.solubility(curve.id,curve.temp),gas=curve.id==="nh3",point=M.classify(curve.id,curve.temp,curve.added);
+  function renderCurve(){var limit=M.solubility(curve.id,curve.temp),gas=curve.id==="nh3",point=M.solutionState(curve);
     $("temperature").value=curve.temp;$("temperature").setAttribute("aria-valuetext",curve.temp+" °C");$("temperature-value").textContent=curve.temp+" °C";
     $("seed").disabled=gas||curve.dissolved<=limit;$("gentle").disabled=gas;$("gas-note").hidden=!gas;$("add-one").disabled=curve.added>=250;$("add-ten").disabled=curve.added>240;
-    readouts("curve-readouts",[["Mass added (g)",f(curve.added,1)],["Solubility (g per 100 g H₂O)",f(limit,1)],["Dissolved (g)",f(curve.dissolved,1)],[gas?"Gas escaped (g)":"Crystals formed (g)",f(gas?curve.escaped:curve.crystals,1)],["Point classification",t(point)],["Liquid state",t(curve.dissolved>limit+1?"supersaturated":Math.abs(curve.dissolved-limit)<=1?"saturated":"unsaturated")]]);
+    readouts("curve-readouts",[["Mass added (g)",f(curve.added,1)],["Solubility (g per 100 g H₂O)",f(limit,1)],["Dissolved (g)",f(curve.dissolved,1)],[gas?"Gas escaped (g)":"Crystals formed (g)",f(gas?curve.escaped:curve.crystals,1)],["Solution state",t(point)]]);
     var text=gas?t("Gas escaped: {mass} g. Dissolved: {dissolved} g.",{mass:f(curve.escaped,1),dissolved:f(curve.dissolved,1)}):t("Crystals formed: {mass} g. Dissolved: {dissolved} g.",{mass:f(curve.crystals,1),dissolved:f(curve.dissolved,1)});
     $("curve-status").textContent=text;
     var el=$("beaker");el.replaceChildren();el.setAttribute("aria-label",t("Beaker holding 100 g of water. {description}",{description:text}));
@@ -176,8 +176,8 @@
   function resetCurve(){stopHeat();curve=M.newBeaker($("curve-solute").value,Number($("temperature").value));curveLog=[];renderCurve();logCurve();syncURL();}
   on("curve-solute",resetCurve,"change");on("curve-reset",resetCurve);
   function tableData(){
-    if(mode==="solubility")return {caption:t("Solubility in 100 g H₂O. Classification refers to the total-mass point."),headers:["Temperature (°C)","Mass added (g)","Solubility (g per 100 g H₂O)","Dissolved (g)",curve.id==="nh3"?"Gas escaped (g)":"Crystals formed (g)","Point classification"],rows:curveLog.map(function(a){return [a.temp,f(a.added,1),f(M.solubility(a.id,a.temp),1),f(a.dissolved,1),f(a.id==="nh3"?a.escaped:a.crystals,1),t(M.classify(a.id,a.temp,a.added))];})};
-    if(mode==="dilute")return {caption:t("Dilution steps. Moles before equal moles after."),headers:["Step","Solute","M₁ (M)","V₁ (mL)","V₂ (mL)","M₂ (M)","Moles before (mol)","Moles after (mol)","Water added (mL)"],rows:diluteLog.map(function(a){return [a.step,a.id==="cuso4"?"CuSO₄":M.SOLUTES[a.id].formula,M.sig(a.m1,a.m1Digits),M.sig(a.v1,a.v1Digits),M.FLASKS[a.v2],a.displayed,M.sig(a.before,6),M.sig(a.after,6),f(a.water,Math.min(a.v1Digits-1-Math.floor(Math.log10(a.v1)),M.FLASKS[a.v2].split(".")[1].length))];})};
+    if(mode==="solubility")return {caption:t("Solution state uses the dissolved amount."),headers:["Temperature (°C)","Mass added (g)","Solubility (g per 100 g H₂O)","Dissolved (g)",curve.id==="nh3"?"Gas escaped (g)":"Crystals formed (g)","Solution state"],rows:curveLog.map(function(a){return [a.temp,f(a.added,1),f(M.solubility(a.id,a.temp),1),f(a.dissolved,1),f(a.id==="nh3"?a.escaped:a.crystals,1),t(M.solutionState(a))];})};
+    if(mode==="dilute")return {caption:t("Dilution steps. Moles before equal moles after."),headers:["Step","Solute","M₁ (M)","V₁ (mL)","V₂ (mL)","M₂ (M)","Moles before (mol)","Moles after (mol)","Water added (mL)"],rows:diluteLog.map(function(a){return [a.step,a.id==="cuso4"?"CuSO₄":M.SOLUTES[a.id].formula,M.sig(a.m1,a.m1Digits),M.sig(a.v1,a.v1Digits),M.FLASKS[a.v2],a.displayed,a.before,a.after,f(a.water,Math.min(a.v1Digits-1-Math.floor(Math.log10(a.v1)),M.FLASKS[a.v2].split(".")[1].length))];})};
     return {caption:t("Finished solutions. All calculations retain unrounded values."),headers:["Solute","Mass (g)","Moles of solute (mol)","Volume (L)","Molarity (M)"],rows:makeLog.map(function(a){return [M.SOLUTES[a.id].formula,f(a.mass),M.sig(a.moles,6),a.waterInstead?f(a.volume,4):M.sig(a.volume,4),a.displayed];})};
   }
   function renderTable(){var data=tableData(),head=node("tr");data.headers.forEach(function(s){var th=node("th",t(s));th.scope="col";head.appendChild(th);});$("data-head").replaceChildren(head);$("data-body").replaceChildren();data.rows.forEach(function(row){var tr=node("tr");row.forEach(function(s){tr.appendChild(node("td",String(s)));});$("data-body").appendChild(tr);});$("data-caption").textContent=data.caption;}
