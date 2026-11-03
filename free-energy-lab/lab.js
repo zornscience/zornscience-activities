@@ -36,7 +36,9 @@
     return document.getElementById(id);
   }
   function f(n, d) {
-    return M.format(n, d || 3);
+    return M.format(n, d || 3)
+      .replace(/\.0+(?= |$)/, "")
+      .replace(/(\.\d*?[1-9])0+(?= |$)/, "$1");
   }
   function given(n) {
     return f(n, M.sigDigits(n));
@@ -46,9 +48,58 @@
       .replace(/\.0+(?= |$)/, "")
       .replace(/(\.\d*?[1-9])0+(?= |$)/, "$1");
   }
+  function content(n, text) {
+    var parts = String(text).split("molrxn");
+    n.replaceChildren();
+    parts.forEach(function (part, i) {
+      if (i) {
+        n.appendChild(document.createTextNode("mol"));
+        var sub = document.createElementNS(
+          n.namespaceURI,
+          n.namespaceURI === "http://www.w3.org/2000/svg" ? "tspan" : "sub",
+        );
+        if (sub.localName === "tspan") {
+          sub.setAttribute("baseline-shift", "sub");
+          sub.setAttribute("font-size", "75%");
+        }
+        sub.textContent = "rxn";
+        n.appendChild(sub);
+      }
+      n.appendChild(document.createTextNode(part));
+    });
+  }
+  // Each exercise owns its reveal state. A wrong committed answer enables help.
+  function solution(h, id, update) {
+    var open = false;
+    var show = button(
+      h,
+      "Show solution",
+      function () {
+        open = true;
+        show.hidden = true;
+        update();
+      },
+      "show-" + id,
+    );
+    show.hidden = true;
+    return {
+      get open() {
+        return open;
+      },
+      check: function (ok) {
+        open = ok;
+        show.hidden = ok;
+        update();
+      },
+      reset: function () {
+        open = false;
+        show.hidden = true;
+      },
+    };
+  }
   function el(tag, text, cls) {
     var n = document.createElement(tag);
-    if (text !== undefined) n.textContent = text;
+    if (text !== undefined) content(n, text);
     if (cls) n.className = cls;
     return n;
   }
@@ -107,8 +158,8 @@
     return n;
   }
   function say(n, s, v) {
-    n.textContent = t(s, v);
-    $("live").textContent = n.textContent;
+    content(n, t(s, v));
+    content($("live"), n.textContent);
   }
   function table(h, heads, rows, caption) {
     var wrap = add(h, "div", undefined, "zsa-fe-scroll");
@@ -126,7 +177,7 @@
     rows.forEach(function (row) {
       var tr = add(body, "tr");
       row.forEach(function (s) {
-        add(tr, "td", typeof s === "number" ? f(s, 4) : t(String(s)));
+        add(tr, "td", typeof s === "number" ? given(s) : t(String(s)));
       });
     });
     return tab;
@@ -145,7 +196,7 @@
     Object.keys(attrs).forEach(function (k) {
       n.setAttribute(k, attrs[k]);
     });
-    if (text !== undefined) n.textContent = text;
+    if (text !== undefined) content(n, text);
     s.appendChild(n);
     return n;
   }
@@ -164,6 +215,7 @@
     return shape(s, "text", { x: x, y: y }, text);
   }
   function layout(mode) {
+    $("live").textContent = "";
     var host = $("panel-" + mode);
     host.replaceChildren();
     var grid = add(host, "div", undefined, "zsa-fe-layout"),
@@ -181,7 +233,8 @@
     gu = chem ? "kJ" : "kJ/molrxn",
     su = chem ? "J/K" : "J/(molrxn·K)",
     exportHeads = [],
-    exportRows = [];
+    exportRows = [],
+    displayRows = [];
   function chosen(obj, fallback) {
     var value = params.get("rxn") || params.get("case");
     return Object.hasOwn(obj, value) ? value : fallback;
@@ -190,11 +243,15 @@
     var n = M.parseNumber(s || "");
     return Number.isFinite(n) && n >= lo && n <= hi ? n : fallback;
   }
-  function data(heads, rows) {
+  function data(heads, rows, displayed) {
     exportHeads = heads;
     exportRows = rows;
+    displayRows = displayed || rows;
+    $("copy-fallback").hidden = true;
+    $("copy-fallback").value = "";
+    $("export-status").textContent = "";
     $("data-table").replaceChildren();
-    table($("data-table"), heads, rows);
+    table($("data-table"), heads, displayRows);
   }
   function favored(dg) {
     return t(
@@ -209,7 +266,7 @@
           : "at equilibrium in the standard state",
     );
   }
-  function work(h, dh, ds, temp, places) {
+  function work(h, dh, ds, temp, places, revealed) {
     p(
       h,
       "Entropy conversion: {s} ÷ 1000 = {converted} {unit}",
@@ -221,6 +278,7 @@
       "zsa-fe-formula",
     );
     p(h, "{g} = {h} − T{s}", { g: G, h: H, s: S }, "zsa-fe-formula");
+    if (!revealed) return;
     p(
       h,
       "{g} = {h} − ({t})({s}) = {value} {unit}",
@@ -238,13 +296,16 @@
       "zsa-fe-readout",
     );
     p(h, "{status}", { status: favored(M.gibbs(dh, ds, temp)) });
-    $("live").textContent = t("T = {t} K; {g} = {value} {unit}; {status}", {
-      t: tick(temp),
-      g: G,
-      value: M.gibbsDisplay(dh, ds, temp, places),
-      unit: gu,
-      status: favored(M.gibbs(dh, ds, temp)),
-    });
+    content(
+      $("live"),
+      t("T = {t} K; {g} = {value} {unit}; {status}", {
+        t: tick(temp),
+        g: G,
+        value: M.gibbsDisplay(dh, ds, temp, places),
+        unit: gu,
+        status: favored(M.gibbs(dh, ds, temp)),
+      }),
+    );
   }
   function particleBox(s, x, y, w, labelText, state, count) {
     shape(s, "rect", {
@@ -414,7 +475,13 @@
       h,
       "300 K: solid line (blue). 400 K: dashed line (purple). Equal areas represent the same number of particles.",
     );
-    data(["Speed (m/s)", "300 K density", "400 K density"], rows);
+    data(
+      ["Speed (m/s)", "300 K density", "400 K density"],
+      rows,
+      rows.map(function (row) {
+        return [given(row[0]), f(row[1], 4), f(row[2], 4)];
+      }),
+    );
   }
   function entropyMode() {
     var pair = layout("entropy"),
@@ -480,6 +547,7 @@
     });
     var controls = add(a, "div");
     function render() {
+      $("live").textContent = "";
       controls.replaceChildren();
       b.replaceChildren();
       var r = M.DS[id],
@@ -507,7 +575,13 @@
             [S, v.ds, su],
           ];
           if (unknownSolved) rows.push(["S°(NO₂)", v.unknown, "J/(mol·K)"]);
-          data(["Quantity", "Value", "Unit"], rows);
+          data(
+            ["Quantity", "Value", "Unit"],
+            rows,
+            rows.map(function (row) {
+              return [row[0], f(row[1], 4), row[2]];
+            }),
+          );
         } else {
           var reference = [];
           ["reactants", "products"].forEach(function (side) {
@@ -617,7 +691,7 @@
     }
     render();
   }
-  function dgGraph(h, dh, ds, temp) {
+  function dgGraph(h, dh, ds, temp, revealed) {
     title(h, "ΔG vs T graph");
     var s = svg(
       h,
@@ -673,34 +747,49 @@
       "Blue solid line: Gibbs free energy. Dashed line: zero. Green shading: negative Gibbs free energy.",
     );
     var cross = M.crossover(dh, ds);
-    p(h, "Crossover temperature");
-    p(
-      h,
-      cross
-        ? "T = ΔH ÷ (ΔS ÷ 1000) = {t} K"
-        : "No positive crossover temperature.",
-      {
-        t: cross
-          ? cross >= 1000 && cross < 10000
-            ? f(cross / 1000) + " × 10³"
-            : f(cross)
-          : "",
-      },
-      "zsa-fe-readout",
-    );
-    if (cross && (cross < 100 || cross > 2000))
-      p(h, "The crossover is outside the plotted interval.");
-    if (dh === 0 && ds === 0)
-      p(h, "Gibbs free energy is zero at every temperature.");
+    if (revealed) {
+      p(h, "Crossover temperature");
+      p(
+        h,
+        cross
+          ? "T = ΔH ÷ (ΔS ÷ 1000) = {t} K"
+          : "No positive crossover temperature.",
+        {
+          t: cross
+            ? cross >= 1000 && cross < 10000
+              ? f(cross / 1000) + " × 10³"
+              : f(cross)
+            : "",
+        },
+        "zsa-fe-readout",
+      );
+      if (cross && (cross < 100 || cross > 2000))
+        p(h, "The crossover is outside the plotted interval.");
+      if (dh === 0 && ds === 0)
+        p(h, "Gibbs free energy is zero at every temperature.");
+    }
     var rows = [];
     for (var tt = 100; tt <= 2000; tt += 100)
       rows.push([tt, M.gibbs(dh, ds, tt)]);
     rows.push([temp, M.gibbs(dh, ds, temp)]);
-    if (cross) rows.push([cross, 0]);
+    if (revealed && cross) rows.push([cross, 0]);
     rows.sort(function (a, b) {
       return a[0] - b[0];
     });
-    data(["Temperature (K)", G + " (" + gu + ")"], rows);
+    data(
+      revealed ? ["Temperature (K)", G + " (" + gu + ")"] : ["Temperature (K)"],
+      rows.map(function (row) {
+        return revealed ? row : [row[0]];
+      }),
+      rows.map(function (row) {
+        return revealed
+          ? [
+              row[0] === cross ? f(cross) : given(row[0]),
+              row[1] === 0 ? "0" : M.gibbsDisplay(dh, ds, row[0]),
+            ]
+          : [given(row[0])];
+      }),
+    );
   }
   function dgMode(override) {
     var dgOptions = Object.assign({}, M.THERMO, {
@@ -783,6 +872,13 @@
       a,
       "Check",
       function () {
+        if (!Number.isFinite(M.parseNumber(answer.value))) return;
+        var ok = M.matchesNumber(
+          answer.value,
+          M.gibbs(dh, ds, temp),
+          M.sigDigits(M.gibbsDisplay(dh, ds, temp)),
+        );
+        gate.check(ok);
         say(
           result,
           M.forgottenConversion(answer.value, dh, ds, temp)
@@ -798,6 +894,7 @@
       },
       "check-dg",
     );
+    var gate = solution(a, "dg", update);
     var readout = add(a, "div"),
       gridHost = add(a, "div");
     title(gridHost, "Four-case sign grid");
@@ -826,13 +923,18 @@
     });
     p(gridHost, "The four cases assume nonzero ΔH and ΔS and T > 0.");
     formation(a);
-    function render() {
+    function update() {
       readout.replaceChildren();
-      work(readout, dh, ds, temp);
+      work(readout, dh, ds, temp, undefined, gate.open);
       b.replaceChildren();
-      dgGraph(b, dh, ds, temp);
+      dgGraph(b, dh, ds, temp, gate.open);
+    }
+    function render() {
+      gate.reset();
       result.textContent = "";
       gridOut.textContent = "";
+      content($("live"), t("T = {t} K", { t: given(temp) }));
+      update();
     }
     render();
   }
@@ -975,6 +1077,9 @@
       a,
       "Check",
       function () {
+        if (!pred.value) return;
+        checked = true;
+        update();
         say(
           out,
           pred.value === M.control(id, cat, heat, light).classification
@@ -984,9 +1089,16 @@
       },
       "check-control",
     );
+    var checked = false;
     function render() {
-      b.replaceChildren();
+      checked = false;
+      pred.value = "";
       out.textContent = "";
+      $("live").textContent = "";
+      update();
+    }
+    function update() {
+      b.replaceChildren();
       cb.setAttribute("aria-pressed", String(cat));
       hb.setAttribute("aria-pressed", String(heat));
       lb.setAttribute("aria-pressed", String(light));
@@ -1029,11 +1141,11 @@
       );
       p(b, "{g} = {value} {unit}; Ea = {ea} kJ/mol", {
         g: G,
-        value: f(r.dg, 4),
+        value: given(r.dg),
         unit: gu,
-        ea: f(v.ea),
+        ea: given(v.ea),
       });
-      p(b, "{status}", { status: favored(r.dg) });
+      if (checked) p(b, "{status}", { status: favored(r.dg) });
       var ml = add(b, "label", t("Observed rate"));
       ml.htmlFor = "rate-meter";
       var meter = add(b, "meter");
@@ -1041,12 +1153,13 @@
       meter.min = 0;
       meter.max = 1;
       meter.value = v.rate;
-      p(
-        b,
-        v.rate > 0.1
-          ? "Observable reaction (illustrative)."
-          : "No observable reaction on this timescale.",
-      );
+      if (checked)
+        p(
+          b,
+          v.rate > 0.1
+            ? "Observable reaction (illustrative)."
+            : "No observable reaction on this timescale.",
+        );
       p(
         b,
         "Catalysts lower Ea, not ΔG. Light initiates H₂ + Cl₂. Heating increases the fraction that surmounts Ea.",
@@ -1055,26 +1168,28 @@
         b,
         "Heating here changes only the kinetic comparison. ΔG stays at its reference value; real ΔG may also change with temperature. Rates and Ea are illustrative.",
       );
-      $("live").textContent = t(
-        "Observed rate: {rate}; {g} = {value} {unit}.",
-        {
-          rate: t(
-            v.rate > 0.1
-              ? "Observable reaction (illustrative)."
-              : "No observable reaction on this timescale.",
-          ),
-          g: G,
-          value: given(r.dg),
-          unit: gu,
-        },
-      );
+      if (checked)
+        content(
+          $("live"),
+          t("Observed rate: {rate}; {g} = {value} {unit}.", {
+            rate: t(
+              v.rate > 0.1
+                ? "Observable reaction (illustrative)."
+                : "No observable reaction on this timescale.",
+            ),
+            g: G,
+            value: given(r.dg),
+            unit: gu,
+          }),
+        );
       data(
         ["Quantity", "Value", "Unit"],
         [
           [G, r.dg, gu],
           ["Ea", v.ea, "kJ/mol"],
-          ["Relative observed rate", v.rate, "Illustrative"],
-        ],
+        ].concat(
+          checked ? [["Relative observed rate", v.rate, "Illustrative"]] : [],
+        ),
       );
     }
     render();
@@ -1110,10 +1225,8 @@
       function () {
         direction = this.value;
         input.value =
-          direction === "forward"
-            ? String(dg).replace("-", "−")
-            : f(M.toK(dg, temp).k, 4);
-        render();
+          direction === "forward" ? given(dg) : f(M.toK(dg, temp).k, 4);
+        input.onchange();
       },
     );
     var input = field(
@@ -1154,7 +1267,7 @@
       dg = Number(this.value);
       direction = "forward";
       dir.value = direction;
-      input.value = String(dg).replace("-", "−");
+      input.value = given(dg);
       render();
     };
     var ans = field(a, "Your result", "", "k-answer"),
@@ -1163,19 +1276,23 @@
       a,
       "Check",
       function () {
+        if (!Number.isFinite(M.parseNumber(ans.value))) return;
+        var ok = M.matchesNumber(
+          ans.value,
+          direction === "forward" ? M.toK(dg, temp).k : dg,
+          2,
+        );
+        gate.check(ok);
         say(
           out,
-          M.matchesNumber(
-            ans.value,
-            direction === "forward" ? M.toK(dg, temp).k : dg,
-            2,
-          )
+          ok
             ? "Correct answer."
             : "Try again. Use kelvin and convert ΔG from kJ to J.",
         );
       },
       "check-k",
     );
+    var gate = solution(a, "k", update);
     title(a, "ΔH, ΔS → ΔG → K");
     var chain = select(
       a,
@@ -1184,52 +1301,111 @@
       "haber",
       "chain-rxn",
       function () {
-        render();
+        chainGate.reset();
+        chainG.value = chainK.value = "";
+        chainOut.textContent = "";
+        $("live").textContent = "";
+        update();
       },
     );
+    var chainGiven = add(a, "div"),
+      chainG = field(a, "Chain " + G + " (" + gu + ")", "", "chain-dg-answer"),
+      chainK = field(a, "Chain K", "", "chain-k-answer"),
+      chainOut = feedback(a, "chain-feedback");
+    button(
+      a,
+      "Check chain",
+      function () {
+        if (
+          !Number.isFinite(M.parseNumber(chainG.value)) ||
+          !Number.isFinite(M.parseNumber(chainK.value))
+        )
+          return;
+        var r = M.thermo(chain.value, chem),
+          g = M.gibbs(r.dh, r.ds, temp),
+          ok =
+            M.matchesNumber(
+              chainG.value,
+              g,
+              M.sigDigits(M.gibbsDisplay(r.dh, r.ds, temp)),
+            ) && M.matchesNumber(chainK.value, M.toK(g, temp).k, 2);
+        chainGate.check(ok);
+        say(
+          chainOut,
+          ok
+            ? "Correct answer."
+            : "Try again. Use kelvin and convert ΔG from kJ to J.",
+        );
+      },
+      "check-chain",
+    );
+    var chainGate = solution(a, "chain", update);
     function render() {
-      b.replaceChildren();
-      out.textContent = "";
+      gate.reset();
+      chainGate.reset();
+      ans.value = chainG.value = chainK.value = "";
+      out.textContent = chainOut.textContent = "";
+      $("live").textContent = "";
       input.removeAttribute("aria-invalid");
-      var v = M.toK(dg, temp);
+      update();
+    }
+    function update() {
+      b.replaceChildren();
+      var v = M.toK(dg, temp),
+        r = M.thermo(chain.value, chem),
+        g = M.gibbs(r.dh, r.ds, temp),
+        chainValue = M.toK(g, temp).k;
+      sl.hidden = slider.hidden = direction === "reverse" && !gate.open;
+      chainGiven.replaceChildren();
+      p(chainGiven, "{h} = {dh} {hu}; {s} = {ds} {su}", {
+        h: H,
+        dh: given(r.dh),
+        hu: gu,
+        s: S,
+        ds: given(r.ds),
+        su: su,
+      });
       title(b, "ΔG° and K");
       p(
         b,
         "R = 8.314 J/(mol·K). Keep the exponent unrounded. Rounding it early changes K.",
       );
-      p(b, "Gibbs conversion: {value} kJ × 1000 = {j} J", {
-        value: given(dg),
-        j: f(dg * 1000, M.sigDigits(dg)),
-      });
-      if (direction === "reverse")
-        p(b, "{g} = −RT ln K = −({r})({t}) ln({k}) ÷ 1000 = {value} {unit}", {
-          g: G,
-          r: "8.314",
-          t: temp,
-          k: f(v.k, 2),
-          value: f(dg, 2),
-          unit: gu,
-        });
-      else
+      if (gate.open) {
+        if (direction === "forward")
+          p(b, "Gibbs conversion: {value} kJ × 1000 = {j} J", {
+            value: given(dg),
+            j: f(dg * 1000, M.sigDigits(dg)),
+          });
+        if (direction === "reverse")
+          p(b, "{g} = −RT ln K = −({r})({t}) ln({k}) ÷ 1000 = {value} {unit}", {
+            g: G,
+            r: "8.314",
+            t: temp,
+            k: f(v.k, 2),
+            value: f(dg, 2),
+            unit: gu,
+          });
+        else
+          p(
+            b,
+            "K = exp[−({j}) ÷ (8.314 × {t})] = exp({exponent}) = {k}",
+            {
+              j: f(dg * 1000, 5),
+              t: temp,
+              exponent: f(v.exponent, 5),
+              k: f(v.k, 2),
+            },
+            "zsa-fe-readout",
+          );
         p(
           b,
-          "K = exp[−({j}) ÷ (8.314 × {t})] = exp({exponent}) = {k}",
-          {
-            j: f(dg * 1000, 5),
-            t: temp,
-            exponent: f(v.exponent, 5),
-            k: f(v.k, 2),
-          },
-          "zsa-fe-readout",
+          Math.abs(v.log10) < 0.01
+            ? "K ≈ 1"
+            : v.k > 1
+              ? "K > 1: products favored"
+              : "K < 1: reactants favored",
         );
-      p(
-        b,
-        Math.abs(v.log10) < 0.01
-          ? "K ≈ 1"
-          : v.k > 1
-            ? "K > 1: products favored"
-            : "K < 1: reactants favored",
-      );
+      }
       var s = svg(b, "K on a logarithmic scale. See Data table.");
       line(s, 55, 140, 570, 140);
       line(s, 312.5, 110, 312.5, 165, "#64748b", "5 4");
@@ -1238,40 +1414,65 @@
         line(s, xx, 130, xx, 150);
         label(s, xx - 12, 175, "10" + M.superscript(i));
       }
-      var pos = 55 + ((Math.max(-12, Math.min(12, v.log10)) + 12) / 24) * 515;
-      shape(s, "circle", { cx: pos, cy: 140, r: 9, fill: "#1d4ed8" });
+      if (gate.open) {
+        var pos = 55 + ((Math.max(-12, Math.min(12, v.log10)) + 12) / 24) * 515;
+        shape(s, "circle", { cx: pos, cy: 140, r: 9, fill: "#1d4ed8" });
+        p(
+          b,
+          "Solid line: logarithmic K scale. Dashed line: K = 1. Blue marker: current K.",
+        );
+        p(
+          b,
+          "The marker is clamped at the graph ends. The numerical K is not clamped.",
+        );
+      }
       label(s, 220, 225, t("K (log scale)"));
-      p(
-        b,
-        "Solid line: logarithmic K scale. Dashed line: K = 1. Blue marker: current K.",
-      );
-      p(
-        b,
-        "The marker is clamped at the graph ends. The numerical K is not clamped.",
-      );
-      var r = M.thermo(chain.value, chem);
-      work(b, r.dh, r.ds, temp);
-      p(b, "Chain K = {k}", {
-        k: f(M.toK(M.gibbs(r.dh, r.ds, temp), temp).k, 2),
-      });
-      $("live").textContent = t("K = {k}; {g} = {dg} {unit}", {
-        k: f(v.k, 2),
-        g: G,
-        dg: given(dg),
-        unit: gu,
-      });
-      data(
-        ["Quantity", "Value", "Unit"],
-        [
-          [G, dg, gu],
+      if (chainGate.open) {
+        work(b, r.dh, r.ds, temp, undefined, true);
+        p(b, "Chain K = {k}", { k: f(chainValue, 2) });
+        if (
+          chain.value === id &&
+          temp === 298 &&
+          M.KCASES[id].dg === dg &&
+          Math.abs(g - dg) > 1e-9
+        )
+          p(b, "The chain ΔG° differs from the given ΔG° because of rounding.");
+      }
+      var rows = [
+          [
+            direction === "forward" ? G : "K",
+            direction === "forward" ? dg : M.parseNumber(input.value),
+            direction === "forward" ? gu : "",
+          ],
           ["Temperature (K)", temp, "K"],
-          ["Exponent", v.exponent, "1"],
-          ["K", v.k, "1"],
-          ["log₁₀ K", v.log10, "1"],
-          ["Chain " + G, M.gibbs(r.dh, r.ds, temp), gu],
-          ["Chain K", M.toK(M.gibbs(r.dh, r.ds, temp), temp).k, "1"],
         ],
-      );
+        displayed = rows.map(function (row) {
+          return [row[0], given(row[1]), row[2]];
+        });
+      if (gate.open) {
+        if (direction === "reverse") {
+          rows.push([G, dg, gu]);
+          displayed.push([G, f(dg, 2), gu]);
+        }
+        rows.push(
+          ["Exponent", v.exponent, ""],
+          ["K", v.k, ""],
+          ["log₁₀ K", v.log10, ""],
+        );
+        displayed.push(
+          ["Exponent", f(v.exponent, 5), ""],
+          ["K", f(v.k, 2), ""],
+          ["log₁₀ K", f(v.log10, 4), ""],
+        );
+      }
+      if (chainGate.open) {
+        rows.push(["Chain " + G, g, gu], ["Chain K", chainValue, ""]);
+        displayed.push(
+          ["Chain " + G, M.gibbsDisplay(r.dh, r.ds, temp), gu],
+          ["Chain K", f(chainValue, 2), ""],
+        );
+      }
+      data(["Quantity", "Value", "Unit"], rows, displayed);
     }
     render();
   }
@@ -1366,6 +1567,7 @@
     });
     var controls = add(a, "div");
     function render() {
+      $("live").textContent = "";
       controls.replaceChildren();
       b.replaceChildren();
       if (M.SALTS[id]) {
@@ -1389,6 +1591,15 @@
           controls,
           "Check",
           function () {
+            if (!pred.value) return;
+            worked.replaceChildren();
+            work(worked, r.dh, r.ds, 298, 1, true);
+            p(worked, "T{s} = {value} {unit}", {
+              s: S,
+              value: f((298 * r.ds) / 1000, 3),
+              unit: gu,
+            });
+            saltData(true);
             say(
               out,
               pred.value === M.driving(r.dh, r.ds, 298)
@@ -1398,16 +1609,32 @@
           },
           "check-driving",
         );
-        work(controls, r.dh, r.ds, 298, 1);
+        p(controls, "{h} = {dh} {hu}; {s} = {ds} {su}", {
+          h: H,
+          dh: given(r.dh),
+          hu: gu,
+          s: S,
+          ds: given(r.ds),
+          su: su,
+        });
+        var worked = add(controls, "div");
         hydration(b);
-        data(
-          ["Quantity", "Value", "Unit"],
-          [
+        function saltData(checked) {
+          var rows = [
             [H, r.dh, gu],
             [S, r.ds, su],
-            [G, M.gibbs(r.dh, r.ds, 298), gu],
-          ],
-        );
+          ];
+          var displayed = [
+            [H, given(r.dh), gu],
+            [S, given(r.ds), su],
+          ];
+          if (checked) {
+            rows.push([G, M.gibbs(r.dh, r.ds, 298), gu]);
+            displayed.push([G, M.gibbsDisplay(r.dh, r.ds, 298, 1), gu]);
+          }
+          data(["Quantity", "Value", "Unit"], rows, displayed);
+        }
+        saltData(false);
       } else {
         var r = M.COUPLING[id],
           net = M.combine(id, true);
@@ -1428,10 +1655,7 @@
           "Favored partner",
           [
             ["", "No partner"],
-            [
-              "add",
-              equation(r.second) + "; " + G + " = " + given(r.dg[1]) + " " + gu,
-            ],
+            ["add", equation(r.second)],
           ],
           "",
           "coupling-partner",
@@ -1456,6 +1680,11 @@
           controls,
           "Check",
           function () {
+            if (!second.value) {
+              say(out, "Choose a favored partner to cancel the intermediate.");
+              return;
+            }
+            if (!Number.isFinite(M.parseNumber(ans.value))) return;
             output.replaceChildren();
             var v = M.combine(id, second.value === "add");
             p(output, "Common intermediate");
@@ -1484,7 +1713,7 @@
                   return [s, v.net[s]];
                 })
                 .concat([
-                  [G, v.dg],
+                  [G, v.dg.toFixed(1).replace("-", "−")],
                   ["Common intermediate", v.common.join(", ")],
                 ]),
             );
@@ -1495,16 +1724,16 @@
           b,
           ["Step", G + " (" + gu + ")"],
           [
-            ["Unfavored reaction", r.dg[0]],
-            ["Favored partner", r.dg[1]],
+            ["Unfavored reaction", "+" + given(r.dg[0])],
+            ["Favored partner", given(r.dg[1])],
           ],
           "Coupling steps",
         );
         data(
           ["Step", G + " (" + gu + ")"],
           [
-            ["Unfavored reaction", r.dg[0]],
-            ["Favored partner", r.dg[1]],
+            ["Unfavored reaction", "+" + given(r.dg[0])],
+            ["Favored partner", given(r.dg[1])],
           ],
         );
       }
@@ -1583,11 +1812,11 @@
   }
   $("copy-data").onclick = function () {
     var content = [exportHeads]
-      .concat(exportRows)
+      .concat(displayRows)
       .map(function (row) {
         return row
           .map(function (v) {
-            return typeof v === "number" ? f(v, 4) : t(String(v));
+            return typeof v === "number" ? given(v) : t(String(v));
           })
           .join("\t");
       })
