@@ -270,6 +270,12 @@
         "El marcador se limita a los extremos de la gráfica. El valor numérico de K no se limita.",
       "Chain K = {k}": "K de la secuencia = {k}",
       Exponent: "Exponente",
+      "Show solution": "Mostrar solución",
+      "Check chain": "Verificar secuencia",
+      "The chain ΔG° differs from the given ΔG° because of rounding.":
+        "La ΔG° de la secuencia difiere de la ΔG° dada por el redondeo.",
+      "Chain ΔG (kJ)": "ΔG de la secuencia (kJ)",
+      "Chain ΔG° (kJ/molrxn)": "ΔG° de la secuencia (kJ/molrxn)",
       "Chain K": "K de la secuencia",
       "Ion-dipole attractions": "Atracciones ion-dipolo",
       "Water oxygen ends face cations. Hydrogen ends face anions. Hydration orders nearby water.":

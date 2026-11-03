@@ -1,8 +1,10 @@
 # Free Energy Lab
 
-Version: 1.0.0
+Version: 1.0.1
 
 A standalone, bilingual activity at `/free-energy-lab/` for AP Chemistry 9.1 to 9.7 and Chemistry, Entropy, Enthalpy & Gibbs Energy. Open through a static server, for example `npm run serve`, then visit `/free-energy-lab/`. No build step or runtime dependencies. No accounts, persistence, tracking, or requests beyond the initial local assets. All calculations run in the tab.
+
+Worked answers and computed Data rows stay hidden until the relevant Check passes. One wrong numeric Check enables Show solution. Control and dissolving classifications reveal their explanations after a selection is checked. The formation exercise and the ΔH/ΔS to ΔG to K chain each require their own Check. Changing problem data hides the previous answer again.
 
 ## Modes
 
@@ -34,7 +36,7 @@ Parameters combine. Unsupported strings, empty numeric values, nonfinite values,
 | `from` | Absolute HTTPS lesson URL on exactly `zornscience.org`, without credentials or a nondefault port. Its path follows the selected language. Invalid URLs use the course fallback. |
 | `embed` | `1` enables the existing shared embed behavior |
 
-AP uses thermodynamically favored, J/(molrxn·K), kJ/molrxn, and ΔG°. Chemistry uses spontaneous, J/K, kJ, and ΔG. Chemistry supplies NH₃ S° = 192.8, Haber ΔS = −198.1, and CaCO₃ ΔH = 178, ΔS = 161. AP supplies NH₃ S° = 192.5, Haber ΔS° = −198.8, and CaCO₃ ΔH° = 178.3, ΔS° = 160.6. All quoted reaction energies refer to the stoichiometric equation as written.
+AP uses thermodynamically favored, J/(mol<sub>rxn</sub>·K), kJ/mol<sub>rxn</sub>, and ΔG°. Chemistry uses spontaneous, J/K, kJ, and ΔG. Chemistry supplies NH₃ S° = 192.8, Haber ΔS = −198.1, and CaCO₃ ΔH = 178, ΔS = 161. AP supplies NH₃ S° = 192.5, Haber ΔS° = −198.8, and CaCO₃ ΔH° = 178.3, ΔS° = 160.6. All quoted reaction energies refer to the stoichiometric equation as written.
 
 Language links preserve URL settings and reload a fresh activity. Answers and in-tab changes are not saved. The shared Share dialog supplies a fresh canonical activity URL and selected language, without student state, embed, or source lesson. Lesson return links and the home link follow `/es/` for Spanish.
 
@@ -66,7 +68,7 @@ Additional examples:
 
 Tabs support Arrow Left, Arrow Right, Home and End. Native controls, partner selection and numeric temperature entry support the keyboard. Visible focus, live feedback, SVG descriptions, text explanations and captioned tables provide alternatives to every graphic. Nothing requires dragging or animation. The layout fits 360 px, and reduced motion is respected.
 
-The Data table describes the current mode. Copy data follows the displayed table, with a selectable-text fallback. Calculated rows use four significant figures; reference values keep their supplied precision. Download CSV uses up to fifteen significant figures and typographic scientific notation, preserving precision for review without displaying programming exponent notation. Model calculations retain the original numbers. Graph ticks follow the existing 1, 2, 5 scale helper. The logarithmic K axis uses equally spaced powers of ten.
+The Data table describes the current mode. Copy data follows the displayed table, with a selectable-text fallback. Calculated rows use the lesson precision without trailing-zero padding; reference values keep their supplied precision. Download CSV uses up to fifteen significant figures and typographic scientific notation, preserving precision for review without displaying programming exponent notation. Model calculations retain the original numbers. Graph ticks follow the existing 1, 2, 5 scale helper. The logarithmic K axis uses equally spaced powers of ten.
 
 ## Implementation and scope
 

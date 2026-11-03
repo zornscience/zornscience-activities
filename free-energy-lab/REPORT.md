@@ -1,8 +1,16 @@
 # Free Energy Lab delivery report
 
-Version: 1.0.0
+Version: 1.0.1
 
 Implemented `/free-energy-lab/` with all six modes, English and Mexican Spanish, AP/Chemistry wording and data, explicit unit conversions, misconception feedback, accessible diagrams and tables, keyboard controls, local exports and the unchanged shared shell. No shared files were modified.
+
+## Version 1.0.1 fix pass
+
+Worked Gibbs and equilibrium results, classifications, crossover results and computed Data rows now wait for the relevant student Check. A wrong numeric Check enables Show solution, and the formation exercise and the ΔH/ΔS to ΔG to K chain each have their own checks. Changing problem data resets the reveal state. Control and dissolving explanations wait for a classification Check.
+
+Supplied values retain their precision, including the iron and mercury steps, while calculated values use the lesson precision. Dimensionless units are blank and reaction-mole units use subscripts in HTML and SVG. The K chain explains the difference caused by rounding in English and Mexican Spanish. All original `chem.js` values, presets, URL parameters and Spanish translations are preserved.
+
+The original implementation file list and screenshots below describe version 1.0.0. Current browser screenshots are written into the Playwright test results.
 
 ## File list
 
@@ -71,30 +79,30 @@ The supplied glossary terms, including entropía, microestado, energía libre de
 
 ## Model and rounding notes
 
-Calculations retain unrounded values. Worked Gibbs answers follow the decimal-place precision of ΔH and the significant figures of TΔS; the two salt examples preserve their supplied one-decimal-place enthalpy precision. Reference S° entries show their supplied precision. Tables show four significant figures, and CSV preserves up to fifteen using typographic scientific notation. Extra table digits support comparison and are not an instruction to round intermediate work.
+Calculations retain unrounded values. Worked Gibbs answers follow the decimal-place precision of ΔH and the significant figures of TΔS; the two salt examples preserve their supplied one-decimal-place enthalpy precision. Reference S° entries show their supplied precision. Tables use the lesson precision for calculated values and the supplied precision for reference values, without added trailing zeros. CSV preserves up to fifteen significant figures using typographic scientific notation.
 
 | Example | Internal result and lesson comparison |
 | --- | --- |
-| CH₄ combustion, H₂O(l) | ΔS° = −242.8 J/(molrxn·K), as requested |
+| CH₄ combustion, H₂O(l) | ΔS° = −242.8 J/(mol<sub>rxn</sub>·K), as requested |
 | NH₄Cl, AP | ΔS° = +284.8, as requested |
 | NH₄Cl, Chemistry | +285.1 because Chemistry uses NH₃ S° = 192.8 instead of 192.5 |
 | Unknown S°(NO₂) | 240.1 J/(mol·K), as requested |
 | Haber, Chemistry entropy table | −198.1 J/K, as requested |
 | Haber, AP entropy table | −198.7 from the supplied rounded S° entries. The ΔG preset independently retains the requested lesson ΔS° = −198.8. |
-| Haber at 298 K | AP −32.9576 kJ/molrxn, displayed −33.0; Chemistry −33.1662 kJ, displayed −33.2 |
+| Haber at 298 K | AP −32.9576 kJ/mol<sub>rxn</sub>, displayed −33.0; Chemistry −33.1662 kJ, displayed −33.2 |
 | Forgotten J-to-kJ conversion | Incorrect AP result +59150.2, accepted as the targeted misconception near 5.9 × 10⁴ |
-| SO₃ formation method | −141.8 kJ/molrxn, as requested |
+| SO₃ formation method | −141.8 kJ/mol<sub>rxn</sub>, as requested |
 | CaCO₃ crossover, AP | 1110.2117061 K, displayed 1.11 × 10³ K |
 | CaCO₃, Chemistry | ΔG = +130.022 kJ at 298 K, displayed 130. to mark three significant figures; crossover 1105.5900621 K, displayed 1.11 × 10³ K |
 | 2NO₂ → N₂O₄ | ΔH/ΔS gives −4.7818 kJ at 298 K and K = about 6.89. The independent K preset uses the supplied −4.8 kJ, giving K = 6.9405473, displayed 6.9. Favored at low T only. |
 | −32.9 kJ to K | Exponent 13.2791297, displayed with guard digits; K = 584861.1389, displayed 5.8 × 10⁵ |
 | Haber chained ΔH/ΔS to K | Uses −32.9576 internally, so K is about 6.0 × 10⁵ rather than the standalone −32.9 example's 5.8 × 10⁵ |
-| Acetic acid | Ka = 1.8 × 10⁻⁵ gives ΔG° = +27.067818 kJ/molrxn, displayed +27 to two significant figures |
+| Acetic acid | Ka = 1.8 × 10⁻⁵ gives ΔG° = +27.067818 kJ/mol<sub>rxn</sub>, displayed +27 to two significant figures |
 | N₂ + O₂ → 2NO | +173.2 kJ gives K far below 1. The K marker clamps at the log-axis ends; the numerical result is not clamped. The ΔG slider also sits at its limit for this +173.2 kJ case; moving it starts a new value within its −60 to +60 kJ range. |
 | NH₄NO₃ dissolving | −4.2926 kJ, displayed −4.3; entropy-driven |
 | CaCO₃ dissolving | +47.4642 kJ, displayed +47.5; not favored |
-| Iron coupling | −58.8 kJ/molrxn; O₂ cancels |
-| Mercury coupling | −249.6 kJ/molrxn; S cancels |
+| Iron coupling | −58.8 kJ/mol<sub>rxn</sub>; O₂ cancels |
+| Mercury coupling | −249.6 kJ/mol<sub>rxn</sub>; S cancels |
 
 The thermodynamic temperature model assumes constant ΔH and ΔS over 100 to 2000 K. The particle drawings are schematic, and the argon speed curves use normalized ideal Maxwell-Boltzmann densities. No phase transitions, heat-capacity corrections, activity corrections, solubility amounts or actual reaction times are inferred.
 
