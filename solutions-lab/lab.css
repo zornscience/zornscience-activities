@@ -1,0 +1,58 @@
+.zsa-sl {--zsa-max-width:1240px;}
+.zsa-sl label:not(.zsa-sl-check) {display:block;font-size:16px;font-weight:500;margin:16px 0 6px;color:var(--zsa-navy);}
+.zsa-sl select,.zsa-sl input[type=number],.zsa-sl textarea {width:100%;min-height:44px;border:1px solid var(--zsa-border-strong);border-radius:8px;padding:9px 12px;background:white;color:var(--zsa-navy);}
+.zsa-sl input[type=range] {width:100%;min-height:44px;accent-color:var(--zsa-blue);}
+.zsa-sl input[type=checkbox] {width:20px;height:20px;accent-color:var(--zsa-blue);flex-shrink:0;}
+.zsa-sl .zsa-btn {font-size:16px;padding:10px 14px;}
+.zsa-sl .zsa-btn:disabled {opacity:.55;}
+.zsa-sl .zsa-btn[aria-selected=true] {background:var(--zsa-navy);color:white;}
+.zsa-sl h2 {font-size:26px;margin:10px 0 20px;}
+.zsa-sl h3 {font-size:20px;margin-top:24px;}
+.zsa-sl p {margin:12px 0;}
+.zsa-sl .zsa-eyebrow {margin-top:0;}
+.zsa-sl-tabs,.zsa-sl-actions {display:flex;gap:8px;flex-wrap:wrap;margin:14px 0;}
+.zsa-sl-tabs {padding:12px 0;border-block:1px solid var(--zsa-border);}
+.zsa-sl-layout {display:grid;grid-template-columns:minmax(300px, .9fr) minmax(0,1.4fr);gap:20px;align-items:start;}
+.zsa-sl-curve-layout {display:grid;grid-template-columns:minmax(280px,.75fr) minmax(0,1.5fr);gap:20px;align-items:start;}
+.zsa-sl .zsa-card {min-width:0;padding:22px;}
+.zsa-sl-note {font-size:16px;line-height:1.6;}
+.zsa-sl-lede {font-size:20px;color:var(--zsa-navy);}
+.zsa-sl-check {display:flex;align-items:center;gap:10px;min-height:44px;margin:16px 0;font-size:16px;}
+.zsa-sl-steps {padding-left:24px;}
+.zsa-sl-steps li {margin:14px 0;padding-left:4px;}
+.zsa-sl-steps li::marker {color:var(--zsa-blue);font-weight:600;}
+.zsa-sl-meter {display:block;padding:12px 18px;background:#0b2a5b;color:#fff;font-size:28px;font-variant-numeric:tabular-nums;border-radius:8px;}
+.zsa-sl-apparatus {display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);align-items:center;background:#f8fbff;border-radius:12px;}
+.zsa-sl svg {width:100%;height:auto;display:block;overflow:visible;}
+.zsa-sl svg text {font-family:var(--zsa-font);fill:var(--zsa-navy);font-size:14px;}
+.zsa-sl-readouts {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:20px 0;}
+.zsa-sl-readouts>div {background:var(--zsa-sky);padding:12px;border-radius:8px;min-width:0;overflow-wrap:anywhere;}
+.zsa-sl-readouts dt {font-size:14px;color:var(--zsa-slate);}
+.zsa-sl-readouts dd {font-size:22px;color:var(--zsa-navy);margin:6px 0 0;font-variant-numeric:tabular-nums;}
+.zsa-sl details {margin:18px 0;font-size:16px;}
+.zsa-sl summary {cursor:pointer;min-height:44px;padding:10px 0;color:var(--zsa-blue);}
+.zsa-sl summary:focus-visible,.zsa-sl textarea:focus-visible {outline:var(--zsa-focus-ring);outline-offset:2px;}
+.zsa-sl-equation {font-size:19px;overflow-wrap:anywhere;}
+.zsa-sl-table-wrap {max-width:100%;overflow:auto;}
+.zsa-sl table {width:100%;border-collapse:collapse;font-size:15px;text-align:left;}
+.zsa-sl caption {text-align:left;margin:12px 0;font-size:16px;color:var(--zsa-navy);}
+.zsa-sl th,.zsa-sl td {padding:12px 10px;border-bottom:1px solid var(--zsa-border);white-space:nowrap;}
+.zsa-sl th {background:var(--zsa-sky);color:var(--zsa-navy);font-weight:500;}
+.zsa-sl-challenges {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;align-items:start;}
+.zsa-sl-challenges .zsa-card {margin:0;}
+.zsa-sl-feedback {min-height:30px;}
+.zsa-sl-success {color:#166534;}
+.zsa-sl-error {color:#991b1b;}
+.zsa-sl-legend {display:flex;flex-wrap:wrap;gap:8px 14px;font-size:14px;}
+.zsa-sl-key {display:inline-flex;align-items:center;gap:5px;}
+.zsa-sl-key svg {width:30px;height:12px;}
+.zsa-sl-swirl {animation:zsa-sl-swirl .6s ease-in-out;transform-origin:center;}
+.zsa-sl-invert {animation:zsa-sl-invert 1s ease-in-out;transform-origin:center;}
+.zsa-sl-crystals {animation:zsa-sl-crystals .5s ease-out;}
+@keyframes zsa-sl-swirl {25%{transform:rotate(-7deg)}75%{transform:rotate(7deg)}}
+@keyframes zsa-sl-crystals {from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:780px) {.zsa-sl-layout,.zsa-sl-curve-layout,.zsa-sl-challenges {grid-template-columns:minmax(0,1fr);}.zsa-sl-tabs .zsa-btn {flex:1 1 42%;}.zsa-sl .zsa-card {padding:16px;}.zsa-sl h2 {font-size:24px;}}
+@media(prefers-reduced-motion:reduce) {.zsa-sl * {animation:none!important;transition:none!important;}}
+
+@keyframes zsa-sl-invert {50%{transform:rotate(180deg)}100%{transform:rotate(360deg)}}
+.zsa-sl #bulb {max-width:300px;margin:12px auto;}

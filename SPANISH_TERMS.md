@@ -2554,3 +2554,28 @@ Oganesson | Oganesón
 Metal-name distractors are intentionally invalid names ending in `uro`: litiouro, sodiouro, potasiouro, rubidiouro, cesiouro, magnesiouro, calciouro, estronciouro, bariouro, aluminiouro. Negative-ion distractors deliberately keep `ion de` plus the element name instead of the correct anion name. These are wrong answer choices, never glossary recommendations.
 
 Chemical formulas, symbols, numerical charges, state markers, units, keyboard key names and proper source titles retain their original notation. `picometers`, `kilojoules`, `mol` and `electron volts` remain unit names; prose uses `por mol`.
+
+## Solutions Lab (1.0.0)
+
+English | Spanish
+--- | ---
+volumetric flask | matraz aforado
+fill line | línea de aforo
+meniscus | menisco
+balance | balanza
+volumetric pipet | pipeta volumétrica
+graduated cylinder | probeta graduada
+wash bottle | piseta
+seed crystal | cristal semilla
+unsaturated solution | solución insaturada
+supersaturated solution | solución sobresaturada
+strong electrolyte | electrolito fuerte
+nonelectrolyte | no electrolito
+aliquot | alícuota
+tare (verb) | tarar
+sucrose | sacarosa
+copper(II) sulfate pentahydrate | sulfato de cobre(II) pentahidratado
+
+Existing choices retained: solution / solución, solute / soluto, solvent / disolvente,
+stock solution / solución concentrada, beaker / vaso de precipitados,
+weigh boat / navecilla de pesaje, saturated solution / solución saturada.
