@@ -21,6 +21,9 @@
   "Physics": "Física",
   "Test prep": "Preparación para exámenes",
   "Lab tools": "Herramientas de laboratorio",
+  "Thermochemistry": "Termoquímica",
+  "Reaction Energy Lab": "Laboratorio virtual de energía de reacción",
+  "Build energy diagrams, explore heating and cooling curves, and calculate reaction enthalpy with stoichiometry, bonds, formation data and Hess's law.": "Construye diagramas de energía, explora curvas de calentamiento y enfriamiento y calcula la entalpía de reacción con estequiometría, enlaces, datos de formación y la ley de Hess.",
   // Tags
   "Reference": "Consulta",
   "Practice": "Práctica",
