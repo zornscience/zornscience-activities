@@ -2579,3 +2579,50 @@ copper(II) sulfate pentahydrate | sulfato de cobre(II) pentahidratado
 Existing choices retained: solution / solución, solute / soluto, solvent / disolvente,
 stock solution / solución concentrada, beaker / vaso de precipitados,
 weigh boat / navecilla de pesaje, saturated solution / solución saturada.
+
+## Equilibrium Constant Lab (1.0.0)
+
+Mexican Spanish activity terminology. Existing glossary terms are repeated here to make the activity vocabulary reviewable.
+
+| English | Mexican Spanish |
+| --- | --- |
+| equilibrium constant | constante de equilibrio |
+| reaction quotient (Q) | cociente de reacción (Q) |
+| ICE table (initial, change, equilibrium) | tabla ICE (inicial, cambio, equilibrio) |
+| RICE table | tabla RICE |
+| solubility product (Ksp) | producto de solubilidad (Ksp) |
+| molar solubility | solubilidad molar |
+| common-ion effect | efecto del ion común |
+| common ion | ion común |
+| shift right | desplazamiento a la derecha |
+| shift left | desplazamiento a la izquierda |
+| products favored | se favorecen los productos |
+| reactants favored | se favorecen los reactivos |
+| forward reaction | reacción directa |
+| reverse reaction | reacción inversa |
+| K magnitude | magnitud de K |
+| small-x shortcut | aproximación de x pequeña |
+| 5% check | verificación del 5% |
+| reaction extent | extensión de reacción |
+| bisection | bisección |
+| formula unit | unidad fórmula |
+| partial pressure | presión parcial |
+| net coefficient | coeficiente neto |
+| target reaction | reacción objetivo |
+| logarithmic scale | escala logarítmica |
+| solid: ignore | sólido: se omite |
+| partial particles | partículas parciales |
+| relaxation clock | reloj de relajación |
+| transformed constant | constante transformada |
+| molarity | molaridad |
+| exothermic | exotérmica |
+
+### Equilibrium Constant Lab Style Kit review (1.0.1)
+
+Reviewed against ZornScience Style Kit v1.8, sections 1, 4, 5, 6 and 7. Reaction rates use velocidad, as required by section 6.
+
+| English | Mexican Spanish |
+| --- | --- |
+| forward reaction rate | velocidad de reacción directa |
+| reverse reaction rate | velocidad de reacción inversa |
+| stress | perturbación |
