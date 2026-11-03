@@ -23,6 +23,8 @@
   "Lab tools": "Herramientas de laboratorio",
   "Thermochemistry": "Termoquímica",
   "Reaction Energy Lab": "Laboratorio virtual de energía de reacción",
+  "Free Energy Lab": "Laboratorio virtual de entropía y energía libre",
+  "Predict entropy changes, explore Gibbs free energy and temperature, link ΔG° with K, and compare kinetic control, dissolving and coupled reactions.": "Predice cambios de entropía, explora la energía libre de Gibbs y la temperatura, relaciona ΔG° con K y compara el control cinético, la disolución y las reacciones acopladas.",
   "Build energy diagrams, explore heating and cooling curves, and calculate reaction enthalpy with stoichiometry, bonds, formation data and Hess's law.": "Construye diagramas de energía, explora curvas de calentamiento y enfriamiento y calcula la entalpía de reacción con estequiometría, enlaces, datos de formación y la ley de Hess.",
   // Tags
   "Reference": "Consulta",

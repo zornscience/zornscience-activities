@@ -52,6 +52,7 @@ beers-law-lab/             Beer's Law Spectrophotometer Lab, v1.0.0 (zero with a
 equilibrium-lab/          Equilibrium Sandbox, v1.2.1 (Le Chatelier stresses, Kc/Qc and live concentration graphs)
 calorimetry-lab/          Calorimetry & Enthalpy Lab, v1.2.1 (heated-metal and neutralization calorimetry)
 reaction-energy-lab/      Reaction Energy Lab, v1.0.0 (energy diagrams, phase changes, reaction enthalpy, bonds, formation and Hess; English and Mexican Spanish)
+free-energy-lab/          Free Energy Lab, v1.0.0 (entropy, Gibbs free energy, temperature, K, kinetic control, dissolving and coupling; English and Mexican Spanish)
 equilibrium-thermo-lab/   Compatibility chooser linking to the two standalone labs, v1.1.0 (English and Mexican Spanish)
 check/                     completion code checker for teachers, v1.2.0 (linked under "For teachers")
 TEACHERS.md                assigning activities in Google Classroom and checking completion codes

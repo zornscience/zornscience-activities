@@ -2684,3 +2684,32 @@ Style Kit 1.6, sections 1, 4, 5, 6 and 7. These activity terms include the requi
 | graphite / diamond | grafito / diamante |
 
 Action labels: Check = Comprobar; Start process = Iniciar proceso; Play = Iniciar; Pause = Pausar; Reset = Reiniciar. Equations, state symbols, units and decimal points are preserved.
+
+### Free Energy Lab (1.0.0)
+
+Reviewed against ZornScience Style Kit sections 1, 4, 5, 6 and 7. The supplied glossary terms remain entropía, microestado, energía libre de Gibbs, favorabilidad termodinámica, control cinético, control termodinámico, reacción acoplada, energía de activación, estado estándar and kelvin. Espontáneo appears only where English says spontaneous. Reaction rate uses velocidad de reacción; particle speed uses rapidez.
+
+The following activity-specific choices are newly recorded here:
+
+| English | Mexican Spanish |
+| --- | --- |
+| crossover temperature | temperatura de cruce |
+| common intermediate | intermediario común |
+| entropy-driven | impulsada por la entropía |
+| enthalpy-driven | impulsada por la entalpía |
+| ion-dipole attractions | atracciones ion-dipolo |
+| hydration | hidratación |
+| accessible microstates | microestados accesibles |
+| matter becomes more dispersed | la materia se dispersa más |
+| matter becomes less dispersed | la materia se dispersa menos |
+| ordering of water | ordenamiento del agua |
+| fixed lattice | red fija |
+| mobile neighbors | partículas vecinas móviles |
+| activation barrier | barrera de activación |
+| observed reaction rate | velocidad de reacción observada |
+| Gibbs free energy of formation | energía libre de Gibbs de formación |
+| four-case sign grid | cuadro de los cuatro casos de signos |
+| coupled-reaction partner | reacción para acoplar |
+| Maxwell-Boltzmann style curves | curvas de tipo Maxwell-Boltzmann |
+
+The activity title is Laboratorio virtual de entropía y energía libre. Section titles are noun phrases; buttons remain actions. Decimal points, formulas, charges, units and state symbols are preserved. All feedback and complete sentence templates are in `free-energy-lab/data.js`.
