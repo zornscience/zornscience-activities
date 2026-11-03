@@ -34,7 +34,7 @@ test("Solutions Lab: ordinary cooling crystallizes 54 g and heating redissolves 
   var a=M.beaker(M.newBeaker("kno3",70),"add",100,false);close(a.dissolved,100);a=M.beaker(a,"temp",30,false);close(a.crystals,54);close(a.dissolved,46);a=M.beaker(a,"temp",70,false);close(a.crystals,0);close(a.dissolved,100);
 });
 test("Solutions Lab: gentle cooling retains dissolved excess, seed releases it",function(){
-  var a=M.beaker(M.newBeaker("kno3",70),"add",100,false);a=M.beaker(a,"temp",30,true);close(a.crystals,0);close(a.dissolved,100);a=M.beaker(a,"add",10,true);close(a.dissolved,100);close(a.crystals,10);a=M.beaker(a,"seed",0,true);close(a.dissolved,46);close(a.crystals,64);
+  var a=M.beaker(M.newBeaker("kno3",70),"add",100,false);a=M.beaker(a,"temp",30,true);close(a.crystals,0);close(a.dissolved,100);a=M.beaker(a,"add",10,true);close(a.dissolved,46);close(a.crystals,64);a=M.beaker(a,"seed",0,true);close(a.dissolved,46);close(a.crystals,64);
   var b=M.beaker(M.newBeaker("kno3",30),"add",100,true);close(b.dissolved,46);close(b.crystals,54);
 });
 test("Solutions Lab: NH₃ escapes instead of crystallizing, warming cannot be undone by cooling",function(){
@@ -61,4 +61,17 @@ test("Solutions Lab: all made stocks and very dilute serial stocks remain usable
   var concentrated=M.make("nacl",250,50);assert.ok(concentrated.molarity>10);
   close(M.dilute(concentrated,5,100,3,4).molarity,concentrated.molarity/20);
   var low={id:"nacl",molarity:1e-15,digits:3};assert.equal(M.dilute(low,10,100,4,4).displayed,"1.00e-16");
+});
+
+test("Solutions Lab 1.0.1: solid additions seed supersaturated solutions",function(){
+  var a=M.beaker(M.newBeaker("kno3",70),"add",100,false);
+  a=M.beaker(a,"temp",30,true);close(a.dissolved,100);assert.equal(M.solutionState(a),"supersaturated");
+  var seeded=M.beaker(a,"seed",0,true);close(seeded.dissolved,46);close(seeded.crystals,54);assert.equal(M.solutionState(seeded),"saturated");
+  a=M.beaker(a,"add",1,true);close(a.dissolved,46);close(a.crystals,55);assert.equal(M.solutionState(a),"saturated");
+});
+test("Solutions Lab 1.0.1: existing crystals prevent gentle supersaturation",function(){
+  var a=M.beaker(M.newBeaker("kno3",70),"add",100,false);
+  a=M.beaker(a,"temp",50,false);close(a.crystals,15);
+  a=M.beaker(a,"temp",30,true);close(a.dissolved,46);close(a.crystals,54);assert.equal(M.solutionState(a),"saturated");
+  a=M.beaker(a,"temp",70,true);close(a.dissolved,100);close(a.crystals,0);
 });

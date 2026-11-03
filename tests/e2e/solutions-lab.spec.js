@@ -74,3 +74,25 @@ for(const lang of ["en","es"])for(const mode of ["make","dilute","solubility","c
     }
   });
 }
+test("Solutions 1.0.1: dissolved graph point, unified state and scale labels",async function({page}){
+  await page.goto("/solutions-lab/?mode=solubility&temp=70");
+  for(var i=0;i<10;i++)await page.locator("#add-ten").click();
+  await page.locator("#gentle").check();await page.locator("#temperature").fill("30");
+  await expect(page.locator("#curve-readouts")).toContainText("supersaturated");
+  await page.locator("#add-one").click();
+  await expect(page.locator("#curve-status")).toHaveText("Crystals formed: 55.0 g. Dissolved: 46.0 g.");
+  await expect(page.locator("#curve-readouts")).toContainText("Solution statesaturated");
+  await expect(page.locator("#curve-readouts")).not.toContainText("Point classification");
+  await expect(page.locator("#data-caption")).toHaveText("Solution state uses the dissolved amount.");
+  await expect(page.locator("#data-head")).toContainText("Solution state");
+  await expect(page.locator("#data-body tr").last()).toContainText("saturated");
+  await expect(page.locator("#curve-graph")).toHaveAttribute("aria-label",/46.0 g dissolved.*Solution state: saturated/);
+  expect(Number(await page.locator("#curve-graph circle").getAttribute("cy"))).toBeCloseTo(25+365-46*365/250);
+  var ticks=await page.locator("#curve-graph text[text-anchor=end]").allTextContents();expect(ticks).toEqual(["0","50","100","150","200","250"]);
+});
+test("Solutions 1.0.1: mole readouts round while CSV retains full precision",async function({page}){
+  await page.goto("/solutions-lab/?mode=dilute&solute=cuso4&stock=1&flask=100");await finishDilute(page);
+  var moles=page.locator("#dilute-readouts dd");await expect(moles.nth(0)).toHaveText("0.0100");await expect(moles.nth(1)).toHaveText("0.0100");
+  await page.locator("#dilute-reset").click();await page.locator("#stock").selectOption("nacl-2");await page.locator("#pipet").selectOption("cylinder");await page.locator("#cylinder").fill("5.1");await finishDilute(page);
+  var pending=page.waitForEvent("download");await page.locator("#download-data").click();var download=await pending;var csv=fs.readFileSync(await download.path(),"utf8");expect(csv).toContain('"'+String(2*5.1/1000)+'"');
+});

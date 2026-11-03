@@ -1,6 +1,6 @@
 # Solutions Lab testing
 
-Version: 1.0.0
+Version: 1.0.1
 
 ## Automated checks
 
@@ -64,7 +64,7 @@ in English and Spanish, at 1366 px. Review includes:
 - A blue mixed 6.24 g pentahydrate solution in a 250.0 mL flask.
 - The single etched neck line and the bottom of the zoomed meniscus at the line.
 - CuSO₄ dilution with matching particle counts and lighter blue color.
-- A 100 g KNO₃ point at 30 °C, with 54 g crystals and saturated liquid.
+- A 100 g KNO₃ point at 30 °C, with 54 g crystals and a saturated solution.
 - All seven challenge cards and Spanish terminology.
 
 Further classroom checks:
@@ -80,7 +80,7 @@ Further classroom checks:
    stock, and repeat. Check 0.200 M and 0.0200 M, then download both rows.
 5. Try the 10 mL cylinder at 5.1 mL and confirm its 0.1 mL precision limits M₂.
 6. At 70 °C dissolve 100 g KNO₃. Cool normally to 30 °C. Reset and repeat with
-   gentle cooling, then seed. Compare the liquid state and point classification.
+   gentle cooling, then seed. Compare Solution state, the dissolved graph point and the data table.
 7. Switch to NH₃, add gas, then warm. Confirm bubbles and cumulative gas escape;
    cooling does not restore escaped gas and seeding remains disabled.
 8. Open the curve reference table. Confirm all curves can be read without interpreting
@@ -93,7 +93,7 @@ Further classroom checks:
 
 Read `README.md` for the illustrative water-volume displacement, schematic
 wash-bottle portions, ideal volume bookkeeping, absence of phase limits in Make
-and Dilute, qualitative colors and bulb brightness, total-mass graph convention,
+and Dilute, qualitative colors and bulb brightness, dissolved-amount solution state,
 and simplified crystal nucleation. All requested numeric constants are unchanged.
 
 ## Recorded validation
@@ -113,3 +113,25 @@ and simplified crystal nucleation. All requested numeric constants are unchanged
 - Isolated retry of the existing Lewis-builder AP routing group 2: passed in
   2.0 minutes with one browser worker. The initial failure was a timeout;
   its chemistry and feedback assertions passed on retry.
+
+## Version 1.0.1 regression coverage
+
+- Gentle cooling of 100 g KNO₃ from 70 °C to 30 °C without solid retains 100 g
+  dissolved and is supersaturated. Seeding leaves 46 g dissolved, 54 g crystals,
+  and a saturated solution.
+- Adding 1 g solid to that supersaturated solution leaves 46 g dissolved and
+  55 g crystals immediately.
+- Normal cooling to 50 °C followed by gentle cooling to 30 °C leaves 46 g
+  dissolved and 54 g crystals. Heating still redissolves the crystals.
+- Live Solution state, its sole table column, and the solid graph point use the
+  dissolved amount. The caption is "Solution state uses the dissolved amount."
+- Abstract classification challenges keep the original ±1 g point rule.
+- The 250 g graph scale labels 0, 50, 100, 150, 200, 250 with 10 g gridlines.
+- Dilution mole readouts use M₂ significant figures, with unrounded CSV values.
+
+The validation totals above describe the original 1.0.0 baseline.
+
+Version 1.0.1 validation: 13 model tests, 16 dedicated browser tests and all six
+repository static checks passed. Browser checks include the dissolved graph point,
+unified table/readout state, 50 g labels, displayed mole precision and unrounded
+CSV values, plus accessibility and translation coverage in both languages.

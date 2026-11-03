@@ -59,19 +59,21 @@
     var delta=mass-solubility(id,temp);
     return Math.abs(delta)<=1+1e-9?"saturated":delta<0?"unsaturated":"supersaturated";
   }
+  function solutionState(s) {
+    return s.crystals>0?"saturated":classify(s.id,s.temp,s.dissolved);
+  }
   function newBeaker(id,temp) {
     return {id:id,temp:temp,added:0,dissolved:0,crystals:0,escaped:0};
   }
   function beaker(state,action,value,gentle) {
-    var s=Object.assign({},state), oldTemp=s.temp;
+    var s=Object.assign({},state);
     if(action==="add")s.added=Math.min(250,s.added+value);
     if(action==="temp")s.temp=Math.max(0,Math.min(100,value));
     var cap=solubility(s.id,s.temp), available=s.added-s.escaped;
     if(s.id==="nh3") {
       s.dissolved=Math.min(available,cap);s.escaped=s.added-s.dissolved;s.crystals=0;
     } else {
-      var preserve=action!=="seed"&&((action==="temp"&&s.temp<oldTemp&&gentle)||
-        (s.dissolved>cap&&(action==="add"||(action==="temp"&&gentle))));
+      var preserve=action==="temp"&&gentle&&state.crystals===0;
       s.dissolved=preserve?Math.min(available,Math.max(s.dissolved,Math.min(available,cap))):Math.min(available,cap);
       s.crystals=Math.max(0,s.added-s.dissolved);
     }
@@ -120,7 +122,7 @@
     return typeof answer==="number"&&Number.isFinite(answer)&&Math.abs(answer-c.answer)<=.5;
   }
   var api={ATOMS:ATOMS,SOLUTES:SOLUTES,FLASKS:FLASKS,CURVES:CURVES,FORMULAS:FORMULAS,BULBS:BULBS,sigFigs:sigFigs,sig:sig,make:make,dilute:dilute,
-    solubility:solubility,classify:classify,newBeaker:newBeaker,beaker:beaker,parameters:parameters,safeFrom:safeFrom,challenges:challenges,checkChallenge:checkChallenge};
+    solubility:solubility,classify:classify,solutionState:solutionState,newBeaker:newBeaker,beaker:beaker,parameters:parameters,safeFrom:safeFrom,challenges:challenges,checkChallenge:checkChallenge};
   if(typeof module==="object"&&module.exports)module.exports=api;
   if(typeof document!=="undefined") {
     var root=document.querySelector('[data-zsa-activity="solutions-lab"]');

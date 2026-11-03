@@ -1,6 +1,6 @@
 # Solutions Lab
 
-Version: 1.0.0
+Version: 1.0.1
 
 A high school Chemistry Unit 7 activity for lessons 550 Characteristics of Solutions,
 551 Solubility Curves, 552 Molarity Calculations, and 553 Dilutions.
@@ -116,6 +116,8 @@ is filled to the line. It is not a density or real mixing-volume model.
 Volumetric pipets are 5.00, 10.00, and 25.00 mL; the 10 mL graduated cylinder
 supports 0.1 through 10.0 mL in 0.1 mL steps.
 M₂ significant figures also account for stock precision and V₁ measurement precision.
+Live moles-before and moles-after readouts use M₂ significant figures. Internally
+and in CSV exports, mole values remain unrounded.
 The particle diagram uses twelve schematic solute markers on both sides, not a
 molecular count. Its liquid heights are schematic and have a minimum visible height
 to keep the twelve particles distinct. Blue color decreases continuously as water is added.
@@ -129,22 +131,23 @@ unrelated experiments at the right concentrations do not satisfy it.
 Every supplied table value is used unchanged, with linear interpolation between
 0, 10, 20 ... 100 °C. Units are g solute per 100 g H₂O. The beaker has 100 g of
 water and accepts up to 250 g of added solute. Graph axes use 10 °C and 10 g
-gridlines, with 30 g labels and a default y maximum of 150 g. KNO₃ or a mass over
+gridlines, with 30 g labels on the default 150 g scale and 50 g labels on the
+250 g scale. KNO₃ or a mass over
 150 g changes the maximum to 250 g.
 
-The requested point classification uses total mass added: below is unsaturated,
-within **±1 g** of the curve is saturated, above is supersaturated. This graph
-convention differs from the physical state of the liquid when excess solid or
-escaped gas exists. The interface explicitly reports both point classification
-and liquid state. Excess solid normally leaves saturated liquid plus crystals,
-not a physically supersaturated liquid.
+Solution state uses the dissolved amount. The solid graph point, live state readout,
+and data table all use dissolved solute. Any crystals or undissolved solid mean
+saturated. With no solid, dissolved mass above solubility + 1 g means
+supersaturated; within **±1 g** means saturated, and below means unsaturated.
+The abstract point-classification challenges retain their original curve rule.
 
-At a fixed temperature, adding too much solid leaves undissolved solid. Ordinary
-cooling crystallizes the excess and heating redissolves it. Cool gently retains
-only previously dissolved excess; it cannot make additional solid dissolve above
-the solubility limit. A seed crystal releases the dissolved excess at once, without
-adding a measurable mass of its own. Turning gentle cooling off equilibrates the
-solution. This is a simplified nucleation demonstration, not a kinetic model.
+At a fixed temperature, excess solid stays undissolved. Normal cooling crystallizes
+the excess, and heating redissolves it. Gentle cooling can retain dissolved excess
+only if no crystals were present before cooling. Any added solid seeds a
+supersaturated solution immediately: dissolved solute returns to the curve and the
+added grams join the crystals. The seed-crystal button adds no measurable mass.
+Turning gentle cooling off equilibrates the solution. This is a simplified
+nucleation demonstration, not a kinetic model.
 
 NH₃ is dissolved gas. Excess escapes, never forms crystals, and cannot be restored
 by cooling unless more gas is explicitly added. Gas escaped is cumulative. Seed
