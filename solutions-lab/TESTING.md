@@ -1,6 +1,6 @@
 # Solutions Lab testing
 
-Version: 1.0.1
+Version: 1.0.2
 
 ## Automated checks
 
@@ -135,3 +135,7 @@ Version 1.0.1 validation: 13 model tests, 16 dedicated browser tests and all six
 repository static checks passed. Browser checks include the dissolved graph point,
 unified table/readout state, 50 g labels, displayed mole precision and unrounded
 CSV values, plus accessibility and translation coverage in both languages.
+
+## Version 1.0.2 dilution table precision
+
+The serial-dilution browser regression checks that both table mole columns match the readouts and display 0.00200, while the downloaded CSV contains 0.0019999999999999996. All 13 model tests, 16 activity browser tests and six repository static checks pass.

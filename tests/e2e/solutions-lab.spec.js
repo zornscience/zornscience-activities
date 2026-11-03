@@ -25,6 +25,10 @@ test("Solutions: ordered preparation, balance precision, overfill and challenge"
 test("Solutions: stock transfer and serial dilution conserve moles",async function({page}){
   await page.goto("/solutions-lab/?mode=dilute&flask=100&stock=2");await page.locator("#pipet").selectOption("10");await finishDilute(page);await expect(page.locator("#dilute-readouts")).toContainText("0.200");
   await page.locator("#serial-stock").click();await finishDilute(page);await expect(page.locator("#dilute-readouts")).toContainText("0.0200");await expect(page.locator("#data-body tr")).toHaveCount(2);
+  var cells=page.locator("#data-body tr").last().locator("td"),readouts=page.locator("#dilute-readouts dd");
+  await expect(cells.nth(6)).toHaveText(await readouts.nth(0).innerText());await expect(cells.nth(7)).toHaveText(await readouts.nth(1).innerText());await expect(cells.nth(6)).toHaveText("0.00200");
+  var csvDownload=page.waitForEvent("download");await page.locator("#download-data").click();var file=await csvDownload;var csv=fs.readFileSync(await file.path(),"utf8");expect(csv).toContain('"0.0019999999999999996"');expect(csv).not.toContain('"0.00200"');
+
   await page.locator("#tab-challenge").click();await page.locator("#check-challenge-3").click();await expect(page.locator("#challenge-feedback-3")).toContainText("Correct.");
   await page.locator("#tab-make").click();await page.locator("#make-flask").selectOption("250");await finishMake(page,"14.61");await page.locator("#use-stock").click();await expect(page.locator("#stock-info")).toContainText("1.000 M NaCl");
 });

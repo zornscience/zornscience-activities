@@ -2626,3 +2626,18 @@ Reviewed against ZornScience Style Kit v1.8, sections 1, 4, 5, 6 and 7. Reaction
 | forward reaction rate | velocidad de reacción directa |
 | reverse reaction rate | velocidad de reacción inversa |
 | stress | perturbación |
+
+### Equilibrium Constant Lab algebra and notation fixes (1.0.1)
+
+| English | Mexican Spanish |
+| --- | --- |
+| linear expression | expresión lineal |
+| constant term | término constante |
+| coefficient of x | coeficiente de x |
+| solve for x | resolución de x |
+| square-root step | paso de la raíz cuadrada |
+| scientific notation | notación científica |
+| solid line | línea continua |
+| dashed line | línea discontinua |
+
+Action labels use Verificar x. The equilibrium table keeps the lesson letters I, C, E and, for Chemistry, R. Formulas, numerical values, x, s, and state symbols remain unchanged.

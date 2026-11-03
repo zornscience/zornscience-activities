@@ -1,6 +1,6 @@
 # Solutions Lab
 
-Version: 1.0.1
+Version: 1.0.2
 
 A high school Chemistry Unit 7 activity for lessons 550 Characteristics of Solutions,
 551 Solubility Curves, 552 Molarity Calculations, and 553 Dilutions.
@@ -180,3 +180,7 @@ solución insaturada, solución sobresaturada, electrolito fuerte, no electrolit
 alícuota, tarar, sacarosa, sulfato de cobre(II) pentahidratado.
 
 ZornScience. CC BY-NC-SA 4.0.
+
+## Version 1.0.2
+
+Dilute mole columns now use the readouts' significant figures, hiding floating-point tails such as 0.0019999999999999996 behind the correct 0.00200 display. Download CSV still exports the original unrounded moles; Copy data follows the table.
