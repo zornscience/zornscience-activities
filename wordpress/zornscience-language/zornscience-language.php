@@ -2,7 +2,7 @@
 /**
  * Plugin Name: ZornScience Language
  * Description: Connects the Spanish pages under /es/ to their English twins: a language toggle in the header, Spanish menus, sidebars and labels on Spanish pages, links that fall back to English until a Spanish page is published, and hreflang tags for search engines.
- * Version: 1.1.0
+ * Version: 1.2.0
  * Author: Nick Zorn
  * License: GPL-2.0-or-later
  * Requires at least: 6.4
@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZS_LANG_VERSION', '1.1.0' );
+define( 'ZS_LANG_VERSION', '1.2.0' );
 define( 'ZS_LANG_ES_ROOT', 'es' );
 define( 'ZS_LANG_CONTENT_START', '<!--zs-lang-content-start-->' );
 define( 'ZS_LANG_CONTENT_END', '<!--zs-lang-content-end-->' );
@@ -38,10 +38,14 @@ function zs_lang_ui_strings() {
 		'Equations'                                   => 'Ecuaciones',
 		'Graphs and Change'                           => 'Gráficas y cambio',
 		'Advanced Tools'                              => 'Herramientas avanzadas',
+		'Students'                                    => 'Estudiantes',
+		'Teachers'                                    => 'Maestros',
 		'Teaching'                                    => 'Enseñanza',
+		'ACT Prep'                                    => 'Preparación para el ACT',
 		'Virtual Labs'                                => 'Laboratorios virtuales',
 		'Physical Labs'                               => 'Laboratorios presenciales',
-		'Classroom Strategies'                        => 'Estrategias de clase',
+		'Classroom Strategies'                        => 'Estrategias para el aula',
+		'Next-Day Notes'                              => 'Apuntes del día siguiente',
 		'Brain Breaks'                                => 'Pausas activas',
 		'Instructional Technology'                    => 'Tecnología educativa',
 		'ACT Practice'                                => 'Práctica para el ACT',
@@ -49,6 +53,7 @@ function zs_lang_ui_strings() {
 		'Practice Activities'                         => 'Actividades de práctica',
 		'About'                                       => 'Acerca de',
 		'Contact'                                     => 'Contacto',
+		'Lab Notes'                                   => 'Notas de laboratorio',
 		'Explore'                                     => 'Explora',
 		'Buy Me a Coffee'                             => 'Invítame un café',
 		'Unit Overview'                               => 'Resumen de la unidad',
