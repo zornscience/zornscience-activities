@@ -2641,3 +2641,46 @@ Reviewed against ZornScience Style Kit v1.8, sections 1, 4, 5, 6 and 7. Reaction
 | dashed line | línea discontinua |
 
 Action labels use Verificar x. The equilibrium table keeps the lesson letters I, C, E and, for Chemistry, R. Formulas, numerical values, x, s, and state symbols remain unchanged.
+
+
+### Reaction Energy Lab (1.0.0)
+
+Style Kit 1.6, sections 1, 4, 5, 6 and 7. These activity terms include the required lesson vocabulary and the new control and feedback terms. The AP label is diagrama de energía; Chemistry uses diagrama de energía potencial.
+
+| English | Mexican Spanish |
+| --- | --- |
+| Reaction Energy Lab | Laboratorio virtual de energía de reacción |
+| thermoneutral | termoneutro |
+| read and sketch | lectura y construcción del diagrama |
+| peak | pico |
+| reactant PE | energía potencial de los reactivos |
+| product PE | energía potencial de los productos |
+| surroundings thermometer | termómetro de los alrededores |
+| energy flow | flujo de energía |
+| instant cold pack | compresa fría instantánea |
+| frost | escarcha |
+| phase endpoint | extremo de fase |
+| start phase / end phase | fase inicial / fase final |
+| heating and cooling curves | curvas de calentamiento y enfriamiento |
+| sloped segment / flat segment | tramo inclinado / tramo plano |
+| heat of fusion / heat of vaporization | calor de fusión / calor de vaporización |
+| two-phase segments | tramos con dos fases |
+| particle spacing | separación de las partículas |
+| segment calculator | calculadora de tramos |
+| elapsed time | tiempo transcurrido |
+| bond tallies | conteo de enlaces |
+| bonds broken / bonds formed | enlaces rotos / enlaces formados |
+| lone pairs | pares libres |
+| unknown formation enthalpy | entalpía de formación desconocida |
+| formation heat, Chemistry | calor de formación |
+| formation enthalpy, AP | entalpía de formación |
+| standard state | estado estándar |
+| running sum | suma acumulada |
+| scaled reaction enthalpy | entalpía de reacción escalada |
+| canceled species | especies canceladas |
+| net reaction | reacción neta |
+| multiplier | multiplicador |
+| reverse a step | invertir un paso |
+| graphite / diamond | grafito / diamante |
+
+Action labels: Check = Comprobar; Start process = Iniciar proceso; Play = Iniciar; Pause = Pausar; Reset = Reiniciar. Equations, state symbols, units and decimal points are preserved.

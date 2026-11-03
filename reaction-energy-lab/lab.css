@@ -1,0 +1,159 @@
+.zsa-re {--zsa-max-width:1240px;}
+.zsa-re label:not(.zsa-re-check) {display:block;font-size:16px;font-weight:500;margin:16px 0 6px;color:var(--zsa-navy);}
+.zsa-re select,.zsa-re input[type=number],.zsa-re input[type=text],.zsa-re textarea {width:100%;min-width:0;min-height:44px;border:1px solid var(--zsa-border-strong);border-radius:8px;padding:9px 12px;background:white;color:var(--zsa-navy);}
+.zsa-re input[type=range] {width:100%;min-height:44px;accent-color:var(--zsa-blue);}
+.zsa-re input[type=checkbox] {width:20px;height:20px;accent-color:var(--zsa-blue);flex-shrink:0;}
+.zsa-re textarea:focus-visible,.zsa-re input[type=range]:focus-visible {outline:var(--zsa-focus-ring);outline-offset:2px;}
+.zsa-re .zsa-btn {font-size:16px;padding:10px 14px;}
+.zsa-re .zsa-btn:disabled {opacity:.55;}
+.zsa-re .zsa-btn[aria-selected=true] {background:var(--zsa-navy);color:white;}
+.zsa-re h2 {font-size:26px;margin:10px 0 20px;}
+.zsa-re h3 {font-size:20px;margin-top:24px;}
+.zsa-re p {margin:12px 0;}
+.zsa-re-tabs,.zsa-re-actions {display:flex;gap:8px;flex-wrap:wrap;margin:14px 0;}
+.zsa-re-tabs {padding:12px 0;border-block:1px solid var(--zsa-border);}
+.zsa-re-tabs .zsa-btn {flex:1 1 150px;}
+.zsa-re-layout {display:grid;grid-template-columns:minmax(300px,.9fr) minmax(0,1.4fr);gap:20px;align-items:start;}
+.zsa-re .zsa-card {min-width:0;padding:22px;margin-top:12px;}
+.zsa-re-note {font-size:16px;line-height:1.6;}
+.zsa-re-check {display:flex;align-items:center;gap:10px;min-height:44px;margin:16px 0;font-size:16px;}
+.zsa-re svg {width:100%;height:auto;display:block;overflow:visible;}
+.zsa-re svg text {font-family:var(--zsa-font);fill:var(--zsa-navy);font-size:14px;}
+.zsa-re-equation {font-size:19px;overflow-wrap:anywhere;}
+.zsa-re-scroll {overflow:auto;max-width:100%;}
+.zsa-re table {width:100%;border-collapse:collapse;font-size:15px;text-align:left;}
+.zsa-re caption {text-align:left;margin:12px 0;font-size:16px;color:var(--zsa-navy);}
+.zsa-re th,.zsa-re td {padding:12px 10px;border-bottom:1px solid var(--zsa-border);white-space:nowrap;}
+.zsa-re th {background:var(--zsa-sky);color:var(--zsa-navy);font-weight:500;}
+.zsa-re table input {max-width:110px;}
+.zsa-re [role=tabpanel]:focus {outline-offset:4px;}
+.zsa-re pre {white-space:pre-wrap;line-height:1.5;font:500 18px/1.6 monospace;color:var(--zsa-navy);}
+.zsa-re-feedback {border-left:3px solid var(--zsa-blue);padding-left:12px;min-height:30px;}
+.zsa-re-feedback:empty {border:0;padding:0;min-height:0;margin:0;}
+.zsa-re-result {background:var(--zsa-sky);border-radius:8px;padding:16px;font-size:20px;color:var(--zsa-navy);}
+.zsa-re-particles {background:#f8fbff;border:1px solid var(--zsa-border);border-radius:12px;}
+.zsa-re-challenge-graph {max-width:760px;}
+.zsa-re sub,.zsa-re sup {font-size:.75em;line-height:0;}
+.zsa-re .particle {animation:zsa-re-vibrate 1s linear infinite alternate;transform-box:fill-box;transform-origin:center;}
+.zsa-re .particle:nth-child(3n) {animation-delay:-.2s;}
+.zsa-re .particle:nth-child(3n + 1) {animation-delay:-.4s;}
+@keyframes zsa-re-vibrate {from{transform:translate(-3px,-2px)}to{transform:translate(3px,2px)}}
+@media(max-width:780px) {.zsa-re-layout {grid-template-columns:minmax(0,1fr);}.zsa-re-tabs .zsa-btn {flex:1 1 42%;}.zsa-re .zsa-card {padding:16px;}.zsa-re h2 {font-size:24px;}}
+@media(prefers-reduced-motion:reduce) {.zsa-re * {animation:none!important;transition:none!important;}}
+/* Discrete classes keep animation timing out of inline styles under the CSP. */
+.zsa-re .particle.speed-18 {animation-duration:0.18s;}
+.zsa-re .particle.speed-19 {animation-duration:0.19s;}
+.zsa-re .particle.speed-20 {animation-duration:0.20s;}
+.zsa-re .particle.speed-21 {animation-duration:0.21s;}
+.zsa-re .particle.speed-22 {animation-duration:0.22s;}
+.zsa-re .particle.speed-23 {animation-duration:0.23s;}
+.zsa-re .particle.speed-24 {animation-duration:0.24s;}
+.zsa-re .particle.speed-25 {animation-duration:0.25s;}
+.zsa-re .particle.speed-26 {animation-duration:0.26s;}
+.zsa-re .particle.speed-27 {animation-duration:0.27s;}
+.zsa-re .particle.speed-28 {animation-duration:0.28s;}
+.zsa-re .particle.speed-29 {animation-duration:0.29s;}
+.zsa-re .particle.speed-30 {animation-duration:0.30s;}
+.zsa-re .particle.speed-31 {animation-duration:0.31s;}
+.zsa-re .particle.speed-32 {animation-duration:0.32s;}
+.zsa-re .particle.speed-33 {animation-duration:0.33s;}
+.zsa-re .particle.speed-34 {animation-duration:0.34s;}
+.zsa-re .particle.speed-35 {animation-duration:0.35s;}
+.zsa-re .particle.speed-36 {animation-duration:0.36s;}
+.zsa-re .particle.speed-37 {animation-duration:0.37s;}
+.zsa-re .particle.speed-38 {animation-duration:0.38s;}
+.zsa-re .particle.speed-39 {animation-duration:0.39s;}
+.zsa-re .particle.speed-40 {animation-duration:0.40s;}
+.zsa-re .particle.speed-41 {animation-duration:0.41s;}
+.zsa-re .particle.speed-42 {animation-duration:0.42s;}
+.zsa-re .particle.speed-43 {animation-duration:0.43s;}
+.zsa-re .particle.speed-44 {animation-duration:0.44s;}
+.zsa-re .particle.speed-45 {animation-duration:0.45s;}
+.zsa-re .particle.speed-46 {animation-duration:0.46s;}
+.zsa-re .particle.speed-47 {animation-duration:0.47s;}
+.zsa-re .particle.speed-48 {animation-duration:0.48s;}
+.zsa-re .particle.speed-49 {animation-duration:0.49s;}
+.zsa-re .particle.speed-50 {animation-duration:0.50s;}
+.zsa-re .particle.speed-51 {animation-duration:0.51s;}
+.zsa-re .particle.speed-52 {animation-duration:0.52s;}
+.zsa-re .particle.speed-53 {animation-duration:0.53s;}
+.zsa-re .particle.speed-54 {animation-duration:0.54s;}
+.zsa-re .particle.speed-55 {animation-duration:0.55s;}
+.zsa-re .particle.speed-56 {animation-duration:0.56s;}
+.zsa-re .particle.speed-57 {animation-duration:0.57s;}
+.zsa-re .particle.speed-58 {animation-duration:0.58s;}
+.zsa-re .particle.speed-59 {animation-duration:0.59s;}
+.zsa-re .particle.speed-60 {animation-duration:0.60s;}
+.zsa-re .particle.speed-61 {animation-duration:0.61s;}
+.zsa-re .particle.speed-62 {animation-duration:0.62s;}
+.zsa-re .particle.speed-63 {animation-duration:0.63s;}
+.zsa-re .particle.speed-64 {animation-duration:0.64s;}
+.zsa-re .particle.speed-65 {animation-duration:0.65s;}
+.zsa-re .particle.speed-66 {animation-duration:0.66s;}
+.zsa-re .particle.speed-67 {animation-duration:0.67s;}
+.zsa-re .particle.speed-68 {animation-duration:0.68s;}
+.zsa-re .particle.speed-69 {animation-duration:0.69s;}
+.zsa-re .particle.speed-70 {animation-duration:0.70s;}
+.zsa-re .particle.speed-71 {animation-duration:0.71s;}
+.zsa-re .particle.speed-72 {animation-duration:0.72s;}
+.zsa-re .particle.speed-73 {animation-duration:0.73s;}
+.zsa-re .particle.speed-74 {animation-duration:0.74s;}
+.zsa-re .particle.speed-75 {animation-duration:0.75s;}
+.zsa-re .particle.speed-76 {animation-duration:0.76s;}
+.zsa-re .particle.speed-77 {animation-duration:0.77s;}
+.zsa-re .particle.speed-78 {animation-duration:0.78s;}
+.zsa-re .particle.speed-79 {animation-duration:0.79s;}
+.zsa-re .particle.speed-80 {animation-duration:0.80s;}
+.zsa-re .particle.speed-81 {animation-duration:0.81s;}
+.zsa-re .particle.speed-82 {animation-duration:0.82s;}
+.zsa-re .particle.speed-83 {animation-duration:0.83s;}
+.zsa-re .particle.speed-84 {animation-duration:0.84s;}
+.zsa-re .particle.speed-85 {animation-duration:0.85s;}
+.zsa-re .particle.speed-86 {animation-duration:0.86s;}
+.zsa-re .particle.speed-87 {animation-duration:0.87s;}
+.zsa-re .particle.speed-88 {animation-duration:0.88s;}
+.zsa-re .particle.speed-89 {animation-duration:0.89s;}
+.zsa-re .particle.speed-90 {animation-duration:0.90s;}
+.zsa-re .particle.speed-91 {animation-duration:0.91s;}
+.zsa-re .particle.speed-92 {animation-duration:0.92s;}
+.zsa-re .particle.speed-93 {animation-duration:0.93s;}
+.zsa-re .particle.speed-94 {animation-duration:0.94s;}
+.zsa-re .particle.speed-95 {animation-duration:0.95s;}
+.zsa-re .particle.speed-96 {animation-duration:0.96s;}
+.zsa-re .particle.speed-97 {animation-duration:0.97s;}
+.zsa-re .particle.speed-98 {animation-duration:0.98s;}
+.zsa-re .particle.speed-99 {animation-duration:0.99s;}
+.zsa-re .particle.speed-100 {animation-duration:1.00s;}
+.zsa-re .particle.speed-101 {animation-duration:1.01s;}
+.zsa-re .particle.speed-102 {animation-duration:1.02s;}
+.zsa-re .particle.speed-103 {animation-duration:1.03s;}
+.zsa-re .particle.speed-104 {animation-duration:1.04s;}
+.zsa-re .particle.speed-105 {animation-duration:1.05s;}
+.zsa-re .particle.speed-106 {animation-duration:1.06s;}
+.zsa-re .particle.speed-107 {animation-duration:1.07s;}
+.zsa-re .particle.speed-108 {animation-duration:1.08s;}
+.zsa-re .particle.speed-109 {animation-duration:1.09s;}
+.zsa-re .particle.speed-110 {animation-duration:1.10s;}
+.zsa-re .particle.speed-111 {animation-duration:1.11s;}
+.zsa-re .particle.speed-112 {animation-duration:1.12s;}
+.zsa-re .particle.speed-113 {animation-duration:1.13s;}
+.zsa-re .particle.speed-114 {animation-duration:1.14s;}
+.zsa-re .particle.speed-115 {animation-duration:1.15s;}
+.zsa-re .particle.speed-116 {animation-duration:1.16s;}
+.zsa-re .particle.speed-117 {animation-duration:1.17s;}
+.zsa-re .particle.speed-118 {animation-duration:1.18s;}
+.zsa-re .particle.speed-119 {animation-duration:1.19s;}
+.zsa-re .particle.speed-120 {animation-duration:1.20s;}
+.zsa-re .particle.speed-121 {animation-duration:1.21s;}
+.zsa-re .particle.speed-122 {animation-duration:1.22s;}
+.zsa-re .particle.speed-123 {animation-duration:1.23s;}
+.zsa-re .particle.speed-124 {animation-duration:1.24s;}
+.zsa-re .particle.speed-125 {animation-duration:1.25s;}
+.zsa-re .particle.speed-126 {animation-duration:1.26s;}
+.zsa-re .particle.speed-127 {animation-duration:1.27s;}
+.zsa-re .particle.speed-128 {animation-duration:1.28s;}
+.zsa-re .particle.speed-129 {animation-duration:1.29s;}
+.zsa-re .particle.speed-130 {animation-duration:1.30s;}
+
+/* Keep chart labels legible when a full curve scales down on a phone. */
+@media(max-width:780px) {.zsa-re svg text {font-size:28px;}}
