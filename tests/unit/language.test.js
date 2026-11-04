@@ -20,7 +20,12 @@ test("the plugin's PHP has no syntax errors", function () {
   ["a Spanish lesson: toggle, links, fallbacks, interface text, label, sidebar, lang and hreflang", []],
   ["an English lesson with a published Spanish twin", ["500"]],
   ["an English lesson without a Spanish twin", ["502"]],
-  ["the front page", ["7"]]
+  ["the front page", ["7"]],
+  ["a Lab Notes post with a Spanish page", ["900"]],
+  ["a Lab Notes post without a Spanish page", ["901"]],
+  ["the Spanish page of a Lab Notes post", ["7672"]],
+  ["the Lab Notes index", ["837"]],
+  ["the Spanish Lab Notes index", ["7667"]]
 ].forEach(function (c) {
   test(c[0], function () {
     var out = execFileSync("php", [SCRIPT].concat(c[1]), {encoding: "utf8"});
