@@ -28,6 +28,13 @@ $GLOBALS['zsl_pages'] = array(
 	4650 => array( 'es', 0, 'ZornScience en español' ), 4651 => array( 'science', 4650, 'Ciencias' ), 4652 => array( 'chemistry', 4651, 'Química' ),
 	4653 => array( 'unit-1-atomic-structure', 4652, 'Estructura atómica' ), 4654 => array( 'atomic-structure', 4653, 'Estructura del átomo' ),
 	4655 => array( 'ions', 4653, 'Iones' ),
+	837 => array( 'lab-notes', 0, 'Lab Notes' ), 7667 => array( 'lab-notes', 4650, 'Notas de laboratorio' ),
+	7672 => array( '100-miles-around-kane-county', 7667, '100 millas alrededor del condado de Kane' ),
+);
+// Blog posts (Lab Notes): id => [ slug, permalink path, title ]. The century ride has a Spanish page; the AVID visit does not.
+$GLOBALS['zsl_posts'] = array(
+	900 => array( '100-miles-around-kane-county', '2026/10/10/100-miles-around-kane-county', '100 Miles Around Kane County' ),
+	901 => array( 'avid-seniors-visit', '2026/10/19/avid-seniors-visit', 'AVID Seniors Visit' ),
 );
 // The page being viewed: a Spanish lesson by default, or an ID passed on the command line.
 $GLOBALS['zsl_current'] = isset( $argv[1] ) ? (int) $argv[1] : 4655;
@@ -39,12 +46,20 @@ function get_page_uri( $p ) {
 }
 function get_posts( $a ) {
 	$out = array();
+	if ( 'post' === $a['post_type'] ) {
+		foreach ( $GLOBALS['zsl_posts'] as $id => $p ) { $out[] = (object) array( 'ID' => $id, 'post_name' => $p[0], 'post_title' => $p[2] ); }
+		return $out;
+	}
 	foreach ( $GLOBALS['zsl_pages'] as $id => $p ) { $out[] = (object) array( 'ID' => $id, 'post_title' => $p[2], 'post_parent' => $p[1] ); }
 	return $out;
 }
-function get_option( $k ) { return 'page_on_front' === $k ? 7 : false; }
+function get_permalink( $p ) { $id = is_object( $p ) ? $p->ID : $p; return 'https://zornscience.org/' . $GLOBALS['zsl_posts'][ $id ][1] . '/'; }
+function get_option( $k ) { return array( 'page_on_front' => 7, 'page_for_posts' => 837 )[ $k ] ?? false; }
 function is_front_page() { return 7 === $GLOBALS['zsl_current']; }
-function is_page() { return true; }
+function is_home() { return 837 === $GLOBALS['zsl_current']; }
+function is_page() { return isset( $GLOBALS['zsl_pages'][ $GLOBALS['zsl_current'] ] ) && ! is_home(); }
+function is_singular( $t = '' ) { return isset( $GLOBALS['zsl_posts'][ $GLOBALS['zsl_current'] ] ); }
+function get_queried_object() { $id = $GLOBALS['zsl_current']; return isset( $GLOBALS['zsl_posts'][ $id ] ) ? (object) array( 'ID' => $id, 'post_name' => $GLOBALS['zsl_posts'][ $id ][0] ) : null; }
 function get_queried_object_id() { return $GLOBALS['zsl_current']; }
 function wp_cache_get_last_changed( $g ) { return '1'; }
 function get_transient( $k ) { return false; }
@@ -88,6 +103,47 @@ check( null === zs_lang_localize_href( '#examples', $map, 'zornscience.org', $ho
 check( null === zs_lang_localize_href( 'mailto:a@b.c', $map, 'zornscience.org', $home ), 'mailto left alone' );
 $r = zs_lang_localize_href( '/', $map, 'zornscience.org', $home );
 check( $r && '/es/' === $r[0], 'home link goes to /es/' );
+
+// Lab Notes: posts pair with Spanish pages under es/lab-notes/<slug>.
+$twins = zs_lang_post_twins( $map, zs_lang_post_map(), zs_lang_blog_path() );
+check( array( '2026/10/10/100-miles-around-kane-county' => 'es/lab-notes/100-miles-around-kane-county' ) === $twins, 'only the post with a Spanish page has a twin' );
+$r = zs_lang_localize_href( 'https://zornscience.org/2026/10/10/100-miles-around-kane-county/', $map, 'zornscience.org', $home, $twins );
+check( $r && 'https://zornscience.org/es/lab-notes/100-miles-around-kane-county/' === $r[0] && 'es' === $r[3], 'link to a translated post goes to its Spanish page' );
+check( null === zs_lang_localize_href( '/2026/10/19/avid-seniors-visit/', $map, 'zornscience.org', $home, $twins ), 'link to an untranslated post stays' );
+$r = zs_lang_localize_href( '/lab-notes/', $map, 'zornscience.org', $home, $twins );
+check( $r && '/es/lab-notes/' === $r[0], 'Lab Notes index link goes to Notas de laboratorio' );
+
+$header0 = '<div class="wp-block-group zs-header-tools"><nav class="wp-block-navigation zs-mobile-menu">M</nav></div>';
+$block0  = array( 'blockName' => 'core/group', 'attrs' => array( 'className' => 'zs-header-tools' ) );
+$blogs   = array(
+	900  => array( 'en' => 'https://zornscience.org/2026/10/10/100-miles-around-kane-county/', 'es' => 'https://zornscience.org/es/lab-notes/100-miles-around-kane-county/', 'is_es' => false ),
+	7672 => array( 'en' => 'https://zornscience.org/2026/10/10/100-miles-around-kane-county/', 'es' => 'https://zornscience.org/es/lab-notes/100-miles-around-kane-county/', 'is_es' => true ),
+	837  => array( 'en' => 'https://zornscience.org/lab-notes/', 'es' => 'https://zornscience.org/es/lab-notes/', 'is_es' => false ),
+	7667 => array( 'en' => 'https://zornscience.org/lab-notes/', 'es' => 'https://zornscience.org/es/lab-notes/', 'is_es' => true ),
+);
+if ( isset( $blogs[ $GLOBALS['zsl_current'] ] ) ) {
+	$want = $blogs[ $GLOBALS['zsl_current'] ];
+	check( $want === zs_lang_pair(), 'Lab Notes view pairs English and Spanish' );
+	ob_start();
+	zsl_do( 'wp_head' );
+	$head = ob_get_clean();
+	foreach ( array( 'en-US' => 'en', 'en' => 'en', 'es-MX' => 'es', 'es' => 'es', 'x-default' => 'en' ) as $code => $lang ) {
+		check( false !== strpos( $head, 'hreflang="' . $code . '" href="' . $want[ $lang ] . '"' ), "hreflang $code on Lab Notes view" );
+	}
+	$out = zsl_apply( 'render_block', $header0, $block0 );
+	check( false !== strpos( $out, 'class="zs-lang-toggle" href="' . ( $want['is_es'] ? $want['en'] : $want['es'] ) . '"' ), 'toggle links to the other language' );
+	echo "OK $checks\n";
+	exit( 0 );
+}
+if ( 901 === $GLOBALS['zsl_current'] ) {
+	check( array( 'en' => 'https://zornscience.org/2026/10/19/avid-seniors-visit/', 'es' => null, 'is_es' => false ) === zs_lang_pair(), 'untranslated post has no Spanish URL' );
+	ob_start();
+	zsl_do( 'wp_head' );
+	check( false === strpos( ob_get_clean(), 'hreflang' ), 'no hreflang on an untranslated post' );
+	check( $header0 === zsl_apply( 'render_block', $header0, $block0 ), 'no toggle on an untranslated post' );
+	echo "OK $checks\n";
+	exit( 0 );
+}
 
 // English pages and the front page (run with an ID): a toggle only when the Spanish twin is published.
 $header = '<div class="wp-block-group zs-header-tools"><nav class="zs-desktop-menu">D</nav><nav class="wp-block-navigation zs-mobile-menu">M</nav></div>';
@@ -141,6 +197,8 @@ zsl_do( 'wp_head' );
 $head = ob_get_clean();
 check( false !== strpos( $head, 'hreflang="es-MX" href="https://zornscience.org/es/science/chemistry/unit-1-atomic-structure/ions/"' ), 'hreflang es-MX' );
 check( false !== strpos( $head, 'hreflang="x-default" href="https://zornscience.org/science/chemistry/unit-1-atomic-structure/ions/"' ), 'hreflang x-default is English' );
+check( false !== strpos( $head, 'hreflang="es" href="https://zornscience.org/es/science/chemistry/unit-1-atomic-structure/ions/"' ) && false !== strpos( $head, 'hreflang="en" href="https://zornscience.org/science/chemistry/unit-1-atomic-structure/ions/"' ), 'general es and en hreflang too' );
+check( 'es_MX' === zsl_apply( 'jetpack_open_graph_tags', array( 'og:locale' => 'en_US' ) )['og:locale'], 'Open Graph locale is es_MX' );
 
 // Whole page processing.
 $page = '<html><head><style>.a>.b{x}</style><script>var s="<a href=\'/science/\'>Science</a>";</script></head><body>'

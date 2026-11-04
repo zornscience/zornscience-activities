@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: ZornScience Language
- * Description: Connects the Spanish pages under /es/ to their English twins: a language toggle in the header, Spanish menus, sidebars and labels on Spanish pages, links that fall back to English until a Spanish page is published, and hreflang tags for search engines.
- * Version: 1.2.0
+ * Description: Connects the Spanish pages under /es/ to their English twins (including Lab Notes posts and their Spanish pages under /es/lab-notes/): a language toggle in the header, Spanish menus, sidebars and labels on Spanish pages, links that fall back to English until a Spanish page is published, and hreflang tags for search engines.
+ * Version: 1.3.0
  * Author: Nick Zorn
  * License: GPL-2.0-or-later
  * Requires at least: 6.4
@@ -13,7 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZS_LANG_VERSION', '1.2.0' );
+define( 'ZS_LANG_VERSION', '1.3.0' );
+define( 'ZS_LANG_BLOG_PATH', 'lab-notes' );
 define( 'ZS_LANG_ES_ROOT', 'es' );
 define( 'ZS_LANG_CONTENT_START', '<!--zs-lang-content-start-->' );
 define( 'ZS_LANG_CONTENT_END', '<!--zs-lang-content-end-->' );
@@ -118,6 +119,51 @@ function zs_lang_map() {
 }
 
 /* -------------------------------------------------------------------------
+ * Post map: every published blog post (Lab Notes), keyed by its slug.
+ * Spanish versions of posts are pages at es/<blog path>/<post slug>/.
+ * ---------------------------------------------------------------------- */
+function zs_lang_post_map() {
+	static $posts = null;
+	if ( null !== $posts ) {
+		return $posts;
+	}
+	$key    = 'zs_lang_posts_' . md5( wp_cache_get_last_changed( 'posts' ) );
+	$cached = get_transient( $key );
+	if ( is_array( $cached ) ) {
+		$posts = $cached;
+		return $posts;
+	}
+	$posts = array();
+	$items = get_posts(
+		array(
+			'post_type'              => 'post',
+			'post_status'            => 'publish',
+			'numberposts'            => -1,
+			'orderby'                => 'ID',
+			'order'                  => 'ASC',
+			'no_found_rows'          => true,
+			'update_post_term_cache' => false,
+			'update_post_meta_cache' => false,
+		)
+	);
+	foreach ( $items as $item ) {
+		$posts[ (string) $item->post_name ] = array(
+			'id'    => (int) $item->ID,
+			'path'  => trim( (string) wp_parse_url( get_permalink( $item ), PHP_URL_PATH ), '/' ),
+			'title' => (string) $item->post_title,
+		);
+	}
+	set_transient( $key, $posts, DAY_IN_SECONDS );
+	return $posts;
+}
+
+/* Path of the blog index page (the "posts page"), or lab-notes if none is set. */
+function zs_lang_blog_path() {
+	$id = (int) get_option( 'page_for_posts' );
+	return $id ? trim( (string) get_page_uri( $id ), '/' ) : ZS_LANG_BLOG_PATH;
+}
+
+/* -------------------------------------------------------------------------
  * Pure helpers (no WordPress state beyond the map passed in).
  * ---------------------------------------------------------------------- */
 function zs_lang_is_es_path( $path ) {
@@ -129,6 +175,37 @@ function zs_lang_twin_path( $path ) {
 		return ltrim( substr( $path, strlen( ZS_LANG_ES_ROOT ) ), '/' );
 	}
 	return '' === $path ? ZS_LANG_ES_ROOT : ZS_LANG_ES_ROOT . '/' . $path;
+}
+
+/**
+ * English post path => Spanish page path, for posts whose Spanish page is published.
+ *
+ * @param array  $map   Page map (path => info).
+ * @param array  $posts Post map (slug => info).
+ * @param string $blog  Blog index path, for example lab-notes.
+ */
+function zs_lang_post_twins( $map, $posts, $blog ) {
+	$twins = array();
+	foreach ( $posts as $slug => $post ) {
+		$es = ZS_LANG_ES_ROOT . '/' . $blog . '/' . $slug;
+		if ( '' !== $post['path'] && isset( $map[ $es ] ) ) {
+			$twins[ $post['path'] ] = $es;
+		}
+	}
+	return $twins;
+}
+
+/* For a Spanish page path like es/lab-notes/<slug>, the English post it translates, or null. */
+function zs_lang_post_for_es_path( $path, $posts, $blog ) {
+	$prefix = ZS_LANG_ES_ROOT . '/' . $blog . '/';
+	if ( 0 !== strpos( $path, $prefix ) ) {
+		return null;
+	}
+	$slug = substr( $path, strlen( $prefix ) );
+	if ( '' === $slug || false !== strpos( $slug, '/' ) || ! isset( $posts[ $slug ] ) ) {
+		return null;
+	}
+	return $posts[ $slug ];
 }
 
 function zs_lang_norm( $text ) {
@@ -147,7 +224,7 @@ function zs_lang_norm( $text ) {
  * @param string $home      Home URL with trailing slash.
  * @return array|null [ new_href, from_path, to_path, direction ] or null to leave alone.
  */
-function zs_lang_localize_href( $href, $map, $site_host, $home ) {
+function zs_lang_localize_href( $href, $map, $site_host, $home, $post_twins = array() ) {
 	$raw = html_entity_decode( $href, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
 	if ( '' === $raw || '#' === $raw[0] || preg_match( '#^(mailto|tel|javascript|data):#i', $raw ) || 0 === strpos( $raw, '//' ) ) {
 		return null;
@@ -169,13 +246,14 @@ function zs_lang_localize_href( $href, $map, $site_host, $home ) {
 	if ( preg_match( '#^(wp-content|wp-admin|wp-includes|wp-json|wp-login\.php|feed)(/|$)#', $path ) ) {
 		return null;
 	}
-	if ( ! array_key_exists( $path, $map ) && ! array_key_exists( zs_lang_twin_path( $path ), $map ) ) {
-		return null;
-	}
-
 	$target    = null;
 	$direction = null;
-	if ( zs_lang_is_es_path( $path ) ) {
+	if ( isset( $post_twins[ $path ] ) ) {
+		$target    = $post_twins[ $path ];
+		$direction = 'es';
+	} elseif ( ! array_key_exists( $path, $map ) && ! array_key_exists( zs_lang_twin_path( $path ), $map ) ) {
+		return null;
+	} elseif ( zs_lang_is_es_path( $path ) ) {
 		if ( ! isset( $map[ $path ] ) && isset( $map[ zs_lang_twin_path( $path ) ] ) ) {
 			$target    = zs_lang_twin_path( $path );
 			$direction = 'fallback';
@@ -221,10 +299,10 @@ function zs_lang_swap_text_nodes( $html, $from, $to_escaped ) {
 }
 
 /* Rewrite every link in an HTML fragment for a Spanish page. */
-function zs_lang_rewrite_links( $html, $map, $site_host, $home ) {
+function zs_lang_rewrite_links( $html, $map, $site_host, $home, $post_twins = array() ) {
 	return preg_replace_callback(
 		'#<a\b([^>]*)>(.*?)</a>#is',
-		function ( $m ) use ( $map, $site_host, $home ) {
+		function ( $m ) use ( $map, $site_host, $home, $post_twins ) {
 			$attrs = $m[1];
 			$inner = $m[2];
 			if ( false !== strpos( $attrs, 'zs-lang-toggle' ) ) {
@@ -233,7 +311,7 @@ function zs_lang_rewrite_links( $html, $map, $site_host, $home ) {
 			if ( ! preg_match( '/\shref\s*=\s*(["\'])(.*?)\1/is', $attrs, $hm ) ) {
 				return $m[0];
 			}
-			$result = zs_lang_localize_href( $hm[2], $map, $site_host, $home );
+			$result = zs_lang_localize_href( $hm[2], $map, $site_host, $home, $post_twins );
 			if ( null === $result ) {
 				return $m[0];
 			}
@@ -329,7 +407,7 @@ function zs_lang_process_page( $html, $args ) {
 		$out .= zs_lang_process_safe_segments(
 			$text,
 			function ( $segment ) use ( $is_chrome, $map, $site_host, $home, $args ) {
-				$segment = zs_lang_rewrite_links( $segment, $map, $site_host, $home );
+				$segment = zs_lang_rewrite_links( $segment, $map, $site_host, $home, isset( $args['post_twins'] ) ? $args['post_twins'] : array() );
 				if ( $is_chrome ) {
 					$segment = zs_lang_fix_label( $segment, $args['unit_title'] );
 					$segment = zs_lang_translate_ui( $segment );
@@ -369,10 +447,48 @@ function zs_lang_current_path() {
 	$path = null;
 	if ( is_front_page() && get_option( 'page_on_front' ) ) {
 		$path = '';
+	} elseif ( is_home() && get_option( 'page_for_posts' ) ) {
+		$path = trim( (string) get_page_uri( (int) get_option( 'page_for_posts' ) ), '/' );
 	} elseif ( is_page() ) {
 		$path = trim( (string) get_page_uri( get_queried_object_id() ), '/' );
 	}
 	return $path;
+}
+
+/**
+ * The English and Spanish URLs of what is being viewed.
+ * Returns null when this kind of view has no language pairing, otherwise
+ * array( 'en' => url|null, 'es' => url|null, 'is_es' => bool ).
+ */
+function zs_lang_pair() {
+	$path = zs_lang_current_path();
+	if ( null !== $path ) {
+		$map  = zs_lang_map();
+		$twin = zs_lang_twin_path( $path );
+		if ( zs_lang_is_es_path( $path ) ) {
+			$en = isset( $map[ $twin ] ) ? zs_lang_url( $twin ) : null;
+			if ( null === $en ) {
+				$post = zs_lang_post_for_es_path( $path, zs_lang_post_map(), zs_lang_blog_path() );
+				$en   = $post ? zs_lang_url( $post['path'] ) : null;
+			}
+			return array( 'en' => $en, 'es' => zs_lang_url( $path ), 'is_es' => true );
+		}
+		return array( 'en' => zs_lang_url( $path ), 'es' => isset( $map[ $twin ] ) ? zs_lang_url( $twin ) : null, 'is_es' => false );
+	}
+	if ( is_singular( 'post' ) ) {
+		$post = get_queried_object();
+		if ( ! $post || empty( $post->post_name ) ) {
+			return null;
+		}
+		$es = ZS_LANG_ES_ROOT . '/' . zs_lang_blog_path() . '/' . $post->post_name;
+		$map = zs_lang_map();
+		return array(
+			'en'    => (string) get_permalink( $post ),
+			'es'    => isset( $map[ $es ] ) ? zs_lang_url( $es ) : null,
+			'is_es' => false,
+		);
+	}
+	return null;
 }
 
 function zs_lang_is_spanish_page() {
@@ -414,18 +530,13 @@ add_filter(
 add_action(
 	'wp_head',
 	function () {
-		$path = zs_lang_current_path();
-		if ( null === $path ) {
-			return;
-		}
-		$map  = zs_lang_map();
-		$twin = zs_lang_twin_path( $path );
-		if ( isset( $map[ $path ], $map[ $twin ] ) ) {
-			$en = zs_lang_is_es_path( $path ) ? $twin : $path;
-			$es = zs_lang_is_es_path( $path ) ? $path : $twin;
-			printf( "<link rel=\"alternate\" hreflang=\"en-US\" href=\"%s\" />\n", esc_url( zs_lang_url( $en ) ) );
-			printf( "<link rel=\"alternate\" hreflang=\"es-MX\" href=\"%s\" />\n", esc_url( zs_lang_url( $es ) ) );
-			printf( "<link rel=\"alternate\" hreflang=\"x-default\" href=\"%s\" />\n", esc_url( zs_lang_url( $en ) ) );
+		$pair = zs_lang_pair();
+		if ( $pair && $pair['en'] && $pair['es'] ) {
+			// Regional and general codes both point at the same page, so Spanish
+			// speakers in the US (es-US) and elsewhere are matched, not just Mexico.
+			foreach ( array( 'en-US' => 'en', 'en' => 'en', 'es-MX' => 'es', 'es' => 'es', 'x-default' => 'en' ) as $code => $lang ) {
+				printf( "<link rel=\"alternate\" hreflang=\"%s\" href=\"%s\" />\n", $code, esc_url( $pair[ $lang ] ) );
+			}
 		}
 		?>
 <style id="zs-lang-style">
@@ -460,26 +571,24 @@ function zs_lang_flag_svg( $lang ) {
 }
 
 function zs_lang_toggle_html() {
-	$path = zs_lang_current_path();
-	if ( null === $path ) {
+	$pair = zs_lang_pair();
+	if ( null === $pair ) {
 		return '';
 	}
-	$map  = zs_lang_map();
-	$twin = zs_lang_twin_path( $path );
-	if ( zs_lang_is_es_path( $path ) ) {
-		$href = isset( $map[ $twin ] ) ? zs_lang_url( $twin ) : home_url( '/' );
+	if ( $pair['is_es'] ) {
+		$href = $pair['en'] ? $pair['en'] : home_url( '/' );
 		return sprintf(
 			'<a class="zs-lang-toggle" href="%s" hreflang="en-US" lang="en" aria-label="View this page in English">%s<span class="zs-lang-long">English</span><span class="zs-lang-short">EN</span></a>',
 			esc_url( $href ),
 			zs_lang_flag_svg( 'en' )
 		);
 	}
-	if ( ! isset( $map[ $twin ] ) ) {
+	if ( ! $pair['es'] ) {
 		return '';
 	}
 	return sprintf(
 		'<a class="zs-lang-toggle" href="%s" hreflang="es-MX" lang="es" aria-label="Ver esta página en español">%s<span class="zs-lang-long">Español</span><span class="zs-lang-short">ES</span></a>',
-		esc_url( zs_lang_url( $twin ) ),
+		esc_url( $pair['es'] ),
 		zs_lang_flag_svg( 'es' )
 	);
 }
@@ -490,23 +599,13 @@ function zs_lang_toggle_html() {
  * whose Spanish twin is not published yet, same as the header toggle.
  */
 function zs_lang_switch_html() {
-	$path = zs_lang_current_path();
-	if ( null === $path ) {
+	$pair = zs_lang_pair();
+	if ( null === $pair || ( ! $pair['is_es'] && ! $pair['es'] ) ) {
 		return '';
 	}
-	$map   = zs_lang_map();
-	$twin  = zs_lang_twin_path( $path );
-	$is_es = zs_lang_is_es_path( $path );
-	if ( $is_es ) {
-		$en_href = isset( $map[ $twin ] ) ? zs_lang_url( $twin ) : home_url( '/' );
-		$es_href = zs_lang_url( $path );
-	} else {
-		if ( ! isset( $map[ $twin ] ) ) {
-			return '';
-		}
-		$en_href = zs_lang_url( $path );
-		$es_href = zs_lang_url( $twin );
-	}
+	$is_es   = $pair['is_es'];
+	$en_href = $pair['en'] ? $pair['en'] : home_url( '/' );
+	$es_href = $pair['es'];
 	$option = function ( $lang, $hreflang, $href, $label, $current ) {
 		return sprintf(
 			'<a class="zs-lang-toggle-opt%s" href="%s" hreflang="%s" lang="%s"%s>%s<span>%s</span></a>',
@@ -583,6 +682,7 @@ add_action(
 			'home'        => trailingslashit( home_url() ),
 			'current_url' => zs_lang_url( $path ),
 			'unit_title'  => $unit_title,
+			'post_twins'  => zs_lang_post_twins( $map, zs_lang_post_map(), zs_lang_blog_path() ),
 		);
 		ob_start(
 			function ( $html ) use ( $args ) {
@@ -599,4 +699,16 @@ add_action(
 		);
 	},
 	99
+);
+
+/* Open Graph locale for shared links (Jetpack). */
+add_filter(
+	'jetpack_open_graph_tags',
+	function ( $tags ) {
+		if ( zs_lang_is_spanish_page() ) {
+			$tags['og:locale']           = 'es_MX';
+			$tags['og:locale:alternate'] = 'en_US';
+		}
+		return $tags;
+	}
 );
