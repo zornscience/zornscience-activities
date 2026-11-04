@@ -1,6 +1,6 @@
 # Reaction Energy Lab
 
-Version: 1.0.0
+Version: 1.0.1
 
 ZornScience, CC BY-NC-SA 4.0. Open `index.html` through a static server. No build step or runtime dependencies. All assets, including Inter, are local. The activity makes no API or tracking requests and uses no accounts, cookies, or browser storage. CSV and clipboard actions run only when requested.
 
@@ -40,7 +40,7 @@ All parameters combine. Unknown modes and identifiers, nonfinite numbers, and va
 | mass | Heating sample, 1.0 to 100.0 g; default 15.0 |
 | start, end | Heating temperatures, −20 to 120 °C; defaults −20 and 120 |
 | startPhase, endPhase | auto (default), ice, liquid, steam. Incompatible phases reset to auto. |
-| course | chem uses kJ, PE diagram, J/g phase heats and Chemistry formation wording. Default AP uses kJ/molrxn and molar phase heats. |
+| course | chem uses kJ, PE diagram, J/g phase heats and Chemistry formation wording. Default AP uses kJ/mol<sub>rxn</sub> and molar phase heats. |
 | lang | es selects Mexican Spanish; default English |
 | from | Safe lesson URL. The back link follows the selected language, preserving query and fragment. |
 | embed | 1 uses the shared embedded layout and hides site chrome |
@@ -71,9 +71,15 @@ Prefix every query with `/reaction-energy-lab/?`.
 | Ice warming example | mode=heating&mass=15&start=-10&end=40&course=chem |
 | Spanish catalyst example | mode=diagram&r=50&p=20&peak=110&catalyst=1&course=chem&lang=es |
 
+## Student answers
+
+Bond and formation Data tables mirror student entries and clear when the reaction changes. Bond Check gives row feedback; Show answer becomes available after an incorrect Check. Process results, energy direction and thermometer changes appear only after a prediction and the process has finished. Switching reactions or modes clears the prediction.
+
+The complete 1.00 g water curve is a graph-only reading challenge. Phase names and endpoint temperatures in the sample Data table appear after Check. Segment calculator results all use J, with the Data table also showing kJ. Numerical constants and course conventions are unchanged.
+
 ## Model and rounding notes
 
-Calculations retain unrounded values. Most readouts use 3 significant figures. Ammonia stoichiometry uses 2 significant figures because its supplied ΔH is −92 kJ/molrxn. Formation constants and Hess step energies preserve their supplied decimal places. Tables exported as CSV retain unrounded numeric results where a calculated result is present. Scientific notation uses multiplication and superscripts in the interface. ASCII signs and notation remain accepted in answer fields, alongside real minus signs and superscript exponents.
+Calculations retain unrounded values. Most readouts use 3 significant figures. Ammonia stoichiometry uses 2 significant figures because its supplied ΔH is −92 kJ/mol<sub>rxn</sub>. Formation constants and Hess step energies preserve their supplied decimal places. Tables exported as CSV retain unrounded numeric results where a calculated result is present. Scientific notation uses multiplication and superscripts in the interface. ASCII signs and notation remain accepted in answer fields, alongside real minus signs and superscript exponents.
 
 The supplied water equivalences are rounded independently: 6.01 kJ/mol / 18.02 g/mol is 333.5183 J/g, rather than 334 J/g; 40.7 kJ/mol / 18.02 g/mol is 2258.6016 J/g, rather than 2260 J/g. AP uses the supplied molar values; Chemistry uses the supplied per-gram values. The steam heat capacity, 2.01 J/(g·°C), is identified as absent from the lessons.
 
@@ -91,4 +97,4 @@ The catalyst peak is an illustrative lower barrier, 45% of the excess above the 
 
 ## Vocabulary
 
-All activity vocabulary additions are listed in the Reaction Energy Lab 1.0.0 section of `../SPANISH_TERMS.md`. Required lesson terms follow Style Kit 1.6, sections 1, 4, 5, 6 and 7. No shared or WordPress files are changed.
+All activity vocabulary additions are listed in the Reaction Energy Lab sections of `../SPANISH_TERMS.md`. Required lesson terms follow Style Kit 1.6, sections 1, 4, 5, 6 and 7. No shared or WordPress files are changed.

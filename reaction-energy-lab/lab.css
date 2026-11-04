@@ -157,3 +157,6 @@
 
 /* Keep chart labels legible when a full curve scales down on a phone. */
 @media(max-width:780px) {.zsa-re svg text {font-size:28px;}}
+
+.zsa-re-structures {display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.zsa-re-structures pre {margin:0;white-space:pre;max-width:100%;font-size:16px;}

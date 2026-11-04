@@ -14,8 +14,8 @@ test('diagram values, catalyst, read and sketch misconceptions',async({page})=>{
   await page.locator('#r').fill('280');await page.locator('#r').press('Tab');await expect(page.locator('#peak')).toHaveValue('280');
 });
 test('system, surroundings and every listed process',async({page})=>{
-  await page.goto(base+'?mode=process&rxn=koh');await page.locator('#start-process').click();await expect(page.locator('#panel-process')).toContainText('exothermic');await expect(page.locator('#panel-process')).toContainText('21.0 °C → 34.5 °C');
-  for(const [id,type] of [['coldpack','endothermic'],['condensation','exothermic'],['frost','endothermic'],['ch4','exothermic']]){await page.locator('#reaction').selectOption(id);await page.locator('#start-process').click();await expect(page.locator('#panel-process .zsa-re-result')).toHaveText(type);}
+  await page.goto(base+'?mode=process&rxn=koh');await page.locator('#process-prediction').selectOption('exothermic');await page.locator('#start-process').click();await expect(page.locator('#panel-process')).toContainText('exothermic');await expect(page.locator('#panel-process')).toContainText('21.0 °C → 34.5 °C');await expect(page.locator('#panel-process')).toContainText('Your prediction matched.');
+  for(const [id,type] of [['coldpack','endothermic'],['condensation','exothermic'],['frost','endothermic'],['ch4','exothermic']]){await page.locator('#reaction').selectOption(id);await page.locator('#process-prediction').selectOption('exothermic');await page.locator('#start-process').click();await expect(page.locator('#panel-process .zsa-re-result')).toHaveText(type);}
 });
 test('heating lesson example, plateau controls, particles, negative cooling and challenge',async({page})=>{
   await page.goto(base+'?mode=heating&mass=15&start=-10&end=40&course=chem');await expect(page.locator('#heat-total')).toHaveText('Total q = 7.83 kJ');await expect(page.locator('#data-table')).toContainText('5.01');await page.locator('#heat-progress').fill('20');await page.locator('#heat-progress').press('Tab');await expect(page.locator('#particle-text')).toContainText('Segment B');await expect(page.locator('#particle-text')).toContainText('KE stays constant');
@@ -25,7 +25,7 @@ test('heating lesson example, plateau controls, particles, negative cooling and 
 });
 test('stoichiometry flags omitted coefficient and bond tallies flag three NH bonds',async({page})=>{
   await page.goto(base+'?mode=stoich&rxn=h2');await expect(page.locator('#panel-stoich')).toContainText('−1.42 × 10³ kJ');await page.locator('#stoich-answer').fill('-2.84 × 10³');await page.locator('#check-stoich').click();await expect(page.locator('#stoich-feedback')).toContainText('coefficient');await page.locator('#stoich-answer').fill('−1.42 × 10³');await page.locator('#check-stoich').click();await expect(page.locator('#stoich-feedback')).toHaveText('Correct.');
-  await page.goto(base+'?mode=bonds&rxn=nh3');await page.locator('#broken-0').fill('1');await page.locator('#broken-1').fill('3');await page.locator('#formed-2').fill('3');await page.locator('#check-bonds').click();await expect(page.locator('#bonds-feedback')).toContainText('6 N-H');await page.locator('#formed-2').fill('6');await page.locator('#check-bonds').click();await expect(page.locator('#bonds-feedback')).toHaveText('Correct.');await expect(page.locator('#data-table')).toContainText('−97');
+  await page.goto(base+'?mode=bonds&rxn=nh3');await page.locator('#broken-0').fill('1');await page.locator('#broken-1').fill('3');await page.locator('#formed-2').fill('3');await page.locator('#check-bonds').click();await expect(page.locator('#bonds-feedback')).toContainText('6 N-H');await page.locator('#formed-2').fill('6');await page.locator('#check-bonds').click();await expect(page.locator('#bonds-feedback')).toHaveText('Correct.');await expect(page.locator('#panel-bonds .zsa-re-result')).toContainText('−97');await expect(page.locator('#data-table tbody tr').nth(2).locator('td').nth(1)).toHaveText('6');await expect(page.locator('#panel-bonds .zsa-re-result sub')).toHaveText('rxn');
   await page.goto(base+'?mode=stoich&course=chem');await expect(page.locator('#panel-stoich')).not.toContainText('kJ/molrxn');
 });
 test('formation coefficient sums, water states and unknown ethanol',async({page})=>{
@@ -50,8 +50,77 @@ for(const lang of ['en','es'])test(lang+' all modes, offline behavior, accessibi
   await page.goto(base+'?lang='+lang);await page.evaluate(()=>document.fonts.ready);await context.setOffline(true);await page.locator('#tab-diagram').focus();await page.keyboard.press('ArrowRight');await expect(page.locator('#tab-process')).toBeFocused();await page.keyboard.press('End');await expect(page.locator('#tab-hess')).toBeFocused();
   await page.evaluate(fs.readFileSync(require.resolve('axe-core/axe.min.js'),'utf8'));
   for(const width of [1366,360]){await page.setViewportSize({width,height:900});for(const mode of modes){await page.locator('#tab-'+mode).click();if(lang==='es'&&mode==='diagram'){await expect(page.locator('#panel-diagram')).toContainText('PEproductos');await expect(page.locator('#panel-diagram')).not.toContainText('EPproductos');}expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBeTruthy();const violations=await page.evaluate(async()=>{const r=await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}});return r.violations.map(x=>({id:x.id,nodes:x.nodes.map(n=>n.target)}));});expect(violations).toEqual([]);
-    if(width===1366){if(mode==='process')await page.locator('#start-process').click();if(mode==='heating'){await page.locator('#heat-progress').fill('35');await page.locator('#heat-progress').press('Tab');}const dir=process.env.ZSA_RE_SCREENSHOTS||'test-results/reaction-energy-screenshots';fs.mkdirSync(dir,{recursive:true});await page.screenshot({path:path.join(dir,mode+'-'+lang+'.png'),fullPage:true});}
+    if(width===1366){if(mode==='process'){await page.locator('#process-prediction').selectOption('exothermic');await page.locator('#start-process').click();await expect(page.locator('#panel-process .zsa-re-result')).toHaveText(lang==='es'?'exotérmico':'exothermic');}if(mode==='heating'){await page.locator('#heat-progress').fill('35');await page.locator('#heat-progress').press('Tab');}const dir=process.env.ZSA_RE_SCREENSHOTS||'test-results/reaction-energy-screenshots';fs.mkdirSync(dir,{recursive:true});await page.screenshot({path:path.join(dir,mode+'-'+lang+'.png'),fullPage:true});}
   }}
   expect(errors).toEqual([]);expect(external).toEqual([]);expect(await page.evaluate(()=>window.cspErrors)).toEqual([]);expect(await page.locator('main').innerText()).not.toContain('\u2014');
   if(lang==='es'){await expect(page.locator('html')).toHaveAttribute('lang','es-MX');await expect(page.locator('#tab-heating')).toHaveText('Curva de calentamiento');await expect(page.locator('#panel-hess')).not.toContainText('Running sum');}
+});
+
+const M=require('../../reaction-energy-lab/chem.js');
+for(const lang of ['en','es']){
+  test(lang+' fresh bond, process and formation presets withhold answers and mirror entries',async({page})=>{
+    for(const [id,rxn] of Object.entries(M.BOND_RXNS)){
+      await page.goto(base+'?mode=bonds&rxn='+id+'&lang='+lang);
+      const cells=page.locator('#data-table tbody td');await expect(cells).toHaveText(Array(Object.keys({...rxn.broken,...rxn.formed}).length*2).fill('0'));
+      await expect(page.locator('#show-bond-answer')).toBeHidden();await expect(page.locator('#bonds-feedback')).toBeEmpty();
+      await page.locator('#broken-0').fill('9');await expect(cells.first()).toHaveText('9');
+      await page.locator('#check-bonds').click();await expect(page.locator('#show-bond-answer')).toBeVisible();
+      await expect(page.locator('#panel-bonds')).toContainText(lang==='es'?'Fila incorrecta.':'Row incorrect.');
+      await page.locator('#show-bond-answer').click();await expect(page.locator('#panel-bonds table').last().locator('tbody tr').first().locator('td').first()).toHaveText(String(Object.values(rxn.broken)[0]));
+      await expect(cells.first()).toHaveText('9');
+      await page.locator('#reaction').selectOption(id==='hcl'?'ch4':'hcl');await expect(page.locator('#show-bond-answer')).toBeHidden();
+    }
+    for(const [id,process] of Object.entries(M.PROCESSES)){
+      await page.goto(base+'?mode=process&rxn='+id+'&lang='+lang);
+      await expect(page.locator('#start-process')).toBeDisabled();await expect(page.locator('#data-table tbody td')).toHaveText([lang==='es'?'todavía no':'not yet',lang==='es'?'todavía no':'not yet']);
+      await expect(page.locator('#panel-process .zsa-re-result')).toHaveText(lang==='es'?'Antes del proceso':'Before the process');
+      await expect(page.locator('#panel-process')).not.toContainText('34.5');await expect(page.locator('#panel-process')).not.toContainText('−890');
+      const initial=await page.locator('#panel-process svg').innerHTML();
+      await page.locator('#process-prediction').selectOption(process.type==='exothermic'?'endothermic':'exothermic');await page.locator('#start-process').click();
+      await expect(page.locator('#panel-process .zsa-re-result')).toHaveText(lang==='es'?'Proceso en curso':'Process running');await expect(page.locator('#data-table tbody td').first()).toHaveText(lang==='es'?'todavía no':'not yet');
+      await expect(page.locator('#panel-process')).toContainText(lang==='es'?'Tu predicción no coincidió.':'Your prediction did not match.');
+      await expect(page.locator('#panel-process .zsa-re-result')).toHaveText(lang==='es'?(process.type==='exothermic'?'exotérmico':'endotérmico'):process.type);expect(await page.locator('#panel-process svg').innerHTML()).not.toBe(initial);
+    }
+    for(const id of Object.keys(M.FORMATION)){
+      await page.goto(base+'?mode=formation&rxn='+id+'&lang='+lang);
+      const coefficients=page.locator('#data-table tbody tr td:nth-child(3)');await expect(coefficients).toHaveText(Object.keys(M.FORMATION[id].net).map(()=>''));
+      for(const field of await page.locator('#panel-formation input[id*="coeff-"]').all())await expect(field).toHaveValue('');
+      const field=page.locator('#panel-formation input[id*="coeff-"]').first();await field.fill('9');expect(await coefficients.allTextContents()).toContain('9');await field.fill('');await expect(coefficients).toHaveText(Object.keys(M.FORMATION[id].net).map(()=>''));
+    }
+  });
+  test(lang+' every README preset loads without console errors or unsolicited answers',async({page})=>{
+    const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')errors.push(m.text());});
+    const queries=[...fs.readFileSync(path.join(__dirname,'../../reaction-energy-lab/README.md'),'utf8').matchAll(/^\| [^|]+ \| (mode=[^ |]+) \|$/gm)].map(m=>m[1]);expect(queries.length).toBe(15);
+    for(const query of queries){const params=new URLSearchParams(query);params.set('lang',lang);await page.goto(base+'?'+params);const mode=params.get('mode');await expect(page.locator('#panel-'+mode)).toBeVisible();await expect(page.locator('main')).not.toContainText('\u2014');
+      expect(await page.locator('main').evaluate(main=>{const walker=document.createTreeWalker(main,NodeFilter.SHOW_TEXT);while(walker.nextNode())if(walker.currentNode.textContent.includes('molrxn'))return false;return true;})).toBeTruthy();
+      if(mode==='heating'){
+        await expect(page.locator('#melt-answer')).toHaveValue('');await expect(page.locator('#boil-answer')).toHaveValue('');await expect(page.locator('#heating-feedback')).toBeEmpty();
+        await expect(page.locator('#panel-heating table')).toHaveCount(0);
+        await expect(page.locator('#data-table thead')).not.toContainText(lang==='es'?'Fase':'Phase');
+        await expect(page.locator('#data-table thead')).not.toContainText('(°C)');
+        await expect(page.locator('#panel-heating h3')).toHaveText(lang==='es'?'Curva completa del agua (1.00 g)':'Complete water curve (1.00 g)');await expect(page.locator('#panel-heating .zsa-re-challenge-graph svg')).toHaveAttribute('aria-label',lang==='es'?'Curva completa del agua (1.00 g)':'Complete water curve (1.00 g)');
+        expect(await page.locator('#data-table').innerText()).not.toMatch(/-\d/);
+        const calculator=page.locator('#panel-heating > section').filter({has:page.locator('h2', {hasText:lang==='es'?'Calculadora de segmentos':'Segment calculator'})});
+        for(const line of await calculator.locator('p').allTextContents())expect(line).toMatch(/ J$/);
+        await page.locator('#check-heating').click();await expect(page.locator('#data-table thead')).toContainText('(°C)');expect(await page.locator('#data-table').innerText()).not.toMatch(/-\d/);
+      }
+      if(mode==='formation')for(const cell of await page.locator('#data-table tbody tr td:nth-child(3)').all())await expect(cell).toBeEmpty();
+      if(mode==='bonds')await expect(page.locator('#show-bond-answer')).toBeHidden();
+      if(mode==='process')await expect(page.locator('#start-process')).toBeDisabled();
+    }expect(errors).toEqual([]);
+  });
+}
+test('diagram labels stay inside both charts at desktop and phone sizes',async({page})=>{
+  for(const width of [1366,360]){await page.setViewportSize({width,height:900});await page.goto(base+'?r=0&p=300&peak=300');
+    for(const chart of await page.locator('#panel-diagram svg').all()){
+      const labels=await chart.evaluate(g=>Array.from(g.querySelectorAll('text')).filter(n=>['ΔH','Ea'].includes(n.textContent)).map(n=>{const b=n.getBBox();return {text:n.textContent,x:b.x,right:b.x+b.width,y:b.y,bottom:b.y+b.height};}));
+      expect(labels).toHaveLength(2);for(const label of labels){expect(label.x).toBeGreaterThanOrEqual(55);expect(label.right).toBeLessThanOrEqual(700);expect(label.y).toBeGreaterThanOrEqual(0);expect(label.bottom).toBeLessThanOrEqual(390);}expect(labels.find(n=>n.text==='Ea').right).toBeLessThanOrEqual(175);
+    }
+  }
+});
+
+test('switching processes cancels the pending reveal and resets prediction',async({page})=>{
+  await page.goto(base+'?mode=process&rxn=koh');await page.locator('#process-prediction').selectOption('exothermic');await page.locator('#start-process').click();await page.locator('#reaction').selectOption('coldpack');
+  await expect(page.locator('#process-prediction')).toHaveValue('');await expect(page.locator('#start-process')).toBeDisabled();
+  await page.waitForTimeout(900);await expect(page.locator('#panel-process .zsa-re-result')).toHaveText('Before the process');await expect(page.locator('#data-table tbody td')).toHaveText(['not yet','not yet']);
 });

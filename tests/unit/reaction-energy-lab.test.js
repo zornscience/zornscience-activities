@@ -45,3 +45,8 @@ test('KOH surroundings, scientific notation, rounding and safe links',()=>{
   assert.equal(M.lessonURL('https://zornscience.org/science/chemistry/?a=1#practice','es'),'https://zornscience.org/es/science/chemistry/?a=1#practice');assert.equal(M.lessonURL('https://zornscience.org/es/science/chemistry/','en'),'https://zornscience.org/science/chemistry/');
   assert.deepEqual(M.niceScale(117.18),{max:150,step:50,ticks:[0,50,100,150]});
 });
+test('displayed equations separate every coefficient from its formula',()=>{
+  assert.equal(M.equation({'H₂(g)':-1,'O₂(g)':-1.5,'H₂O(l)':2}), 'H₂(g) + 1.5 O₂(g) → 2 H₂O(l)');
+  assert.equal(M.equation({'O₂(g)':-.5,'O(g)':1}), '½ O₂(g) → O(g)');
+  for(const set of Object.values(M.HESS))for(const net of [set.target,...set.steps.map(s=>s.net)])assert.doesNotMatch(M.equation(net),/(?:\d|½)(?=[A-Z])/);
+});
