@@ -2713,3 +2713,20 @@ The following activity-specific choices are newly recorded here:
 | Maxwell-Boltzmann style curves | curvas de tipo Maxwell-Boltzmann |
 
 The activity title is Laboratorio virtual de entropía y energía libre. Section titles are noun phrases; buttons remain actions. Decimal points, formulas, charges, units and state symbols are preserved. All feedback and complete sentence templates are in `free-energy-lab/data.js`.
+
+### Reaction Energy Lab (1.0.1)
+
+| English | Mexican Spanish |
+| --- | --- |
+| Your prediction | Tu predicción |
+| Process running | Proceso en curso |
+| Your prediction matched. | Tu predicción coincidió. |
+| Your prediction did not match. | Tu predicción no coincidió. |
+| not yet | todavía no |
+| Show answer | Mostrar respuesta |
+| Row correct. | Fila correcta. |
+| Row incorrect. | Fila incorrecta. |
+| Complete water curve (1.00 g) | Curva completa del agua (1.00 g) |
+| Lone pairs: Cl has 3 pairs. | Pares libres: Cl tiene 3 pares. |
+| Lone pairs: O has 2 pairs. | Pares libres: O tiene 2 pares. |
+| Lone pairs: N in NH₃ has 1 pair. | Pares libres: N en NH₃ tiene 1 par. |

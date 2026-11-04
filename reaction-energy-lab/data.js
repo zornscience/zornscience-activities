@@ -5,6 +5,21 @@
   let I;
   root.dispatchEvent(new CustomEvent('zsa:request-i18n',{detail:{receive:api=>{I=api;}}}));
   if(I)I.configure({title:'Reaction Energy Lab',es:{
+  "Your prediction": "Tu predicción",
+  "Process running": "Proceso en curso",
+  "Your prediction matched.": "Tu predicción coincidió.",
+  "Your prediction did not match.": "Tu predicción no coincidió.",
+  "not yet": "todavía no",
+  "Show answer": "Mostrar respuesta",
+  "Answer": "Respuesta",
+  "Row correct.": "Fila correcta.",
+  "Row incorrect.": "Fila incorrecta.",
+  "{bond}: {status}": "{bond}: {status}",
+  "Choose endpoint phases to include a phase change. Incompatible phase choices reset to Automatic.": "Elige las fases de los extremos para incluir un cambio de fase. Las opciones incompatibles se restablecen a Automático.",
+  "Complete water curve (1.00 g)": "Curva completa del agua (1.00 g)",
+  "Lone pairs: Cl has 3 pairs.": "Pares libres: Cl tiene 3 pares.",
+  "Lone pairs: O has 2 pairs.": "Pares libres: O tiene 2 pares.",
+  "Lone pairs: N in NH₃ has 1 pair.": "Pares libres: N en NH₃ tiene 1 par.",
   "Reaction Energy Lab": "Laboratorio virtual de energía de reacción",
   "Explore how energy moves during reactions and phase changes.": "Explora cómo se transfiere la energía durante las reacciones y los cambios de fase.",
   "Choose a mode and adjust the inputs.": "Elige un modo y ajusta los valores.",
