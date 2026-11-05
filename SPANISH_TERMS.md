@@ -2,6 +2,37 @@
 
 Reference: the ZornScience Style Kit v1.7, sections 4 to 6. Mexican Spanish, tú, noun-phrase titles, unchanged chemistry and decimal points. This inventory records choices beyond the supplied fixed interface text and glossary. Full feedback and explanatory translations are in each activity's `data.js`. Existing Gas Laws Spanish wording is preserved.
 
+## AP Chemistry Unit 4 Practice (1.0.0)
+
+Reviewed against the attached ZornScience Style Kit v1.9, sections 1, 4, 5 and 6. The user's supplied nine topic titles and AP glossary take precedence. Interface title: Práctica de la unidad 4 de Química AP. All questions, distractors, explanations, reference rules and model SVG text are paired. State symbols remain (aq). Oxidation uses número de oxidación. AP practice uses razón molar as requested; existing Chemistry activities keep relación molar.
+
+English | Mexican Spanish
+--- | ---
+net ionic equation | ecuación iónica neta
+complete ionic equation | ecuación iónica completa
+molecular equation | ecuación molecular
+spectator ion | ion espectador
+limiting reactant | reactivo limitante
+theoretical / actual / percent yield | rendimiento teórico / rendimiento real / rendimiento porcentual
+mole ratio / stoichiometry | razón molar / estequiometría
+buret / titrant / analyte | bureta / titulante / analito
+equivalence point / endpoint | punto de equivalencia / punto final
+strong / weak electrolyte | electrolito fuerte / electrolito débil
+precipitation reaction | reacción de precipitación
+Brønsted-Lowry acid / base | ácido de Brønsted-Lowry / base de Brønsted-Lowry
+conjugate acid / base | ácido conjugado / base conjugada
+oxidation number | número de oxidación
+oxidizing / reducing agent | agente oxidante / agente reductor
+half-reaction | semirreacción
+physical / chemical change | cambio físico / cambio químico
+evidence of a reaction | evidencia de una reacción
+extent of ionization | grado de ionización
+molecular connectivity | conectividad molecular
+bond-counting model | modelo de conteo de enlaces
+reaction group | grupo de reacción
+
+Newly documented term entries for this unit: complete ionic equation, molecular equation, evidence of a reaction, extent of ionization, molecular connectivity, bond-counting model and reaction group. Other rows retain or collect the requested existing AP terms. Overshoot wording is “se pasa” in the student prompt and an explicit volume comparison in the explanation. No changes to the source style kit, WordPress or zornscience.org.
+
 ## AP Chemistry Unit 3 Practice (1.0.0)
 
 Reviewed against the attached ZornScience Style Kit v1.9, sections 1, 4, 5 and 6, with the user's supplied thirteen topic titles taking precedence. Interface title: Práctica de la unidad 3 de Química AP. All topic titles appear exactly as supplied in `apchem-unit3-practice/data.js`. Formulas, charges, decimal points and numbers match English. Particle speed uses rapidez and temperatures use lowercase kelvin. The schematic SVG is labeled modelo and has translated accessible text.

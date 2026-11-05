@@ -1,0 +1,7 @@
+.zsa-u4 #zsa-u4-particles { margin: 1rem 0; }
+.zsa-u4 #zsa-u4-particles svg { display: block; width: 100%; max-width: 18rem; margin: auto; }
+.zsa-u4 #zsa-u4-particles .zsa-u4-box { fill: none; stroke: var(--zsa-muted, #526174); stroke-width: 1.5; }
+.zsa-u4 #zsa-u4-particles .zsa-u4-h { fill: var(--zsa-surface, #fff); stroke: var(--zsa-navy); stroke-width: 2; }
+.zsa-u4 #zsa-u4-particles .zsa-u4-o { fill: var(--zsa-navy); stroke: var(--zsa-navy); stroke-width: 1.5; }
+.zsa-u4 #zsa-u4-particles .zsa-u4-label { fill: var(--zsa-navy); font: 16px Inter, sans-serif; text-anchor: middle; }
+.zsa-u4 #zsa-u4-particles figcaption { color: var(--zsa-muted, #526174); font-size: .875rem; }

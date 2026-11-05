@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<meta name="description" content="Catch up on AP Chemistry Unit 4 with 54 original questions, instant explanations, and English or Spanish practice from ZornScience.">
+<title>AP Chemistry Unit 4 Practice | ZornScience</title>
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-practice.css?v=1.0.0">
+<link rel="stylesheet" href="diagrams.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.0.0" defer></script>
+<script src="data.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-practice-model.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-practice.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-header.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="zsa zsa-u4 zsa-practice" data-zsa-activity="apchem-unit4-practice" data-zsa-practice="zsa-u4">
+<header data-zsa-header>
+<div data-zsa-header-row>
+<div data-zsa-header-identity><a data-zsa-header-brand href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png" width="34" height="33" alt=""></a><h1>AP Chemistry Unit 4 Practice</h1></div>
+<nav data-zsa-header-tools aria-label="Activity tools"><div>
+<button class="zsa-btn" type="button" data-zsa-dialog-open="zsa-header-instructions" aria-haspopup="dialog" aria-controls="zsa-header-instructions">Instructions</button>
+<button class="zsa-btn" type="button" data-zsa-chrome data-zsa-dialog-open="zsa-header-share" aria-label="Share activity" aria-haspopup="dialog" aria-controls="zsa-header-share"><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button>
+</div></nav>
+</div>
+</header>
+<dialog class="zsa-header-dialog" id="zsa-header-instructions" aria-labelledby="zsa-header-instructions-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-header-instructions-title">Instructions</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close instructions" autofocus>Close</button></div>
+<ol>
+<li>Choose a topic, then start. Mixed review includes all nine topics.</li>
+<li>Select one answer, or enter a number and choose its unit. For a count, choose count; for a ratio, choose no units.</li>
+<li>Submit once per question. Read the explanation, then continue. Your score counts correct answers; a significant figure note does not remove a point.</li>
+<li>At the end, Try again shuffles the questions and answer choices. Choose another topic to build a new set.</li>
+</ol>
+</dialog>
+<dialog class="zsa-header-dialog" id="zsa-header-share" aria-labelledby="zsa-header-share-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-header-share-title">Share this activity</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close share options" autofocus>Close</button></div>
+<p>Share a fresh activity. Your answers and results are not included.</p>
+<label for="zsa-header-share-url">Share link</label><div class="zsa-header-share-link"><input id="zsa-header-share-url" type="text" readonly spellcheck="false"><button class="zsa-btn" type="button" data-zsa-share-copy>Copy link</button></div>
+<a data-zsa-share-email href="#">Email</a><p data-zsa-share-status role="status" aria-live="polite"></p>
+</dialog>
+<noscript><p class="zsa-panel">This activity needs JavaScript. / Esta actividad necesita JavaScript.</p></noscript>
+<section id="zsa-u4-setup" class="zsa-card" aria-labelledby="zsa-u4-setup-title">
+<p class="zsa-eyebrow">AP Chemistry · Unit 4</p>
+<h2 id="zsa-u4-setup-title">Catch up at your own pace.</h2>
+<p>Choose one topic for six questions, or Mixed review for all 54. Read the feedback after each answer.</p>
+<div class="zsa-u4-settings zsa-practice-settings"><div><label for="zsa-u4-topic">Topic</label><select id="zsa-u4-topic"></select></div><button class="zsa-btn zsa-btn--primary" id="zsa-u4-start" type="button">Start practice</button></div>
+<p class="zsa-u4-small zsa-practice-small">No timer. Use scratch paper and a calculator. All the atomic masses you need are below.</p>
+</section>
+<section id="zsa-u4-play" hidden aria-labelledby="zsa-u4-question">
+<div class="zsa-u4-status zsa-practice-status"><p id="zsa-u4-position"></p><p id="zsa-u4-score"></p></div>
+<progress id="zsa-u4-progress" value="0" max="6" aria-label="Set progress"></progress>
+<div class="zsa-card zsa-u4-question-card">
+<p class="zsa-eyebrow" id="zsa-u4-topic-name"></p>
+<h2 id="zsa-u4-question" tabindex="-1"></h2>
+<figure id="zsa-u4-particles" data-zsa-practice-visual="particles" hidden>
+<svg viewBox="0 0 200 260" role="img" aria-labelledby="zsa-u4-particles-title" aria-describedby="zsa-u4-particles-desc">
+<title id="zsa-u4-particles-title">Model: initial reacting particles</title>
+<desc id="zsa-u4-particles-desc">Four hydrogen pairs and three oxygen pairs before reaction. Small open circles represent H; large filled circles represent O.</desc>
+<text x="100" y="25" class="zsa-u4-label">Before reaction</text>
+<rect x="8" y="40" width="184" height="208" class="zsa-u4-box"/>
+<g class="zsa-u4-h"><circle cx="45" cy="75" r="7"/><circle cx="59" cy="75" r="7"/></g>
+<g class="zsa-u4-h"><circle cx="120" cy="75" r="7"/><circle cx="134" cy="75" r="7"/></g>
+<g class="zsa-u4-h"><circle cx="45" cy="130" r="7"/><circle cx="59" cy="130" r="7"/></g>
+<g class="zsa-u4-h"><circle cx="120" cy="130" r="7"/><circle cx="134" cy="130" r="7"/></g>
+<g class="zsa-u4-o"><circle cx="45" cy="180" r="11"/><circle cx="67" cy="180" r="11"/></g>
+<g class="zsa-u4-o"><circle cx="120" cy="180" r="11"/><circle cx="142" cy="180" r="11"/></g>
+<g class="zsa-u4-o"><circle cx="80" cy="222" r="11"/><circle cx="102" cy="222" r="11"/></g>
+</svg><figcaption>Model, not to scale. Small open circles represent H; large filled circles represent O. Each joined group is one molecule.</figcaption>
+</figure>
+<form id="zsa-u4-answer" novalidate>
+<fieldset id="zsa-u4-choices"><legend class="zsa-u4-small zsa-practice-small">Choose one answer.</legend><div id="zsa-u4-options" class="zsa-practice-options"></div></fieldset>
+<div id="zsa-u4-numeric" hidden>
+<p id="zsa-u4-precision" class="zsa-u4-small zsa-practice-small"></p>
+<div class="zsa-u4-entry zsa-practice-entry"><div><label for="zsa-u4-value">Numerical answer</label><input id="zsa-u4-value" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" aria-describedby="zsa-u4-precision zsa-u4-number-help zsa-u4-error"></div><div><label for="zsa-u4-unit">Unit</label><select id="zsa-u4-unit"></select></div></div>
+<p id="zsa-u4-number-help" class="zsa-u4-small zsa-practice-small">Scientific notation: you may type 1.51e23 in the number field.</p>
+</div>
+<p id="zsa-u4-error" role="alert" class="zsa-u4-error zsa-practice-error"></p>
+<button id="zsa-u4-check" class="zsa-btn zsa-btn--primary" type="submit">Check answer</button>
+</form>
+<section id="zsa-u4-feedback" class="zsa-practice-feedback zsa-panel" aria-live="polite" aria-atomic="true" hidden></section>
+<button id="zsa-u4-next" class="zsa-btn zsa-btn--primary" type="button" hidden>Next question</button>
+</div>
+</section>
+<section id="zsa-u4-results" class="zsa-card" aria-labelledby="zsa-u4-results-title" hidden>
+<h2 id="zsa-u4-results-title" tabindex="-1">Your set is complete</h2>
+<p id="zsa-u4-total" class="zsa-u4-total zsa-practice-total"></p>
+<h3>Results by topic</h3><ul id="zsa-u4-breakdown" class="zsa-practice-breakdown"></ul>
+<div class="zsa-u4-actions zsa-practice-actions"><button id="zsa-u4-retry" class="zsa-btn zsa-btn--primary" type="button">Try again</button><button id="zsa-u4-choose" class="zsa-btn" type="button">Choose another topic</button></div>
+<div id="zsa-u4-review"></div>
+</section>
+<details class="zsa-panel zsa-u4-reference zsa-practice-reference" id="zsa-u4-reference">
+<summary>Reference</summary><h2>Atomic masses (g/mol)</h2>
+<p>Use these values. Keep extra digits in your work and round only the final answer.</p>
+<dl class="zsa-u4-masses"><div><dt>H</dt><dd>1.01</dd></div><div><dt>C</dt><dd>12.01</dd></div><div><dt>N</dt><dd>14.01</dd></div><div><dt>O</dt><dd>16.00</dd></div><div><dt>Na</dt><dd>22.99</dd></div><div><dt>Mg</dt><dd>24.31</dd></div><div><dt>Al</dt><dd>26.98</dd></div><div><dt>S</dt><dd>32.06</dd></div><div><dt>Cl</dt><dd>35.45</dd></div><div><dt>K</dt><dd>39.10</dd></div><div><dt>Ca</dt><dd>40.08</dd></div><div><dt>Fe</dt><dd>55.85</dd></div></dl>
+<p><span>Avogadro constant</span>: 6.022 × 10<sup>23</sup> mol<sup>−1</sup></p>
+<h2>Solubility rules for 4.2</h2>
+<ul>
+<li>For dilute aqueous solutions near room temperature: Group 1, ammonium and nitrate salts are soluble.</li>
+<li><span>Chlorides are generally soluble except those of Ag, Pb and Hg(I). Sulfates are generally soluble except those of Ba, Sr and Pb.</span> CaSO<sub>4</sub>: <span>limited solubility</span>.</li>
+<li>Carbonates and phosphates are generally insoluble except Group 1 and ammonium salts. Hydroxides are generally insoluble except Group 1; Ca, Sr and Ba hydroxides are more soluble. These are guidelines; use any specific data in a prompt.</li>
+</ul>
+<p>Keep weak acids, solids and pure liquids intact in ionic equations. Separate soluble strong electrolytes into ions and cancel only unchanged spectator ions.</p>
+<p>Molarity = moles / liters of solution. Use balanced coefficients for mole ratios. Percent yield = actual yield / theoretical yield × 100.</p>
+</details>
+<p class="zsa-u4-small zsa-practice-small">Aligned practice for AP Chemistry CED topics 4.1 to 4.9. Original ZornScience questions.</p>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Your answers stay in this tab. No account needed.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><a class="zsa-back" id="zsa-u4-back" href="https://zornscience.org/science/ap-chemistry/">← Back to the lesson</a></footer>
+</main>
+</body>
+</html>
