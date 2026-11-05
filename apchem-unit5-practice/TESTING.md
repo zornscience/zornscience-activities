@@ -77,7 +77,7 @@ Question | Worked reasoning or calculation | Answer
 
 ## Verification
 
-Run `npm test` and `npm run parity -- --base origin/main`. Focused checks are `node --test tests/unit/apchem-unit5-practice.test.js tests/unit/static.test.js` and `npx playwright test tests/e2e/apchem-unit5-practice.spec.js`. Full-suite outcomes and CI links are recorded in the Unit 5 pull request.
+Run `npm test` and `npm run parity -- --base origin/main`. Focused checks are `node --test tests/unit/apchem-unit5-practice.test.js tests/unit/static.test.js` and `npx playwright test tests/e2e/apchem-unit5-practice.spec.js`. Full-suite outcomes and CI links are recorded in [PR #87](https://github.com/zornscience/zornscience-activities/pull/87).
 
 The six new unit checks pass. They independently verify every numeric calculation, unit, precision, exact count and ratio, tolerance boundary, all 44 multiple-choice keys, unique bilingual prompts, all 132 individual distractor explanations, chemistry markup and number parity, exact topic titles and all requested AP glossary terms. They also check distinct 5.1, 5.10 and 5.11 sets, the two-runtime-file contract, each diagram's accessible text and reference formulas.
 

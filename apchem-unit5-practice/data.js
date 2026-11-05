@@ -1660,7 +1660,7 @@
         "es": "Otro modelo de perfil de energía coloca los reactivos a 10.0 kJ/mol y los productos a 35.0 kJ/mol. Calcula ΔH, incluido su signo."
       },
       "value": 25,
-      "display": "25.0",
+      "display": "+25.0",
       "unit": "kJ/mol",
       "precision": {
         "decimals": 1
