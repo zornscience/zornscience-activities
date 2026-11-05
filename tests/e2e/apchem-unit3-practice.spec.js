@@ -182,7 +182,7 @@ test("directory lists and translates the new activity", async ({page, problems})
   await page.goto("/?lang=es");
   const link = page.getByRole("link", {name:"Práctica de la unidad 3 de Química AP", exact:true});
   expect(new URL(await link.getAttribute("href"), page.url()).searchParams.get("lang")).toBe("es");
-  await expect(page.locator('a[href="#test-prep"] .zsa-home-count')).toHaveText("6");
+  await expect(page.locator('a[href="#test-prep"] .zsa-home-count')).toHaveText("7");
   await link.click();
   await expect(page.locator("h1")).toHaveText("Práctica de la unidad 3 de Química AP");
 });
