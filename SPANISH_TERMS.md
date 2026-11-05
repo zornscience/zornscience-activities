@@ -2,6 +2,24 @@
 
 Reference: the ZornScience Style Kit v1.7, sections 4 to 6. Mexican Spanish, tú, noun-phrase titles, unchanged chemistry and decimal points. This inventory records choices beyond the supplied fixed interface text and glossary. Full feedback and explanatory translations are in each activity's `data.js`. Existing Gas Laws Spanish wording is preserved.
 
+## AP Chemistry Unit 6 Practice (1.0.0)
+
+Uses the supplied Style Kit v1.9 AP glossary and exact Unit 6 topic titles. Sistema / alrededores, calor / temperatura / energía térmica, equilibrio térmico, capacidad calorífica, capacidad calorífica específica (calor específico), capacidad calorífica molar, calorímetro de vaso de espuma, calor de fusión / vaporización (entalpía de fusión / vaporización), tramo inclinado / tramo plano, entalpía de reacción, entalpía de enlace, entalpía de formación (entalpía estándar de formación), estado estándar, función de estado, diagrama de energía, primera ley de la termodinámica and endotérmico / exotérmico retain the glossary wording. Units remain J, kJ, kJ/mol and °C, never translated.
+
+Additional activity wording recorded here:
+
+English | Mexican Spanish
+--- | ---
+heat-capacity-weighted mean | promedio ponderado por capacidad calorífica
+heat of mixing | calor de mezcla
+pressure-volume work | trabajo de presión-volumen
+thermostatted vessel | recipiente con termostato
+atomization | atomización
+gas-phase bond-breaking quantity | cantidad de ruptura de enlace en fase gaseosa
+reference form | forma de referencia
+reaction as written | reacción tal como está escrita
+heat-loss bias | sesgo por pérdida de calor
+
 ## AP Chemistry Unit 5 Practice (1.0.0)
 
 Reviewed against the attached ZornScience Style Kit v1.9, sections 1, 4, 5 and 6. The eleven user-supplied topic titles and AP glossary are exact. Interface title: Práctica de la unidad 5 de Química AP. Reaction rate always uses velocidad, never rapidez. State symbols, formulas, decimal points and units are preserved. All questions, feedback, reference text and SVG descriptions are bilingual.
