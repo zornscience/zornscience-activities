@@ -65,4 +65,18 @@ ID | Work and reasoning | Expected answer
 
 ## Verification
 
-Verification results will be recorded after running the full suite and parity. Real screen readers, Firefox, Safari and school devices are outside the automated Chromium checks.
+Run `npm test` and `npm run parity -- --base origin/main`. Focused checks are `node --test tests/unit/apchem-unit6-practice.test.js tests/unit/static.test.js` and `npx playwright test tests/e2e/apchem-unit6-practice.spec.js`. Full-suite outcomes and CI links are recorded in [PR #88](https://github.com/zornscience/zornscience-activities/pull/88).
+
+The six Unit 6 unit checks independently audit every numeric calculation, unit, precision requirement and tolerance boundary; all 36 multiple-choice keys; the exact nine topic titles; 54 unique bilingual prompts; all 108 individual distractor explanations; semantic chemistry markup and number parity; the AP glossary; the reference values; and the two-runtime-file contract. Every signed numeric heat or enthalpy answer is checked against its opposite sign, zero, a wrong unit and an incorrect factor of 1000. The worked records above cover all 54 IDs.
+
+The eighteen Unit 6 browser cases cover every question correct and incorrect in English and Spanish, scores and nine-topic breakdowns, missed-question explanations, shuffled retries, topic switching and reload reset. Three passes per language exercise every distractor. Two additional full sets enter the wrong sign on all seventeen numeric heat and enthalpy questions and verify both rejection and explicit sign feedback. Temperature is the one numeric answer without a required sign. Other numeric checks cover malformed entries, missing and wrong units, typed unit suffixes, scientific notation, advisory precision and one scored submission.
+
+Browser checks also cover the complete translated reference, both energy diagrams and the heating curve, model visibility, accessible names and descriptions, keyboard continuation, focus, Instructions and Share dialogs, fresh share URLs, EN / ES controls, validated lesson backlinks, denied storage and zero outside requests. Models and reference are checked at phone widths, with layouts and WCAG scans at 320, 390 and 1366 px. The new directory link follows Unit 5; the navigation badge and all five existing practice tests expect nine entries.
+
+Reviewed English desktop and Spanish phone previews with the expanded reference and energy models. Tables have unit-scoped spacing and semantic column headers. All model values or segments also appear in their question prompts. Mixing prompts explicitly state constant specific heats and negligible container heat capacity; the two-liquid model also neglects heat of mixing. Coffee-cup calculations state the heat-loss and cup-capacity assumptions. Reaction enthalpy is normalized per mole of the equation as written, and water phase-change values apply at the stated transition temperatures rather than at 298 K.
+
+Every numeric q or ΔH answer displays an explicit + or − sign. Authored feedback says which sign is required and why the opposite sign is incorrect. Displayed negatives use the typographic minus; entry uses the existing parser's ASCII - key. Positive entries may include or omit +, as in the existing engine. This does not accept a negative entry for a positive answer. No engine change was needed.
+
+Confirmed ZornScience branding, CC BY-NC-SA 4.0, real subscript and superscript tags, preserved state symbols, → arrows and no en or em dashes. All shared files, Units 1 to 5 runtime files and WordPress files are unchanged from main. No zornscience.org changes. Nine additional Spanish wording choices are in SPANISH_TERMS.md. No unresolved chemistry or translation questions.
+
+Not automated: real screen readers, Firefox, Safari and school devices. Local verification uses Node 22, system Chromium and an isolated PHP runtime with SQLite support. GitHub Actions runs the repository's standard commands.
