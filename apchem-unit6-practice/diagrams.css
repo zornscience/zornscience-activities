@@ -1,0 +1,10 @@
+/* Unit-owned schematic models and reference tables. */
+.zsa-u6 [data-zsa-practice-visual] { margin: 1rem auto; max-width: 28rem; }
+.zsa-u6 [data-zsa-practice-visual] svg { display: block; width: 100%; height: auto; }
+.zsa-u6 .zsa-u6-axis { fill: none; stroke: var(--zsa-navy); stroke-width: 1.5; }
+.zsa-u6 .zsa-u6-curve { fill: none; stroke: var(--zsa-blue); stroke-width: 3; }
+.zsa-u6 .zsa-u6-label, .zsa-u6 .zsa-u6-axis-label { fill: var(--zsa-navy); font-family: inherit; font-size: 13px; text-anchor: middle; }
+.zsa-u6 figcaption { font-size: 0.85rem; text-align: center; }
+.zsa-u6 .zsa-u6-reference table { width: 100%; max-width: 36rem; border-collapse: collapse; margin: 1rem 0; font-variant-numeric: tabular-nums; }
+.zsa-u6 .zsa-u6-reference th, .zsa-u6 .zsa-u6-reference td { padding: 0.45rem 0.6rem; border-bottom: 1px solid var(--zsa-border); text-align: left; vertical-align: top; }
+.zsa-u6 .zsa-u6-reference td:last-child { white-space: nowrap; }
