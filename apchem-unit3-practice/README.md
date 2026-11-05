@@ -1,14 +1,19 @@
 # AP Chemistry Unit 3 Practice
 
-Version: 1.0.0
+Version: 1.0.1
 
 Original bilingual ZornScience practice for AP Chemistry CED Unit 3. Thirteen topics contain six original questions each, 78 total: 51 multiple-choice and 27 numeric entry. Every topic has both formats. Mixed review includes all 78. All wrong choices have individual misconception feedback. Every answer was worked before question authoring and recorded in `TESTING.md`.
 
-## Copied Unit 2 pattern
+## Files and shared practice engine
 
-`index.html`, `practice.css`, `model.js` and `practice.js` copy Unit 2's layout, header dialogs, licensed footer, reference panel, language controls, session, scoring and results. `data.js` pairs English and Mexican Spanish prompts, choices, feedback and interface text. Only authored `<sub>` and `<sup>` notation becomes markup. No shared engine extraction or shared asset edits. Unit 1 and Unit 2 activity files are unchanged; their browser tests only change the directory count from five to six.
+- `index.html`: unit page, accessible inline SVG, reference panel, header dialogs, language controls, and footer.
+- `data.js`: unchanged bilingual questions, topic titles, units, explanations, and authored translations.
+- `diagrams.css`: only scoped Unit 3 SVG styles.
+- `README.md` and `TESTING.md`: unit documentation and the complete worked answer audit.
 
-The topic helper uses the complete ID before the question separator so topics 3.10 through 3.13 stay distinct. The model retains Unit 2's numeric parser and tolerance rules, with additional suffix aliases for M / mol/L and K / kelvin. Units must match the requested output unit. Automatic conversion of an alternative unit is not performed, matching Unit 2.
+The common model, session, interface text, rendering, scoring, results, retries, and responsive layout live in `../shared/zsa-practice-model.js`, `../shared/zsa-practice.js`, and `../shared/zsa-practice.css`. See `../shared/README.md` for the page contract and how to add another unit. Only authored `<sub>` and `<sup>` notation becomes markup. SVGs stay inline in the unit page with their accessible labels and descriptions.
+
+The topic helper uses the complete ID before the question separator so topics 3.10 through 3.13 stay distinct. Units must match the requested output unit. Automatic conversion of an alternative unit is not performed.
 
 No runtime dependencies, storage, accounts, data collection or network requests. State stays in the tab and is discarded on reload. CSP blocks connections. All scripts and assets are local. No WordPress or zornscience.org changes.
 

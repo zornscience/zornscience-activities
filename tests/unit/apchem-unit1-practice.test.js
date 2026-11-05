@@ -2,7 +2,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const bank = require("../../apchem-unit1-practice/data.js");
-const M = require("../../apchem-unit1-practice/model.js");
+const M = require("../../shared/zsa-practice-model.js");
 const byId = id => bank.questions.find(q => q.id === id);
 
 test("48 original bilingual questions cover all eight CED topics with mixed response types", () => {

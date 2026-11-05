@@ -1,6 +1,6 @@
 # AP Chemistry Unit 1 Practice
 
-Version: 1.0.0
+Version: 1.0.1
 
 Original ZornScience practice for students catching up on AP Chemistry Unit 1. Six questions per topic, 48 total. Each topic mixes multiple choice with numeric entry. Mixed review uses all 48 questions. Questions and choices are shuffled for each new set, including Try again.
 
@@ -8,12 +8,13 @@ Original ZornScience practice for students catching up on AP Chemistry Unit 1. S
 
 - `index.html`: activity, shared header dialogs, language controls, reference, and licensed footer.
 - `data.js`: original English and Mexican Spanish questions, choice-specific feedback, worked reasoning, exact official topic titles, and interface translations.
-- `model.js`: pure numeric checking, significant figures, shuffling, and validated lesson links.
-- `practice.js`: tab-only session state and accessible rendering. Only authored `<sub>` and `<sup>` notation becomes markup.
-- `practice.css`: responsive layout using shared ZornScience design tokens.
+- `../shared/zsa-practice-model.js`: numeric checking, precision, units, shuffling, and validated lesson links.
+- `../shared/zsa-practice.js`: tab-only session, interface text, accessible rendering, scoring, results, and retries.
+- `../shared/zsa-practice.css`: the common responsive layout.
+- `README.md`: unit content and behavior notes.
 - `TESTING.md`: verification and numerical answer audit.
 
-Matches the structures and shared chrome of Stoichiometry Coach and Polyatomic Ion Trainer, plus Periodic Table's restricted lesson backlink. No changes to shared assets. No runtime dependencies, network requests, storage, account, or data collection. CSP prevents connections. All work is discarded on reload.
+Matches the structures and shared chrome of Stoichiometry Coach and Polyatomic Ion Trainer, plus Periodic Table's restricted lesson backlink. The practice engine is shared with Units 2 and 3. See `../shared/README.md` for the page contract and how to add another unit. No runtime dependencies, network requests, storage, account, or data collection. CSP prevents connections. All work is discarded on reload.
 
 ## Language and routing
 

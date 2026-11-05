@@ -1,6 +1,6 @@
 # AP Chemistry Unit 2 Practice
 
-Version: 1.0.0
+Version: 1.0.1
 
 Original ZornScience practice for AP Chemistry Unit 2. Six questions per topic, 42 total, with multiple choice and numeric entry in every topic. Mixed review uses all 42 questions. Questions and choices are shuffled for each new set, including Try again.
 
@@ -8,12 +8,14 @@ Original ZornScience practice for AP Chemistry Unit 2. Six questions per topic, 
 
 - `index.html`: same layout, shared header dialogs, language controls, reference panel, and licensed footer as Unit 1. Includes a small accessible inline SVG potential energy curve.
 - `data.js`: original English and Mexican Spanish questions, individual distractor feedback, worked reasoning, exact supplied topic titles, and interface and SVG translations.
-- `model.js`: Unit 1 numeric checking, precision, shuffling, and restricted lesson links, with the Unit 2 activity selector and aliases for the new degrees / grados unit.
-- `practice.js`: Unit 1 tab-only session and rendering pattern, with Unit 2 identifiers, topic and question counts, and visibility for the curve. Only authored `<sub>` and `<sup>` notation becomes markup.
-- `practice.css`: copied Unit 1 layout with scoped Unit 2 names and curve styles using shared ZornScience tokens.
+- `diagrams.css`: only scoped Unit 2 potential energy curve styles.
+- `../shared/zsa-practice-model.js`: numeric checking, precision, units, shuffling, and restricted lesson links.
+- `../shared/zsa-practice.js`: the common session, interface text, rendering, scoring, results, and retries.
+- `../shared/zsa-practice.css`: the common responsive layout.
+- `README.md`: unit content and behavior notes.
 - `TESTING.md`: complete worked answer audit and verification.
 
-The Unit 1 pattern is copied, with no shared engine extraction and no changes to Unit 1 activity files or shared assets. Its directory test now expects five Test prep entries after Unit 2 is added. There are no runtime dependencies, network requests, storage, accounts, or data collection. CSP prevents connections. Answers are discarded on reload. No WordPress or zornscience.org changes.
+The practice engine is shared with Units 1 and 3. The question bank and translations are unchanged. See `../shared/README.md` for the page contract and how to add another unit. There are no runtime dependencies, network requests, storage, accounts, or data collection. CSP prevents connections. Answers are discarded on reload. No WordPress or zornscience.org changes.
 
 ## Language and routing
 

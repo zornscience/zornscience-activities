@@ -1,8 +1,8 @@
 # AP Chemistry Unit 1 Practice checks
 
-Version: 1.0.0
+Version: 1.0.1
 
-## Automated checks
+## Original release automated checks (1.0.0)
 
 Run `node --test tests/unit/apchem-unit1-practice.test.js tests/unit/static.test.js` and `npx playwright test tests/e2e/apchem-unit1-practice.spec.js`. The tests cover bank coverage and bilingual notation parity; independently calculated answers; all numeric tolerances, units and precision; all multiple-choice distractor explanations; complete English and Spanish sets; scoring; shuffling; validation; restricted backlinks; header and share dialogs; keyboard flow; phone layout; accessibility; directory discovery; and blocked storage.
 
@@ -68,8 +68,22 @@ Question | Correct result and reasoning
 1.8-5 | NaCl gives a 1:1 ion ratio in an extended lattice
 1.8-6 | K loses 4s<sup>1</sup>, giving K<sup>+</sup> with configuration [Ar]
 
-## Manual review
+## Original release manual review (1.0.0)
 
 Use a narrow phone viewport and test both languages. Complete a topic with correct and wrong responses, inspect numeric unit and precision feedback, review a missed question, restart, and choose another topic. Use keyboard navigation and open both header dialogs. Confirm formulas, charges, and exponents use actual subscript and superscript elements. Confirm no horizontal page overflow and no requests to outside services. No sitemap exists in this repository.
 
 ZornScience. CC BY-NC-SA 4.0.
+
+## Shared engine refactor, 1.0.1
+
+The question bank and translation table are byte-for-byte unchanged. The unit now loads the shared practice model, controller and stylesheet. The existing unit tests change only their model imports; existing browser tests are unchanged.
+
+The full unit suite passes all 322 checks, including the PHP-backed checks and eight new shared-model checks. Two new browser checks verify another unit with only a page and data file, in English and Spanish, including a custom SVG flag.
+
+Original-versus-refactored comparisons pass in both languages at 320 px and 1366 px widths. Across all three units, 12 scenarios compare 1,416 states and 136 screenshot pairs with zero differences. Compared states include setup, reference, every question and submitted feedback, validation, results, missed review, and retries. DOM, focus, live text, scroll, title, computed layout and styles match; only added shared styling classes and engine metadata are normalized.
+
+Full browser coverage completed across the initial and resumed runs: 641 of 642 unique cases pass, including all 28 existing Unit 1, 2 and 3 browser checks and both new shared-engine checks. The 84 cases interrupted in the original run and nine retries all pass in a 93-case run on port 4173 with one worker. Initial ACT, periodic-trends and frame-rate failures pass when run alone; the free-energy and redox request checks pass on their hardcoded port 4173. No test assertion, timeout, helper or existing browser test was changed.
+
+One unrelated failure remains: the unchanged Lewis AP routing group 2 test exceeded its declared 400-second timeout, returning after 18.5 minutes while recursively enumerating SF6 reference structures. Its test, reference helper and activity files match main. This result is reported rather than changing another activity or its tests.
+
+The full repository parity check also passes: 11 scenarios, 3,723 states and 3,296 screenshot pairs, with zero differences.

@@ -1,6 +1,6 @@
 # AP Chemistry Unit 3 Practice checks
 
-Version: 1.0.0
+Version: 1.0.1
 
 ## Answer audit, worked before authoring the question bank
 
@@ -87,7 +87,7 @@ Question | Worked reasoning or calculation | Answer
 3.13-5 | A solvent blank removes solvent and cell background contributions. | Blank with the solvent in a matching cell
 3.13-6 | The slope is εb, and ε depends on wavelength. | Use the calibration wavelength and the same path length
 
-## Automated and manual verification
+## Original release verification (1.0.0)
 
 Run `node --test tests/unit/apchem-unit1-practice.test.js tests/unit/apchem-unit2-practice.test.js tests/unit/apchem-unit3-practice.test.js tests/unit/static.test.js` and `npx playwright test tests/e2e/apchem-unit1-practice.spec.js tests/e2e/apchem-unit2-practice.spec.js tests/e2e/apchem-unit3-practice.spec.js`. The directory language regression is `npx playwright test tests/e2e/i18n.spec.js --grep 'landing page opens'`.
 
@@ -102,3 +102,17 @@ Reviewed desktop and Spanish phone previews, including the curve. The normalized
 Confirmed ZornScience branding, CC BY-NC-SA 4.0, real subscript and superscript markup, no en or em dashes, supplied topic titles, required glossary terms and translated reference values. Unit 1 and Unit 2 activity files and all shared assets are unchanged. Only their directory-count assertions change from five to six. No WordPress or zornscience.org edits. No unresolved content questions remain.
 
 ZornScience. CC BY-NC-SA 4.0.
+
+## Shared engine refactor, 1.0.1
+
+The question bank and translation table are byte-for-byte unchanged. The unit now loads the shared practice model, controller and stylesheet. The existing unit tests change only their model imports; existing browser tests are unchanged.
+
+The full unit suite passes all 322 checks, including the PHP-backed checks and eight new shared-model checks. Two new browser checks verify another unit with only a page and data file, in English and Spanish, including a custom SVG flag.
+
+Original-versus-refactored comparisons pass in both languages at 320 px and 1366 px widths. Across all three units, 12 scenarios compare 1,416 states and 136 screenshot pairs with zero differences. Compared states include setup, reference, every question and submitted feedback, validation, results, missed review, and retries. DOM, focus, live text, scroll, title, computed layout and styles match; only added shared styling classes and engine metadata are normalized.
+
+Full browser coverage completed across the initial and resumed runs: 641 of 642 unique cases pass, including all 28 existing Unit 1, 2 and 3 browser checks and both new shared-engine checks. The 84 cases interrupted in the original run and nine retries all pass in a 93-case run on port 4173 with one worker. Initial ACT, periodic-trends and frame-rate failures pass when run alone; the free-energy and redox request checks pass on their hardcoded port 4173. No test assertion, timeout, helper or existing browser test was changed.
+
+One unrelated failure remains: the unchanged Lewis AP routing group 2 test exceeded its declared 400-second timeout, returning after 18.5 minutes while recursively enumerating SF6 reference structures. Its test, reference helper and activity files match main. This result is reported rather than changing another activity or its tests.
+
+The full repository parity check also passes: 11 scenarios, 3,723 states and 3,296 screenshot pairs, with zero differences.
