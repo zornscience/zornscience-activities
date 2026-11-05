@@ -8,6 +8,9 @@ shared/
   zsa-activity.css    activity layout and every engine component (load after zsa-base.css)
   zsa-embed.js        ?embed=1 mode and zsa:resize messages
   zsa-engine.js       the activity engine
+  zsa-practice-model.js numeric practice checking, units, precision, shuffling and lesson links
+  zsa-practice.js     question-set practice sessions, interface, feedback and results
+  zsa-practice.css    responsive question-set practice layout, scoped to .zsa-practice
   zsa-codes.js        completion codes: the activity registry, writing and reading codes
   fonts/              Inter (SIL OFL 1.1)
 ```
@@ -178,3 +181,32 @@ The module translates initial static text and accessible attributes, sets the do
 `api.url(href)` keeps the language on generated activity and share URLs without adding it to outside websites. Switch links preserve current URL parameters. Activities normally navigate when switching. Gas Laws installs `api.onChange(language)` to render again in place and retain its simulation state. Language is never inferred from the browser or saved in storage.
 
 New terminology beyond Style Kit sections 4 to 6 is recorded in `SPANISH_TERMS.md`. Formulas, symbols, charges, units and decimal points stay unchanged.
+
+## Question-set practice engine
+
+AP Chemistry Units 1, 2 and 3 use `zsa-practice-model.js`, `zsa-practice.js` and `zsa-practice.css`. This engine submits one answer per question and scores a set. It is separate from the step-based `zsa-engine.js`, which is unchanged.
+
+`zsa-practice-model.js` exports `parse(raw)`, `inspect(question, raw, unit)`, `shuffle(items, random)`, `makeSet(questions, topic, random)` and `lessonLink(from, language)` in Node. In the browser it provides the same API through `zsa:request-model` on roots with `data-zsa-practice`. No browser globals are created. The optional random function makes shuffles reproducible in tests.
+
+Numeric inspection preserves the original rules: invalid numbers and missing units are not scored; exact counts use strict equality; other values use the authored absolute tolerance plus a floating point rounding allowance proportional to the answer. The selected unit ID must match exactly. A typed suffix must also match, including the existing English and Spanish aliases. There is no conversion between units. `precisionOK` reports significant figures or decimal places separately, so a correct value with the right unit still earns its point. Trailing integer zeros without a decimal point are nonsignificant. The model never changes the bank or its choices.
+
+`lessonLink` accepts only the exact `https://zornscience.org` origin, without credentials. Invalid inputs fall back to the AP Chemistry course. Spanish selects the `/es/` twin and English removes that prefix. Paths, queries and fragments are retained. The engine reads `from=` only for that backlink, never for a request.
+
+`zsa-practice.js` owns set state, topic and unit dropdowns, question and choice order, validation, feedback text, focus, scoring, topic results, missed-question review and Try again. It uses the existing `zsa-i18n.js` API for interface text and `?lang=es`, plus the bank's paired authored content. Existing `data.js` translation tables are preserved unchanged. It derives the first topic and mixed-set size from the bank. No unit number, topic count, question count, or scientific drawing is built into it.
+
+### Add Unit 4 with two runtime files
+
+1. Create `apchem-unit4-practice/` with `index.html` and `data.js`. Use Unit 1's page as the markup template. Replace its unit-specific title, descriptions, reference, activity slug and `zsa-u1` IDs/classes with the new unit's content and `zsa-u4`. Keep the `zsa-practice` classes. No new engine script, model, stylesheet, registry entry or build step is needed.
+2. Set the root to `<main class="zsa zsa-u4 zsa-practice" data-zsa-activity="apchem-unit4-practice" data-zsa-practice="zsa-u4">`. The `data-zsa-practice` value is the ID prefix; the activity slug remains the data and i18n event target. Every referenced ID below starts with that prefix and a hyphen.
+3. In `data.js`, provide `{topics, questions, units, copy}`. Topics are `{id, title:{en, es}}`; units are `{id, label:{en, es}}`. Every question has `id`, the full `topic` ID, `type`, paired `prompt` and `explanation`. Multiple choice adds `choices:[{text:{en, es}, why:{en, es}}]` and the original zero-based `answer` index. Numeric questions add `value`, `display`, `unit`, absolute `tolerance` and `precision:{exact:true}`, `{sf:n}` or `{decimals:n}`. The bank supplies tolerances, the engine checks them. Full topic strings such as `4.10` remain distinct from `4.1`.
+4. Use a strict IIFE, export the bank through `module.exports` for tests, and return when `document` is absent. In the browser, find the new activity root, dispatch `zsa:request-i18n` and call the received API's `configure(copy)`, then answer `zsa:request-data` with `event.detail.receive(bank)`. Copy Unit 1's event plumbing and interface translation entries, then author the unit-specific `copy.title`, static text and paired questions. Do not translate enum values or unit IDs.
+5. Load CSS in this order: `../shared/zsa-base.css`, `../shared/zsa-practice.css`, any optional unit diagram CSS, `../shared/zsa-header.css`. Load deferred scripts in this order: `../shared/zsa-embed.js`, `../shared/zsa-i18n.js`, `data.js`, `../shared/zsa-practice-model.js`, `../shared/zsa-practice.js`, `../shared/zsa-header.js`. Preserve the CSP and use the same version on the page, all `?v=` values, README and TESTING. Keep the original header dialogs, language controls and footer.
+6. Add `README.md`, `TESTING.md` and independent question audits and browser coverage. Run the full suite and parity. If the activity should appear in the directory, add its directory entry separately from the engine.
+
+### Page contract and diagrams
+
+The setup IDs are `setup`, `topic`, `start`. The question IDs are `play`, `position`, `score`, `progress`, `topic-name`, `question`, `answer`, `choices`, `options`, `numeric`, `precision`, `value`, `unit`, `error`, `feedback`, `check`, `next`. The result IDs are `results`, `results-title`, `total`, `breakdown`, `review`, `retry`, `choose`. The footer needs `back`. Keep `setup-title`, `number-help` and the original `aria-labelledby` / `aria-describedby` relationships from the template. Keep the question and results headings focusable with `tabindex="-1"`, the error's alert role, the feedback live region, labels and native form controls.
+
+Common class suffixes are `small`, `settings`, `status`, `options`, `entry`, `error`, `feedback`, `total`, `breakdown`, `actions`, `reference`, with `zsa-practice-` before each name. The engine creates `zsa-practice-option` and `zsa-practice-review-item`. Existing unit classes and IDs are retained for compatibility. Atomic-mass grids use a class ending in `-masses`, including `zsa-practice-masses`.
+
+Keep reference content and accessible inline SVGs in the unit's `index.html`. A drawing container can declare `data-zsa-practice-visual="curve"` and start `hidden`. The engine shows it when the current question has a truthy `curve` property, and hides it for the next question otherwise. Any question flag name works, so another diagram needs no engine change. The drawing's title, description, visible labels and caption remain unit content, translated by the existing copy table. Use a small scoped stylesheet for drawing-specific sizes, strokes and labels, as in Units 2 and 3's `diagrams.css`. Do not put science-specific geometry or styles in the shared engine. Authored question text supports only `<sub>` and `<sup>`; everything else stays text, with no HTML injection.

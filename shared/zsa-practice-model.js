@@ -51,6 +51,7 @@
   var api = {shuffle:shuffle, makeSet:makeSet, parse:parse, inspect:inspect, lessonLink:lessonLink};
   if (typeof module === "object" && module.exports) module.exports = api;
   if (typeof document === "undefined") return;
-  var root = document.querySelector('[data-zsa-activity="apchem-unit3-practice"]');
-  if (root) root.addEventListener("zsa:request-model", function (event) { event.detail.receive(api); });
+  document.querySelectorAll("[data-zsa-practice]").forEach(function (root) {
+    root.addEventListener("zsa:request-model", function (event) { event.detail.receive(api); });
+  });
 }());

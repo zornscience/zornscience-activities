@@ -4,22 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.0.0">
+<meta name="zsa-version" content="1.0.1">
 <meta name="description" content="Catch up on AP Chemistry Unit 3 with 78 original questions, instant explanations, and English or Spanish practice from ZornScience.">
 <title>AP Chemistry Unit 3 Practice | ZornScience</title>
 <link rel="icon" href="../favicon.png" type="image/png">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
-<link rel="stylesheet" href="practice.css?v=1.0.0">
-<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.0">
-<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
-<script src="../shared/zsa-i18n.js?v=1.0.0" defer></script>
-<script src="data.js?v=1.0.0" defer></script>
-<script src="model.js?v=1.0.0" defer></script>
-<script src="practice.js?v=1.0.0" defer></script>
-<script src="../shared/zsa-header.js?v=1.0.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.1">
+<link rel="stylesheet" href="../shared/zsa-practice.css?v=1.0.1">
+<link rel="stylesheet" href="diagrams.css?v=1.0.1">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.1">
+<script src="../shared/zsa-embed.js?v=1.0.1" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.0.1" defer></script>
+<script src="data.js?v=1.0.1" defer></script>
+<script src="../shared/zsa-practice-model.js?v=1.0.1" defer></script>
+<script src="../shared/zsa-practice.js?v=1.0.1" defer></script>
+<script src="../shared/zsa-header.js?v=1.0.1" defer></script>
 </head>
 <body>
-<main class="zsa zsa-u3" data-zsa-activity="apchem-unit3-practice">
+<main class="zsa zsa-u3 zsa-practice" data-zsa-activity="apchem-unit3-practice" data-zsa-practice="zsa-u3">
 <header data-zsa-header>
 <div data-zsa-header-row>
 <div data-zsa-header-identity><a data-zsa-header-brand href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png" width="34" height="33" alt=""></a><h1>AP Chemistry Unit 3 Practice</h1></div>
@@ -49,16 +50,16 @@
 <p class="zsa-eyebrow">AP Chemistry · Unit 3</p>
 <h2 id="zsa-u3-setup-title">Catch up at your own pace.</h2>
 <p>Choose one topic for six questions, or Mixed review for all 78. Read the feedback after each answer.</p>
-<div class="zsa-u3-settings"><div><label for="zsa-u3-topic">Topic</label><select id="zsa-u3-topic"></select></div><button class="zsa-btn zsa-btn--primary" id="zsa-u3-start" type="button">Start practice</button></div>
-<p class="zsa-u3-small">No timer. Use scratch paper and a calculator. Reference values are below.</p>
+<div class="zsa-u3-settings zsa-practice-settings"><div><label for="zsa-u3-topic">Topic</label><select id="zsa-u3-topic"></select></div><button class="zsa-btn zsa-btn--primary" id="zsa-u3-start" type="button">Start practice</button></div>
+<p class="zsa-u3-small zsa-practice-small">No timer. Use scratch paper and a calculator. Reference values are below.</p>
 </section>
 <section id="zsa-u3-play" hidden aria-labelledby="zsa-u3-question">
-<div class="zsa-u3-status"><p id="zsa-u3-position"></p><p id="zsa-u3-score"></p></div>
+<div class="zsa-u3-status zsa-practice-status"><p id="zsa-u3-position"></p><p id="zsa-u3-score"></p></div>
 <progress id="zsa-u3-progress" value="0" max="6" aria-label="Set progress"></progress>
 <div class="zsa-card zsa-u3-question-card">
 <p class="zsa-eyebrow" id="zsa-u3-topic-name"></p>
 <h2 id="zsa-u3-question" tabindex="-1"></h2>
-<figure id="zsa-u3-curve" class="zsa-u3-curve" hidden>
+<figure id="zsa-u3-curve" data-zsa-practice-visual="curve" class="zsa-u3-curve" hidden>
 <svg viewBox="0 0 460 280" role="img" aria-labelledby="zsa-u3-curve-title" aria-describedby="zsa-u3-curve-desc">
 <title id="zsa-u3-curve-title">Model Maxwell-Boltzmann speed distributions</title>
 <desc id="zsa-u3-curve-desc">Schematic model for equal numbers of particles of the same gas. The warmer curve has a lower, broader peak at greater speed. Both curves represent the same total area. No numerical scale is implied.</desc>
@@ -69,30 +70,30 @@
 <text x="62" y="41">Cooler</text><text x="235" y="115">Warmer</text>
 <text x="170" y="258">Particle speed</text>
 </svg>
-<figcaption class="zsa-u3-small">Model, schematic curves; equal particle numbers.</figcaption>
+<figcaption class="zsa-u3-small zsa-practice-small">Model, schematic curves; equal particle numbers.</figcaption>
 </figure>
 <form id="zsa-u3-answer" novalidate>
-<fieldset id="zsa-u3-choices"><legend class="zsa-u3-small">Choose one answer.</legend><div id="zsa-u3-options"></div></fieldset>
+<fieldset id="zsa-u3-choices"><legend class="zsa-u3-small zsa-practice-small">Choose one answer.</legend><div id="zsa-u3-options" class="zsa-practice-options"></div></fieldset>
 <div id="zsa-u3-numeric" hidden>
-<p id="zsa-u3-precision" class="zsa-u3-small"></p>
-<div class="zsa-u3-entry"><div><label for="zsa-u3-value">Numerical answer</label><input id="zsa-u3-value" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" aria-describedby="zsa-u3-precision zsa-u3-number-help zsa-u3-error"></div><div><label for="zsa-u3-unit">Unit</label><select id="zsa-u3-unit"></select></div></div>
-<p id="zsa-u3-number-help" class="zsa-u3-small">Scientific notation: you may type 1.51e23 in the number field.</p>
+<p id="zsa-u3-precision" class="zsa-u3-small zsa-practice-small"></p>
+<div class="zsa-u3-entry zsa-practice-entry"><div><label for="zsa-u3-value">Numerical answer</label><input id="zsa-u3-value" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" aria-describedby="zsa-u3-precision zsa-u3-number-help zsa-u3-error"></div><div><label for="zsa-u3-unit">Unit</label><select id="zsa-u3-unit"></select></div></div>
+<p id="zsa-u3-number-help" class="zsa-u3-small zsa-practice-small">Scientific notation: you may type 1.51e23 in the number field.</p>
 </div>
-<p id="zsa-u3-error" role="alert" class="zsa-u3-error"></p>
+<p id="zsa-u3-error" role="alert" class="zsa-u3-error zsa-practice-error"></p>
 <button id="zsa-u3-check" class="zsa-btn zsa-btn--primary" type="submit">Check answer</button>
 </form>
-<section id="zsa-u3-feedback" class="zsa-panel" aria-live="polite" aria-atomic="true" hidden></section>
+<section id="zsa-u3-feedback" class="zsa-practice-feedback zsa-panel" aria-live="polite" aria-atomic="true" hidden></section>
 <button id="zsa-u3-next" class="zsa-btn zsa-btn--primary" type="button" hidden>Next question</button>
 </div>
 </section>
 <section id="zsa-u3-results" class="zsa-card" aria-labelledby="zsa-u3-results-title" hidden>
 <h2 id="zsa-u3-results-title" tabindex="-1">Your set is complete</h2>
-<p id="zsa-u3-total" class="zsa-u3-total"></p>
-<h3>Results by topic</h3><ul id="zsa-u3-breakdown"></ul>
-<div class="zsa-u3-actions"><button id="zsa-u3-retry" class="zsa-btn zsa-btn--primary" type="button">Try again</button><button id="zsa-u3-choose" class="zsa-btn" type="button">Choose another topic</button></div>
+<p id="zsa-u3-total" class="zsa-u3-total zsa-practice-total"></p>
+<h3>Results by topic</h3><ul id="zsa-u3-breakdown" class="zsa-practice-breakdown"></ul>
+<div class="zsa-u3-actions zsa-practice-actions"><button id="zsa-u3-retry" class="zsa-btn zsa-btn--primary" type="button">Try again</button><button id="zsa-u3-choose" class="zsa-btn" type="button">Choose another topic</button></div>
 <div id="zsa-u3-review"></div>
 </section>
-<details class="zsa-panel zsa-u3-reference" id="zsa-u3-reference">
+<details class="zsa-panel zsa-u3-reference zsa-practice-reference" id="zsa-u3-reference">
 <summary>Reference</summary><h2>Gas, solution and light reference</h2>
 <p>Use temperatures in kelvin for gas law calculations. Keep extra digits in your work and round only the final answer.</p>
 <p>R = 0.08206 L·atm/(mol·K) = 8.314 J/(mol·K)</p>
@@ -105,7 +106,7 @@
 <h3>Atomic masses (g/mol)</h3>
 <dl class="zsa-u3-masses"><div><dt>H</dt><dd>1.01</dd></div><div><dt>C</dt><dd>12.01</dd></div><div><dt>N</dt><dd>14.01</dd></div><div><dt>O</dt><dd>16.00</dd></div><div><dt>Na</dt><dd>22.99</dd></div><div><dt>Mg</dt><dd>24.31</dd></div><div><dt>Al</dt><dd>26.98</dd></div><div><dt>S</dt><dd>32.06</dd></div><div><dt>Cl</dt><dd>35.45</dd></div><div><dt>K</dt><dd>39.10</dd></div><div><dt>Ca</dt><dd>40.08</dd></div><div><dt>Fe</dt><dd>55.85</dd></div></dl>
 </details>
-<p class="zsa-u3-small">Aligned practice for AP Chemistry CED topics 3.1 to 3.13. Original ZornScience questions.</p>
+<p class="zsa-u3-small zsa-practice-small">Aligned practice for AP Chemistry CED topics 3.1 to 3.13. Original ZornScience questions.</p>
 <footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Your answers stay in this tab. No account needed.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><a class="zsa-back" id="zsa-u3-back" href="https://zornscience.org/science/ap-chemistry/">← Back to the lesson</a></footer>
 </main>
 </body>

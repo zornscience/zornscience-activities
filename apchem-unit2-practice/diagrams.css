@@ -1,0 +1,6 @@
+.zsa-u2 .zsa-u2-curve {margin:16px 0; max-width:460px;}
+.zsa-u2 .zsa-u2-curve svg {display:block; width:100%; height:auto; overflow:visible;}
+.zsa-u2 .zsa-u2-curve text {fill:var(--zsa-navy); font:14px sans-serif;}
+.zsa-u2 .zsa-u2-axis {fill:none; stroke:var(--zsa-navy); stroke-width:1.5;}
+.zsa-u2 .zsa-u2-guide {fill:none; stroke:var(--zsa-navy); stroke-width:1; stroke-dasharray:4 4;}
+.zsa-u2 .zsa-u2-bond-curve {fill:none; stroke:var(--zsa-blue); stroke-width:3;}

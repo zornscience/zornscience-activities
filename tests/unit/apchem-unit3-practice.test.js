@@ -2,7 +2,7 @@
 const test = require("node:test");
 const assert = require("node:assert/strict");
 const bank = require("../../apchem-unit3-practice/data.js");
-const M = require("../../apchem-unit3-practice/model.js");
+const M = require("../../shared/zsa-practice-model.js");
 const byId = id => bank.questions.find(q => q.id === id);
 
 test("all 27 numeric answers match independently worked calculations and tolerance boundaries", () => {
