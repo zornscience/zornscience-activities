@@ -2,6 +2,26 @@
 
 Reference: the ZornScience Style Kit v1.7, sections 4 to 6. Mexican Spanish, tú, noun-phrase titles, unchanged chemistry and decimal points. This inventory records choices beyond the supplied fixed interface text and glossary. Full feedback and explanatory translations are in each activity's `data.js`. Existing Gas Laws Spanish wording is preserved.
 
+## AP Chemistry Unit 7 Practice (1.0.0)
+
+Reviewed against the attached ZornScience Style Kit v1.9, sections 1, 4, 5 and 6. All twelve supplied topic titles and AP glossary terms are preserved. Uses tabla ICE (inicial, cambio, equilibrio), never RICE; ion has no accent. Equilibrium constants and quotients use no units / sin unidades, as in earlier units. Additional activity wording:
+
+English | Mexican Spanish
+--- | ---
+concentration versus time | concentración contra tiempo
+rate versus time | velocidad contra tiempo
+plateau | meseta
+small-x approximation | aproximación de x pequeña
+re-equilibration | restablecimiento del equilibrio
+ion product | producto iónico
+sparingly soluble | poco soluble
+dimer | dímero
+monomer | monómero
+association / dissociation | asociación / disociación
+activity (thermodynamic) | actividad
+physical root | raíz física
+macroscopic composition | composición macroscópica
+
 ## AP Chemistry Unit 6 Practice (1.0.0)
 
 Uses the supplied Style Kit v1.9 AP glossary and exact Unit 6 topic titles. Sistema / alrededores, calor / temperatura / energía térmica, equilibrio térmico, capacidad calorífica, capacidad calorífica específica (calor específico), capacidad calorífica molar, calorímetro de vaso de espuma, calor de fusión / vaporización (entalpía de fusión / vaporización), tramo inclinado / tramo plano, entalpía de reacción, entalpía de enlace, entalpía de formación (entalpía estándar de formación), estado estándar, función de estado, diagrama de energía, primera ley de la termodinámica and endotérmico / exotérmico retain the glossary wording. Units remain J, kJ, kJ/mol and °C, never translated.
