@@ -2,6 +2,48 @@
 
 Reference: the ZornScience Style Kit v1.7, sections 4 to 6. Mexican Spanish, tú, noun-phrase titles, unchanged chemistry and decimal points. This inventory records choices beyond the supplied fixed interface text and glossary. Full feedback and explanatory translations are in each activity's `data.js`. Existing Gas Laws Spanish wording is preserved.
 
+## AP Chemistry Unit 2 Practice (1.0.0)
+
+Reviewed against the attached ZornScience Style Kit v1.9, sections 1, 4, 5 and 6. The seven supplied topic titles are used exactly. AP vocabulary uses diagrama de Lewis, carga formal, resonancia, hibridación, enlace metálico, mar de electrones, aleación intersticial / sustitucional, red cristalina and ley de Coulomb. Existing par libre, geometría electrónica, geometría molecular and ángulo de enlace are retained. Geometry names agree in the feminine: lineal, trigonal plana, tetraédrica and piramidal trigonal.
+
+Newly recorded terms used in this activity:
+
+English | Spanish
+--- | ---
+Lewis diagram | diagrama de Lewis
+hybridization | hibridación
+metallic bonding | enlace metálico
+sea of electrons | mar de electrones
+interstitial alloy | aleación intersticial
+substitutional alloy | aleación sustitucional
+crystal lattice | red cristalina
+Coulomb's law | ley de Coulomb
+network covalent solid | sólido covalente de red
+bond order | orden de enlace
+bond length | longitud de enlace
+bond dissociation energy | energía de disociación del enlace
+internuclear distance | distancia internuclear
+potential well depth | profundidad del pozo
+bonding pair | par de enlace
+nonbonding electrons | electrones no enlazantes
+delocalized electrons | electrones deslocalizados
+resonance contributor | contribuyente de resonancia
+resonance hybrid | híbrido de resonancia
+charge separation | separación de cargas
+elementary charge | carga elemental
+metal core | centro metálico
+host metal | metal base
+brass | latón
+hardness | dureza
+malleability / ductility | maleabilidad / ductilidad
+sigma bond / pi bond | enlace sigma / enlace pi
+unhybridized p orbital | orbital p no hibridado
+side-by-side overlap | superposición lateral
+ethene | eteno
+cyanate | cianato
+
+Interface title: Práctica de la unidad 2 de Química AP. Mixed review remains Repaso mixto. Units use pm, kJ, kJ/mol and e unchanged. The angle unit is degrees / grados. Formal charges use signed integers in units of e. Full paired feedback and the accessible SVG description are in `apchem-unit2-practice/data.js`.
+
 ## AP Chemistry Unit 1 Practice (1.0.0)
 
 The eight topic titles follow the supplied official titles exactly. Decimal points, formulas, charges, numbers, and unit symbols are identical in both languages. Interface title: Práctica de la unidad 1 de Química AP. Mixed review: Repaso mixto. Complete question and feedback translations are paired in `apchem-unit1-practice/data.js`.
