@@ -187,8 +187,8 @@ test("directory lists and translates the new activity", async ({page, problems})
   await expect(page.locator("h1")).toHaveText("Práctica de la unidad 4 de Química AP");
 });
 
-for (const lang of ["en", "es"]) {
-  test("reference, solubility, particle model and complete distractor feedback in " + lang, async ({page, problems}) => {
+for (const lang of ["en", "es"]) for (const wrongIndex of [0, 1, 2]) {
+  test("reference, solubility and distractor " + (wrongIndex + 1) + " feedback across all topics in " + lang, async ({page, problems}) => {
     void problems;
     await page.setViewportSize({width:320,height:740});
     await page.goto(slug+(lang === "es" ? "?lang=es" : ""));
@@ -201,8 +201,7 @@ for (const lang of ["en", "es"]) {
     // Static copy is translated, including all solubility guidance.
     if (lang === "es") await expect(el(page,"reference")).not.toContainText("generally soluble");
     for (const topic of bank.topics) {
-      // Three sets expose every wrong choice once, including all nine topic selections.
-      for (let wrongIndex = 0; wrongIndex < 3; wrongIndex++) {
+      // Separate cases keep each of the three exhaustive passes within the normal timeout.
         await start(page,topic.id);
         for (let i=0;i<6;i++) {
           const q = await question(page);
@@ -219,7 +218,6 @@ for (const lang of ["en", "es"]) {
           await noOverflow(page); await el(page,"next").click();
         }
         await el(page,"choose").click();
-      }
     }
   });
 }
