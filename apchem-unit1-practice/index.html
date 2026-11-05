@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<meta name="description" content="Catch up on AP Chemistry Unit 1 with 48 original questions, instant explanations, and English or Spanish practice from ZornScience.">
+<title>AP Chemistry Unit 1 Practice | ZornScience</title>
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="practice.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.0.0" defer></script>
+<script src="data.js?v=1.0.0" defer></script>
+<script src="model.js?v=1.0.0" defer></script>
+<script src="practice.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-header.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="zsa zsa-u1" data-zsa-activity="apchem-unit1-practice">
+<header data-zsa-header>
+<div data-zsa-header-row>
+<div data-zsa-header-identity><a data-zsa-header-brand href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png" width="34" height="33" alt=""></a><h1>AP Chemistry Unit 1 Practice</h1></div>
+<nav data-zsa-header-tools aria-label="Activity tools"><div>
+<button class="zsa-btn" type="button" data-zsa-dialog-open="zsa-header-instructions" aria-haspopup="dialog" aria-controls="zsa-header-instructions">Instructions</button>
+<button class="zsa-btn" type="button" data-zsa-chrome data-zsa-dialog-open="zsa-header-share" aria-label="Share activity" aria-haspopup="dialog" aria-controls="zsa-header-share"><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button>
+</div></nav>
+</div>
+</header>
+<dialog class="zsa-header-dialog" id="zsa-header-instructions" aria-labelledby="zsa-header-instructions-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-header-instructions-title">Instructions</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close instructions" autofocus>Close</button></div>
+<ol>
+<li>Choose a topic, then start. Mixed review includes all eight topics.</li>
+<li>Select one answer, or enter a number and choose its unit. For a count, choose count; for a ratio, choose no units.</li>
+<li>Submit once per question. Read the explanation, then continue. Your score counts correct answers; a significant figure note does not remove a point.</li>
+<li>At the end, Try again shuffles the questions and answer choices. Choose another topic to build a new set.</li>
+</ol>
+</dialog>
+<dialog class="zsa-header-dialog" id="zsa-header-share" aria-labelledby="zsa-header-share-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-header-share-title">Share this activity</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close share options" autofocus>Close</button></div>
+<p>Share a fresh activity. Your answers and results are not included.</p>
+<label for="zsa-header-share-url">Share link</label><div class="zsa-header-share-link"><input id="zsa-header-share-url" type="text" readonly spellcheck="false"><button class="zsa-btn" type="button" data-zsa-share-copy>Copy link</button></div>
+<a data-zsa-share-email href="#">Email</a><p data-zsa-share-status role="status" aria-live="polite"></p>
+</dialog>
+<noscript><p class="zsa-panel">This activity needs JavaScript. / Esta actividad necesita JavaScript.</p></noscript>
+<section id="zsa-u1-setup" class="zsa-card" aria-labelledby="zsa-u1-setup-title">
+<p class="zsa-eyebrow">AP Chemistry · Unit 1</p>
+<h2 id="zsa-u1-setup-title">Catch up at your own pace.</h2>
+<p>Choose one topic for six questions, or Mixed review for all 48. Read the feedback after each answer.</p>
+<div class="zsa-u1-settings"><div><label for="zsa-u1-topic">Topic</label><select id="zsa-u1-topic"></select></div><button class="zsa-btn zsa-btn--primary" id="zsa-u1-start" type="button">Start practice</button></div>
+<p class="zsa-u1-small">No timer. Use scratch paper and a calculator. All the atomic masses you need are below.</p>
+</section>
+<section id="zsa-u1-play" hidden aria-labelledby="zsa-u1-question">
+<div class="zsa-u1-status"><p id="zsa-u1-position"></p><p id="zsa-u1-score"></p></div>
+<progress id="zsa-u1-progress" value="0" max="6" aria-label="Set progress"></progress>
+<div class="zsa-card zsa-u1-question-card">
+<p class="zsa-eyebrow" id="zsa-u1-topic-name"></p>
+<h2 id="zsa-u1-question" tabindex="-1"></h2>
+<form id="zsa-u1-answer" novalidate>
+<fieldset id="zsa-u1-choices"><legend class="zsa-u1-small">Choose one answer.</legend><div id="zsa-u1-options"></div></fieldset>
+<div id="zsa-u1-numeric" hidden>
+<p id="zsa-u1-precision" class="zsa-u1-small"></p>
+<div class="zsa-u1-entry"><div><label for="zsa-u1-value">Numerical answer</label><input id="zsa-u1-value" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" aria-describedby="zsa-u1-precision zsa-u1-number-help zsa-u1-error"></div><div><label for="zsa-u1-unit">Unit</label><select id="zsa-u1-unit"></select></div></div>
+<p id="zsa-u1-number-help" class="zsa-u1-small">Scientific notation: you may type 1.51e23 in the number field.</p>
+</div>
+<p id="zsa-u1-error" role="alert" class="zsa-u1-error"></p>
+<button id="zsa-u1-check" class="zsa-btn zsa-btn--primary" type="submit">Check answer</button>
+</form>
+<section id="zsa-u1-feedback" class="zsa-panel" aria-live="polite" aria-atomic="true" hidden></section>
+<button id="zsa-u1-next" class="zsa-btn zsa-btn--primary" type="button" hidden>Next question</button>
+</div>
+</section>
+<section id="zsa-u1-results" class="zsa-card" aria-labelledby="zsa-u1-results-title" hidden>
+<h2 id="zsa-u1-results-title" tabindex="-1">Your set is complete</h2>
+<p id="zsa-u1-total" class="zsa-u1-total"></p>
+<h3>Results by topic</h3><ul id="zsa-u1-breakdown"></ul>
+<div class="zsa-u1-actions"><button id="zsa-u1-retry" class="zsa-btn zsa-btn--primary" type="button">Try again</button><button id="zsa-u1-choose" class="zsa-btn" type="button">Choose another topic</button></div>
+<div id="zsa-u1-review"></div>
+</section>
+<details class="zsa-panel zsa-u1-reference" id="zsa-u1-reference">
+<summary>Reference</summary><h2>Atomic masses (g/mol)</h2>
+<p>Use these values. Keep extra digits in your work and round only the final answer. Isotope masses in model questions are given in the prompt.</p>
+<dl class="zsa-u1-masses"><div><dt>H</dt><dd>1.01</dd></div><div><dt>C</dt><dd>12.01</dd></div><div><dt>N</dt><dd>14.01</dd></div><div><dt>O</dt><dd>16.00</dd></div><div><dt>Na</dt><dd>22.99</dd></div><div><dt>Mg</dt><dd>24.31</dd></div><div><dt>Al</dt><dd>26.98</dd></div><div><dt>S</dt><dd>32.06</dd></div><div><dt>Cl</dt><dd>35.45</dd></div><div><dt>K</dt><dd>39.10</dd></div><div><dt>Ca</dt><dd>40.08</dd></div><div><dt>Fe</dt><dd>55.85</dd></div></dl>
+<p><span>Avogadro constant</span>: 6.022 × 10<sup>23</sup> mol<sup>−1</sup></p>
+</details>
+<p class="zsa-u1-small">Aligned practice for AP Chemistry CED topics 1.1 to 1.8. Original ZornScience questions.</p>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Your answers stay in this tab. No account needed.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><a class="zsa-back" id="zsa-u1-back" href="https://zornscience.org/science/ap-chemistry/">← Back to the lesson</a></footer>
+</main>
+</body>
+</html>

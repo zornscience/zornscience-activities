@@ -1,0 +1,47 @@
+.zsa-u1 {--zsa-max-width:1000px;}
+.zsa-u1 h2 {font-size:clamp(1.35rem,1.15rem + .8vw,1.8rem); line-height:1.4;}
+.zsa-u1 h3 {font-size:1.2rem;}
+.zsa-u1 .zsa-card {padding:clamp(16px,3vw,28px);}
+.zsa-u1 .zsa-card>h2 {margin-top:0;}
+.zsa-u1 .zsa-u1-small {font-size:15px; line-height:1.6;}
+.zsa-u1 .zsa-u1-settings {display:flex; flex-wrap:wrap; gap:16px; align-items:end;}
+.zsa-u1 .zsa-u1-settings>div {flex:1 1 300px; min-width:0;}
+.zsa-u1 label {display:block; margin-bottom:6px; font-weight:500;}
+.zsa-u1 select,.zsa-u1 input[type="text"] {width:100%; min-width:0; min-height:48px; border:1px solid var(--zsa-border-strong); border-radius:8px; padding:10px; color:var(--zsa-navy); background:white;}
+.zsa-u1 select {font-size:16px; text-overflow:ellipsis;}
+.zsa-u1 .zsa-u1-status {display:flex; flex-wrap:wrap; justify-content:space-between; gap:0 16px; font-size:15px;}
+.zsa-u1 progress {width:100%; height:10px; accent-color:var(--zsa-blue);}
+.zsa-u1 fieldset {border:0; margin:0; padding:0; min-width:0;}
+.zsa-u1 legend {padding:0; margin:0 0 12px;}
+.zsa-u1 #zsa-u1-options {display:grid; gap:10px;}
+.zsa-u1 .zsa-u1-option {display:flex; gap:12px; align-items:center; padding:14px; margin:0; min-height:52px; border:1px solid var(--zsa-border-strong); border-radius:8px; cursor:pointer; font-weight:400;}
+.zsa-u1 .zsa-u1-option:has(input:checked) {border-color:var(--zsa-blue); background:var(--zsa-sky);}
+.zsa-u1 .zsa-u1-option:has(input:disabled) {cursor:default;}
+.zsa-u1 .zsa-u1-option input {flex:0 0 20px; width:20px; height:20px; accent-color:var(--zsa-blue); margin:0;}
+.zsa-u1 .zsa-u1-option.is-correct {border:2px solid var(--zsa-success); background:var(--zsa-success-bg);}
+.zsa-u1 .zsa-u1-option.is-wrong {border:2px solid var(--zsa-error); background:var(--zsa-error-bg);}
+.zsa-u1 .zsa-u1-entry {display:grid; grid-template-columns:minmax(0,2fr) minmax(0,1fr); gap:16px;}
+.zsa-u1 .zsa-u1-error {color:var(--zsa-error); font-size:16px;}
+.zsa-u1 #zsa-u1-feedback {margin:20px 0;}
+.zsa-u1 #zsa-u1-feedback p:first-child {margin-top:0; font-weight:600;}
+.zsa-u1 #zsa-u1-feedback p:last-child {margin-bottom:0;}
+.zsa-u1 #zsa-u1-feedback.is-correct {border-color:var(--zsa-success); background:var(--zsa-success-bg);}
+.zsa-u1 #zsa-u1-feedback.is-wrong {border-color:var(--zsa-error); background:var(--zsa-error-bg);}
+.zsa-u1 .zsa-u1-total {color:var(--zsa-navy); font-size:1.5rem; font-weight:600;}
+.zsa-u1 #zsa-u1-breakdown {padding-left:22px;}
+.zsa-u1 #zsa-u1-breakdown li {margin:10px 0;}
+.zsa-u1 .zsa-u1-actions {display:flex; flex-wrap:wrap; gap:12px; margin:24px 0;}
+.zsa-u1 .zsa-u1-review-item {margin:16px 0; padding:16px 0; border-top:1px solid var(--zsa-border);}
+.zsa-u1 .zsa-u1-review-item summary {cursor:pointer; color:var(--zsa-navy);}
+.zsa-u1 .zsa-u1-reference {margin-top:24px; font-size:16px;}
+.zsa-u1 summary {min-height:44px; padding:8px 0; cursor:pointer;}
+.zsa-u1 .zsa-u1-masses {display:grid; grid-template-columns:repeat(auto-fit,minmax(100px,1fr)); gap:8px;}
+.zsa-u1 .zsa-u1-masses>div {display:flex; gap:8px;}
+.zsa-u1 dd {margin:0; font-variant-numeric:tabular-nums;}
+.zsa-u1 sub,.zsa-u1 sup {font-size:.75em; line-height:0;}
+@media(max-width:480px) {
+  .zsa-u1 .zsa-u1-settings>.zsa-btn {width:100%;}
+  .zsa-u1 .zsa-u1-entry {grid-template-columns:minmax(0,1fr);}
+  .zsa-u1 .zsa-u1-status p {margin-bottom:8px;}
+  .zsa-u1 .zsa-footer {gap:8px;}
+}
