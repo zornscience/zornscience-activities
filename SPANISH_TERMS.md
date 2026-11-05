@@ -2,6 +2,28 @@
 
 Reference: the ZornScience Style Kit v1.7, sections 4 to 6. Mexican Spanish, tú, noun-phrase titles, unchanged chemistry and decimal points. This inventory records choices beyond the supplied fixed interface text and glossary. Full feedback and explanatory translations are in each activity's `data.js`. Existing Gas Laws Spanish wording is preserved.
 
+## AP Chemistry Unit 1 Practice (1.0.0)
+
+The eight topic titles follow the supplied official titles exactly. Decimal points, formulas, charges, numbers, and unit symbols are identical in both languages. Interface title: Práctica de la unidad 1 de Química AP. Mixed review: Repaso mixto. Complete question and feedback translations are paired in `apchem-unit1-practice/data.js`.
+
+English | Spanish
+--- | ---
+binding energy | energía de ligadura
+core electrons | electrones internos
+shielding | apantallamiento
+subshell | subnivel
+unpaired electron | electrón desapareado
+integrated peak area | área integrada de un pico
+mass fraction | fracción en masa
+mass percent | porcentaje en masa
+percent abundance | abundancia porcentual
+molecular formula | fórmula molecular
+Pauli exclusion principle | principio de exclusión de Pauli
+Hund's rule | regla de Hund
+principal quantum number | número cuántico principal
+ionic lattice | red iónica
+successive ionization energies | energías de ionización sucesivas
+
 ## Science terms and ion names
 
 English | Spanish
