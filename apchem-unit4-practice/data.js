@@ -1866,8 +1866,8 @@
       "topic": "4.7",
       "type": "numeric",
       "prompt": {
-        "en": "A precipitation reaction follows CaCl<sub>2</sub>(aq) + Na<sub>2</sub>CO<sub>3</sub>(aq) → CaCO<sub>3</sub>(s) + 2NaCl(aq). With excess carbonate, assume all 0.0200 mol CaCl<sub>2</sub> precipitates. How many moles of CaCO<sub>3</sub> form?",
-        "es": "Una reacción de precipitación sigue CaCl<sub>2</sub>(aq) + Na<sub>2</sub>CO<sub>3</sub>(aq) → CaCO<sub>3</sub>(s) + 2NaCl(aq). Con carbonato en exceso, supone que precipitan todos los 0.0200 mol de CaCl<sub>2</sub>. ¿Cuántos moles de CaCO<sub>3</sub> se forman?"
+        "en": "A precipitation reaction follows CaCl<sub>2</sub>(aq) + Na<sub>2</sub>CO<sub>3</sub>(aq) → CaCO<sub>3</sub>(s) + 2NaCl(aq). With excess carbonate, assume all calcium ions from 0.0200 mol CaCl<sub>2</sub> precipitate. How many moles of CaCO<sub>3</sub> form?",
+        "es": "Una reacción de precipitación sigue CaCl<sub>2</sub>(aq) + Na<sub>2</sub>CO<sub>3</sub>(aq) → CaCO<sub>3</sub>(s) + 2NaCl(aq). Con carbonato en exceso, supone que todos los iones calcio de 0.0200 mol de CaCl<sub>2</sub> precipitan. ¿Cuántos moles de CaCO<sub>3</sub> se forman?"
       },
       "value": 0.02,
       "display": "0.0200",

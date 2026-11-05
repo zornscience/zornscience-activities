@@ -67,6 +67,14 @@ For 4.8-1, the equilibrium is shown in the prompt as a forward proton-transfer e
 
 ## Verification
 
-Pending full unit, browser and parity runs. Results will be recorded here after execution.
+Run the full repository suite with `npm test`, then `npm run parity -- --base origin/main`. Focused development checks are `node --test tests/unit/apchem-unit4-practice.test.js tests/unit/static.test.js` and `npx playwright test tests/e2e/apchem-unit4-practice.spec.js`. The complete repository browser run contains 653 cases, including the ten new Unit 4 cases. Current full-run outcomes and CI links are recorded in [PR #86](https://github.com/zornscience/zornscience-activities/pull/86).
+
+The six new unit checks pass. They independently verify all 18 numeric calculations, rounded and unrounded values, units, exact counts, tolerance boundaries, all 36 multiple-choice answers, six questions per topic, paired notation and numbers, unique distractor feedback, exact topic titles, required AP glossary terms, unchanged atomic-mass values, asset order and the two-runtime-file contract. The particle SVG conserves eight H atoms and six O atoms and shows only the initial mixture so it does not reveal the answer.
+
+The browser coverage completes all 54 questions correctly and incorrectly in English and Spanish, checks per-topic scores and missed-question review, reshuffled retries, topic switching, validation, unit errors, significant figures and decimal places. Three passes through every topic exercise all 108 wrong-choice explanations in both languages. Additional cases check mol/L suffixes, translated reference rules and diagram text, native keyboard flow, focus, header dialogs, fresh share links, validated backlinks, reload reset, blocked storage, zero outside requests, WCAG scans and 320 px layouts.
+
+Reviewed desktop and Spanish phone previews of the particle model and expanded reference panel. The model uses different particle sizes and fill patterns and has a translated title, description, visible label and caption. Complete particle counts are also given in words. Solubility guidance specifies dilute aqueous solutions near room temperature and yields to specific prompt data. Precipitation questions explicitly assume complete precipitation when a quantitative amount is requested. The ammonia-water question describes a forward proton-transfer event without implying complete ionization. The bond-counting question counts net original bonds, not elementary mechanism events.
+
+Confirmed ZornScience branding, CC BY-NC-SA 4.0, real subscript and superscript notation, (aq) state symbols and no en or em dashes. All shared files, Units 1 to 3 activity files and WordPress files are unchanged from the base. The only existing practice-test edits change the directory count from six to seven. No zornscience.org edits. No engine change was needed and no unresolved chemistry or translation questions remain.
 
 ZornScience. CC BY-NC-SA 4.0.
