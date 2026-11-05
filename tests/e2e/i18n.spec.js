@@ -21,6 +21,7 @@ const labs = {
   "circuit-builder":"Constructor de circuitos",
   "collision-carts":"Carritos de colisión",
   "electrochemistry-lab":"Constructor de celdas electroquímicas",
+  "equilibrium-k-lab":"Laboratorio virtual de la constante de equilibrio",
   "equilibrium-lab":"Explorador del equilibrio",
   "equilibrium-thermo-lab":"Selección de un laboratorio de química",
   "equipotential-lab":"Líneas equipotenciales y mapeo de campos eléctricos",
@@ -39,6 +40,7 @@ const labs = {
   "projectile-lab":"Laboratorio de vectores del movimiento de proyectiles",
   "redox-coach":"Práctica de balanceo de semirreacciones redox",
   "snells-law-lab":"Ley de Snell y refracción",
+  "solutions-lab":"Laboratorio virtual de soluciones",
   "standing-waves-lab":"Ondas estacionarias en una cuerda",
   "titration-lab":"Simulador virtual de titulación"
 };
