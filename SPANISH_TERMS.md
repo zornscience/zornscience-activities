@@ -2,6 +2,52 @@
 
 Reference: the ZornScience Style Kit v1.7, sections 4 to 6. Mexican Spanish, tú, noun-phrase titles, unchanged chemistry and decimal points. This inventory records choices beyond the supplied fixed interface text and glossary. Full feedback and explanatory translations are in each activity's `data.js`. Existing Gas Laws Spanish wording is preserved.
 
+## AP Chemistry Unit 3 Practice (1.0.0)
+
+Reviewed against the attached ZornScience Style Kit v1.9, sections 1, 4, 5 and 6, with the user's supplied thirteen topic titles taking precedence. Interface title: Práctica de la unidad 3 de Química AP. All topic titles appear exactly as supplied in `apchem-unit3-practice/data.js`. Formulas, charges, decimal points and numbers match English. Particle speed uses rapidez and temperatures use lowercase kelvin. The schematic SVG is labeled modelo and has translated accessible text.
+
+Required AP glossary terms used in the questions and reference:
+
+English | Mexican Spanish
+--- | ---
+London dispersion forces (LDF) | fuerzas de dispersión de London (FDL)
+hydrogen bond | puente de hidrógeno
+partial pressure / mole fraction | presión parcial / fracción molar
+kinetic molecular theory | teoría cinético-molecular
+Maxwell-Boltzmann distribution | distribución de Maxwell-Boltzmann
+particle speed | rapidez de partículas
+molarity | molaridad
+miscible / immiscible | miscible / inmiscible
+chromatography | cromatografía
+stationary phase / mobile phase | fase estacionaria / fase móvil
+retention factor | factor de retención
+wavelength / frequency | longitud de onda / frecuencia
+photon / Planck's constant | fotón / constante de Planck
+absorbance | absorbancia
+path length / molar absorptivity | longitud de trayectoria / absortividad molar
+calibration curve | curva de calibración
+cuvette | celda
+like dissolves like | lo semejante disuelve a lo semejante
+
+New activity-specific terms beyond the supplied glossary:
+
+English | Mexican Spanish
+--- | ---
+excluded volume | volumen excluido
+compressibility | compresibilidad
+volatility | volatilidad
+solvent front | frente del disolvente
+solvent blank | blanco de disolvente
+hydroxyl group | grupo hidroxilo
+hydrolysis | hidrólisis
+azeotrope | azeótropo
+distillate | destilado
+rotational transition | transición rotacional
+vibrational transition | transición vibracional
+electronic excitation | excitación electrónica
+
+Retained existing terms include hidratación, no electrolito and ordenada al origen. Full paired question and feedback translations, including the model curve and reference panel, are in `apchem-unit3-practice/data.js`. No edits to the source style kit, WordPress or zornscience.org.
+
 ## AP Chemistry Unit 2 Practice (1.0.0)
 
 Reviewed against the attached ZornScience Style Kit v1.9, sections 1, 4, 5 and 6. The seven supplied topic titles are used exactly. AP vocabulary uses diagrama de Lewis, carga formal, resonancia, hibridación, enlace metálico, mar de electrones, aleación intersticial / sustitucional, red cristalina and ley de Coulomb. Existing par libre, geometría electrónica, geometría molecular and ángulo de enlace are retained. Geometry names agree in the feminine: lineal, trigonal plana, tetraédrica and piramidal trigonal.

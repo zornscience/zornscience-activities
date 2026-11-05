@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<meta name="description" content="Catch up on AP Chemistry Unit 3 with 78 original questions, instant explanations, and English or Spanish practice from ZornScience.">
+<title>AP Chemistry Unit 3 Practice | ZornScience</title>
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="practice.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.0.0" defer></script>
+<script src="data.js?v=1.0.0" defer></script>
+<script src="model.js?v=1.0.0" defer></script>
+<script src="practice.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-header.js?v=1.0.0" defer></script>
+</head>
+<body>
+<main class="zsa zsa-u3" data-zsa-activity="apchem-unit3-practice">
+<header data-zsa-header>
+<div data-zsa-header-row>
+<div data-zsa-header-identity><a data-zsa-header-brand href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png" width="34" height="33" alt=""></a><h1>AP Chemistry Unit 3 Practice</h1></div>
+<nav data-zsa-header-tools aria-label="Activity tools"><div>
+<button class="zsa-btn" type="button" data-zsa-dialog-open="zsa-header-instructions" aria-haspopup="dialog" aria-controls="zsa-header-instructions">Instructions</button>
+<button class="zsa-btn" type="button" data-zsa-chrome data-zsa-dialog-open="zsa-header-share" aria-label="Share activity" aria-haspopup="dialog" aria-controls="zsa-header-share"><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button>
+</div></nav>
+</div>
+</header>
+<dialog class="zsa-header-dialog" id="zsa-header-instructions" aria-labelledby="zsa-header-instructions-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-header-instructions-title">Instructions</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close instructions" autofocus>Close</button></div>
+<ol>
+<li>Choose a topic, then start. Mixed review includes all thirteen topics.</li>
+<li>Select one answer, or enter a number and choose its unit. For a count, choose count; for a ratio, choose no units.</li>
+<li>Submit once per question. Read the explanation, then continue. Your score counts correct answers; a significant figure note does not remove a point.</li>
+<li>At the end, Try again shuffles the questions and answer choices. Choose another topic to build a new set.</li>
+</ol>
+</dialog>
+<dialog class="zsa-header-dialog" id="zsa-header-share" aria-labelledby="zsa-header-share-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-header-share-title">Share this activity</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close share options" autofocus>Close</button></div>
+<p>Share a fresh activity. Your answers and results are not included.</p>
+<label for="zsa-header-share-url">Share link</label><div class="zsa-header-share-link"><input id="zsa-header-share-url" type="text" readonly spellcheck="false"><button class="zsa-btn" type="button" data-zsa-share-copy>Copy link</button></div>
+<a data-zsa-share-email href="#">Email</a><p data-zsa-share-status role="status" aria-live="polite"></p>
+</dialog>
+<noscript><p class="zsa-panel">This activity needs JavaScript. / Esta actividad necesita JavaScript.</p></noscript>
+<section id="zsa-u3-setup" class="zsa-card" aria-labelledby="zsa-u3-setup-title">
+<p class="zsa-eyebrow">AP Chemistry · Unit 3</p>
+<h2 id="zsa-u3-setup-title">Catch up at your own pace.</h2>
+<p>Choose one topic for six questions, or Mixed review for all 78. Read the feedback after each answer.</p>
+<div class="zsa-u3-settings"><div><label for="zsa-u3-topic">Topic</label><select id="zsa-u3-topic"></select></div><button class="zsa-btn zsa-btn--primary" id="zsa-u3-start" type="button">Start practice</button></div>
+<p class="zsa-u3-small">No timer. Use scratch paper and a calculator. Reference values are below.</p>
+</section>
+<section id="zsa-u3-play" hidden aria-labelledby="zsa-u3-question">
+<div class="zsa-u3-status"><p id="zsa-u3-position"></p><p id="zsa-u3-score"></p></div>
+<progress id="zsa-u3-progress" value="0" max="6" aria-label="Set progress"></progress>
+<div class="zsa-card zsa-u3-question-card">
+<p class="zsa-eyebrow" id="zsa-u3-topic-name"></p>
+<h2 id="zsa-u3-question" tabindex="-1"></h2>
+<figure id="zsa-u3-curve" class="zsa-u3-curve" hidden>
+<svg viewBox="0 0 460 280" role="img" aria-labelledby="zsa-u3-curve-title" aria-describedby="zsa-u3-curve-desc">
+<title id="zsa-u3-curve-title">Model Maxwell-Boltzmann speed distributions</title>
+<desc id="zsa-u3-curve-desc">Schematic model for equal numbers of particles of the same gas. The warmer curve has a lower, broader peak at greater speed. Both curves represent the same total area. No numerical scale is implied.</desc>
+<text x="12" y="18">Relative number of particles</text>
+<path class="zsa-u3-axis" d="M35 30V230H445"/>
+<path class="zsa-u3-cool-curve" d="M35.00 230.0000L40.00 228.7655L45.00 225.1077L50.00 219.1608L55.00 211.1422L60.00 201.3419L65.00 190.1099L70.00 177.8405L75.00 164.9554L80.00 151.8860L85.00 139.0556L90.00 126.8634L95.00 115.6700L100.00 105.7850L105.00 97.4584L110.00 90.8745L115.00 86.1495L120.00 83.3320L125.00 82.4062L130.00 83.2984L135.00 85.8842L140.00 89.9984L145.00 95.4443L150.00 102.0048L155.00 109.4517L160.00 117.5555L165.00 126.0933L170.00 134.8558L175.00 143.6528L180.00 152.3173L185.00 160.7075L190.00 168.7082L195.00 176.2309L200.00 183.2121L205.00 189.6117L210.00 195.4104L215.00 200.6070L220.00 205.2148L225.00 209.2592L230.00 212.7744L235.00 215.8005L240.00 218.3816L245.00 220.5632L250.00 222.3910L255.00 223.9091L260.00 225.1594L265.00 226.1804L270.00 227.0075L275.00 227.6720L280.00 228.2017L285.00 228.6205L290.00 228.9492L295.00 229.2050L300.00 229.4028L305.00 229.5544L310.00 229.6698L315.00 229.7570L320.00 229.8224L325.00 229.8710L330.00 229.9070L335.00 229.9334L340.00 229.9526L345.00 229.9665L350.00 229.9765L355.00 229.9836L360.00 229.9886L365.00 229.9922L370.00 229.9947L375.00 229.9964L380.00 229.9976L385.00 229.9984L390.00 229.9989L395.00 229.9993L400.00 229.9995L405.00 229.9997L410.00 229.9998L415.00 229.9999L420.00 229.9999L425.00 229.9999L430.00 230.0000L435.00 230.0000"/>
+<path class="zsa-u3-bond-curve" d="M35.00 230.0000L40.00 229.7321L45.00 228.9321L50.00 227.6105L55.00 225.7849L60.00 223.4794L65.00 220.7244L70.00 217.5559L75.00 214.0151L80.00 210.1477L85.00 206.0030L90.00 201.6333L95.00 197.0931L100.00 192.4381L105.00 187.7245L110.00 183.0083L115.00 178.3442L120.00 173.7849L125.00 169.3807L130.00 165.1785L135.00 161.2216L140.00 157.5487L145.00 154.1940L150.00 151.1868L155.00 148.5509L160.00 146.3052L165.00 144.4627L170.00 143.0317L175.00 142.0149L180.00 141.4101L185.00 141.2108L190.00 141.4058L195.00 141.9800L200.00 142.9149L205.00 144.1890L210.00 145.7781L215.00 147.6558L220.00 149.7943L225.00 152.1645L230.00 154.7366L235.00 157.4808L240.00 160.3671L245.00 163.3664L250.00 166.4501L255.00 169.5910L260.00 172.7633L265.00 175.9429L270.00 179.1072L275.00 182.2360L280.00 185.3108L285.00 188.3151L290.00 191.2349L295.00 194.0578L300.00 196.7737L305.00 199.3743L310.00 201.8534L315.00 204.2063L320.00 206.4300L325.00 208.5231L330.00 210.4853L335.00 212.3178L340.00 214.0226L345.00 215.6029L350.00 217.0624L355.00 218.4056L360.00 219.6374L365.00 220.7633L370.00 221.7890L375.00 222.7202L380.00 223.5629L385.00 224.3230L390.00 225.0066L395.00 225.6193L400.00 226.1669L405.00 226.6547L410.00 227.0880L415.00 227.4717L420.00 227.8104L425.00 228.1087L430.00 228.3704L435.00 228.5995"/>
+<text x="62" y="41">Cooler</text><text x="235" y="115">Warmer</text>
+<text x="170" y="258">Particle speed</text>
+</svg>
+<figcaption class="zsa-u3-small">Model, schematic curves; equal particle numbers.</figcaption>
+</figure>
+<form id="zsa-u3-answer" novalidate>
+<fieldset id="zsa-u3-choices"><legend class="zsa-u3-small">Choose one answer.</legend><div id="zsa-u3-options"></div></fieldset>
+<div id="zsa-u3-numeric" hidden>
+<p id="zsa-u3-precision" class="zsa-u3-small"></p>
+<div class="zsa-u3-entry"><div><label for="zsa-u3-value">Numerical answer</label><input id="zsa-u3-value" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" aria-describedby="zsa-u3-precision zsa-u3-number-help zsa-u3-error"></div><div><label for="zsa-u3-unit">Unit</label><select id="zsa-u3-unit"></select></div></div>
+<p id="zsa-u3-number-help" class="zsa-u3-small">Scientific notation: you may type 1.51e23 in the number field.</p>
+</div>
+<p id="zsa-u3-error" role="alert" class="zsa-u3-error"></p>
+<button id="zsa-u3-check" class="zsa-btn zsa-btn--primary" type="submit">Check answer</button>
+</form>
+<section id="zsa-u3-feedback" class="zsa-panel" aria-live="polite" aria-atomic="true" hidden></section>
+<button id="zsa-u3-next" class="zsa-btn zsa-btn--primary" type="button" hidden>Next question</button>
+</div>
+</section>
+<section id="zsa-u3-results" class="zsa-card" aria-labelledby="zsa-u3-results-title" hidden>
+<h2 id="zsa-u3-results-title" tabindex="-1">Your set is complete</h2>
+<p id="zsa-u3-total" class="zsa-u3-total"></p>
+<h3>Results by topic</h3><ul id="zsa-u3-breakdown"></ul>
+<div class="zsa-u3-actions"><button id="zsa-u3-retry" class="zsa-btn zsa-btn--primary" type="button">Try again</button><button id="zsa-u3-choose" class="zsa-btn" type="button">Choose another topic</button></div>
+<div id="zsa-u3-review"></div>
+</section>
+<details class="zsa-panel zsa-u3-reference" id="zsa-u3-reference">
+<summary>Reference</summary><h2>Gas, solution and light reference</h2>
+<p>Use temperatures in kelvin for gas law calculations. Keep extra digits in your work and round only the final answer.</p>
+<p>R = 0.08206 L·atm/(mol·K) = 8.314 J/(mol·K)</p>
+<p>1 atm = 760 mmHg = 101.3 kPa</p>
+<p><span>Planck constant</span>: h = 6.626 × 10<sup>−34</sup> J·s</p>
+<p><span>Speed of light in vacuum</span>: c = 3.00 × 10<sup>8</sup> m/s</p>
+<p><span>Avogadro constant</span>: 6.022 × 10<sup>23</sup> mol<sup>−1</sup></p>
+<p>Gas laws: PV = nRT. Partial pressure = mole fraction × total pressure. Molarity = moles of solute / liters of solution.</p>
+<p>Light: E = hν and c = λν. Beer-Lambert law: A = εbc. Absorbance and retention factor Rf have no units.</p>
+<h3>Atomic masses (g/mol)</h3>
+<dl class="zsa-u3-masses"><div><dt>H</dt><dd>1.01</dd></div><div><dt>C</dt><dd>12.01</dd></div><div><dt>N</dt><dd>14.01</dd></div><div><dt>O</dt><dd>16.00</dd></div><div><dt>Na</dt><dd>22.99</dd></div><div><dt>Mg</dt><dd>24.31</dd></div><div><dt>Al</dt><dd>26.98</dd></div><div><dt>S</dt><dd>32.06</dd></div><div><dt>Cl</dt><dd>35.45</dd></div><div><dt>K</dt><dd>39.10</dd></div><div><dt>Ca</dt><dd>40.08</dd></div><div><dt>Fe</dt><dd>55.85</dd></div></dl>
+</details>
+<p class="zsa-u3-small">Aligned practice for AP Chemistry CED topics 3.1 to 3.13. Original ZornScience questions.</p>
+<footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Your answers stay in this tab. No account needed.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><a class="zsa-back" id="zsa-u3-back" href="https://zornscience.org/science/ap-chemistry/">← Back to the lesson</a></footer>
+</main>
+</body>
+</html>

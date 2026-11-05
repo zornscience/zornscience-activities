@@ -40,6 +40,7 @@ gas-lab/                   Gas Laws and KMT Lab, v1.0.0 (particle simulation, gr
 stoichiometry-coach/       Stoichiometry Coach, v1.0.0 (conversion factor setups with unit cancellation)
 apchem-unit1-practice/     AP Chemistry Unit 1 Practice, v1.0.0 (48 original questions across topics 1.1 to 1.8, instant feedback, topic scores; English and Mexican Spanish)
 apchem-unit2-practice/     AP Chemistry Unit 2 Practice, v1.0.0 (42 original questions across topics 2.1 to 2.7, instant feedback, topic scores; English and Mexican Spanish)
+apchem-unit3-practice/     AP Chemistry Unit 3 Practice, v1.0.0 (78 original questions across topics 3.1 to 3.13, instant feedback, topic scores; English and Mexican Spanish)
 atwood-machine/           The Atwood Machine, v1.1.0 (ideal pulley, adjustable masses and live vectors; no data recording; English and Mexican Spanish)
 physics-graphing-lab/      Physics Graphing Lab, v1.1.0 (a cart with linked position, velocity and acceleration graphs; English and Mexican Spanish)
 collision-carts/           Collision Carts, v1.1.0 (two carts on a track, elastic and inelastic collisions, live velocity and momentum vectors; English and Mexican Spanish)
