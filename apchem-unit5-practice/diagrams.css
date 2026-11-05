@@ -1,0 +1,9 @@
+/* Unit-owned schematic models. Shared practice layout is unchanged. */
+.zsa-u5 [data-zsa-practice-visual] { margin: 1rem auto; max-width: 28rem; }
+.zsa-u5 [data-zsa-practice-visual] svg { display: block; width: 100%; height: auto; }
+.zsa-u5 .zsa-u5-axis { fill: none; stroke: var(--zsa-navy); stroke-width: 1.5; }
+.zsa-u5 .zsa-u5-curve { fill: none; stroke: var(--zsa-blue); stroke-width: 3; }
+.zsa-u5 .zsa-u5-catalyzed { fill: none; stroke: var(--zsa-navy); stroke-width: 3; stroke-dasharray: 7 4; }
+.zsa-u5 .zsa-u5-label, .zsa-u5 .zsa-u5-axis-label, .zsa-u5 .zsa-u5-key { fill: var(--zsa-navy); font-family: inherit; font-size: 13px; text-anchor: middle; }
+.zsa-u5 .zsa-u5-key { font-size: 11px; }
+.zsa-u5 figcaption { font-size: 0.85rem; text-align: center; }
