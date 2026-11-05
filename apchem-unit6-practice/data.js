@@ -1115,8 +1115,8 @@
       "topic": "6.4",
       "type": "numeric",
       "prompt": {
-        "en": "A 50.0 g solution in a coffee-cup calorimeter cools from 30.0 °C to 24.0 °C. Use c = 4.18 J/(g·°C). Find q(solution), not q(reaction), with its sign and three significant figures.",
-        "es": "Una solución de 50.0 g en un calorímetro de vaso de espuma se enfría de 30.0 °C a 24.0 °C. Usa c = 4.18 J/(g·°C). Calcula q(solución), no q(reacción), con su signo y tres cifras significativas."
+        "en": "A 50.0 g solution in a coffee-cup calorimeter cools from 30.00 °C to 24.00 °C. Use c = 4.18 J/(g·°C). Find q(solution), not q(reaction), with its sign and three significant figures.",
+        "es": "Una solución de 50.0 g en un calorímetro de vaso de espuma se enfría de 30.00 °C a 24.00 °C. Usa c = 4.18 J/(g·°C). Calcula q(solución), no q(reacción), con su signo y tres cifras significativas."
       },
       "value": -1254,
       "display": "−1.25e3",
@@ -1126,8 +1126,8 @@
       },
       "tolerance": 5.5,
       "explanation": {
-        "en": "q(solution) = (50.0)(4.18)(24.0 − 30.0) = −1254 J ≈ −1.25 × 10<sup>3</sup> J. The sign must be − because the solution cools; a + sign would be incorrect for the solution.",
-        "es": "q(solución) = (50.0)(4.18)(24.0 − 30.0) = −1254 J ≈ −1.25 × 10<sup>3</sup> J. El signo debe ser − porque la solución se enfría; un signo + sería incorrecto para la solución."
+        "en": "q(solution) = (50.0)(4.18)(24.00 − 30.00) = −1254 J ≈ −1.25 × 10<sup>3</sup> J. The sign must be − because the solution cools; a + sign would be incorrect for the solution.",
+        "es": "q(solución) = (50.0)(4.18)(24.00 − 30.00) = −1254 J ≈ −1.25 × 10<sup>3</sup> J. El signo debe ser − porque la solución se enfría; un signo + sería incorrecto para la solución."
       }
     },
     {
@@ -1909,19 +1909,19 @@
       "topic": "6.7",
       "type": "numeric",
       "prompt": {
-        "en": "Estimate ΔH for N<sub>2</sub>(g) + 3H<sub>2</sub>(g) → 2NH<sub>3</sub>(g). Use bond enthalpies N≡N 945, H-H 436, N-H 391 kJ/mol. Include the sign and three significant figures.",
-        "es": "Estima ΔH para N<sub>2</sub>(g) + 3H<sub>2</sub>(g) → 2NH<sub>3</sub>(g). Usa entalpías de enlace N≡N 945, H-H 436, N-H 391 kJ/mol. Incluye el signo y tres cifras significativas."
+        "en": "Estimate ΔH for N<sub>2</sub>(g) + 3H<sub>2</sub>(g) → 2NH<sub>3</sub>(g). Use bond enthalpies N≡N 945, H-H 436, N-H 391 kJ/mol. Include the sign and two significant figures.",
+        "es": "Estima ΔH para N<sub>2</sub>(g) + 3H<sub>2</sub>(g) → 2NH<sub>3</sub>(g). Usa entalpías de enlace N≡N 945, H-H 436, N-H 391 kJ/mol. Incluye el signo y dos cifras significativas."
       },
       "value": -93,
-      "display": "−93.0",
+      "display": "−93",
       "unit": "kJ/mol",
       "precision": {
-        "sf": 3
+        "sf": 2
       },
-      "tolerance": 0.055,
+      "tolerance": 0.55,
       "explanation": {
-        "en": "Break one N≡N and three H-H bonds; form six N-H bonds. ΔH ≈ 945 + 3(436) − 6(391) = −93.0 kJ/mol. The sign must be −; a + sign reverses broken minus formed.",
-        "es": "Rompe un enlace N≡N y tres H-H; forma seis enlaces N-H. ΔH ≈ 945 + 3(436) − 6(391) = −93.0 kJ/mol. El signo debe ser −; un signo + invierte rotos menos formados."
+        "en": "Break one N≡N and three H-H bonds; form six N-H bonds. ΔH ≈ 945 + 3(436) − 6(391) = −93 kJ/mol. The sign must be −; a + sign reverses broken minus formed.",
+        "es": "Rompe un enlace N≡N y tres H-H; forma seis enlaces N-H. ΔH ≈ 945 + 3(436) − 6(391) = −93 kJ/mol. El signo debe ser −; un signo + invierte rotos menos formados."
       }
     },
     {

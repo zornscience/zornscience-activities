@@ -31,7 +31,7 @@ ID | Work and reasoning | Expected answer
 6.4-3 | Reaction q = −2.09 kJ for 0.0500 mol of reaction. Divide by amount. | ΔH = −41.8 kJ/mol
 6.4-4 | Heat escaping before the peak makes measured solution ΔT too small. Calculated exothermic ΔH has too small a magnitude. | Less negative ΔH
 6.4-5 | Solution q = (100.0)(4.18)(+5.00) = +2090 J = +2.090 kJ. Reaction q = −2.090 kJ. Divide by 0.0250 mol. | −83.6 kJ/mol
-6.4-6 | Solution q = (50.0)(4.18)(24.0 − 30.0) = −1254 J. | −1.25e3 J
+6.4-6 | Solution q = (50.0)(4.18)(24.00 − 30.00) = −1254 J. ΔT = −6.00 °C supports three significant figures. | −1.25e3 J
 6.5-1 | Heating curve A-B slopes (solid), B-C flat (fusion), C-D slopes (liquid), D-E flat (vaporization), E-F slopes (gas). | B-C is fusion
 6.5-2 | On D-E, temperature and average kinetic energy stay constant while potential energy rises. | Potential energy increases
 6.5-3 | For water, +40.7 kJ/mol vaporization exceeds +6.01 kJ/mol fusion for the same amount. | Vaporization requires more heat
@@ -49,7 +49,7 @@ ID | Work and reasoning | Expected answer
 6.7-3 | Average gas-phase bond enthalpies vary with molecular environment and give approximate ΔH. | Estimates from average gas-phase values
 6.7-4 | Vaporization separates intact molecules and overcomes intermolecular attractions. | Do not break O-H covalent bonds
 6.7-5 | H<sub>2</sub>(g) + 0.5O<sub>2</sub>(g) → H<sub>2</sub>O(g): 436 + 0.5(498) − 2(463). | −241 kJ/mol
-6.7-6 | N<sub>2</sub>(g) + 3H<sub>2</sub>(g) → 2NH<sub>3</sub>(g): 945 + 3(436) − 6(391). | −93.0 kJ/mol
+6.7-6 | N<sub>2</sub>(g) + 3H<sub>2</sub>(g) → 2NH<sub>3</sub>(g): 945 + 3(436) − 6(391). Integer bond data support a whole-kJ/mol estimate, two significant figures. | −93 kJ/mol
 6.8-1 | Element in standard state has ΔH°f = 0 by definition. Carbon's reference form is graphite; oxygen is O<sub>2</sub>(g). | O<sub>2</sub>(g), not O(g)
 6.8-2 | Standard formation produces exactly one mole from elements in standard states. | C(s, graphite) + O<sub>2</sub>(g) → CO<sub>2</sub>(g)
 6.8-3 | H<sub>2</sub>O(g) is higher in enthalpy than H<sub>2</sub>O(l); states change formation enthalpies. | Use each species' stated physical state
