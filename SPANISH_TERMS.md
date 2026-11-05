@@ -2,6 +2,31 @@
 
 Reference: the ZornScience Style Kit v1.7, sections 4 to 6. Mexican Spanish, tú, noun-phrase titles, unchanged chemistry and decimal points. This inventory records choices beyond the supplied fixed interface text and glossary. Full feedback and explanatory translations are in each activity's `data.js`. Existing Gas Laws Spanish wording is preserved.
 
+## AP Chemistry Unit 5 Practice (1.0.0)
+
+Reviewed against the attached ZornScience Style Kit v1.9, sections 1, 4, 5 and 6. The eleven user-supplied topic titles and AP glossary are exact. Interface title: Práctica de la unidad 5 de Química AP. Reaction rate always uses velocidad, never rapidez. State symbols, formulas, decimal points and units are preserved. All questions, feedback, reference text and SVG descriptions are bilingual.
+
+Required AP terms retained: ley de velocidad, constante de velocidad, orden de reacción, orden global, vida media, ley de velocidad integrada, velocidad inicial, método de las velocidades iniciales, velocidad promedio, velocidad instantánea, reacción elemental, mecanismo de reacción, reacción global, intermediario, catalizador, paso determinante de la velocidad, molecularidad, modelo de colisiones, colisión exitosa, energía de activación, complejo activado, estado de transición, coordenada de reacción, perfil de energía, aproximación de preequilibrio and ecuación de Arrhenius.
+
+Newly recorded vocabulary used in this unit:
+
+English | Mexican Spanish
+--- | ---
+secant slope | pendiente secante
+tangent slope | pendiente tangente
+normalized reaction rate | velocidad de reacción normalizada
+pre-exponential factor / Arrhenius prefactor | factor preexponencial de Arrhenius
+local forward barrier | barrera directa local
+free equilibrium concentration | concentración libre de equilibrio
+initial analytical totals | totales analíticos iniciales
+collision-count model | modelo de conteo de colisiones
+surface site / active site | sitio de superficie / sitio activo
+heterogeneous catalysis | catálisis heterogénea
+uncatalyzed / catalyzed pathway | ruta sin catalizador / ruta con catalizador
+finite lifetime | vida finita
+
+No source style kit, WordPress or zornscience.org edits.
+
 ## AP Chemistry Unit 4 Practice (1.0.0)
 
 Reviewed against the attached ZornScience Style Kit v1.9, sections 1, 4, 5 and 6. The user's supplied nine topic titles and AP glossary take precedence. Interface title: Práctica de la unidad 4 de Química AP. All questions, distractors, explanations, reference rules and model SVG text are paired. State symbols remain (aq). Oxidation uses número de oxidación. AP practice uses razón molar as requested; existing Chemistry activities keep relación molar.
