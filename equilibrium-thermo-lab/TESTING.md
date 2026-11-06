@@ -1,6 +1,6 @@
 # Verification
 
-Version: 1.1.0
+Version: 1.1.1
 
 The browser test in `tests/e2e/equilibrium-thermo.spec.js` checks both links on this compatibility page.
 

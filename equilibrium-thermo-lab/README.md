@@ -1,6 +1,8 @@
 # Chemistry lab chooser
 
-Version: 1.1.0
+Version: 1.1.1
+
+Version 1.1.1 adds search engine tags to the page head: a canonical link to the clean activity address, English and Spanish hreflang links (Spanish is ?lang=es), and a English and Mexican Spanish meta description from `tools/seo-pages.js`. Run `node tools/build-seo.js` after changing them.
 
 The previously published combined lab URL remains available as a chooser. The standalone labs are now at `../equilibrium-lab/` and `../calorimetry-lab/`. No simulations run on this page.
 

@@ -1,5 +1,7 @@
 # ACT Practice
-Version: 1.11.1
+Version: 1.11.2
+
+Version 1.11.2 adds search engine tags to the page head: a canonical link to the clean activity address, and a meta description from `tools/seo-pages.js`. Run `node tools/build-seo.js` after changing them.
 
 Version 1.11.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 

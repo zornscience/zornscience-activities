@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /tests/
+Disallow: /templates/
+Disallow: /tools/
+Disallow: /wordpress/
+
+Sitemap: https://activities.zornscience.org/sitemap.xml
