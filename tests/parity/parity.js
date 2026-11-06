@@ -18,6 +18,11 @@
 // ([data-zsa-code], added in Ion Charge Trainer 1.4.0 and Ionic Formula Builder 1.1.0) and its announcement
 // ("Completion code ready."). Before each comparison the box is hidden in both pages and left out of the DOM and
 // layout, and the announcement is removed from the live region text. Everything else on that summary is compared.
+//
+// A second intended difference is set aside the same way: the "About this activity" section above the footer
+// ([data-zsa-about], added in Ion Charge Trainer 1.5.1 and every other activity's next patch version, see
+// shared/README.md). It is static text and links that no action changes, and tests/e2e/about.spec.js covers it.
+// It is hidden in both pages and left out of the DOM (with its <!-- zsa-about --> markers) and layout.
 "use strict";
 var {execSync} = require("child_process");
 var fs = require("fs");
@@ -54,10 +59,14 @@ function snapshot(ignore) {
       .filter(function (c) { return !ignore.has(c); }).sort().join(" ");
   }
   var main = document.querySelector("main");
-  // The completion code box: hidden (so it takes no space) and left out of what is compared.
-  main.querySelectorAll("[data-zsa-code]").forEach(function (el) { el.hidden = true; });
+  // The completion code box and the About section: hidden (so they take no space) and left out of what is compared.
+  var ASIDE = "[data-zsa-code], [data-zsa-about]";
+  main.querySelectorAll(ASIDE).forEach(function (el) { el.hidden = true; });
   var clone = main.cloneNode(true);
-  clone.querySelectorAll("[data-zsa-code]").forEach(function (el) { el.remove(); });
+  clone.querySelectorAll(ASIDE).forEach(function (el) { el.remove(); });
+  var walker = document.createTreeWalker(clone, NodeFilter.SHOW_COMMENT), comments = [];
+  while (walker.nextNode()) if (/^ \/?zsa-about $/.test(walker.currentNode.data)) comments.push(walker.currentNode);
+  comments.forEach(function (c) { c.remove(); });
   clone.querySelectorAll("[aria-live]").forEach(function (el) { el.textContent = el.textContent.replace(/\. Completion code ready\.$/, ""); });
   [clone].concat([].slice.call(clone.querySelectorAll("[class]"))).forEach(function (el) {
     var c = norm(el.getAttribute("class") || "");
@@ -73,7 +82,7 @@ function snapshot(ignore) {
     "line-height", "text-align", "border-top", "border-right", "border-bottom", "border-left", "border-radius", "padding", "margin",
     "box-shadow", "outline", "text-decoration", "white-space", "cursor", "opacity", "vertical-align", "gap"];
   var layout = [];
-  [main].concat([].slice.call(main.querySelectorAll("*"))).filter(function (el) { return !el.closest("[data-zsa-code]"); }).forEach(function (el, i) {
+  [main].concat([].slice.call(main.querySelectorAll("*"))).filter(function (el) { return !el.closest(ASIDE); }).forEach(function (el, i) {
     var r = el.getBoundingClientRect(), s = getComputedStyle(el), b = getComputedStyle(el, "::before");
     layout.push(i + " " + el.tagName + " " + [r.x, r.y, r.width, r.height].map(function (n) { return Math.round(n * 10) / 10; }).join(",") + " | " +
       STYLE.map(function (p) { return s.getPropertyValue(p); }).join(";") + (b.content !== "none" ? " | before " + b.content + " " + b.color + " " + b.fontSize : ""));
