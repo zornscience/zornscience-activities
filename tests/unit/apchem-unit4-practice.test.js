@@ -120,7 +120,7 @@ test("page uses Unit 1 markup and shared assets without local engine files", () 
   assert.equal(html.match(grid)[1], u1.match(grid)[1]);
   assert.match(html, /data-zsa-activity="apchem-unit4-practice" data-zsa-practice="zsa-u4"/);
   const scripts = [...html.matchAll(/<script src="([^?]+)[^"]*" defer>/g)].map(m => m[1]);
-  assert.deepEqual(scripts, ["../shared/zsa-embed.js", "../shared/zsa-i18n.js", "data.js", "../shared/zsa-practice-model.js", "../shared/zsa-practice.js", "../shared/zsa-header.js", "../shared/zsa-about.js"]);
+  assert.deepEqual(scripts, ["../shared/zsa-seo.js","../shared/zsa-embed.js","../shared/zsa-i18n.js", "data.js", "../shared/zsa-practice-model.js", "../shared/zsa-practice.js", "../shared/zsa-header.js", "../shared/zsa-about.js"]);
   assert.deepEqual(fs.readdirSync("apchem-unit4-practice").sort(), ["README.md","TESTING.md","data.js","diagrams.css","index.html"]);
   assert.match(html, /data-zsa-practice-visual="particles" hidden/);
   assert.deepEqual(bank.questions.filter(q => q.particles).map(q => q.id), ["4.3-1"]);

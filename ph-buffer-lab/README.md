@@ -2,7 +2,7 @@
 
 Version: 1.0.2
 
-Version 1.0.2 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
+Version 1.0.2 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson. It also adds search engine tags from `shared/zsa-seo.js`: hreflang links for English and Spanish, a canonical address that keeps `?lang=es` and drops every other parameter, and a description in each language.
 
 A static Chemistry and AP Chemistry activity with four modes: pH Explorer, Buffer Builder, Stress Test, and Challenges. It uses the existing ZornScience header, dialogs, footer, Inter font, shared styles, language module, safe lesson return links, and embed behavior. There is no build step, account, storage, tracking, completion code, or external request. All four modes work offline after the page and its local assets have loaded.
 

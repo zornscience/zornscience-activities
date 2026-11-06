@@ -1,7 +1,7 @@
 # Physics Graphing Lab
 Version: 1.1.1
 
-Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
+Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson. It also adds search engine tags from `shared/zsa-seo.js`: hreflang links for English and Spanish, a canonical address that keeps `?lang=es` and drops every other parameter, and a description in each language.
 
 A lab for one-dimensional motion with constant acceleration. A cart moves along a labeled track for 10 seconds while its position, velocity and acceleration graphs grow together. Students explore the model, or sketch their own predictions first and then reveal and compare. The page ends with an explanation prompt that prints with the graphs.
 

@@ -46,7 +46,8 @@ requireOK(compressed>base*1.2&&heated>base*1.9&&added>base*1.9,'wall collision r
 console.log(JSON.stringify({settingsChecked:checked,maxRelativeEquationError:maxError,wallCollisions:{base,compressed,heated,added},laws:'4 passed, both control directions',invalidInputs:'rejected',particleSpeed:'sqrt(T)',count:'proportional to n'}));
 `,context);
 assert(!html.includes('\u2014'),'em dash found');
-assert(!/<(?:script|link)[^>]+(?:src|href)="https?:/i.test(html),'external script or CSS');
+// hreflang and canonical links name this page's own URLs; nothing is loaded from them.
+assert(!/<(?:script|link(?![^>]*rel="(?:alternate|canonical)"))[^>]+(?:src|href)="https?:/i.test(html),'external script or CSS');
 assert(!/\b(fetch\(|XMLHttpRequest|localStorage|sessionStorage|document\.cookie)/.test(script),'unexpected data access');
 assert(html.includes('data:image/png;base64,'),'missing embedded favicon');
 console.log('Local assets, embedded favicon and no em dashes checked.');

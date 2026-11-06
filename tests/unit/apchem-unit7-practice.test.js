@@ -125,7 +125,7 @@ test("ICE approximations pass independent checks and exact solutions round to ac
 test("page preserves the two-runtime-file contract with translated models and reference patterns",()=>{
   const html=fs.readFileSync("apchem-unit7-practice/index.html","utf8");
   assert.match(html,/data-zsa-activity="apchem-unit7-practice" data-zsa-practice="zsa-u7"/);
-  assert.deepEqual([...html.matchAll(/<script src="([^?]+)[^"]*" defer>/g)].map(m=>m[1]),["../shared/zsa-embed.js","../shared/zsa-i18n.js","data.js","../shared/zsa-practice-model.js","../shared/zsa-practice.js","../shared/zsa-header.js","../shared/zsa-about.js"]);
+  assert.deepEqual([...html.matchAll(/<script src="([^?]+)[^"]*" defer>/g)].map(m=>m[1]),["../shared/zsa-seo.js","../shared/zsa-embed.js","../shared/zsa-i18n.js","data.js","../shared/zsa-practice-model.js","../shared/zsa-practice.js","../shared/zsa-header.js","../shared/zsa-about.js"]);
   assert.deepEqual(fs.readdirSync("apchem-unit7-practice").sort(),["README.md","TESTING.md","data.js","diagrams.css","index.html"]);
   const flags={curve:["7.1-2","7.1-6"],rates:["7.1-3"],stress:["7.9-1"],particles:["7.8-1"]};
   for(const [flag,ids] of Object.entries(flags)){

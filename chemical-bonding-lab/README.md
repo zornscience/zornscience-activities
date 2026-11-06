@@ -2,7 +2,7 @@
 
 Version: 1.1.2
 
-Version 1.1.2 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
+Version 1.1.2 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson. It also adds search engine tags from `shared/zsa-seo.js`: hreflang links for English and Spanish, a canonical address that keeps `?lang=es` and drops every other parameter, and a description in each language.
 
 Version 1.1.1 keeps each sample's icon and caption inside its button on screens narrower than 360 px, in every language: the four samples form a 2 x 2 grid there. Layout at 360 px and wider is unchanged.
 

@@ -115,7 +115,7 @@ test("page follows the two-file contract with unit-owned translated models and k
   const fs=require("node:fs");
   const html=fs.readFileSync("apchem-unit5-practice/index.html","utf8");
   assert.match(html,/data-zsa-activity="apchem-unit5-practice" data-zsa-practice="zsa-u5"/);
-  assert.deepEqual([...html.matchAll(/<script src="([^?]+)[^"]*" defer>/g)].map(m=>m[1]),["../shared/zsa-embed.js","../shared/zsa-i18n.js","data.js","../shared/zsa-practice-model.js","../shared/zsa-practice.js","../shared/zsa-header.js","../shared/zsa-about.js"]);
+  assert.deepEqual([...html.matchAll(/<script src="([^?]+)[^"]*" defer>/g)].map(m=>m[1]),["../shared/zsa-seo.js","../shared/zsa-embed.js","../shared/zsa-i18n.js","data.js","../shared/zsa-practice-model.js","../shared/zsa-practice.js","../shared/zsa-header.js","../shared/zsa-about.js"]);
   assert.deepEqual(fs.readdirSync("apchem-unit5-practice").sort(),["README.md","TESTING.md","data.js","diagrams.css","index.html"]);
   for (const flag of ["linear","single","multi","catalysis"]) {
     assert.match(html,new RegExp('data-zsa-practice-visual="'+flag+'" hidden'));
