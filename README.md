@@ -45,6 +45,7 @@ apchem-unit3-practice/     AP Chemistry Unit 3 Practice, v1.0.0 (78 original que
 apchem-unit4-practice/     AP Chemistry Unit 4 Practice, v1.0.1 (54 original questions across topics 4.1 to 4.9, shared practice engine; English and Mexican Spanish)
 apchem-unit5-practice/     AP Chemistry Unit 5 Practice, v1.0.1 (66 original questions across topics 5.1 to 5.11, shared practice engine; English and Mexican Spanish)
 apchem-unit6-practice/     AP Chemistry Unit 6 Practice, v1.0.1 (54 original questions across topics 6.1 to 6.9, shared practice engine; English and Mexican Spanish)
+apchem-unit7-practice/     AP Chemistry Unit 7 Practice, v1.0.1 (72 original questions across topics 7.1 to 7.12, shared practice engine; English and Mexican Spanish)
 atwood-machine/           The Atwood Machine, v1.1.1 (ideal pulley, adjustable masses and live vectors; no data recording; English and Mexican Spanish)
 physics-graphing-lab/      Physics Graphing Lab, v1.1.1 (a cart with linked position, velocity and acceleration graphs; English and Mexican Spanish)
 collision-carts/           Collision Carts, v1.1.1 (two carts on a track, elastic and inelastic collisions, live velocity and momentum vectors; English and Mexican Spanish)
@@ -60,6 +61,22 @@ equilibrium-lab/          Equilibrium Sandbox, v1.2.1 (Le Chatelier stresses, Kc
 calorimetry-lab/          Calorimetry & Enthalpy Lab, v1.2.1 (heated-metal and neutralization calorimetry)
 reaction-energy-lab/      Reaction Energy Lab, v1.0.2 (energy diagrams, phase changes, reaction enthalpy, bonds, formation and Hess; English and Mexican Spanish)
 free-energy-lab/          Free Energy Lab, v1.0.0 (entropy, Gibbs free energy, temperature, K, kinetic control, dissolving and coupling; English and Mexican Spanish)
+chemical-bonding-lab/      Chemical Bonding Lab, v1.1.1 (four unknown solids tested for appearance, conductivity, melting, solubility and malleability; English and Mexican Spanish)
+metals-lab/                Metals, Nonmetals & Metalloids Lab, v1.1.1 (classify three unknown solids from physical and chemical evidence; English and Mexican Spanish)
+iodine-clock-lab/          Iodine Clock Lab, v1.1.1 (concentration and temperature trials with a timed blue endpoint and a 20-second challenge; English and Mexican Spanish)
+net-ionic-lab/             Net Ionic Reactions Lab, v1.1.0 (ten reagent pairs: precipitates, metal displacement and no visible reaction; English and Mexican Spanish)
+flame-test-lab/            Virtual Flame Test Lab, v1.1.0 (eight known metal salts and an unknown in a Bunsen burner; English and Mexican Spanish)
+gravimetric-lab/           Gravimetric Analysis, v1.1.0 (precipitate, filter, wash and dry calcium carbonate to constant mass; English and Mexican Spanish)
+electrochemistry-lab/      Galvanic & Electrolytic Cell Builder, v1.4.0 (half-cells, salt bridge, voltmeter, electron flow and standard cell potentials; English and Mexican Spanish)
+equilibrium-k-lab/         Equilibrium Constant Lab, v1.0.1 (K expressions, Q versus K, ICE and RICE tables, K rules, Ksp and the common-ion effect; English and Mexican Spanish)
+solutions-lab/             Solutions Lab, v1.0.2 (make solutions in a volumetric flask, dilute stock solutions and read solubility curves; English and Mexican Spanish)
+faraday-lab/               Faraday’s Law · Magnet Drop, v1.2.1 (realistic tube apparatus, free-fall comparison, eddy currents, induced fields, pause and slow motion; no data recording; English and Mexican Spanish)
+equipotential-lab/         Equipotential & Electric Field Mapping, v1.2.0 (point charges, a voltage probe, equipotential lines and field vectors; English and Mexican Spanish)
+standing-waves-lab/        Standing Waves on a String, v1.1.0 (oscillator harmonics, string tension, strobe and ruler for node spacing; English and Mexican Spanish)
+snells-law-lab/            Snell’s Law & Refraction, v1.1.0 (laser through optical blocks, snapping protractor and total internal reflection; English and Mexican Spanish)
+hookes-law-lab/            Hooke’s Law & Harmonic Motion, v1.2.0 (slotted masses on a spring, ruler extension and a live position graph; English and Mexican Spanish)
+pendulum-lab/              The Simple Pendulum, v1.2.1 (mass, length and gravity on Earth, the Moon and Jupiter, with energy exchange; English and Mexican Spanish)
+inclined-plane/            Inclined Plane & Friction, v1.1.0 (raise a ramp until the block slips, static and kinetic friction, live free body diagram; English and Mexican Spanish)
 equilibrium-thermo-lab/   Compatibility chooser linking to the two standalone labs, v1.1.0 (English and Mexican Spanish)
 check/                     completion code checker for teachers, v1.2.0 (linked under "For teachers")
 TEACHERS.md                assigning activities in Google Classroom and checking completion codes
@@ -68,8 +85,6 @@ tools/build-about.js       writes each page's "About this activity" section from
 tests/                     automated tests (development only; see TESTING.md)
 package.json               test tooling only; the site has no dependencies
 ```
-
-faraday-lab/               Faraday’s Law · Magnet Drop, v1.2.1 (realistic tube apparatus, free-fall comparison, eddy currents, induced fields, pause and slow motion; no data recording; English and Mexican Spanish)
 
 ## Publishing (GitHub Pages)
 

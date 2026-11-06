@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.1">
+<meta name="description" content="Catch up on AP Chemistry Unit 7 with 72 original questions, instant explanations, and English or Spanish practice from ZornScience.">
+<title>AP Chemistry Unit 7 Practice | ZornScience</title>
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.1">
+<link rel="stylesheet" href="../shared/zsa-practice.css?v=1.0.1">
+<link rel="stylesheet" href="diagrams.css?v=1.0.1">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.1">
+<script src="../shared/zsa-embed.js?v=1.0.1" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.0.1" defer></script>
+<script src="data.js?v=1.0.1" defer></script>
+<script src="../shared/zsa-practice-model.js?v=1.0.1" defer></script>
+<script src="../shared/zsa-practice.js?v=1.0.1" defer></script>
+<script src="../shared/zsa-header.js?v=1.0.1" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.0.1"><script src="../shared/zsa-about.js?v=1.0.1" defer></script></head>
+<body>
+<main class="zsa zsa-u7 zsa-practice" data-zsa-activity="apchem-unit7-practice" data-zsa-practice="zsa-u7">
+<header data-zsa-header>
+<div data-zsa-header-row>
+<div data-zsa-header-identity><a data-zsa-header-brand href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png" width="34" height="33" alt=""></a><h1>AP Chemistry Unit 7 Practice</h1></div>
+<nav data-zsa-header-tools aria-label="Activity tools"><div>
+<button class="zsa-btn" type="button" data-zsa-dialog-open="zsa-header-instructions" aria-haspopup="dialog" aria-controls="zsa-header-instructions">Instructions</button>
+<button class="zsa-btn" type="button" data-zsa-chrome data-zsa-dialog-open="zsa-header-share" aria-label="Share activity" aria-haspopup="dialog" aria-controls="zsa-header-share"><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button>
+</div></nav>
+</div>
+</header>
+<dialog class="zsa-header-dialog" id="zsa-header-instructions" aria-labelledby="zsa-header-instructions-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-header-instructions-title">Instructions</h2>
+<button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close instructions" autofocus>Close</button></div>
+<ol>
+<li>Choose a topic, then start. Mixed review includes all twelve topics.</li>
+<li>Select one answer, or enter a number and choose its unit. For K or Q, choose no units. For particles, choose count.</li>
+<li>Submit once per question. Read the explanation, then continue. Your score counts correct answers; a significant figure note does not remove a point.</li>
+<li>At the end, Try again shuffles the questions and answer choices. Choose another topic to build a new set.</li>
+</ol>
+</dialog>
+<dialog class="zsa-header-dialog" id="zsa-header-share" aria-labelledby="zsa-header-share-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-header-share-title">Share this activity</h2>
+<button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close share options" autofocus>Close</button></div>
+<p>Share a fresh activity. Your answers and results are not included.</p>
+<label for="zsa-header-share-url">Share link</label><div class="zsa-header-share-link"><input id="zsa-header-share-url" type="text" readonly spellcheck="false"><button class="zsa-btn" type="button" data-zsa-share-copy>Copy link</button></div>
+<a data-zsa-share-email href="#">Email</a><p data-zsa-share-status role="status" aria-live="polite"></p>
+</dialog>
+<noscript><p class="zsa-panel">This activity needs JavaScript. / Esta actividad necesita JavaScript.</p>
+</noscript>
+<section id="zsa-u7-setup" class="zsa-card" aria-labelledby="zsa-u7-setup-title">
+<p class="zsa-eyebrow">AP Chemistry · Unit 7</p>
+<h2 id="zsa-u7-setup-title">Catch up at your own pace.</h2>
+<p>Choose one topic for six questions, or Mixed review for all 72. Read the feedback after each answer.</p>
+<div class="zsa-u7-settings zsa-practice-settings"><div><label for="zsa-u7-topic">Topic</label><select id="zsa-u7-topic"></select></div><button class="zsa-btn zsa-btn--primary" id="zsa-u7-start" type="button">Start practice</button></div>
+<p class="zsa-u7-small zsa-practice-small">No timer. Use scratch paper and a calculator. The equilibrium reference is below.</p>
+</section>
+<section id="zsa-u7-play" hidden aria-labelledby="zsa-u7-question">
+<div class="zsa-u7-status zsa-practice-status"><p id="zsa-u7-position"></p>
+<p id="zsa-u7-score"></p>
+</div>
+<progress id="zsa-u7-progress" value="0" max="6" aria-label="Set progress"></progress>
+<div class="zsa-card zsa-u7-question-card">
+<p class="zsa-eyebrow" id="zsa-u7-topic-name"></p>
+<h2 id="zsa-u7-question" tabindex="-1"></h2>
+<figure id="zsa-u7-curve" data-zsa-practice-visual="curve" hidden>
+<svg viewBox="0 0 400 260" role="img" aria-labelledby="zsa-u7-curve-title" aria-describedby="zsa-u7-curve-desc">
+<title id="zsa-u7-curve-title">Model: concentration versus time</title>
+<desc id="zsa-u7-curve-desc">For A in equilibrium with B, A starts at 1.000 M and B at 0.000 M. A levels off at 0.600 M and B at 0.400 M. A uses a solid curve; B uses a dashed curve.</desc>
+<path d="M64 35V205H375" class="zsa-u7-axis"/>
+<text x="200" y="19" class="zsa-u7-label">Concentration (M)</text>
+<text x="220" y="246" class="zsa-u7-label">Time</text><text x="31" y="45" class="zsa-u7-label">1.000</text><text x="31" y="205" class="zsa-u7-label">0.000</text>
+<path d="M64 40C100 68 115 104 220 104H338" class="zsa-u7-a"/>
+<path d="M64 200C100 172 115 136 220 136H338" class="zsa-u7-b"/>
+<text x="280" y="94" class="zsa-u7-label">A: 0.600</text><text x="280" y="160" class="zsa-u7-label">B: 0.400</text>
+</svg><figcaption>Model for A ⇌ B at fixed temperature and volume. Solid: A. Dashed: B. Values are also given in the question.</figcaption>
+</figure>
+<figure id="zsa-u7-rates" data-zsa-practice-visual="rates" hidden>
+<svg viewBox="0 0 400 260" role="img" aria-labelledby="zsa-u7-rates-title" aria-describedby="zsa-u7-rates-desc">
+<title id="zsa-u7-rates-title">Model: forward and reverse rates versus time</title>
+<desc id="zsa-u7-rates-desc">For A in equilibrium with B, the forward rate decreases from 0.080 to 0.020 M/s while the reverse rate increases from 0 to 0.020 M/s. Both share the same final plateau. The forward curve is solid; the reverse curve is dashed.</desc>
+<path d="M64 35V205H375" class="zsa-u7-axis"/>
+<text x="200" y="19" class="zsa-u7-label">Rate (M/s)</text>
+<text x="220" y="246" class="zsa-u7-label">Time</text>
+<text x="31" y="45" class="zsa-u7-label">0.080</text><text x="31" y="165" class="zsa-u7-label">0.020</text><text x="31" y="205" class="zsa-u7-label">0.000</text>
+<path d="M64 40C104 100 130 160 235 160H370" class="zsa-u7-a"/>
+<path d="M64 200C104 180 130 160 235 160H370" class="zsa-u7-b"/>
+<text x="280" y="55" class="zsa-u7-label">Forward (solid)</text><text x="280" y="78" class="zsa-u7-label">Reverse (dashed)</text>
+</svg><figcaption>Rate model for A ⇌ B. The forward and reverse curves meet and share a nonzero plateau. Values are also given in the question.</figcaption>
+</figure>
+<figure id="zsa-u7-stress" data-zsa-practice-visual="stress" hidden>
+<svg viewBox="0 0 400 260" role="img" aria-labelledby="zsa-u7-stress-title" aria-describedby="zsa-u7-stress-desc">
+<title id="zsa-u7-stress-title">Model: concentration response to a perturbation</title>
+<desc id="zsa-u7-stress-desc">At fixed temperature and volume, A and B initially have constant concentrations. At the marked stress, only B jumps upward. B then decreases gradually while A rises to new plateaus. Solid is A; dashed is B.</desc>
+<path d="M64 35V205H375" class="zsa-u7-axis"/>
+<text x="200" y="19" class="zsa-u7-label">Concentration (M)</text>
+<text x="220" y="246" class="zsa-u7-label">Time</text><path d="M160 40V205" class="zsa-u7-marker"/>
+<path d="M64 168H160C205 168 218 152 290 152H370" class="zsa-u7-a"/>
+<path d="M64 136H160V88C205 88 218 104 290 104H370" class="zsa-u7-b"/>
+<text x="335" y="142" class="zsa-u7-label">A</text><text x="335" y="93" class="zsa-u7-label">B</text>
+<text x="160" y="225" class="zsa-u7-label">Stress</text>
+</svg><figcaption>Model for A ⇌ B. Solid: A. Dashed: B. The graph separates an immediate change from gradual re-equilibration.</figcaption>
+</figure>
+<figure id="zsa-u7-particles" data-zsa-practice-visual="particles" hidden>
+<svg viewBox="0 0 400 260" role="img" aria-labelledby="zsa-u7-particles-title" aria-describedby="zsa-u7-particles-desc">
+<title id="zsa-u7-particles-title">Model: initial paired and single particles</title>
+<desc id="zsa-u7-particles-desc">Initial model contains four joined pairs and two single circles. Every circle represents an A atom; each pair represents an A dimer.</desc>
+<rect x="40" y="40" width="320" height="205" class="zsa-u7-box"/>
+<g class="zsa-u7-particle"><circle cx="100" cy="80" r="12"/><circle cx="124" cy="80" r="12"/></g><g class="zsa-u7-particle"><circle cx="260" cy="80" r="12"/><circle cx="284" cy="80" r="12"/></g><g class="zsa-u7-particle"><circle cx="100" cy="150" r="12"/><circle cx="124" cy="150" r="12"/></g><g class="zsa-u7-particle"><circle cx="260" cy="150" r="12"/><circle cx="284" cy="150" r="12"/></g><g class="zsa-u7-particle"><circle cx="160" cy="215" r="12"/><circle cx="235" cy="215" r="12"/></g>
+</svg><figcaption>Initial particle model, not to scale. Each circle is an atom; each joined pair is a molecule. Later counts are described in the question.</figcaption>
+</figure>
+<form id="zsa-u7-answer" novalidate>
+<fieldset id="zsa-u7-choices"><legend class="zsa-u7-small zsa-practice-small">Choose one answer.</legend><div id="zsa-u7-options" class="zsa-practice-options"></div></fieldset>
+<div id="zsa-u7-numeric" hidden>
+<p id="zsa-u7-precision" class="zsa-u7-small zsa-practice-small"></p>
+<div class="zsa-u7-entry zsa-practice-entry"><div><label for="zsa-u7-value">Numerical answer</label><input id="zsa-u7-value" type="text" inputmode="decimal" autocomplete="off" spellcheck="false" aria-describedby="zsa-u7-precision zsa-u7-number-help zsa-u7-error"></div><div><label for="zsa-u7-unit">Unit</label><select id="zsa-u7-unit"></select></div></div>
+<p id="zsa-u7-number-help" class="zsa-u7-small zsa-practice-small">Scientific notation: you may type 1.51e23 in the number field.</p>
+</div>
+<p id="zsa-u7-error" role="alert" class="zsa-u7-error zsa-practice-error"></p>
+<button id="zsa-u7-check" class="zsa-btn zsa-btn--primary" type="submit">Check answer</button>
+</form>
+<section id="zsa-u7-feedback" class="zsa-practice-feedback zsa-panel" aria-live="polite" aria-atomic="true" hidden></section>
+<button id="zsa-u7-next" class="zsa-btn zsa-btn--primary" type="button" hidden>Next question</button>
+</div>
+</section>
+<section id="zsa-u7-results" class="zsa-card" aria-labelledby="zsa-u7-results-title" hidden>
+<h2 id="zsa-u7-results-title" tabindex="-1">Your set is complete</h2>
+<p id="zsa-u7-total" class="zsa-u7-total zsa-practice-total"></p>
+<h3>Results by topic</h3><ul id="zsa-u7-breakdown" class="zsa-practice-breakdown"></ul>
+<div class="zsa-u7-actions zsa-practice-actions"><button id="zsa-u7-retry" class="zsa-btn zsa-btn--primary" type="button">Try again</button><button id="zsa-u7-choose" class="zsa-btn" type="button">Choose another topic</button></div>
+<div id="zsa-u7-review"></div>
+</section>
+<details class="zsa-panel zsa-u7-reference zsa-practice-reference" id="zsa-u7-reference">
+<summary>Reference</summary><h2>Equilibrium expressions</h2>
+<p>aA + bB ⇌ cC + dD</p>
+<p>Kc = [C]<sup>c</sup>[D]<sup>d</sup> / ([A]<sup>a</sup>[B]<sup>b</sup>)</p>
+<p>Use products over reactants, raised to their balanced coefficients. Omit pure solids and pure liquids; retain dissolved species and gases. Kc uses equilibrium concentrations; Kp uses equilibrium gas partial pressures.</p>
+<p>All K and Q values are dimensionless here. Choose no units for them. Use M for concentrations and molar solubility. Concentrations approximate activities in ideal dilute solutions; gases are ideal.</p>
+<h2>Q versus K</h2>
+<p>Q uses the same expression as K with current values, not necessarily equilibrium values.</p>
+<ul><li>Q < K: shift right; net product formation.</li><li>Q > K: shift left; net reactant formation.</li><li>Q = K: dynamic equilibrium; equal forward and reverse rates.</li></ul>
+<h2>Changing the reaction equation</h2>
+<p><span>Reverse:</span> K′ = 1/K. <span>Multiply coefficients by n:</span> K′ = K<sup>n</sup>. <span>Add reactions:</span> K = K<sub>1</sub> × K<sub>2</sub>.</p>
+<h2>Gas equilibria</h2>
+<p>Kp = Kc(RT)<sup>Δn</sup>; R = 0.08206 L·atm/(mol·K).</p>
+<p>Δn is the sum of gaseous product coefficients minus the sum of gaseous reactant coefficients. Use kelvin. At fixed temperature, concentration, volume, catalyst and inert-gas changes do not change K. Temperature can change K.</p>
+<p>A catalyst changes both reaction rates. An inert gas causes no shift at constant temperature and volume; at constant total pressure it can cause expansion and a shift when gaseous coefficients differ. Heating favors the endothermic direction.</p>
+<h2>ICE tables and approximations</h2>
+<p>ICE means initial, change, equilibrium. Use coefficient-weighted changes and substitute the equilibrium row into K. Discard roots that give negative concentrations.</p>
+<p>For a small-x approximation, check each neglected concentration change divided by its initial concentration, times 100, is under 5%. Otherwise solve the full equation. Keep extra digits and round only the final answer.</p>
+<h2>Solubility equilibria</h2>
+<p>M<sub>a</sub>X<sub>b</sub>(s) ⇌ aM<sup>b+</sup>(aq) + bX<sup>a−</sup>(aq); Ksp = [M<sup>b+</sup>]<sup>a</sup>[X<sup>a−</sup>]<sup>b</sup>.</p>
+<p>AgCl(s) ⇌ Ag<sup>+</sup>(aq) + Cl<sup>−</sup>(aq); Ksp = [Ag<sup>+</sup>][Cl<sup>−</sup>] = s<sup>2</sup>.</p>
+<p>CaF<sub>2</sub>(s) ⇌ Ca<sup>2+</sup>(aq) + 2F<sup>−</sup>(aq); Ksp = [Ca<sup>2+</sup>][F<sup>−</sup>]<sup>2</sup> = 4s<sup>3</sup>.</p>
+<p>The s relations apply in pure water with no side reactions. For precipitation, use ion concentrations after mixing: Qsp > Ksp forms precipitate; Qsp = Ksp is saturated equilibrium; Qsp < Ksp is unsaturated.</p>
+<p>A common ion lowers molar solubility at fixed temperature without changing Ksp. Include the initial common-ion concentration in the ICE table. Ignore acid-base reactions and complex formation only when the prompt specifies no side reactions.</p>
+</details>
+<p class="zsa-u7-small zsa-practice-small">Aligned practice for AP Chemistry CED topics 7.1 to 7.12. Original ZornScience questions.</p>
+<!-- zsa-about --><section class="zsa-about" data-zsa-about="apchem-unit7-practice" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Review AP Chemistry Unit 7, Equilibrium, with 72 original questions. Each answer gets an explanation right away, and your score is broken down by topic.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="ap-unit-7"><a href="https://zornscience.org/science/ap-chemistry/unit-7-equilibrium/">Unit 7: Equilibrium</a><span data-zsa-lesson-course>AP Chemistry</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Your answers stay in this tab. No account needed.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><a class="zsa-back" id="zsa-u7-back" href="https://zornscience.org/science/ap-chemistry/">← Back to the lesson</a></footer>
+</main>
+</body>
+</html>

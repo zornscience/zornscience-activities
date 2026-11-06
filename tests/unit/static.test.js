@@ -115,3 +115,32 @@ test("the landing page lists the Ionic Reaction Builder, not the retired builder
   assert.match(page, /<link rel="icon" href="favicon\.png" type="image\/png">/);
   assert.ok(fs.existsSync(path.join(ROOT, "favicon.png")));
 });
+
+test("the landing page links every published activity, and each subject count matches its cards", function () {
+  var page = read("index.html");
+  // Folders with a page that are deliberately not listed: redirects to a newer activity, and the chooser kept at an old address.
+  var unlisted = ["act-science", "ionic-formula-builder", "equilibrium-thermo-lab"];
+  var folders = fs.readdirSync(ROOT, {withFileTypes: true}).filter(function (e) {
+    return e.isDirectory() && SKIP.indexOf(e.name) < 0 && fs.existsSync(path.join(ROOT, e.name, "index.html"));
+  }).map(function (e) { return e.name; });
+  folders.forEach(function (slug) {
+    var linked = page.indexOf('href="' + slug + '/"') >= 0;
+    if (unlisted.indexOf(slug) >= 0) assert.ok(!linked, slug + " should not be listed");
+    else if (/^(templates|shared|wordpress)$/.test(slug)) return;
+    else assert.ok(linked, slug + " is published but missing from the landing page");
+  });
+  (page.match(/href="([^"#:]+\/)"/g) || []).forEach(function (h) {
+    var target = h.slice(6, -1);
+    assert.ok(fs.existsSync(path.join(ROOT, target, "index.html")), "landing page links to missing " + target);
+  });
+  // Each subject in the jump navigation shows how many cards its section holds.
+  var sections = page.split(/<section /).slice(1).filter(function (s) { return /^[^>]*\bid="/.test(s); });
+  assert.ok(sections.length >= 5);
+  sections.forEach(function (s) {
+    var id = s.match(/^[^>]*\bid="([^"]+)"/)[1];
+    var cards = (s.split("</section>")[0].match(/class="zsa-home-card"/g) || []).length;
+    var count = page.match(new RegExp('href="#' + id + '">[^<]*<span class="zsa-home-count">(\\d+)</span>'));
+    assert.ok(count, "no count for " + id);
+    assert.equal(Number(count[1]), cards, id + " count");
+  });
+});

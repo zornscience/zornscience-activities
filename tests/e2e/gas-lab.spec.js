@@ -121,10 +121,11 @@ test("gas lab: readouts follow the ideal gas law and the hold setting", async ({
   await expect(page.locator("#zsa-gl-note")).toContainText("The piston reached the top of the container, so the change stopped there.");
   await setNumber(page, "zsa-gl-n0-num", 0.5);
   expect(await page.inputValue("#zsa-gl-V-num")).toBe("5.00");
-  // The gauge measures: within 5% of the gas law after a few seconds.
+  // The gauge measures: within 5% of the gas law once it averages its full 10 s window. A 4 s average of a few
+  // hundred dots misses 5% in about 6% of runs; a full window stayed within 4% in 2,000 random runs.
   await page.check('input[name="zsa-gl-hold"][value="T"]');
   await setNumber(page, "zsa-gl-V-num", 5);
-  await page.waitForTimeout(4000);
+  await expect(page.locator("#zsa-gl-p-note")).toHaveText(/^Averaged over 10(\.0)? s of wall hits$/, {timeout:30000});
   var measured = parseFloat(await text(page, "zsa-gl-p-atm")), law = parseFloat((await text(page, "zsa-gl-p-law")).replace("Gas law: ", ""));
   expect(Math.abs(measured / law - 1), measured + " vs " + law).toBeLessThan(0.05);
   expect(await text(page, "zsa-gl-p-kpa")).toMatch(/^\d+(\.\d+)? kPa$/);
