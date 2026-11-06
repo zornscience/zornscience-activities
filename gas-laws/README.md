@@ -1,7 +1,9 @@
 # Gas Laws Sandbox
-Version: 1.1.1
+Version: 1.1.2
 
-Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson. It also adds search engine tags from `shared/zsa-seo.js`: hreflang links for English and Spanish, a canonical address that keeps `?lang=es` and drops every other parameter, and a description in each language.
+Version 1.1.2 adds search engine tags from `shared/zsa-seo.js`: hreflang links for English and Spanish, a canonical address that keeps `?lang=es` and drops every other parameter, and a description in each language. The activity itself is unchanged.
+
+Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 Four ideal gas law modes share the same full-precision PV = nRT model, coupled control limits, particle illustration and live graph. English and Mexican Spanish copy is in `data.js`. `?lang=es` selects Spanish; the shared EN / ES header toggle changes language without resetting the law, values or paused state.
 

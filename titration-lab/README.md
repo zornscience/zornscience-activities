@@ -1,7 +1,9 @@
 # Virtual Titration Simulator
-Version: 1.1.1
+Version: 1.1.2
 
-Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson. It also adds search engine tags from `shared/zsa-seo.js`: hreflang links for English and Spanish, a canonical address that keeps `?lang=es` and drops every other parameter, and a description in each language.
+Version 1.1.2 adds search engine tags from `shared/zsa-seo.js`: hreflang links for English and Spanish, a canonical address that keeps `?lang=es` and drops every other parameter, and a description in each language. The activity itself is unchanged.
+
+Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 A titration lab for AP Chemistry (Unit 8, Acids and Bases). Students choose an analyte, a titrant and an indicator, add titrant with a stopcock (closed, drop by drop, slow or fast stream) or one drop at a time, and watch the flask's color, the pH meter and a live pH curve. They record the endpoint, read the equivalence volume and the pKa (or the equivalence pH) from their own curve, check those answers, and then show the key points to connect the steep slope to the equivalence point and the half-equivalence point to the pKa.
 

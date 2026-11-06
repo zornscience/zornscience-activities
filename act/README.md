@@ -1,7 +1,9 @@
 # ACT Practice
-Version: 1.11.1
+Version: 1.11.2
 
-Version 1.11.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson. It also adds a canonical address and a description from `shared/zsa-seo.js`; this activity is English only, so it has no hreflang links.
+Version 1.11.2 adds a canonical address and a search description from `shared/zsa-seo.js`. This activity is English only, so it has no hreflang links. The activity itself is unchanged.
+
+Version 1.11.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 Free ACT practice with original questions in all four sections: English, Math, Reading and the optional Science. Students practice a few questions, one timed section, or the full ACT, and get a score report that compares them with national results and gives tips for the skills they missed. With a practice code (optional, no account), their scores are saved so they can see how they change over time. Not linked from zornscience.org yet. The live URL after approval will be https://activities.zornscience.org/act/. The old address, https://activities.zornscience.org/act-science/, redirects to the Science section.
 

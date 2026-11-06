@@ -1,7 +1,9 @@
 # Beer's Law Spectrophotometer Lab
-Version: 1.1.1
+Version: 1.1.2
 
-Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson. It also adds search engine tags from `shared/zsa-seo.js`: hreflang links for English and Spanish, a canonical address that keeps `?lang=es` and drops every other parameter, and a description in each language.
+Version 1.1.2 adds search engine tags from `shared/zsa-seo.js`: hreflang links for English and Spanish, a canonical address that keeps `?lang=es` and drops every other parameter, and a description in each language. The activity itself is unchanged.
+
+Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 A spectrophotometry lab for Chemistry and AP Chemistry (Beer's law, Beer-Lambert law). Students zero a spectrophotometer with a blank, choose the concentrations of their own standards and measure each one to build a calibration curve, then measure an unknown of the same solution and calculate its concentration. They check their answer, or show it, and can take a new unknown, which has a different random concentration each time. The page shows a mock-up of the spectrophotometer, with a cutaway of the light path (lamp, grating, the selected wavelength, the cuvette and the light that gets through to the detector), a calibration curve with every standard, the best-fit line and the unknown's absorbance, and a data table.
 

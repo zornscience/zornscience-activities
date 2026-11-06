@@ -1,8 +1,10 @@
 # Ionic Reaction Builder
 
-Version: 3.5.1
+Version: 3.5.2
 
-Version 3.5.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson. It also adds search engine tags from `shared/zsa-seo.js`: hreflang links for English and Spanish, a canonical address that keeps `?lang=es` and drops every other parameter, and a description in each language.
+Version 3.5.2 adds search engine tags from `shared/zsa-seo.js`: hreflang links for English and Spanish, a canonical address that keeps `?lang=es` and drops every other parameter, and a description in each language. The activity itself is unchanged.
+
+Version 3.5.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 Choose Synthesis, Decomposition, Single Replacement, Double Replacement, or any combination before starting a ten-problem round. At least one checkbox must be selected. The 40-reaction bank contains ten examples per family, so even a single-family round has ten distinct problems. Rounds distribute questions as evenly as possible across the selected families and shuffle the order, including the first problem. The existing `ionic-reactions/` address stays the same.
 

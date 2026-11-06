@@ -1,7 +1,9 @@
 # Limiting Reactant Visualizer
-Version: 1.1.1
+Version: 1.1.2
 
-Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson. It also adds search engine tags from `shared/zsa-seo.js`: hreflang links for English and Spanish, a canonical address that keeps `?lang=es` and drops every other parameter, and a description in each language.
+Version 1.1.2 adds search engine tags from `shared/zsa-seo.js`: hreflang links for English and Spanish, a canonical address that keeps `?lang=es` and drops every other parameter, and a description in each language. The activity itself is unchanged.
+
+Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 A stoichiometry visualizer for Chemistry (Unit 6, Stoichiometry). Students pick a reaction between simple molecules, such as 2 H₂ + O₂ → 2 H₂O, and the starting moles of each reactant. They predict which reactant runs out first and how much product forms, then watch the molecules gather in sets, react, and move to the product side. When the limiting reactant is gone, the excess molecules are left drifting on the reactant side with a dashed amber ring and the label "Left over: ..., nothing to react with", so students can see why the reaction stopped. A before, change and after table in mol fills in with each reaction, an explanation works the ratio once it stops and checks the predictions, four questions check the main ideas, and a reflection prints with the page.
 

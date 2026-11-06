@@ -1,8 +1,10 @@
 # ACT Question Generator
 
-Version: 1.2.1
+Version: 1.2.2
 
-Version 1.2.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson. It also adds a canonical address and a description from `shared/zsa-seo.js`; this activity is English only, so it has no hreflang links.
+Version 1.2.2 adds a canonical address and a search description from `shared/zsa-seo.js`. This activity is English only, so it has no hreflang links. The activity itself is unchanged.
+
+Version 1.2.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 A standalone, untimed practice tool for ZornScience. Choose English, Math, or Science; answer one random multiple-choice question at a time; check a choice or reveal the answer without attempting it. Every answer includes an explanation.
 

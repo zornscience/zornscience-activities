@@ -6,9 +6,11 @@ Mass changes reset the system. Free motion uses a=(m2-m1)g/(m1+m2), T=2m1m2g/(m1
 
 The activity intentionally does not use the quiz engine or completion codes, because it is an exploration simulation with no data recording. Arrow colors: mint acceleration, gold gravity, blue tension, each also labeled. The SVG equipment is illustrative, with enlarged hanger geometry.
 
-Version: 1.1.1
+Version: 1.1.2
 
-Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson. It also adds search engine tags from `shared/zsa-seo.js`: hreflang links for English and Spanish, a canonical address that keeps `?lang=es` and drops every other parameter, and a description in each language.
+Version 1.1.2 adds search engine tags from `shared/zsa-seo.js`: hreflang links for English and Spanish, a canonical address that keeps `?lang=es` and drops every other parameter, and a description in each language. The activity itself is unchanged.
+
+Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 Version 1.0.2 removes the introductory banner so the simulation follows the header directly.
 

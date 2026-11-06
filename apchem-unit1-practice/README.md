@@ -1,8 +1,10 @@
 # AP Chemistry Unit 1 Practice
 
-Version: 1.0.2
+Version: 1.0.3
 
-Version 1.0.2 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson. It also adds search engine tags from `shared/zsa-seo.js`: hreflang links for English and Spanish, a canonical address that keeps `?lang=es` and drops every other parameter, and a description in each language.
+Version 1.0.3 adds search engine tags from `shared/zsa-seo.js`: hreflang links for English and Spanish, a canonical address that keeps `?lang=es` and drops every other parameter, and a description in each language. The activity itself is unchanged.
+
+Version 1.0.2 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 Original ZornScience practice for students catching up on AP Chemistry Unit 1. Six questions per topic, 48 total. Each topic mixes multiple choice with numeric entry. Mixed review uses all 48 questions. Questions and choices are shuffled for each new set, including Try again.
 
