@@ -2958,3 +2958,23 @@ The activity title is Laboratorio virtual de entropía y energía libre. Section
 | Lone pairs: Cl has 3 pairs. | Pares libres: Cl tiene 3 pares. |
 | Lone pairs: O has 2 pairs. | Pares libres: O tiene 2 pares. |
 | Lone pairs: N in NH₃ has 1 pair. | Pares libres: N en NH₃ tiene 1 par. |
+
+
+## Gas lab check pilot (gas-lab 1.2.0)
+
+| English | Mexican Spanish | Use |
+| --- | --- | --- |
+| Lab check | Comprobación del laboratorio | Optional five-question section, distinct from Investigaciones. |
+| Question {current} of {total} | Pregunta {current} de {total} | Full progress template. |
+| {score} of {total} right on the first try. | {score} de {total} correctas al primer intento. | Completion score, with decimal points unchanged in numeric choices. |
+| Correct answer | Respuesta correcta | Visible marker after a correct answer or Show me. |
+| Answer shown. {explanation} | Respuesta mostrada. {explanation} | Full feedback template. |
+| Try again. | Inténtalo de nuevo. | Used within the full feedback template. |
+| Light and heavy particles | Partículas ligeras y pesadas | Question title, noun phrase. |
+| Share the pressure | Presión compartida | Question title, noun phrase. |
+| When helium is not ideal | Helio no ideal | Question title, noun phrase. |
+| speed ratio / mass ratio | razón de rapideces / razón de masas | Kinetic energy explanation. |
+| free space | espacio libre | Real-gas explanation. |
+| own volume | volumen propio | Volume occupied by the atoms. |
+
+Other pilot text reuses existing terms, including rapidez promedio, energía cinética promedio, fracción molar, presión parcial, línea discontinua, código de finalización, Preparar el laboratorio, Muéstrame, and Empezar de nuevo.

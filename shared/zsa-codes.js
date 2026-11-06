@@ -5,7 +5,7 @@
 // The check characters depend on a key written in this file. They catch typos and casual editing. They do not stop
 // someone who reads this source, so a code is not secure proof of anything. See shared/README.md.
 //
-// No globals: the engine and the checker ask for this module with a one-use "zsa:request-codes" event on their root.
+// No globals: the engine and the checker ask for this module with a "zsa:request-codes" event on their root.
 // (In Node, for the unit tests, it is module.exports.)
 (function () {
   "use strict";
@@ -50,7 +50,11 @@
     {id:5, prefix:"LVB", slug:"lewis-vsepr", setting:"Octet rule", name:"Lewis Structure and VSEPR Builder", maxItems:6,
       stats:LEWIS_STATS, totals:LEWIS_TOTALS, items:[0]},
     {id:6, prefix:"LVA", slug:"lewis-vsepr", setting:"AP setting", name:"Lewis Structure and VSEPR Builder", maxItems:6,
-      stats:LEWIS_STATS, totals:LEWIS_TOTALS, items:[0]}
+      stats:LEWIS_STATS, totals:LEWIS_TOTALS, items:[0]},
+    {id:7, prefix:"GLC", slug:"gas-lab", setting:"Lab check", name:"Gas Laws and KMT Lab", maxItems:5,
+      stats:[["boyle", "Squeeze the gas"], ["zero", "Find absolute zero"], ["speeds", "Light and heavy particles"],
+        ["mix", "Share the pressure"], ["real", "When helium is not ideal"]],
+      totals:[["boyle"], ["zero"], ["speeds"], ["mix"], ["real"]], items:[0, 1, 2, 3, 4]}
   ];
   // The fixed fields, least significant first: [name, how many values]. Then one total per totals group (0 to
   // maxItems) and one first-try count per stat (0 to its total). Show me and Hint counts stop at their top value.
@@ -263,7 +267,7 @@
   };
   if (typeof document !== "undefined") {
     document.querySelectorAll("[data-zsa-activity], [data-zsa-checker]").forEach(function (root) {
-      root.addEventListener("zsa:request-codes", function (event) {event.detail.receive(api);}, {once:true});
+      root.addEventListener("zsa:request-codes", function (event) {event.detail.receive(api);});
     });
   }
   if (typeof module === "object" && module.exports) module.exports = api;

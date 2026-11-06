@@ -35,6 +35,10 @@
   function cells(row) {
     var r = row.result, ok = r.status === "valid" || r.status === "future";
     var steps = ok ? r.stats.filter(function (s) {return s.total > 0;}).map(function (s) {return s.label + ": " + s.correct + " / " + s.total;}) : [];
+    if (ok && r.activity.prefix === "GLC") {
+      var score = r.stats.reduce(function (sum, s) { return sum + s.correct; }, 0);
+      steps.unshift(score + " of " + r.items + " right on the first try.");
+    }
     return {
       line:String(row.line), code:r.code, activity:ok ? activityName(r.activity) : "", version:ok ? r.version : "",
       date:ok ? readableDate(r.date) : "", iso:ok ? r.date : "", items:ok ? String(r.items) : "", steps:steps,

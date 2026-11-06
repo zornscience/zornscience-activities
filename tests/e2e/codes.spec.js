@@ -211,7 +211,7 @@ function bulkLines() {
     return {activity: slug, version: ict ? "1.4.0" : "1.1.0", day: day, items: 10, totals: totals, results: results, show: n % 4, hints: n};
   }
   function code(slug, day, n) { return codes.encode(result(slug, day, n)); }
-  var other = {id: 7, prefix: "BEQ", slug: "balancing", name: "Balancing", maxItems: 8, stats: [["0", "Balance"]], totals: [["0"]], items: [0]};
+  var other = {id: 31, prefix: "BEQ", slug: "balancing", name: "Balancing", maxItems: 8, stats: [["0", "Balance"]], totals: [["0"]], items: [0]};
   function unknown(n) { return codes.encode({version: "1.0.0", day: today - n, items: 8, totals: {"0": 8}, results: {"0": n}, show: 0, hints: 0}, other); }
   function typo(c, at) { var ch = c[at] === "7" ? "8" : "7"; return c.slice(0, at) + ch + c.slice(at + 1); }
   // Swap the first two different neighbors from `at` on, neither of them a hyphen.

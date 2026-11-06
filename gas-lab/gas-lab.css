@@ -175,3 +175,9 @@
   .zsa-gl-stage .zsa-gl-play-note:empty {display:none;}
 }
 @media(max-width:359px) {.zsa-gl-stage {grid-template-columns:minmax(0,1fr) 104px;}}
+
+/* The check sits below the container and controls, outside every tab. */
+#zsa-gl-check {min-width:0;}
+#zsa-gl-check .zsa-labcheck {margin:0;}
+@media(min-width:900px) {#zsa-gl-check {grid-column:1 / -1;}}
+@media(min-width:1200px) {#zsa-gl-check {grid-column:1 / 3;grid-row:2;} .zsa-gl-panel {grid-column:3;grid-row:1 / 3;}}

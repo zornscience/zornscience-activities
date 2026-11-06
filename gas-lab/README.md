@@ -1,5 +1,5 @@
 # Gas Laws and KMT Lab
-Version: 1.1.2
+Version: 1.2.0
 
 Version 1.1.2 adds search engine tags to the page head: a canonical link to the clean activity address, English and Spanish hreflang links (Spanish is ?lang=es), and a English and Mexican Spanish meta description from `tools/seo-pages.js`. Run `node tools/build-seo.js` after changing them.
 
@@ -7,8 +7,22 @@ Version 1.1.1 adds an "About this activity" section above the footer: a short in
 
 A particle simulation of a gas in a container with a movable piston, linked to a live pressure gauge, readouts, graphs of the gas laws, Maxwell-Boltzmann speed distributions, gas mixtures and a real gas mode. An Investigations tab adds guided predict, test and explain tasks with a completion code.
 
+## Lab check pilot (1.2.0)
+
+Open **Lab check** below the container and controls for five questions about Boyle's law, absolute zero, speed and kinetic energy, partial pressure, and real helium. It stays outside the tabs while students use Graphs or Speeds. It is closed by default. Link directly with `?check=1`, or `?check=1&lang=es&embed=1` for Mexican Spanish in a lesson embed. Hidden question content is created only when opened.
+
+Each question has Set up the lab, which restores its starting state. Students make the requested slider change or sweep themselves. Previous and Next allow free navigation. Wrong answers get specific feedback and unlimited retries. After two misses, Show me marks the correct answer and shows the explanation. A correct first submission earns one point. A retry or Show me earns no first-try point. Start over clears only the check's in-memory answers.
+
+All five completed questions produce a separate `GLC` code and a first-try score out of five. The teacher checker reports that score and a 0 or 1 result for each named question. Registry id 7 uses setting `Lab check` on the shared `gas-lab` slug; the original Investigations `GAS` entry is unchanged. No answer, code or usage is stored or sent. The code is the student's record, with the same typo protection and limitations as other activity codes.
+
+The shared runner is `shared/zsa-labcheck.js`, with styles in `shared/zsa-labcheck.css`. `data.js` holds the five question definitions and all English templates; `i18n-data.js` supplies Mexican Spanish. `labcheck.js` resolves numeric placeholders through `physics.js` and `lab.format`, then passes localized questions and a setup callback to the shared runner. See `shared/README.md` for the reusable data format.
+
+Decisions: the section sits below both controls at desktop widths and before the tabs in mobile flow, preserving the existing simulation fit. Setup opens Graphs for the volume-temperature question and resets the graph to V vs T with an unchecked °C axis. Students run the sweep and enable °C. The speed question uses the existing He vs Ar preset, which uses 2.00 mol for smoother histograms. Setup never compresses the gas or runs a sweep. Previous and Next stay available before an answer. Revisiting or reopening reshuffles choices; attempts remain. Completion codes keep their original completion day on revisits.
+
+Value detail: the existing `lab.format.sig` displays the molar-mass ratio as `10.0` when asked for two significant figures, because the unrounded value is just below 10. The brief calls this about 10 times. The computed ratio and every other requested value agree with the brief. The pilot preserves the existing formatter.
+
 ## Assumptions and departures
-- Built on the house conventions: plain JavaScript in strict IIFEs, classic deferred scripts, no globals, the shared Content Security Policy (no inline scripts, styles or style attributes; the canvas and SVG are drawn by script), shared tokens and Inter, embed mode, no storage, cookies, analytics or outside requests. The only file changed in `shared/` is `zsa-codes.js` (to register the activity).
+- Built on the house conventions: plain JavaScript in strict IIFEs, classic deferred scripts, no globals, the shared Content Security Policy (no inline scripts, styles or style attributes; the canvas and SVG are drawn by script), shared tokens and Inter, embed mode, no storage, cookies, analytics or outside requests. The lab check adds a shared runner and stylesheet, plus a new completion-code registration.
 - The lab is not an engine activity. The Investigations tab uses the shared engine (`shared/zsa-engine.js`, `shared/zsa-activity.css`). The engine always draws a periodic table, which this activity does not need, so it draws into a hidden holder (`#zsa-gl-table`).
 - Scripts: `physics.js` is the model (constants, gas law, van der Waals, Maxwell-Boltzmann, the simulation) and has no page text; `data.js` holds every string the scripts show; `i18n-data.js` maps each English string (data, page markup and the few words written in the scripts) to Mexican Spanish for the shared language module (`shared/zsa-i18n.js`), and is named so because `data.js` already holds the science data; `lab.js` runs the container, controls, readouts, tabs and deep links; `charts.js` draws the Graphs and Speeds tabs; `investigations.js` is the engine activity. They talk through one-use-style events on the root (`zsa:request-data`, `zsa-gl:request-physics`, `zsa-gl:request-lab`), never through globals.
 - When pressure is held, the piston is placed where the ideal gas law puts it (V = nRT/P) and the gauge then confirms the pressure; the piston itself is not simulated as a moving mass.

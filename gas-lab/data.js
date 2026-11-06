@@ -5,6 +5,258 @@
   var root = document.querySelector('[data-zsa-activity="gas-lab"]');
   if (!root) return;
   var data = {
+    check: {
+      "labels": {
+        "title": "Lab check",
+        "progress": "Question {current} of {total}",
+        "setupButton": "Set up the lab",
+        "setupDone": "The lab is set up. Follow the question and use the lab controls.",
+        "check": "Check",
+        "show": "Show me",
+        "previous": "Previous",
+        "next": "Next",
+        "restart": "Start over",
+        "restarted": "Lab check started over. All answers are cleared.",
+        "correctChoice": "Correct answer",
+        "correct": "Correct. {explanation}",
+        "retry": "{feedback} Try again.",
+        "shown": "Answer shown. {explanation}",
+        "score": "{score} of {total} right on the first try.",
+        "completion": "Completion code",
+        "codeNote": "Paste this code into your Google Classroom assignment."
+      },
+      "questions": [
+        {
+          "id": "boyle",
+          "title": "Squeeze the gas",
+          "question": "Move the volume to 5.0 L. What does the gas law pressure read now?",
+          "setup": {
+            "mode": "ideal",
+            "gases": [
+              {
+                "gas": "N2",
+                "n": 1
+              }
+            ],
+            "T": 300,
+            "V": 10,
+            "hold": "T"
+          },
+          "choices": [
+            [
+              "right",
+              "{right}",
+              null
+            ],
+            [
+              "start",
+              "{start}",
+              "boyleSame"
+            ],
+            [
+              "half",
+              "{half}",
+              "inverse"
+            ],
+            [
+              "four",
+              "{four}",
+              "notSquare"
+            ]
+          ],
+          "explanation": "Half the room means each particle hits the walls twice as often, so the pressure doubles. The speeds do not change, because the temperature is held.",
+          "feedback": {}
+        },
+        {
+          "id": "zero",
+          "title": "Find absolute zero",
+          "question": "Press Run sweep and turn on the °C axis. The dashed line extends the data to zero volume. At what temperature does it reach zero?",
+          "setup": {
+            "mode": "ideal",
+            "gases": [
+              {
+                "gas": "N2",
+                "n": 1
+              }
+            ],
+            "T": 300,
+            "V": 10,
+            "hold": "P"
+          },
+          "choices": [
+            [
+              "right",
+              "About −273 °C (0 K)",
+              null
+            ],
+            [
+              "zeroC",
+              "0 °C",
+              "zeroC"
+            ],
+            [
+              "sliderMin",
+              "About −173 °C, the coldest setting in the lab",
+              "sliderMin"
+            ],
+            [
+              "neverZero",
+              "It never reaches zero",
+              "neverZero"
+            ]
+          ],
+          "explanation": "Volume is proportional to the kelvin temperature, so the line reaches zero volume at 0 K, which is −273 °C. That is why gas law calculations always use kelvins.",
+          "feedback": {
+            "zeroC": "0 °C is where water freezes. Gas particles still move at 0 °C, so the volume is not zero there. Follow the dashed line further left.",
+            "sliderMin": "The lab only goes down to 100 K, which is −173 °C. The dashed line keeps going past the data. Read where it meets zero volume.",
+            "neverZero": "The data make a straight line, so extending it does reach zero volume. Read the temperature where it crosses."
+          },
+          "view": "graphs"
+        },
+        {
+          "id": "speeds",
+          "title": "Light and heavy particles",
+          "question": "Compare helium and argon at the same temperature.",
+          "setup": {
+            "mode": "ideal",
+            "gases": [
+              {
+                "gas": "He",
+                "n": 1
+              }
+            ],
+            "T": 300,
+            "V": 10,
+            "hold": "T"
+          },
+          "choices": [
+            [
+              "right",
+              "Same average kinetic energy. Helium's average speed is about {ratio} times argon's.",
+              null
+            ],
+            [
+              "heavierKE",
+              "Same average speed. Argon has more kinetic energy because it is heavier.",
+              "heavierKE"
+            ],
+            [
+              "heavyFast",
+              "Argon is faster, because its particles are heavier.",
+              "heavyFast"
+            ],
+            [
+              "massRatio",
+              "Helium's average speed is about {mass} times argon's, because argon is about {mass} times heavier.",
+              "massRatio"
+            ]
+          ],
+          "explanation": "The same temperature means the same average kinetic energy, (3/2)RT. Since KE = ½mv², the lighter helium atoms must move faster: about {he} m/s on average, compared with {ar} m/s for argon.",
+          "feedback": {
+            "massRatio": "Speed does not go down in step with mass. Since KE = ½mv² is the same for both gases, the speed ratio is the square root of the mass ratio."
+          },
+          "view": "speeds"
+        },
+        {
+          "id": "mix",
+          "title": "Share the pressure",
+          "question": "What is the partial pressure of helium?",
+          "setup": {
+            "mode": "ideal",
+            "gases": [
+              {
+                "gas": "He",
+                "n": 1
+              },
+              {
+                "gas": "Ar",
+                "n": 0.5
+              },
+              {
+                "gas": "Kr",
+                "n": 0.5
+              }
+            ],
+            "T": 300,
+            "V": 10,
+            "hold": "T"
+          },
+          "choices": [
+            [
+              "right",
+              "{right}",
+              null
+            ],
+            [
+              "equal",
+              "{equal}",
+              "equalSplit"
+            ],
+            [
+              "total",
+              "{total}",
+              "totalNotPartial"
+            ],
+            [
+              "mass",
+              "{mass}",
+              "byMass"
+            ]
+          ],
+          "explanation": "Helium is 1.00 of the 2.00 mol, a mole fraction of 0.500, so it supplies half of the {total} total. Heavier atoms move slower, so each mole hits the walls with the same force on average.",
+          "feedback": {
+            "equalSplit": "The pressure is not split evenly among the three gases. Each gas's share matches its share of the moles.",
+            "totalNotPartial": "That is the total pressure of all three gases. Helium's partial pressure is only its share.",
+            "byMass": "Partial pressure follows moles, not mass. At the same temperature, each mole of gas adds the same pressure, whatever its mass."
+          }
+        },
+        {
+          "id": "real",
+          "title": "When helium is not ideal",
+          "question": "Squeeze the helium to 0.25 L. What does PV/nRT read, and why?",
+          "setup": {
+            "mode": "real",
+            "gases": [
+              {
+                "gas": "He",
+                "n": 1
+              }
+            ],
+            "T": 300,
+            "V": 2.5,
+            "hold": "T"
+          },
+          "choices": [
+            [
+              "right",
+              "{right}, because the atoms' own volume leaves less empty space",
+              null
+            ],
+            [
+              "realAttract",
+              "{attract}, because attractions pull the atoms away from the walls",
+              "realAttract"
+            ],
+            [
+              "realIdeal",
+              "{ideal}, because helium is an ideal gas",
+              "realIdeal"
+            ],
+            [
+              "realFaster",
+              "{right}, because the atoms move faster when they are squeezed",
+              "realFaster"
+            ]
+          ],
+          "explanation": "At high pressure the atoms themselves fill part of the container, so the free space is less than V and the pressure is higher than the ideal gas law predicts. Helium's attractions are so weak that this effect wins, which is why PV/nRT is above 1. Gases with strong attractions, like CO₂, drop below 1 first.",
+          "feedback": {
+            "realAttract": "Helium atoms barely attract each other. Look at the two parts of PV/nRT. The particle volume part is the one that grew.",
+            "realIdeal": "No real gas is perfectly ideal. At 0.25 L the pressure is over 100 atm, and the atoms fill a real share of the container.",
+            "realFaster": "The temperature is held, so the speeds stay the same. The atoms take up space, so they have less room to move in."
+          }
+        }
+      ]
+    },
     lab: {
       defaultBack: "https://zornscience.org/science/ap-chemistry/unit-3-properties-of-substances-and-mixtures/",
       backToLesson: "← Back to the lesson",
@@ -407,6 +659,9 @@
   // Only words are swapped, by exact English match: ids, lab settings, gas symbols and choice values stay as they
   // are, because the scripts look things up by them. The engine's own default words are added so they are
   // translated too; English keeps the engine defaults.
+  data.check.questions[0].feedback = data.inv.tasks.filter(function (q) { return q.id === "boyle"; })[0].feedback;
+  data.check.questions[2].feedback.heavierKE = data.inv.feedback.heavierKE;
+  data.check.questions[2].feedback.heavyFast = data.inv.tasks.filter(function (q) { return q.id === "mbM"; })[0].feedback.heavyFast;
   var i18n;
   root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: function (api) { i18n = api; }}}));
   if (i18n && i18n.lang === "es") {
@@ -422,7 +677,7 @@
       chargeMark: "ion charge", tableCaption: "Main-group elements by group (column) and period (row)", periodLabel: "Period"};
     Object.keys(data.inv.labels).forEach(function (k) { engine[k] = data.inv.labels[k]; });
     data.inv.labels = engine;
-    var KEEP = {id: 1, group: 1, setup: 1, run: 1, chart: 1, celsius: 1, quantity: 1, curves: 1, formula: 1, spoken: 1, defaultBack: 1};
+    var KEEP = {id: 1, group: 1, setup: 1, run: 1, chart: 1, celsius: 1, quantity: 1, curves: 1, formula: 1, spoken: 1, defaultBack: 1, view: 1};
     var localize = function (value) {
       if (typeof value === "string") return i18n.text(value);
       if (Array.isArray(value)) return value.map(localize);
