@@ -1,0 +1,13 @@
+/* Unit-owned schematic equilibrium models. */
+.zsa-u7 .zsa-practice-option { min-width: 0; overflow-wrap: anywhere; }
+.zsa-u7 .zsa-practice-option > span { min-width: 0; }
+.zsa-u7 .zsa-practice-feedback { overflow-wrap: anywhere; }
+.zsa-u7 [data-zsa-practice-visual] { margin: 1rem auto; max-width: 30rem; }
+.zsa-u7 [data-zsa-practice-visual] svg { display: block; width: 100%; height: auto; }
+.zsa-u7 .zsa-u7-axis, .zsa-u7 .zsa-u7-box { fill: none; stroke: var(--zsa-navy); stroke-width: 1.5; }
+.zsa-u7 .zsa-u7-a { fill: none; stroke: var(--zsa-blue); stroke-width: 3; }
+.zsa-u7 .zsa-u7-b { fill: none; stroke: var(--zsa-navy); stroke-width: 3; stroke-dasharray: 7 4; }
+.zsa-u7 .zsa-u7-marker { fill: none; stroke: var(--zsa-navy); stroke-width: 1; stroke-dasharray: 2 4; }
+.zsa-u7 .zsa-u7-label { fill: var(--zsa-navy); font-family: inherit; font-size: 14px; text-anchor: middle; }
+.zsa-u7 .zsa-u7-particle { fill: white; stroke: var(--zsa-navy); stroke-width: 2; }
+.zsa-u7 figcaption { font-size: 0.85rem; text-align: center; }
