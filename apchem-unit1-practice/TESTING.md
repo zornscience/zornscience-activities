@@ -1,6 +1,6 @@
 # AP Chemistry Unit 1 Practice checks
 
-Version: 1.0.1
+Version: 1.0.2
 
 ## Original release automated checks (1.0.0)
 

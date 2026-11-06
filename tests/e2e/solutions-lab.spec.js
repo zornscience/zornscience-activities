@@ -56,6 +56,8 @@ test("Solutions: every requested translation is supplied and experiments make no
   var original=fs.readFileSync(path.join(__dirname,"../../solutions-lab/data.js"),"utf8");
   await page.route("**/solutions-lab/data.js*",function(route){return route.fulfill({contentType:"application/javascript",body:'window.__solutionsStrings=[];document.querySelector("[data-zsa-activity]").dispatchEvent(new CustomEvent("zsa:request-i18n",{detail:{receive:function(api){var original=api.text;api.text=function(s,v){window.__solutionsStrings.push(s);return original(s,v);};}}}));\n'+original});});
   var missing=[];
+  // The "About this activity" section localizes itself from shared/zsa-about.js, so its strings are not in this dictionary.
+  var about=require("../../shared/zsa-about.js").about("solutions-lab","en"),aboutStrings=[about.heading,about.intro,about.lessonsHeading].concat(about.lessons.flatMap(function(l){return [l.title,l.course];}));
   for(var mode of ["make","dilute","solubility","challenge"]){
     await page.goto("/solutions-lab/?mode="+mode+"&lang=es");
     if(mode==="make")await finishMake(page,"1.46");
@@ -63,7 +65,7 @@ test("Solutions: every requested translation is supplied and experiments make no
     if(mode==="solubility"){await page.locator("#curve-solute").selectOption("nh3");await page.locator("#add-ten").click();}
     if(mode==="challenge"){await page.locator("#new-challenges").click();await page.locator("#check-challenge-0").click();}
     var requested=await page.evaluate(function(){return window.__solutionsStrings;});
-    missing=missing.concat(requested.filter(function(s){return /[a-z]{3}/i.test(s)&&!["ZornScience","CC BY-NC-SA 4.0","2.00 M NaCl","1.00 M CuSO₄","4.00 M NaCl"].includes(s)&&!Object.hasOwn(dictionary,s);}));
+    missing=missing.concat(requested.filter(function(s){return /[a-z]{3}/i.test(s)&&!["ZornScience","CC BY-NC-SA 4.0","2.00 M NaCl","1.00 M CuSO₄","4.00 M NaCl"].includes(s)&&!aboutStrings.includes(s)&&!Object.hasOwn(dictionary,s);}));
   }
   expect([...new Set(missing)]).toEqual([]);expect(unexpected).toEqual([]);
 });

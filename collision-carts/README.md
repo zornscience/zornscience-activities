@@ -1,5 +1,7 @@
 # Collision Carts
-Version: 1.1.0
+Version: 1.1.1
+
+Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 Ideal one-dimensional two-cart simulation. Adjustable total masses and signed initial velocities; elastic magnetic bumpers or perfectly inelastic hook-and-loop coupling. Live velocity and momentum overlays, pause, frame stepping, slow motion, four presets, instructions and sharing. No student data recording or storage.
 

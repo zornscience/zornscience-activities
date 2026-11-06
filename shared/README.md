@@ -12,6 +12,8 @@ shared/
   zsa-practice.js     question-set practice sessions, interface, feedback and results
   zsa-practice.css    responsive question-set practice layout, scoped to .zsa-practice
   zsa-codes.js        completion codes: the activity registry, writing and reading codes
+  zsa-about.js        "About this activity": each activity's intro and related lesson links (English and Mexican Spanish)
+  zsa-about.css       styles for that section, in the page's own colors
   fonts/              Inter (SIL OFL 1.1)
 ```
 
@@ -21,7 +23,18 @@ The engine runs everything the activities have in common. A new activity is most
 
 Non-ACT activities other than Periodic Table load `zsa-header.css` after their activity styles. Use `data-zsa-header` on the header, `data-zsa-header-row` on its flex row, `data-zsa-header-identity` on the logo/title group, `data-zsa-header-brand` on the home link, and `data-zsa-header-tools` on the controls. The shared styles set a 44px logo frame, 34px logo image, Inter title, and 44px Instructions and Share buttons. Phone layouts wrap the controls beneath the title. Keep activity-specific IDs and classes for existing event handlers and fullscreen behavior.
 
-Keep explanations inside Instructions, lesson links in the footer, and functional controls and equations in the workspace. Do not add an intro banner or a second brand-name line above the title. Activities without existing dialog handlers can load `zsa-header.js` and use `data-zsa-dialog-open` with a dialog ID and `data-zsa-dialog-close` on its close button. Native dialogs support Escape, contain keyboard focus, and return focus to the opener. The shared Share dialog copies a clean activity URL and provides an email link without including student state.
+Keep explanations inside Instructions, the short intro and lesson links in the "About this activity" section just above the footer (see below), and functional controls and equations in the workspace. Do not add an intro banner or a second brand-name line above the title. Activities without existing dialog handlers can load `zsa-header.js` and use `data-zsa-dialog-open` with a dialog ID and `data-zsa-dialog-close` on its close button. Native dialogs support Escape, contain keyboard focus, and return focus to the opener. The shared Share dialog copies a clean activity URL and provides an email link without including student state.
+
+## About this activity
+
+Every activity page students land on ends with a short "About this activity" section just above its footer: one or two sentences on what the student does and learns, and links to the related lessons on zornscience.org with their course. It gives visitors who arrive from search, a listing site or a shared link the context the lesson page would have given them, and links them back to the lesson.
+
+- **One source.** The words and links live in `shared/zsa-about.js`: a lesson catalog (course, path, English title and the official Spanish title from Style Kit Appendix A or the live Spanish page) and, for each activity folder, its intro in English and Mexican Spanish and its lesson keys, most specific first. Never edit the section in a page by hand.
+- **Written into the page.** `node tools/build-about.js` writes the English section into each registered page between `<!-- zsa-about -->` and `<!-- /zsa-about -->`, just above the last `<footer>` (or at the end of `<main>`), and adds `zsa-about.css` and `zsa-about.js` with the page's version to the end of `<head>`. The section reads without JavaScript. Bump the activity's version first, then run the tool. `node tools/build-about.js --check` fails if a page is out of date, and the browser test runs the same check.
+- **Spanish.** The script follows the page language (`<html lang>`), so the section switches to Mexican Spanish with `?lang=es` and when an activity switches language in place, and links go to the `/es/` twin of each lesson. Pages without Spanish (the ACT activities) keep it in English.
+- **Embedded.** It carries `data-zsa-chrome` and the script also hides it with `?embed=1`, because a lesson page that embeds the activity already introduces it.
+- **Adding an activity.** Add its entry (and any new lessons) to `shared/zsa-about.js`, check each lesson URL and its `/es/` twin on zornscience.org, bump the version and run the tool. `tests/e2e/about.spec.js` fails if a page with a version is missing from the registry; the teacher checker, the Chemistry lab chooser and the starter template are deliberately left out.
+- **Layout.** The section is at most 760 px wide and takes the page's text color, so it reads on light and dark pages. On pages whose root has no side padding, the entry's `wrap` names a class that lines it up with the footer (ACT uses `zsa-act-wrap`, Gas Laws uses `zsa-about-wrap`).
 
 ## What the engine does
 

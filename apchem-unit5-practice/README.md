@@ -1,6 +1,8 @@
 # AP Chemistry Unit 5 Practice
 
-Version: 1.0.0
+Version: 1.0.1
+
+Version 1.0.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 Original bilingual ZornScience practice aligned to College Board CED Unit 5, Kinetics. Each of eleven topics has six questions, 66 total: 44 multiple choice and 22 numeric entry. Every topic has four multiple-choice and two numeric questions. Each of the 132 distractors has its own bilingual explanation. Mixed review includes all 66. These are original aligned questions, not official College Board exam items.
 

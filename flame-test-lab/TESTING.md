@@ -1,6 +1,6 @@
 # Verification
 
-Version: 1.1.0
+Version: 1.1.1
 
 - `node --test tests/unit/static.test.js tests/unit/i18n.test.js`: versions, asset queries, markup and language module.
 - `npx playwright test tests/e2e/activity-headers.spec.js tests/e2e/a11y.spec.js tests/e2e/layout.spec.js`: header, Instructions dialog, Share panel, accessibility and responsive layout.

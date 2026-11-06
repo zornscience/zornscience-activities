@@ -1,5 +1,7 @@
 # Predicting Ion Charge Trainer
-Version: 1.5.0
+Version: 1.5.1
+
+Version 1.5.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 ## Assumptions and departures
 - Claude will host these static files and add the WordPress link. This package makes no hosting or WordPress changes.

@@ -1,6 +1,6 @@
 # Verification
 
-Version: 1.1.1
+Version: 1.1.2
 
 - `node --test tests/unit/static.test.js tests/unit/i18n.test.js`: versions, asset queries, markup and language module.
 - `npx playwright test tests/e2e/metals-lab.spec.js`: all three unknowns through every station, acid → solid → observation → waste order, pause, locked sample switches during an acid test, cancelled stale animations, instructions and share focus, axe and a 390 px viewport.

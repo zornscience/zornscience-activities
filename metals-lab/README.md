@@ -1,6 +1,8 @@
 # Metals, Nonmetals & Metalloids Lab
 
-Version: 1.1.1
+Version: 1.1.2
+
+Version 1.1.2 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 Version 1.1.1 fixes sideways scrolling on screens narrower than 360 px, in every language: the samples stack their icon and caption, and the four tests take one column. Layout at 360 px and wider is unchanged.
 

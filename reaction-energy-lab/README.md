@@ -1,6 +1,8 @@
 # Reaction Energy Lab
 
-Version: 1.0.1
+Version: 1.0.2
+
+Version 1.0.2 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 ZornScience, CC BY-NC-SA 4.0. Open `index.html` through a static server. No build step or runtime dependencies. All assets, including Inter, are local. The activity makes no API or tracking requests and uses no accounts, cookies, or browser storage. CSV and clipboard actions run only when requested.
 

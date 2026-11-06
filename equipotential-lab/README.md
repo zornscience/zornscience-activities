@@ -1,6 +1,8 @@
 # Equipotential & Electric Field Mapping
 
-Version: 1.2.0
+Version: 1.2.1
+
+Version 1.2.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 An offline-capable, buildless point-charge sandbox with ZornScience branding. Open `index.html` through a static server. Published at https://activities.zornscience.org/equipotential-lab/.
 

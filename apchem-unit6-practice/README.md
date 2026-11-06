@@ -1,6 +1,8 @@
 # AP Chemistry Unit 6 Practice
 
-Version: 1.0.0
+Version: 1.0.1
+
+Version 1.0.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 Original bilingual ZornScience practice aligned to College Board CED Unit 6, Thermochemistry. Each of nine topics has six questions: four multiple choice and two numeric entry. There are 54 questions, 36 multiple choice and 18 numeric, with individual bilingual feedback for all 108 distractors. Mixed review includes all 54. These are original aligned questions, not official College Board exam items.
 

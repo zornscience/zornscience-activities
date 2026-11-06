@@ -1,6 +1,8 @@
 # Scientific Calculator Practice
 
-Version: 1.2.2
+Version: 1.2.3
+
+Version 1.2.3 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 Independent browser-local scientific calculator practice tool. Files are served directly from this folder by GitHub Pages. No accounts, analytics, server calculations, or external runtime dependencies.
 
 Includes reference keypad placement, arithmetic with precedence and implicit multiplication, mixed fractions, powers and roots, logs, inverse and hyperbolic trigonometry, angle units and DMS, probability, 5 memory variables, scientific and engineering notation, fixed decimals, statistics and linear regression, coordinate conversion, history, keyboard input and six guided lessons.

@@ -1,5 +1,7 @@
 # Snell’s Law & Refraction
-Version: 1.1.0
+Version: 1.1.1
+
+Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 A buildless, browser-local optical bench using the same ZornScience branding and header controls as Metals Lab. Published at https://activities.zornscience.org/snells-law-lab/.
 

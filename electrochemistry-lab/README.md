@@ -1,6 +1,8 @@
 # Electrochemistry Cell Builder
 
-Version: 1.4.0
+Version: 1.4.1
+
+Version 1.4.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 Static, private-data-free AP Chemistry lab at `/electrochemistry-lab/`. No runtime dependencies, network requests, storage, accounts or completion codes. Shared font, embedding helper and branded Instructions/Share header are retained. The promotional banner, standalone reaction panel and prediction section remain removed.
 

@@ -1,6 +1,6 @@
 # Chemical Bonding Lab checks
 
-Version: 1.1.1
+Version: 1.1.2
 
 Run `npx playwright test tests/e2e/chemical-bonding-lab.spec.js` and `node --test tests/unit/static.test.js`.
 
