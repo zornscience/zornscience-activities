@@ -14,6 +14,7 @@ shared/
   zsa-codes.js        completion codes: the activity registry, writing and reading codes
   zsa-about.js        "About this activity": each activity's intro and related lesson links (English and Mexican Spanish)
   zsa-about.css       styles for that section, in the page's own colors
+  zsa-seo.js          search engine tags: each page's description in English and Spanish, and its canonical address
   fonts/              Inter (SIL OFL 1.1)
 ```
 
@@ -35,6 +36,16 @@ Every activity page students land on ends with a short "About this activity" sec
 - **Embedded.** It carries `data-zsa-chrome` and the script also hides it with `?embed=1`, because a lesson page that embeds the activity already introduces it.
 - **Adding an activity.** Add its entry (and any new lessons) to `shared/zsa-about.js`, check each lesson URL and its `/es/` twin on zornscience.org, bump the version and run the tool. `tests/e2e/about.spec.js` fails if a page with a version is missing from the registry; the teacher checker, the Chemistry lab chooser and the starter template are deliberately left out.
 - **Layout.** The section is at most 760 px wide and takes the page's text color, so it reads on light and dark pages. On pages whose root has no side padding, the entry's `wrap` names a class that lines it up with the footer (ACT uses `zsa-act-wrap`, Gas Laws uses `zsa-about-wrap`).
+
+## Search engine tags
+
+`shared/zsa-seo.js` holds the meta description of every indexed page (the landing page, every activity and the checker) in English and, where the page has Spanish, in Mexican Spanish, 100 to 160 characters each. `node tools/build-seo.js` writes them into the pages and writes `sitemap.xml`; `--check` reports anything out of date, and `tests/unit/seo.test.js` runs the same check.
+
+- **Description.** The English one is the page's `<meta name="description">`. The script swaps in the Spanish one when the page is in Spanish.
+- **Bilingual pages** get three hreflang links just after the description (`en` = the clean address, `es` = `?lang=es`, `x-default` = English) and load `zsa-seo.js`, which adds the canonical: the clean address, or `?lang=es` in Spanish, never the page's state, `embed=1` or `from=`. English and Spanish are one HTML file, so a canonical written into the HTML would point the Spanish page at the English one; Google reads a canonical that a script adds when the HTML has none. It follows an in-place language switch too.
+- **English-only pages** (ACT Practice, the ACT Question Generator, the checker) get a static canonical instead.
+- **Not indexed.** The redirects keep their noindex and canonical to the new address; the Chemistry lab chooser and the starter template are left out of the sitemap, and `robots.txt` keeps crawlers out of `/tests/`, `/templates/`, `/tools/` and `/wordpress/`.
+- **Adding a page.** Add its descriptions to `shared/zsa-seo.js`, bump the version, run `node tools/build-seo.js` (and `node tools/build-about.js`). `sitemap.xml` is rewritten to include it.
 
 ## What the engine does
 

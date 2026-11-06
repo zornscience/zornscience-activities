@@ -66,7 +66,8 @@ test("pages have one CSP, no inline scripts or styles, and only the expected out
   });
   assert.equal(csp, "default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'");
   // The SVG namespace is an identifier for createElementNS, not a link; nothing is fetched from it.
-  var allowed = /^(https:\/\/((activities\.)?zornscience\.org(\/[\w\-\/]*)?|creativecommons\.org\/licenses\/by-nc-sa\/4\.0\/)|http:\/\/www\.w3\.org\/2000\/svg)$/;
+  // An activity's Spanish address (?lang=es) appears in its hreflang links.
+  var allowed = /^(https:\/\/(zornscience\.org(\/[\w\-\/]*)?|activities\.zornscience\.org(\/[\w\-\/]*)?(\?lang=es)?|creativecommons\.org\/licenses\/by-nc-sa\/4\.0\/)|http:\/\/www\.w3\.org\/2000\/svg)$/;
   // User-initiated share links are plain outbound anchors, with no social SDK or page-load requests.
   var shareLinks = new Set(["https://www.facebook.com/sharer/sharer.php?u=", "https://x.com/intent/tweet?text="]);
   var shareFiles = new Set(["ionic-reactions/share.js", "redox-coach/share.js", "polyatomic-ion-trainer/share.js", "periodic-table/data.js"]);

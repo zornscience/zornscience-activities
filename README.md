@@ -21,6 +21,9 @@ shared/
   zsa-embed.js             ?embed=1 mode and zsa:resize messages
   zsa-codes.js             completion codes: activity registry, writing and reading codes
   zsa-about.js, zsa-about.css  "About this activity" on each activity page: a short intro and related lesson links
+  zsa-seo.js               search engine tags: descriptions in English and Spanish, hreflang and canonical addresses
+sitemap.xml                every indexed page in English and Spanish (written by tools/build-seo.js)
+robots.txt                 crawl rules and the sitemap's address
   fonts/InterVariable.woff2, Inter-OFL.txt
 ion-charge-trainer/        Predicting Ion Charge Trainer, v1.5.1
 ionic-formula-builder/     Redirect only: the retired Ionic Formula Builder now sends visitors to ionic-reactions/
@@ -78,10 +81,11 @@ hookes-law-lab/            Hooke’s Law & Harmonic Motion, v1.2.0 (slotted mass
 pendulum-lab/              The Simple Pendulum, v1.2.1 (mass, length and gravity on Earth, the Moon and Jupiter, with energy exchange; English and Mexican Spanish)
 inclined-plane/            Inclined Plane & Friction, v1.1.0 (raise a ramp until the block slips, static and kinetic friction, live free body diagram; English and Mexican Spanish)
 equilibrium-thermo-lab/   Compatibility chooser linking to the two standalone labs, v1.1.0 (English and Mexican Spanish)
-check/                     completion code checker for teachers, v1.2.0 (linked under "For teachers")
+check/                     completion code checker for teachers, v1.2.1 (linked under "For teachers")
 TEACHERS.md                assigning activities in Google Classroom and checking completion codes
 templates/starter/         starter template for a new activity (not linked from the site)
 tools/build-about.js       writes each page's "About this activity" section from shared/zsa-about.js (Node only)
+tools/build-seo.js         writes each page's search engine tags and sitemap.xml from shared/zsa-seo.js (Node only)
 tests/                     automated tests (development only; see TESTING.md)
 package.json               test tooling only; the site has no dependencies
 ```
@@ -94,7 +98,7 @@ package.json               test tooling only; the site has no dependencies
 
 ## Adding an activity
 
-Every activity runs on the shared engine in `shared/zsa-engine.js`. A new activity is a folder named with the activity slug, holding a data file, a small script with its steps and misconception rules, a stylesheet for its strip, and README.md and TESTING.md. Start from `templates/starter/` and follow [shared/README.md](shared/README.md). Classes specific to an activity are prefixed `zsa-<code>-`; shared classes are `zsa-`. Changes to `shared/` affect every activity and need the full test suite and the parity check. Bump the version in the activity's meta tag and asset query strings on every change. Every activity page also needs an entry in `shared/zsa-about.js` (its intro and related lessons); then run `node tools/build-about.js` (see [shared/README.md](shared/README.md#about-this-activity)).
+Every activity runs on the shared engine in `shared/zsa-engine.js`. A new activity is a folder named with the activity slug, holding a data file, a small script with its steps and misconception rules, a stylesheet for its strip, and README.md and TESTING.md. Start from `templates/starter/` and follow [shared/README.md](shared/README.md). Classes specific to an activity are prefixed `zsa-<code>-`; shared classes are `zsa-`. Changes to `shared/` affect every activity and need the full test suite and the parity check. Bump the version in the activity's meta tag and asset query strings on every change. Every activity page also needs an entry in `shared/zsa-about.js` (its intro and related lessons); then run `node tools/build-about.js` (see [shared/README.md](shared/README.md#about-this-activity)). Its search descriptions go in `shared/zsa-seo.js`; then run `node tools/build-seo.js` ([Search engine tags](shared/README.md#search-engine-tags)).
 
 ## Tests
 

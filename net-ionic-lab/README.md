@@ -10,7 +10,7 @@ Validation: JavaScript syntax check; Chromium interaction checks for all ten mix
 
 Version: 1.1.1
 
-Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
+Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson. It also adds search engine tags from `shared/zsa-seo.js`: hreflang links for English and Spanish, a canonical address that keeps `?lang=es` and drops every other parameter, and a description in each language.
 
 The beaker starts empty. Both solutions pour sequentially in 10 mL portions, with volume-driven liquid height, mouth-connected streams, bottle tilt and horizontal liquid surfaces. The zinc trial adds 10 mL lead nitrate before lowering the metal strip. Reduced motion uses static sequential additions. Reset and switching trials cancel pending frames.
 

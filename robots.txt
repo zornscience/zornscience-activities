@@ -1,0 +1,9 @@
+# activities.zornscience.org: every activity may be crawled. Tests, templates, tools and the WordPress plugins
+# in this repository are published by GitHub Pages too, but they are not pages for students.
+User-agent: *
+Disallow: /tests/
+Disallow: /templates/
+Disallow: /tools/
+Disallow: /wordpress/
+
+Sitemap: https://activities.zornscience.org/sitemap.xml

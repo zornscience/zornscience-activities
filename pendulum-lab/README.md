@@ -5,7 +5,7 @@ Physics: fixed-step RK4 for the full nonlinear pendulum; actual period computed 
 
 Version: 1.2.2
 
-Version 1.2.2 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
+Version 1.2.2 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson. It also adds search engine tags from `shared/zsa-seo.js`: hreflang links for English and Spanish, a canonical address that keeps `?lang=es` and drops every other parameter, and a description in each language.
 
 Learning goals: identify the effects of mass, length and gravity on period; distinguish a half swing from a complete oscillation; explain kinetic/potential energy transfer and conservation.
 

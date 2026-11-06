@@ -1,7 +1,7 @@
 # Stoichiometry Coach
 Version: 1.1.1
 
-Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
+Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson. It also adds search engine tags from `shared/zsa-seo.js`: hreflang links for English and Spanish, a canonical address that keeps `?lang=es` and drops every other parameter, and a description in each language.
 
 Practice for stoichiometry with dimensional analysis. Students read a problem, build a conversion setup from a bank of conversion factors (some with errors), watch the units cancel, then calculate and check a three significant figure answer. Guided practice gives feedback after each step; independent practice waits until the student checks.
 

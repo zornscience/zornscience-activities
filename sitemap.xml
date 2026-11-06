@@ -1,0 +1,612 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://activities.zornscience.org/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/act/</loc>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/act-question-generator/</loc>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/check/</loc>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/apchem-unit1-practice/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/apchem-unit1-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/apchem-unit1-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/apchem-unit1-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/apchem-unit1-practice/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/apchem-unit1-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/apchem-unit1-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/apchem-unit1-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/apchem-unit2-practice/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/apchem-unit2-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/apchem-unit2-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/apchem-unit2-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/apchem-unit2-practice/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/apchem-unit2-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/apchem-unit2-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/apchem-unit2-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/apchem-unit3-practice/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/apchem-unit3-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/apchem-unit3-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/apchem-unit3-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/apchem-unit3-practice/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/apchem-unit3-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/apchem-unit3-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/apchem-unit3-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/apchem-unit4-practice/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/apchem-unit4-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/apchem-unit4-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/apchem-unit4-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/apchem-unit4-practice/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/apchem-unit4-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/apchem-unit4-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/apchem-unit4-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/apchem-unit5-practice/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/apchem-unit5-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/apchem-unit5-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/apchem-unit5-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/apchem-unit5-practice/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/apchem-unit5-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/apchem-unit5-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/apchem-unit5-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/apchem-unit6-practice/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/apchem-unit6-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/apchem-unit6-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/apchem-unit6-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/apchem-unit6-practice/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/apchem-unit6-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/apchem-unit6-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/apchem-unit6-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/apchem-unit7-practice/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/apchem-unit7-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/apchem-unit7-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/apchem-unit7-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/apchem-unit7-practice/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/apchem-unit7-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/apchem-unit7-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/apchem-unit7-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/atwood-machine/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/atwood-machine/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/atwood-machine/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/atwood-machine/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/atwood-machine/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/atwood-machine/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/atwood-machine/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/atwood-machine/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/beers-law-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/beers-law-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/beers-law-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/beers-law-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/beers-law-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/beers-law-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/beers-law-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/beers-law-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/calorimetry-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/calorimetry-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/calorimetry-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/calorimetry-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/calorimetry-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/calorimetry-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/calorimetry-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/calorimetry-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/chemical-bonding-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/chemical-bonding-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/chemical-bonding-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/chemical-bonding-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/chemical-bonding-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/chemical-bonding-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/chemical-bonding-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/chemical-bonding-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/circuit-builder/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/circuit-builder/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/circuit-builder/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/circuit-builder/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/circuit-builder/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/circuit-builder/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/circuit-builder/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/circuit-builder/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/collision-carts/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/collision-carts/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/collision-carts/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/collision-carts/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/collision-carts/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/collision-carts/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/collision-carts/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/collision-carts/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/electrochemistry-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/electrochemistry-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/electrochemistry-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/electrochemistry-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/electrochemistry-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/electrochemistry-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/electrochemistry-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/electrochemistry-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/equilibrium-k-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/equilibrium-k-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/equilibrium-k-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/equilibrium-k-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/equilibrium-k-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/equilibrium-k-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/equilibrium-k-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/equilibrium-k-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/equilibrium-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/equilibrium-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/equilibrium-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/equilibrium-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/equilibrium-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/equilibrium-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/equilibrium-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/equilibrium-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/equipotential-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/equipotential-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/equipotential-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/equipotential-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/equipotential-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/equipotential-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/equipotential-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/equipotential-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/faraday-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/faraday-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/faraday-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/faraday-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/faraday-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/faraday-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/faraday-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/faraday-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/flame-test-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/flame-test-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/flame-test-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/flame-test-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/flame-test-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/flame-test-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/flame-test-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/flame-test-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/free-energy-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/free-energy-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/free-energy-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/free-energy-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/free-energy-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/free-energy-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/free-energy-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/free-energy-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/gas-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/gas-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/gas-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/gas-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/gas-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/gas-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/gas-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/gas-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/gas-laws/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/gas-laws/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/gas-laws/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/gas-laws/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/gas-laws/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/gas-laws/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/gas-laws/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/gas-laws/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/gravimetric-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/gravimetric-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/gravimetric-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/gravimetric-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/gravimetric-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/gravimetric-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/gravimetric-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/gravimetric-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/hookes-law-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/hookes-law-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/hookes-law-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/hookes-law-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/hookes-law-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/hookes-law-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/hookes-law-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/hookes-law-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/inclined-plane/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/inclined-plane/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/inclined-plane/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/inclined-plane/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/inclined-plane/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/inclined-plane/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/inclined-plane/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/inclined-plane/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/iodine-clock-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/iodine-clock-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/iodine-clock-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/iodine-clock-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/iodine-clock-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/iodine-clock-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/iodine-clock-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/iodine-clock-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/ion-charge-trainer/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/ion-charge-trainer/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/ion-charge-trainer/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/ion-charge-trainer/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/ion-charge-trainer/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/ion-charge-trainer/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/ion-charge-trainer/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/ion-charge-trainer/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/ionic-reactions/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/ionic-reactions/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/ionic-reactions/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/ionic-reactions/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/ionic-reactions/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/ionic-reactions/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/ionic-reactions/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/ionic-reactions/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/kinetics-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/kinetics-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/kinetics-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/kinetics-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/kinetics-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/kinetics-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/kinetics-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/kinetics-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/lewis-vsepr/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/lewis-vsepr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/lewis-vsepr/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/lewis-vsepr/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/lewis-vsepr/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/lewis-vsepr/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/lewis-vsepr/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/lewis-vsepr/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/limiting-reactant/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/limiting-reactant/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/limiting-reactant/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/limiting-reactant/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/limiting-reactant/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/limiting-reactant/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/limiting-reactant/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/limiting-reactant/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/metals-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/metals-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/metals-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/metals-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/metals-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/metals-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/metals-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/metals-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/net-ionic-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/net-ionic-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/net-ionic-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/net-ionic-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/net-ionic-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/net-ionic-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/net-ionic-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/net-ionic-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/pendulum-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/pendulum-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/pendulum-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/pendulum-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/pendulum-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/pendulum-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/pendulum-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/pendulum-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/periodic-table/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/periodic-table/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/periodic-table/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/periodic-table/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/periodic-table/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/periodic-table/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/periodic-table/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/periodic-table/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/periodic-trends/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/periodic-trends/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/periodic-trends/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/periodic-trends/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/periodic-trends/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/periodic-trends/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/periodic-trends/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/periodic-trends/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/ph-buffer-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/ph-buffer-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/ph-buffer-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/ph-buffer-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/ph-buffer-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/ph-buffer-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/ph-buffer-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/ph-buffer-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/physics-graphing-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/physics-graphing-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/physics-graphing-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/physics-graphing-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/physics-graphing-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/physics-graphing-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/physics-graphing-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/physics-graphing-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/polyatomic-ion-trainer/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/polyatomic-ion-trainer/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/polyatomic-ion-trainer/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/polyatomic-ion-trainer/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/polyatomic-ion-trainer/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/polyatomic-ion-trainer/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/polyatomic-ion-trainer/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/polyatomic-ion-trainer/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/projectile-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/projectile-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/projectile-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/projectile-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/projectile-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/projectile-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/projectile-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/projectile-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/reaction-energy-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/reaction-energy-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/reaction-energy-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/reaction-energy-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/reaction-energy-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/reaction-energy-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/reaction-energy-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/reaction-energy-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/redox-coach/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/redox-coach/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/redox-coach/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/redox-coach/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/redox-coach/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/redox-coach/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/redox-coach/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/redox-coach/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/scientific-calculator/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/scientific-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/scientific-calculator/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/scientific-calculator/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/scientific-calculator/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/scientific-calculator/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/scientific-calculator/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/scientific-calculator/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/snells-law-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/snells-law-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/snells-law-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/snells-law-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/snells-law-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/snells-law-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/snells-law-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/snells-law-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/solutions-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/solutions-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/solutions-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/solutions-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/solutions-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/solutions-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/solutions-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/solutions-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/standing-waves-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/standing-waves-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/standing-waves-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/standing-waves-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/standing-waves-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/standing-waves-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/standing-waves-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/standing-waves-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/stoichiometry-coach/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/stoichiometry-coach/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/stoichiometry-coach/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/stoichiometry-coach/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/stoichiometry-coach/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/stoichiometry-coach/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/stoichiometry-coach/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/stoichiometry-coach/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/titration-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/titration-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/titration-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/titration-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/titration-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/titration-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/titration-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/titration-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/virtual-lab-graphing/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/virtual-lab-graphing/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/virtual-lab-graphing/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/virtual-lab-graphing/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/virtual-lab-graphing/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/virtual-lab-graphing/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/virtual-lab-graphing/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/virtual-lab-graphing/"/>
+  </url>
+</urlset>
