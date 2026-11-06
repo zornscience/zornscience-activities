@@ -1,5 +1,7 @@
 # Periodic Trends Practice
-Version: 1.2.0
+Version: 1.2.1
+
+Version 1.2.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 ## Assumptions and departures
 - Runs on the shared activity engine (`shared/zsa-engine.js`, `shared/zsa-activity.css`) exactly as it is, like the Ion Charge Trainer and the Ionic Formula Builder: tap to check, answer trail, two hints, Show me, review queue, round summary, Practice my misses and the always-visible main-group table. `trends.js` holds the steps, the misconception rules and the question strip.

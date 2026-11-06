@@ -4,7 +4,9 @@ Virtual standing-wave lab. A function generator drives a mechanical vibrator, an
 
 The model uses tension T = mg, wave speed v = √(T/μ), harmonics fₙ = nv/(2L) and wavelengths λₙ = 2L/n. Within 0.5% of a resonance a single ideal harmonic gives exactly stationary nodes; away from resonance a lightly damped modal sum gives the forced response. Normal playback is 1/40 of real time, and the generator shows the physical frequency.
 
-Version: 1.1.0
+Version: 1.1.1
+
+Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 ## Mexican Spanish
 

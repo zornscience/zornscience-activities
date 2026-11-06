@@ -1,6 +1,8 @@
 # AP Chemistry Unit 3 Practice
 
-Version: 1.0.1
+Version: 1.0.2
+
+Version 1.0.2 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 Original bilingual ZornScience practice for AP Chemistry CED Unit 3. Thirteen topics contain six original questions each, 78 total: 51 multiple-choice and 27 numeric entry. Every topic has both formats. Mixed review includes all 78. All wrong choices have individual misconception feedback. Every answer was worked before question authoring and recorded in `TESTING.md`.
 

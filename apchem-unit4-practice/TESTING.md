@@ -1,6 +1,6 @@
 # AP Chemistry Unit 4 Practice checks
 
-Version: 1.0.0
+Version: 1.0.1
 
 ## Answer audit, worked before authoring the question bank
 

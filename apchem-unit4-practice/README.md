@@ -1,6 +1,8 @@
 # AP Chemistry Unit 4 Practice
 
-Version: 1.0.0
+Version: 1.0.1
+
+Version 1.0.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 Original bilingual ZornScience practice for College Board CED Unit 4, Chemical Reactions. Each of nine topics has six questions, 54 total: 36 multiple choice and 18 numeric entry. Every topic uses both formats. Mixed review includes all 54. Every wrong choice has its own explanation. These are aligned original practice questions, not official College Board exam items.
 

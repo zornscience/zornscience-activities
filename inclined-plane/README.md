@@ -1,6 +1,8 @@
 # Inclined Plane & Friction
 
-Version: 1.1.0
+Version: 1.1.1
+
+Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
  Buildless, browser-local ramp simulation. Open index.html through a static server. Uses the shared ZornScience font, branding and embed behavior. No storage or data recording.
 

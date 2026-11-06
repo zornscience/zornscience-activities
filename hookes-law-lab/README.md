@@ -8,7 +8,9 @@ Use the controls or drag the hanger. Keyboard: focus hanger, arrow keys displace
 
 Version 1.2.0. Shared branding and top controls adapted from Metals Lab.
 
-Version: 1.2.0
+Version: 1.2.1
+
+Version 1.2.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 ## Learning design in 1.1.0
 

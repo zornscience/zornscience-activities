@@ -1,6 +1,8 @@
 # Polyatomic Ion Trainer
 
-Version: 2.2.0
+Version: 2.2.1
+
+Version 2.2.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 Flashcards and individual four-choice quiz practice for the exact 17 shaded ions on the Common Polyatomic Ions classroom chart. Excludes all seven unshaded ions from cards, questions, answer choices, and reference. Includes alternate names and acetate notation. No introduction band; uses the shared ZornScience logo, Inter font, and navy/blue styles.
 

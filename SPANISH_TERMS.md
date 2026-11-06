@@ -2,6 +2,30 @@
 
 Reference: the ZornScience Style Kit v1.7, sections 4 to 6. Mexican Spanish, tú, noun-phrase titles, unchanged chemistry and decimal points. This inventory records choices beyond the supplied fixed interface text and glossary. Full feedback and explanatory translations are in each activity's `data.js`. Existing Gas Laws Spanish wording is preserved.
 
+## About this activity (shared/zsa-about.js)
+
+Each activity's intro and related lessons, shown above the footer. Lesson titles are the official titles in Style Kit Appendix A; Physics Units 6 to 9, Quantitative Skills and the lab pages use the titles of their live Spanish pages on zornscience.org. Activity terms in the intros follow the choices already recorded below (pesas ranuradas, línea de mejor ajuste, tarjetas de estudio, corrientes parásitas, foco, vaso de precipitados, bureta, semirreacción).
+
+English | Mexican Spanish
+--- | ---
+About this activity | Acerca de esta actividad
+Related lessons | Lecciones relacionadas
+Students (course label) | Estudiantes
+Physical Labs (course label) | Laboratorios presenciales
+Quantitative Skills (course label) | Habilidades cuantitativas
+Circuit Basics | Conceptos básicos de circuitos
+Ohm's Law | Ley de Ohm
+Series Circuits | Circuitos en serie
+Electric Fields | Campos eléctricos
+Electromagnetic Induction | Inducción electromagnética
+Standing Waves | Ondas estacionarias
+Refraction | Refracción
+Scientific Notation | Notación científica
+Calculator Skills | Habilidades con la calculadora
+Reading Graphs | Lectura de gráficas
+Slope and Rate of Change | Pendiente y razón de cambio
+Net Ionic Equations Lab | Laboratorio de ecuaciones iónicas netas
+
 ## AP Chemistry Unit 6 Practice (1.0.0)
 
 Uses the supplied Style Kit v1.9 AP glossary and exact Unit 6 topic titles. Sistema / alrededores, calor / temperatura / energía térmica, equilibrio térmico, capacidad calorífica, capacidad calorífica específica (calor específico), capacidad calorífica molar, calorímetro de vaso de espuma, calor de fusión / vaporización (entalpía de fusión / vaporización), tramo inclinado / tramo plano, entalpía de reacción, entalpía de enlace, entalpía de formación (entalpía estándar de formación), estado estándar, función de estado, diagrama de energía, primera ley de la termodinámica and endotérmico / exotérmico retain the glossary wording. Units remain J, kJ, kJ/mol and °C, never translated.

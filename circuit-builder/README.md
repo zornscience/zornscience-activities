@@ -1,5 +1,7 @@
 # Circuit Builder
-Version: 1.1.0
+Version: 1.1.1
+
+Version 1.1.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
 
 An electric circuits lab for Physics. Students drag batteries, wires, resistors, switches and bulbs onto a grid and build their own circuits, or start from series and parallel circuits. A digital multimeter probes the voltage between any two points and the current through any part, bulbs glow by the power they use, and moving dots show the current flowing. A readings table lists every part, an insight line explains what the circuit is doing (including short circuits and open loops), six questions check the main ideas, and a reflection prints with the lab.
 

@@ -1,5 +1,5 @@
 # Verification
-Version: 1.1.0
+Version: 1.1.1
 
 `tests/unit/gas-laws.test.js` verifies all four laws, both control directions, 16,000 legal settings, fixed variables, range limits, invalid inputs, particle count, temperature-dependent motion and wall collisions.
 

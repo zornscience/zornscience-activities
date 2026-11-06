@@ -112,7 +112,7 @@ test("36 multiple-choice keys match the independently worked thermochemistry aud
 test("page keeps the shared two-runtime-file contract and all model text is translated",()=>{
   const html=fs.readFileSync("apchem-unit6-practice/index.html","utf8");
   assert.match(html,/data-zsa-activity="apchem-unit6-practice" data-zsa-practice="zsa-u6"/);
-  assert.deepEqual([...html.matchAll(/<script src="([^?]+)[^"]*" defer>/g)].map(m=>m[1]),["../shared/zsa-embed.js","../shared/zsa-i18n.js","data.js","../shared/zsa-practice-model.js","../shared/zsa-practice.js","../shared/zsa-header.js"]);
+  assert.deepEqual([...html.matchAll(/<script src="([^?]+)[^"]*" defer>/g)].map(m=>m[1]),["../shared/zsa-embed.js","../shared/zsa-i18n.js","data.js","../shared/zsa-practice-model.js","../shared/zsa-practice.js","../shared/zsa-header.js","../shared/zsa-about.js"]);
   assert.deepEqual(fs.readdirSync("apchem-unit6-practice").sort(),["README.md","TESTING.md","data.js","diagrams.css","index.html"]);
   const flags={exo:["6.2-1","6.2-2","6.2-3","6.2-5"],endo:["6.2-4","6.2-6"],curve:["6.5-1","6.5-2"]};
   for(const [flag,ids] of Object.entries(flags)){
