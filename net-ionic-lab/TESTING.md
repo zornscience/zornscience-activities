@@ -1,6 +1,6 @@
 # Verification
 
-Version: 1.1.1
+Version: 1.1.2
 
 - `npm run test:unit`: syntax, house rules, the one shared CSP, no en or em dashes, and matching version numbers.
 - Chromium checks of all ten mixtures, resets, the settling states, dialogs and mobile overflow (see README).

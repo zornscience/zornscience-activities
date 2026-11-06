@@ -1,6 +1,6 @@
 # Verification
 
-Version: 1.1.1
+Version: 1.1.2
 
 - `node --test tests/unit/collision-carts.test.js tests/unit/static.test.js`: 2,000 random collisions, exact event timing, versions, asset queries and markup.
 - `npx playwright test tests/e2e/collision-carts.spec.js tests/e2e/activity-headers.spec.js`: the carts, vectors, readouts, presets, the end-stop pause and reset, the header, Instructions dialog and Share panel.

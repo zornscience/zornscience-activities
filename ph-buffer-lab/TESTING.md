@@ -1,6 +1,6 @@
 # pH & Buffer Lab validation
 
-Version: 1.0.2
+Version: 1.0.3
 
 Run from the repository root:
 

@@ -1,6 +1,6 @@
 # Verification
 
-Version: 1.1.1
+Version: 1.1.2
 
 - `node --test tests/unit/static.test.js`: versions, asset queries, markup and no en or em dashes.
 - `npx playwright test tests/e2e/standing-waves-lab.spec.js tests/e2e/activity-headers.spec.js`: harmonics against tension and length, the strobe lock and phase, transverse motion of one string point, node cursor measurements, fine tuning, zero drive, reset, the header, Instructions dialog, Share panel and the phone layout.

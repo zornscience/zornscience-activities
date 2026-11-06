@@ -1,6 +1,6 @@
 # Solutions Lab testing
 
-Version: 1.0.3
+Version: 1.0.4
 
 ## Automated checks
 

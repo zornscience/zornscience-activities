@@ -1,6 +1,6 @@
 # Verification
 
-Version: 1.2.1
+Version: 1.2.2
 
 Run `node tests/unit/equipotential.test.js` from the repository root. Tests independently verify Coulomb magnitude, inverse-distance potential, inverse-square field, dipole symmetry, negative potential gradient, empty space, and singularity detection.
 

@@ -1,6 +1,6 @@
 # Electrochemistry verification
 
-Version: 1.4.1
+Version: 1.4.2
 
 `npm run test:unit`
 `npx playwright test tests/e2e/electrochemistry.spec.js`

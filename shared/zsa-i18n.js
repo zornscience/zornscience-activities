@@ -31,10 +31,21 @@
     return value;
   };
   api.url = function (href) { return link(href, location.href, lang); };
+  // Search engine tags (written by tools/build-seo.js): on a page with Spanish, the description and the canonical
+  // link follow the page language. The English description is the meta tag's content, the Spanish one its data-zsa-es.
+  var description = document.querySelector('meta[name="description"][data-zsa-es]'), canonical = null, english = "";
+  if (!description || typeof description.getAttribute !== "function") description = null;
+  else { english = description.getAttribute("content"); canonical = document.querySelector('link[rel="canonical"]'); }
+  function head(code) {
+    if (!description) return;
+    description.setAttribute("content", code === "es" ? description.getAttribute("data-zsa-es") : english);
+    if (canonical) canonical.setAttribute("href", link(canonical.getAttribute("href"), canonical.getAttribute("href"), code));
+  }
   api.configure = function (copy) {
     strings = copy.es || {};
     document.documentElement.lang = lang === "es" ? "es-MX" : "en";
     document.title = api.text(copy.title) + " | ZornScience";
+    head(lang);
     // Only the initial static markup is translated here. Dynamic views use text() or localized data.
     function visit(el) {
       if (/^(SCRIPT|STYLE|NOSCRIPT)$/.test(el.tagName)) return;
@@ -68,6 +79,7 @@
           history.replaceState(null, "", link(location.href, location.href, code));
           document.documentElement.lang = code === "es" ? "es-MX" : "en";
           document.title = api.text(copy.title) + " | ZornScience";
+          head(code);
           Array.from(nav.children).forEach(function (toggle) {
             if (toggle.lang === (code === "es" ? "es-MX" : "en")) toggle.setAttribute("aria-current", "true");
             else toggle.removeAttribute("aria-current");
