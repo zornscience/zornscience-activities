@@ -1,0 +1,17 @@
+/* Shared lab check. Native details and radios keep the same keyboard flow as the lab. */
+.zsa-labcheck {border:1px solid var(--zsa-border);border-radius:var(--zsa-radius-lg);background:var(--zsa-white);min-width:0;margin:12px 0;}
+.zsa-labcheck summary {min-height:44px;padding:10px 14px;cursor:pointer;color:var(--zsa-navy);font-weight:600;}
+.zsa-labcheck-progress {margin-left:16px;font-weight:400;display:inline-block;}
+.zsa-labcheck-body {padding:0 14px 14px;}
+.zsa-labcheck h2 {font-size:1.15rem;margin:8px 0;}
+.zsa-labcheck-choices {border:0;padding:0;margin:12px 0;min-width:0;}
+.zsa-labcheck-choices legend {font-weight:600;margin-bottom:8px;}
+.zsa-labcheck-choice {display:flex;align-items:center;gap:10px;min-height:44px;padding:10px;margin:6px 0;border:1px solid var(--zsa-border);border-radius:var(--zsa-radius);cursor:pointer;overflow-wrap:anywhere;}
+.zsa-labcheck-choice input {flex:none;accent-color:var(--zsa-blue);width:18px;height:18px;}
+.zsa-labcheck-choice strong {margin-left:auto;color:var(--zsa-navy);}
+.zsa-labcheck-choice:has(input:checked) {background:var(--zsa-sky);border-color:var(--zsa-blue);}
+.zsa-labcheck-choice:has(input:focus-visible), .zsa-labcheck summary:focus-visible {outline:var(--zsa-focus-ring);outline-offset:var(--zsa-focus-offset);}
+.zsa-labcheck-actions {display:flex;flex-wrap:wrap;gap:8px;}
+.zsa-labcheck-feedback {min-height:1.5em;}
+.zsa-labcheck-code {display:block;max-width:100%;width:26ch;min-height:44px;font:inherit;font-weight:600;color:var(--zsa-navy);border:1px solid var(--zsa-border-strong);border-radius:var(--zsa-radius);padding:6px;}
+.zsa-labcheck .zsa-btn:disabled {color:var(--zsa-slate);background:#f8fafc;border-color:var(--zsa-border-strong);cursor:default;}
