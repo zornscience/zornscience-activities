@@ -1,0 +1,18 @@
+/* Unit-owned schematic acid-base models. */
+.zsa-u8 .zsa-practice-option { min-width: 0; overflow-wrap: anywhere; }
+.zsa-u8 .zsa-practice-option > span { min-width: 0; }
+.zsa-u8 .zsa-practice-feedback { overflow-wrap: anywhere; }
+.zsa-u8 [data-zsa-practice-visual] { margin: 1rem auto; max-width: 30rem; }
+.zsa-u8 [data-zsa-practice-visual] svg { display: block; width: 100%; height: auto; }
+.zsa-u8 .zsa-u8-axis, .zsa-u8 .zsa-u8-box { fill: none; stroke: var(--zsa-navy); stroke-width: 1.5; }
+.zsa-u8 .zsa-u8-a { fill: none; stroke: var(--zsa-blue); stroke-width: 3; }
+.zsa-u8 .zsa-u8-b { fill: none; stroke: var(--zsa-navy); stroke-width: 3; stroke-dasharray: 7 4; }
+.zsa-u8 .zsa-u8-marker { fill: none; stroke: var(--zsa-navy); stroke-width: 1; stroke-dasharray: 2 4; }
+.zsa-u8 .zsa-u8-label { fill: var(--zsa-navy); font-family: inherit; font-size: 14px; text-anchor: middle; }
+.zsa-u8 figcaption { font-size: 0.85rem; text-align: center; }
+
+.zsa-u8 .zsa-u8-dot { fill: var(--zsa-navy); }
+.zsa-u8 .zsa-u8-constants { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.zsa-u8 .zsa-u8-constants th, .zsa-u8 .zsa-u8-constants td { padding: 0.4rem; text-align: left; overflow-wrap: anywhere; }
+.zsa-u8 .zsa-u8-constants caption { text-align: left; font-weight: 600; margin-bottom: 0.5rem; }
+.zsa-u8 .zsa-u8-constants thead th, .zsa-u8 .zsa-u8-constants td { white-space: nowrap; }
