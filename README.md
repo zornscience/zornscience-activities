@@ -49,6 +49,7 @@ apchem-unit5-practice/     AP Chemistry Unit 5 Practice, v1.0.2 (66 original que
 apchem-unit6-practice/     AP Chemistry Unit 6 Practice, v1.0.2 (54 original questions across topics 6.1 to 6.9, shared practice engine; English and Mexican Spanish)
 apchem-unit7-practice/     AP Chemistry Unit 7 Practice, v1.0.2 (72 original questions across topics 7.1 to 7.12, shared practice engine; English and Mexican Spanish)
 apchem-unit8-practice/     AP Chemistry Unit 8 Practice, v1.0.0 (66 original questions across topics 8.1 to 8.11, shared practice engine; English and Mexican Spanish)
+apchem-unit9-practice/     AP Chemistry Unit 9 Practice, v1.0.0 (66 original questions across topics 9.1 to 9.11, shared practice engine; English and Mexican Spanish)
 atwood-machine/           The Atwood Machine, v1.1.2 (ideal pulley, adjustable masses and live vectors; no data recording; English and Mexican Spanish)
 physics-graphing-lab/      Physics Graphing Lab, v1.1.2 (a cart with linked position, velocity and acceleration graphs; English and Mexican Spanish)
 collision-carts/           Collision Carts, v1.1.2 (two carts on a track, elastic and inelastic collisions, live velocity and momentum vectors; English and Mexican Spanish)

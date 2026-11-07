@@ -1,0 +1,20 @@
+/* Unit-owned schematic thermodynamic and galvanic models. */
+.zsa-u9 .zsa-practice-option { min-width: 0; overflow-wrap: anywhere; }
+.zsa-u9 .zsa-practice-option > span { min-width: 0; }
+.zsa-u9 .zsa-practice-feedback { overflow-wrap: anywhere; }
+.zsa-u9 [data-zsa-practice-visual] { margin: 1rem auto; max-width: 30rem; }
+.zsa-u9 [data-zsa-practice-visual] svg { display: block; width: 100%; height: auto; }
+.zsa-u9 .zsa-u9-axis, .zsa-u9 .zsa-u9-box { fill: none; stroke: var(--zsa-navy); stroke-width: 1.5; }
+.zsa-u9 .zsa-u9-a { fill: none; stroke: var(--zsa-blue); stroke-width: 3; }
+.zsa-u9 .zsa-u9-b { fill: none; stroke: var(--zsa-navy); stroke-width: 3; stroke-dasharray: 7 4; }
+.zsa-u9 .zsa-u9-marker { fill: none; stroke: var(--zsa-navy); stroke-width: 1; stroke-dasharray: 2 4; }
+.zsa-u9 .zsa-u9-label { fill: var(--zsa-navy); font-family: inherit; font-size: 14px; text-anchor: middle; }
+.zsa-u9 figcaption { font-size: 0.85rem; text-align: center; }
+
+.zsa-u9 .zsa-u9-dot { fill: var(--zsa-navy); }
+.zsa-u9 .zsa-u9-constants { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.zsa-u9 .zsa-u9-constants th, .zsa-u9 .zsa-u9-constants td { padding: 0.4rem; text-align: left; overflow-wrap: anywhere; }
+.zsa-u9 .zsa-u9-constants caption { text-align: left; font-weight: 600; margin-bottom: 0.5rem; }
+.zsa-u9 .zsa-u9-constants thead th, .zsa-u9 .zsa-u9-constants td { white-space: nowrap; }
+
+.zsa-u9 .zsa-u9-electrode { fill: white; stroke: var(--zsa-navy); stroke-width: 2; }
