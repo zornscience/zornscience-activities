@@ -49,6 +49,10 @@ module.exports = {
     en: "Catch up on AP Chemistry Unit 8 with 66 original questions, instant explanations, and English or Spanish practice from ZornScience.",
     es: "Ponte al corriente con la unidad 8 de Química AP: 66 preguntas originales con explicaciones inmediatas, en español o inglés, de ZornScience."
   },
+  "apchem-unit9-practice": {
+    en: "Catch up on AP Chemistry Unit 9 with 66 original questions, instant explanations, and English or Spanish practice from ZornScience.",
+    es: "Ponte al corriente con la unidad 9 de Química AP: 66 preguntas originales con explicaciones inmediatas, en español o inglés, de ZornScience."
+  },
   "atwood-machine": {
     en: "Explore Newton’s second law with a realistic ideal Atwood machine, adjustable brass masses and live force and acceleration vectors.",
     es: "Explora la segunda ley de Newton con una máquina de Atwood ideal y realista, masas de latón ajustables y vectores de fuerza y aceleración en vivo."

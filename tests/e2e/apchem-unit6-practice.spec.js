@@ -197,7 +197,7 @@ test("directory lists and translates the new activity", async ({page, problems})
   await page.goto("/?lang=es");
   const link = page.getByRole("link", {name:"Práctica de la unidad 6 de Química AP", exact:true});
   expect(new URL(await link.getAttribute("href"), page.url()).searchParams.get("lang")).toBe("es");
-  await expect(page.locator('a[href="#test-prep"] .zsa-home-count')).toHaveText("11");
+  await expect(page.locator('a[href="#test-prep"] .zsa-home-count')).toHaveText("12");
   const links=await page.locator("#test-prep h3 a").evaluateAll(nodes=>nodes.map(n=>new URL(n.href).pathname));
   expect(links.indexOf("/apchem-unit6-practice/")).toBe(links.indexOf("/apchem-unit5-practice/")+1);
   await link.click();

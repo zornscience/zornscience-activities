@@ -26,6 +26,26 @@ Reading Graphs | Lectura de gráficas
 Slope and Rate of Change | Pendiente y razón de cambio
 Net Ionic Equations Lab | Laboratorio de ecuaciones iónicas netas
 
+## AP Chemistry Unit 9 Practice (1.0.0)
+
+Uses the supplied AP glossary, including entropía absoluta, energía libre de Gibbs, favorabilidad termodinámica, termodinámicamente favorable, control cinético, control termodinámico, reacciones acopladas, celda galvánica (voltaica), celda electrolítica, ánodo, cátodo, puente salino, semirreacción, potencial estándar de reducción, potencial de celda, constante de Faraday, electrólisis and ley de Faraday. Formulas, state symbols, unit symbols and decimal points are preserved. New activity wording beyond the supplied glossary:
+
+English | Mexican Spanish
+--- | ---
+hydration shell | capa de hidratación
+current efficiency | eficiencia de corriente
+electrical work | trabajo eléctrico
+charge balance | balance de carga
+activation barrier | barrera de activación
+ground-state arrangement | distribución del estado fundamental
+standard reduction potential table | tabla de potenciales estándar de reducción
+driving force | fuerza impulsora
+ion migration | migración de iones
+intensive potential | potencial intensivo
+positional freedom | libertad de posición
+
+New question-set unit IDs are J/(mol·K), V, C and A. Existing IDs kJ/mol, K, s, g, mol and ratio are reused. Unit symbols are identical in both languages; ratio is displayed as no units / sin unidades. Use ampere and coulomb for spelled-out unit names.
+
 ## AP Chemistry Unit 8 Practice (1.0.0)
 
 Mexican Spanish follows Style Kit sections 4 to 6. AP terms use amortiguador, capacidad amortiguadora, titulación, punto de equivalencia, punto de semiequivalencia, curva de titulación, indicador, punto final, par conjugado ácido-base, ion hidronio, constante de acidez (Ka), constante de basicidad (Kb), porcentaje de ionización, anfótero, ácido poliprótico and tabla ICE. Decimal points, state symbols and formulas are preserved. Added wording beyond the supplied glossary:
