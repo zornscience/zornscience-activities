@@ -26,6 +26,29 @@ Reading Graphs | Lectura de gráficas
 Slope and Rate of Change | Pendiente y razón de cambio
 Net Ionic Equations Lab | Laboratorio de ecuaciones iónicas netas
 
+## AP Chemistry Unit 8 Practice (1.0.0)
+
+Mexican Spanish follows Style Kit sections 4 to 6. AP terms use amortiguador, capacidad amortiguadora, titulación, punto de equivalencia, punto de semiequivalencia, curva de titulación, indicador, punto final, par conjugado ácido-base, ion hidronio, constante de acidez (Ka), constante de basicidad (Kb), porcentaje de ionización, anfótero, ácido poliprótico and tabla ICE. Decimal points, state symbols and formulas are preserved. Added wording beyond the supplied glossary:
+
+English | Mexican Spanish
+--- | ---
+analyte | analito
+titrant | titulante
+deprotonated form | forma desprotonada
+normalized species fractions | fracciones normalizadas de especies
+conjugate ratio | razón conjugada
+conjugate-base hydrolysis | hidrólisis de la base conjugada
+stoichiometric limit | límite estequiométrico
+external reservoir | reservorio externo
+alkoxide | alcóxido
+carboxyl group | grupo carboxilo
+free-ion concentrations | concentraciones de iones libres
+analytical concentration | concentración analítica
+counterion | contraion
+fraction ionized | fracción ionizada
+proton donor | donador de protones
+protonation | protonación
+
 ## AP Chemistry Unit 7 Practice (1.0.0)
 
 Reviewed against the attached ZornScience Style Kit v1.9, sections 1, 4, 5 and 6. All twelve supplied topic titles and AP glossary terms are preserved. Uses tabla ICE (inicial, cambio, equilibrio), never RICE; ion has no accent. Equilibrium constants and quotients use no units / sin unidades, as in earlier units. Additional activity wording:

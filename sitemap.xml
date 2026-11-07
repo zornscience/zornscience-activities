@@ -103,6 +103,18 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/apchem-unit7-practice/"/>
   </url>
   <url>
+    <loc>https://activities.zornscience.org/apchem-unit8-practice/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/apchem-unit8-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/apchem-unit8-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/apchem-unit8-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/apchem-unit8-practice/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/apchem-unit8-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/apchem-unit8-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/apchem-unit8-practice/"/>
+  </url>
+  <url>
     <loc>https://activities.zornscience.org/atwood-machine/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/atwood-machine/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/atwood-machine/?lang=es"/>
