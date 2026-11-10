@@ -1,6 +1,6 @@
 # Free Energy Lab testing
 
-Version: 1.0.3
+Version: 1.0.4
 
 ## Automated checks
 
@@ -23,6 +23,7 @@ Version 1.0.1 adds tests generated from all eight README lesson presets in both 
 
 ## Review checklist
 
+- `tests/e2e/labs-a11y.spec.js` (all labs): axe-core in English and Spanish at laptop and phone size, one pass through the Tab order with an accessible name and a visible focus indicator at every stop (compared pixel by pixel), roles, names and states of custom controls, arrow keys on every slider, text alternatives for drawings, and the Instructions dialog from the keyboard. `tests/unit/focus-css.test.js`: no stylesheet removes a focus outline without a named replacement.
 - Compare the provided lesson presets with the README.
 - Use both languages and `course=chem`. Check the ΔG notation, vocabulary and units.
 - Enter `5.9 × 10⁴` for AP Haber at 298 K and verify the J-to-kJ warning.

@@ -88,7 +88,9 @@ test("lab check: wrong then right, Show me, completion score, checker and restar
     await pick(page, RIGHTS[i]);
     if (i < 4) { await expect(check(page).getByRole("region", {name:"Completion code"})).toHaveCount(0); await next(page); }
   }
-  await expect(check(page).getByText("3 of 5 right on the first try.")).toBeVisible();
+  await expect(check(page).getByText("3 of 5 right on the first try.", {exact:true})).toBeVisible();
+  // The last answer is spoken together with the score and where the code goes, through the lab check's live region.
+  await expect(check(page).locator(".zsa-sr-only[role=status]")).toContainText(/3 of 5 right on the first try\. Paste this code into your Google Classroom assignment\./);
   var code = await check(page).getByRole("textbox", {name:"Completion code"}).inputValue();
   var decoded = codes.decode(code, 8191);
   expect(decoded.status).toBe("valid"); expect(decoded.show).toBe(1);
@@ -192,7 +194,8 @@ test("lab check: perfect Spanish completion and all five Show me results", async
     await expect(check(page).locator(".zsa-labcheck-feedback")).toContainText("Correcto.");
     if (i<4) await check(page).getByRole("button", {name:"Siguiente",exact:true}).click();
   }
-  await expect(check(page).getByText("5 de 5 correctas al primer intento.")).toBeVisible();
+  await expect(check(page).getByText("5 de 5 correctas al primer intento.", {exact:true})).toBeVisible();
+  await expect(check(page).locator(".zsa-sr-only[role=status]")).toContainText(/5 de 5 correctas al primer intento\. /);
   var code = await check(page).getByRole("textbox", {name:"Código de finalización"}).inputValue();
   expect(codes.decode(code,8191).stats.map(s=>s.correct)).toEqual([1,1,1,1,1]);
   await audit(page);
@@ -202,7 +205,7 @@ test("lab check: perfect Spanish completion and all five Show me results", async
     await check(page).getByRole("button", {name:"Muéstrame",exact:true}).click();
     if (j<4) await check(page).getByRole("button", {name:"Siguiente",exact:true}).click();
   }
-  await expect(check(page).getByText("0 de 5 correctas al primer intento.")).toBeVisible();
+  await expect(check(page).getByText("0 de 5 correctas al primer intento.", {exact:true})).toBeVisible();
   code = await check(page).getByRole("textbox", {name:"Código de finalización"}).inputValue();
   var decoded = codes.decode(code,8191);
   expect(decoded.show).toBe(5); expect(decoded.stats.map(s=>s.correct)).toEqual([0,0,0,0,0]);

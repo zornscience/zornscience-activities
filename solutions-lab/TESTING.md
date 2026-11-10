@@ -1,6 +1,6 @@
 # Solutions Lab testing
 
-Version: 1.0.4
+Version: 1.0.5
 
 ## Automated checks
 
@@ -21,6 +21,7 @@ are outside the repository and are not activity dependencies.
 
 The 11 model tests cover:
 
+- `tests/e2e/labs-a11y.spec.js` (all labs): axe-core in English and Spanish at laptop and phone size, one pass through the Tab order with an accessible name and a visible focus indicator at every stop (compared pixel by pixel), roles, names and states of custom controls, arrow keys on every slider, text alternatives for drawings, and the Instructions dialog from the keyboard. `tests/unit/focus-css.test.js`: no stylesheet removes a focus outline without a named replacement.
 - All class atomic masses and all five molar mass sums.
 - 14.61 g NaCl / 250.0 mL = 1.000 M.
 - 5.06 g KNO₃ / 100.0 mL = 0.500 M (three significant figures).

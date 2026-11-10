@@ -1,0 +1,11 @@
+/* Keyboard and screen reader styles shared by the virtual labs. Load it after zsa-base.css. */
+
+/* One focus ring for every focusable thing, including summary, textarea and custom widgets. The blue ring (6.7:1 on white)
+   sits outside a 2px white gap, so it stays visible on dark panels and photos as well as on light ones. SVG parts that take
+   focus also change stroke in the lab's own CSS, because not every browser paints an outline on SVG shapes. */
+.zsa :is(a[href],button,input,select,textarea,summary,[tabindex],[role="button"],[role="slider"],[role="radio"],[role="checkbox"],[role="tab"],[role="switch"],[role="option"],[role="spinbutton"],[contenteditable="true"]):focus-visible {outline:var(--zsa-focus-ring);outline-offset:var(--zsa-focus-offset);box-shadow:0 0 0 var(--zsa-focus-offset) #ffffff;}
+.zsa :is(svg,svg *):focus-visible {box-shadow:none;}
+@media (forced-colors:active) {.zsa :focus-visible {outline:3px solid Highlight;outline-offset:2px;}}
+
+/* A section heading one level below the page's h1 that keeps the look of an h3 (the labs have no h2 above their sections). */
+.zsa .zsa-h3 {line-height:1.3;}

@@ -464,14 +464,14 @@ test("flame-test-lab opens in Mexican Spanish and translates every state", async
   await noEnglish(page);
   await expect(page.locator("#observation")).toHaveText("Una llama azul y limpia. ¿Todo listo para explorar?");
   await expect(page.locator("#progress")).toHaveText("0 / 8 probadas");
-  await page.getByRole("button", {name:"Prueba el cloruro de litio", exact:true}).click();
+  await page.getByRole("button", {name:"Prueba Litio LiCl", exact:true}).click();
   await expect(page.locator("#sample-label")).toHaveText("CLORURO DE LITIO · LiCl");
   await expect(page.locator("#observation")).toHaveText("Llama de color rojo carmesí");
-  await page.getByRole("button", {name:"Prueba el cloruro de calcio", exact:true}).click();
+  await page.getByRole("button", {name:"Prueba Calcio CaCl₂", exact:true}).click();
   await expect(page.locator("#sample-label")).toHaveText("CLORURO DE CALCIO · CaCl₂");
   await expect(page.locator("#progress")).toHaveText("2 / 8 probadas");
   await noEnglish(page);
-  await page.getByRole("button", {name:"Prueba la muestra desconocida", exact:true}).click();
+  await page.getByRole("button", {name:"Prueba Muestra desconocida Una de las ocho sales conocidas", exact:true}).click();
   await expect(page.locator("#sample-label")).toHaveText("MUESTRA DESCONOCIDA · EN OBSERVACIÓN");
   await expect(page.locator("#observation")).toHaveText(/^Llama de color /);
   await noEnglish(page);
@@ -2066,16 +2066,16 @@ test("equipotential-lab opens in Mexican Spanish and translates the probe, reado
   await expect(page.locator("#status")).toHaveText(/^La punta marca -?\d+\.\d\d V\.$/);
   await noEnglish(page);
   // Charges: add, select, remove and the 12-charge limit.
-  await page.getByRole("button", {name:"Agregar carga negativa", exact:true}).click();
+  await page.getByRole("button", {name:"Negativa −0.10 nC, agregar carga", exact:true}).click();
   await expect(page.locator("#status")).toHaveText("Se agregó una carga negativa. Arrástrala para acomodar tu campo.");
   await expect(page.locator("#charge-value")).toHaveText("−0.10 nC");
   await page.getByRole("button", {name:"Quitar la seleccionada", exact:true}).click();
   await expect(page.locator("#status")).toHaveText("Se quitó la carga.");
   await page.locator("#preset").selectOption("empty");
   await expect(page.locator("#charge-value")).toHaveText("Ninguna");
-  for (let i = 0; i < 12; i++) await page.getByRole("button", {name:"Agregar carga positiva", exact:true}).click();
+  for (let i = 0; i < 12; i++) await page.getByRole("button", {name:"Positiva +0.10 nC, agregar carga", exact:true}).click();
   await expect(page.locator("#status")).toHaveText("Se agregó una carga positiva. Arrástrala para acomodar tu campo.");
-  await page.getByRole("button", {name:"Agregar carga positiva", exact:true}).click();
+  await page.getByRole("button", {name:"Positiva +0.10 nC, agregar carga", exact:true}).click();
   await expect(page.locator("#status")).toHaveText("La cuadrícula admite hasta 12 cargas. Quita una para agregar otra.");
   await noEnglish(page);
   for (const name of ["like", "quad", "dipole"]) {

@@ -1,5 +1,5 @@
 # Verification record
-Version: 1.2.0
+Version: 1.2.1
 Date: 2026-10-16
 Reviewer: Claude (built and tested 1.0.0)
 
@@ -67,3 +67,5 @@ Run `node --test tests/unit/labcheck.test.js tests/unit/codes.test.js` and `npx 
 
 
 Pilot verification in this change: 346 non-PHP unit tests passed. The full unit run also attempted the 12 existing PHP tests, which could not execute because `php` is not installed in the environment. Forty Chromium tests passed across the lab check, gas lab, checker and Lewis completion-code suites. The ten Lab check tests were rerun after the final translation and disabled-button styling fixes. Axe found no violations in the new open, feedback and completion states. English desktop and Spanish phone screenshots were visually reviewed. `git diff --check` passed. The missing PHP executable affects existing WordPress tests, outside this feature.
+
+- `tests/e2e/labs-a11y.spec.js` (all labs): axe-core in English and Spanish at laptop and phone size, one pass through the Tab order with an accessible name and a visible focus indicator at every stop (compared pixel by pixel), roles, names and states of custom controls, arrow keys on every slider, text alternatives for drawings, and the Instructions dialog from the keyboard. `tests/unit/focus-css.test.js`: no stylesheet removes a focus outline without a named replacement.

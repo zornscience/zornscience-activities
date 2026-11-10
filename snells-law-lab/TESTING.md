@@ -1,6 +1,7 @@
 # Verification
-Version: 1.1.2
+Version: 1.1.3
 
+- `tests/e2e/labs-a11y.spec.js` (all labs): axe-core in English and Spanish at laptop and phone size, one pass through the Tab order with an accessible name and a visible focus indicator at every stop (compared pixel by pixel), roles, names and states of custom controls, arrow keys on every slider, text alternatives for drawings, and the Instructions dialog from the keyboard. `tests/unit/focus-css.test.js`: no stylesheet removes a focus outline without a named replacement.
 - Unit tests check Snell’s law against a known air/glass result, optical reversibility, matched indices, normal incidence, Fresnel reflectance, the critical angle, total internal reflection, parallel slab exits, and finite paths across the available index and incidence ranges.
 - Browser tests exercise geometry changes, materials, custom indices, the exact critical-angle preset, power and reset, keyboard aiming, laser dragging, protractor snapping and visibility, normal visibility, Instructions/Escape/focus return, Share URL, and 390/320 px page fit.
 - An axe scan checks for serious and critical accessibility issues.

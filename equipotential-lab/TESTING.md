@@ -1,6 +1,6 @@
 # Verification
 
-Version: 1.2.2
+Version: 1.2.3
 
 Run `node tests/unit/equipotential.test.js` from the repository root. Tests independently verify Coulomb magnitude, inverse-distance potential, inverse-square field, dipole symmetry, negative potential gradient, empty space, and singularity detection.
 
@@ -11,3 +11,5 @@ Learning checks for 1.1.0: `node tests/unit/equipotential-learning.test.js` veri
 ## Spanish verification
 
 `tests/e2e/i18n.spec.js` opens the lab with `?lang=es` and checks text and accessible attributes for leftover English: the title, the language toggle, the instructions (including the rebuilt opening sentence), the share panel and its `?lang=es` link and email, the probe moved by keyboard and by pointer, the readouts and spoken labels near and away from a charge, adding, removing and limiting charges, every configuration, all four explorations before and after Reveal & explain, and Reset lab. English visible text, accessible labels and share links were compared with version 1.1.0 through the same states and are identical. The language toggle intentionally adds header controls. The Spanish layout was checked at 320 px and 390 px with no sideways scrolling and a 44 px ES toggle.
+
+- `tests/e2e/labs-a11y.spec.js` (all labs): axe-core in English and Spanish at laptop and phone size, one pass through the Tab order with an accessible name and a visible focus indicator at every stop (compared pixel by pixel), roles, names and states of custom controls, arrow keys on every slider, text alternatives for drawings, and the Instructions dialog from the keyboard. `tests/unit/focus-css.test.js`: no stylesheet removes a focus outline without a named replacement.

@@ -1,7 +1,8 @@
 # Verification
 
-Version: 1.3.2
+Version: 1.3.3
 
+- `tests/e2e/labs-a11y.spec.js` (all labs): axe-core in English and Spanish at laptop and phone size, one pass through the Tab order with an accessible name and a visible focus indicator at every stop (compared pixel by pixel), roles, names and states of custom controls, arrow keys on every slider, text alternatives for drawings, and the Instructions dialog from the keyboard. `tests/unit/focus-css.test.js`: no stylesheet removes a focus outline without a named replacement.
 - `node --test tests/unit/equilibrium-thermo.test.js`: conservation, positivity, ongoing equal equilibrium rates, cold-metal energy transfer, equal-temperature behavior and limiting reactants.
 - `npx playwright test tests/e2e/equilibrium-thermo.spec.js`: free exploration, independent activities without cross-links or intro banners, headers/help/sharing, pause/step controls, calculations and sign feedback, comparison trials, equal-temperature case, input validation, CSV and mobile layout.
 
