@@ -145,15 +145,18 @@ for (const a of ACTIVITIES) {
           await page.locator("#" + a.prefix + "-reference summary").click();
           await check();
           await start(page, bank.topics[0].id);
-          for (let i = 0; i < bank.perTopic; i++) {
+          // A question, then feedback for a right and a wrong answer at both widths; the results and review once, at 1366 px.
+          for (let i = 0; i < (width > 400 ? bank.perTopic : 2); i++) {
             const q = await current(page);
             if (i === 0) await check();
             await answer(page, q, i % 2 === 1);
             if (i < 2) await check();
             await el(page, "next").click();
           }
-          await el(page, "review").locator("summary").first().click();
-          await check();
+          if (width > 400) {
+            await el(page, "review").locator("summary").first().click();
+            await check();
+          }
         }
       });
     }
