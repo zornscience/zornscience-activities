@@ -213,6 +213,13 @@
   "Name the sides of a right triangle, use SOH CAH TOA, and find missing sides and angles.": "Identifica los lados de un triángulo rectángulo, usa SOH CAH TOA y calcula lados y ángulos faltantes.",
   "Vectors Practice": "Práctica de vectores",
   "Tell scalars from vectors, add vectors tip to tail, and find components.": "Distingue escalares de vectores, suma vectores de punta a cola y calcula componentes.",
+  "Units": "Unidades",
+  "Metric Prefixes Practice": "Práctica de prefijos métricos",
+  "Learn what each prefix means, from mega to nano, and use the prefix ladder to convert between units.": "Aprende qué significa cada prefijo, de mega a nano, y usa la escalera de prefijos para convertir entre unidades.",
+  "Unit Conversions Practice": "Práctica de conversiones de unidades",
+  "Choose and set up one conversion factor so the units cancel, and keep the measurement's significant figures.": "Elige y plantea un factor de conversión para que las unidades se cancelen, y conserva las cifras significativas de la medición.",
+  "Dimensional Analysis Practice": "Práctica de análisis dimensional",
+  "Chain conversion factors, convert rates and densities, and square or cube factors for area and volume.": "Encadena factores de conversión, convierte razones de cambio y densidades, y eleva factores al cuadrado o al cubo para área y volumen.",
   // Lab tools
   "Work with your own measurements and make clear graphs for your lab write-ups.": "Trabaja con tus propias mediciones y haz gráficas claras para tus reportes de laboratorio.",
   "Reading Graphs": "Lectura de gráficas",

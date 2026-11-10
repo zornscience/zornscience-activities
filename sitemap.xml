@@ -526,6 +526,30 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/projectile-lab/"/>
   </url>
   <url>
+    <loc>https://activities.zornscience.org/qs-dimensional-analysis-practice/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-dimensional-analysis-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-dimensional-analysis-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-dimensional-analysis-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/qs-dimensional-analysis-practice/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-dimensional-analysis-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-dimensional-analysis-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-dimensional-analysis-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/qs-metric-prefixes-practice/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-metric-prefixes-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-metric-prefixes-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-metric-prefixes-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/qs-metric-prefixes-practice/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-metric-prefixes-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-metric-prefixes-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-metric-prefixes-practice/"/>
+  </url>
+  <url>
     <loc>https://activities.zornscience.org/qs-percent-error-and-percent-change-practice/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-percent-error-and-percent-change-practice/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-percent-error-and-percent-change-practice/?lang=es"/>
@@ -596,6 +620,18 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-trigonometry-basics-practice/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-trigonometry-basics-practice/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-trigonometry-basics-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/qs-unit-conversions-practice/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-unit-conversions-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-unit-conversions-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-unit-conversions-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/qs-unit-conversions-practice/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-unit-conversions-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-unit-conversions-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-unit-conversions-practice/"/>
   </url>
   <url>
     <loc>https://activities.zornscience.org/qs-vectors-practice/</loc>

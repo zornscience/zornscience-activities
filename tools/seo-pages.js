@@ -194,6 +194,14 @@ module.exports = {
     en: "Fire a cannon from any height, angle and speed, and watch live velocity and acceleration vectors on the projectile, from ZornScience.",
     es: "Dispara un cañón desde cualquier altura, ángulo y rapidez, y observa los vectores de velocidad y aceleración del proyectil en vivo, de ZornScience."
   },
+  "qs-dimensional-analysis-practice": {
+    en: "Practice dimensional analysis with new numbers every set: chain factors, convert rates and densities, and cube units, with feedback in English or Spanish.",
+    es: "Practica el análisis dimensional con números nuevos en cada serie: encadena factores, convierte razones de cambio y densidades, y eleva unidades al cubo."
+  },
+  "qs-metric-prefixes-practice": {
+    en: "Practice metric prefixes from mega to nano with new numbers every set: meanings, the prefix ladder and conversions, with feedback in English or Spanish.",
+    es: "Practica los prefijos métricos de mega a nano con números nuevos en cada serie: significados, escalera de prefijos y conversiones, con retroalimentación."
+  },
   "qs-percent-error-and-percent-change-practice": {
     en: "Practice percent error and percent change with new numbers every set: accepted value on the bottom, sign kept, instant feedback in English or Spanish.",
     es: "Practica el porcentaje de error y el cambio porcentual con números nuevos en cada serie: el valor aceptado va abajo y el signo se conserva."
@@ -217,6 +225,10 @@ module.exports = {
   "qs-trigonometry-basics-practice": {
     en: "Practice right triangle trigonometry with new numbers every set: name the sides, use SOH CAH TOA, and find sides and angles, with instant feedback.",
     es: "Practica trigonometría del triángulo rectángulo con números nuevos en cada serie: identifica los lados, usa SOH CAH TOA y calcula lados y ángulos."
+  },
+  "qs-unit-conversions-practice": {
+    en: "Practice unit conversions with one exact factor: choose it, set it up so units cancel, and keep significant figures, with feedback in English or Spanish.",
+    es: "Practica conversiones de unidades con un factor exacto: elígelo, plantéalo para que las unidades se cancelen y conserva las cifras significativas."
   },
   "qs-vectors-practice": {
     en: "Practice vectors with new numbers every set: scalars and vectors, adding in a line and at right angles, and components, with instant feedback.",
