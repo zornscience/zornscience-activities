@@ -200,7 +200,10 @@
   }
 
   function figures(n) { return {en:n === 1 ? "1 significant figure" : n + " significant figures", es:n === 1 ? "1 cifra significativa" : n + " cifras significativas"}; }
-  function places(n) { return {en:n === 1 ? "1 decimal place" : n + " decimal places", es:n === 1 ? "1 lugar decimal" : n + " lugares decimales"}; }
+  function places(n) {
+    if (n === 0) return {en:"the nearest whole number", es:"el número entero más cercano"};
+    return {en:n === 1 ? "1 decimal place" : n + " decimal places", es:n === 1 ? "1 lugar decimal" : n + " lugares decimales"};
+  }
   var NOTES = {
     unit:{en:"Check the unit. This answer is in {unit}.", es:"Revisa la unidad. Esta respuesta va en {unit}."},
     noUnit:{en:"This answer has no unit.", es:"Esta respuesta no lleva unidad."},
@@ -219,6 +222,7 @@
     ["en", "es"].forEach(function (lang) {
       out[lang] = NOTES[key][lang].replace(/\{(\w+)\}/g, function (_, k) { var v = values[k]; return v && typeof v === "object" ? v[lang] : v; });
     });
+    out.es = out.es.replace(/\ba el\b/g, "al").replace(/\bde el\b/g, "del"); // Redondea al número entero más cercano.
     return out;
   }
   // v (typed, its last digit at 10^place) agrees with a: |v - a| <= half of 10^place.
@@ -243,6 +247,9 @@
       if (r.form === "plain") { formOK = false; notes.push(note("sci", {})); }
       else if (cmp(abs(r.coef), 1) < 0 || cmp(abs(r.coef), 10) >= 0) { formOK = false; notes.push(note("coef", {})); }
     } else if (check.form === "plain" && r.form !== "plain") { formOK = false; notes.push(note("plain", {})); }
+    // Rounded to decimal places (nearest whole number, nearest degree), a whole number like 40 is exact to the ones place:
+    // its zeros at the end are not a significant-figure question there.
+    if (P.decimals !== undefined && P.decimals >= 0 && r.form === "plain" && r.place > 0) r.place = 0;
     var A = exact(q.answer), v = r.value, valueOK, precisionOK, R = rounded(A, P);
     if (P.exact) {
       valueOK = cmp(v, A) === 0; precisionOK = v.d === 1n;

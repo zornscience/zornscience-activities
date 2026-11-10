@@ -252,6 +252,12 @@ test("judging accepts equivalent forms and separates value, unit, form and preci
   assert.equal(M.judge({answer:"2/3", precision:{sf:3}, unit:null, check:{}}, "0.66666").correct, true, "extra digits that round to the answer");
   assert.equal(M.judge({answer:"2/3", precision:{sf:3}, unit:null, check:{}}, "0.6666").valueOK, true);
   assert.equal(M.judge({answer:"2/3", precision:{sf:3}, unit:null, check:{}}, "0.665").valueOK, false);
+  // Nearest whole number (angles to the nearest degree): 40 is exact to the ones place, and the notes say so.
+  const degree = {answer:"40.37", precision:{decimals:0}, unit:"°", accept:["°", "degrees", "grados"], check:{}};
+  for (const raw of ["40", "40°", "40 degrees", "40 grados"]) assert.ok(M.judge(degree, raw).correct && M.judge(degree, raw).precisionOK, raw);
+  assert.equal(M.judge(degree, "40.4").notes[0].en, "Round to the nearest whole number.");
+  assert.equal(M.judge(degree, "40.4").notes[0].es, "Redondea al número entero más cercano.");
+  assert.equal(M.judge(degree, "41").correct, false);
   // Double rounding: 255 is 254.79 correctly rounded to 3 figures, so it is the right value with an extra figure,
   // even though rounding 255 again to 2 figures would give 260.
   const twice = {answer:"254.79", precision:{sf:2}, unit:null, check:{}};

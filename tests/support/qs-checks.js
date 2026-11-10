@@ -7,6 +7,13 @@ function rng(seed) {
   let a = seed >>> 0;
   return () => { a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
 }
+// English words that must not be left in Spanish text (unit symbols such as in, min and h are fine).
+const ENGLISH = /\b(?:the|and|your|answer|question|correct|incorrect|round|rounded|significant|figures?|choose|start|practice|topic|next|results|mixed|review|try|again|unit|number|type|with|count|has|keep|rules?|zeros?|places?|digits?|scientific|notation|write|use|first|only|when|there|is|are|of|to|for|from|which|what|how|many|much|value|percent|ratio|mass|volume|time|speed|distance|force|side|angle|degrees?|east|west|north|south|left|right|bigger|less|than|move|point)\b/i;
+function spanish(text, where) {
+  const plain = String(text).replace(/<\/?su[bp]>/g, "").replace(/\((?:en inglés|in English)[^)]*\)/g, "").replace(/SOH CAH TOA[^.]*\./g, "");
+  const m = plain.match(ENGLISH);
+  assert.equal(m, null, where + " has English in Spanish: " + (m && m[0]) + " in " + JSON.stringify(plain));
+}
 function numbers(text) { return (String(text).replace(/<\/?su[bp]>/g, " ").match(/\d[\d,]*(?:\.\d+)?/g) || []).sort(); }
 function pair(p, where, sameNumbers = true) {
   assert.ok(p && typeof p.en === "string" && typeof p.es === "string" && p.en && p.es, where + " has English and Spanish");
@@ -17,6 +24,7 @@ function pair(p, where, sameNumbers = true) {
     for (const tag of ["sub", "sup"]) assert.equal((t.match(new RegExp("<" + tag + ">", "g")) || []).length, (t.match(new RegExp("</" + tag + ">", "g")) || []).length, where + " tags");
   }
   if (sameNumbers) assert.deepEqual(numbers(p.es), numbers(p.en), where + " numbers match in Spanish");
+  spanish(p.es, where);
 }
 // One generated question: shape, words, and the activity's own answer judged correct (and a wild guess not).
 function common(M, q) {
@@ -39,4 +47,4 @@ function common(M, q) {
   assert.equal(M.judge(q, guess).correct, false, q.id + " rejects a wild guess");
   (q.traps || []).forEach(t => pair(t.note, q.id + " trap", false));
 }
-module.exports = {rng, pair, common, numbers};
+module.exports = {rng, pair, common, numbers, spanish};
