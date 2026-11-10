@@ -4,7 +4,7 @@ Reference: the ZornScience Style Kit v1.7, sections 4 to 6. Mexican Spanish, tú
 
 ## About this activity (shared/zsa-about.js)
 
-Each activity's intro and related lessons, shown above the footer. Lesson titles are the official titles in Style Kit Appendix A; Physics Units 6 to 9, Quantitative Skills and the lab pages use the titles of their live Spanish pages on zornscience.org. Activity terms in the intros follow the choices already recorded below (pesas ranuradas, línea de mejor ajuste, tarjetas de estudio, corrientes parásitas, foco, vaso de precipitados, bureta, semirreacción).
+Each activity's intro and related lessons, shown above the footer. Lesson titles are the official titles in Style Kit Appendix A; Physics Units 6 to 9, Quantitative Skills and the lab pages use the titles of their live Spanish pages on zornscience.org. The Quantitative Skills titles below are as listed on the live Spanish course page (Habilidades cuantitativas) on November 10, 2026. Activity terms in the intros follow the choices already recorded below (pesas ranuradas, línea de mejor ajuste, tarjetas de estudio, corrientes parásitas, foco, vaso de precipitados, bureta, semirreacción).
 
 English | Mexican Spanish
 --- | ---
@@ -24,6 +24,21 @@ Scientific Notation | Notación científica
 Calculator Skills | Habilidades con la calculadora
 Reading Graphs | Lectura de gráficas
 Slope and Rate of Change | Pendiente y razón de cambio
+Significant Figures | Cifras significativas
+Metric Prefixes | Prefijos métricos
+Unit Conversions | Conversiones de unidades
+Dimensional Analysis | Análisis dimensional
+Ratios and Proportions | Razones y proporciones
+Percents | Porcentajes
+Percent Error and Percent Change | Error porcentual y cambio porcentual
+Reading Formulas | Lectura de fórmulas
+Rearranging Equations | Despeje de ecuaciones
+Substituting with Units | Sustitución con unidades
+Direct and Inverse Relationships | Relaciones directas e inversas
+Exponents and Logarithms | Exponentes y logaritmos
+Trigonometry Basics | Conceptos básicos de trigonometría
+Vectors | Vectores
+Numbers, Units, Ratios and Percents, Equations, Graphs and Change, Advanced Tools (Quantitative Skills sections) | Números, Unidades, Razones y porcentajes, Ecuaciones, Gráficas y cambio, Herramientas avanzadas
 Net Ionic Equations Lab | Laboratorio de ecuaciones iónicas netas
 
 ## Quantitative Skills practice (shared words)
@@ -358,6 +373,58 @@ container (gas) | recipiente
 toy car | carrito de juguete
 push (a box) | empujar (una caja)
 Change it to kelvin. | Cámbiala a kelvin.
+
+## Direct and Inverse Relationships Practice (1.0.0)
+
+Terms from the live Spanish lesson: relación directa, relación inversa, directamente proporcional, inversamente proporcional, pasa por el origen, se duplica, se triplica, se reduce a la mitad, se reduce a la tercera parte, se multiplica por 4, prueba del producto, constante, lineal, cuadrática (squared), ley de Boyle. The lesson's "prueba de la razón" (ratio test) is not used: the Style Kit keeps "relación" for ratio, and in this lesson "relación" also names the relationship, so the Spanish text writes the test out as "y ÷ x da el mismo valor en todas las filas". In Spanish sentences the variable y is "la variable y", so it is never read as the word "y" (and); formulas keep y ÷ x and x × y. Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Identifying relationships | Identificación de relaciones
+Changing x | Cambios en x
+Finding the constant | Cálculo de la constante
+Predictions | Predicciones
+Squared relationship | Relación cuadrática
+Linear, but not direct | Lineal, pero no directa
+Tests for relationships (reference) | Pruebas para identificar relaciones
+a curve that drops steeply, then flattens out and never touches the axes | una curva que baja de forma pronunciada, luego se aplana y nunca toca los ejes
+a curve that bends upward | una curva que se dobla hacia arriba
+is cut in half / becomes one third (one fourth) as large | se reduce a la mitad / se reduce a la tercera (cuarta) parte
+increases by 2 / decreases by 3 | aumenta en 2 / disminuye en 3
+a graph of y against x | la gráfica de y contra x
+What kind of relationship is this? | ¿Qué tipo de relación es?
+What happens to y? | ¿Qué le pasa a la variable y?
+in every row | en todas las filas
+kelvin temperature | temperatura en kelvin
+distance fallen | distancia de caída
+stretch (spring) | estiramiento
+weights hung on a spring | pesas colgadas de un resorte
+pulled with a force | se jala con una fuerza
+a ball dropped from rest | una pelota que se suelta desde el reposo
+the same trip / average speed | el mismo viaje / rapidez promedio
+
+## Exponents and Logarithms Practice (1.0.0)
+
+Terms from the live Spanish lesson: exponente, logaritmo (log), potencia de diez, base, coeficientes, suma / resta / multiplica los exponentes, potencia de una potencia, exponente cero, exponente negativo, concentración de iones de hidrógeno, tecla LOG, segunda función, lugares decimales, deshaz el log. The calculator key keeps its label: "segunda función: 2nd, LOG". Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Exponent rules | Reglas de los exponentes
+Logarithms | Logaritmos
+Exponent and log rules (reference) | Reglas de exponentes y logaritmos
+Write ... as one power of ten. What is the exponent? | Escribe ... como una sola potencia de diez. ¿Cuál es el exponente?
+Enter only the exponent | Escribe solo el exponente
+top minus bottom | el de arriba menos el de abajo
+Adjust (the coefficient) | Ajusta
+Which number equals ...? | ¿Qué número es igual a ...?
+log(x) is between which two whole numbers? | ¿Entre qué dos números enteros está log(x)?
+Numbers below 1 have negative logs. | Los números menores que 1 tienen logaritmos negativos.
+log asks: 10 to what power? | El log pregunta: ¿10 elevado a qué potencia?
+Check: (bracketing) | Comprobación:
+Use the lesson's rule | Usa la regla de la lección
+precision counts | la precisión cuenta
+Light travels at ... | La luz viaja a ...
+How long does it take? | ¿Cuánto tarda?
 
 ## AP Chemistry Unit 9 Practice (1.0.0)
 

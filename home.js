@@ -227,6 +227,11 @@
   "Solve formulas for one variable, undo steps in reverse order, and calculate with the rearranged formula.": "Despeja una variable, deshaz los pasos en orden inverso y calcula con la fórmula despejada.",
   "Substituting with Units Practice": "Práctica de sustitución con unidades",
   "Substitute values with their units, convert to kg, m and s first, and check the unit of every answer.": "Sustituye valores con sus unidades, convierte primero a kg, m y s y comprueba la unidad de cada respuesta.",
+  "Graphs and Change": "Gráficas y cambio",
+  "Direct and Inverse Relationships Practice": "Práctica de relaciones directas e inversas",
+  "Classify data tables and graph shapes, use the ratio and product tests, and predict new values.": "Clasifica tablas de datos y formas de gráficas, encuentra la constante con y ÷ x o x × y, y predice valores nuevos.",
+  "Exponents and Logarithms Practice": "Práctica de exponentes y logaritmos",
+  "Use the exponent rules, work in scientific notation, find logs of powers of ten, and go between pH and hydrogen ion concentration.": "Usa las reglas de los exponentes, trabaja con notación científica, encuentra logaritmos de potencias de diez y pasa del pH a la concentración de iones de hidrógeno y de regreso.",
   // Lab tools
   "Work with your own measurements and make clear graphs for your lab write-ups.": "Trabaja con tus propias mediciones y haz gráficas claras para tus reportes de laboratorio.",
   "Reading Graphs": "Lectura de gráficas",

@@ -198,6 +198,14 @@ module.exports = {
     en: "Practice dimensional analysis with new numbers every set: chain factors, convert rates and densities, and cube units, with feedback in English or Spanish.",
     es: "Practica el análisis dimensional con números nuevos en cada serie: encadena factores, convierte razones de cambio y densidades, y eleva unidades al cubo."
   },
+  "qs-direct-and-inverse-relationships-practice": {
+    en: "Practice direct and inverse relationships with new data every set: classify tables, use the ratio and product tests, and predict values, in English or Spanish.",
+    es: "Practica relaciones directas e inversas con datos nuevos en cada serie: clasifica tablas, encuentra la constante y predice valores, con retroalimentación."
+  },
+  "qs-exponents-and-logarithms-practice": {
+    en: "Practice exponents and logarithms with new numbers every set: exponent rules, scientific notation, logs of powers of ten and pH, with instant feedback.",
+    es: "Practica exponentes y logaritmos con números nuevos en cada serie: reglas de exponentes, notación científica, logaritmos y pH, con retroalimentación inmediata."
+  },
   "qs-metric-prefixes-practice": {
     en: "Practice metric prefixes from mega to nano with new numbers every set: meanings, the prefix ladder and conversions, with feedback in English or Spanish.",
     es: "Practica los prefijos métricos de mega a nano con números nuevos en cada serie: significados, escalera de prefijos y conversiones, con retroalimentación."

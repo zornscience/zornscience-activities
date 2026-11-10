@@ -61,6 +61,8 @@ qs-percent-error-and-percent-change-practice/  Percent Error and Percent Change 
 qs-reading-formulas-practice/  Reading Formulas Practice, v1.0.0 (generated sets: symbols and subscripts, formulas in words, Δ as final minus initial, one-step substitution; English and Mexican Spanish)
 qs-rearranging-equations-practice/  Rearranging Equations Practice, v1.0.0 (generated sets: solving for one variable, the first step, rearranging then calculating; English and Mexican Spanish)
 qs-substituting-with-units-practice/  Substituting with Units Practice, v1.0.0 (generated sets: units that cancel, choosing the setup, answers with units, converting before substituting; units required; English and Mexican Spanish)
+qs-direct-and-inverse-relationships-practice/  Direct and Inverse Relationships Practice, v1.0.0 (generated sets: identifying relationships from tables and graph shapes, changing x, the constant from the ratio and product tests, predictions; English and Mexican Spanish)
+qs-exponents-and-logarithms-practice/  Exponents and Logarithms Practice, v1.0.0 (generated sets: exponent rules, scientific notation, logs of powers of ten, pH and [H+] with scored precision; English and Mexican Spanish)
 qs-trigonometry-basics-practice/  Trigonometry Basics Practice, v1.0.0 (generated sets: naming the sides, SOH CAH TOA, finding a side, finding an angle; labeled right triangle; English and Mexican Spanish)
 qs-vectors-practice/  Vectors Practice, v1.0.0 (generated sets: scalars and vectors, same and opposite directions, perpendicular vectors, components; English and Mexican Spanish)
 atwood-machine/           The Atwood Machine, v1.1.2 (ideal pulley, adjustable masses and live vectors; no data recording; English and Mexican Spanish)
