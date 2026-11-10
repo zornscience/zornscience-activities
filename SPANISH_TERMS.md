@@ -77,6 +77,86 @@ Significant figure rules | Reglas de las cifras significativas
 beaker (lab) | vaso de precipitados
 cart | carrito
 
+## Ratios and Proportions Practice (1.0.0)
+
+The live Spanish lesson is titled Razones y proporciones (section Razones y porcentajes) and says razón for ratio. Lesson and section names keep those titles; activity text follows the Style Kit glossary: relación for ratio and relación molar for mole ratio. Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Writing and simplifying ratios | Escritura y simplificación de relaciones
+Solving proportions | Resolución de proporciones
+Mole ratios | Relaciones molares
+the ratio of X to Y | la relación de X a Y
+3 to 2 | 3 a 2
+in simplest form | en su forma más simple
+the reverse order | el orden inverso
+the first quantity named goes first | la cantidad que se menciona primero va primero
+Keep the same units in the same spots | Mantén las mismas unidades en los mismos lugares
+the unknown (x) | la incógnita
+Cross-multiply | Multiplica en cruz
+coefficient | coeficiente
+balanced equation | ecuación balanceada
+A formula with no number in front has a coefficient of 1. | Una fórmula sin número al frente tiene coeficiente 1.
+The ratio is upside down. | La relación está invertida.
+form from / react with / are needed to make | se forman a partir de / reaccionan con / se necesitan para producir
+pea plant cross; tall, short | cruza de plantas de chícharo; altas, bajas
+marbles | canicas
+flask | matraz
+string, rope | hilo, cuerda
+scoop (of salt) | porción
+baking soda | bicarbonato de sodio
+towns (on a map) | pueblos
+At the same speed | A la misma rapidez
+stretches a spring | estira un resorte
+
+## Percents Practice (1.0.0)
+
+Follows the live Spanish lesson, Porcentajes, and the Style Kit glossary (porcentaje, composición porcentual, rendimiento porcentual, teórico, real, masa molar). Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Percents and decimals | Porcentajes y decimales
+Percent of a whole | Porcentaje de un total
+whole (part ÷ whole) | total
+part | parte
+Percent means per hundred | Porcentaje significa por cada cien
+move the decimal point 2 places left | mueve el punto decimal 2 lugares a la izquierda
+percent by mass, by volume | porcentaje en masa, en volumen
+actual yield, theoretical yield | rendimiento real, rendimiento teórico
+You collect (a product) | Obtienes
+breaks down into | se descompone en
+Which calculation gives ...? | ¿Qué cálculo da ...?
+sprouted; absent, present; trials | germinaron; faltaron, asistieron; intentos
+soil sample; brass key | muestra de suelo; llave de latón
+seawater; fertilizer bag | agua de mar; costal de fertilizante
+vinegar, acetic acid | vinagre, ácido acético
+Questions give any others. | Las preguntas dan las demás.
+advice, not scored | una sugerencia y no cuentan en la puntuación
+
+## Percent Error and Percent Change Practice (1.0.0)
+
+The live Spanish lesson is titled Error porcentual y cambio porcentual and says error porcentual. The title is kept where the lesson is named; activity text uses the Style Kit lab term porcentaje de error. Lesson terms used: valor aceptado, valor medido (never experimental), valor absoluto, nuevo, original, aumento, disminución. Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Percent error | Porcentaje de error
+Percent change | Cambio porcentual
+Setups and signs | Planteamientos y signos
+the true value scientists agree on | el valor verdadero en el que coinciden los científicos
+goes on the bottom | va abajo
+absolute value bars | barras de valor absoluto
+new minus original | nuevo menos original
+A decrease needs a negative sign. | Una disminución lleva signo negativo.
+Keep the sign. | Conserva el signo.
+increased, decreased | aumentó, disminuyó
+by 12% of the original mass | 12% respecto a la masa original
+It cannot be found without an accepted value. | No se puede saber sin un valor aceptado.
+Positive, Negative (the percent change) | Positivo, Negativo
+the answer keeps n significant figures | la respuesta conserva n cifras significativas
+standard mass; standard rod | pesa patrón; barra patrón
+acceleration due to gravity | aceleración debida a la gravedad
+speed of sound; specific heat | rapidez del sonido; calor específico
+
 ## AP Chemistry Unit 9 Practice (1.0.0)
 
 Uses the supplied AP glossary, including entropía absoluta, energía libre de Gibbs, favorabilidad termodinámica, termodinámicamente favorable, control cinético, control termodinámico, reacciones acopladas, celda galvánica (voltaica), celda electrolítica, ánodo, cátodo, puente salino, semirreacción, potencial estándar de reducción, potencial de celda, constante de Faraday, electrólisis and ley de Faraday. Formulas, state symbols, unit symbols and decimal points are preserved. New activity wording beyond the supplied glossary:

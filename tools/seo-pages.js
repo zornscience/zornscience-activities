@@ -194,6 +194,18 @@ module.exports = {
     en: "Fire a cannon from any height, angle and speed, and watch live velocity and acceleration vectors on the projectile, from ZornScience.",
     es: "Dispara un cañón desde cualquier altura, ángulo y rapidez, y observa los vectores de velocidad y aceleración del proyectil en vivo, de ZornScience."
   },
+  "qs-percent-error-and-percent-change-practice": {
+    en: "Practice percent error and percent change with new numbers every set: accepted value on the bottom, sign kept, instant feedback in English or Spanish.",
+    es: "Practica el porcentaje de error y el cambio porcentual con números nuevos en cada serie: el valor aceptado va abajo y el signo se conserva."
+  },
+  "qs-percents-practice": {
+    en: "Practice percents with new numbers every set: decimals, percent of a whole, percent composition and percent yield, with instant feedback in English or Spanish.",
+    es: "Practica porcentajes con números nuevos en cada serie: decimales, porcentaje de un total, composición porcentual y rendimiento porcentual."
+  },
+  "qs-ratios-and-proportions-practice": {
+    en: "Practice ratios and proportions with new numbers every set: write and simplify ratios, solve proportions and use mole ratios, with instant feedback.",
+    es: "Practica relaciones y proporciones con números nuevos en cada serie: escribe y simplifica relaciones, resuelve proporciones y usa relaciones molares."
+  },
   "qs-scientific-notation-practice": {
     en: "Practice scientific notation with new numbers every set: convert big and small numbers both ways and read the exponent. Instant feedback in English or Spanish.",
     es: "Practica la notación científica con números nuevos en cada serie: convierte números grandes y pequeños en ambos sentidos e interpreta el exponente."

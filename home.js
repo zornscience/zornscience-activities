@@ -201,6 +201,13 @@
   "Write big and small numbers in scientific notation and back in standard notation, and read what the exponent says.": "Escribe números grandes y pequeños en notación científica y de vuelta en notación estándar, e interpreta lo que dice el exponente.",
   "Significant Figures Practice": "Práctica de cifras significativas",
   "Count significant figures, round, and use the rules for multiplying, dividing, adding and subtracting.": "Cuenta cifras significativas, redondea y usa las reglas para multiplicar, dividir, sumar y restar.",
+  "Ratios and Percents": "Razones y porcentajes",
+  "Ratios and Proportions Practice": "Práctica de razones y proporciones",
+  "Write and simplify ratios, solve proportions, and use mole ratios from balanced equations.": "Escribe y simplifica relaciones, resuelve proporciones y usa relaciones molares de ecuaciones balanceadas.",
+  "Percents Practice": "Práctica de porcentajes",
+  "Change percents to decimals, find parts and percents of a whole, and work out percent composition and percent yield.": "Cambia porcentajes a decimales, encuentra partes y porcentajes de un total, y calcula la composición porcentual y el rendimiento porcentual.",
+  "Percent Error and Percent Change Practice": "Práctica de error porcentual y cambio porcentual",
+  "Find percent error and percent change, keep the right sign, and put the right value on the bottom.": "Encuentra el porcentaje de error y el cambio porcentual, conserva el signo correcto y pon abajo el valor correcto.",
   // Lab tools
   "Work with your own measurements and make clear graphs for your lab write-ups.": "Trabaja con tus propias mediciones y haz gráficas claras para tus reportes de laboratorio.",
   "Reading Graphs": "Lectura de gráficas",
