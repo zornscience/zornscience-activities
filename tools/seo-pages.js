@@ -214,6 +214,14 @@ module.exports = {
     en: "Practice ratios and proportions with new numbers every set: write and simplify ratios, solve proportions and use mole ratios, with instant feedback.",
     es: "Practica relaciones y proporciones con números nuevos en cada serie: escribe y simplifica relaciones, resuelve proporciones y usa relaciones molares."
   },
+  "qs-reading-formulas-practice": {
+    en: "Practice reading science formulas: what each letter means, implied multiplication, constants, subscripts and Δ as final minus initial, with instant feedback.",
+    es: "Practica la lectura de fórmulas: qué significa cada letra, la multiplicación implícita, las constantes, los subíndices y Δ como final menos inicial."
+  },
+  "qs-rearranging-equations-practice": {
+    en: "Practice solving formulas for one variable: opposite operations on both sides, steps undone in reverse order, then substitute and calculate.",
+    es: "Practica el despeje de fórmulas: operaciones opuestas en ambos lados, pasos deshechos en orden inverso, y luego sustituye y calcula con retroalimentación."
+  },
   "qs-scientific-notation-practice": {
     en: "Practice scientific notation with new numbers every set: convert big and small numbers both ways and read the exponent. Instant feedback in English or Spanish.",
     es: "Practica la notación científica con números nuevos en cada serie: convierte números grandes y pequeños en ambos sentidos e interpreta el exponente."
@@ -221,6 +229,10 @@ module.exports = {
   "qs-significant-figures-practice": {
     en: "Practice significant figures with new numbers every set: count them, round, and use the rules for calculations, with instant feedback in English or Spanish.",
     es: "Practica cifras significativas con números nuevos en cada serie: cuéntalas, redondea y usa las reglas de los cálculos, con retroalimentación inmediata."
+  },
+  "qs-substituting-with-units-practice": {
+    en: "Practice substituting with units: units that cancel, converting to kg, m and s first, named units N and J, and kelvin for gases, with new numbers every set.",
+    es: "Practica la sustitución con unidades: unidades que se cancelan, conversión a kg, m y s, las unidades N y J, y kelvin para los gases, con números nuevos."
   },
   "qs-trigonometry-basics-practice": {
     en: "Practice right triangle trigonometry with new numbers every set: name the sides, use SOH CAH TOA, and find sides and angles, with instant feedback.",

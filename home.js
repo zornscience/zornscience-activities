@@ -220,6 +220,13 @@
   "Choose and set up one conversion factor so the units cancel, and keep the measurement's significant figures.": "Elige y plantea un factor de conversión para que las unidades se cancelen, y conserva las cifras significativas de la medición.",
   "Dimensional Analysis Practice": "Práctica de análisis dimensional",
   "Chain conversion factors, convert rates and densities, and square or cube factors for area and volume.": "Encadena factores de conversión, convierte razones de cambio y densidades, y eleva factores al cuadrado o al cubo para área y volumen.",
+  "Equations": "Ecuaciones",
+  "Reading Formulas Practice": "Práctica de lectura de fórmulas",
+  "Read formulas as sentences, tell variables from constants, and find changes with Δ as final minus initial.": "Lee fórmulas como oraciones, distingue variables de constantes y calcula cambios con Δ como final menos inicial.",
+  "Rearranging Equations Practice": "Práctica de despeje de ecuaciones",
+  "Solve formulas for one variable, undo steps in reverse order, and calculate with the rearranged formula.": "Despeja una variable, deshaz los pasos en orden inverso y calcula con la fórmula despejada.",
+  "Substituting with Units Practice": "Práctica de sustitución con unidades",
+  "Substitute values with their units, convert to kg, m and s first, and check the unit of every answer.": "Sustituye valores con sus unidades, convierte primero a kg, m y s y comprueba la unidad de cada respuesta.",
   // Lab tools
   "Work with your own measurements and make clear graphs for your lab write-ups.": "Trabaja con tus propias mediciones y haz gráficas claras para tus reportes de laboratorio.",
   "Reading Graphs": "Lectura de gráficas",

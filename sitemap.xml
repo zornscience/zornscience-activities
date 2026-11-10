@@ -586,6 +586,30 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-ratios-and-proportions-practice/"/>
   </url>
   <url>
+    <loc>https://activities.zornscience.org/qs-reading-formulas-practice/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-reading-formulas-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-reading-formulas-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-reading-formulas-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/qs-reading-formulas-practice/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-reading-formulas-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-reading-formulas-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-reading-formulas-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/qs-rearranging-equations-practice/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-rearranging-equations-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-rearranging-equations-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-rearranging-equations-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/qs-rearranging-equations-practice/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-rearranging-equations-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-rearranging-equations-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-rearranging-equations-practice/"/>
+  </url>
+  <url>
     <loc>https://activities.zornscience.org/qs-scientific-notation-practice/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-scientific-notation-practice/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-scientific-notation-practice/?lang=es"/>
@@ -608,6 +632,18 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-significant-figures-practice/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-significant-figures-practice/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-significant-figures-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/qs-substituting-with-units-practice/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-substituting-with-units-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-substituting-with-units-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-substituting-with-units-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/qs-substituting-with-units-practice/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-substituting-with-units-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-substituting-with-units-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-substituting-with-units-practice/"/>
   </url>
   <url>
     <loc>https://activities.zornscience.org/qs-trigonometry-basics-practice/</loc>

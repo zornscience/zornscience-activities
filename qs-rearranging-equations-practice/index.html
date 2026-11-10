@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<title>Rearranging Equations Practice | ZornScience</title>
+<meta name="description" content="Practice solving formulas for one variable: opposite operations on both sides, steps undone in reverse order, then substitute and calculate." data-zsa-es="Practica el despeje de fórmulas: operaciones opuestas en ambos lados, pasos deshechos en orden inverso, y luego sustituye y calcula con retroalimentación.">
+<link rel="canonical" href="https://activities.zornscience.org/qs-rearranging-equations-practice/">
+<link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-rearranging-equations-practice/">
+<link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-rearranging-equations-practice/?lang=es">
+<link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-rearranging-equations-practice/">
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-practice.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-practice-model.js?v=1.0.0" defer></script>
+<script src="data.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-practice.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-header.js?v=1.0.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.0.0"><script src="../shared/zsa-about.js?v=1.0.0" defer></script></head>
+<body>
+<main class="zsa zsa-qre zsa-practice" data-zsa-activity="qs-rearranging-equations-practice" data-zsa-practice="zsa-qre">
+<header data-zsa-header>
+<div data-zsa-header-row>
+<div data-zsa-header-identity><a data-zsa-header-brand href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png" width="34" height="33" alt=""></a><h1>Rearranging Equations Practice</h1></div>
+<nav data-zsa-header-tools aria-label="Activity tools"><div>
+<button class="zsa-btn" type="button" data-zsa-dialog-open="zsa-header-instructions" aria-haspopup="dialog" aria-controls="zsa-header-instructions">Instructions</button>
+<button class="zsa-btn" type="button" data-zsa-chrome data-zsa-dialog-open="zsa-header-share" aria-label="Share activity" aria-haspopup="dialog" aria-controls="zsa-header-share"><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button>
+</div></nav>
+</div>
+</header>
+<dialog class="zsa-header-dialog" id="zsa-header-instructions" aria-labelledby="zsa-header-instructions-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-header-instructions-title">Instructions</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close instructions" autofocus>Close</button></div>
+<ol>
+<li>Choose a skill, then start. Mixed review includes all three skills.</li>
+<li>Solve for the letter first, then put in the numbers. A unit after the number is optional.</li>
+<li>The line under each question says how to round. Significant figures are a reminder here, not part of the score.</li>
+<li>Submit once per question and read the feedback. Try again gives you a new set.</li>
+</ol>
+</dialog>
+<dialog class="zsa-header-dialog" id="zsa-header-share" aria-labelledby="zsa-header-share-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-header-share-title">Share this activity</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close share options" autofocus>Close</button></div>
+<p>Share a fresh activity. Your answers and results are not included.</p>
+<label for="zsa-header-share-url">Share link</label><div class="zsa-header-share-link"><input id="zsa-header-share-url" type="text" readonly spellcheck="false"><button class="zsa-btn" type="button" data-zsa-share-copy>Copy link</button></div>
+<a data-zsa-share-email href="#">Email</a><p data-zsa-share-status role="status" aria-live="polite"></p>
+</dialog>
+<noscript><p class="zsa-panel">This activity needs JavaScript. / Esta actividad necesita JavaScript.</p></noscript>
+<section id="zsa-qre-setup" class="zsa-card" aria-labelledby="zsa-qre-setup-title">
+<p class="zsa-eyebrow">Quantitative Skills · Equations</p>
+<h2 id="zsa-qre-setup-title">New numbers every set.</h2>
+<p>Choose one skill for 8 questions, or Mixed review for 12. Every set is new.</p>
+<div class="zsa-qre-settings zsa-practice-settings"><div><label for="zsa-qre-topic">Topic</label><select id="zsa-qre-topic"></select></div><button class="zsa-btn zsa-btn--primary" id="zsa-qre-start" type="button">Start practice</button></div>
+<p class="zsa-qre-small zsa-practice-small">No timer. Use scratch paper and a calculator. The steps from the lesson are below.</p>
+</section>
+<section id="zsa-qre-play" hidden aria-labelledby="zsa-qre-question">
+<div class="zsa-qre-status zsa-practice-status"><p id="zsa-qre-position"></p><p id="zsa-qre-score"></p></div>
+<progress id="zsa-qre-progress" value="0" max="8" aria-label="Set progress"></progress>
+<div class="zsa-card zsa-qre-question-card">
+<p class="zsa-eyebrow" id="zsa-qre-topic-name"></p>
+<h2 id="zsa-qre-question" tabindex="-1"></h2>
+<form id="zsa-qre-answer" novalidate>
+<fieldset id="zsa-qre-choices"><legend class="zsa-qre-small zsa-practice-small">Choose one answer.</legend><div id="zsa-qre-options" class="zsa-practice-options"></div></fieldset>
+<div id="zsa-qre-numeric" hidden>
+<p id="zsa-qre-precision" class="zsa-qre-small zsa-practice-small"></p>
+<div class="zsa-qre-entry zsa-practice-entry"><div><label for="zsa-qre-value">Your answer</label><input id="zsa-qre-value" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="zsa-qre-precision zsa-qre-number-help zsa-qre-error"></div><div hidden><label for="zsa-qre-unit">Unit</label><select id="zsa-qre-unit"></select></div></div>
+<p id="zsa-qre-number-help" class="zsa-qre-small zsa-practice-small">Type a number such as 16.7 or 0.448. You may add the unit after it.</p>
+</div>
+<p id="zsa-qre-error" role="alert" class="zsa-qre-error zsa-practice-error"></p>
+<button id="zsa-qre-check" class="zsa-btn zsa-btn--primary" type="submit">Check answer</button>
+</form>
+<section id="zsa-qre-feedback" class="zsa-practice-feedback zsa-panel" aria-live="polite" aria-atomic="true" hidden></section>
+<button id="zsa-qre-next" class="zsa-btn zsa-btn--primary" type="button" hidden>Next question</button>
+</div>
+</section>
+<section id="zsa-qre-results" class="zsa-card" aria-labelledby="zsa-qre-results-title" hidden>
+<h2 id="zsa-qre-results-title" tabindex="-1">Your set is complete</h2>
+<p id="zsa-qre-total" class="zsa-qre-total zsa-practice-total"></p>
+<h3>Results by topic</h3><ul id="zsa-qre-breakdown" class="zsa-practice-breakdown"></ul>
+<div class="zsa-qre-actions zsa-practice-actions"><button id="zsa-qre-retry" class="zsa-btn zsa-btn--primary" type="button">Try again</button><button id="zsa-qre-choose" class="zsa-btn" type="button">Choose another topic</button></div>
+<div id="zsa-qre-review"></div>
+</section>
+<details class="zsa-panel zsa-qre-reference zsa-practice-reference" id="zsa-qre-reference">
+<summary>Reference</summary><h2>Rearranging equations</h2>
+<ul>
+<li>Solve for the variable with letters first. Substitute the numbers last.</li>
+<li>An equation is a balance: do the same step to both sides, using the opposite operation.</li>
+<li>Undo steps in reverse order: F = 1.8C + 32 becomes C = (F − 32)/1.8.</li>
+<li>A variable in the denominator: multiply both sides by it, then divide. D = m/V gives DV = m, so V = m/D.</li>
+<li>The triangle shortcut works only for three-letter formulas like A = BC, and only to check your work.</li>
+</ul>
+<p>Rearranged formulas: t = d/v, a = F/m, m = DV, V = m/D, c = q/(mΔT), m = q/(cΔT), a = (v<sub>f</sub> − v<sub>i</sub>)/t, t = (x<sub>f</sub> − x<sub>i</sub>)/v.</p>
+</details>
+<p class="zsa-qre-small zsa-practice-small">Practice for the Rearranging Equations lesson in Quantitative Skills. Original ZornScience questions.</p>
+<!-- zsa-about --><section class="zsa-about" data-zsa-about="qs-rearranging-equations-practice" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Solve formulas for one variable with the opposite operation on both sides, undo steps in reverse order, then substitute and calculate. Every set is new, and each answer gets feedback right away.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="qs-rearranging-equations"><a href="https://zornscience.org/science/quantitative-skills/equations/rearranging-equations/">Rearranging Equations</a><span data-zsa-lesson-course>Quantitative Skills</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Your answers stay in this tab. No account needed.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><a class="zsa-back" id="zsa-qre-back" href="https://zornscience.org/science/quantitative-skills/equations/rearranging-equations/">← Back to the lesson</a></footer>
+</main>
+</body>
+</html>
