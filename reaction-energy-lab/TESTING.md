@@ -1,6 +1,6 @@
 # Reaction Energy Lab verification
 
-Version: 1.0.3
+Version: 1.0.4
 
 ## Commands
 
@@ -19,6 +19,7 @@ The e2e spec writes fourteen full-page screenshots, one per mode per language, t
 
 ## Automated coverage
 
+- `tests/e2e/labs-a11y.spec.js` (all labs): axe-core in English and Spanish at laptop and phone size, one pass through the Tab order with an accessible name and a visible focus indicator at every stop (compared pixel by pixel), roles, names and states of custom controls, arrow keys on every slider, text alternatives for drawings, and the Instructions dialog from the keyboard. `tests/unit/focus-css.test.js`: no stylesheet removes a focus outline without a named replacement.
 - All supplied diagram, heating, stoichiometry, bond, formation, Hess and KOH examples, including all six Hess sets and independently rounded water constants.
 - The peak-for-ΔH, missing stoichiometric coefficient, three N-H bonds, missing Hess multiplier and missing reversed-sign mistakes.
 - Catalyst invariance, phase endpoints, heat conservation and positive/negative reverse paths.

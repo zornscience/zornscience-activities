@@ -162,10 +162,15 @@
     content($("live"), n.textContent);
   }
   function table(h, heads, rows, caption) {
-    var wrap = add(h, "div", undefined, "zsa-fe-scroll");
-    wrap.tabIndex = 0;
-    wrap.setAttribute("role", "region");
-    wrap.setAttribute("aria-label", t(caption || "Data table"));
+    // The experiment data host is already the one focusable, labelled scroll region; a second one inside it would be a
+    // second Tab stop for the same table, with its focus ring clipped by the first.
+    var wrap = h;
+    if (!h.classList.contains("zsa-fe-scroll")) {
+      wrap = add(h, "div", undefined, "zsa-fe-scroll");
+      wrap.tabIndex = 0;
+      wrap.setAttribute("role", "region");
+      wrap.setAttribute("aria-label", t(caption || "Data table"));
+    }
     var tab = add(wrap, "table");
     add(tab, "caption", t(caption || "Data table"));
     var tr = add(add(tab, "thead"), "tr");

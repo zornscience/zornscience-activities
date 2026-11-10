@@ -1,5 +1,5 @@
 # Verification record
-Version: 1.1.2
+Version: 1.1.3
 Date: 2026-10-20
 Reviewer: Claude (built and tested 1.0.0)
 
@@ -36,3 +36,5 @@ Real screen readers (NVDA, VoiceOver, ChromeVox), Firefox, Safari, Chromebooks a
 ## Spanish verification
 
 `tests/e2e/i18n.spec.js` opens the lab with `?lang=es`, checks text and accessible attributes for leftover English, and exercises zeroing, standards, the curve, the unknown, a wrong and a right answer, Show the answer, the instructions and the share panel, with full-sentence templates. English output of every model text function (solution text, insight, checks and hints, the worked answer, instrument and graph descriptions and the CSV) was compared with version 1.0.1 for all three solutions across many wavelengths, standards and answers, and is identical; the English page text was compared with 1.0.1 through the same states. The language toggle intentionally adds header controls. The Spanish knob label in the drawing is two short lines ("Perilla", "de λ") so it fits beside the display.
+
+- `tests/e2e/labs-a11y.spec.js` (all labs): axe-core in English and Spanish at laptop and phone size, one pass through the Tab order with an accessible name and a visible focus indicator at every stop (compared pixel by pixel), roles, names and states of custom controls, arrow keys on every slider, text alternatives for drawings, and the Instructions dialog from the keyboard. `tests/unit/focus-css.test.js`: no stylesheet removes a focus outline without a named replacement.

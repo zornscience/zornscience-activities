@@ -35,6 +35,12 @@
       var b = node("button", "zsa-btn", text); b.type = "button"; b.addEventListener("click", action); return b;
     }
     function announce(text) { live.textContent = text; }
+    // After the last question, the score (and where the completion code goes) is spoken with the feedback, so a
+    // screen reader user does not have to hunt for the result below the question.
+    function announceAnswer(e) {
+      var done = result();
+      announce(e.feedback + (done ? " " + fill(ui.score, {score: done.score, total: questions.length}) + (done.code && ui.codeNote ? " " + ui.codeNote : "") : ""));
+    }
     function updateProgress() { progress.textContent = fill(ui.progress, {current: index + 1, total: questions.length}); }
     function result() {
       if (!entries.every(function (e) { return e.done; })) return null;
@@ -72,7 +78,7 @@
         if (!selected || e.done) return;
         e.tries++; e.choice = selected[0];
         if (selected[2] === null) {
-          e.done = true; e.feedback = fill(ui.correct, {explanation: q.explanation}); render(true); announce(e.feedback);
+          e.done = true; e.feedback = fill(ui.correct, {explanation: q.explanation}); render(true); announceAnswer(e);
         } else {
           e.feedback = fill(ui.retry, {feedback: q.feedback[selected[2]]}); feedback.textContent = e.feedback;
           show.hidden = e.tries < 2;
@@ -82,7 +88,7 @@
       var show = button(ui.show, function () {
         if (e.done || e.tries < 2) return;
         e.done = true; e.shown = true; e.choice = q.choices.filter(function (c) { return c[2] === null; })[0][0];
-        e.feedback = fill(ui.shown, {explanation: q.explanation}); render(true); announce(e.feedback);
+        e.feedback = fill(ui.shown, {explanation: q.explanation}); render(true); announceAnswer(e);
       });
       show.hidden = e.done || e.tries < 2;
       var actions = node("div", "zsa-labcheck-actions"); actions.append(check, show);

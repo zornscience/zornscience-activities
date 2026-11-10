@@ -1,6 +1,6 @@
 # pH & Buffer Lab validation
 
-Version: 1.0.3
+Version: 1.0.4
 
 Run from the repository root:
 
@@ -23,3 +23,5 @@ Manual device validation remains useful for real Chromebook keyboards, iOS Safar
 Chromium checks passed for the activity and shared header, including both languages, mobile layouts, offline operation, and axe accessibility audits. All 22 targeted chemistry, static-contract, and i18n unit checks passed. Desktop and Spanish mobile screenshots were also reviewed.
 
 The broader unit run initially passed 33 of 36 test files. After aligning asset versions and moving temporary tooling outside the published tree, all static-contract checks passed too. The two remaining test files cover existing WordPress plugins and require PHP, which is absent from this environment (`spawnSync php ENOENT`). No shared source files were changed. The full repository browser suite was not run.
+
+- `tests/e2e/labs-a11y.spec.js` (all labs): axe-core in English and Spanish at laptop and phone size, one pass through the Tab order with an accessible name and a visible focus indicator at every stop (compared pixel by pixel), roles, names and states of custom controls, arrow keys on every slider, text alternatives for drawings, and the Instructions dialog from the keyboard. `tests/unit/focus-css.test.js`: no stylesheet removes a focus outline without a named replacement.

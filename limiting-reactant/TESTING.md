@@ -1,5 +1,5 @@
 # Verification record
-Version: 1.1.2
+Version: 1.1.3
 Date: 2026-10-18
 Reviewer: Claude (built and tested 1.0.0)
 
@@ -36,3 +36,5 @@ Real screen readers (NVDA, VoiceOver, ChromeVox), Firefox, Safari, Chromebooks a
 ## Spanish verification
 
 `tests/e2e/i18n.spec.js` opens the visualizer with `?lang=es`, checks text and accessible attributes for leftover English, and exercises predictions, reacting, the explanation, the questions and full-sentence templates. English output of every model text function was compared with version 1.0.1 for all four reactions and every starting amount from 0 to 10 mol, with every prediction choice, and is identical. The language toggle intentionally adds header controls.
+
+- `tests/e2e/labs-a11y.spec.js` (all labs): axe-core in English and Spanish at laptop and phone size, one pass through the Tab order with an accessible name and a visible focus indicator at every stop (compared pixel by pixel), roles, names and states of custom controls, arrow keys on every slider, text alternatives for drawings, and the Instructions dialog from the keyboard. `tests/unit/focus-css.test.js`: no stylesheet removes a focus outline without a named replacement.

@@ -1,6 +1,6 @@
 # Chemical Bonding Lab checks
 
-Version: 1.1.3
+Version: 1.1.4
 
 Run `npx playwright test tests/e2e/chemical-bonding-lab.spec.js` and `node --test tests/unit/static.test.js`.
 
@@ -15,3 +15,5 @@ Visual QA: inspect the watch glass/light, beaker, balance, graduated cylinder, c
 ## Narrow screens (1.1.1)
 
 At 320 px, in English and Spanish and with a wide fallback font (DejaVu Sans), the page has no sideways scrolling and every sample icon and caption stays inside its button. Element boxes at 360, 390, 768 and 1366 px in English, and at every width in Spanish, were compared with version 1.1.0 and are identical.
+
+- `tests/e2e/labs-a11y.spec.js` (all labs): axe-core in English and Spanish at laptop and phone size, one pass through the Tab order with an accessible name and a visible focus indicator at every stop (compared pixel by pixel), roles, names and states of custom controls, arrow keys on every slider, text alternatives for drawings, and the Instructions dialog from the keyboard. `tests/unit/focus-css.test.js`: no stylesheet removes a focus outline without a named replacement.

@@ -1,6 +1,6 @@
 # Electrochemistry verification
 
-Version: 1.4.2
+Version: 1.4.3
 
 `npm run test:unit`
 `npx playwright test tests/e2e/electrochemistry.spec.js`
@@ -16,3 +16,5 @@ Verification completed for 1.3.0: all 20 repository unit-test files passed; all 
 ## Spanish verification
 
 `tests/e2e/i18n.spec.js` opens the lab with `?lang=es`, checks text and accessible attributes for leftover English, and walks the ready cell, single steps for zinc/copper and zinc/silver, running and pausing, electrolytic mode below and above the required voltage, a disconnected bridge and circuit, a cleared bench, placed metals, identical and mismatched half-cells, a completed 12-event sample, the instructions dialog and the share panel. English page text, SVG markup, accessible labels and share links were compared with version 1.3.0 through 22 states and are identical. The language toggle intentionally adds header controls. Spanish was checked at 320 px, 390 px and 1366 px: no horizontal page scrolling, SVG labels stay inside their drawing boxes and select options fit their controls.
+
+- `tests/e2e/labs-a11y.spec.js` (all labs): axe-core in English and Spanish at laptop and phone size, one pass through the Tab order with an accessible name and a visible focus indicator at every stop (compared pixel by pixel), roles, names and states of custom controls, arrow keys on every slider, text alternatives for drawings, and the Instructions dialog from the keyboard. `tests/unit/focus-css.test.js`: no stylesheet removes a focus outline without a named replacement.

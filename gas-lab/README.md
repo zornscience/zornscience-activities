@@ -1,5 +1,7 @@
 # Gas Laws and KMT Lab
-Version: 1.2.0
+Version: 1.2.1
+
+Version 1.2.1 improves keyboard and screen reader access. The lab check now speaks the score and where the completion code goes (through its live region) after the last question. The GLC code format is unchanged. Every focusable element, including summaries, text areas and custom controls, now shows the same visible focus ring (`shared/zsa-lab-a11y.css`), a blue ring with a white gap that reads on light and dark panels and in high contrast mode. `tests/e2e/labs-a11y.spec.js` now checks this lab in English and Mexican Spanish with axe-core, the Tab order, a visible focus indicator on every stop, names and states of custom controls, and text alternatives for drawings. The science, scoring and any completion code are unchanged.
 
 Version 1.1.2 adds search engine tags to the page head: a canonical link to the clean activity address, English and Spanish hreflang links (Spanish is ?lang=es), and a English and Mexican Spanish meta description from `tools/seo-pages.js`. Run `node tools/build-seo.js` after changing them.
 

@@ -1,5 +1,5 @@
 # Verification record
-Version: 1.1.2
+Version: 1.1.3
 Date: 2026-10-18
 Reviewer: Claude (built and tested 1.0.0)
 
@@ -39,3 +39,5 @@ PASS means the check was run on version 1.0.0 as committed and passed. Browser c
 
 ## Not tested
 Real screen readers (NVDA, VoiceOver, ChromeVox), Firefox, Safari, Chromebooks and phones (frame rate on slow devices included), printing to paper (print media was emulated), and the live site. The model was checked against collision theory, not against measured rate data.
+
+- `tests/e2e/labs-a11y.spec.js` (all labs): axe-core in English and Spanish at laptop and phone size, one pass through the Tab order with an accessible name and a visible focus indicator at every stop (compared pixel by pixel), roles, names and states of custom controls, arrow keys on every slider, text alternatives for drawings, and the Instructions dialog from the keyboard. `tests/unit/focus-css.test.js`: no stylesheet removes a focus outline without a named replacement.
