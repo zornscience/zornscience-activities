@@ -8,6 +8,8 @@ const M = require("../../shared/zsa-practice-model.js");
 const ACTIVITIES = require("../support/qs-activities.js");
 const AXE = fs.readFileSync(require.resolve("axe-core/axe.min.js"), "utf8");
 const strip = html => html.replace(/<\/?su[bp]>/g, "");
+// What a student types for a typed-equation question: the key (right) or a well-formed wrong equation.
+const typedAnswer = (q, right) => { const target = q.formula.variables.find(v => v.name === q.formula.target).spellings[0]; return target + " = " + (right ? q.formula.answer : "987654321"); };
 // Common English words that must not be left on a Spanish page (unit symbols such as in, min and h, and numbers, are fine).
 const ENGLISH = /\b(?:the|and|your|answer|question|questions|correct|incorrect|round|rounded|significant|figures?|choose|start|practice|topic|next|results|mixed|review|try|again|unit|number|type|with|count|has|keep|rules?|zeros?|places?|digits?|reference|instructions|share|close|check|see|set|complete|back|lesson|scientific|notation|write|use|first|end|only|when|there|is|are|of|to|for|from)\b/i;
 
@@ -38,6 +40,7 @@ for (const a of ACTIVITIES) {
   const current = async page => bank.rebuild(await el(page, "play").getAttribute("data-question-id"));
   async function answer(page, q, right = true) {
     if (q.type === "mc") await page.locator('input[name="answer"][value="' + (right ? 0 : 1) + '"]').check();
+    else if (q.type === "formula") await el(page, "equation").fill(typedAnswer(q, right));
     else await el(page, "value").fill(right ? q.display : "987654321" + (q.check && q.check.unit === "required" && q.unit ? " " + q.unit : ""));
     await el(page, "check").click();
   }
@@ -114,6 +117,10 @@ for (const a of ACTIVITIES) {
           await ring();
           for (let k = 0; k < 4 && await page.locator('input[name="answer"][value="0"]').evaluate(n => !n.checked); k++) await page.keyboard.press("ArrowDown");
           await expect(page.locator('input[name="answer"][value="0"]')).toBeChecked();
+          await page.keyboard.press("Enter");
+        } else if (q.type === "formula") {
+          await expect(el(page, "equation")).toBeFocused(); await ring();
+          await page.keyboard.type(typedAnswer(q, true));
           await page.keyboard.press("Enter");
         } else {
           await expect(el(page, "value")).toBeFocused(); await ring();

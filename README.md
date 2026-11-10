@@ -21,6 +21,7 @@ shared/
   zsa-i18n.js              shared English and Mexican Spanish interface and URLs
   zsa-engine.js            the activity engine
   zsa-embed.js             ?embed=1 mode and zsa:resize messages
+  zsa-formula.js           typed equations for practice questions, read as algebra (used by Rearranging Equations Practice)
   zsa-codes.js             completion codes: activity registry, writing and reading codes
   zsa-about.js, zsa-about.css  "About this activity" on each activity page: a short intro and related lesson links
   fonts/InterVariable.woff2, Inter-OFL.txt
@@ -59,7 +60,7 @@ qs-ratios-and-proportions-practice/  Ratios and Proportions Practice, v1.0.0 (ge
 qs-percents-practice/  Percents Practice, v1.0.0 (generated sets: percents and decimals, percent of a whole, percent composition, percent yield; advisory significant figures; English and Mexican Spanish)
 qs-percent-error-and-percent-change-practice/  Percent Error and Percent Change Practice, v1.0.0 (generated sets: percent error, signed percent change, setups and signs; advisory significant figures; English and Mexican Spanish)
 qs-reading-formulas-practice/  Reading Formulas Practice, v1.0.0 (generated sets: symbols and subscripts, formulas in words, Δ as final minus initial, one-step substitution; English and Mexican Spanish)
-qs-rearranging-equations-practice/  Rearranging Equations Practice, v1.0.0 (generated sets: solving for one variable, the first step, rearranging then calculating; English and Mexican Spanish)
+qs-rearranging-equations-practice/  Rearranging Equations Practice, v1.1.0 (generated sets: solving for one variable (multiple choice or a typed equation), the first step, rearranging then calculating; English and Mexican Spanish)
 qs-substituting-with-units-practice/  Substituting with Units Practice, v1.0.0 (generated sets: units that cancel, choosing the setup, answers with units, converting before substituting; units required; English and Mexican Spanish)
 qs-direct-and-inverse-relationships-practice/  Direct and Inverse Relationships Practice, v1.0.0 (generated sets: identifying relationships from tables and graph shapes, changing x, the constant from the ratio and product tests, predictions; English and Mexican Spanish)
 qs-exponents-and-logarithms-practice/  Exponents and Logarithms Practice, v1.0.0 (generated sets: exponent rules, scientific notation, logs of powers of ten, pH and [H+] with scored precision; English and Mexican Spanish)

@@ -315,6 +315,45 @@
       }, twoStepQuestion);
     }
 
+    // Type the equation. The same cases as the two Solve generators, asked as a typed answer: the key and the three wrong
+    // choices of the multiple-choice question become the key and the traps, so the same mistakes get the same feedback.
+    // The reader (shared/zsa-formula.js) compares what was typed as algebra, not as text.
+    function plain(html) { return html.replace(/<\/?sub>/g, ""); }
+    function variablesOf(formulaHtml) {
+      var seen = {}, list = [];
+      (formulaHtml.match(/Δ?[A-Za-z](?:<sub>[a-z]<\/sub>)?/g) || []).forEach(function (html) {
+        var name = plain(html);
+        if (seen[name]) return;
+        seen[name] = true;
+        var spellings = [name];
+        if (/<sub>/.test(html)) spellings.push(name.replace(/^(.)/, "$1_"));
+        if (name.charAt(0) === "Δ") spellings.push("d" + name.slice(1), "delta" + name.slice(1));
+        list.push({name:name, html:html, spellings:spellings});
+      });
+      return list;
+    }
+    function typedHelp(variable) {
+      if (variable.name.charAt(0) === "Δ") return p(variable.html + " (type " + variable.spellings[1] + ")", variable.html + " (escribe " + variable.spellings[1] + ")");
+      if (/<sub>/.test(variable.html)) return p(variable.html + " (type " + variable.name + ")", variable.html + " (escribe " + variable.name + ")");
+      return same(variable.html);
+    }
+    function list(items, lang) {
+      var words = items.map(function (x) { return x[lang]; }), join = lang === "es" ? " y " : " and ";
+      return words.length < 2 ? words.join("") : words.slice(0, -1).join(", ") + join + words[words.length - 1];
+    }
+    function typedQuestion(params) {
+      var mc = PRODUCTS[params[0]] ? solveOne(params) : solveTwo(params), formula = (PRODUCTS[params[0]] || LINEAR[params[0]]).f;
+      var vars = variablesOf(formula), key = mc.choices[0].text.en.split(" = "), target = plain(key[0]);
+      var targetHtml = key[0], items = vars.map(typedHelp);
+      return {type:"formula", answer:0,
+        prompt:join([mc.prompt, p("Type your answer as an equation.", "Escribe tu respuesta como una ecuación.")]),
+        instruction:p("Write an equation with " + targetHtml + " alone on one side. Letters you can use: " + list(items, "en") + ".",
+          "Escribe una ecuación con " + targetHtml + " sola en un lado. Letras que puedes usar: " + list(items, "es") + "."),
+        formula:{target:target, variables:vars.map(function (v) { return {name:v.name, spellings:v.spellings}; }), answer:plain(key[1]),
+          traps:mc.choices.slice(1).map(function (c) { return {expr:plain(c.text.en.split(" = ")[1]), note:c.why}; })},
+        answerText:same(mc.choices[0].text.en), explanation:mc.explanation};
+    }
+
     var topics = [
       {id:"solve", title:p("Solving for one variable", "Despeje de una variable")},
       {id:"steps", title:p("The first step", "El primer paso")},
@@ -324,6 +363,7 @@
     var generators = [
       {key:"s1", topic:"solve", make:function (r) { return pick(r, ONE_STEP).slice(); }, build:solveOne},
       {key:"s2", topic:"solve", make:function (r) { return pick(r, TWO_STEP).slice(); }, build:solveTwo},
+      {key:"ty", topic:"solve", make:function (r) { return pick(r, FIRST).slice(); }, build:typedQuestion},
       {key:"fs", topic:"steps", make:function (r) { return pick(r, FIRST).slice(); }, build:firstStep},
       {key:"tr", topic:"steps", make:function (r) {
         if (r() < 0.15) return ["w"];
@@ -346,6 +386,17 @@
         "Solve for the letter first, then put in the numbers. A unit after the number is optional.":"Primero despeja la letra y luego sustituye los números. La unidad después del número es opcional.",
         "The line under each question says how to round. Significant figures are a reminder here, not part of the score.":"La línea debajo de cada pregunta indica cómo redondear. Aquí las cifras significativas son un recordatorio, no forman parte de la puntuación.",
         "Submit once per question and read the feedback. Try again gives you a new set.":"Envía una respuesta por pregunta y lee la retroalimentación. Intentar de nuevo te da una serie nueva.",
+        "Your equation":"Tu ecuación",
+        "Type it like t = d/v. Letters side by side multiply, so vt means v times t. Use * or × to multiply, / or ÷ to divide, and parentheses when you need them.":"Escríbela como t = d/v. Las letras juntas se multiplican, así que vt significa v por t. Usa * o × para multiplicar, / o ÷ para dividir y paréntesis cuando los necesites.",
+        "Some Solve questions ask you to type the equation. Put the letter you solve for alone on one side, like t = d/v.":"Algunas preguntas de despeje piden que escribas la ecuación. Deja sola en un lado la letra que despejas, como t = d/v.",
+        "Type your equation first.":"Primero escribe tu ecuación.",
+        "Write one equation with a single equals sign, like t = d/v.":"Escribe una ecuación con un solo signo igual, como t = d/v.",
+        "Something is missing next to an operator or on one side of the equals sign.":"Falta algo junto a un operador o en un lado del signo igual.",
+        "Check your parentheses: each ( needs a ).":"Revisa tus paréntesis: cada ( necesita un ).",
+        "The letter {letter} is not in this problem. Use only: {letters}.":"La letra {letter} no está en este problema. Usa solo: {letters}.",
+        "I could not read {symbol}. Use letters, numbers, + − × ÷ / * and parentheses.":"No pude leer {symbol}. Usa letras, números, + − × ÷ / * y paréntesis.",
+        "That is too long to be the answer. Check it and try again.":"Eso es demasiado largo para ser la respuesta. Revísalo e inténtalo de nuevo.",
+        "Get {x} alone on one side of the equals sign, and leave it out of the other side.":"Deja {x} sola en un lado del signo igual y quítala del otro lado.",
         "Type a number such as 16.7 or 0.448. You may add the unit after it.":"Escribe un número como 16.7 o 0.448. Puedes agregar la unidad después.",
         "Reference":"Consulta", "Rearranging equations":"Despeje de ecuaciones",
         "Solve for the variable with letters first. Substitute the numbers last.":"Primero despeja la variable con letras. Sustituye los números al final.",

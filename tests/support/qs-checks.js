@@ -38,6 +38,19 @@ function common(M, q) {
     q.choices.forEach((c, i) => { pair(c.text, q.id + " choice"); if (i) pair(c.why, q.id + " why", false); });
     return;
   }
+  if (q.type === "formula") {
+    // A typed equation: its key typed back is correct, a wild guess is scored wrong (not unreadable), and every trap has feedback.
+    const F = require("../../shared/zsa-formula.js"), f = q.formula;
+    pair(q.instruction, q.id + " instruction");
+    pair(q.answerText, q.id + " answer text");
+    const target = f.variables.find(v => v.name === f.target).spellings[0];
+    const right = F.judge(q, target + " = " + f.answer);
+    assert.ok(right.valid && right.correct, q.id + " accepts its own answer " + f.answer + " " + JSON.stringify(right));
+    const wild = F.judge(q, target + " = 987654321");
+    assert.ok(wild.valid && !wild.correct && wild.notes.length === 1, q.id + " scores a wild guess wrong");
+    f.traps.forEach(t => { pair(t.note, q.id + " trap", false); const r = F.judge(q, target + " = " + t.expr); assert.ok(r.valid && !r.correct && r.notes[0] === t.note, q.id + " trap " + t.expr); });
+    return;
+  }
   assert.equal(q.type, "numeric");
   if (q.instruction) pair(q.instruction, q.id + " instruction");
   pair(q.answerText, q.id + " answer text");
