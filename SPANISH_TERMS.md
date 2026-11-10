@@ -26,6 +26,43 @@ Reading Graphs | Lectura de gráficas
 Slope and Rate of Change | Pendiente y razón de cambio
 Net Ionic Equations Lab | Laboratorio de ecuaciones iónicas netas
 
+## Quantitative Skills practice (shared words)
+
+The generated practice pages follow the live Spanish Quantitative Skills lessons and Style Kit sections 4 to 6: cifras significativas (never abbreviated), notación científica, punto decimal, lugares decimales, redondear. Numbers keep the decimal point and comma thousands. The engine's notes for typed answers (in `shared/zsa-practice-model.js`):
+
+English | Mexican Spanish
+--- | ---
+Your answer (field label) | Tu respuesta
+New numbers every set. | Números nuevos en cada serie.
+skill (topic) | habilidad
+Check the unit. This answer is in {unit}. | Revisa la unidad. Esta respuesta va en {unit}.
+This answer has no unit. | Esta respuesta no lleva unidad.
+standard notation | notación estándar
+a number from 1 to less than 10, times a power of 10 | un número de 1 a menos de 10, por una potencia de 10
+first number (coefficient) | primer número
+Check the sign. | Revisa el signo.
+rounded too far | demasiado redondeada
+Use a decimal point, not a comma, like 3.5. | Usa punto decimal, no coma, como en 3.5.
+Write the power of 10 with ^, like 3.2 x 10^4. | Escribe la potencia de 10 con ^, como en 3.2 x 10^4.
+Type the unit after the number. | Escribe la unidad después del número.
+
+## Significant Figures Practice (1.0.0)
+
+Terms from the live Spanish lesson: dígitos distintos de cero, ceros al inicio, ceros entre dígitos distintos de cero, ceros al final, el primer dígito que quitas, redondea hacia arriba. Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Counting significant figures | Conteo de cifras significativas
+Rounding | Redondeo
+Multiplying and dividing | Multiplicación y división
+Adding and subtracting | Suma y resta
+the last kept digit | el último dígito que conservas
+Zeros hold the places | Los ceros ocupan los lugares
+Line up the decimal points. | Alinea los puntos decimales.
+Significant figure rules | Reglas de las cifras significativas
+beaker (lab) | vaso de precipitados
+cart | carrito
+
 ## AP Chemistry Unit 9 Practice (1.0.0)
 
 Uses the supplied AP glossary, including entropía absoluta, energía libre de Gibbs, favorabilidad termodinámica, termodinámicamente favorable, control cinético, control termodinámico, reacciones acopladas, celda galvánica (voltaica), celda electrolítica, ánodo, cátodo, puente salino, semirreacción, potencial estándar de reducción, potencial de celda, constante de Faraday, electrólisis and ley de Faraday. Formulas, state symbols, unit symbols and decimal points are preserved. New activity wording beyond the supplied glossary:

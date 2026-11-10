@@ -45,6 +45,8 @@ const labs = {
   "titration-lab":"Simulador virtual de titulación"
 };
 // Tools (the calculator and the graphing tool) also have their own tests below and join the narrow-screen header check.
+// Quantitative Skills practice (generated question sets); their full Spanish checks are in qs-practice.spec.js.
+const skills = Object.fromEntries(require("../support/qs-activities.js").map(a => [a.slug, a.title.es]));
 const tools = {
   "scientific-calculator":"Práctica con la calculadora científica",
   "virtual-lab-graphing":"Herramienta de gráficas para el laboratorio virtual"
@@ -3038,7 +3040,7 @@ test("landing page opens in Mexican Spanish with Spanish activity names and link
   await expect(page.getByRole("link", {name:"ES Español", exact:true})).toHaveAttribute("aria-current", "true");
   await expect(page.getByRole("navigation", {name:"Ir a un tema"})).toBeVisible();
   // Every activity's card uses its own Spanish title and opens it in Spanish.
-  for (const [slug, title] of Object.entries({...activities, ...labs, ...tools})) {
+  for (const [slug, title] of Object.entries({...activities, ...labs, ...tools, ...skills})) {
     if (slug === "equilibrium-thermo-lab") continue; // a chooser page, not listed on the landing page
     const link = page.locator(".zsa-home-card h3 a").filter({hasText:new RegExp("^" + title.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "$")});
     await expect(link, slug).toHaveCount(1);
@@ -3123,7 +3125,7 @@ test("Spanish follows links between activities and English is the fallback", asy
 });
 
 test("Spanish activity headers fit narrow screens", async ({page}) => {
-  for (const slug of Object.keys(activities).concat(Object.keys(labs), Object.keys(tools))) {
+  for (const slug of Object.keys(activities).concat(Object.keys(labs), Object.keys(tools), Object.keys(skills))) {
     for (const width of [320, 390]) {
       await page.setViewportSize({width, height:844});
       await page.goto("/" + slug + "/?lang=es");

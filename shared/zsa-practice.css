@@ -21,6 +21,7 @@
 .zsa-practice .zsa-practice-option.is-correct {border:2px solid var(--zsa-success); background:var(--zsa-success-bg);}
 .zsa-practice .zsa-practice-option.is-wrong {border:2px solid var(--zsa-error); background:var(--zsa-error-bg);}
 .zsa-practice .zsa-practice-entry {display:grid; grid-template-columns:minmax(0,2fr) minmax(0,1fr); gap:16px;}
+.zsa-practice .zsa-practice-entry:has(>[hidden]) {grid-template-columns:minmax(0,1fr);}
 .zsa-practice .zsa-practice-error {color:var(--zsa-error); font-size:16px;}
 .zsa-practice .zsa-practice-feedback {margin:20px 0;}
 .zsa-practice .zsa-practice-feedback p:first-child {margin-top:0; font-weight:600;}

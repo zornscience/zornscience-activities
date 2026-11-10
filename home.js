@@ -193,8 +193,13 @@
   "Calculator skills": "Habilidades con la calculadora",
   "Scientific Calculator Practice": "Práctica con la calculadora científica",
   "Learn a familiar scientific calculator keypad with fractions, powers, roots, trigonometry and six guided exercises. Build calculator confidence before test day.": "Aprende las teclas de una calculadora científica conocida con fracciones, potencias, raíces, trigonometría y seis ejercicios guiados. Gana confianza con la calculadora antes del día del examen.",
+  // Quantitative skills (lesson section names follow the Spanish course page)
+  "Quantitative skills": "Habilidades cuantitativas",
+  "Practice the math skills every science class uses, with new numbers in every set.": "Practica las habilidades matemáticas que se usan en todas las clases de ciencias, con números nuevos en cada serie.",
+  "Numbers": "Números",
+  "Significant Figures Practice": "Práctica de cifras significativas",
+  "Count significant figures, round, and use the rules for multiplying, dividing, adding and subtracting.": "Cuenta cifras significativas, redondea y usa las reglas para multiplicar, dividir, sumar y restar.",
   // Lab tools
-  "Lab tools and quantitative skills": "Herramientas de laboratorio y habilidades cuantitativas",
   "Work with your own measurements and make clear graphs for your lab write-ups.": "Trabaja con tus propias mediciones y haz gráficas claras para tus reportes de laboratorio.",
   "Reading Graphs": "Lectura de gráficas",
   "Virtual Lab Graphing Tool": "Herramienta de gráficas para el laboratorio virtual",

@@ -194,6 +194,10 @@ module.exports = {
     en: "Fire a cannon from any height, angle and speed, and watch live velocity and acceleration vectors on the projectile, from ZornScience.",
     es: "Dispara un cañón desde cualquier altura, ángulo y rapidez, y observa los vectores de velocidad y aceleración del proyectil en vivo, de ZornScience."
   },
+  "qs-significant-figures-practice": {
+    en: "Practice significant figures with new numbers every set: count them, round, and use the rules for calculations, with instant feedback in English or Spanish.",
+    es: "Practica cifras significativas con números nuevos en cada serie: cuéntalas, redondea y usa las reglas de los cálculos, con retroalimentación inmediata."
+  },
   "reaction-energy-lab": {
     en: "Build energy diagrams, explore heating and cooling curves, and calculate reaction enthalpy with stoichiometry, bonds, formation data and Hess's law.",
     es: "Construye diagramas de energía, explora curvas de calentamiento y enfriamiento y calcula la entalpía de reacción con enlaces, formación y la ley de Hess."
