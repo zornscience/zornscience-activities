@@ -46,6 +46,20 @@ Use a decimal point, not a comma, like 3.5. | Usa punto decimal, no coma, como e
 Write the power of 10 with ^, like 3.2 x 10^4. | Escribe la potencia de 10 con ^, como en 3.2 x 10^4.
 Type the unit after the number. | Escribe la unidad después del número.
 
+## Scientific Notation Practice (1.0.0)
+
+Terms from the live Spanish lesson: notación científica, notación estándar, coeficiente (called "primer número" in feedback, as in the lesson's own explanations), base, exponente positivo / negativo, punto decimal, dígito distinto de cero, "llena los lugares vacíos con ceros". Additional wording:
+
+English | Mexican Spanish
+--- | ---
+To scientific notation | A notación científica
+To standard notation | A notación estándar
+Reading scientific notation | Lectura de la notación científica
+Move the decimal point 3 places to the left | Mueve el punto decimal 3 lugares a la izquierda
+bigger than 1 / less than 1 | mayor que 1 / menor que 1
+The exponent counts the places the decimal point moved. | El exponente cuenta los lugares que se movió el punto decimal.
+Scientific notation rules | Reglas de la notación científica
+
 ## Significant Figures Practice (1.0.0)
 
 Terms from the live Spanish lesson: dígitos distintos de cero, ceros al inicio, ceros entre dígitos distintos de cero, ceros al final, el primer dígito que quitas, redondea hacia arriba. Additional wording:

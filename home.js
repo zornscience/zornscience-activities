@@ -197,6 +197,8 @@
   "Quantitative skills": "Habilidades cuantitativas",
   "Practice the math skills every science class uses, with new numbers in every set.": "Practica las habilidades matemáticas que se usan en todas las clases de ciencias, con números nuevos en cada serie.",
   "Numbers": "Números",
+  "Scientific Notation Practice": "Práctica de notación científica",
+  "Write big and small numbers in scientific notation and back in standard notation, and read what the exponent says.": "Escribe números grandes y pequeños en notación científica y de vuelta en notación estándar, e interpreta lo que dice el exponente.",
   "Significant Figures Practice": "Práctica de cifras significativas",
   "Count significant figures, round, and use the rules for multiplying, dividing, adding and subtracting.": "Cuenta cifras significativas, redondea y usa las reglas para multiplicar, dividir, sumar y restar.",
   // Lab tools

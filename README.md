@@ -50,6 +50,7 @@ apchem-unit6-practice/     AP Chemistry Unit 6 Practice, v1.0.3 (54 original que
 apchem-unit7-practice/     AP Chemistry Unit 7 Practice, v1.0.3 (72 original questions across topics 7.1 to 7.12, shared practice engine; English and Mexican Spanish)
 apchem-unit8-practice/     AP Chemistry Unit 8 Practice, v1.0.1 (66 original questions across topics 8.1 to 8.11, shared practice engine; English and Mexican Spanish)
 apchem-unit9-practice/     AP Chemistry Unit 9 Practice, v1.0.1 (66 original questions across topics 9.1 to 9.11, shared practice engine; English and Mexican Spanish)
+qs-scientific-notation-practice/  Scientific Notation Practice, v1.0.0 (generated sets: to scientific notation, to standard notation, reading the exponent; notation is checked; English and Mexican Spanish)
 qs-significant-figures-practice/  Significant Figures Practice, v1.0.0 (generated sets: counting, rounding, multiplying and dividing, adding and subtracting; scored significant figures; English and Mexican Spanish)
 atwood-machine/           The Atwood Machine, v1.1.2 (ideal pulley, adjustable masses and live vectors; no data recording; English and Mexican Spanish)
 physics-graphing-lab/      Physics Graphing Lab, v1.1.2 (a cart with linked position, velocity and acceleration graphs; English and Mexican Spanish)

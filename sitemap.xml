@@ -526,6 +526,18 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/projectile-lab/"/>
   </url>
   <url>
+    <loc>https://activities.zornscience.org/qs-scientific-notation-practice/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-scientific-notation-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-scientific-notation-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-scientific-notation-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/qs-scientific-notation-practice/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-scientific-notation-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-scientific-notation-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-scientific-notation-practice/"/>
+  </url>
+  <url>
     <loc>https://activities.zornscience.org/qs-significant-figures-practice/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-significant-figures-practice/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-significant-figures-practice/?lang=es"/>
