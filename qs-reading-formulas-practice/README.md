@@ -1,6 +1,6 @@
 # Reading Formulas Practice
 
-Version: 1.0.0
+Version: 1.0.1
 
 Generated practice for the Quantitative Skills lesson [Reading Formulas](https://zornscience.org/science/quantitative-skills/equations/reading-formulas/). Every set is new. Four skills: symbols and subscripts, formulas in words, change (final minus initial), and one-step substitution. A skill gives 8 questions; Mixed review gives 12, three of each. English: `/qs-reading-formulas-practice/`. Mexican Spanish: `/qs-reading-formulas-practice/?lang=es`.
 
@@ -52,6 +52,8 @@ Reading a formula aloud is practiced as choosing the right sentence, not as spea
 Runs on the shared question-set engine (`../shared/zsa-practice.js`) with the generated-bank options described in `../shared/README.md`. Native controls only, so Tab, arrow keys, Enter and Space work as usual. Spanish follows the live lesson "Lectura de fórmulas" and the Style Kit: fórmula, variable, constante, subíndice (etiquetas con nombre), inicial / final, cambio en, final menos inicial, multiplicación implícita, mayúsculas y minúsculas, masa, masa molar, volumen, velocidad, peso, "por" for times and "entre" for divided by. New wording is in `../SPANISH_TERMS.md`.
 
 ## Changelog
+
+1.0.1: Patch bump for the shared practice engine (`shared/zsa-practice.js`), which gained an opt-in typed-equation question type used only by Rearranging Equations Practice. This page does not load the equation reader and its questions, scoring and text are unchanged.
 
 1.0.0: Ten generators in four skills, Δ with its sign, advisory significant figures, specific feedback for common mistakes, lesson reference, About/SEO/sitemap and directory entries, English and Mexican Spanish.
 

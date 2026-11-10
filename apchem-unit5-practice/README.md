@@ -1,6 +1,6 @@
 # AP Chemistry Unit 5 Practice
 
-Version: 1.0.3
+Version: 1.0.4
 
 Version 1.0.2 adds search engine tags to the page head: a canonical link to the clean activity address, English and Spanish hreflang links (Spanish is ?lang=es), and a English and Mexican Spanish meta description from `tools/seo-pages.js`. Run `node tools/build-seo.js` after changing them.
 
@@ -45,6 +45,8 @@ One scored submission per question. Invalid values or missing units request corr
 Tab moves through native controls; arrows operate radios and selects. New questions focus their heading, checked answers focus Next question, results focus their heading and topic switching focuses the selector. Feedback uses a polite live region; validation uses an alert. Results show topic scores and expandable missed-question explanations. Try again reshuffles questions and choices. Header dialogs, fresh Share links, EN/ES controls, validated lesson backlinks and embed support follow Unit 4.
 
 ## Changelog
+
+1.0.4: Patch bump for the shared practice engine (`shared/zsa-practice.js`), which gained an opt-in typed-equation question type used only by Rearranging Equations Practice. This page does not load the equation reader and its questions, scoring and text are unchanged.
 
 1.0.3: Version bump for the shared practice engine, which gains opt-in options for generated question sets. This unit's questions and behavior are unchanged.
 

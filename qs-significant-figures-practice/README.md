@@ -1,6 +1,6 @@
 # Significant Figures Practice
 
-Version: 1.0.0
+Version: 1.0.1
 
 Generated practice for the Quantitative Skills lesson [Significant Figures](https://zornscience.org/science/quantitative-skills/numbers/significant-figures/). Every set has new numbers. Four skills: counting significant figures, rounding, multiplying and dividing, and adding and subtracting. A skill gives 8 questions; Mixed review gives 12, three of each. English: `/qs-significant-figures-practice/`. Mexican Spanish: `/qs-significant-figures-practice/?lang=es`.
 
@@ -52,6 +52,8 @@ Counting answers are whole numbers, and "3 sig figs" or "3 cifras significativas
 Runs on the shared question-set engine (`../shared/zsa-practice.js`) with the generated-bank options described in `../shared/README.md`. Native controls only: the topic menu, radio buttons, one text field and buttons, so Tab, arrow keys, Enter and Space work as usual; question and results headings take focus, feedback is announced, and the language links and dialogs follow the shared header. Spanish follows the Style Kit: cifras significativas (never abbreviated), redondear, punto decimal, lugares decimales, ceros al inicio, ceros al final, notación científica. New wording is in `../SPANISH_TERMS.md`.
 
 ## Changelog
+
+1.0.1: Patch bump for the shared practice engine (`shared/zsa-practice.js`), which gained an opt-in typed-equation question type used only by Rearranging Equations Practice. This page does not load the equation reader and its questions, scoring and text are unchanged.
 
 1.0.0: Eleven generators in four skills, scored significant figures, specific feedback for common mistakes, rules reference, About/SEO/sitemap and directory entries, English and Mexican Spanish.
 
