@@ -1,6 +1,8 @@
 # AP Chemistry Unit 3 Practice
 
-Version: 1.0.3
+Version: 1.0.4
+
+Version 1.0.4 loads the shared practice engine after it gained opt-in options for generated question sets. This unit's questions and behavior are unchanged.
 
 Version 1.0.3 adds search engine tags to the page head: a canonical link to the clean activity address, English and Spanish hreflang links (Spanish is ?lang=es), and a English and Mexican Spanish meta description from `tools/seo-pages.js`. Run `node tools/build-seo.js` after changing them.
 

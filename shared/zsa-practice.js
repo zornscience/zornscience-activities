@@ -9,6 +9,9 @@
     root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail:{receive:function (api) { i18n = api; }}}));
     if (!bank || !M || !i18n) return;
     var t = i18n.text, set = [], index = 0, records = [], answered = false, activeTopic = bank.topics[0].id;
+    // A bank with generate(topic, model, random) makes new questions for every set (the Quantitative Skills sets).
+    // Its questions carry a check object and are judged by M.judge; fixed banks keep M.inspect and the unit menu.
+    var generated = typeof bank.generate === "function";
     function $(id) { return root.querySelector("#" + prefix + "-" + id); }
     function local(pair) { return pair[i18n.lang]; }
     function node(tag, text, cls) {
@@ -32,6 +35,7 @@
     function topicName(id) { return local(bank.topics.find(function (topic) { return topic.id === id; }).title); }
     function unitName(id) { return local(bank.units.find(function (unit) { return unit.id === id; }).label); }
     function answerText(q) {
+      if (q.answerText) return local(q.answerText);
       if (q.type === "mc") return local(q.choices[q.answer].text);
       var number = q.display.replace(/e([+-]?\d+)/i, " × 10<sup>$1</sup>");
       return number + (q.unit === "count" || q.unit === "ratio" ? "" : " " + unitName(q.unit));
@@ -40,20 +44,21 @@
     function show(view) {
       ["setup", "play", "results"].forEach(function (name) { $(name).hidden = name !== view; });
     }
-    var mixed = node("option", t("Mixed review") + " · " + t("{n} questions", {n:bank.questions.length}));
+    var mixed = node("option", t("Mixed review") + " · " + t("{n} questions", {n:generated ? bank.mixedSize : bank.questions.length}));
     mixed.value = "mixed"; $("topic").appendChild(mixed);
     bank.topics.forEach(function (topic) {
       var option = node("option", local(topic.title)); option.value = topic.id; $("topic").appendChild(option);
     });
     $("topic").value = activeTopic;
     var blankUnit = node("option", t("Choose a unit")); blankUnit.value = ""; $("unit").appendChild(blankUnit);
-    bank.units.forEach(function (unit) {
+    (bank.units || []).forEach(function (unit) {
       var option = node("option", local(unit.label)); option.value = unit.id; $("unit").appendChild(option);
     });
-    $("back").href = M.lessonLink(new URLSearchParams(location.search).get("from"), i18n.lang);
+    $("back").href = M.lessonLink(new URLSearchParams(location.search).get("from"), i18n.lang, bank.lesson);
     function start() {
       activeTopic = $("topic").value;
-      set = M.makeSet(bank.questions, activeTopic); index = 0; records = [];
+      set = generated ? M.makeSet(bank.generate(activeTopic, M, Math.random), "mixed") : M.makeSet(bank.questions, activeTopic);
+      index = 0; records = [];
       $("results").hidden = true; show("play"); render();
     }
     function render() {
@@ -84,8 +89,15 @@
           label.appendChild(input); label.appendChild(chemistry(node("span"), local(q.choices[choiceIndex].text)));
           $("options").appendChild(label);
         });
+      } else if (q.check) {
+        // Generated questions: the unit is typed with the number, and the line under the question is the bank's own
+        // instruction, or nothing when deciding the precision is the skill being practiced.
+        $("precision").textContent = q.instruction ? local(q.instruction) : "";
+        $("precision").hidden = !q.instruction;
+        $("unit").parentNode.hidden = true;
       } else {
         var precision = q.precision;
+        $("precision").hidden = false; $("unit").parentNode.hidden = false;
         $("precision").textContent = precision.exact ? t("Enter an exact whole number.") : precision.sf ? t("Use {n} significant figures.", {n:precision.sf}) : precision.decimals === 1 ? t("Use 1 decimal place.") : t("Use {n} decimal places.", {n:precision.decimals});
       }
       $("question").focus();
@@ -99,6 +111,14 @@
         chosen = $("options").querySelector("input:checked");
         if (!chosen) { $("error").textContent = t("Select an answer first."); $("options").querySelector("input").focus(); return; }
         result = {correct:Number(chosen.value) === q.answer};
+      } else if (q.check) {
+        $("value").removeAttribute("aria-invalid");
+        result = M.judge(q, $("value").value);
+        if (!result.valid) {
+          $("error").textContent = t({number:"Enter a number using a decimal point or scientific notation.", comma:"Use a decimal point, not a comma, like 3.5.",
+            power:"Write the power of 10 with ^, like 3.2 x 10^4.", unit:"Type the unit after the number."}[result.reason]);
+          $("value").setAttribute("aria-invalid", "true"); $("value").focus(); return;
+        }
       } else {
         $("value").removeAttribute("aria-invalid"); $("unit").removeAttribute("aria-invalid");
         result = M.inspect(q, $("value").value, $("unit").value);
@@ -120,6 +140,8 @@
           if (Number(input.value) === q.answer) input.parentNode.classList.add("is-correct");
           else if (input.checked) input.parentNode.classList.add("is-wrong");
         });
+      } else if (q.check) {
+        result.notes.forEach(function (note) { $("feedback").appendChild(chemistry(node("p"), local(note))); });
       } else {
         if (!result.unitOK) {
           if (result.valueOK) $("feedback").appendChild(node("p", t("Your value is within tolerance, but the unit is incorrect.")));

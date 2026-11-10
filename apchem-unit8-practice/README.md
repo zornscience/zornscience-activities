@@ -1,6 +1,6 @@
 # AP Chemistry Unit 8 Practice
 
-Version: 1.0.0
+Version: 1.0.1
 
 Original bilingual ZornScience practice aligned to College Board CED Unit 8, Acids and Bases. Each of eleven topics has six questions: four multiple choice and two numeric entry. Total: 66 questions, 44 multiple choice and 22 numeric, with individual explanations for all 132 distractors in English and Mexican Spanish. These are original aligned questions, not official College Board exam items.
 
@@ -43,6 +43,8 @@ Choose a six-question topic or Mixed review for all 66. Submit once, read feedba
 English: `/apchem-unit8-practice/`. Spanish: `/apchem-unit8-practice/?lang=es`. Mexican Spanish follows the supplied AP glossary, including amortiguador, capacidad amortiguadora, titulación, punto de equivalencia, punto de semiequivalencia, curva de titulación, indicador, punto final, par conjugado ácido-base, ion hidronio, constante de acidez, constante de basicidad, porcentaje de ionización, anfótero and tabla ICE. Additional terms are recorded in `../SPANISH_TERMS.md`.
 
 ## Changelog
+
+1.0.1: Version bump for the shared practice engine, which gains opt-in options for generated question sets. This unit's questions and behavior are unchanged.
 
 1.0.0: Added eleven topics, 66 worked bilingual questions, 132 individual distractor explanations, acid-base reference, two accessible models, About and SEO metadata, sitemap entries and the directory entry after Unit 7.
 

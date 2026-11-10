@@ -1,5 +1,5 @@
 /* Landing page only: subject sections with a responsive grid of activity cards. Builds on shared/zsa-base.css. */
-.zsa-home {--zsa-max-width:1120px; --zsa-home-chem:#0f766e; --zsa-home-chem-bg:#ecfdf8; --zsa-home-react:#7c3aed; --zsa-home-react-bg:#f5f3ff; --zsa-home-lab:#c2410c; --zsa-home-lab-bg:#fff7ed; --zsa-home-phys:#1d4ed8; --zsa-home-phys-bg:#eef4ff; --zsa-home-prep:#be185d; --zsa-home-prep-bg:#fdf2f8;}
+.zsa-home {--zsa-max-width:1120px; --zsa-home-chem:#0f766e; --zsa-home-chem-bg:#ecfdf8; --zsa-home-react:#7c3aed; --zsa-home-react-bg:#f5f3ff; --zsa-home-lab:#c2410c; --zsa-home-lab-bg:#fff7ed; --zsa-home-phys:#1d4ed8; --zsa-home-phys-bg:#eef4ff; --zsa-home-prep:#be185d; --zsa-home-prep-bg:#fdf2f8; --zsa-home-qs:#15803d; --zsa-home-qs-bg:#f0fdf4;}
 .zsa-home-hero {display:flex;align-items:center;gap:16px;margin:8px 0;}
 /* The logo is as tall as one line of the h1 (its font size times its 1.15 line height). */
 .zsa-home-logo {display:inline-flex;flex:none;border-radius:var(--zsa-radius);}
@@ -22,6 +22,7 @@
 .zsa-home-lab {--zsa-home-accent:var(--zsa-home-lab);--zsa-home-tint:var(--zsa-home-lab-bg);}
 .zsa-home-phys {--zsa-home-accent:var(--zsa-home-phys);--zsa-home-tint:var(--zsa-home-phys-bg);}
 .zsa-home-prep {--zsa-home-accent:var(--zsa-home-prep);--zsa-home-tint:var(--zsa-home-prep-bg);}
+.zsa-home-qs {--zsa-home-accent:var(--zsa-home-qs);--zsa-home-tint:var(--zsa-home-qs-bg);}
 
 .zsa-home-grid {list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px;}
 .zsa-home-card {position:relative;display:flex;flex-direction:column;background:var(--zsa-white);border:1px solid var(--zsa-border);border-top:4px solid var(--zsa-home-accent);border-radius:var(--zsa-radius-lg);padding:16px 20px 18px;transition:box-shadow .15s ease,transform .15s ease,border-color .15s ease;}
