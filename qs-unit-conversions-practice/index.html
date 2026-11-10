@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<title>Unit Conversions Practice | ZornScience</title>
+<meta name="description" content="Practice unit conversions with one exact factor: choose it, set it up so units cancel, and keep significant figures, with feedback in English or Spanish." data-zsa-es="Practica conversiones de unidades con un factor exacto: elígelo, plantéalo para que las unidades se cancelen y conserva las cifras significativas.">
+<link rel="canonical" href="https://activities.zornscience.org/qs-unit-conversions-practice/">
+<link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-unit-conversions-practice/">
+<link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-unit-conversions-practice/?lang=es">
+<link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-unit-conversions-practice/">
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-practice.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-practice-model.js?v=1.0.0" defer></script>
+<script src="data.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-practice.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-header.js?v=1.0.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.0.0"><script src="../shared/zsa-about.js?v=1.0.0" defer></script></head>
+<body>
+<main class="zsa zsa-quc zsa-practice" data-zsa-activity="qs-unit-conversions-practice" data-zsa-practice="zsa-quc">
+<header data-zsa-header>
+<div data-zsa-header-row>
+<div data-zsa-header-identity><a data-zsa-header-brand href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png" width="34" height="33" alt=""></a><h1>Unit Conversions Practice</h1></div>
+<nav data-zsa-header-tools aria-label="Activity tools"><div>
+<button class="zsa-btn" type="button" data-zsa-dialog-open="zsa-header-instructions" aria-haspopup="dialog" aria-controls="zsa-header-instructions">Instructions</button>
+<button class="zsa-btn" type="button" data-zsa-chrome data-zsa-dialog-open="zsa-header-share" aria-label="Share activity" aria-haspopup="dialog" aria-controls="zsa-header-share"><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button>
+</div></nav>
+</div>
+</header>
+<dialog class="zsa-header-dialog" id="zsa-header-instructions" aria-labelledby="zsa-header-instructions-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-header-instructions-title">Instructions</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close instructions" autofocus>Close</button></div>
+<ol>
+<li>Choose a skill, then start. Mixed review includes all three skills.</li>
+<li>Type your answer. A unit after the number is optional.</li>
+<li>Exact factors never limit significant figures. In Exact factors and significant figures, an answer with the wrong number of significant figures is marked incorrect; in the other skills it gets a note.</li>
+<li>Submit once per question and read the feedback. Try again gives you new numbers.</li>
+</ol>
+</dialog>
+<dialog class="zsa-header-dialog" id="zsa-header-share" aria-labelledby="zsa-header-share-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-header-share-title">Share this activity</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close share options" autofocus>Close</button></div>
+<p>Share a fresh activity. Your answers and results are not included.</p>
+<label for="zsa-header-share-url">Share link</label><div class="zsa-header-share-link"><input id="zsa-header-share-url" type="text" readonly spellcheck="false"><button class="zsa-btn" type="button" data-zsa-share-copy>Copy link</button></div>
+<a data-zsa-share-email href="#">Email</a><p data-zsa-share-status role="status" aria-live="polite"></p>
+</dialog>
+<noscript><p class="zsa-panel">This activity needs JavaScript. / Esta actividad necesita JavaScript.</p></noscript>
+<section id="zsa-quc-setup" class="zsa-card" aria-labelledby="zsa-quc-setup-title">
+<p class="zsa-eyebrow">Quantitative Skills · Units</p>
+<h2 id="zsa-quc-setup-title">New numbers every set.</h2>
+<p>Choose one skill for 8 questions, or Mixed review for 12. Every set has new numbers.</p>
+<div class="zsa-quc-settings zsa-practice-settings"><div><label for="zsa-quc-topic">Topic</label><select id="zsa-quc-topic"></select></div><button class="zsa-btn zsa-btn--primary" id="zsa-quc-start" type="button">Start practice</button></div>
+<p class="zsa-quc-small zsa-practice-small">No timer. Use scratch paper and a calculator. The method and the exact equalities are below.</p>
+</section>
+<section id="zsa-quc-play" hidden aria-labelledby="zsa-quc-question">
+<div class="zsa-quc-status zsa-practice-status"><p id="zsa-quc-position"></p><p id="zsa-quc-score"></p></div>
+<progress id="zsa-quc-progress" value="0" max="8" aria-label="Set progress"></progress>
+<div class="zsa-card zsa-quc-question-card">
+<p class="zsa-eyebrow" id="zsa-quc-topic-name"></p>
+<h2 id="zsa-quc-question" tabindex="-1"></h2>
+<form id="zsa-quc-answer" novalidate>
+<fieldset id="zsa-quc-choices"><legend class="zsa-quc-small zsa-practice-small">Choose one answer.</legend><div id="zsa-quc-options" class="zsa-practice-options"></div></fieldset>
+<div id="zsa-quc-numeric" hidden>
+<p id="zsa-quc-precision" class="zsa-quc-small zsa-practice-small"></p>
+<div class="zsa-quc-entry zsa-practice-entry"><div><label for="zsa-quc-value">Your answer</label><input id="zsa-quc-value" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="zsa-quc-precision zsa-quc-number-help zsa-quc-error"></div><div hidden><label for="zsa-quc-unit">Unit</label><select id="zsa-quc-unit"></select></div></div>
+<p id="zsa-quc-number-help" class="zsa-quc-small zsa-practice-small">Type a number such as 15.2. You may add the unit after it.</p>
+</div>
+<p id="zsa-quc-error" role="alert" class="zsa-quc-error zsa-practice-error"></p>
+<button id="zsa-quc-check" class="zsa-btn zsa-btn--primary" type="submit">Check answer</button>
+</form>
+<section id="zsa-quc-feedback" class="zsa-practice-feedback zsa-panel" aria-live="polite" aria-atomic="true" hidden></section>
+<button id="zsa-quc-next" class="zsa-btn zsa-btn--primary" type="button" hidden>Next question</button>
+</div>
+</section>
+<section id="zsa-quc-results" class="zsa-card" aria-labelledby="zsa-quc-results-title" hidden>
+<h2 id="zsa-quc-results-title" tabindex="-1">Your set is complete</h2>
+<p id="zsa-quc-total" class="zsa-quc-total zsa-practice-total"></p>
+<h3>Results by topic</h3><ul id="zsa-quc-breakdown" class="zsa-practice-breakdown"></ul>
+<div class="zsa-quc-actions zsa-practice-actions"><button id="zsa-quc-retry" class="zsa-btn zsa-btn--primary" type="button">Try again</button><button id="zsa-quc-choose" class="zsa-btn" type="button">Choose another topic</button></div>
+<div id="zsa-quc-review"></div>
+</section>
+<details class="zsa-panel zsa-quc-reference zsa-practice-reference" id="zsa-quc-reference">
+<summary>Reference</summary><h2>Using conversion factors</h2>
+<ul>
+<li>A conversion factor is an equality written as a fraction. It equals 1, so the amount does not change.</li>
+<li>Each equality gives two factors: 1 min = 60 s gives (60 s / 1 min) and (1 min / 60 s).</li>
+<li>Put the new unit on top and the starting unit on the bottom, then cross out the units that cancel: 3.25 min × (60 s / 1 min) = 195 s.</li>
+<li>If nothing cancels (you get s²/min), flip the factor: 150 s × (1 min / 60 s) = 2.5 min.</li>
+<li>Defined equalities are exact. They never limit significant figures, so the answer keeps the measurement's: 4.25 h × (60 min / 1 h) = 255 min.</li>
+</ul>
+<h3>Exact equalities</h3>
+<ul>
+<li>Time: 1 min = 60 s, 1 h = 60 min, 1 d = 24 h</li>
+<li>Length: 1 yd = 3 ft, 1 ft = 12 <span lang="en">in</span>, 1 <span lang="en">in</span> = 2.54 cm</li>
+<li>Symbols: s seconds, min minutes, h hours, d days, yd yards, ft feet, <span lang="en">in</span> inches, cm centimeters</li>
+</ul>
+</details>
+<p class="zsa-quc-small zsa-practice-small">Practice for the Unit Conversions lesson in Quantitative Skills. Original ZornScience questions.</p>
+<!-- zsa-about --><section class="zsa-about" data-zsa-about="qs-unit-conversions-practice" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Choose the right conversion factor, set it up so the units cancel, and convert time and length with one exact factor. Every set has new numbers, and each answer gets feedback right away.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="qs-unit-conversions"><a href="https://zornscience.org/science/quantitative-skills/units/unit-conversions/">Unit Conversions</a><span data-zsa-lesson-course>Quantitative Skills</span></li><li data-zsa-lesson="qs-significant-figures"><a href="https://zornscience.org/science/quantitative-skills/numbers/significant-figures/">Significant Figures</a><span data-zsa-lesson-course>Quantitative Skills</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Your answers stay in this tab. No account needed.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><a class="zsa-back" id="zsa-quc-back" href="https://zornscience.org/science/quantitative-skills/units/unit-conversions/">← Back to the lesson</a></footer>
+</main>
+</body>
+</html>

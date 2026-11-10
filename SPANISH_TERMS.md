@@ -208,6 +208,81 @@ tug of war | competencia de jalar la cuerda
 hiker | excursionista
 wagon | carrito
 
+## Metric Prefixes Practice (1.0.0)
+
+Terms from the live Spanish lesson (Prefijos métricos): prefijo métrico, unidad base, potencia de diez, escalera de prefijos, peldaño, mueve el punto decimal, lugares. Prefix names: mega, kilo, centi, mili (not milli), micro, nano; with meters they take an accent (kilómetros, centímetros, milímetros, micrómetros, nanómetros, megámetros); gramos and litros do not (miligramos, microlitros). Symbols keep their case (M, m, μ). Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Prefix meanings | Significado de los prefijos
+The prefix ladder | La escalera de prefijos
+Converting | Conversiones
+Rungs from top to bottom | Peldaños de arriba hacia abajo
+Moving the decimal point | Movimiento del punto decimal
+In 4.5 mg, what power of ten does the prefix stand for? | En 4.5 mg, ¿qué potencia de diez representa el prefijo?
+How do you write 37 nanograms with a symbol? | ¿Cómo escribes 37 nanogramos con símbolo?
+so they are 3 places apart | así que están a 3 lugares de distancia
+The new unit, m, is smaller, so the number gets bigger | La unidad nueva, m, es más pequeña, así que el número se hace más grande
+3 places to the right / to the left | 3 lugares a la derecha / a la izquierda
+Count places, not rungs. | Cuenta lugares, no peldaños.
+The exponents differ by 5 | Los exponentes difieren en 5
+Not every rung is 3 places apart. | No todos los peldaños están a 3 lugares.
+Capital M is mega; lowercase m is milli. | La M mayúscula es mega; la m minúscula es mili.
+μ is the Greek letter mu. | μ es la letra griega mu.
+Case matters | Las mayúsculas importan
+The zero at the end stays | El cero al final se queda
+
+## Unit Conversions Practice (1.0.0)
+
+Terms from the live Spanish lesson (Conversiones de unidades) and the Style Kit: factor de conversión, igualdad, numerador, denominador, unidad nueva arriba, unidad inicial abajo, tacha las unidades que se cancelan, voltea el factor, factores exactos, planteamiento (setup), cifras significativas. Unit names: segundos, minutos, horas, días, yardas, pies, pulgadas, centímetros; the symbols stay s, min, h, d, yd, ft, in, cm. Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Conversion factors | Factores de conversión
+Setting up and converting | Planteamiento y conversión
+Exact factors and significant figures | Factores exactos y cifras significativas
+Using conversion factors | Uso de los factores de conversión
+Exact equalities | Igualdades exactas
+defined equality | igualdad definida
+exact equality | igualdad exacta
+Which conversion factor do you multiply by? | ¿Por qué factor de conversión multiplicas?
+Which setup converts ...? | ¿Qué planteamiento convierte ...?
+What went wrong? | ¿Qué salió mal?
+the units come out as s²/min | las unidades quedan como s²/min
+Keep each number with its own unit. | Deja cada número con su propia unidad.
+the flipped factor | el factor volteado
+upside down | al revés
+Your factor was upside down. | Tu factor estaba al revés.
+A calculator shows | Una calculadora muestra
+every calculator digit | todos los dígitos de la calculadora
+unlimited significant figures | cifras significativas ilimitadas
+the measurement's 3 significant figures | las 3 cifras significativas de la medición
+Significant figures count here. | Aquí cuentan las cifras significativas.
+
+## Dimensional Analysis Practice (1.0.0)
+
+Terms from the live Spanish lesson (Análisis dimensional) and the Style Kit: análisis dimensional, traza el camino, encadena factores, meta, unidades al cuadrado y al cubo, eleva al cubo el factor, centímetro cúbico, razón de cambio (rate), densidad, planteamiento. Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Chains of factors | Cadenas de factores
+Rates and densities | Razones de cambio y densidades
+Squared and cubed units | Unidades al cuadrado y al cubo
+Units of the result | Unidades del resultado
+Path: d → h → min → s. | Camino: d → h → min → s.
+Map the path first | Primero traza el camino
+each bottom unit cancels the top unit before it | cada unidad de abajo cancela la unidad de arriba anterior
+Convert one unit at a time. | Convierte una unidad a la vez.
+The unit h is on the bottom of km/h, so h goes on top of its factor. | La unidad h está abajo en km/h, así que h va arriba en su factor.
+Square / Cube the whole factor, numbers and units | Eleva al cuadrado / al cubo todo el factor, números y unidades
+Cubic units need the factor cubed, not squared. | Las unidades cúbicas necesitan el factor al cubo, no al cuadrado.
+Follow the path to the end | Sigue el camino hasta el final
+Convert both parts of g/mL | Convierte las dos partes de g/mL
+on the wrong side | del lado equivocado
+Let the units check the setup | Deja que las unidades revisen el planteamiento
+What unit does ... give? | ¿Qué unidad da ...?
+exactly (1 cm³ = 1 mL exactly) | exactamente
+
 ## AP Chemistry Unit 9 Practice (1.0.0)
 
 Uses the supplied AP glossary, including entropía absoluta, energía libre de Gibbs, favorabilidad termodinámica, termodinámicamente favorable, control cinético, control termodinámico, reacciones acopladas, celda galvánica (voltaica), celda electrolítica, ánodo, cátodo, puente salino, semirreacción, potencial estándar de reducción, potencial de celda, constante de Faraday, electrólisis and ley de Faraday. Formulas, state symbols, unit symbols and decimal points are preserved. New activity wording beyond the supplied glossary:

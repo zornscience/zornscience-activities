@@ -8,8 +8,8 @@ const M = require("../../shared/zsa-practice-model.js");
 const ACTIVITIES = require("../support/qs-activities.js");
 const AXE = fs.readFileSync(require.resolve("axe-core/axe.min.js"), "utf8");
 const strip = html => html.replace(/<\/?su[bp]>/g, "");
-// Common English words that must not be left on a Spanish page (unit symbols and numbers are fine).
-const ENGLISH = /\b(?:the|and|your|answer|question|questions|correct|incorrect|round|rounded|significant|figures?|choose|start|practice|topic|next|results|mixed|review|try|again|unit|number|type|with|count|has|keep|rules?|zeros?|places?|digits?|reference|instructions|share|close|check|see|set|complete|back|lesson|scientific|notation|write|use|first|end|only|when|there|is|are|of|to|in|for|from)\b/i;
+// Common English words that must not be left on a Spanish page (unit symbols such as in, min and h, and numbers, are fine).
+const ENGLISH = /\b(?:the|and|your|answer|question|questions|correct|incorrect|round|rounded|significant|figures?|choose|start|practice|topic|next|results|mixed|review|try|again|unit|number|type|with|count|has|keep|rules?|zeros?|places?|digits?|reference|instructions|share|close|check|see|set|complete|back|lesson|scientific|notation|write|use|first|end|only|when|there|is|are|of|to|for|from)\b/i;
 
 async function audit(page) {
   await page.evaluate(AXE);
