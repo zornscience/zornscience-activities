@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<title>Reading Formulas Practice | ZornScience</title>
+<meta name="description" content="Practice reading science formulas: what each letter means, implied multiplication, constants, subscripts and Δ as final minus initial, with instant feedback." data-zsa-es="Practica la lectura de fórmulas: qué significa cada letra, la multiplicación implícita, las constantes, los subíndices y Δ como final menos inicial.">
+<link rel="canonical" href="https://activities.zornscience.org/qs-reading-formulas-practice/">
+<link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-reading-formulas-practice/">
+<link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-reading-formulas-practice/?lang=es">
+<link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-reading-formulas-practice/">
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-practice.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-practice-model.js?v=1.0.0" defer></script>
+<script src="data.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-practice.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-header.js?v=1.0.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.0.0"><script src="../shared/zsa-about.js?v=1.0.0" defer></script></head>
+<body>
+<main class="zsa zsa-qrf zsa-practice" data-zsa-activity="qs-reading-formulas-practice" data-zsa-practice="zsa-qrf">
+<header data-zsa-header>
+<div data-zsa-header-row>
+<div data-zsa-header-identity><a data-zsa-header-brand href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png" width="34" height="33" alt=""></a><h1>Reading Formulas Practice</h1></div>
+<nav data-zsa-header-tools aria-label="Activity tools"><div>
+<button class="zsa-btn" type="button" data-zsa-dialog-open="zsa-header-instructions" aria-haspopup="dialog" aria-controls="zsa-header-instructions">Instructions</button>
+<button class="zsa-btn" type="button" data-zsa-chrome data-zsa-dialog-open="zsa-header-share" aria-label="Share activity" aria-haspopup="dialog" aria-controls="zsa-header-share"><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button>
+</div></nav>
+</div>
+</header>
+<dialog class="zsa-header-dialog" id="zsa-header-instructions" aria-labelledby="zsa-header-instructions-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-header-instructions-title">Instructions</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close instructions" autofocus>Close</button></div>
+<ol>
+<li>Choose a skill, then start. Mixed review includes all four skills.</li>
+<li>For a number, type it with a decimal point. A negative change needs its minus sign. A unit after the number is optional.</li>
+<li>The line under each question says how to round. Significant figures are a reminder here, not part of the score.</li>
+<li>Submit once per question and read the feedback. Try again gives you a new set.</li>
+</ol>
+</dialog>
+<dialog class="zsa-header-dialog" id="zsa-header-share" aria-labelledby="zsa-header-share-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-header-share-title">Share this activity</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close share options" autofocus>Close</button></div>
+<p>Share a fresh activity. Your answers and results are not included.</p>
+<label for="zsa-header-share-url">Share link</label><div class="zsa-header-share-link"><input id="zsa-header-share-url" type="text" readonly spellcheck="false"><button class="zsa-btn" type="button" data-zsa-share-copy>Copy link</button></div>
+<a data-zsa-share-email href="#">Email</a><p data-zsa-share-status role="status" aria-live="polite"></p>
+</dialog>
+<noscript><p class="zsa-panel">This activity needs JavaScript. / Esta actividad necesita JavaScript.</p></noscript>
+<section id="zsa-qrf-setup" class="zsa-card" aria-labelledby="zsa-qrf-setup-title">
+<p class="zsa-eyebrow">Quantitative Skills · Equations</p>
+<h2 id="zsa-qrf-setup-title">New numbers every set.</h2>
+<p>Choose one skill for 8 questions, or Mixed review for 12. Every set is new.</p>
+<div class="zsa-qrf-settings zsa-practice-settings"><div><label for="zsa-qrf-topic">Topic</label><select id="zsa-qrf-topic"></select></div><button class="zsa-btn zsa-btn--primary" id="zsa-qrf-start" type="button">Start practice</button></div>
+<p class="zsa-qrf-small zsa-practice-small">No timer. Use scratch paper and a calculator. The formulas from the lesson are below.</p>
+</section>
+<section id="zsa-qrf-play" hidden aria-labelledby="zsa-qrf-question">
+<div class="zsa-qrf-status zsa-practice-status"><p id="zsa-qrf-position"></p><p id="zsa-qrf-score"></p></div>
+<progress id="zsa-qrf-progress" value="0" max="8" aria-label="Set progress"></progress>
+<div class="zsa-card zsa-qrf-question-card">
+<p class="zsa-eyebrow" id="zsa-qrf-topic-name"></p>
+<h2 id="zsa-qrf-question" tabindex="-1"></h2>
+<form id="zsa-qrf-answer" novalidate>
+<fieldset id="zsa-qrf-choices"><legend class="zsa-qrf-small zsa-practice-small">Choose one answer.</legend><div id="zsa-qrf-options" class="zsa-practice-options"></div></fieldset>
+<div id="zsa-qrf-numeric" hidden>
+<p id="zsa-qrf-precision" class="zsa-qrf-small zsa-practice-small"></p>
+<div class="zsa-qrf-entry zsa-practice-entry"><div><label for="zsa-qrf-value">Your answer</label><input id="zsa-qrf-value" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="zsa-qrf-precision zsa-qrf-number-help zsa-qrf-error"></div><div hidden><label for="zsa-qrf-unit">Unit</label><select id="zsa-qrf-unit"></select></div></div>
+<p id="zsa-qrf-number-help" class="zsa-qrf-small zsa-practice-small">Type a number such as 63.0 or −8.0. You may add the unit after it.</p>
+</div>
+<p id="zsa-qrf-error" role="alert" class="zsa-qrf-error zsa-practice-error"></p>
+<button id="zsa-qrf-check" class="zsa-btn zsa-btn--primary" type="submit">Check answer</button>
+</form>
+<section id="zsa-qrf-feedback" class="zsa-practice-feedback zsa-panel" aria-live="polite" aria-atomic="true" hidden></section>
+<button id="zsa-qrf-next" class="zsa-btn zsa-btn--primary" type="button" hidden>Next question</button>
+</div>
+</section>
+<section id="zsa-qrf-results" class="zsa-card" aria-labelledby="zsa-qrf-results-title" hidden>
+<h2 id="zsa-qrf-results-title" tabindex="-1">Your set is complete</h2>
+<p id="zsa-qrf-total" class="zsa-qrf-total zsa-practice-total"></p>
+<h3>Results by topic</h3><ul id="zsa-qrf-breakdown" class="zsa-practice-breakdown"></ul>
+<div class="zsa-qrf-actions zsa-practice-actions"><button id="zsa-qrf-retry" class="zsa-btn zsa-btn--primary" type="button">Try again</button><button id="zsa-qrf-choose" class="zsa-btn" type="button">Choose another topic</button></div>
+<div id="zsa-qrf-review"></div>
+</section>
+<details class="zsa-panel zsa-qrf-reference zsa-practice-reference" id="zsa-qrf-reference">
+<summary>Reference</summary><h2>Reading formulas</h2>
+<ul>
+<li>Each letter stands for a measured quantity. Read a formula as a sentence: d = vt reads “distance equals velocity times time.”</li>
+<li>Letters side by side mean multiply: ma = m × a and PV = P × V. The × is left out so it is not confused with x.</li>
+<li>A constant has the same value in every problem and comes from a reference sheet, such as g = 9.8 m/s² and R in PV = nRT.</li>
+<li>Subscripts are name tags: i is initial and f is final. v<sub>i</sub> is the initial velocity, not v × i.</li>
+<li>Δ means “change in,” and it is always final minus initial: Δv = v<sub>f</sub> − v<sub>i</sub>. A negative Δ means the quantity decreased.</li>
+<li>Case matters: m is mass (g) and M is molar mass (g/mol); v is velocity (m/s) and V is volume (mL).</li>
+</ul>
+<p>Formulas in this practice: d = vt, F = ma, W = mg, D = m/V, v<sub>f</sub> = v<sub>i</sub> + at, PV = nRT.</p>
+</details>
+<p class="zsa-qrf-small zsa-practice-small">Practice for the Reading Formulas lesson in Quantitative Skills. Original ZornScience questions.</p>
+<!-- zsa-about --><section class="zsa-about" data-zsa-about="qs-reading-formulas-practice" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Say what each letter in a formula stands for, read formulas as sentences, find changes with Δ as final minus initial, and substitute in one step. Every set is new, and each answer gets feedback right away.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="qs-reading-formulas"><a href="https://zornscience.org/science/quantitative-skills/equations/reading-formulas/">Reading Formulas</a><span data-zsa-lesson-course>Quantitative Skills</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Your answers stay in this tab. No account needed.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><a class="zsa-back" id="zsa-qrf-back" href="https://zornscience.org/science/quantitative-skills/equations/reading-formulas/">← Back to the lesson</a></footer>
+</main>
+</body>
+</html>

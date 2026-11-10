@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<title>Percents Practice | ZornScience</title>
+<meta name="description" content="Practice percents with new numbers every set: decimals, percent of a whole, percent composition and percent yield, with instant feedback in English or Spanish." data-zsa-es="Practica porcentajes con números nuevos en cada serie: decimales, porcentaje de un total, composición porcentual y rendimiento porcentual.">
+<link rel="canonical" href="https://activities.zornscience.org/qs-percents-practice/">
+<link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-percents-practice/">
+<link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-percents-practice/?lang=es">
+<link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-percents-practice/">
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-practice.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-practice-model.js?v=1.0.0" defer></script>
+<script src="data.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-practice.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-header.js?v=1.0.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.0.0"><script src="../shared/zsa-about.js?v=1.0.0" defer></script></head>
+<body>
+<main class="zsa zsa-qpc zsa-practice" data-zsa-activity="qs-percents-practice" data-zsa-practice="zsa-qpc">
+<header data-zsa-header>
+<div data-zsa-header-row>
+<div data-zsa-header-identity><a data-zsa-header-brand href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png" width="34" height="33" alt=""></a><h1>Percents Practice</h1></div>
+<nav data-zsa-header-tools aria-label="Activity tools"><div>
+<button class="zsa-btn" type="button" data-zsa-dialog-open="zsa-header-instructions" aria-haspopup="dialog" aria-controls="zsa-header-instructions">Instructions</button>
+<button class="zsa-btn" type="button" data-zsa-chrome data-zsa-dialog-open="zsa-header-share" aria-label="Share activity" aria-haspopup="dialog" aria-controls="zsa-header-share"><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button>
+</div></nav>
+</div>
+</header>
+<dialog class="zsa-header-dialog" id="zsa-header-instructions" aria-labelledby="zsa-header-instructions-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-header-instructions-title">Instructions</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close instructions" autofocus>Close</button></div>
+<ol>
+<li>Choose a skill, then start. Mixed review includes all four skills.</li>
+<li>Type your answer. The % sign is optional. When the answer is an amount, type its unit after the number.</li>
+<li>Round as the line under the question says. Significant figures are advice here, not scored.</li>
+<li>Submit once per question and read the feedback. Try again gives you new numbers.</li>
+</ol>
+</dialog>
+<dialog class="zsa-header-dialog" id="zsa-header-share" aria-labelledby="zsa-header-share-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-header-share-title">Share this activity</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close share options" autofocus>Close</button></div>
+<p>Share a fresh activity. Your answers and results are not included.</p>
+<label for="zsa-header-share-url">Share link</label><div class="zsa-header-share-link"><input id="zsa-header-share-url" type="text" readonly spellcheck="false"><button class="zsa-btn" type="button" data-zsa-share-copy>Copy link</button></div>
+<a data-zsa-share-email href="#">Email</a><p data-zsa-share-status role="status" aria-live="polite"></p>
+</dialog>
+<noscript><p class="zsa-panel">This activity needs JavaScript. / Esta actividad necesita JavaScript.</p></noscript>
+<section id="zsa-qpc-setup" class="zsa-card" aria-labelledby="zsa-qpc-setup-title">
+<p class="zsa-eyebrow">Quantitative Skills · Ratios and Percents</p>
+<h2 id="zsa-qpc-setup-title">New numbers every set.</h2>
+<p>Choose one skill for 8 questions, or Mixed review for 12. Every set has new numbers.</p>
+<div class="zsa-qpc-settings zsa-practice-settings"><div><label for="zsa-qpc-topic">Topic</label><select id="zsa-qpc-topic"></select></div><button class="zsa-btn zsa-btn--primary" id="zsa-qpc-start" type="button">Start practice</button></div>
+<p class="zsa-qpc-small zsa-practice-small">No timer. Use scratch paper and a calculator. The rules from the lesson are below.</p>
+</section>
+<section id="zsa-qpc-play" hidden aria-labelledby="zsa-qpc-question">
+<div class="zsa-qpc-status zsa-practice-status"><p id="zsa-qpc-position"></p><p id="zsa-qpc-score"></p></div>
+<progress id="zsa-qpc-progress" value="0" max="8" aria-label="Set progress"></progress>
+<div class="zsa-card zsa-qpc-question-card">
+<p class="zsa-eyebrow" id="zsa-qpc-topic-name"></p>
+<h2 id="zsa-qpc-question" tabindex="-1"></h2>
+<form id="zsa-qpc-answer" novalidate>
+<fieldset id="zsa-qpc-choices"><legend class="zsa-qpc-small zsa-practice-small">Choose one answer.</legend><div id="zsa-qpc-options" class="zsa-practice-options"></div></fieldset>
+<div id="zsa-qpc-numeric" hidden>
+<p id="zsa-qpc-precision" class="zsa-qpc-small zsa-practice-small"></p>
+<div class="zsa-qpc-entry zsa-practice-entry"><div><label for="zsa-qpc-value">Your answer</label><input id="zsa-qpc-value" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="zsa-qpc-precision zsa-qpc-number-help zsa-qpc-error"></div><div hidden><label for="zsa-qpc-unit">Unit</label><select id="zsa-qpc-unit"></select></div></div>
+<p id="zsa-qpc-number-help" class="zsa-qpc-small zsa-practice-small">Type a number such as 0.35, 84.0 or 0.38 kg.</p>
+</div>
+<p id="zsa-qpc-error" role="alert" class="zsa-qpc-error zsa-practice-error"></p>
+<button id="zsa-qpc-check" class="zsa-btn zsa-btn--primary" type="submit">Check answer</button>
+</form>
+<section id="zsa-qpc-feedback" class="zsa-practice-feedback zsa-panel" aria-live="polite" aria-atomic="true" hidden></section>
+<button id="zsa-qpc-next" class="zsa-btn zsa-btn--primary" type="button" hidden>Next question</button>
+</div>
+</section>
+<section id="zsa-qpc-results" class="zsa-card" aria-labelledby="zsa-qpc-results-title" hidden>
+<h2 id="zsa-qpc-results-title" tabindex="-1">Your set is complete</h2>
+<p id="zsa-qpc-total" class="zsa-qpc-total zsa-practice-total"></p>
+<h3>Results by topic</h3><ul id="zsa-qpc-breakdown" class="zsa-practice-breakdown"></ul>
+<div class="zsa-qpc-actions zsa-practice-actions"><button id="zsa-qpc-retry" class="zsa-btn zsa-btn--primary" type="button">Try again</button><button id="zsa-qpc-choose" class="zsa-btn" type="button">Choose another topic</button></div>
+<div id="zsa-qpc-review"></div>
+</section>
+<details class="zsa-panel zsa-qpc-reference zsa-practice-reference" id="zsa-qpc-reference">
+<summary>Reference</summary><h2>Percent rules</h2>
+<ul>
+<li>Percent means per hundred: 35% = 35/100 = 0.35.</li>
+<li>Percent to decimal: move the decimal point 2 places left (4.5% = 0.045). Decimal to percent: move it 2 places right.</li>
+<li>percent = part ÷ whole × 100. The whole always goes on the bottom.</li>
+<li>part = (percent ÷ 100) × whole. The part has the same units as the whole.</li>
+<li>Percent composition = mass of the element ÷ mass of the compound × 100. All the percents add up to about 100%.</li>
+<li>Percent yield = actual yield ÷ theoretical yield × 100.</li>
+<li>Atomic masses from the lesson: H = 1.01, C = 12.01, N = 14.01, O = 16.00. Questions give any others.</li>
+</ul>
+</details>
+<p class="zsa-qpc-small zsa-practice-small">Practice for the Percents lesson in Quantitative Skills. Original ZornScience questions.</p>
+<!-- zsa-about --><section class="zsa-about" data-zsa-about="qs-percents-practice" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Change percents to decimals and back, find a percent or a part of a whole, and work out percent composition and percent yield. Every set has new numbers.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="qs-percents"><a href="https://zornscience.org/science/quantitative-skills/ratios-and-percents/percents/">Percents</a><span data-zsa-lesson-course>Quantitative Skills</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Your answers stay in this tab. No account needed.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><a class="zsa-back" id="zsa-qpc-back" href="https://zornscience.org/science/quantitative-skills/ratios-and-percents/percents/">← Back to the lesson</a></footer>
+</main>
+</body>
+</html>

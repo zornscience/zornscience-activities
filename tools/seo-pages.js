@@ -194,6 +194,42 @@ module.exports = {
     en: "Fire a cannon from any height, angle and speed, and watch live velocity and acceleration vectors on the projectile, from ZornScience.",
     es: "Dispara un cañón desde cualquier altura, ángulo y rapidez, y observa los vectores de velocidad y aceleración del proyectil en vivo, de ZornScience."
   },
+  "qs-dimensional-analysis-practice": {
+    en: "Practice dimensional analysis with new numbers every set: chain factors, convert rates and densities, and cube units, with feedback in English or Spanish.",
+    es: "Practica el análisis dimensional con números nuevos en cada serie: encadena factores, convierte razones de cambio y densidades, y eleva unidades al cubo."
+  },
+  "qs-direct-and-inverse-relationships-practice": {
+    en: "Practice direct and inverse relationships with new data every set: classify tables, use the ratio and product tests, and predict values, in English or Spanish.",
+    es: "Practica relaciones directas e inversas con datos nuevos en cada serie: clasifica tablas, encuentra la constante y predice valores, con retroalimentación."
+  },
+  "qs-exponents-and-logarithms-practice": {
+    en: "Practice exponents and logarithms with new numbers every set: exponent rules, scientific notation, logs of powers of ten and pH, with instant feedback.",
+    es: "Practica exponentes y logaritmos con números nuevos en cada serie: reglas de exponentes, notación científica, logaritmos y pH, con retroalimentación inmediata."
+  },
+  "qs-metric-prefixes-practice": {
+    en: "Practice metric prefixes from mega to nano with new numbers every set: meanings, the prefix ladder and conversions, with feedback in English or Spanish.",
+    es: "Practica los prefijos métricos de mega a nano con números nuevos en cada serie: significados, escalera de prefijos y conversiones, con retroalimentación."
+  },
+  "qs-percent-error-and-percent-change-practice": {
+    en: "Practice percent error and percent change with new numbers every set: accepted value on the bottom, sign kept, instant feedback in English or Spanish.",
+    es: "Practica el porcentaje de error y el cambio porcentual con números nuevos en cada serie: el valor aceptado va abajo y el signo se conserva."
+  },
+  "qs-percents-practice": {
+    en: "Practice percents with new numbers every set: decimals, percent of a whole, percent composition and percent yield, with instant feedback in English or Spanish.",
+    es: "Practica porcentajes con números nuevos en cada serie: decimales, porcentaje de un total, composición porcentual y rendimiento porcentual."
+  },
+  "qs-ratios-and-proportions-practice": {
+    en: "Practice ratios and proportions with new numbers every set: write and simplify ratios, solve proportions and use mole ratios, with instant feedback.",
+    es: "Practica relaciones y proporciones con números nuevos en cada serie: escribe y simplifica relaciones, resuelve proporciones y usa relaciones molares."
+  },
+  "qs-reading-formulas-practice": {
+    en: "Practice reading science formulas: what each letter means, implied multiplication, constants, subscripts and Δ as final minus initial, with instant feedback.",
+    es: "Practica la lectura de fórmulas: qué significa cada letra, la multiplicación implícita, las constantes, los subíndices y Δ como final menos inicial."
+  },
+  "qs-rearranging-equations-practice": {
+    en: "Practice solving formulas for one variable: opposite operations on both sides, steps undone in reverse order, then substitute and calculate.",
+    es: "Practica el despeje de fórmulas: operaciones opuestas en ambos lados, pasos deshechos en orden inverso, y luego sustituye y calcula con retroalimentación."
+  },
   "qs-scientific-notation-practice": {
     en: "Practice scientific notation with new numbers every set: convert big and small numbers both ways and read the exponent. Instant feedback in English or Spanish.",
     es: "Practica la notación científica con números nuevos en cada serie: convierte números grandes y pequeños en ambos sentidos e interpreta el exponente."
@@ -201,6 +237,22 @@ module.exports = {
   "qs-significant-figures-practice": {
     en: "Practice significant figures with new numbers every set: count them, round, and use the rules for calculations, with instant feedback in English or Spanish.",
     es: "Practica cifras significativas con números nuevos en cada serie: cuéntalas, redondea y usa las reglas de los cálculos, con retroalimentación inmediata."
+  },
+  "qs-substituting-with-units-practice": {
+    en: "Practice substituting with units: units that cancel, converting to kg, m and s first, named units N and J, and kelvin for gases, with new numbers every set.",
+    es: "Practica la sustitución con unidades: unidades que se cancelan, conversión a kg, m y s, las unidades N y J, y kelvin para los gases, con números nuevos."
+  },
+  "qs-trigonometry-basics-practice": {
+    en: "Practice right triangle trigonometry with new numbers every set: name the sides, use SOH CAH TOA, and find sides and angles, with instant feedback.",
+    es: "Practica trigonometría del triángulo rectángulo con números nuevos en cada serie: identifica los lados, usa SOH CAH TOA y calcula lados y ángulos."
+  },
+  "qs-unit-conversions-practice": {
+    en: "Practice unit conversions with one exact factor: choose it, set it up so units cancel, and keep significant figures, with feedback in English or Spanish.",
+    es: "Practica conversiones de unidades con un factor exacto: elígelo, plantéalo para que las unidades se cancelen y conserva las cifras significativas."
+  },
+  "qs-vectors-practice": {
+    en: "Practice vectors with new numbers every set: scalars and vectors, adding in a line and at right angles, and components, with instant feedback.",
+    es: "Practica vectores con números nuevos en cada serie: escalares y vectores, suma en una línea y perpendicular, y componentes, con retroalimentación inmediata."
   },
   "reaction-energy-lab": {
     en: "Build energy diagrams, explore heating and cooling curves, and calculate reaction enthalpy with stoichiometry, bonds, formation data and Hess's law.",

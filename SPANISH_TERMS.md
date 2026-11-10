@@ -4,7 +4,7 @@ Reference: the ZornScience Style Kit v1.7, sections 4 to 6. Mexican Spanish, tú
 
 ## About this activity (shared/zsa-about.js)
 
-Each activity's intro and related lessons, shown above the footer. Lesson titles are the official titles in Style Kit Appendix A; Physics Units 6 to 9, Quantitative Skills and the lab pages use the titles of their live Spanish pages on zornscience.org. Activity terms in the intros follow the choices already recorded below (pesas ranuradas, línea de mejor ajuste, tarjetas de estudio, corrientes parásitas, foco, vaso de precipitados, bureta, semirreacción).
+Each activity's intro and related lessons, shown above the footer. Lesson titles are the official titles in Style Kit Appendix A; Physics Units 6 to 9, Quantitative Skills and the lab pages use the titles of their live Spanish pages on zornscience.org. The Quantitative Skills titles below are as listed on the live Spanish course page (Habilidades cuantitativas) on November 10, 2026. Activity terms in the intros follow the choices already recorded below (pesas ranuradas, línea de mejor ajuste, tarjetas de estudio, corrientes parásitas, foco, vaso de precipitados, bureta, semirreacción).
 
 English | Mexican Spanish
 --- | ---
@@ -24,6 +24,21 @@ Scientific Notation | Notación científica
 Calculator Skills | Habilidades con la calculadora
 Reading Graphs | Lectura de gráficas
 Slope and Rate of Change | Pendiente y razón de cambio
+Significant Figures | Cifras significativas
+Metric Prefixes | Prefijos métricos
+Unit Conversions | Conversiones de unidades
+Dimensional Analysis | Análisis dimensional
+Ratios and Proportions | Razones y proporciones
+Percents | Porcentajes
+Percent Error and Percent Change | Error porcentual y cambio porcentual
+Reading Formulas | Lectura de fórmulas
+Rearranging Equations | Despeje de ecuaciones
+Substituting with Units | Sustitución con unidades
+Direct and Inverse Relationships | Relaciones directas e inversas
+Exponents and Logarithms | Exponentes y logaritmos
+Trigonometry Basics | Conceptos básicos de trigonometría
+Vectors | Vectores
+Numbers, Units, Ratios and Percents, Equations, Graphs and Change, Advanced Tools (Quantitative Skills sections) | Números, Unidades, Razones y porcentajes, Ecuaciones, Gráficas y cambio, Herramientas avanzadas
 Net Ionic Equations Lab | Laboratorio de ecuaciones iónicas netas
 
 ## Quantitative Skills practice (shared words)
@@ -76,6 +91,340 @@ Line up the decimal points. | Alinea los puntos decimales.
 Significant figure rules | Reglas de las cifras significativas
 beaker (lab) | vaso de precipitados
 cart | carrito
+
+## Ratios and Proportions Practice (1.0.0)
+
+The live Spanish lesson is titled Razones y proporciones (section Razones y porcentajes) and says razón for ratio. Lesson and section names keep those titles; activity text follows the Style Kit glossary: relación for ratio and relación molar for mole ratio. Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Writing and simplifying ratios | Escritura y simplificación de relaciones
+Solving proportions | Resolución de proporciones
+Mole ratios | Relaciones molares
+the ratio of X to Y | la relación de X a Y
+3 to 2 | 3 a 2
+in simplest form | en su forma más simple
+the reverse order | el orden inverso
+the first quantity named goes first | la cantidad que se menciona primero va primero
+Keep the same units in the same spots | Mantén las mismas unidades en los mismos lugares
+the unknown (x) | la incógnita
+Cross-multiply | Multiplica en cruz
+coefficient | coeficiente
+balanced equation | ecuación balanceada
+A formula with no number in front has a coefficient of 1. | Una fórmula sin número al frente tiene coeficiente 1.
+The ratio is upside down. | La relación está invertida.
+form from / react with / are needed to make | se forman a partir de / reaccionan con / se necesitan para producir
+pea plant cross; tall, short | cruza de plantas de chícharo; altas, bajas
+marbles | canicas
+flask | matraz
+string, rope | hilo, cuerda
+scoop (of salt) | porción
+baking soda | bicarbonato de sodio
+towns (on a map) | pueblos
+At the same speed | A la misma rapidez
+stretches a spring | estira un resorte
+
+## Percents Practice (1.0.0)
+
+Follows the live Spanish lesson, Porcentajes, and the Style Kit glossary (porcentaje, composición porcentual, rendimiento porcentual, teórico, real, masa molar). Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Percents and decimals | Porcentajes y decimales
+Percent of a whole | Porcentaje de un total
+whole (part ÷ whole) | total
+part | parte
+Percent means per hundred | Porcentaje significa por cada cien
+move the decimal point 2 places left | mueve el punto decimal 2 lugares a la izquierda
+percent by mass, by volume | porcentaje en masa, en volumen
+actual yield, theoretical yield | rendimiento real, rendimiento teórico
+You collect (a product) | Obtienes
+breaks down into | se descompone en
+Which calculation gives ...? | ¿Qué cálculo da ...?
+sprouted; absent, present; trials | germinaron; faltaron, asistieron; intentos
+soil sample; brass key | muestra de suelo; llave de latón
+seawater; fertilizer bag | agua de mar; costal de fertilizante
+vinegar, acetic acid | vinagre, ácido acético
+Questions give any others. | Las preguntas dan las demás.
+advice, not scored | una sugerencia y no cuentan en la puntuación
+
+## Percent Error and Percent Change Practice (1.0.0)
+
+The live Spanish lesson is titled Error porcentual y cambio porcentual and says error porcentual. The title is kept where the lesson is named; activity text uses the Style Kit lab term porcentaje de error. Lesson terms used: valor aceptado, valor medido (never experimental), valor absoluto, nuevo, original, aumento, disminución. Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Percent error | Porcentaje de error
+Percent change | Cambio porcentual
+Setups and signs | Planteamientos y signos
+the true value scientists agree on | el valor verdadero en el que coinciden los científicos
+goes on the bottom | va abajo
+absolute value bars | barras de valor absoluto
+new minus original | nuevo menos original
+A decrease needs a negative sign. | Una disminución lleva signo negativo.
+Keep the sign. | Conserva el signo.
+increased, decreased | aumentó, disminuyó
+by 12% of the original mass | 12% respecto a la masa original
+It cannot be found without an accepted value. | No se puede saber sin un valor aceptado.
+Positive, Negative (the percent change) | Positivo, Negativo
+the answer keeps n significant figures | la respuesta conserva n cifras significativas
+standard mass; standard rod | pesa patrón; barra patrón
+acceleration due to gravity | aceleración debida a la gravedad
+speed of sound; specific heat | rapidez del sonido; calor específico
+## Trigonometry Basics Practice (1.0.0)
+
+Terms from the live Spanish lesson (Conceptos básicos de trigonometría): triángulo rectángulo, ángulo recto, hipotenusa, lado opuesto, lado adyacente, cateto, seno (sen θ, sen⁻¹), coseno, tangente, función trigonométrica inversa, modo de grados, radianes. Calculator keys stay SIN, COS, TAN and 2nd. SOH CAH TOA keeps its English expansion, marked `lang="en"`. Ratio is relación (Style Kit glossary), where the lesson says razón and razones trigonométricas. Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Naming the sides (topic) | Identificación de los lados
+Finding a side (topic) | Cálculo de un lado
+Finding an angle (topic) | Cálculo de un ángulo
+Round to the nearest degree. | Redondea al grado más cercano.
+across from θ | frente a θ
+the leg next to θ | el cateto junto a θ
+the other acute angle, at the top of the triangle | el otro ángulo agudo, en la parte de arriba del triángulo
+on top of / on the bottom of the ratio | en el numerador / en el denominador de la relación
+opposite over adjacent | opuesto entre adyacente
+The −1 means undo, not 1 over. | El −1 significa deshacer, no 1 entre.
+That ratio is upside down. | Esa relación está invertida.
+Memory aid: | Para recordar (en inglés):
+Not to scale. | No está a escala.
+kite | papalote
+ladder | escalera
+wheelchair ramp | rampa para silla de ruedas
+rise (of a ramp or roof) | subida
+line of sight | línea de visión
+the wrong trig function | la función trigonométrica equivocada
+Which expression gives θ? | ¿Qué expresión da el valor de θ?
+
+## Vectors Practice (1.0.0)
+
+Terms from the live Spanish lesson (Vectores): vector, escalar, magnitud, dirección, resultante, de punta a cola, cola, punta, desplazamiento, velocidad, rapidez, fuerza neta, perpendiculares, teorema de Pitágoras, componente horizontal, componente vertical, al norte del este, al sur del este, sobre la horizontal; components are written R sen θ. The topic title follows the glossary (componentes de vectores). Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Scalars and vectors (topic) | Escalares y vectores
+Same and opposite directions (topic) | Misma dirección y direcciones opuestas
+Perpendicular vectors (topic) | Vectores perpendiculares
+has a size only | solo tiene magnitud
+15 N upward, 15 N downward | 15 N hacia arriba, 15 N hacia abajo
+7 N east (a direction after a vector) | 7 N al este
+points east | apunta hacia el este
+1 square = 10 N (arrow scale) | 1 cuadro = 10 N
+37° south of west | 37° al sur del oeste
+25° east of north | 25° al este del norte
+at 25° from the vertical | con un ángulo de 25° respecto a la vertical
+east component | componente hacia el este
+sine and cosine switch | el seno y el coseno se intercambian
+Measure from east | Mide desde el este
+relative to the water, relative to the shore | respecto al agua, respecto a la orilla
+tug of war | competencia de jalar la cuerda
+hiker | excursionista
+wagon | carrito
+
+## Metric Prefixes Practice (1.0.0)
+
+Terms from the live Spanish lesson (Prefijos métricos): prefijo métrico, unidad base, potencia de diez, escalera de prefijos, peldaño, mueve el punto decimal, lugares. Prefix names: mega, kilo, centi, mili (not milli), micro, nano; with meters they take an accent (kilómetros, centímetros, milímetros, micrómetros, nanómetros, megámetros); gramos and litros do not (miligramos, microlitros). Symbols keep their case (M, m, μ). Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Prefix meanings | Significado de los prefijos
+The prefix ladder | La escalera de prefijos
+Converting | Conversiones
+Rungs from top to bottom | Peldaños de arriba hacia abajo
+Moving the decimal point | Movimiento del punto decimal
+In 4.5 mg, what power of ten does the prefix stand for? | En 4.5 mg, ¿qué potencia de diez representa el prefijo?
+How do you write 37 nanograms with a symbol? | ¿Cómo escribes 37 nanogramos con símbolo?
+so they are 3 places apart | así que están a 3 lugares de distancia
+The new unit, m, is smaller, so the number gets bigger | La unidad nueva, m, es más pequeña, así que el número se hace más grande
+3 places to the right / to the left | 3 lugares a la derecha / a la izquierda
+Count places, not rungs. | Cuenta lugares, no peldaños.
+The exponents differ by 5 | Los exponentes difieren en 5
+Not every rung is 3 places apart. | No todos los peldaños están a 3 lugares.
+Capital M is mega; lowercase m is milli. | La M mayúscula es mega; la m minúscula es mili.
+μ is the Greek letter mu. | μ es la letra griega mu.
+Case matters | Las mayúsculas importan
+The zero at the end stays | El cero al final se queda
+
+## Unit Conversions Practice (1.0.0)
+
+Terms from the live Spanish lesson (Conversiones de unidades) and the Style Kit: factor de conversión, igualdad, numerador, denominador, unidad nueva arriba, unidad inicial abajo, tacha las unidades que se cancelan, voltea el factor, factores exactos, planteamiento (setup), cifras significativas. Unit names: segundos, minutos, horas, días, yardas, pies, pulgadas, centímetros; the symbols stay s, min, h, d, yd, ft, in, cm. Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Conversion factors | Factores de conversión
+Setting up and converting | Planteamiento y conversión
+Exact factors and significant figures | Factores exactos y cifras significativas
+Using conversion factors | Uso de los factores de conversión
+Exact equalities | Igualdades exactas
+defined equality | igualdad definida
+exact equality | igualdad exacta
+Which conversion factor do you multiply by? | ¿Por qué factor de conversión multiplicas?
+Which setup converts ...? | ¿Qué planteamiento convierte ...?
+What went wrong? | ¿Qué salió mal?
+the units come out as s²/min | las unidades quedan como s²/min
+Keep each number with its own unit. | Deja cada número con su propia unidad.
+the flipped factor | el factor volteado
+upside down | al revés
+Your factor was upside down. | Tu factor estaba al revés.
+A calculator shows | Una calculadora muestra
+every calculator digit | todos los dígitos de la calculadora
+unlimited significant figures | cifras significativas ilimitadas
+the measurement's 3 significant figures | las 3 cifras significativas de la medición
+Significant figures count here. | Aquí cuentan las cifras significativas.
+
+## Dimensional Analysis Practice (1.0.0)
+
+Terms from the live Spanish lesson (Análisis dimensional) and the Style Kit: análisis dimensional, traza el camino, encadena factores, meta, unidades al cuadrado y al cubo, eleva al cubo el factor, centímetro cúbico, razón de cambio (rate), densidad, planteamiento. Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Chains of factors | Cadenas de factores
+Rates and densities | Razones de cambio y densidades
+Squared and cubed units | Unidades al cuadrado y al cubo
+Units of the result | Unidades del resultado
+Path: d → h → min → s. | Camino: d → h → min → s.
+Map the path first | Primero traza el camino
+each bottom unit cancels the top unit before it | cada unidad de abajo cancela la unidad de arriba anterior
+Convert one unit at a time. | Convierte una unidad a la vez.
+The unit h is on the bottom of km/h, so h goes on top of its factor. | La unidad h está abajo en km/h, así que h va arriba en su factor.
+Square / Cube the whole factor, numbers and units | Eleva al cuadrado / al cubo todo el factor, números y unidades
+Cubic units need the factor cubed, not squared. | Las unidades cúbicas necesitan el factor al cubo, no al cuadrado.
+Follow the path to the end | Sigue el camino hasta el final
+Convert both parts of g/mL | Convierte las dos partes de g/mL
+on the wrong side | del lado equivocado
+Let the units check the setup | Deja que las unidades revisen el planteamiento
+What unit does ... give? | ¿Qué unidad da ...?
+exactly (1 cm³ = 1 mL exactly) | exactamente
+
+## Reading Formulas Practice (1.0.0)
+
+Terms from the live Spanish lesson "Lectura de fórmulas": fórmula, variable, constante, subíndice (etiquetas con nombre), inicial / final, cambio en, final menos inicial, multiplicación implícita, mayúsculas y minúsculas, masa, masa molar, volumen, velocidad, peso. "Times" is "por" and "divided by" is "entre". Formulas and symbols are unchanged. Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Equations (lesson section) | Ecuaciones
+Symbols and subscripts | Símbolos y subíndices
+Formulas in words | Fórmulas en palabras
+Change: final minus initial | Cambio: final menos inicial
+One-step substitution | Sustitución de un paso
+What does d stand for? | ¿Qué representa d?
+How do you read F = ma aloud? | ¿Cómo se lee F = ma en voz alta?
+Case matters. | Las mayúsculas y minúsculas importan.
+capital / lowercase (letter) | mayúscula / minúscula
+Letters side by side mean multiply. | Las letras juntas significan multiplicar.
+fraction bar | barra de fracción
+acceleration due to gravity | aceleración de la gravedad
+gas constant | constante de los gases
+moles of gas | moles de gas
+reference sheet | hoja de referencia
+name tag | etiqueta con nombre
+The negative sign means the temperature decreased. | El signo negativo significa que la temperatura disminuyó.
+warms / cools (temperature) | se calienta / se enfría
+speeds up / slows down | acelera / frena
+Keep 1 decimal place, and include the sign if it is negative. | Conserva 1 lugar decimal e incluye el signo si es negativo.
+backpack, box, large dog | mochila, caja, perro grande
+
+## Rearranging Equations Practice (1.0.0)
+
+Terms from the live Spanish lesson "Despeje de ecuaciones": despejar ("despeja m"), reacomodar, dejar sola la variable, sustituir, operación opuesta, en ambos lados, orden inverso, deshacer, balanza, denominador, el atajo del triángulo, dividir entre. Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Solving for one variable | Despeje de una variable
+The first step | El primer paso
+Rearrange, then calculate | Despeje y cálculo
+Solve d = vt for t. | Despeja t en d = vt.
+This is upside down. | Esto está al revés.
+Undo steps in reverse order. | Deshaz los pasos en orden inverso.
+Divide both sides by v. | Divide ambos lados entre v.
+Subtract 32 from both sides. | Resta 32 en ambos lados.
+one side only | solo en un lado
+An equation is a balance. | Una ecuación es una balanza.
+three-letter formula | fórmula de tres letras
+specific heat | calor específico
+absorbs … of heat | absorbe … de calor
+A thermometer reads 98.6 °F. | Un termómetro marca 98.6 °F.
+a piece of (metal) | un trozo de
+aluminum, copper, iron, lead, mercury, gold, ethanol, silver | aluminio, cobre, hierro, plomo, mercurio, oro, etanol, plata
+Then substitute: | Luego sustituye:
+To 3 significant figures, that is 37.0 °C. | Con 3 cifras significativas, eso es 37.0 °C.
+
+## Substituting with Units Practice (1.0.0)
+
+Terms from the live Spanish lesson "Sustitución con unidades": sustituir, unidad, se cancelan, convierte antes de sustituir, predice la unidad, planteamiento, fuerza neta, trabajo, presión, rapidez (promedio), newton, joule, kelvin, energía cinética (EC). Unit names stay lowercase and unchanged (newton, joule, kelvin); KE is written EC. Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Units in a substitution | Unidades en una sustitución
+Choosing the setup | Elección del planteamiento
+Answers with units | Respuestas con unidades
+Convert, then substitute | Conversión antes de sustituir
+What unit does this substitution leave? | ¿Qué unidad deja esta sustitución?
+kg·m/s², which is a newton (N) | kg·m/s², que es un newton (N)
+Which setup gives … in m/s? | ¿Qué planteamiento da … en m/s?
+Predict the unit. Is the setup right? | Predice la unidad. ¿Es correcto el planteamiento?
+so the setup is right / wrong | así que el planteamiento es correcto / incorrecto
+Work the units: | Calcula las unidades:
+named units / base units | unidades con nombre / unidades base
+Type the unit after the number. | Escribe la unidad después del número.
+container (gas) | recipiente
+toy car | carrito de juguete
+push (a box) | empujar (una caja)
+Change it to kelvin. | Cámbiala a kelvin.
+
+## Direct and Inverse Relationships Practice (1.0.0)
+
+Terms from the live Spanish lesson: relación directa, relación inversa, directamente proporcional, inversamente proporcional, pasa por el origen, se duplica, se triplica, se reduce a la mitad, se reduce a la tercera parte, se multiplica por 4, prueba del producto, constante, lineal, cuadrática (squared), ley de Boyle. The lesson's "prueba de la razón" (ratio test) is not used: the Style Kit keeps "relación" for ratio, and in this lesson "relación" also names the relationship, so the Spanish text writes the test out as "y ÷ x da el mismo valor en todas las filas". In Spanish sentences the variable y is "la variable y", so it is never read as the word "y" (and); formulas keep y ÷ x and x × y. Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Identifying relationships | Identificación de relaciones
+Changing x | Cambios en x
+Finding the constant | Cálculo de la constante
+Predictions | Predicciones
+Squared relationship | Relación cuadrática
+Linear, but not direct | Lineal, pero no directa
+Tests for relationships (reference) | Pruebas para identificar relaciones
+a curve that drops steeply, then flattens out and never touches the axes | una curva que baja de forma pronunciada, luego se aplana y nunca toca los ejes
+a curve that bends upward | una curva que se dobla hacia arriba
+is cut in half / becomes one third (one fourth) as large | se reduce a la mitad / se reduce a la tercera (cuarta) parte
+increases by 2 / decreases by 3 | aumenta en 2 / disminuye en 3
+a graph of y against x | la gráfica de y contra x
+What kind of relationship is this? | ¿Qué tipo de relación es?
+What happens to y? | ¿Qué le pasa a la variable y?
+in every row | en todas las filas
+kelvin temperature | temperatura en kelvin
+distance fallen | distancia de caída
+stretch (spring) | estiramiento
+weights hung on a spring | pesas colgadas de un resorte
+pulled with a force | se jala con una fuerza
+a ball dropped from rest | una pelota que se suelta desde el reposo
+the same trip / average speed | el mismo viaje / rapidez promedio
+
+## Exponents and Logarithms Practice (1.0.0)
+
+Terms from the live Spanish lesson: exponente, logaritmo (log), potencia de diez, base, coeficientes, suma / resta / multiplica los exponentes, potencia de una potencia, exponente cero, exponente negativo, concentración de iones de hidrógeno, tecla LOG, segunda función, lugares decimales, deshaz el log. The calculator key keeps its label: "segunda función: 2nd, LOG". Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Exponent rules | Reglas de los exponentes
+Logarithms | Logaritmos
+Exponent and log rules (reference) | Reglas de exponentes y logaritmos
+Write ... as one power of ten. What is the exponent? | Escribe ... como una sola potencia de diez. ¿Cuál es el exponente?
+Enter only the exponent | Escribe solo el exponente
+top minus bottom | el de arriba menos el de abajo
+Adjust (the coefficient) | Ajusta
+Which number equals ...? | ¿Qué número es igual a ...?
+log(x) is between which two whole numbers? | ¿Entre qué dos números enteros está log(x)?
+Numbers below 1 have negative logs. | Los números menores que 1 tienen logaritmos negativos.
+log asks: 10 to what power? | El log pregunta: ¿10 elevado a qué potencia?
+Check: (bracketing) | Comprobación:
+Use the lesson's rule | Usa la regla de la lección
+precision counts | la precisión cuenta
+Light travels at ... | La luz viaja a ...
+How long does it take? | ¿Cuánto tarda?
 
 ## AP Chemistry Unit 9 Practice (1.0.0)
 

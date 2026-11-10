@@ -8,8 +8,8 @@ const M = require("../../shared/zsa-practice-model.js");
 const ACTIVITIES = require("../support/qs-activities.js");
 const AXE = fs.readFileSync(require.resolve("axe-core/axe.min.js"), "utf8");
 const strip = html => html.replace(/<\/?su[bp]>/g, "");
-// Common English words that must not be left on a Spanish page (unit symbols and numbers are fine).
-const ENGLISH = /\b(?:the|and|your|answer|question|questions|correct|incorrect|round|rounded|significant|figures?|choose|start|practice|topic|next|results|mixed|review|try|again|unit|number|type|with|count|has|keep|rules?|zeros?|places?|digits?|reference|instructions|share|close|check|see|set|complete|back|lesson|scientific|notation|write|use|first|end|only|when|there|is|are|of|to|in|for|from)\b/i;
+// Common English words that must not be left on a Spanish page (unit symbols such as in, min and h, and numbers, are fine).
+const ENGLISH = /\b(?:the|and|your|answer|question|questions|correct|incorrect|round|rounded|significant|figures?|choose|start|practice|topic|next|results|mixed|review|try|again|unit|number|type|with|count|has|keep|rules?|zeros?|places?|digits?|reference|instructions|share|close|check|see|set|complete|back|lesson|scientific|notation|write|use|first|end|only|when|there|is|are|of|to|for|from)\b/i;
 
 async function audit(page) {
   await page.evaluate(AXE);
@@ -38,7 +38,7 @@ for (const a of ACTIVITIES) {
   const current = async page => bank.rebuild(await el(page, "play").getAttribute("data-question-id"));
   async function answer(page, q, right = true) {
     if (q.type === "mc") await page.locator('input[name="answer"][value="' + (right ? 0 : 1) + '"]').check();
-    else await el(page, "value").fill(right ? q.display : "987654321");
+    else await el(page, "value").fill(right ? q.display : "987654321" + (q.check && q.check.unit === "required" && q.unit ? " " + q.unit : ""));
     await el(page, "check").click();
   }
   async function start(page, topic) { await el(page, "topic").selectOption(topic); await el(page, "start").click(); }
