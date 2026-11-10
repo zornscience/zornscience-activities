@@ -38,7 +38,7 @@ for (const a of ACTIVITIES) {
   const current = async page => bank.rebuild(await el(page, "play").getAttribute("data-question-id"));
   async function answer(page, q, right = true) {
     if (q.type === "mc") await page.locator('input[name="answer"][value="' + (right ? 0 : 1) + '"]').check();
-    else await el(page, "value").fill(right ? q.display : "987654321");
+    else await el(page, "value").fill(right ? q.display : "987654321" + (q.check && q.check.unit === "required" && q.unit ? " " + q.unit : ""));
     await el(page, "check").click();
   }
   async function start(page, topic) { await el(page, "topic").selectOption(topic); await el(page, "start").click(); }

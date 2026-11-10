@@ -283,6 +283,82 @@ Let the units check the setup | Deja que las unidades revisen el planteamiento
 What unit does ... give? | ¿Qué unidad da ...?
 exactly (1 cm³ = 1 mL exactly) | exactamente
 
+## Reading Formulas Practice (1.0.0)
+
+Terms from the live Spanish lesson "Lectura de fórmulas": fórmula, variable, constante, subíndice (etiquetas con nombre), inicial / final, cambio en, final menos inicial, multiplicación implícita, mayúsculas y minúsculas, masa, masa molar, volumen, velocidad, peso. "Times" is "por" and "divided by" is "entre". Formulas and symbols are unchanged. Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Equations (lesson section) | Ecuaciones
+Symbols and subscripts | Símbolos y subíndices
+Formulas in words | Fórmulas en palabras
+Change: final minus initial | Cambio: final menos inicial
+One-step substitution | Sustitución de un paso
+What does d stand for? | ¿Qué representa d?
+How do you read F = ma aloud? | ¿Cómo se lee F = ma en voz alta?
+Case matters. | Las mayúsculas y minúsculas importan.
+capital / lowercase (letter) | mayúscula / minúscula
+Letters side by side mean multiply. | Las letras juntas significan multiplicar.
+fraction bar | barra de fracción
+acceleration due to gravity | aceleración de la gravedad
+gas constant | constante de los gases
+moles of gas | moles de gas
+reference sheet | hoja de referencia
+name tag | etiqueta con nombre
+The negative sign means the temperature decreased. | El signo negativo significa que la temperatura disminuyó.
+warms / cools (temperature) | se calienta / se enfría
+speeds up / slows down | acelera / frena
+Keep 1 decimal place, and include the sign if it is negative. | Conserva 1 lugar decimal e incluye el signo si es negativo.
+backpack, box, large dog | mochila, caja, perro grande
+
+## Rearranging Equations Practice (1.0.0)
+
+Terms from the live Spanish lesson "Despeje de ecuaciones": despejar ("despeja m"), reacomodar, dejar sola la variable, sustituir, operación opuesta, en ambos lados, orden inverso, deshacer, balanza, denominador, el atajo del triángulo, dividir entre. Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Solving for one variable | Despeje de una variable
+The first step | El primer paso
+Rearrange, then calculate | Despeje y cálculo
+Solve d = vt for t. | Despeja t en d = vt.
+This is upside down. | Esto está al revés.
+Undo steps in reverse order. | Deshaz los pasos en orden inverso.
+Divide both sides by v. | Divide ambos lados entre v.
+Subtract 32 from both sides. | Resta 32 en ambos lados.
+one side only | solo en un lado
+An equation is a balance. | Una ecuación es una balanza.
+three-letter formula | fórmula de tres letras
+specific heat | calor específico
+absorbs … of heat | absorbe … de calor
+A thermometer reads 98.6 °F. | Un termómetro marca 98.6 °F.
+a piece of (metal) | un trozo de
+aluminum, copper, iron, lead, mercury, gold, ethanol, silver | aluminio, cobre, hierro, plomo, mercurio, oro, etanol, plata
+Then substitute: | Luego sustituye:
+To 3 significant figures, that is 37.0 °C. | Con 3 cifras significativas, eso es 37.0 °C.
+
+## Substituting with Units Practice (1.0.0)
+
+Terms from the live Spanish lesson "Sustitución con unidades": sustituir, unidad, se cancelan, convierte antes de sustituir, predice la unidad, planteamiento, fuerza neta, trabajo, presión, rapidez (promedio), newton, joule, kelvin, energía cinética (EC). Unit names stay lowercase and unchanged (newton, joule, kelvin); KE is written EC. Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Units in a substitution | Unidades en una sustitución
+Choosing the setup | Elección del planteamiento
+Answers with units | Respuestas con unidades
+Convert, then substitute | Conversión antes de sustituir
+What unit does this substitution leave? | ¿Qué unidad deja esta sustitución?
+kg·m/s², which is a newton (N) | kg·m/s², que es un newton (N)
+Which setup gives … in m/s? | ¿Qué planteamiento da … en m/s?
+Predict the unit. Is the setup right? | Predice la unidad. ¿Es correcto el planteamiento?
+so the setup is right / wrong | así que el planteamiento es correcto / incorrecto
+Work the units: | Calcula las unidades:
+named units / base units | unidades con nombre / unidades base
+Type the unit after the number. | Escribe la unidad después del número.
+container (gas) | recipiente
+toy car | carrito de juguete
+push (a box) | empujar (una caja)
+Change it to kelvin. | Cámbiala a kelvin.
+
 ## AP Chemistry Unit 9 Practice (1.0.0)
 
 Uses the supplied AP glossary, including entropía absoluta, energía libre de Gibbs, favorabilidad termodinámica, termodinámicamente favorable, control cinético, control termodinámico, reacciones acopladas, celda galvánica (voltaica), celda electrolítica, ánodo, cátodo, puente salino, semirreacción, potencial estándar de reducción, potencial de celda, constante de Faraday, electrólisis and ley de Faraday. Formulas, state symbols, unit symbols and decimal points are preserved. New activity wording beyond the supplied glossary:
