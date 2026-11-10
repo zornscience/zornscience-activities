@@ -1,6 +1,8 @@
 # Rearranging Equations Practice testing
 
-Version: 1.0.0
+Version: 1.1.0
+
+`tests/unit/zsa-formula.test.js` covers the typed-equation reader and judge: spellings, mistakes and notes, the parentheses note, subscripts, every unreadable reason with its message values, case, exact decimals, 4,000 random strings that must never throw, all 20 typed cases (the key in other spellings and every trap), the lesson's keys, and a differential check against the independent reader in `tests/support/equation-equivalence.js` on more than 400 candidates. `tests/e2e/qs-formula.spec.js` plays a typed question in English and Spanish: field, label, hint and help, unreadable answers that stay open and unscored, an equivalent form, a trap's note, keyboard only, axe-core in each state and 320 px.
 
 ## Generators (Node)
 

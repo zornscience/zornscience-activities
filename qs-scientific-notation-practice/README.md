@@ -1,6 +1,6 @@
 # Scientific Notation Practice
 
-Version: 1.0.0
+Version: 1.0.1
 
 Generated practice for the Quantitative Skills lesson [Scientific Notation](https://zornscience.org/science/quantitative-skills/numbers/scientific-notation/). Every set has new numbers. Three skills: writing numbers in scientific notation, writing them back in standard notation, and reading scientific notation. A skill gives 8 questions; Mixed review gives 12, four of each. English: `/qs-scientific-notation-practice/`. Mexican Spanish: `/qs-scientific-notation-practice/?lang=es`.
 
@@ -37,6 +37,8 @@ Significant figures are advice here: the coefficient should keep the number's di
 Runs on the shared question-set engine with the generated-bank options (`../shared/README.md`). Native controls only, so Tab, arrow keys, Enter and Space work as usual. Spanish follows the live lesson and the Style Kit: notación científica, notación estándar, exponente positivo / negativo, punto decimal, dígito distinto de cero, "llena los lugares vacíos con ceros". New wording is in `../SPANISH_TERMS.md`.
 
 ## Changelog
+
+1.0.1: Patch bump for the shared practice engine (`shared/zsa-practice.js`), which gained an opt-in typed-equation question type used only by Rearranging Equations Practice. This page does not load the equation reader and its questions, scoring and text are unchanged.
 
 1.0.0: Six generators in three skills, required notation with specific feedback, rules reference, About/SEO/sitemap and directory entries, English and Mexican Spanish.
 

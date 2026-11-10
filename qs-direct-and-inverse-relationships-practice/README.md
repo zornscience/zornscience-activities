@@ -1,6 +1,6 @@
 # Direct and Inverse Relationships Practice
 
-Version: 1.0.0
+Version: 1.0.1
 
 Generated practice for the Quantitative Skills lesson [Direct and Inverse Relationships](https://zornscience.org/science/quantitative-skills/graphs-and-change/direct-and-inverse-relationships/). Every set has new numbers. Four skills: identifying relationships, changing x, finding the constant, and predictions. A skill gives 8 questions; Mixed review gives 12, three of each. English: `/qs-direct-and-inverse-relationships-practice/`. Mexican Spanish: `/qs-direct-and-inverse-relationships-practice/?lang=es`.
 
@@ -47,6 +47,8 @@ Prediction rounding follows the given measurements; whole kelvin, kPa and km/h s
 Runs on the shared question-set engine (`../shared/zsa-practice.js`) with the generated-bank options described in `../shared/README.md`. Native controls only: the topic menu, radio buttons, one text field and buttons, so Tab, arrow keys, Enter and Space work as usual; question and results headings take focus, feedback is announced, and the language links and dialogs follow the shared header. Spanish follows the live lesson and the Style Kit: relación directa, relación inversa, directamente proporcional, inversamente proporcional, pasa por el origen, se duplica, se triplica, se reduce a la mitad, se reduce a la tercera parte, se multiplica por 4, prueba del producto, constante, lineal, cuadrática, ley de Boyle, gráfica, tabla de datos, rapidez, energía cinética. The lesson's "prueba de la razón" is not used, because the glossary keeps "relación" for ratio and the same word names the relationship; Spanish text says "y ÷ x" instead. New wording is in `../SPANISH_TERMS.md`.
 
 ## Changelog
+
+1.0.1: Patch bump for the shared practice engine (`shared/zsa-practice.js`), which gained an opt-in typed-equation question type used only by Rearranging Equations Practice. This page does not load the equation reader and its questions, scoring and text are unchanged.
 
 1.0.0: Nine generators in four skills, tables in plain and science contexts, specific feedback for common mistakes, reference of the lesson's tests, About/SEO/sitemap and directory entries, English and Mexican Spanish.
 

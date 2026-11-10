@@ -1,6 +1,6 @@
 # Substituting with Units Practice
 
-Version: 1.0.0
+Version: 1.0.1
 
 Generated practice for the Quantitative Skills lesson [Substituting with Units](https://zornscience.org/science/quantitative-skills/equations/substituting-with-units/). Every set has new numbers. Four skills: units in a substitution, choosing the setup, answers with units, and converting before substituting. A skill gives 8 questions; Mixed review gives 12, three of each. English: `/qs-substituting-with-units-practice/`. Mexican Spanish: `/qs-substituting-with-units-practice/?lang=es`.
 
@@ -46,6 +46,8 @@ Answers are judged by `M.judge` in `../shared/zsa-practice-model.js` with exact 
 Runs on the shared question-set engine (`../shared/zsa-practice.js`) with the generated-bank options described in `../shared/README.md`. Native controls only. Spanish follows the live lesson "Sustitución con unidades" and the Style Kit: sustituir, unidad, se cancelan, convierte antes de sustituir, predice la unidad, planteamiento, fuerza neta, trabajo, presión, rapidez (promedio), newton, joule, kelvin, energía cinética (EC). New wording is in `../SPANISH_TERMS.md`.
 
 ## Changelog
+
+1.0.1: Patch bump for the shared practice engine (`shared/zsa-practice.js`), which gained an opt-in typed-equation question type used only by Rearranging Equations Practice. This page does not load the equation reader and its questions, scoring and text are unchanged.
 
 1.0.0: Ten generators in four skills, required units with named-unit equivalents, advisory significant figures, specific feedback for skipped conversions and °C, lesson reference, About/SEO/sitemap and directory entries, English and Mexican Spanish.
 

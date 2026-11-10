@@ -8,6 +8,9 @@
     root.dispatchEvent(new CustomEvent("zsa:request-model", {detail:{receive:function (api) { M = api; }}}));
     root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail:{receive:function (api) { i18n = api; }}}));
     if (!bank || !M || !i18n) return;
+    // Only pages that load shared/zsa-formula.js can ask typed-equation questions (q.type "formula").
+    var F;
+    root.dispatchEvent(new CustomEvent("zsa:request-formula", {detail:{receive:function (api) { F = api; }}}));
     var t = i18n.text, set = [], index = 0, records = [], answered = false, activeTopic = bank.topics[0].id;
     // A bank with generate(topic, model, random) makes new questions for every set (the Quantitative Skills sets).
     // Its questions carry a check object and are judged by M.judge; fixed banks keep M.inspect and the unit menu.
@@ -81,6 +84,13 @@
       $("value").value = ""; $("value").disabled = false; $("value").removeAttribute("aria-invalid");
       $("unit").value = ""; $("unit").disabled = false; $("unit").removeAttribute("aria-invalid");
       $("options").replaceChildren();
+      if ($("formula")) {
+        // The typed-equation block exists only on pages with a formula bank; its hint names the letters to use.
+        $("formula").hidden = q.type !== "formula";
+        $("equation").value = ""; $("equation").disabled = false; $("equation").removeAttribute("aria-invalid");
+        $("formula-hint").replaceChildren();
+        if (q.type === "formula") chemistry($("formula-hint"), local(q.instruction));
+      }
       if (q.type === "mc") {
         item.order.forEach(function (choiceIndex, displayIndex) {
           var input = node("input"); input.type = "radio"; input.name = "answer"; input.value = String(choiceIndex);
@@ -89,6 +99,8 @@
           label.appendChild(input); label.appendChild(chemistry(node("span"), local(q.choices[choiceIndex].text)));
           $("options").appendChild(label);
         });
+      } else if (q.type === "formula") {
+        $("unit").parentNode.hidden = true;
       } else if (q.check) {
         // Generated questions: the unit is typed with the number, and the line under the question is the bank's own
         // instruction, or nothing when deciding the precision is the skill being practiced.
@@ -111,6 +123,13 @@
         chosen = $("options").querySelector("input:checked");
         if (!chosen) { $("error").textContent = t("Select an answer first."); $("options").querySelector("input").focus(); return; }
         result = {correct:Number(chosen.value) === q.answer};
+      } else if (q.type === "formula") {
+        $("equation").removeAttribute("aria-invalid");
+        result = F.judge(q, $("equation").value);
+        if (!result.valid) {
+          $("error").textContent = t(F.messages[result.reason], result.values);
+          $("equation").setAttribute("aria-invalid", "true"); $("equation").focus(); return;
+        }
       } else if (q.check) {
         $("value").removeAttribute("aria-invalid");
         result = M.judge(q, $("value").value);
@@ -130,6 +149,7 @@
       }
       answered = true; records.push({question:q, correct:result.correct});
       $("check").disabled = true; $("choices").disabled = true; $("value").disabled = true; $("unit").disabled = true;
+      if ($("equation")) $("equation").disabled = true;
       var message = result.correct ? "Correct." : "Incorrect.";
       if (q.type === "numeric" && result.correct && !result.precisionOK) message = q.precision.sf ? "Correct value; check significant figures." : "Correct value; check decimal places.";
       $("feedback").className = "zsa-panel zsa-practice-feedback " + (result.correct ? "is-correct" : "is-wrong");
@@ -140,6 +160,8 @@
           if (Number(input.value) === q.answer) input.parentNode.classList.add("is-correct");
           else if (input.checked) input.parentNode.classList.add("is-wrong");
         });
+      } else if (q.type === "formula") {
+        result.notes.forEach(function (note) { $("feedback").appendChild(chemistry(node("p"), local(note))); });
       } else if (q.check) {
         result.notes.forEach(function (note) { $("feedback").appendChild(chemistry(node("p"), local(note))); });
       } else {

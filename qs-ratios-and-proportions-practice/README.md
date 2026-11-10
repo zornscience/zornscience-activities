@@ -1,6 +1,6 @@
 # Ratios and Proportions Practice
 
-Version: 1.0.0
+Version: 1.0.1
 
 Generated practice for the Quantitative Skills lesson [Ratios and Proportions](https://zornscience.org/science/quantitative-skills/ratios-and-percents/ratios-and-proportions/). Every set has new numbers. Three skills: writing and simplifying ratios, solving proportions, and mole ratios. A skill gives 8 questions; Mixed review gives 12, four of each. English: `/qs-ratios-and-proportions-practice/`. Mexican Spanish: `/qs-ratios-and-proportions-practice/?lang=es`.
 
@@ -43,6 +43,8 @@ Specific feedback for the lesson's warnings:
 Runs on the shared question-set engine (`../shared/zsa-practice.js`) with the generated-bank options described in `../shared/README.md`. Native controls only: the topic menu, radio buttons, one text field and buttons, so Tab, arrow keys, Enter and Space work as usual; question and results headings take focus, feedback is announced, and the language links and dialogs follow the shared header. Spanish follows the Style Kit glossary: relación for ratio and relación molar for mole ratio (the live Spanish lesson says razón; its title, Razones y proporciones, is kept where the lesson is named), proporción, multiplicar en cruz, incógnita, coeficiente, ecuación balanceada. New wording is in `../SPANISH_TERMS.md`.
 
 ## Changelog
+
+1.0.1: Patch bump for the shared practice engine (`shared/zsa-practice.js`), which gained an opt-in typed-equation question type used only by Rearranging Equations Practice. This page does not load the equation reader and its questions, scoring and text are unchanged.
 
 1.0.0: Eight generators in three skills, advisory significant figures, specific feedback for common mistakes, rules reference, About/SEO/sitemap and directory entries, English and Mexican Spanish.
 

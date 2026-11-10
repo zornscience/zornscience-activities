@@ -1,6 +1,6 @@
 # Percent Error and Percent Change Practice
 
-Version: 1.0.0
+Version: 1.0.1
 
 Generated practice for the Quantitative Skills lesson [Percent Error and Percent Change](https://zornscience.org/science/quantitative-skills/ratios-and-percents/percent-error-and-percent-change/). Every set has new numbers. Three skills: percent error, percent change, and setups and signs. A skill gives 8 questions; Mixed review gives 12, four of each. English: `/qs-percent-error-and-percent-change-practice/`. Mexican Spanish: `/qs-percent-error-and-percent-change-practice/?lang=es`.
 
@@ -40,6 +40,8 @@ Specific feedback for the lesson's warnings:
 Runs on the shared question-set engine (`../shared/zsa-practice.js`) with the generated-bank options described in `../shared/README.md`. Native controls only: the topic menu, radio buttons, one text field and buttons, so Tab, arrow keys, Enter and Space work as usual; question and results headings take focus, feedback is announced, and the language links and dialogs follow the shared header. Spanish follows the Style Kit glossary: porcentaje de error for percent error (the live lesson says error porcentual; its title, Error porcentual y cambio porcentual, is kept where the lesson is named), cambio porcentual, valor aceptado, valor medido, valor absoluto, nuevo, original, aumento, disminución. New wording is in `../SPANISH_TERMS.md`.
 
 ## Changelog
+
+1.0.1: Patch bump for the shared practice engine (`shared/zsa-practice.js`), which gained an opt-in typed-equation question type used only by Rearranging Equations Practice. This page does not load the equation reader and its questions, scoring and text are unchanged.
 
 1.0.0: Seven generators in three skills, advisory significant figures that follow the difference, a scored sign for percent change, specific feedback for common mistakes, rules reference, About/SEO/sitemap and directory entries, English and Mexican Spanish.
 

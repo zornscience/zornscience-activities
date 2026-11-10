@@ -326,7 +326,7 @@ speeds up / slows down | acelera / frena
 Keep 1 decimal place, and include the sign if it is negative. | Conserva 1 lugar decimal e incluye el signo si es negativo.
 backpack, box, large dog | mochila, caja, perro grande
 
-## Rearranging Equations Practice (1.0.0)
+## Rearranging Equations Practice (1.1.0)
 
 Terms from the live Spanish lesson "Despeje de ecuaciones": despejar ("despeja m"), reacomodar, dejar sola la variable, sustituir, operación opuesta, en ambos lados, orden inverso, deshacer, balanza, denominador, el atajo del triángulo, dividir entre. Additional wording:
 
@@ -343,6 +343,17 @@ Subtract 32 from both sides. | Resta 32 en ambos lados.
 one side only | solo en un lado
 An equation is a balance. | Una ecuación es una balanza.
 three-letter formula | fórmula de tres letras
+Your equation | Tu ecuación
+Type your answer as an equation. | Escribe tu respuesta como una ecuación.
+Write an equation with t alone on one side. Letters you can use: d, v and t. | Escribe una ecuación con t sola en un lado. Letras que puedes usar: d, v y t.
+(type vf) | (escribe vf)
+Type your equation first. | Primero escribe tu ecuación.
+Write one equation with a single equals sign, like t = d/v. | Escribe una ecuación con un solo signo igual, como t = d/v.
+Get t alone on one side of the equals sign, and leave it out of the other side. | Deja t sola en un lado del signo igual y quítala del otro lado.
+The letter w is not in this problem. Use only: d, v, t. | La letra w no está en este problema. Usa solo: d, v, t.
+Check your parentheses: each ( needs a ). | Revisa tus paréntesis: cada ( necesita un ).
+Almost: write parentheses around what is on the bottom of the fraction. | Casi: escribe paréntesis alrededor de lo que está abajo de la fracción.
+That is not the same as the answer. Check that you did the same step to both sides. | Eso no es igual a la respuesta. Revisa que hayas hecho el mismo paso en ambos lados.
 specific heat | calor específico
 absorbs … of heat | absorbe … de calor
 A thermometer reads 98.6 °F. | Un termómetro marca 98.6 °F.
