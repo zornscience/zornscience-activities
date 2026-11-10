@@ -228,8 +228,8 @@
   //   unit        the unit symbol shown in the answer, or null; accept: every spelling of it (symbols and names)
   //   check       {sf:"strict" | "advice", form:"sci" | "plain" | "any", unit:"required" | "optional"}
   //   traps       [{answer, note:{en, es}}]: wrong values from known mistakes, each with its own feedback
-  // A value is right when it equals the correctly rounded answer, or has more digits than asked that are within one
-  // unit of their last digit of the exact answer and round to the right one. Fewer digits that are the exact answer rounded there are "rounded too far".
+  // A value is right when it equals the correctly rounded answer, or has more digits than asked that are either the
+  // exact answer correctly rounded at their last digit, or within one unit of it and round to the right answer. Fewer digits that are the exact answer rounded there are "rounded too far".
   // With sf "strict" the precision must also match.
   function judge(q, raw) {
     var r = read(raw), check = q.check || {}, notes = [], P = q.precision || {exact:true};
@@ -248,12 +248,13 @@
       valueOK = cmp(v, A) === 0; precisionOK = v.d === 1n;
       if (valueOK && !precisionOK) notes.push(note("whole", {}));
     } else {
-      // Right: the correctly rounded answer, or more digits (within one unit of the last one, so a cut-off calculator
-      // value counts) that round to it.
+      // Right: the correctly rounded answer, or more digits that are the exact answer correctly rounded there (255 for
+      // 254.79 when two figures were asked: rounding 255 again would give 260), or more digits within one unit of their
+      // last one that round to it (a cut-off calculator value).
       // Rounded too far: fewer digits, but the exact answer rounded half up at that digit (9.5 to one figure is 10, not 9).
       var equal = cmp(v, R.value) === 0, want = P.sf ? figures(P.sf) : places(P.decimals);
       var finer = P.sf ? r.sf > P.sf : r.place < -P.decimals, coarser = P.sf ? r.sf < P.sf : r.place > -P.decimals;
-      valueOK = equal || (finer && cmp(abs(sub(v, A)), scale(r.place)) <= 0 && cmp(rounded(v, P).value, R.value) === 0);
+      valueOK = equal || (finer && (cmp(roundAt(A, r.place), v) === 0 || (cmp(abs(sub(v, A)), scale(r.place)) <= 0 && cmp(rounded(v, P).value, R.value) === 0)));
       precisionOK = P.sf ? r.sf === P.sf : r.place === -P.decimals;
       if (valueOK && !precisionOK) {
         if (finer) notes.push(note("many", {figures:want}));

@@ -35,7 +35,8 @@ function common(M, q) {
   pair(q.answerText, q.id + " answer text");
   const right = M.judge(q, q.display);
   assert.ok(right.valid && right.correct && right.precisionOK, q.id + " accepts its own answer " + q.display + " " + JSON.stringify(right.notes));
-  assert.equal(M.judge(q, "987654321").correct, false, q.id + " rejects a wild guess");
+  const guess = "987654321" + (q.check && q.check.unit === "required" && q.unit ? " " + q.unit : "");
+  assert.equal(M.judge(q, guess).correct, false, q.id + " rejects a wild guess");
   (q.traps || []).forEach(t => pair(t.note, q.id + " trap", false));
 }
 module.exports = {rng, pair, common, numbers};

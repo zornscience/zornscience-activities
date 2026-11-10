@@ -252,6 +252,13 @@ test("judging accepts equivalent forms and separates value, unit, form and preci
   assert.equal(M.judge({answer:"2/3", precision:{sf:3}, unit:null, check:{}}, "0.66666").correct, true, "extra digits that round to the answer");
   assert.equal(M.judge({answer:"2/3", precision:{sf:3}, unit:null, check:{}}, "0.6666").valueOK, true);
   assert.equal(M.judge({answer:"2/3", precision:{sf:3}, unit:null, check:{}}, "0.665").valueOK, false);
+  // Double rounding: 255 is 254.79 correctly rounded to 3 figures, so it is the right value with an extra figure,
+  // even though rounding 255 again to 2 figures would give 260.
+  const twice = {answer:"254.79", precision:{sf:2}, unit:null, check:{}};
+  assert.ok(M.judge(twice, "250").correct && M.judge(twice, "250").precisionOK);
+  assert.ok(M.judge(twice, "255").correct && M.judge(twice, "255").notes[0].en === "Round to 2 significant figures.");
+  assert.equal(M.judge({...twice, check:{sf:"strict"}}, "255").correct, false);
+  assert.equal(M.judge(twice, "256").correct, false);
 
   // Exact counts and words after them.
   const count = {answer:"3", precision:{exact:true}, unit:null, accept:["sig figs", "significant figures", "cifras significativas"], check:{}};
