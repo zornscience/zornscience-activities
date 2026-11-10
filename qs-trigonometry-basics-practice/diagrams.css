@@ -1,0 +1,8 @@
+/* Trigonometry Basics Practice: the labeled right triangle shown with some questions. Scoped to this page. */
+.zsa-qtb .zsa-qtb-triangle {margin:12px 0 16px; max-width:340px;}
+.zsa-qtb .zsa-qtb-triangle svg {display:block; width:100%; height:auto; overflow:visible;}
+.zsa-qtb .zsa-qtb-triangle text {fill:var(--zsa-navy); font:italic 20px Georgia, "Times New Roman", serif; text-anchor:middle;}
+.zsa-qtb .zsa-qtb-side {fill:var(--zsa-sky); stroke:var(--zsa-navy); stroke-width:2.5; stroke-linejoin:round;}
+.zsa-qtb .zsa-qtb-mark {fill:none; stroke:var(--zsa-navy); stroke-width:1.5;}
+.zsa-qtb .zsa-qtb-other {stroke-dasharray:3 3;}
+.zsa-qtb .zsa-qtb-triangle figcaption {margin-top:4px; font-size:var(--zsa-text-sm); color:var(--zsa-slate);}

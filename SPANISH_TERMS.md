@@ -156,6 +156,57 @@ the answer keeps n significant figures | la respuesta conserva n cifras signific
 standard mass; standard rod | pesa patrón; barra patrón
 acceleration due to gravity | aceleración debida a la gravedad
 speed of sound; specific heat | rapidez del sonido; calor específico
+## Trigonometry Basics Practice (1.0.0)
+
+Terms from the live Spanish lesson (Conceptos básicos de trigonometría): triángulo rectángulo, ángulo recto, hipotenusa, lado opuesto, lado adyacente, cateto, seno (sen θ, sen⁻¹), coseno, tangente, función trigonométrica inversa, modo de grados, radianes. Calculator keys stay SIN, COS, TAN and 2nd. SOH CAH TOA keeps its English expansion, marked `lang="en"`. Ratio is relación (Style Kit glossary), where the lesson says razón and razones trigonométricas. Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Naming the sides (topic) | Identificación de los lados
+Finding a side (topic) | Cálculo de un lado
+Finding an angle (topic) | Cálculo de un ángulo
+Round to the nearest degree. | Redondea al grado más cercano.
+across from θ | frente a θ
+the leg next to θ | el cateto junto a θ
+the other acute angle, at the top of the triangle | el otro ángulo agudo, en la parte de arriba del triángulo
+on top of / on the bottom of the ratio | en el numerador / en el denominador de la relación
+opposite over adjacent | opuesto entre adyacente
+The −1 means undo, not 1 over. | El −1 significa deshacer, no 1 entre.
+That ratio is upside down. | Esa relación está invertida.
+Memory aid: | Para recordar (en inglés):
+Not to scale. | No está a escala.
+kite | papalote
+ladder | escalera
+wheelchair ramp | rampa para silla de ruedas
+rise (of a ramp or roof) | subida
+line of sight | línea de visión
+the wrong trig function | la función trigonométrica equivocada
+Which expression gives θ? | ¿Qué expresión da el valor de θ?
+
+## Vectors Practice (1.0.0)
+
+Terms from the live Spanish lesson (Vectores): vector, escalar, magnitud, dirección, resultante, de punta a cola, cola, punta, desplazamiento, velocidad, rapidez, fuerza neta, perpendiculares, teorema de Pitágoras, componente horizontal, componente vertical, al norte del este, al sur del este, sobre la horizontal; components are written R sen θ. The topic title follows the glossary (componentes de vectores). Additional wording:
+
+English | Mexican Spanish
+--- | ---
+Scalars and vectors (topic) | Escalares y vectores
+Same and opposite directions (topic) | Misma dirección y direcciones opuestas
+Perpendicular vectors (topic) | Vectores perpendiculares
+has a size only | solo tiene magnitud
+15 N upward, 15 N downward | 15 N hacia arriba, 15 N hacia abajo
+7 N east (a direction after a vector) | 7 N al este
+points east | apunta hacia el este
+1 square = 10 N (arrow scale) | 1 cuadro = 10 N
+37° south of west | 37° al sur del oeste
+25° east of north | 25° al este del norte
+at 25° from the vertical | con un ángulo de 25° respecto a la vertical
+east component | componente hacia el este
+sine and cosine switch | el seno y el coseno se intercambian
+Measure from east | Mide desde el este
+relative to the water, relative to the shore | respecto al agua, respecto a la orilla
+tug of war | competencia de jalar la cuerda
+hiker | excursionista
+wagon | carrito
 
 ## AP Chemistry Unit 9 Practice (1.0.0)
 

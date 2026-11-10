@@ -214,6 +214,14 @@ module.exports = {
     en: "Practice significant figures with new numbers every set: count them, round, and use the rules for calculations, with instant feedback in English or Spanish.",
     es: "Practica cifras significativas con números nuevos en cada serie: cuéntalas, redondea y usa las reglas de los cálculos, con retroalimentación inmediata."
   },
+  "qs-trigonometry-basics-practice": {
+    en: "Practice right triangle trigonometry with new numbers every set: name the sides, use SOH CAH TOA, and find sides and angles, with instant feedback.",
+    es: "Practica trigonometría del triángulo rectángulo con números nuevos en cada serie: identifica los lados, usa SOH CAH TOA y calcula lados y ángulos."
+  },
+  "qs-vectors-practice": {
+    en: "Practice vectors with new numbers every set: scalars and vectors, adding in a line and at right angles, and components, with instant feedback.",
+    es: "Practica vectores con números nuevos en cada serie: escalares y vectores, suma en una línea y perpendicular, y componentes, con retroalimentación inmediata."
+  },
   "reaction-energy-lab": {
     en: "Build energy diagrams, explore heating and cooling curves, and calculate reaction enthalpy with stoichiometry, bonds, formation data and Hess's law.",
     es: "Construye diagramas de energía, explora curvas de calentamiento y enfriamiento y calcula la entalpía de reacción con enlaces, formación y la ley de Hess."

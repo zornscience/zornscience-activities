@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<title>Vectors Practice | ZornScience</title>
+<meta name="description" content="Practice vectors with new numbers every set: scalars and vectors, adding in a line and at right angles, and components, with instant feedback." data-zsa-es="Practica vectores con números nuevos en cada serie: escalares y vectores, suma en una línea y perpendicular, y componentes, con retroalimentación inmediata.">
+<link rel="canonical" href="https://activities.zornscience.org/qs-vectors-practice/">
+<link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-vectors-practice/">
+<link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-vectors-practice/?lang=es">
+<link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-vectors-practice/">
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-practice.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-practice-model.js?v=1.0.0" defer></script>
+<script src="data.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-practice.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-header.js?v=1.0.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.0.0"><script src="../shared/zsa-about.js?v=1.0.0" defer></script></head>
+<body>
+<main class="zsa zsa-qve zsa-practice" data-zsa-activity="qs-vectors-practice" data-zsa-practice="zsa-qve">
+<header data-zsa-header>
+<div data-zsa-header-row>
+<div data-zsa-header-identity><a data-zsa-header-brand href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png" width="34" height="33" alt=""></a><h1>Vectors Practice</h1></div>
+<nav data-zsa-header-tools aria-label="Activity tools"><div>
+<button class="zsa-btn" type="button" data-zsa-dialog-open="zsa-header-instructions" aria-haspopup="dialog" aria-controls="zsa-header-instructions">Instructions</button>
+<button class="zsa-btn" type="button" data-zsa-chrome data-zsa-dialog-open="zsa-header-share" aria-label="Share activity" aria-haspopup="dialog" aria-controls="zsa-header-share"><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button>
+</div></nav>
+</div>
+</header>
+<dialog class="zsa-header-dialog" id="zsa-header-instructions" aria-labelledby="zsa-header-instructions-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-header-instructions-title">Instructions</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close instructions" autofocus>Close</button></div>
+<ol>
+<li>Choose a skill, then start. Mixed review includes all four skills.</li>
+<li>Type your answer as a number. A unit after it is optional, like 8.6 m/s or 37°.</li>
+<li>Round to 2 significant figures, or angles to the nearest degree, when a question says so. Keep your calculator in degree mode.</li>
+<li>Submit once per question and read the feedback. Try again gives you new numbers.</li>
+</ol>
+</dialog>
+<dialog class="zsa-header-dialog" id="zsa-header-share" aria-labelledby="zsa-header-share-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-header-share-title">Share this activity</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close share options" autofocus>Close</button></div>
+<p>Share a fresh activity. Your answers and results are not included.</p>
+<label for="zsa-header-share-url">Share link</label><div class="zsa-header-share-link"><input id="zsa-header-share-url" type="text" readonly spellcheck="false"><button class="zsa-btn" type="button" data-zsa-share-copy>Copy link</button></div>
+<a data-zsa-share-email href="#">Email</a><p data-zsa-share-status role="status" aria-live="polite"></p>
+</dialog>
+<noscript><p class="zsa-panel">This activity needs JavaScript. / Esta actividad necesita JavaScript.</p></noscript>
+<section id="zsa-qve-setup" class="zsa-card" aria-labelledby="zsa-qve-setup-title">
+<p class="zsa-eyebrow">Quantitative Skills · Advanced Tools</p>
+<h2 id="zsa-qve-setup-title">New numbers every set.</h2>
+<p>Choose one skill for 8 questions, or Mixed review for 12. Every set has new numbers.</p>
+<div class="zsa-qve-settings zsa-practice-settings"><div><label for="zsa-qve-topic">Topic</label><select id="zsa-qve-topic"></select></div><button class="zsa-btn zsa-btn--primary" id="zsa-qve-start" type="button">Start practice</button></div>
+<p class="zsa-qve-small zsa-practice-small">No timer. Use scratch paper and a calculator in degree mode. The rules from the lesson are below.</p>
+</section>
+<section id="zsa-qve-play" hidden aria-labelledby="zsa-qve-question">
+<div class="zsa-qve-status zsa-practice-status"><p id="zsa-qve-position"></p><p id="zsa-qve-score"></p></div>
+<progress id="zsa-qve-progress" value="0" max="8" aria-label="Set progress"></progress>
+<div class="zsa-card zsa-qve-question-card">
+<p class="zsa-eyebrow" id="zsa-qve-topic-name"></p>
+<h2 id="zsa-qve-question" tabindex="-1"></h2>
+<form id="zsa-qve-answer" novalidate>
+<fieldset id="zsa-qve-choices"><legend class="zsa-qve-small zsa-practice-small">Choose one answer.</legend><div id="zsa-qve-options" class="zsa-practice-options"></div></fieldset>
+<div id="zsa-qve-numeric" hidden>
+<p id="zsa-qve-precision" class="zsa-qve-small zsa-practice-small"></p>
+<div class="zsa-qve-entry zsa-practice-entry"><div><label for="zsa-qve-value">Your answer</label><input id="zsa-qve-value" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="zsa-qve-precision zsa-qve-number-help zsa-qve-error"></div><div hidden><label for="zsa-qve-unit">Unit</label><select id="zsa-qve-unit"></select></div></div>
+<p id="zsa-qve-number-help" class="zsa-qve-small zsa-practice-small">Type a number such as 8.6 or 37. You may add the unit after it.</p>
+</div>
+<p id="zsa-qve-error" role="alert" class="zsa-qve-error zsa-practice-error"></p>
+<button id="zsa-qve-check" class="zsa-btn zsa-btn--primary" type="submit">Check answer</button>
+</form>
+<section id="zsa-qve-feedback" class="zsa-practice-feedback zsa-panel" aria-live="polite" aria-atomic="true" hidden></section>
+<button id="zsa-qve-next" class="zsa-btn zsa-btn--primary" type="button" hidden>Next question</button>
+</div>
+</section>
+<section id="zsa-qve-results" class="zsa-card" aria-labelledby="zsa-qve-results-title" hidden>
+<h2 id="zsa-qve-results-title" tabindex="-1">Your set is complete</h2>
+<p id="zsa-qve-total" class="zsa-qve-total zsa-practice-total"></p>
+<h3>Results by topic</h3><ul id="zsa-qve-breakdown" class="zsa-practice-breakdown"></ul>
+<div class="zsa-qve-actions zsa-practice-actions"><button id="zsa-qve-retry" class="zsa-btn zsa-btn--primary" type="button">Try again</button><button id="zsa-qve-choose" class="zsa-btn" type="button">Choose another topic</button></div>
+<div id="zsa-qve-review"></div>
+</section>
+<details class="zsa-panel zsa-qve-reference zsa-practice-reference" id="zsa-qve-reference">
+<summary>Reference</summary><h2>Vector rules</h2>
+<ul>
+<li>A scalar has a size only, like 15 kg or 15 m/s. A vector has a magnitude and a direction, like 15 N upward. Speed is a scalar, and velocity is a vector.</li>
+<li>An arrow shows a vector. Its length shows the magnitude with a scale, like 1 square = 10 N, and it points from its tail to its tip.</li>
+<li>Tip to tail: the resultant R runs from the first vector's tail to the last vector's tip. The order does not matter.</li>
+<li>Same direction: add the magnitudes. Opposite directions: subtract, and use the direction of the larger one.</li>
+<li>Perpendicular: R = √(A² + B²). Find the direction with tan⁻¹ and state it like 53° north of east.</li>
+<li>Components, with θ measured from the horizontal: <span>R<sub>x</sub> = R cos θ</span> and <span>R<sub>y</sub> = R sin θ</span>. If θ is measured from the vertical, sin and cos switch.</li>
+</ul>
+</details>
+<p class="zsa-qve-small zsa-practice-small">Practice for the Vectors lesson in Quantitative Skills. Original ZornScience questions.</p>
+<!-- zsa-about --><section class="zsa-about" data-zsa-about="qs-vectors-practice" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Tell scalars from vectors, add vectors in a line and at right angles, and find components. Every set has new numbers, and each answer gets feedback right away.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="qs-vectors"><a href="https://zornscience.org/science/quantitative-skills/advanced-tools/vectors/">Vectors</a><span data-zsa-lesson-course>Quantitative Skills</span></li><li data-zsa-lesson="phys-vector-components"><a href="https://zornscience.org/science/physics/unit-3-2d-dynamics/vector-components/">Vector Components</a><span data-zsa-lesson-course>Physics</span></li><li data-zsa-lesson="qs-trigonometry"><a href="https://zornscience.org/science/quantitative-skills/advanced-tools/trigonometry-basics/">Trigonometry Basics</a><span data-zsa-lesson-course>Quantitative Skills</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>Your answers stay in this tab. No account needed.</span><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><a class="zsa-back" id="zsa-qve-back" href="https://zornscience.org/science/quantitative-skills/advanced-tools/vectors/">← Back to the lesson</a></footer>
+</main>
+</body>
+</html>

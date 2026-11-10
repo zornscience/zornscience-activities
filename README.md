@@ -55,6 +55,8 @@ qs-significant-figures-practice/  Significant Figures Practice, v1.0.0 (generate
 qs-ratios-and-proportions-practice/  Ratios and Proportions Practice, v1.0.0 (generated sets: writing and simplifying ratios, proportions, mole ratios; advisory significant figures; English and Mexican Spanish)
 qs-percents-practice/  Percents Practice, v1.0.0 (generated sets: percents and decimals, percent of a whole, percent composition, percent yield; advisory significant figures; English and Mexican Spanish)
 qs-percent-error-and-percent-change-practice/  Percent Error and Percent Change Practice, v1.0.0 (generated sets: percent error, signed percent change, setups and signs; advisory significant figures; English and Mexican Spanish)
+qs-trigonometry-basics-practice/  Trigonometry Basics Practice, v1.0.0 (generated sets: naming the sides, SOH CAH TOA, finding a side, finding an angle; labeled right triangle; English and Mexican Spanish)
+qs-vectors-practice/  Vectors Practice, v1.0.0 (generated sets: scalars and vectors, same and opposite directions, perpendicular vectors, components; English and Mexican Spanish)
 atwood-machine/           The Atwood Machine, v1.1.2 (ideal pulley, adjustable masses and live vectors; no data recording; English and Mexican Spanish)
 physics-graphing-lab/      Physics Graphing Lab, v1.1.2 (a cart with linked position, velocity and acceleration graphs; English and Mexican Spanish)
 collision-carts/           Collision Carts, v1.1.2 (two carts on a track, elastic and inelastic collisions, live velocity and momentum vectors; English and Mexican Spanish)

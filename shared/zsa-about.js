@@ -112,6 +112,8 @@
     "qs-percent-error-and-percent-change": ["qs", "ratios-and-percents/percent-error-and-percent-change/", "Percent Error and Percent Change", "Error porcentual y cambio porcentual"],
     "qs-reading-graphs": ["qs", "graphs-and-change/reading-graphs/", "Reading Graphs", "Lectura de gráficas"],
     "qs-slope": ["qs", "graphs-and-change/slope-and-rate-of-change/", "Slope and Rate of Change", "Pendiente y razón de cambio"],
+    "qs-trigonometry": ["qs", "advanced-tools/trigonometry-basics/", "Trigonometry Basics", "Conceptos básicos de trigonometría"],
+    "qs-vectors": ["qs", "advanced-tools/vectors/", "Vectors", "Vectores"],
     "lab-flame-test": ["labs", "flame-test-forensics/", "Flame Test Forensics", "Análisis forense con la prueba de la llama"],
     "lab-net-ionic": ["labs", "net-ionic-equations-lab/", "Net Ionic Equations Lab", "Laboratorio de ecuaciones iónicas netas"]
   };
@@ -252,6 +254,12 @@
     "qs-significant-figures-practice": {lessons: ["qs-significant-figures"],
       en: "Count significant figures, round, and use the rules for multiplying, dividing, adding and subtracting. Every set has new numbers, and each answer gets feedback right away.",
       es: "Cuenta cifras significativas, redondea y usa las reglas para multiplicar, dividir, sumar y restar. Cada serie tiene números nuevos, y cada respuesta recibe retroalimentación al instante."},
+    "qs-trigonometry-basics-practice": {lessons: ["qs-trigonometry", "qs-calculator"],
+      en: "Name the sides of a right triangle, use SOH CAH TOA, and find missing sides and angles in degree mode. Every set has new numbers, and each answer gets feedback right away.",
+      es: "Identifica los lados de un triángulo rectángulo, usa SOH CAH TOA y calcula lados y ángulos en modo de grados. Cada serie tiene números nuevos, y cada respuesta recibe retroalimentación al instante."},
+    "qs-vectors-practice": {lessons: ["qs-vectors", "phys-vector-components", "qs-trigonometry"],
+      en: "Tell scalars from vectors, add vectors in a line and at right angles, and find components. Every set has new numbers, and each answer gets feedback right away.",
+      es: "Distingue escalares de vectores, suma vectores en una línea y perpendiculares, y calcula componentes. Cada serie tiene números nuevos, y cada respuesta recibe retroalimentación al instante."},
     "reaction-energy-lab": {lessons: ["chem-pe-diagrams", "ap-6.2", "ap-6.9"],
       en: "Build energy diagrams for reactions and phase changes. Calculate reaction enthalpy from bond energies, enthalpies of formation and Hess's law.",
       es: "Construye diagramas de energía para reacciones y cambios de fase. Calcula la entalpía de reacción a partir de energías de enlace, entalpías de formación y la ley de Hess."},
