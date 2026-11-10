@@ -11,5 +11,9 @@ module.exports = [
   {slug:"qs-percents-practice", prefix:"zsa-qpc", title:{en:"Percents Practice", es:"Práctica de porcentajes"},
     lesson:"https://zornscience.org/science/quantitative-skills/ratios-and-percents/percents/"},
   {slug:"qs-percent-error-and-percent-change-practice", prefix:"zsa-qpe", title:{en:"Percent Error and Percent Change Practice", es:"Práctica de error porcentual y cambio porcentual"},
-    lesson:"https://zornscience.org/science/quantitative-skills/ratios-and-percents/percent-error-and-percent-change/"}
+    lesson:"https://zornscience.org/science/quantitative-skills/ratios-and-percents/percent-error-and-percent-change/"},
+  {slug:"qs-trigonometry-basics-practice", prefix:"zsa-qtb", title:{en:"Trigonometry Basics Practice", es:"Práctica de conceptos básicos de trigonometría"},
+    lesson:"https://zornscience.org/science/quantitative-skills/advanced-tools/trigonometry-basics/"},
+  {slug:"qs-vectors-practice", prefix:"zsa-qve", title:{en:"Vectors Practice", es:"Práctica de vectores"},
+    lesson:"https://zornscience.org/science/quantitative-skills/advanced-tools/vectors/"}
 ];

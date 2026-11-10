@@ -208,6 +208,11 @@
   "Change percents to decimals, find parts and percents of a whole, and work out percent composition and percent yield.": "Cambia porcentajes a decimales, encuentra partes y porcentajes de un total, y calcula la composición porcentual y el rendimiento porcentual.",
   "Percent Error and Percent Change Practice": "Práctica de error porcentual y cambio porcentual",
   "Find percent error and percent change, keep the right sign, and put the right value on the bottom.": "Encuentra el porcentaje de error y el cambio porcentual, conserva el signo correcto y pon abajo el valor correcto.",
+  "Advanced Tools": "Herramientas avanzadas",
+  "Trigonometry Basics Practice": "Práctica de conceptos básicos de trigonometría",
+  "Name the sides of a right triangle, use SOH CAH TOA, and find missing sides and angles.": "Identifica los lados de un triángulo rectángulo, usa SOH CAH TOA y calcula lados y ángulos faltantes.",
+  "Vectors Practice": "Práctica de vectores",
+  "Tell scalars from vectors, add vectors tip to tail, and find components.": "Distingue escalares de vectores, suma vectores de punta a cola y calcula componentes.",
   // Lab tools
   "Work with your own measurements and make clear graphs for your lab write-ups.": "Trabaja con tus propias mediciones y haz gráficas claras para tus reportes de laboratorio.",
   "Reading Graphs": "Lectura de gráficas",

@@ -586,6 +586,30 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-significant-figures-practice/"/>
   </url>
   <url>
+    <loc>https://activities.zornscience.org/qs-trigonometry-basics-practice/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-trigonometry-basics-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-trigonometry-basics-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-trigonometry-basics-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/qs-trigonometry-basics-practice/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-trigonometry-basics-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-trigonometry-basics-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-trigonometry-basics-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/qs-vectors-practice/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-vectors-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-vectors-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-vectors-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/qs-vectors-practice/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-vectors-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-vectors-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-vectors-practice/"/>
+  </url>
+  <url>
     <loc>https://activities.zornscience.org/reaction-energy-lab/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/reaction-energy-lab/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/reaction-energy-lab/?lang=es"/>
