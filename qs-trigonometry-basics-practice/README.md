@@ -1,6 +1,6 @@
 # Trigonometry Basics Practice
 
-Version: 1.0.0
+Version: 1.0.1
 
 Generated practice for the Quantitative Skills lesson [Trigonometry Basics](https://zornscience.org/science/quantitative-skills/advanced-tools/trigonometry-basics/). Every set has new numbers. Four skills: naming the sides, SOH CAH TOA, finding a side and finding an angle. A skill gives 8 questions; Mixed review gives 12, three of each. English: `/qs-trigonometry-basics-practice/`. Mexican Spanish: `/qs-trigonometry-basics-practice/?lang=es`.
 
@@ -47,6 +47,8 @@ Rounding is advice here, not the skill: a right value with extra digits (5.736 f
 Runs on the shared question-set engine (`../shared/zsa-practice.js`) with the generated-bank options described in `../shared/README.md`. Native controls only: the topic menu, radio buttons, one text field and buttons; the triangle is not focusable. Spanish follows the Style Kit and the live Spanish lesson: triángulo rectángulo, ángulo recto, hipotenusa, lado opuesto, lado adyacente, cateto, seno, coseno, tangente, función trigonométrica inversa, modo de grados, radianes. New wording is in `../SPANISH_TERMS.md`.
 
 ## Changelog
+
+1.0.1: Patch bump for the shared practice engine (`shared/zsa-practice.js`), which gained an opt-in typed-equation question type used only by Rearranging Equations Practice. This page does not load the equation reader and its questions, scoring and text are unchanged.
 
 1.0.0: Ten generators in four skills, the labeled triangle, advisory rounding with traps for radian mode, the upside-down ratio and the wrong function, rules reference, About/SEO/sitemap and directory entries, English and Mexican Spanish.
 

@@ -1,6 +1,6 @@
 # Dimensional Analysis Practice
 
-Version: 1.0.0
+Version: 1.0.1
 
 Generated practice for the Quantitative Skills lesson [Dimensional Analysis](https://zornscience.org/science/quantitative-skills/units/dimensional-analysis/). Every set has new numbers. Four skills: chains of factors, rates and densities, squared and cubed units, and units of the result. A skill gives 8 questions; Mixed review gives 12, three of each. English: `/qs-dimensional-analysis-practice/`. Mexican Spanish: `/qs-dimensional-analysis-practice/?lang=es`.
 
@@ -41,6 +41,8 @@ Answers are judged by `M.judge` in `../shared/zsa-practice-model.js` with exact 
 Runs on the shared question-set engine (`../shared/zsa-practice.js`) with the generated-bank options described in `../shared/README.md`. Native controls only, so Tab, arrow keys, Enter and Space work as usual. Spanish follows the live lesson and the Style Kit: análisis dimensional, traza el camino, encadena factores, unidades al cuadrado y al cubo, eleva al cubo el factor, centímetro cúbico, meta, razón de cambio, planteamiento, densidad. New wording is in `../SPANISH_TERMS.md`.
 
 ## Changelog
+
+1.0.1: Patch bump for the shared practice engine (`shared/zsa-practice.js`), which gained an opt-in typed-equation question type used only by Rearranging Equations Practice. This page does not load the equation reader and its questions, scoring and text are unchanged.
 
 1.0.0: Nine generators in four skills, advisory significant figures with scientific notation where zeros would be unclear, specific feedback for flipped factors, missing steps and powers, method reference, About/SEO/sitemap and directory entries, English and Mexican Spanish.
 

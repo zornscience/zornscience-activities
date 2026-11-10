@@ -1,6 +1,6 @@
 # AP Chemistry Unit 9 Practice
 
-Version: 1.0.1
+Version: 1.0.2
 
 Original bilingual ZornScience practice aligned to College Board CED Unit 9, Thermodynamics and Electrochemistry. Each of eleven topics has six questions: four multiple choice and two numeric entry. There are 66 questions, 44 multiple choice and 22 numeric, with individual English and Mexican Spanish explanations for all 132 distractors. These are original aligned questions, not official College Board exam items.
 
@@ -45,6 +45,8 @@ Choose a six-question topic or Mixed review for all 66. Submit once, read feedba
 English: `/apchem-unit9-practice/`. Spanish: `/apchem-unit9-practice/?lang=es`. Mexican Spanish follows the supplied AP glossary, including entropía absoluta, energía libre de Gibbs, favorabilidad termodinámica, termodinámicamente favorable, control cinético, reacciones acopladas, celda galvánica (voltaica), celda electrolítica, ánodo, cátodo, puente salino, semirreacción, potencial estándar de reducción, potencial de celda, constante de Faraday, electrólisis and ley de Faraday. Additional wording is recorded in `../SPANISH_TERMS.md`. Decimal points, formulas and state symbols are preserved. Unit names follow the Style Kit, including ampere and coulomb.
 
 ## Changelog
+
+1.0.2: Patch bump for the shared practice engine (`shared/zsa-practice.js`), which gained an opt-in typed-equation question type used only by Rearranging Equations Practice. This page does not load the equation reader and its questions, scoring and text are unchanged.
 
 1.0.1: Version bump for the shared practice engine, which gains opt-in options for generated question sets. This unit's questions and behavior are unchanged.
 

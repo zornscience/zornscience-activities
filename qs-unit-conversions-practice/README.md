@@ -1,6 +1,6 @@
 # Unit Conversions Practice
 
-Version: 1.0.0
+Version: 1.0.1
 
 Generated practice for the Quantitative Skills lesson [Unit Conversions](https://zornscience.org/science/quantitative-skills/units/unit-conversions/). Every set has new numbers. Three skills: conversion factors, setting up and converting, and exact factors and significant figures. A skill gives 8 questions; Mixed review gives 12, four of each. English: `/qs-unit-conversions-practice/`. Mexican Spanish: `/qs-unit-conversions-practice/?lang=es`.
 
@@ -41,6 +41,8 @@ Significant figures are advice while converting (the right value with more figur
 Runs on the shared question-set engine (`../shared/zsa-practice.js`) with the generated-bank options described in `../shared/README.md`. Native controls only, so Tab, arrow keys, Enter and Space work as usual. Spanish follows the live lesson and the Style Kit: factor de conversión, igualdad, unidad nueva arriba y unidad inicial abajo, tacha las unidades que se cancelan, voltea el factor, factores exactos, planteamiento, pulgadas and pies (symbols stay in and ft). New wording is in `../SPANISH_TERMS.md`.
 
 ## Changelog
+
+1.0.1: Patch bump for the shared practice engine (`shared/zsa-practice.js`), which gained an opt-in typed-equation question type used only by Rearranging Equations Practice. This page does not load the equation reader and its questions, scoring and text are unchanged.
 
 1.0.0: Nine generators in three skills, advisory and scored significant figures, specific feedback for an upside-down factor and a factor that limits significant figures, method and equalities reference, About/SEO/sitemap and directory entries, English and Mexican Spanish.
 

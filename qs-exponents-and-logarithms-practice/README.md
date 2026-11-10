@@ -1,6 +1,6 @@
 # Exponents and Logarithms Practice
 
-Version: 1.0.0
+Version: 1.0.1
 
 Generated practice for the Quantitative Skills lesson [Exponents and Logarithms](https://zornscience.org/science/quantitative-skills/advanced-tools/exponents-and-logarithms/). Every set has new numbers. Four skills: exponent rules, scientific notation, logarithms, and pH. A skill gives 8 questions; Mixed review gives 12, three of each. English: `/qs-exponents-and-logarithms-practice/`. Mexican Spanish: `/qs-exponents-and-logarithms-practice/?lang=es`.
 
@@ -45,6 +45,8 @@ Known mistakes get their own feedback: multiplying exponents that should be adde
 Runs on the shared question-set engine (`../shared/zsa-practice.js`) with the generated-bank options described in `../shared/README.md`. Native controls only: the topic menu, radio buttons, one text field and buttons, so Tab, arrow keys, Enter and Space work as usual; question and results headings take focus, feedback is announced, and the language links and dialogs follow the shared header. Spanish follows the live lesson and the Style Kit: exponente, logaritmo (log), potencia de diez, coeficientes, suma, resta y multiplica los exponentes, potencia de una potencia, exponente cero, exponente negativo, concentración de iones de hidrógeno, tecla LOG, segunda función, lugares decimales, deshaz el log, notación científica, cifras significativas. New wording is in `../SPANISH_TERMS.md`.
 
 ## Changelog
+
+1.0.1: Patch bump for the shared practice engine (`shared/zsa-practice.js`), which gained an opt-in typed-equation question type used only by Rearranging Equations Practice. This page does not load the equation reader and its questions, scoring and text are unchanged.
 
 1.0.0: Eleven generators in four skills, scored precision for pH, specific feedback for common mistakes, rules reference, About/SEO/sitemap and directory entries, English and Mexican Spanish.
 
