@@ -37,6 +37,10 @@ Answers are judged by `M.judge` in `../shared/zsa-practice-model.js` with exact 
 - The wrong order: v<sub>f</sub> − v<sub>i</sub>/t, F/1.8 − 32, or q/m × ΔT without the parentheses.
 - Adding instead of subtracting (F + 32), and using F = 1.8C + 32 forward.
 
+## Equivalent answers
+
+Nothing here compares typed formulas, so there is no string match to loosen. A rearrangement is chosen from four written formulas and the engine compares the chosen position with the key's, not the text; a typed number is judged by value with exact fractions, so 1500, 1.5e3 and 1.50 × 10^3 are one answer. What could still go wrong is a wrong choice that is secretly the same equation as the key (d = vt next to d = tv), which would mark a right answer wrong. `tests/unit/qs-rearranging-equations-equivalence.test.js` reads every choice of all 20 solve cases as algebra (parsed expressions tested at random numbers, `tests/support/equation-equivalence.js`) and checks that only the key is equivalent to the true rearrangement, and that d = v/t, t = v/d, F/1.8 − 32 and the other mistakes are never equivalent to it.
+
 ## Not practiced
 
 Free symbolic input is not needed: rearrangements are chosen from four written formulas, then used in the calculations.
