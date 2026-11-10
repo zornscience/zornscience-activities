@@ -120,6 +120,8 @@
     "qs-reading-formulas": ["qs", "equations/reading-formulas/", "Reading Formulas", "Lectura de fórmulas"],
     "qs-rearranging-equations": ["qs", "equations/rearranging-equations/", "Rearranging Equations", "Despeje de ecuaciones"],
     "qs-substituting-with-units": ["qs", "equations/substituting-with-units/", "Substituting with Units", "Sustitución con unidades"],
+    "qs-direct-inverse": ["qs", "graphs-and-change/direct-and-inverse-relationships/", "Direct and Inverse Relationships", "Relaciones directas e inversas"],
+    "qs-exponents-logarithms": ["qs", "advanced-tools/exponents-and-logarithms/", "Exponents and Logarithms", "Exponentes y logaritmos"],
     "lab-flame-test": ["labs", "flame-test-forensics/", "Flame Test Forensics", "Análisis forense con la prueba de la llama"],
     "lab-net-ionic": ["labs", "net-ionic-equations-lab/", "Net Ionic Equations Lab", "Laboratorio de ecuaciones iónicas netas"]
   };
@@ -248,6 +250,12 @@
     "qs-dimensional-analysis-practice": {lessons: ["qs-dimensional-analysis", "qs-unit-conversions", "qs-metric-prefixes"],
       en: "Chain conversion factors across several steps, convert rates and densities, and square or cube factors for area and volume. Every set has new numbers, and each answer gets feedback right away.",
       es: "Encadena factores de conversión en varios pasos, convierte razones de cambio y densidades, y eleva factores al cuadrado o al cubo para área y volumen. Cada serie tiene números nuevos, y cada respuesta recibe retroalimentación al instante."},
+    "qs-direct-and-inverse-relationships-practice": {lessons: ["qs-direct-inverse", "qs-reading-graphs"],
+      en: "Identify direct, inverse, squared and linear relationships from data tables and graph shapes, find the constant, and make predictions. Every set has new numbers, and each answer gets feedback right away.",
+      es: "Identifica relaciones directas, inversas, cuadráticas y lineales a partir de tablas de datos y formas de gráficas, encuentra la constante y haz predicciones. Cada serie tiene números nuevos, y cada respuesta recibe retroalimentación al instante."},
+    "qs-exponents-and-logarithms-practice": {lessons: ["qs-exponents-logarithms", "qs-scientific-notation", "qs-calculator"],
+      en: "Use the exponent rules, multiply and divide in scientific notation, find logs of powers of ten, and convert between pH and hydrogen ion concentration. Every set has new numbers, and each answer gets feedback right away.",
+      es: "Usa las reglas de los exponentes, multiplica y divide en notación científica, encuentra logaritmos de potencias de diez y convierte entre el pH y la concentración de iones de hidrógeno. Cada serie tiene números nuevos, y cada respuesta recibe retroalimentación al instante."},
     "qs-metric-prefixes-practice": {lessons: ["qs-metric-prefixes", "qs-scientific-notation"],
       en: "Use the prefix ladder from mega to nano: learn what each prefix means, count the places between rungs, and convert between units. Every set has new numbers, and each answer gets feedback right away.",
       es: "Usa la escalera de prefijos de mega a nano: aprende qué significa cada prefijo, cuenta los lugares entre peldaños y convierte entre unidades. Cada serie tiene números nuevos, y cada respuesta recibe retroalimentación al instante."},

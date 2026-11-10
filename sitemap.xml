@@ -538,6 +538,30 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-dimensional-analysis-practice/"/>
   </url>
   <url>
+    <loc>https://activities.zornscience.org/qs-direct-and-inverse-relationships-practice/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-direct-and-inverse-relationships-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-direct-and-inverse-relationships-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-direct-and-inverse-relationships-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/qs-direct-and-inverse-relationships-practice/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-direct-and-inverse-relationships-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-direct-and-inverse-relationships-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-direct-and-inverse-relationships-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/qs-exponents-and-logarithms-practice/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-exponents-and-logarithms-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-exponents-and-logarithms-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-exponents-and-logarithms-practice/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/qs-exponents-and-logarithms-practice/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-exponents-and-logarithms-practice/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-exponents-and-logarithms-practice/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-exponents-and-logarithms-practice/"/>
+  </url>
+  <url>
     <loc>https://activities.zornscience.org/qs-metric-prefixes-practice/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/qs-metric-prefixes-practice/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-metric-prefixes-practice/?lang=es"/>
