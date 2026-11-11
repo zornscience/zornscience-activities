@@ -29,6 +29,7 @@ var ALLOWED = {
   "hookes-law-lab/lab.css | #hanger:focus": "#hanger:focus-visible > rect gets a thick yellow stroke (SVG shapes do not paint outlines in every browser)",
   "periodic-table/periodic-table.css | .zsa-pt-mode input:focus-visible, .zsa-pt-check input:focus-visible": "the label takes the ring through :has(input:focus-visible)",
   "snells-law-lab/lab.css | #laser,#protractor": "#laser:focus-visible and #protractor:focus-visible stroke their shapes white",
+  "wordpress/zornscience-tutor/assets/chat.css | .zst-chat .zst-input:focus": "the same rule gives the text box a blue border and a blue glow (border-color and box-shadow) while it has focus",
   "standing-waves-lab/lab.css | #cursors [role=slider]": "the .focus-ring rectangles inside each cursor (white and dark) show on :focus-visible"
 };
 
