@@ -196,9 +196,9 @@
       cellFocus = index;
       state.samples.push({cell: index, count: meadow.counts[index], method: usedMethod});
       renderQuadrat();
-      if (usedMethod === "chosen") $("grid").querySelector('[data-cell="' + index + '"]').focus();
-      else if (state.samples.length < target) $("random").focus();
-      else $("estimate").focus();
+      if (state.samples.length >= target) $("estimate").focus();
+      else if (usedMethod === "chosen") $("grid").querySelector('[data-cell="' + index + '"]').focus();
+      else $("random").focus();
       announce(t("{cell}: {count} plants, {method}", {cell: cellName(index), count: meadow.counts[index], method: methodName(usedMethod)}));
     }
   }

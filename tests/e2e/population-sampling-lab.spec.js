@@ -145,7 +145,7 @@ for (const lang of ["en", "es"]) {
     await page.keyboard.press("ArrowDown"); await page.keyboard.press("Enter");
     await expect($(page, "work").locator("table").first().locator("tbody tr")).toHaveCount(3);
     expect(await $(page, "work").locator("table").first().locator("tbody tr td:nth-child(2)").allTextContents()).toEqual(["A1", "A2", "B2"]);
-    await $(page, "estimate").focus(); await page.keyboard.type("600"); await page.keyboard.press("Tab"); await page.keyboard.press("Enter");
+    await expect($(page, "estimate")).toBeFocused(); await page.keyboard.type("600"); await page.keyboard.press("Tab"); await page.keyboard.press("Enter");
     await expect($(page, "estimate")).toHaveValue("610");
     await $(page, "instructions-open").focus(); await page.keyboard.press("Enter");
     await expect(page.locator("dialog")).toBeVisible();
