@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0"><title>Natural Selection Lab | ZornScience</title>
+<meta name="description" content="Explore natural selection with beetles. Compare camouflage, changing ground, variation and population size in a bilingual ZornScience Biology lab." data-zsa-es="Explora la selección natural con escarabajos. Compara camuflaje, suelo cambiante, variación y tamaño de población en un laboratorio de ZornScience.">
+<link rel="canonical" href="https://activities.zornscience.org/natural-selection-lab/">
+<link rel="alternate" hreflang="en" href="https://activities.zornscience.org/natural-selection-lab/">
+<link rel="alternate" hreflang="es" href="https://activities.zornscience.org/natural-selection-lab/?lang=es">
+<link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/natural-selection-lab/">
+<link rel="icon" href="../favicon.png?v=1.0.0" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=1.0.0">
+<link rel="stylesheet" href="lab.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.0.0" defer></script>
+<script src="data.js?v=1.0.0" defer></script>
+<script src="model.js?v=1.0.0" defer></script>
+<script src="lab.js?v=1.0.0" defer></script>
+<script src="share.js?v=1.0.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.0.0"><script src="../shared/zsa-about.js?v=1.0.0" defer></script></head><body><main class="zsa zsa-nsl" data-zsa-activity="natural-selection-lab">
+<header data-zsa-header><div data-zsa-header-row><div data-zsa-header-identity>
+<a data-zsa-header-brand href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png?v=1.0.0" alt="" width="40" height="40"></a><h1>Natural Selection Lab</h1></div>
+<nav data-zsa-header-tools aria-label="Instructions and sharing"><div class="zsa-nsl-actions">
+<button class="zsa-btn" id="zsa-nsl-instructions-open" type="button" aria-haspopup="dialog" aria-controls="instructions">Instructions</button>
+<button class="zsa-btn" id="zsa-nsl-share-toggle" type="button" aria-expanded="false" aria-controls="zsa-nsl-share-panel" data-zsa-chrome>Share</button></div></nav></div>
+<section class="zsa-nsl-share zsa-panel" id="zsa-nsl-share-panel" aria-labelledby="zsa-nsl-share-title" data-zsa-chrome hidden>
+<h2 id="zsa-nsl-share-title">Share this activity</h2><p>Share a fresh lab. Your predictions, settings and seed are not included.</p>
+<p id="zsa-nsl-share-url" class="zsa-nsl-selectable" tabindex="0"></p>
+<div class="zsa-nsl-actions"><button class="zsa-btn" id="zsa-nsl-share-copy" type="button">Copy link</button><a id="zsa-nsl-share-email" href="#">Email</a><button class="zsa-btn" id="zsa-nsl-share-close" type="button">Close share options</button></div>
+<p id="zsa-nsl-share-status" role="status"></p></section></header>
+<a class="zsa-back" id="zsa-nsl-back" data-zsa-chrome href="https://zornscience.org/science/biology/unit-4-evolution-and-natural-selection/natural-selection/">Back to the lesson</a>
+<nav class="zsa-nsl-steps" aria-label="Investigation" id="zsa-nsl-steps"></nav>
+<div id="zsa-nsl-investigation">
+<div class="zsa-nsl-layout"><section class="zsa-nsl-card" aria-labelledby="zsa-nsl-title">
+<p class="zsa-eyebrow">Virtual lab</p><h2 id="zsa-nsl-title"></h2><p id="zsa-nsl-description"></p>
+<p class="zsa-panel" id="zsa-nsl-event" role="status" aria-live="polite" aria-atomic="true" hidden></p>
+<div id="zsa-nsl-guide"></div><div id="zsa-nsl-prediction"></div><div id="zsa-nsl-settings"></div>
+<p id="zsa-nsl-kept"></p><div class="zsa-nsl-actions"><button class="zsa-btn zsa-btn--primary" id="zsa-nsl-start" type="button">Start run</button><button class="zsa-btn" id="zsa-nsl-next" type="button" disabled>Next generation</button><button class="zsa-btn" id="zsa-nsl-finish" type="button" disabled>Run to generation 15</button></div>
+<p id="zsa-nsl-status" role="status" aria-live="polite" aria-atomic="true"></p>
+</section><section class="zsa-nsl-card" aria-labelledby="zsa-nsl-observation-title"><h2 id="zsa-nsl-observation-title">Beetles on the ground</h2><div id="zsa-nsl-scene"></div><p id="zsa-nsl-counts" class="zsa-nsl-counts"></p><p id="zsa-nsl-scene-text"></p></section></div>
+<section class="zsa-nsl-card" aria-labelledby="zsa-nsl-graph-title"><h2 id="zsa-nsl-graph-title">Population through generations</h2><div id="zsa-nsl-graph"></div><ul id="zsa-nsl-legend" class="zsa-nsl-legend"></ul><p>Only observed generations appear. The tables below give exact counts.</p></section>
+<section class="zsa-nsl-card" aria-labelledby="zsa-nsl-worksheet-title"><h2 id="zsa-nsl-worksheet-title">Data for your worksheet</h2><div id="zsa-nsl-tables"></div><button class="zsa-btn" id="zsa-nsl-copy" type="button" disabled>Copy</button><p id="zsa-nsl-copy-status" role="status"></p><pre id="zsa-nsl-copy-text" class="zsa-nsl-selectable" tabindex="0" aria-label="Data for manual copying" hidden></pre>
+<h3>Answer these in your document</h3><ol class="zsa-nsl-prompts" id="zsa-nsl-prompts"></ol></section></div>
+<section class="zsa-nsl-card" id="zsa-nsl-check" aria-labelledby="zsa-nsl-check-title" hidden><h2 id="zsa-nsl-check-title">Check your understanding</h2><p>Choose an answer. You get feedback right away.</p><div id="zsa-nsl-questions"></div></section>
+<!-- zsa-about --><section class="zsa-about" data-zsa-about="natural-selection-lab" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Explore natural selection with beetle populations. Compare camouflage, a changing environment, variation and population size using your run tables.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="bio-natural-selection"><a href="https://zornscience.org/science/biology/unit-4-evolution-and-natural-selection/natural-selection/">Natural Selection</a><span data-zsa-lesson-course>Biology</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer" data-zsa-chrome><span>ZornScience · CC BY-NC-SA 4.0</span><a href="../">All activities</a></footer>
+<dialog class="zsa-header-dialog" id="instructions" aria-labelledby="instructions-title"><div class="zsa-header-dialog-heading"><h2 id="instructions-title">Instructions</h2><button class="zsa-btn" id="zsa-nsl-instructions-close" type="button" autofocus>Close instructions</button></div>
+<p>Watch a population of beetles across generations. Beetles that match the ground are harder for birds to see. Survivors have offspring that inherit their shell color. A rare random change can add a different color to the offspring.</p>
+<p>Choose your prediction, then start a run. Step one generation at a time or run to the last generation. Settings lock during a run. In Investigation 3, start each new run with fresh beetles.</p>
+<p>Dark beetles have solid oval shells. Light beetles have striped, pointed shells. The ground also has a texture. Every drawing has counts and a data table.</p>
+<p>This is an illustrative teaching model, not real data. Real populations have many traits and changing conditions.</p>
+<p>Copy the tables and prompts to your worksheet or document. Write your answers there. Nothing is saved or sent. Reloading or changing language clears your work.</p>
+</dialog><noscript>This simulation requires JavaScript.</noscript></main></body></html>

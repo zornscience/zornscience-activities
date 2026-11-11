@@ -16,6 +16,7 @@
   };
   // key: [course, path below the course, English title, Spanish title]
   var LESSONS = {
+    "bio-natural-selection": ["bio", "unit-4-evolution-and-natural-selection/natural-selection/", "Natural Selection", "Selección natural (needs review)"],
     "bio-photosynthesis": ["bio", "unit-8-photosynthesis-and-respiration/rates-of-photosynthesis/", "Rates of Photosynthesis", "Tasas de fotosíntesis (needs review)"],
     "act-prep": ["students", "act/", "ACT Prep", "Preparación para el ACT"],
     "ap-unit-1": ["ap", "unit-1-atomic-structure-and-properties/", "Unit 1: Atomic Structure and Properties", "Unidad 1: Estructura atómica y propiedades"],
@@ -135,6 +136,9 @@
   // Activity folder: intro (one or two short sentences) and its lessons, most specific first. On pages whose
   // root has no side padding, wrap names the class that lines the section up with the page's footer.
   var ACTIVITIES = {
+    "natural-selection-lab": {lessons: ["bio-natural-selection"],
+      en: "Explore natural selection with beetle populations. Compare camouflage, a changing environment, variation and population size using your run tables.",
+      es: "Explora la selección natural con poblaciones de escarabajos. Compara el camuflaje, un ambiente cambiante, la variación y el tamaño de la población con tus tablas."},
     "leaf-disk-lab": {lessons: ["bio-photosynthesis"],
       en: "Measure photosynthesis with floating spinach leaf disks. Compare light color, brightness, temperature and bicarbonate, then explain your evidence.",
       es: "Mide la fotosíntesis con discos de hoja de espinaca que flotan. Compara el color y la intensidad de la luz, la temperatura y el bicarbonato, y explica tu evidencia."},
