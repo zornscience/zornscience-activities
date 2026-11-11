@@ -254,7 +254,12 @@ async function main() {
           await playRound(api);
           await api.call("practice my misses", function () { window.__zsa.finishButton("Practice my misses"); });
           await playRound(api, 3);
-          await api.call("open options", function () { document.querySelector("main details").open = true; });
+          await api.call("open options", async function () {
+            document.querySelector("main details").open = true;
+            // Newly visible native select text needs font readiness and its first paint.
+            await document.fonts.ready;
+            await new Promise(function (resolve) { requestAnimationFrame(function () { requestAnimationFrame(resolve); }); });
+          });
           await api.call("new round", function () { window.__zsa.newRound(); });
           await playItem(api, "keyboard");
         });
