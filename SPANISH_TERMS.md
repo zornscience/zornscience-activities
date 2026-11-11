@@ -3465,3 +3465,32 @@ Mexican Spanish, tú, decimal points and unchanged units. The lesson title and t
 Fixed words retain Instrucciones, Compartir, Laboratorio virtual, tabla de datos,
 vaso de precipitados, jeringa, ensayo and Ritmo de reproducción. Each explanatory
 sentence is translated as one template in leaf-disk-lab/data.js.
+
+## Population Sampling Lab
+
+Mexican Spanish, tú, decimal points unchanged. Previously approved equivalents are reused where recorded above. New classroom terms and provisional titles await review.
+
+| English | Mexican Spanish | Review |
+| --- | --- | --- |
+| Population Sampling Lab | Laboratorio de muestreo de poblaciones | needs review |
+| Population Sampling | Muestreo de poblaciones | needs review, requested provisional lesson title |
+| quadrat | cuadrante | needs review |
+| mark and recapture | captura y recaptura | needs review |
+| sample | muestra | reused, earlier sample terms |
+| population | población | needs review |
+| estimate | estimación | reused, earlier extrapolation / estimate entry |
+| density | densidad | reused, earlier dimensional-analysis terms |
+| random | al azar | reused, earlier unknown-selection wording |
+| bias | sesgo | needs review |
+| percent error | error porcentual | reused, live lesson wording requested for this lab |
+| net | red | needs review |
+| recapture | recaptura | needs review |
+| marks wear off | las marcas se borran | needs review |
+| marked fish avoid the net | los peces marcados evitan la red | needs review |
+| quadrat samples | muestras de cuadrantes | needs review |
+| sampling bias | sesgo de muestreo | needs review |
+| meadow | prado | needs review |
+| pond | estanque | needs review |
+| spread of estimates | dispersión de las estimaciones | needs review |
+| Data for your worksheet | Datos para tu hoja de trabajo | needs review |
+| Answer these in your document | Responde estas preguntas en tu documento | needs review |

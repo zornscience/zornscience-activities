@@ -14,6 +14,7 @@ const activities = {
 };
 // Virtual labs (Chemistry and Physics): each has its own test below, since the shared walk above clicks hints these labs do not have.
 const labs = {
+  "population-sampling-lab":"Laboratorio de muestreo de poblaciones",
   "leaf-disk-lab":"Laboratorio de discos de hoja",
   "atwood-machine":"La máquina de Atwood",
   "beers-law-lab":"Laboratorio de la ley de Beer con espectrofotómetro",
