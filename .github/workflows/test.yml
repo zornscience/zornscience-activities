@@ -8,14 +8,19 @@ on:
 permissions:
   contents: read
 
+# One-time setup on the Fedora runner: install Chromium system libraries with dnf.
+# The workflow downloads only the browser; it does not install OS packages or require sudo.
+
 jobs:
   test:
     name: Unit and browser tests
     runs-on: [self-hosted, linux]
-    # Fedora dependencies are provisioned on the runner. Allow time for the full browser suite with one worker.
+    # Allow time for the full browser suite with one worker. Queue time does not count toward this timeout.
     timeout-minutes: 120
     steps:
       - uses: actions/checkout@v5
+      - name: Clear leftover output from previous runs
+        run: rm -rf test-results playwright-report
       - uses: actions/setup-node@v6
         with:
           node-version: 22
@@ -35,6 +40,7 @@ jobs:
     name: Behavior parity with the base branch
     # Compares the pull request with its base branch in the browser. Add the label "behavior-change" to a pull
     # request that changes behavior on purpose to skip it.
+    # Note: with a single self-hosted runner, this job waits for the test job to finish.
     if: github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'behavior-change')
     runs-on: [self-hosted, linux]
     timeout-minutes: 30
@@ -42,6 +48,8 @@ jobs:
       - uses: actions/checkout@v5
         with:
           fetch-depth: 0
+      - name: Clear leftover output from previous runs
+        run: rm -rf parity-report
       - uses: actions/setup-node@v6
         with:
           node-version: 22

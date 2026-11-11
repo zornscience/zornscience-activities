@@ -20,7 +20,8 @@ function walk(dir) {
 }
 var files = walk(ROOT).map(function (f) { return path.relative(ROOT, f); });
 // Files the pages load (tools/ scripts run in Node only).
-var siteJs = files.filter(function (f) { return f.endsWith(".js") && f.indexOf("tools" + path.sep) < 0 && !/^(playwright\.config)/.test(f); });
+// The WordPress plugins under wordpress/ run on the WordPress site, not on these pages, so the static-site rules do not apply to their scripts.
+var siteJs = files.filter(function (f) { return f.endsWith(".js") && f.indexOf("tools" + path.sep) < 0 && f.indexOf("wordpress" + path.sep) !== 0 && !/^(playwright\.config)/.test(f); });
 var pages = files.filter(function (f) { return f.endsWith(".html"); });
 // Every page with a version (the activities and the starter template), by folder.
 var activities = pages.filter(function (f) { return /<meta name="zsa-version"/.test(fs.readFileSync(path.join(ROOT, f), "utf8")); }).map(path.dirname);
