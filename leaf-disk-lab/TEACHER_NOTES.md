@@ -1,6 +1,6 @@
 # Teacher notes
 
-Version: 1.0.0
+Version: 1.0.1
 
 Use the lab with ninth grade Biology. Ask students to compare one factor at a
 time, use both tables and graphs, and explain a claim with evidence. Short

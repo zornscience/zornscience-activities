@@ -1,6 +1,6 @@
 # Validation
 
-Version: 1.0.0
+Version: 1.0.1
 
 Run npm ci, npm run test:unit, and the relevant Playwright specs. This activity
 has no production build step. Regenerate registrations with node tools/build-seo.js
@@ -33,7 +33,7 @@ Stage 3: all 12 activity browser tests passed in Chromium. They cover both
 languages, every guided condition, predictions, custom settings, playback,
 CER copying and fallback, all questions, language reload and back-link rules.
 
-## Final executed results
+## Initial v1.0.0 validation
 
 - npm ci --cache /workspace/work/npm-cache: passed. The workspace cache avoids
   the unavailable default home cache.
@@ -69,3 +69,52 @@ keyboard-only air removal, radios, selects, Instructions, Share and Copy my
 answers. Switch steps during preparation and playback. Confirm counts and
 tables agree. Verify real Spanish lesson wording and the /es/ destination with
 the teacher before publishing a final translated lesson title.
+
+## Version 1.0.1 checks
+
+The activity browser spec checks the 15× default, exactly 5×/15×/60× options,
+pause and speed changes, natural completion at all three speeds and the same
+seeded result after skipping. Both language flows check the new temperature
+result explanation after the 5 °C and 45 °C trials. Question 3 and its feedback
+are unchanged. The model file and its constants are unchanged.
+
+Run the full unit suite first, then leaf-disk-lab, layout, seo, about, i18n and
+labs-a11y browser specs as separate commands, each with --workers=1. If an
+unchanged activity times out, rerun that file alone once and report both runs.
+
+Executed v1.0.1 results, after the full unit suite and then each browser file
+as a separate one-worker command:
+
+```
+npm run test:unit
+ℹ tests 572
+ℹ pass 572
+ℹ fail 0
+ℹ skipped 0
+
+leaf-disk-lab.spec.js
+  13 passed (25.0s)
+layout.spec.js
+  3 passed (6.7s)
+seo.spec.js
+  4 passed (3.4s)
+about.spec.js
+  70 passed (1.6m)
+i18n.spec.js
+  42 passed (4.7m)
+labs-a11y.spec.js
+  198 passed (6.8m)
+```
+
+All final browser runs had zero failures, skips and flaky results, with
+--workers=1 and retries disabled. The initial activity browser run had
+12 passes and one failure because its asset-version assertion still expected
+the previous version. That related assertion was updated for v1.0.1 and the
+whole activity file was rerun successfully. No unchanged activity timed out,
+so no timeout rerun was needed. Unrelated test files were not edited.
+
+The unit command used the existing local PHP wrapper via PATH. Browser
+commands used a temporary config under work/leaf-v101/ with system Chromium
+at /usr/bin/chromium, per-file JSON reports and the repository's server setup.
+The committed Playwright config was not changed. Both registration generators
+were run and their --check modes passed.

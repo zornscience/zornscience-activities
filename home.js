@@ -13,7 +13,7 @@
   "Biology labs": "Laboratorios de biología",
   "Photosynthesis": "Fotosíntesis",
   "Leaf Disk Lab": "Laboratorio de discos de hoja",
-  "Explore photosynthesis and respiration with evidence from a virtual experiment.": "Explora la fotosíntesis y la respiración con evidencias de un experimento virtual.",
+  "Explore photosynthesis and respiration with evidence from a virtual experiment.": "Explora la fotosíntesis y la respiración con evidencia de un experimento virtual.",
   "Float spinach leaf disks to compare light color, brightness, temperature and bicarbonate. Use your data to explain the rate of photosynthesis.": "Haz flotar discos de hoja de espinaca para comparar el color y la intensidad de la luz, la temperatura y el bicarbonato. Usa tus datos para explicar la tasa de fotosíntesis.",
   // Header and navigation
   "ZornScience home": "Inicio de ZornScience",

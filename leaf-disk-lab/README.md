@@ -1,6 +1,6 @@
 # Leaf Disk Lab
 
-Version: 1.0.0
+Version: 1.0.1
 
 Grade 9 Biology, floating spinach leaf disks as an indirect measure of net
 photosynthesis. No completion code. Plain HTML, classic deferred scripts, strict
@@ -44,8 +44,9 @@ once all required conditions have been tested. A prediction remains alongside
 each trial's result. Guided investigations test each condition once. The
 custom investigation permits up to 8 runs, including repeats.
 
-Every trial lasts 45 simulated min. 1× means real minutes; 5× accelerates the
-wait, and Skip to end completes it immediately. Pause, visibility changes,
+Every trial lasts 45 simulated min. Playback offers 5×, 15× and 60×, with 15×
+as the default, so a full trial takes 3 real minutes. Skip to end completes it
+immediately. Pause, visibility changes,
 speed and reduced motion cannot alter thresholds or results. The line graph
 shows observations through the current time, without revealing future data.
 The bar chart appears when a trial finishes. Line dash, marker and direct label
@@ -96,6 +97,9 @@ tests/support/activities.js is specific to the question engine and is not used
 by standalone labs; this lab has its own browser spec.
 
 ## Changelog
+
+- 1.0.1: Faster playback defaults, cold and hot temperature result explanation,
+  and consistent Spanish wording. The model constants are unchanged.
 
 - 1.0.0: Initial bilingual leaf disk assay, investigations, graphs, CER export
   and understanding checks.

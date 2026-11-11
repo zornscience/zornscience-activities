@@ -178,6 +178,7 @@
     elapsed = 45; stop(); paintScene(); renderData();
     $("result").textContent = t("Trial {number}: {result}.", {number: records.length, result: resultText(current)});
     renderControls(); predictionResult();
+    if (mode === "temperature") $("result").textContent += " " + t("Cold slows photosynthesis too much at 5 °C and heat stops it at 45 °C, so respiration uses more oxygen than photosynthesis makes and oxygen cannot build up.");
   }
   let lastMinute = -1;
   function tick(now) {

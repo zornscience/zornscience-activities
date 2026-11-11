@@ -137,7 +137,7 @@
   var ACTIVITIES = {
     "leaf-disk-lab": {lessons: ["bio-photosynthesis"],
       en: "Measure photosynthesis with floating spinach leaf disks. Compare light color, brightness, temperature and bicarbonate, then explain your evidence.",
-      es: "Mide la fotosíntesis con discos de hoja de espinaca que flotan. Compara el color y la intensidad de la luz, la temperatura y el bicarbonato, y explica tus evidencias."},
+      es: "Mide la fotosíntesis con discos de hoja de espinaca que flotan. Compara el color y la intensidad de la luz, la temperatura y el bicarbonato, y explica tu evidencia."},
     "act": {lessons: ["act-prep"], wrap: "zsa-act-wrap",
       en: "Practice the English, Math, Reading and Science sections of the ACT, or take a full practice test. You get a score estimate and tips for the skills you missed.",
       es: "Practica las secciones de inglés, matemáticas, lectura y ciencias del ACT, o haz un examen completo de práctica. Recibes una estimación de tu puntuación y consejos para las habilidades que fallaste."},

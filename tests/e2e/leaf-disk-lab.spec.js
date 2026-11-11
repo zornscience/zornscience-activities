@@ -55,6 +55,11 @@ for (const lang of ["en", "es"]) {
       for (const value of values) {
         await $(page, "condition").selectOption(value); await run(page);
         await expect($(page, "prediction").locator("input").first()).toBeDisabled();
+        if (key === "temperature" && ["5", "45"].includes(value)) {
+          await expect($(page, "result")).toContainText(lang === "es" ?
+            "El frío frena demasiado la fotosíntesis a 5 °C y el calor la detiene a 45 °C, así que la respiración consume más oxígeno del que se produce y no se acumula oxígeno." :
+            "Cold slows photosynthesis too much at 5 °C and heat stops it at 45 °C, so respiration uses more oxygen than photosynthesis makes and oxygen cannot build up.");
+        }
       }
       await expect($(page, "table").locator("tbody tr")).toHaveCount(values.length);
       await expect($(page, "result")).toContainText(lang === "es" ? "más rápida observada" : "Fastest observed");
@@ -107,15 +112,28 @@ for (const lang of ["en", "es"]) {
 
 test("leaf-disk-lab: playback speed, pause and skip preserve the same seeded result", async ({page}) => {
   await page.clock.install(); await page.goto(URL); await mode(page, "own");
+  await expect($(page, "speed")).toHaveValue("15");
+  expect(await $(page, "speed").locator("option").evaluateAll(options => options.map(o => o.value))).toEqual(["5", "15", "60"]);
   await $(page, "run").click(); await page.clock.fastForward(60000);
-  await expect($(page, "clock")).toContainText("1.0 min");
+  await expect($(page, "clock")).toContainText("15.0 min");
   await $(page, "pause").click(); const before = await $(page, "clock").textContent();
   await page.clock.fastForward(120000); await expect($(page, "clock")).toHaveText(before);
   await $(page, "speed").selectOption("5"); await $(page, "pause").click(); await page.clock.fastForward(60000);
-  await expect($(page, "clock")).toContainText("6.0 min");
-  await $(page, "skip").click(); await run(page);
+  await expect($(page, "clock")).toContainText("20.0 min");
+  await $(page, "speed").selectOption("60"); await page.clock.fastForward(10000);
+  await expect($(page, "clock")).toContainText("30.0 min");
+  await $(page, "skip").click();
+  for (const [speed, duration] of [["15", 180000], ["5", 540000], ["60", 45000]]) {
+    await $(page, "speed").selectOption(speed); await $(page, "run").click();
+    await page.clock.fastForward(duration); await page.clock.runFor(50);
+    await expect($(page, "clock")).toContainText("45.0 min");
+    await expect($(page, "pause")).toBeDisabled();
+  }
   const rows = $(page, "table").locator("tbody tr");
-  expect(await rows.nth(0).locator("td").last().textContent()).toBe(await rows.nth(1).locator("td").last().textContent());
+  const results = await rows.evaluateAll(trials => trials.map(row => row.querySelector("td:last-child").textContent));
+  expect(results).toHaveLength(4);
+  expect(new Set(results).size).toBe(1);
+  expect(results[0]).toBe(model.trial({}, 42).fiveTime.toFixed(1) + " min");
 });
 
 test("leaf-disk-lab: switching steps cancels preparation and unfinished runs", async ({page}) => {
@@ -170,7 +188,7 @@ test("leaf-disk-lab: safe lesson links, clean sharing, embed and local versioned
   for (const a of await page.locator("main a").all()) await expect(a).toHaveAttribute("target", "_top");
   expect(await $(page, "back").getAttribute("href")).toContain("https://zornscience.org/es/science/biology/");
   expect(requests.every(url => url.startsWith("http://127.0.0.1:"))).toBe(true);
-  requests.filter(url => /\.(js|css|png)\?/.test(url)).forEach(url => expect(url).toMatch(/\?v=1\.0\.0$/));
+  requests.filter(url => /\.(js|css|png)\?/.test(url)).forEach(url => expect(url).toMatch(/\?v=1\.0\.1$/));
   for (const value of ["https://evil.example/a", "http://zornscience.org/a", "https://zornscience.org.evil.example/a", "https://user@zornscience.org/a", "https://zornscience.org:444/a", "javascript:alert(1)"]) {
     await page.goto(URL + "&from=" + encodeURIComponent(value));
     await expect($(page, "back")).toHaveAttribute("href", "https://zornscience.org/science/biology/unit-8-photosynthesis-and-respiration/rates-of-photosynthesis/");
