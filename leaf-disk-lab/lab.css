@@ -1,41 +1,53 @@
-.zsa-ld {--zsa-max-width:1280px;font-size:16px;background:#f9fbfa;}
-.zsa-ld h2 {font-size:24px;margin:0 0 12px;}
+.zsa-ld {--zsa-max-width:1280px;font-size:16px;background:#f5f8f5;}
+.zsa-ld h2 {font-size:24px;line-height:1.25;margin:0 0 12px;letter-spacing:-.4px;}
 .zsa-ld h3 {font-size:19px;margin:12px 0;}
 .zsa-ld p {margin:10px 0;}
-.zsa-ld .zsa-eyebrow {color:#27624a;font-size:12px;}
-.zsa-ld-steps {display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 24px;}
-.zsa-ld-steps button {flex:1 1 145px;border:1px solid var(--zsa-border-strong);border-radius:8px;padding:10px;background:white;color:var(--zsa-navy);font-size:14px;}
-.zsa-ld-steps button[aria-pressed=true] {background:var(--zsa-navy);color:white;border-bottom:4px solid #74c99c;}
-.zsa-ld-layout {display:grid;grid-template-columns:minmax(260px,340px) minmax(0,1fr);gap:20px;align-items:start;}
-.zsa-ld-card {min-width:0;background:white;border:1px solid var(--zsa-border);border-radius:var(--zsa-radius-lg);padding:20px;margin:0 0 20px;}
-.zsa-ld-setup {border-top:4px solid #27624a;}
-.zsa-ld-card-head {margin-bottom:12px;}
-.zsa-ld fieldset {min-width:0;border:1px solid var(--zsa-border);border-radius:8px;margin:16px 0;padding:12px;}
-.zsa-ld legend {font-weight:600;color:var(--zsa-navy);}
-.zsa-ld label {display:block;font-size:15px;}
-.zsa-ld select,.zsa-ld textarea,.zsa-ld input[type=text] {width:100%;max-width:100%;border:1px solid #8ca2b5;border-radius:6px;padding:8px;background:white;color:var(--zsa-slate);font:inherit;}
-.zsa-ld select {margin:4px 0 14px;}
-.zsa-ld textarea {min-height:100px;resize:vertical;}
-.zsa-ld .zsa-ld-choice {display:flex;align-items:center;gap:10px;min-height:44px;padding:7px 5px;cursor:pointer;}
-.zsa-ld input[type=radio] {width:22px;height:22px;flex:0 0 22px;accent-color:var(--zsa-blue);}
-.zsa-ld-setup>.zsa-btn {width:100%;margin-top:12px;}
-.zsa-ld-kept {background:var(--zsa-sky);border-radius:8px;padding:12px;font-size:14px;}
-.zsa-ld-kept ul {padding-left:20px;margin:8px 0;}
+.zsa-ld .zsa-eyebrow {color:#35664f;font-size:11px;letter-spacing:1.8px;font-weight:700;}
+.zsa-ld-steps {display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin:20px 0;padding:14px 18px;background:#e7eee7;border:1px solid #cad9cb;border-radius:12px;}
+.zsa-ld-steps label {font-weight:650;color:#284b39;}
+.zsa-ld .zsa-ld-steps select {flex:1 1 230px;width:auto;margin:0;}
+.zsa-ld-steps .zsa-btn {background:transparent;}
+.zsa-ld-layout {display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:20px;align-items:start;}
+.zsa-ld-card {min-width:0;background:white;border:1px solid #d0ded4;border-radius:16px;padding:22px;margin:0 0 20px;box-shadow:0 4px 18px #213e2d06;}
+.zsa-ld-setup {border-top:4px solid #3c7455;}
+.zsa-ld .zsa-ld-bench {padding:0;overflow:hidden;}
+.zsa-ld-card-head {padding:18px 24px 0;}
+.zsa-ld-card-head h2 {font-size:27px;}
+.zsa-ld fieldset {min-width:0;border:1px solid #d0ded4;border-radius:10px;margin:16px 0;padding:12px;}
+.zsa-ld legend {font-weight:600;color:var(--zsa-navy);font-size:14px;}
+.zsa-ld label {display:block;font-size:14px;}
+.zsa-ld select,.zsa-ld input[type=text] {width:100%;max-width:100%;min-height:44px;border:1px solid #829c8b;border-radius:8px;padding:9px;background:white;color:var(--zsa-slate);font:inherit;font-size:15px;}
+.zsa-ld select {margin:6px 0 14px;}
+.zsa-ld #zsa-ld-prediction select {margin-bottom:0;}
+.zsa-ld .zsa-ld-choice {display:flex;align-items:center;gap:10px;min-height:44px;padding:10px 5px;cursor:pointer;}
+.zsa-ld input[type=radio] {width:22px;height:22px;flex:0 0 22px;accent-color:#346b4b;}
+.zsa-ld-setup>.zsa-btn {width:100%;margin-top:16px;background:#28593e;border-color:#28593e;box-shadow:0 3px 8px #28593e20;}
+.zsa-ld .zsa-ld-reset {margin:4px 0 8px;font-size:14px;}
+.zsa-ld-kept {border-top:1px solid #d0ded4;font-size:13px;}
+.zsa-ld-kept ul {padding-left:20px;margin:0 0 12px;}
 .zsa-ld svg {display:block;width:100%;height:auto;overflow:visible;}
 .zsa-ld svg text {font-family:var(--zsa-font);fill:var(--zsa-navy);}
-.zsa-ld svg .zsa-ld-disk-number {fill:white;}
-.zsa-ld #zsa-ld-scene {border:1px solid var(--zsa-border);border-radius:10px;background:#eef6f2;overflow:hidden;}
-.zsa-ld-readout {font-size:26px;font-weight:650;color:var(--zsa-navy);font-variant-numeric:tabular-nums;}
-.zsa-ld-playback {display:flex;align-items:center;flex-wrap:wrap;gap:8px;}
+.zsa-ld svg .zsa-ld-disk-number {fill:white;font-weight:650;paint-order:stroke;stroke:#1b4a30;stroke-width:2px;}
+.zsa-ld #zsa-ld-scene {overflow:hidden;background:#e7f1ec;margin-top:18px;}
+.zsa-ld-instrument-panel {padding:16px 24px 22px;background:#fcfdfb;}
+.zsa-ld-readout {font-size:27px;line-height:1.25;font-weight:650;color:#244e38;font-variant-numeric:tabular-nums;letter-spacing:-.5px;}
+.zsa-ld .zsa-ld-progress-label {font-size:12px;color:#486351;margin:14px 0 5px;}
+.zsa-ld progress {display:block;width:100%;height:7px;border:0;border-radius:8px;overflow:hidden;background:#e1e9e2;accent-color:#3c7455;}
+.zsa-ld progress::-webkit-progress-bar {background:#e1e9e2;}
+.zsa-ld progress::-webkit-progress-value {background:#3c7455;}
+.zsa-ld progress::-moz-progress-bar {background:#3c7455;}
+.zsa-ld-playback {display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding-top:12px;border-top:1px solid #dce5dd;}
+.zsa-ld-playback label {font-size:13px;}
 .zsa-ld-playback select {width:78px;margin:0;}
-.zsa-ld-scene-text {min-height:52px;}
+.zsa-ld-playback button {font-size:14px;}
+.zsa-ld-scene-text {font-size:14px;color:#486351;line-height:1.5;}
 .zsa-ld-table-wrap {max-width:100%;overflow:auto;}
 .zsa-ld table {border-collapse:collapse;width:100%;font-size:14px;margin:12px 0;text-align:left;}
 .zsa-ld caption {text-align:left;font-weight:600;color:var(--zsa-navy);margin-bottom:8px;}
 .zsa-ld th,.zsa-ld td {border-bottom:1px solid var(--zsa-border);padding:10px 8px;vertical-align:top;overflow-wrap:anywhere;}
-.zsa-ld th {color:var(--zsa-navy);background:var(--zsa-sky);}
+.zsa-ld th {color:var(--zsa-navy);background:#edf3ed;}
 .zsa-ld-graphs {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px;}
-.zsa-ld summary {cursor:pointer;min-height:44px;padding:10px 0;font-weight:600;color:var(--zsa-navy);}
+.zsa-ld summary {cursor:pointer;min-height:44px;padding:12px 0;font-weight:600;color:var(--zsa-navy);}
 .zsa-ld-model {margin:20px 0;max-width:900px;}
 .zsa-ld .zsa-th-share-panel {border:1px solid var(--zsa-border);padding:18px;border-radius:12px;background:white;margin-top:12px;}
 .zsa-ld .zsa-th-share-heading {display:flex;align-items:center;justify-content:space-between;gap:12px;}
@@ -44,12 +56,22 @@
 .zsa-ld .zsa-th-icon-button {border:1px solid var(--zsa-border-strong);border-radius:8px;min-width:44px;min-height:44px;background:white;color:var(--zsa-navy);}
 .zsa-ld .zsa-th-share-options {display:flex;gap:12px;align-items:center;margin-top:12px;}
 .zsa-ld .zsa-th-share-options a {display:inline-flex;align-items:center;min-height:44px;}
-.zsa-ld #zsa-ld-result {border-left:3px solid #27624a;padding-left:10px;}
+.zsa-ld #zsa-ld-result {border-left:3px solid #3c7455;padding-left:12px;font-size:14px;line-height:1.6;}
 .zsa-ld #zsa-ld-result:empty {display:none;}
-.zsa-ld .zsa-ld-answers {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
 .zsa-ld button:disabled {opacity:.55;}
-@media(max-width:850px) {.zsa-ld-layout,.zsa-ld-graphs,.zsa-ld .zsa-ld-answers {grid-template-columns:1fr;}}
-@media(max-width:420px) {.zsa-ld-card {padding:14px;}.zsa-ld h2 {font-size:21px;}.zsa-ld-steps {gap:6px;}.zsa-ld-steps button {flex-basis:125px;font-size:13px;}.zsa-ld th,.zsa-ld td {padding:8px 4px;font-size:12px;}}
+@media(max-width:850px) {
+  .zsa-ld-layout,.zsa-ld-graphs {grid-template-columns:1fr;}
+  .zsa-ld-setup {margin-top:0;}
+}
+@media(max-width:420px) {
+  .zsa-ld-card {padding:16px;}
+  .zsa-ld h2 {font-size:21px;}
+  .zsa-ld-card-head {padding:14px 16px 0;}
+  .zsa-ld-instrument-panel {padding:12px 16px 16px;}
+  .zsa-ld-steps {padding:12px;gap:8px;}
+  .zsa-ld .zsa-ld-steps select {flex-basis:100%;}
+  .zsa-ld th,.zsa-ld td {padding:8px 4px;font-size:12px;}
+}
 @media(max-width:600px) {
   .zsa-ld #zsa-ld-table thead {position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);}
   .zsa-ld #zsa-ld-table tbody tr {display:block;border:1px solid var(--zsa-border);border-radius:8px;margin-bottom:14px;}

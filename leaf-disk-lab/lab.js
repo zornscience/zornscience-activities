@@ -21,8 +21,8 @@
     own: "Choose your conditions. Change one thing at a time for a fair comparison. You can run up to 8 trials.",
     check: "Choose an answer. You get feedback right away."
   };
-  const sessions = Object.fromEntries(modes.map(key => [key, {records: [], prediction: "", answers: ["", "", ""]}]));
-  let mode = "meet", records = sessions.meet.records, preparation = 0, preparing = false, preparationProgress = 0, ownPage = 0;
+  const sessions = Object.fromEntries(modes.map(key => [key, {records: [], prediction: ""}]));
+  let mode = "meet", records = sessions.meet.records, preparation = 0, preparing = false, preparationProgress = 0;
   let current = null, elapsed = 0, playing = false, paused = false, last = 0, frame = 0;
   let conditions = Object.assign({}, model.defaults);
   function el(tag, text, parent, attrs = {}) {
@@ -60,52 +60,81 @@
     if (pinnedSeed !== null) return pinnedSeed;
     return crypto.getRandomValues(new Uint32Array(1))[0];
   }
-  let diskNodes = [], lamp, beam, cutaway, syringe, lightLabel;
+  let diskNodes = [], bubbleNodes = [], lamp, beam, waterBeam, lightStops = [], bulb;
   function buildScene() {
-    const scene = drawing($("scene"), t("Spinach disks, leaf air spaces, a syringe, and a lamp"), 350);
-    svg("rect", {x: 0, y: 285, width: 560, height: 65, fill: "#dbe7df"}, scene);
-    beam = svg("path", {d: "M370 82L169 275H435Z", fill: "#f7e8aa", opacity: ".7"}, scene);
-    lamp = svg("g", {}, scene);
-    svg("path", {d: "M462 286V74H402L368 107", fill: "none", stroke: "#435a67", "stroke-width": 9}, lamp);
-    svg("path", {d: "M345 104L371 64L409 92L382 130Z", fill: "#596f7b", stroke: "#173957", "stroke-width": 2}, lamp);
-    svg("rect", {x: 170, y: 151, width: 231, height: 130, rx: 12, fill: "#c7e5ed"}, scene);
-    svg("path", {d: "M163 116H409L402 132V272Q402 286 386 286H185Q169 286 169 272V130Z", fill: "#ffffff", "fill-opacity": ".15", stroke: "#466b7c", "stroke-width": 3}, scene);
-    svg("path", {d: "M174 151H398M180 163V265", stroke: "white", "stroke-width": 4, fill: "none"}, scene);
+    const scene = drawing($("scene"), t("Ten spinach disks in a beaker lit by a lamp"), 460, 760);
+    const defs = svg("defs", {}, scene);
+    function gradient(id, attrs, stops) {
+      const node = svg("linearGradient", Object.assign({id}, attrs), defs);
+      return stops.map(([offset, color, opacity = 1]) => svg("stop", {offset, "stop-color": color, "stop-opacity": opacity}, node));
+    }
+    gradient("zsa-ld-wall", {x2: "0", y2: "1"}, [["0%", "#e7f1ec"], ["100%", "#f8fbf4"]]);
+    gradient("zsa-ld-water", {x2: "0.8", y2: "1"}, [["0%", "#c4e8e8", .65], ["100%", "#77b8bf", .8]]);
+    gradient("zsa-ld-glass", {x2: "1", y2: "0"}, [["0%", "#ffffff", .6], ["15%", "#ffffff", .08], ["85%", "#ffffff", .04], ["100%", "#ffffff", .5]]);
+    lightStops = gradient("zsa-ld-light", {x1: "70%", y1: "0%", x2: "20%", y2: "100%"}, [["0%", "#fff1ac", .8], ["100%", "#fff1ac", .08]]);
+    const pattern = svg("pattern", {id: "zsa-ld-grid", width: 32, height: 32, patternUnits: "userSpaceOnUse"}, defs);
+    svg("path", {d: "M32 0H0V32", fill: "none", stroke: "#b9cfc4", "stroke-opacity": .25}, pattern);
+    const waterPath = "M154 177Q327 193 500 177V372Q500 391 480 391H177Q154 391 154 372Z";
+    const clip = svg("clipPath", {id: "zsa-ld-water-clip"}, defs);
+    svg("path", {d: waterPath}, clip);
+    svg("rect", {width: 760, height: 460, fill: "url(#zsa-ld-wall)"}, scene);
+    svg("rect", {width: 760, height: 405, fill: "url(#zsa-ld-grid)"}, scene);
+    svg("path", {d: "M0 405H760V460H0Z", fill: "#cfddd3"}, scene);
+    svg("path", {d: "M0 405H760", stroke: "#a6c0b3"}, scene);
+    svg("ellipse", {cx: 326, cy: 402, rx: 204, ry: 16, fill: "#557b69", opacity: .14}, scene);
+    // Air and submerged light are separate layers. The water cannot cover the beam.
+    beam = svg("path", {fill: "url(#zsa-ld-light)"}, scene);
+    svg("path", {d: waterPath, fill: "url(#zsa-ld-water)"}, scene);
+    svg("ellipse", {cx: 327, cy: 177, rx: 173, ry: 11, fill: "#d9f0ed", "fill-opacity": .7, stroke: "#8bbdc0"}, scene);
+    waterBeam = svg("path", {fill: "url(#zsa-ld-light)", "clip-path": "url(#zsa-ld-water-clip)"}, scene);
+    // Decorative oxygen bubbles stay inside the liquid; counts come only from the model.
+    const bubbles = svg("g", {"clip-path": "url(#zsa-ld-water-clip)", "aria-hidden": "true"}, scene);
+    bubbleNodes = Array.from({length: 10}, (_, i) => svg("circle", {cx: 190 + i % 5 * 60, cy: 300, r: 3 + i % 3, fill: "#ffffff", "fill-opacity": .65, stroke: "#4f8f94", "stroke-width": .7, opacity: 0}, bubbles));
     diskNodes = Array.from({length: 10}, (_, i) => {
-      const group = svg("g", {transform: "translate(" + (192 + i % 5 * 45) + "," + (255 + Math.floor(i / 5) * 15) + ")"}, scene);
-      svg("ellipse", {rx: 17, ry: 7, fill: "#357345", stroke: "#163c28", "stroke-width": 2}, group);
-      svg("text", {x: 0, y: 4, "text-anchor": "middle", "font-size": 10, fill: "white", class: "zsa-ld-disk-number"}, group, String(i + 1));
+      const group = svg("g", {}, scene);
+      svg("ellipse", {rx: 22, ry: 9, fill: "#377347", stroke: "#1b4a30", "stroke-width": 1.8}, group);
+      svg("path", {d: "M-18 0H18M-12 0L-6 -5M7 0L14 5", fill: "none", stroke: "#83ac72", "stroke-width": 1.2}, group);
+      svg("text", {x: 0, y: 4, "text-anchor": "middle", "font-size": 12, class: "zsa-ld-disk-number"}, group, String(i + 1));
       return group;
     });
-    cutaway = svg("g", {}, scene);
-    svg("rect", {x: 18, y: 26, width: 242, height: 60, rx: 20, fill: "#88b68d", stroke: "#285138", "stroke-width": 2}, cutaway);
-    [46, 93, 141, 191, 232].forEach((x, i) => {
-      svg("ellipse", {cx: x, cy: 54, rx: 13, ry: 16, fill: "#f9fbfa", stroke: "#285138", "stroke-width": 2}, cutaway);
-      if (i < 4) svg("path", {d: "M" + (x + 18) + " 30V80", stroke: "#285138"}, cutaway);
-    });
-    svg("text", {x: 20, y: 20, "font-size": 15}, scene, t("Leaf disk cutaway"));
-    svg("text", {x: 22, y: 108, "font-size": 14}, scene, t("Air spaces inside the leaf"));
-    syringe = svg("g", {}, scene);
-    svg("rect", {x: 34, y: 173, width: 68, height: 70, rx: 5, fill: "#ffffff", stroke: "#466b7c", "stroke-width": 2}, syringe);
-    svg("path", {d: "M68 160V185M48 160H88M68 243V268M47 199H59M47 214H59M47 229H59", stroke: "#466b7c", "stroke-width": 3}, syringe);
-    svg("text", {x: 20, y: 306, "font-size": 14}, scene, t("Syringe"));
-    svg("text", {x: 170, y: 325, "font-size": 16}, scene, t("Spinach leaf disks"));
-    svg("text", {x: 442, y: 325, "font-size": 16}, scene, t("Lamp"));
-    lightLabel = svg("text", {x: 310, y: 26, "font-size": 13}, scene, "");
+    svg("path", {d: "M140 108H516L502 125V372Q502 395 480 395H177Q151 395 151 372V127Z", fill: "url(#zsa-ld-glass)", stroke: "#688e93", "stroke-width": 2.5}, scene);
+    svg("path", {d: "M143 108Q327 121 513 108M163 135V363Q163 380 180 380", fill: "none", stroke: "#ffffff", "stroke-opacity": .85, "stroke-width": 5, "stroke-linecap": "round"}, scene);
+    [220, 260, 300, 340].forEach(y => svg("path", {d: "M465 " + y + "H488", stroke: "#ffffff", "stroke-opacity": .6, "stroke-width": 2}, scene));
+    lamp = svg("g", {}, scene);
+    svg("ellipse", {cx: 648, cy: 402, rx: 62, ry: 9, fill: "#557b69", opacity: .2}, lamp);
+    svg("path", {d: "M647 391V103Q647 80 625 77L501 55", fill: "none", stroke: "#344d52", "stroke-width": 13, "stroke-linejoin": "round"}, lamp);
+    svg("path", {d: "M649 385V109Q649 84 625 81L504 59", fill: "none", stroke: "#718c8c", "stroke-width": 4}, lamp);
+    svg("path", {d: "M600 393Q648 372 696 393V403H600Z", fill: "#344d52"}, lamp);
+    svg("path", {d: "M448 72L478 100L518 62L487 33Z", fill: "#344d52", stroke: "#243e43", "stroke-width": 2}, lamp);
+    svg("path", {d: "M481 40L507 63", stroke: "#6d8987", "stroke-width": 4, "stroke-linecap": "round"}, lamp);
+    bulb = svg("path", {d: "M448 72L478 100", stroke: "#fff1ac", "stroke-width": 6, "stroke-linecap": "round"}, lamp);
+    svg("text", {x: 327, y: 438, "text-anchor": "middle", "font-size": 17}, scene, t("Spinach leaf disks"));
+    svg("text", {x: 648, y: 438, "text-anchor": "middle", "font-size": 17}, scene, t("Lamp"));
   }
   function paintScene() {
     const count = current ? model.countAt(current, elapsed) : 0;
     diskNodes.forEach((node, i) => {
-      const bottom = 255 + Math.floor(i / 5) * 15;
+      const bottom = 361 + Math.floor(i / 5) * 21;
       const floatTime = current ? current.floatTimes[i] : Infinity;
       const rise = mode === "meet" && preparation === 0 ? 1 - preparationProgress : elapsed >= floatTime ? (reduced || !playing ? 1 : Math.min(1, (elapsed - floatTime) / 0.35)) : 0;
-      node.setAttribute("transform", "translate(" + (192 + i % 5 * 45) + "," + (bottom + (158 + Math.floor(i / 5) * 15 - bottom) * rise) + ")");
+      node.setAttribute("transform", "translate(" + (190 + i % 5 * 60 + Math.floor(i / 5) * 20) + "," + (bottom + (171 + Math.floor(i / 5) * 16 - bottom) * rise) + ")");
+      const oxygen = current && model.rates(current.conditions).net > 0 && elapsed > 0;
+      bubbleNodes[i].setAttribute("opacity", oxygen ? ".6" : "0");
+      bubbleNodes[i].setAttribute("cy", reduced ? 280 - i % 3 * 22 : 350 - (elapsed * 14 + i * 19) % 155);
     });
-    beam.setAttribute("opacity", conditions.color === "dark" || mode === "meet" && preparation < 3 ? "0" : ".7");
-    beam.setAttribute("fill", {white: "#f7e8aa", red: "#e7a9a6", blue: "#a7c5ec", green: "#a7cda7", dark: "#ffffff"}[conditions.color]);
-    lamp.setAttribute("transform", "translate(" + (conditions.distance - 20) + ",0)");
-    lightLabel.textContent = t("{color} · {distance} cm", {color: t(names[conditions.color]), distance: conditions.distance});
-    syringe.setAttribute("transform", preparing && !reduced ? "translate(0," + (-20 * Math.sin(preparationProgress * Math.PI)) + ")" : "translate(0,0)");
+    const lit = conditions.color !== "dark" && !(mode === "meet" && preparation < 3);
+    const color = {white: "#fff1ac", red: "#ff8972", blue: "#78b9ff", green: "#a4ed88", dark: "#a3b6b3"}[conditions.color];
+    const shift = (conditions.distance - 20) * 2;
+    const left = 448 + shift, right = 478 + shift;
+    beam.setAttribute("d", "M" + left + " 72L" + right + " 100L" + (right - 11) + " 187L" + (left - 130) + " 187Z");
+    // A small change in direction at the surface represents refraction.
+    waterBeam.setAttribute("d", "M" + (left - 112) + " 177L" + (right - 10) + " 177L" + (right - 38) + " 395H" + (left - 272) + "Z");
+    beam.setAttribute("opacity", lit ? ".85" : "0");
+    waterBeam.setAttribute("opacity", lit ? ".8" : "0");
+    lightStops.forEach(stop => stop.setAttribute("stop-color", color));
+    bulb.setAttribute("stroke", lit ? color : "#8ca6a2");
+    lamp.setAttribute("transform", "translate(" + shift + ",0)");
+    $("progress").value = elapsed;
     $("clock").textContent = mode === "meet" && preparation === 0 ? t(preparing ? "Air removal in progress" : "Before air removal") :
       t("{time} min · {count} / 10", {time: elapsed.toFixed(1), count});
     $("scene-text").textContent = mode === "meet" && preparation === 0 ? t("Air in the leaf spaces keeps the disks afloat. The syringe pulls out air so solution can enter.") :
@@ -169,8 +198,9 @@
       Array.from({length: 46}, (_, min) => [min].concat(records.map(r => r === current && playing && min > elapsed ? t("Not observed yet") : model.countAt(r, min)))));
   }
   function renderData() {
-    table($("table"), t("Trial data"), [t("Trial"), t("Conditions"), t("Your prediction"), t("Minutes until 5 of 10 disks float")],
-      records.map((r, i) => [i + 1, conditionText(r.conditions), r.prediction || t("No prediction"), r === current && playing ? t("In progress") : resultText(r)]));
+    table($("table"), t("Trial data"), [t("Trial"), t("Conditions"), t("Minutes until 5 of 10 disks float")],
+      records.map((r, i) => [i + 1, conditionText(r.conditions), r === current && playing ? t("In progress") : resultText(r)]));
+    $("data-title").closest("section").hidden = mode === "check" || records.length === 0;
     graphs();
   }
   function stop() { cancelAnimationFrame(frame); playing = false; paused = false; $("pause").disabled = true; $("skip").disabled = true; }
@@ -192,7 +222,7 @@
   }
   function run() {
     if (playing || !canRun()) return;
-    current = model.trial(conditions, seed()); current.prediction = predictionLabel(); records.push(current);
+    current = model.trial(conditions, seed()); records.push(current);
     elapsed = 0; paused = false; playing = true; last = performance.now(); lastMinute = -1;
     $("run").disabled = true; $("pause").disabled = false; $("pause").textContent = t("Pause"); $("skip").disabled = false;
     $("result").textContent = t("Trial in progress. Watch the disks or skip to the end.");
@@ -224,13 +254,11 @@
     const field = el("fieldset", null, $("prediction"));
     field.disabled = playing || records.length > 0;
     el("legend", t("Your prediction: fastest condition"), field);
-    options().forEach((o, i) => {
-      const label = el("label", null, field, {class: "zsa-ld-choice"});
-      const input = el("input", null, label, {type: "radio", name: "prediction", value: o.value});
-      input.checked = sessions[mode].prediction === o.value;
-      el("span", marks[i] + " " + t(o.text, o.values), label);
-      input.addEventListener("change", () => { sessions[mode].prediction = o.value; $("run").disabled = !canRun(); });
-    });
+    const select = el("select", null, field, {"aria-label": t("Your prediction: fastest condition")});
+    el("option", t("Choose your prediction"), select, {value: ""});
+    options().forEach(o => el("option", t(o.text, o.values), select, {value: o.value}));
+    select.value = sessions[mode].prediction;
+    select.addEventListener("change", () => { sessions[mode].prediction = select.value; $("run").disabled = !canRun(); });
   }
   function predictionResult() {
     if (!options().length) return;
@@ -248,12 +276,9 @@
     $("run").hidden = mode === "check" || mode === "meet" && preparation < 3;
     $("run").disabled = playing || !canRun();
     if (mode === "own") {
-      const toggle = el("button", t(ownPage ? "Light settings" : "Solution settings"), $("controls"), {class: "zsa-btn", type: "button"});
-      toggle.disabled = playing;
-      toggle.addEventListener("click", () => { ownPage = 1 - ownPage; renderControls(); });
       const field = el("fieldset", null, $("controls")); field.disabled = playing;
-      el("legend", t(ownPage ? "Solution settings" : "Light settings"), field);
-      (ownPage ? ["temperature", "bicarbonate"] : ["color", "distance"]).forEach(key => {
+      el("legend", t("Experiment settings"), field);
+      ["color", "distance", "temperature", "bicarbonate"].forEach(key => {
         const id = "zsa-ld-" + key;
         el("label", t(controlLabels[key]), field, {for: id});
         const select = el("select", null, field, {id});
@@ -278,13 +303,21 @@
       });
     }
     renderKept(); renderPrediction();
+    if (mode !== "check") {
+      const reset = el("button", t("Reset investigation"), $("controls"), {type: "button", class: "zsa-btn zsa-ld-reset"});
+      reset.addEventListener("click", () => {
+        sessions[mode].records.length = 0; sessions[mode].prediction = "";
+        if (mode === "meet") { preparation = 0; preparationProgress = 0; }
+        stop(); chooseMode(mode);
+      });
+    }
   }
   function renderKept() {
     $("kept").replaceChildren();
     if (["check", "meet"].includes(mode)) return;
-    const box = el("div", null, $("kept"), {class: "zsa-ld-kept"});
-    el("strong", t(mode === "own" ? "Current conditions" : "Kept the same"), box);
-    if (mode === "own") { el("p", conditionText(conditions), box); return; }
+    if (mode === "own") return;
+    const box = el("details", null, $("kept"), {class: "zsa-ld-kept"});
+    el("summary", t("Kept the same"), box);
     const list = el("ul", null, box);
     if (mode !== "color" && mode !== "distance") el("li", t("Light: white, 20 cm"), list);
     if (mode === "color") el("li", t("Lamp distance: 20 cm"), list);
@@ -321,60 +354,17 @@
     mode = next; records = sessions[mode].records;
     current = records.length ? records[records.length - 1] : null;
     elapsed = current ? 45 : 0;
-    conditions = Object.assign({}, model.defaults);
-    if (mode === "why") conditions.bicarbonate = 0;
+    conditions = Object.assign({}, current ? current.conditions : model.defaults);
+    if (mode === "why" && !current) conditions.bicarbonate = 0;
     $("mode-title").textContent = t(titles[mode]); $("description").textContent = t(descriptions[mode]);
     $("result").textContent = "";
-    root.querySelectorAll("[data-ld-mode]").forEach(button => button.setAttribute("aria-pressed", button.getAttribute("data-ld-mode") === mode));
+    $("investigation").value = mode;
+    $("next").disabled = mode === "check";
     $("data-title").closest("section").hidden = mode === "check";
     $("check").hidden = mode !== "check";
     $("scene").closest("section").hidden = mode === "check";
-    renderPreparation(); renderControls(); paintScene(); renderData(); renderWriting();
+    renderPreparation(); renderControls(); paintScene(); renderData();
     if (mode === "check") renderQuiz();
-  }
-  const answerLabels = ["Claim", "Evidence", "Reasoning"];
-  const frames = ["I claim that ...", "My evidence is that ...", "This happens because ..."];
-  function renderWriting() {
-    $("writing").replaceChildren();
-    if (mode === "check") return;
-    const section = el("section", null, $("writing"), {class: "zsa-ld-card", "aria-labelledby": "zsa-ld-writing-title"});
-    el("h2", t("Claim, Evidence, Reasoning"), section, {id: "zsa-ld-writing-title"});
-    el("p", t("Your answers stay on this page. Nothing is saved or sent. Copy your answers before leaving or changing language."), section);
-    const grid = el("div", null, section, {class: "zsa-ld-answers"});
-    answerLabels.forEach((label, i) => {
-      const group = el("div", null, grid), id = "zsa-ld-answer-" + i;
-      el("label", t(label), group, {for: id});
-      el("p", t(frames[i]), group, {id: id + "-frame"});
-      const field = el("textarea", null, group, {id, rows: 4, maxlength: 4000, "aria-describedby": id + "-frame"});
-      field.value = sessions[mode].answers[i];
-      field.addEventListener("input", () => { sessions[mode].answers[i] = field.value; });
-    });
-    const copy = el("button", t("Copy my answers"), section, {type: "button", class: "zsa-btn"});
-    const status = el("p", "", section, {role: "status", "aria-live": "polite"});
-    const fallbackLabel = el("label", t("Answers for manual copying"), section, {for: "zsa-ld-copy-text"}); fallbackLabel.hidden = true;
-    const fallback = el("textarea", null, section, {id: "zsa-ld-copy-text", readonly: "", rows: 8}); fallback.hidden = true;
-    copy.addEventListener("click", async () => {
-      const text = exportAnswers();
-      try {
-        if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error();
-        await navigator.clipboard.writeText(text);
-        status.textContent = t("Answers copied. Paste them into your class assignment.");
-      } catch (error) {
-        fallbackLabel.hidden = false; fallback.hidden = false; fallback.value = text; fallback.focus(); fallback.select();
-        status.textContent = t("Copy is blocked. Your answers are selected below. Press Ctrl+C, or Command+C on a Mac.");
-      }
-    });
-  }
-  function exportAnswers() {
-    const lines = [t("Leaf Disk Lab"), t("Minutes until 5 of 10 disks float")];
-    modes.filter(key => key !== "check").forEach(key => {
-      const session = sessions[key];
-      if (!session.records.length && !session.answers.some(Boolean)) return;
-      lines.push("", t(titles[key]), [t("Trial"), t("Conditions"), t("Your prediction"), t("Minutes until 5 of 10 disks float")].join("\t"));
-      session.records.forEach((r, i) => lines.push([i + 1, conditionText(r.conditions), r.prediction || t("No prediction"), playing && r === current ? t("In progress") : resultText(r)].join("\t")));
-      session.answers.forEach((answer, i) => lines.push(t("{label}: {answer}", {label: t(answerLabels[i]), answer: answer || t("No answer yet")})));
-    });
-    return lines.join("\n");
   }
   const questions = [
     {question: "Why do the prepared disks float in the light?", choices: ["Oxygen builds up inside the leaf.", "Carbon dioxide makes the disks float.", "The lamp fills the disks with hot air."], correct: 0,
@@ -413,10 +403,10 @@
       $("check").querySelector("input").focus();
     });
   }
-  modes.forEach(key => {
-    const button = el("button", t(titles[key]), $("steps"), {type: "button", "data-ld-mode": key, "aria-pressed": key === mode});
-    button.addEventListener("click", () => chooseMode(key));
-  });
+  modes.forEach(key => el("option", t(titles[key]), $("investigation"), {value: key}));
+  $("investigation").addEventListener("change", () => chooseMode($("investigation").value));
+  $("next").addEventListener("click", () => chooseMode(modes[Math.min(modes.length - 1, modes.indexOf(mode) + 1)]));
+  $("graph-details").addEventListener("toggle", () => { if ($("graph-details").open) graphs(); });
   $("run").addEventListener("click", run);
   $("skip").addEventListener("click", finish);
   $("pause").addEventListener("click", () => { paused = !paused; last = performance.now(); $("pause").textContent = t(paused ? "Resume" : "Pause"); });

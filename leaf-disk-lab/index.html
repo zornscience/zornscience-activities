@@ -2,28 +2,28 @@
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.0.1"><title>Leaf Disk Lab | ZornScience</title>
+<meta name="zsa-version" content="1.1.0"><title>Leaf Disk Lab | ZornScience</title>
 <meta name="description" content="Explore photosynthesis with floating spinach leaf disks. Compare light, temperature and bicarbonate in a bilingual Biology lab from ZornScience." data-zsa-es="Explora la fotosíntesis con discos de espinaca que flotan. Compara luz, temperatura y bicarbonato en un laboratorio bilingüe de ZornScience.">
 <link rel="canonical" href="https://activities.zornscience.org/leaf-disk-lab/">
 <link rel="alternate" hreflang="en" href="https://activities.zornscience.org/leaf-disk-lab/">
 <link rel="alternate" hreflang="es" href="https://activities.zornscience.org/leaf-disk-lab/?lang=es">
 <link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/leaf-disk-lab/">
-<link rel="icon" href="../favicon.png?v=1.0.1" type="image/png">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.1">
-<link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=1.0.1">
-<link rel="stylesheet" href="lab.css?v=1.0.1">
-<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.1">
-<script src="../shared/zsa-embed.js?v=1.0.1" defer></script>
-<script src="../shared/zsa-i18n.js?v=1.0.1" defer></script>
-<script src="data.js?v=1.0.1" defer></script>
-<script src="model.js?v=1.0.1" defer></script>
-<script src="lab.js?v=1.0.1" defer></script>
-<script src="share.js?v=1.0.1" defer></script>
-<link rel="stylesheet" href="../shared/zsa-about.css?v=1.0.1"><script src="../shared/zsa-about.js?v=1.0.1" defer></script></head><body><main class="zsa zsa-ld" data-zsa-activity="leaf-disk-lab">
+<link rel="icon" href="../favicon.png?v=1.1.0" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.1.0">
+<link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=1.1.0">
+<link rel="stylesheet" href="lab.css?v=1.1.0">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.1.0">
+<script src="../shared/zsa-embed.js?v=1.1.0" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.1.0" defer></script>
+<script src="data.js?v=1.1.0" defer></script>
+<script src="model.js?v=1.1.0" defer></script>
+<script src="lab.js?v=1.1.0" defer></script>
+<script src="share.js?v=1.1.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.1.0"><script src="../shared/zsa-about.js?v=1.1.0" defer></script></head><body><main class="zsa zsa-ld" data-zsa-activity="leaf-disk-lab">
 <header data-zsa-header class="zsa-th-header">
 <div data-zsa-header-row class="zsa-th-topline">
 <div data-zsa-header-identity class="zsa-th-identity"><a data-zsa-header-brand class="zsa-th-brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome>
-<img src="../ionic-reactions/zornscience-logo.png?v=1.0.1" alt="" width="40" height="39">
+<img src="../ionic-reactions/zornscience-logo.png?v=1.1.0" alt="" width="40" height="39">
 </a><h1>Leaf Disk Lab</h1></div>
 <nav data-zsa-header-tools class="zsa-th-header-tools" aria-label="Instructions and sharing">
 <div class="zsa-th-header-buttons">
@@ -56,9 +56,25 @@
 </section>
 </header>
 <a class="zsa-back" id="zsa-ld-back" data-zsa-chrome href="https://zornscience.org/science/biology/unit-8-photosynthesis-and-respiration/rates-of-photosynthesis/">Back to the lesson</a>
-<nav class="zsa-ld-steps" aria-label="Investigation" id="zsa-ld-steps"></nav>
+<nav class="zsa-ld-steps" aria-label="Investigation">
+<label for="zsa-ld-investigation">Choose an investigation</label>
+<select id="zsa-ld-investigation"></select>
+<button class="zsa-btn" id="zsa-ld-next" type="button">Next investigation</button>
+</nav>
 <div class="zsa-ld-layout">
-<section class="zsa-ld-card zsa-ld-setup" aria-labelledby="zsa-ld-mode-title">
+<section class="zsa-ld-card zsa-ld-bench" aria-labelledby="zsa-ld-observe-title">
+<div class="zsa-ld-card-head"><p class="zsa-eyebrow">Observation</p><h2 id="zsa-ld-observe-title">Watch photosynthesis happen</h2></div>
+<div id="zsa-ld-scene"></div>
+<div class="zsa-ld-instrument-panel">
+<p class="zsa-ld-readout" id="zsa-ld-clock">0.0 min · 0 / 10</p>
+<label class="zsa-ld-progress-label" for="zsa-ld-progress">Simulated time · 45 min trial</label>
+<progress id="zsa-ld-progress" max="45" value="0"></progress>
+<p class="zsa-ld-scene-text" id="zsa-ld-scene-text">Ten disks are at the bottom of the beaker.</p>
+<div class="zsa-ld-playback">
+<label for="zsa-ld-speed">Playback</label><select id="zsa-ld-speed"><option value="5">5×</option><option value="15" selected>15×</option><option value="60">60×</option></select>
+<button class="zsa-btn" id="zsa-ld-pause" type="button" disabled>Pause</button>
+<button class="zsa-btn" id="zsa-ld-skip" type="button" disabled>Skip to end</button>
+</div></div></section><section class="zsa-ld-card zsa-ld-setup" aria-labelledby="zsa-ld-mode-title">
 <p class="zsa-eyebrow">Virtual lab</p><h2 id="zsa-ld-mode-title">Photosynthesis in a beaker</h2>
 <p id="zsa-ld-description">Watch ten spinach disks. Oxygen made by the leaf helps each disk float.</p>
 <div id="zsa-ld-preparation"></div><div id="zsa-ld-prediction"></div><div id="zsa-ld-controls"></div>
@@ -66,23 +82,14 @@
 <button class="zsa-btn zsa-btn--primary" id="zsa-ld-run" type="button">Run trial</button>
 <p id="zsa-ld-result" role="status" aria-live="polite"></p>
 </section>
-<section class="zsa-ld-card" aria-labelledby="zsa-ld-observe-title">
-<div class="zsa-ld-card-head"><p class="zsa-eyebrow">Observation</p><h2 id="zsa-ld-observe-title">Ten disks. One question.</h2></div>
-<div id="zsa-ld-scene"></div>
-<p class="zsa-ld-readout" id="zsa-ld-clock">0.0 min · 0 / 10</p>
-<p class="zsa-ld-scene-text" id="zsa-ld-scene-text">Ten disks are at the bottom of the beaker.</p>
-<div class="zsa-ld-playback">
-<label for="zsa-ld-speed">Playback</label><select id="zsa-ld-speed"><option value="5">5×</option><option value="15" selected>15×</option><option value="60">60×</option></select>
-<button class="zsa-btn" id="zsa-ld-pause" type="button" disabled>Pause</button>
-<button class="zsa-btn" id="zsa-ld-skip" type="button" disabled>Skip to end</button>
-</div></section></div>
-<section class="zsa-ld-card" aria-labelledby="zsa-ld-data-title">
+</div>
+<section class="zsa-ld-card" aria-labelledby="zsa-ld-data-title" hidden>
 <h2 id="zsa-ld-data-title">Trial data</h2><p id="zsa-ld-data-note">Minutes until 5 of 10 disks float</p>
 <div class="zsa-ld-table-wrap" id="zsa-ld-table"></div>
-<div class="zsa-ld-graphs"><div id="zsa-ld-line"></div><div id="zsa-ld-bars"></div></div>
+<details id="zsa-ld-graph-details"><summary>Compare graphs</summary><div class="zsa-ld-graphs"><div id="zsa-ld-line"></div><div id="zsa-ld-bars"></div></div></details>
 <details><summary>Graph data table</summary><div class="zsa-ld-table-wrap" id="zsa-ld-curve-table"></div></details>
 </section>
-<div id="zsa-ld-writing"></div><section id="zsa-ld-check" class="zsa-ld-card" hidden></section>
+<section id="zsa-ld-check" class="zsa-ld-card" hidden></section>
 <details class="zsa-ld-model"><summary>Model details</summary>
 <p>This is an illustrative teaching model. Real leaves vary. The times are examples for comparing conditions, not predictions of real lab times.</p>
 <p>Photosynthesis makes oxygen. Respiration uses oxygen in light and dark. A disk rises after enough oxygen builds up in its air spaces.</p>
@@ -95,6 +102,6 @@
 <p>Predict first. Change one condition at a time. Compare the minutes until 5 of 10 disks float.</p>
 <p>Each trial lasts 45 simulated min. Choose 5×, 15×, or 60× playback. At the default 15×, a full trial takes 3 real minutes. Pause and Skip to end change your wait, not your results.</p>
 <p>This is an illustrative teaching model. Real leaves vary. The times are examples for comparing conditions, not predictions of real lab times.</p>
-<p>Your answers stay on this page. Nothing is saved or sent. Copy your answers before leaving or changing language.</p>
+<p>Record your observations on your worksheet. Trial data stays on this page until you reload, reset an investigation, or change language. Nothing is saved or sent.</p>
 </dialog><noscript>This simulation requires JavaScript.</noscript>
 </main></body></html>

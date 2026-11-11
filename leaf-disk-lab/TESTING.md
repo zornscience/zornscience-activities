@@ -1,6 +1,6 @@
 # Validation
 
-Version: 1.0.1
+Version: 1.1.0
 
 Run npm ci, npm run test:unit, and the relevant Playwright specs. This activity
 has no production build step. Regenerate registrations with node tools/build-seo.js
@@ -11,13 +11,12 @@ the green/white ratio, no floating in dark, 0% bicarbonate and 45 °C, every
 required monotonic trend, exact same-seed repeatability, independent factor
 arithmetic and rejected invalid inputs. The model is imported directly in Node.
 
-tests/e2e/leaf-disk-lab.spec.js covers the full guided conditions in both
-languages, prediction locking and comparisons, preparation and cancellation,
-pause/speed/skip invariant results, custom settings and the eight-trial limit,
-per-investigation CER, successful and blocked clipboard writes, questions and
-feedback, language reload, clean sharing, safe back links, embed and local-only
-assets. Layout checks use 320, 390 and 1366 px. Drawings have bilingual names,
-titles, visible axis labels and table or prose alternatives.
+tests/e2e/leaf-disk-lab.spec.js covers all guided conditions in both languages,
+compact prediction selection, all custom controls, playback, resets, worksheet
+workflow without writing fields, questions and feedback, language reload, clean
+sharing, safe back links, embed and local-only assets. Layout checks use 320,
+390 and 1366 px. Drawings have bilingual names, titles, visible axis labels and
+table or prose alternatives. Graphs expand on demand.
 
 The shared labs-a11y spec automatically discovers lab.js and runs axe, focus
 and keyboard checks in English and Spanish. i18n.spec.js includes this activity
@@ -65,8 +64,8 @@ The browser runs used system Chromium at /usr/bin/chromium through a temporary
 Playwright config under work/. The committed configuration is unchanged.
 
 Manual review: inspect the scene and both graphs after several trials. Use
-keyboard-only air removal, radios, selects, Instructions, Share and Copy my
-answers. Switch steps during preparation and playback. Confirm counts and
+keyboard-only air removal, prediction and investigation selects, Instructions,
+Share, reset and playback controls. Switch steps during preparation and playback. Confirm counts and
 tables agree. Verify real Spanish lesson wording and the /es/ destination with
 the teacher before publishing a final translated lesson title.
 
@@ -118,3 +117,11 @@ commands used a temporary config under work/leaf-v101/ with system Chromium
 at /usr/bin/chromium, per-file JSON reports and the repository's server setup.
 The committed Playwright config was not changed. Both registration generators
 were run and their --check modes passed.
+
+## Version 1.1.0 checks
+
+The current browser spec replaces CER and clipboard-export checks with the
+worksheet workflow, compact navigation, on-demand graphs and reset behavior.
+The model remains byte-for-byte unchanged. Both language flows and every
+investigation are checked at 320, 390 and 1366 px. Prior version results above
+are historical, not validation of this redesign.

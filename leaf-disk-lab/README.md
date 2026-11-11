@@ -1,6 +1,6 @@
 # Leaf Disk Lab
 
-Version: 1.0.1
+Version: 1.1.0
 
 Grade 9 Biology, floating spinach leaf disks as an indirect measure of net
 photosynthesis. No completion code. Plain HTML, classic deferred scripts, strict
@@ -19,29 +19,30 @@ publishing globals.
 data.js contains complete English templates with Mexican Spanish translations.
 Use the shared EN / ES links or ?lang=es. Language changes reload the page and
 clear this visit's work. No answers or trials survive a reload. No storage,
-tracking, accounts, runtime network calls or clipboard reading. Copy my answers
-writes the tables and CER text for all investigations to the clipboard only
-after a click. Blocked copying offers a selectable text area. Share includes
-only a clean activity link and the language, never answers, settings or seed.
+tracking, accounts, runtime network calls or clipboard reading. Students record
+observations on a separate worksheet. There are no CER writing fields or answer
+exports. Share copies only a clean activity link and the language, never
+answers, settings or seed.
 
 ## Flow
 
 | Step | Work |
 | --- | --- |
-| Meet the lab | Leaf cutaway, syringe air removal and sinking, bicarbonate addition, lamp |
+| Meet the lab | Air removal and sinking, bicarbonate addition, lamp |
 | Why bicarbonate | Water only and 1% solution |
 | Light color | Prediction, white, red, blue, green and dark |
 | Light brightness | Prediction, 10, 20, 30, 40 cm and dark |
 | Temperature | Prediction, 5, 15, 25, 35, 45 °C |
-| Design your own test | All four conditions available, in two groups of two controls, up to 8 trials |
+| Design your own test | All four conditions visible together, up to 8 trials |
 | Check your understanding | Three questions, instant feedback, no completion code |
 
-Each investigation has a separate in-memory table and CER answers. Switching
-steps preserves completed work during this visit. Switching during a running
+A labeled selector and Next investigation button replace the seven-button bar.
+Each investigation has a separate in-memory table. Switching investigations
+preserves completed trials during this visit. Reset investigation clears only
+the selected investigation, cancels playback and unlocks its prediction. Switching during a running
 trial cancels and discards that unfinished trial. Predictions lock when the
 first trial begins. The final comparison names the fastest observed condition
-once all required conditions have been tested. A prediction remains alongside
-each trial's result. Guided investigations test each condition once. The
+once all required conditions have been tested. The compact prediction selector remains visible beside the experiment. Guided investigations test each condition once. The
 custom investigation permits up to 8 runs, including repeats.
 
 Every trial lasts 45 simulated min. Playback offers 5×, 15× and 60×, with 15×
@@ -51,7 +52,11 @@ speed and reduced motion cannot alter thresholds or results. The line graph
 shows observations through the current time, without revealing future data.
 The bar chart appears when a trial finishes. Line dash, marker and direct label
 identify each trial. Tables provide exact text alternatives, including counts
-at each integer minute. The beaker has a text count and a leaf cutaway description.
+at each integer minute. The beaker has a text count and observation description. Trial data is hidden
+until a trial starts, and graphs open on demand. The glass, water and lamp use
+local SVG gradients. Separate air and water light layers show the beam entering
+the liquid, with the submerged portion clipped to the water. Decorative bubbles
+do not determine disk counts or change the model.
 
 ## Illustrative teaching model
 
@@ -80,7 +85,8 @@ leaves, temperature exposure and experimental methods can behave differently.
 
 Use Tab and native radio/select keys. Instructions is a modal dialog with
 Escape and focus return. Buttons and labels have targets at least 44 px.
-Reduced motion omits syringe movement and uses immediate disk position changes.
+Reduced motion omits sinking animation and bubble motion and uses immediate
+disk position changes.
 Hidden browser tabs pause trials. Both drawings and text use decimal points.
 
 ?embed=1 uses shared embed behavior. ?from= accepts only an HTTPS URL with the
@@ -97,6 +103,11 @@ tests/support/activities.js is specific to the question engine and is not used
 by standalone labs; this lab has its own browser spec.
 
 ## Changelog
+
+- 1.1.0: Larger beaker scene with light visible through water, compact navigation,
+  on-demand graphs, reset controls and worksheet workflow. Removed CER fields
+  and answer copying. All four custom controls are visible together. The seeded
+  model and its constants are unchanged.
 
 - 1.0.1: Faster playback defaults, cold and hot temperature result explanation,
   and consistent Spanish wording. The model constants are unchanged.
