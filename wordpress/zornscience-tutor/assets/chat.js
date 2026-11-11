@@ -23,7 +23,7 @@
       send: 'Send',
       voice: 'Voice',
       language: 'Language',
-      note: "AI tutors can make mistakes, so double-check important work. Please don't share personal information, and crop names out of photos.",
+      note: "Your tutor can make mistakes, so double-check important work. Please don't share personal information, and crop names out of photos.",
       noteVoice: " Voice typing uses your browser's speech recognition. ZornScience does not record or save your voice.",
       chips: [
         ['Stuck on stoichiometry', "I'm stuck on a stoichiometry problem. Can you help me get started?"],
@@ -72,7 +72,7 @@
       send: 'Enviar',
       voice: 'Voz',
       language: 'Idioma',
-      note: 'Los tutores de IA pueden equivocarse, así que revisa bien el trabajo importante. No compartas información personal y recorta los nombres de tus fotos.',
+      note: 'Tu tutor puede equivocarse, así que revisa bien el trabajo importante. No compartas información personal y recorta los nombres de tus fotos.',
       noteVoice: ' Escribir con la voz usa el reconocimiento de voz de tu navegador. ZornScience no graba ni guarda tu voz.',
       chips: [
         ['Ayuda con estequiometría', 'No me sale un problema de estequiometría. ¿Me ayudas a empezar?'],

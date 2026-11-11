@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       ZornScience Tutor
  * Description:       A chemistry, physics, and biology tutor for students. Guides students with questions instead of giving answers. Supports photos of student work and voice typing. Use the [zornscience_tutor] shortcode on any page.
- * Version:           1.6.0
+ * Version:           1.6.1
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            ZornScience
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZST_VERSION', '1.6.0' );
+define( 'ZST_VERSION', '1.6.1' );
 define( 'ZST_FILE', __FILE__ );
 define( 'ZST_DIR', plugin_dir_path( __FILE__ ) );
 define( 'ZST_URL', plugin_dir_url( __FILE__ ) );
@@ -1104,7 +1104,7 @@ function zst_shortcode( $atts ) {
 			<button type="button" class="zst-icon-btn zst-mic" data-zst-mic hidden aria-pressed="false" title="Start voice input" aria-label="Start voice input"></button>
 			<button type="submit" class="zst-send" data-zst-send aria-label="Send"><span class="zst-btn-text" data-zst-i18n="send">Send</span><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12l15-7-5 15-2.6-5.4z M11.4 14.6L19 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg></button>
 		</form>
-		<p class="zst-note" data-zst-note>AI tutors can make mistakes, so double-check important work. Please don't share personal information, and crop names out of photos.</p>
+		<p class="zst-note" data-zst-note>Your tutor can make mistakes, so double-check important work. Please don't share personal information, and crop names out of photos.</p>
 	</div>
 	<?php
 	return ob_get_clean();

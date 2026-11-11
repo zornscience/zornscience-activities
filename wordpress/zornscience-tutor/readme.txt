@@ -52,6 +52,9 @@ A chemistry, physics, and biology tutor for students. It guides students with qu
 
 == Changelog ==
 
+= 1.6.1 =
+* The note under the chat no longer says "AI". It now reads "Your tutor can make mistakes, so double-check important work" (and the Spanish version). The tutor instructions are unchanged, so the tutor still answers honestly if a student asks what it is.
+
 = 1.6.0 =
 * Added Biology (tutor instructions, welcome messages, placeholder, chips, Spanish vocabulary).
 * Voice typing: no auto-send, interim text in the box, es-MX, status line, friendly messages for denied, no-speech, and network errors, one-line privacy note.
