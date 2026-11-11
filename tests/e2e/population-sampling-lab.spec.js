@@ -151,6 +151,12 @@ for (const lang of ["en", "es"]) {
     await expect(page.locator("dialog")).toBeVisible();
     for (let i = 0; i < 5; i++) { await page.keyboard.press("Tab"); expect(await page.evaluate(() => document.activeElement === document.body || !!document.activeElement.closest("dialog"))).toBe(true); }
     await page.keyboard.press("Escape"); await expect($(page, "instructions-open")).toBeFocused();
+    await page.keyboard.press("Tab"); await page.keyboard.press("Enter");
+    await expect($(page, "share-panel")).toBeVisible();
+    await $(page, "instructions-open").focus(); await page.keyboard.press("Enter");
+    await expect($(page, "share-panel")).toBeHidden();
+    await page.keyboard.press("Escape"); await expect(page.locator("dialog")).toBeHidden();
+    await expect($(page, "instructions-open")).toBeFocused();
     await mode(page, "check");
     for (let i = 0; i < 3; i++) {
       await page.locator('input[name="question-' + i + '"][value="' + ((data.content.questions[i].correct + 1) % 3) + '"]').check();

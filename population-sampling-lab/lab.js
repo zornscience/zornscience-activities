@@ -319,7 +319,11 @@
   }
   Object.entries(labels).forEach(([key, text]) => button(text, $("tabs"), () => { mode = key; render(); $("mode-title").setAttribute("tabindex", "-1"); $("mode-title").focus(); }, {"data-ps-mode": key, "aria-pressed": key === mode}));
   const dialog = root.querySelector("#instructions");
-  $("instructions-open").addEventListener("click", () => dialog.showModal());
+  $("instructions-open").addEventListener("click", () => {
+    $("share-panel").hidden = true;
+    $("share-open").setAttribute("aria-expanded", "false");
+    dialog.showModal();
+  });
   $("instructions-close").addEventListener("click", () => dialog.close());
   const from = params.get("from");
   if (from) {
