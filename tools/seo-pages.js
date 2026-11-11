@@ -5,6 +5,10 @@
 // Keys are folder names; "" is the landing page. es: null = English only. sitemap: false = left out of sitemap.xml.
 "use strict";
 module.exports = {
+  "leaf-disk-lab": {
+    en: "Explore photosynthesis with floating spinach leaf disks. Compare light, temperature and bicarbonate in a bilingual Biology lab from ZornScience.",
+    es: "Explora la fotosíntesis con discos de espinaca que flotan. Compara luz, temperatura y bicarbonato en un laboratorio bilingüe de ZornScience."
+  },
   "": {
     en: "Free interactive chemistry and physics activities from ZornScience: virtual labs, simulations, AP Chemistry review and ACT practice, no login needed.",
     es: "Actividades interactivas gratuitas de química y física de ZornScience: laboratorios virtuales, simulaciones, repaso de Química AP y práctica para el ACT."

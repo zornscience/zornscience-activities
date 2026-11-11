@@ -6,6 +6,7 @@
   // Lesson titles are the page titles on zornscience.org (Style Kit Appendix A for Spanish).
   var HOST = "https://zornscience.org";
   var COURSES = {
+    bio: {en: "Biology", es: "Biología", path: "/science/biology/"},
     chem: {en: "Chemistry", es: "Química", path: "/science/chemistry/"},
     ap: {en: "AP Chemistry", es: "Química AP", path: "/science/ap-chemistry/"},
     phys: {en: "Physics", es: "Física", path: "/science/physics/"},
@@ -15,6 +16,7 @@
   };
   // key: [course, path below the course, English title, Spanish title]
   var LESSONS = {
+    "bio-photosynthesis": ["bio", "unit-8-photosynthesis-and-respiration/rates-of-photosynthesis/", "Rates of Photosynthesis", "Tasas de fotosíntesis (needs review)"],
     "act-prep": ["students", "act/", "ACT Prep", "Preparación para el ACT"],
     "ap-unit-1": ["ap", "unit-1-atomic-structure-and-properties/", "Unit 1: Atomic Structure and Properties", "Unidad 1: Estructura atómica y propiedades"],
     "ap-unit-2": ["ap", "unit-2-compound-structure-and-properties/", "Unit 2: Compound Structure and Properties", "Unidad 2: Estructura y propiedades de los compuestos"],
@@ -133,6 +135,9 @@
   // Activity folder: intro (one or two short sentences) and its lessons, most specific first. On pages whose
   // root has no side padding, wrap names the class that lines the section up with the page's footer.
   var ACTIVITIES = {
+    "leaf-disk-lab": {lessons: ["bio-photosynthesis"],
+      en: "Measure photosynthesis with floating spinach leaf disks. Compare light color, brightness, temperature and bicarbonate, then explain your evidence.",
+      es: "Mide la fotosíntesis con discos de hoja de espinaca que flotan. Compara el color y la intensidad de la luz, la temperatura y el bicarbonato, y explica tus evidencias."},
     "act": {lessons: ["act-prep"], wrap: "zsa-act-wrap",
       en: "Practice the English, Math, Reading and Science sections of the ACT, or take a full practice test. You get a score estimate and tips for the skills you missed.",
       es: "Practica las secciones de inglés, matemáticas, lectura y ciencias del ACT, o haz un examen completo de práctica. Recibes una estimación de tu puntuación y consejos para las habilidades que fallaste."},

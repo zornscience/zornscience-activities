@@ -66,3 +66,25 @@ test("landing page links to both activities", async ({page}) => {
   await page.locator('a[href="ion-charge-trainer/"]').click();
   await expect(page).toHaveTitle("Predicting Ion Charge Trainer | ZornScience");
 });
+
+test("leaf-disk-lab: a lesson iframe reports its height without scrolling the host", async ({page}) => {
+  await page.route("https://activities.zornscience.org/**", route => {
+    var file = path.join(ROOT, new URL(route.request().url()).pathname);
+    if (file.endsWith("/")) file = path.join(file, "index.html");
+    if (!fs.existsSync(file)) return route.fulfill({status: 404, body: ""});
+    return route.fulfill({contentType: TYPES[path.extname(file)] || "application/octet-stream", body: fs.readFileSync(file)});
+  });
+  await page.route("https://zornscience.org/host", route => route.fulfill({contentType: "text/html", body:
+    "<!doctype html><title>Biology lesson</title><div style='height:1200px'>Lesson</div>" +
+    "<iframe id='f' title='Leaf Disk Lab' src='https://activities.zornscience.org/leaf-disk-lab/?embed=1' style='width:100%;height:900px;border:0'></iframe>" +
+    "<script>window.got=[];window.addEventListener('message',function(e){if(e.origin==='https://activities.zornscience.org'&&e.data&&e.data.type==='zsa:resize'){window.got.push(e.data);document.getElementById('f').style.height=e.data.height+'px';}});</script>"}));
+  await page.goto("https://zornscience.org/host");
+  await page.waitForFunction(() => window.got.length > 0);
+  expect(await page.evaluate(() => window.scrollY)).toBe(0);
+  const before = await page.evaluate(() => window.got[window.got.length - 1].height);
+  const frame = page.frameLocator("#f");
+  await expect(frame.locator("main")).toHaveClass(/zsa--embedded/);
+  await frame.locator("main details > summary").first().click();
+  await page.waitForFunction(height => window.got[window.got.length - 1].height > height, before);
+  expect(await page.evaluate(() => window.got.every(m => m.activity === "leaf-disk-lab" && Number.isInteger(m.height)))).toBe(true);
+});

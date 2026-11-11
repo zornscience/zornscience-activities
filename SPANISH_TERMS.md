@@ -3432,3 +3432,36 @@ The activity title is Laboratorio virtual de entropía y energía libre. Section
 | own volume | volumen propio | Volume occupied by the atoms. |
 
 Other pilot text reuses existing terms, including rapidez promedio, energía cinética promedio, fracción molar, presión parcial, línea discontinua, código de finalización, Preparar el laboratorio, Muéstrame, and Empezar de nuevo.
+
+## Leaf Disk Lab
+
+Mexican Spanish, tú, decimal points and unchanged units. The lesson title and the /es/ lesson twin await the teacher's verification.
+
+| English | Mexican Spanish | Review |
+| --- | --- | --- |
+| Leaf Disk Lab | Laboratorio de discos de hoja | needs review |
+| Biology | Biología | |
+| Rates of Photosynthesis | Tasas de fotosíntesis | needs review, requested provisional lesson title |
+| floating leaf disk assay | ensayo de flotación de discos de hoja | needs review |
+| leaf disk | disco de hoja | |
+| spinach | espinaca | |
+| photosynthesis | fotosíntesis | |
+| respiration | respiración | |
+| net photosynthesis | fotosíntesis neta | |
+| oxygen | oxígeno | |
+| carbon dioxide | dióxido de carbono | |
+| air spaces | espacios de aire | needs review, simplified for grade 9 |
+| leaf disk cutaway | corte de un disco de hoja | needs review |
+| sodium bicarbonate | bicarbonato de sodio | |
+| light color | color de la luz | |
+| light brightness | intensidad de la luz | |
+| lamp distance | distancia de la lámpara | |
+| enzymes | enzimas | |
+| minutes until 5 of 10 disks float | minutos hasta que floten 5 de los 10 discos | |
+| Claim, Evidence, Reasoning | Afirmación, evidencia y razonamiento | needs review, classroom framework |
+| kept the same | sin cambios | |
+| illustrative teaching model | modelo ilustrativo para la enseñanza | |
+
+Fixed words retain Instrucciones, Compartir, Laboratorio virtual, tabla de datos,
+vaso de precipitados, jeringa, ensayo and Ritmo de reproducción. Each explanatory
+sentence is translated as one template in leaf-disk-lab/data.js.
