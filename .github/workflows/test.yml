@@ -8,16 +8,15 @@ on:
 permissions:
   contents: read
 
-# One-time setup on the self-hosted runner machine (run once, not in CI):
-#   sudo npx playwright install-deps chromium
-# This installs the system libraries Chromium needs, so the workflow does not need sudo.
+# One-time setup on the Fedora runner: install Chromium system libraries with dnf.
+# The workflow downloads only the browser; it does not install OS packages or require sudo.
 
 jobs:
   test:
     name: Unit and browser tests
-    runs-on: self-hosted
-    # The browser suite takes about 20 to 30 minutes. Queue time does not count toward this timeout.
-    timeout-minutes: 45
+    runs-on: [self-hosted, linux]
+    # Allow time for the full browser suite with one worker. Queue time does not count toward this timeout.
+    timeout-minutes: 120
     steps:
       - uses: actions/checkout@v5
       - name: Clear leftover output from previous runs
@@ -29,7 +28,7 @@ jobs:
       - run: npm ci
       - run: npx playwright install chromium
       - run: npm run test:unit
-      - run: npx playwright test
+      - run: npx playwright test --workers=1
       - uses: actions/upload-artifact@v6
         if: failure()
         with:
@@ -43,7 +42,7 @@ jobs:
     # request that changes behavior on purpose to skip it.
     # Note: with a single self-hosted runner, this job waits for the test job to finish.
     if: github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'behavior-change')
-    runs-on: self-hosted
+    runs-on: [self-hosted, linux]
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v5
