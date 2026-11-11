@@ -16,6 +16,7 @@
   };
   // key: [course, path below the course, English title, Spanish title]
   var LESSONS = {
+    "bio-population-sampling": ["bio", "unit-2-populations/population-sampling/", "Population Sampling", "Muestreo de poblaciones (needs review)"],
     "bio-photosynthesis": ["bio", "unit-8-photosynthesis-and-respiration/rates-of-photosynthesis/", "Rates of Photosynthesis", "Tasas de fotosíntesis (needs review)"],
     "act-prep": ["students", "act/", "ACT Prep", "Preparación para el ACT"],
     "ap-unit-1": ["ap", "unit-1-atomic-structure-and-properties/", "Unit 1: Atomic Structure and Properties", "Unidad 1: Estructura atómica y propiedades"],
@@ -135,6 +136,9 @@
   // Activity folder: intro (one or two short sentences) and its lessons, most specific first. On pages whose
   // root has no side padding, wrap names the class that lines the section up with the page's footer.
   var ACTIVITIES = {
+    "population-sampling-lab": {lessons: ["bio-population-sampling"],
+      en: "Estimate hidden meadow and pond populations with quadrats and mark and recapture. Compare random placement, sample size, repeated trials and biased sampling.",
+      es: "Estima las poblaciones ocultas de un prado y un estanque con cuadrantes y captura y recaptura. Compara la colocación al azar, el tamaño de muestra, los ensayos repetidos y el muestreo sesgado."},
     "leaf-disk-lab": {lessons: ["bio-photosynthesis"],
       en: "Measure photosynthesis with floating spinach leaf disks. Compare light color, brightness, temperature and bicarbonate, then explain your evidence.",
       es: "Mide la fotosíntesis con discos de hoja de espinaca que flotan. Compara el color y la intensidad de la luz, la temperatura y el bicarbonato, y explica tu evidencia."},
