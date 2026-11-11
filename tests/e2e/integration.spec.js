@@ -84,7 +84,7 @@ test("leaf-disk-lab: a lesson iframe reports its height without scrolling the ho
   const before = await page.evaluate(() => window.got[window.got.length - 1].height);
   const frame = page.frameLocator("#f");
   await expect(frame.locator("main")).toHaveClass(/zsa--embedded/);
-  await frame.locator("main details > summary").first().click();
+  await frame.locator("details.zsa-ld-model > summary").click();
   await page.waitForFunction(height => window.got[window.got.length - 1].height > height, before);
   expect(await page.evaluate(() => window.got.every(m => m.activity === "leaf-disk-lab" && Number.isInteger(m.height)))).toBe(true);
 });
