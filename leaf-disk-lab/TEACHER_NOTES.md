@@ -1,13 +1,20 @@
 # Teacher notes
 
-Version: 1.0.1
+Version: 1.1.0
 
-Use the lab with ninth grade Biology. Ask students to compare one factor at a
-time, use both tables and graphs, and explain a claim with evidence. Short
-frames in English and Mexican Spanish support students who are learning either
-language. Students can copy all tables and writing into Google Classroom.
-Nothing is saved or sent by the activity. Remind them to copy before leaving,
-reloading or switching language. There is no completion code.
+Use the lab with ninth grade Biology and your own worksheet. Ask students to
+compare one factor at a time and use the tables and graphs to record their
+observations. The activity contains no Claim, Evidence, Reasoning fields or
+answer-copying controls. Nothing is saved or sent by the activity. Record data
+before reloading, resetting an investigation or switching language. There is
+no completion code.
+
+Use Choose an investigation or Next investigation to navigate. All four custom
+settings are visible together. Reset investigation clears only the selected
+investigation. Completed trials in other investigations remain during this
+visit. Graphs expand below the trial table when students need a comparison.
+The beam is drawn both above and inside the water. Oxygen bubbles illustrate
+gas production; the model's disk thresholds determine when each disk floats.
 
 Suggested sequence: model air removal together, compare water with bicarbonate,
 then assign the light color, brightness and temperature investigations. Finish
@@ -46,7 +53,7 @@ unit 8. The requested provisional Spanish title, "Tasas de fotosíntesis (needs
 review)", is registered exactly as supplied. Please verify the /es/ twin and
 official Spanish lesson title. SPANISH_TERMS.md lists the newly drafted terms
 and marks uncertain translations for review. In particular review the activity
-title, assay, air spaces, cutaway and the CER framework wording.
+title, assay and air spaces.
 
 For an actual wet lab, use your school's preparation and safety directions.
 The virtual air-removal animation illustrates infiltration without serving as
