@@ -10,26 +10,42 @@ permissions:
 
 # One-time setup on the Fedora runner: install Chromium system libraries with dnf.
 # The workflow downloads only the browser; it does not install OS packages or require sudo.
+#
+# Security: pull requests from forks run on a GitHub-hosted runner, never on the self-hosted one.
+# Also keep Settings > Actions > General > "Fork pull request workflows from outside collaborators"
+# set to "Require approval for all outside collaborators". Run the self-hosted runner as an
+# unprivileged user, ideally ephemeral or in a container, with no access to personal files.
+#
+# Actions are pinned to commit SHAs (tag shown in the comment). Update them on purpose, not automatically.
 
 jobs:
   test:
     name: Unit and browser tests
-    runs-on: [self-hosted, linux]
+    runs-on: ${{ (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository) && 'ubuntu-latest' || fromJSON('["self-hosted","linux"]') }}
     # Allow time for the full browser suite with one worker. Queue time does not count toward this timeout.
     timeout-minutes: 120
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
       - name: Clear leftover output from previous runs
         run: rm -rf test-results playwright-report
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npx playwright install chromium
+      # GitHub-hosted runners need the Chromium system libraries; the Fedora runner already has them.
+      - name: Install Chromium
+        run: |
+          if [ "$RUNNER_ENVIRONMENT" = "github-hosted" ]; then
+            npx playwright install --with-deps chromium
+          else
+            npx playwright install chromium
+          fi
       - run: npm run test:unit
       - run: npx playwright test --workers=1
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         if: failure()
         with:
           name: playwright-results
@@ -42,22 +58,29 @@ jobs:
     # request that changes behavior on purpose to skip it.
     # Note: with a single self-hosted runner, this job waits for the test job to finish.
     if: github.event_name == 'pull_request' && !contains(github.event.pull_request.labels.*.name, 'behavior-change')
-    runs-on: [self-hosted, linux]
+    runs-on: ${{ (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository) && 'ubuntu-latest' || fromJSON('["self-hosted","linux"]') }}
     timeout-minutes: 30
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
           fetch-depth: 0
+          persist-credentials: false
       - name: Clear leftover output from previous runs
         run: rm -rf parity-report
-      - uses: actions/setup-node@v6
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npx playwright install chromium
+      - name: Install Chromium
+        run: |
+          if [ "$RUNNER_ENVIRONMENT" = "github-hosted" ]; then
+            npx playwright install --with-deps chromium
+          else
+            npx playwright install chromium
+          fi
       - run: npm run parity -- --base origin/${{ github.base_ref }} --out parity-report
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         if: failure()
         with:
           name: parity-report
