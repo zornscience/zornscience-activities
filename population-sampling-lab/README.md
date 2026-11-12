@@ -12,9 +12,9 @@ The pond population is 200 to 400 fish, fixed for the visit. Every trial begins 
 
 ## Guided series and limits
 
-The small-catch and large-catch series each allow up to eight trials and retain their tables for comparison. This reconciles the requested five small plus five large trials with the eight-trial limit per run. Each problem also has separate off and on series, capped at eight. Switching series preserves this visit's work. A reveal closes that pond series to further trials. Run five trials before revealing for the guided comparison.
+The small-catch and large-catch series each allow up to eight trials and retain their tables for comparison. This reconciles the requested five small plus five large trials with the eight-trial limit per run. Each problem also has separate off and on series, capped at eight. Switching series preserves this visit's work. A reveal closes that pond series to further trials. The best-estimate box (prefilled with the average of the trials) appears after five trials.
 
-Each catch advances by clicks: first catch, marking and release, mixing, second catch, then Next trial. There are no timers, animations or sound. Results never depend on the clock or hidden-tab behavior.
+Each catch advances by clicks: catch the first batch, tag and release them (fish mix afterward), catch the second batch, then Next trial. There are no timers, animations or sound. Results never depend on the clock or hidden-tab behavior.
 
 ## Seeds and teacher keys
 
@@ -36,4 +36,5 @@ Native radios and selects work with the keyboard. Instructions uses a native mod
 
 ## Changelog
 
+- 1.1.0: Plain-language pass for Grade 9: a "big idea" box per part, squares instead of quadrats, tagged instead of marked, "Off by" instead of percent error, prefilled estimates, three-click catch cycle, fixed catch sizes, simpler prompts and checks.
 - 1.0.0: Three bilingual investigations, deterministic population models, worksheet exports, seed keys, knowledge checks, and site registrations.

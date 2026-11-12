@@ -31,6 +31,11 @@
     const node = el("section", null, parent, {class: "zsa-ps-card", "aria-labelledby": "zsa-ps-" + id});
     el("h2", t(title), node, {id: "zsa-ps-" + id}); return node;
   }
+  function idea(parent, lines) {
+    const box = el("div", null, parent, {class: "zsa-ps-idea"});
+    el("h3", t("The big idea"), box);
+    lines.forEach(line => el("p", t(line), box));
+  }
   function select(parent, title, id, options, selected, change) {
     const label = el("label", t(title), parent, {for: "zsa-ps-" + id});
     const node = el("select", null, parent, {id: "zsa-ps-" + id});
@@ -77,7 +82,7 @@
     button("−", group, () => adjust(-10), {"aria-label": t("Decrease estimate by 10")});
     input = el("input", null, group, {type: "number", id: "zsa-ps-" + id, min: 0, max: 100000, step: 1, value: initial, required: "", inputmode: "numeric"});
     button("+", group, () => adjust(10), {"aria-label": t("Increase estimate by 10")});
-    button("Reveal", group, () => {
+    button("Check my answer", group, () => {
       if (input.value.trim() === "" || !input.checkValidity()) { input.reportValidity(); return; }
       reveal(Number(input.value));
     }, {id: "zsa-ps-reveal"});
@@ -85,18 +90,18 @@
   function methodName(key) { return t(key === "chosen" ? "I choose" : "Random"); }
   function cellName(index) { return String.fromCharCode(65 + Math.floor(index / 10)) + (index % 10 + 1); }
   function quadRows(state) { return state.samples.map((sample, i) => [i + 1, cellName(sample.cell), methodName(sample.method), sample.count]); }
-  const quadHeaders = ["Sample", "Quadrat", "Method", "Plants"];
-  const estimateHeaders = ["Method", "Quadrats", "Your estimate", "True total", "Percent error"];
-  const catchHeaders = ["Trial", "M", "C", "R", "Estimate", "Percent error"];
-  function resultEstimate(value) { return value === null ? t("Undefined") : value; }
-  function catchRows(state) { return state.records.map((r, i) => [i + 1, r.M, r.C, r.R, resultEstimate(r.estimate), state.best === null ? t("Hidden") : model.percentError(r.estimate, N) === null ? t("Undefined") : model.percentError(r.estimate, N) + "%"]); }
+  const quadHeaders = ["#", "Square", "Method", "Plants"];
+  const estimateHeaders = ["Method", "Squares counted", "Your estimate", "Real total", "Off by"];
+  const catchHeaders = ["Trial", "Tagged (M)", "2nd catch (C)", "Recaptured (R)", "Estimate", "Off by"];
+  function resultEstimate(value) { return value === null ? t("No estimate") : value; }
+  function catchRows(state) { return state.records.map((r, i) => [i + 1, r.M, r.C, r.R, resultEstimate(r.estimate), state.best === null ? t("Hidden") : model.percentError(r.estimate, N) === null ? t("No estimate") : model.percentError(r.estimate, N) + "%"]); }
   function estimateRows() {
     return ["chosen", "random"].flatMap(key => quad[key].estimates.map(r => [methodName(key), r.size, r.guess, meadow.total, model.percentError(r.guess, meadow.total) + "%"]));
   }
   function worksheet(parent, investigation) {
-    const node = card(parent, "Data for your worksheet", "worksheet-title");
+    const node = card(parent, "Your data and questions", "worksheet-title");
     if (investigation === 1) {
-      ["chosen", "random"].forEach(key => { if (quad[key].samples.length) { el("h3", methodName(key), node); table(node, "Quadrat samples", quadHeaders, quadRows(quad[key])); } });
+      ["chosen", "random"].forEach(key => { if (quad[key].samples.length) { el("h3", methodName(key), node); table(node, "Squares you counted", quadHeaders, quadRows(quad[key])); } });
       table(node, "Estimates and true values", estimateHeaders, estimateRows());
     } else {
       const keys = investigation === 2 ? ["small", "large"] : ["wear-off", "wear-on", "avoid-off", "avoid-on"];
@@ -104,7 +109,7 @@
         const state = catches[key]; if (!state.records.length) return;
         el("h3", t(content.series[key]), node);
         table(node, "Catch trials", catchHeaders, catchRows(state));
-        el("p", state.best === null ? t("Lock in your best estimate to reveal the true total.") : t("Your estimate: {guess}. True total: {truth}. Percent error: {error}%.", {guess: state.best, truth: N, error: model.percentError(state.best, N)}), node);
+        el("p", state.best === null ? t("Check your best estimate to see the real total.") : t("You guessed {guess}. The real total is {truth}. You were off by {error}%.", {guess: state.best, truth: N, error: model.percentError(state.best, N)}), node);
       });
     }
     const copyStatus = el("p", "", node, {role: "status"});
@@ -136,7 +141,7 @@
       keys.forEach(key => {
         const state = catches[key]; if (!state.records.length) return;
         add(t(content.series[key]), catchHeaders, catchRows(state));
-        add(t("Estimates and true values"), ["Your estimate", "True total", "Percent error"], [[state.best === null ? t("Hidden") : state.best, state.best === null ? t("Hidden") : N, state.best === null ? t("Hidden") : model.percentError(state.best, N) + "%"]]);
+        add(t("Estimates and true values"), ["Your estimate", "Real total", "Off by"], [[state.best === null ? t("Hidden") : state.best, state.best === null ? t("Hidden") : N, state.best === null ? t("Hidden") : model.percentError(state.best, N) + "%"]]);
       });
     }
     tables.push(t("Answer these in your document") + "\n" + content.prompts[investigation - 1].map((text, i) => investigation + String.fromCharCode(65 + i) + ". " + t(text)).join("\n"));
@@ -145,27 +150,34 @@
   function renderQuadrat() {
     const work = $("work"); work.replaceChildren();
     const setup = card(work, labels.quadrat, "mode-title");
-    el("p", t("A 20 m by 20 m meadow. 100 quadrats, each 2 m by 2 m (4 m²). Plants outside sampled quadrats stay hidden."), setup);
-    select(setup, "Placement method", "method", [["chosen", "I choose"], ["random", "Random"]], method, key => { method = key; renderQuadrat(); $("method").focus(); });
+    idea(setup, ["You can't count every plant in a big meadow. Scientists count a few small squares, find the average, and scale up. This meadow has 100 squares. (Scientists call these squares quadrats.)", "Your job: count plants in some squares, estimate the whole meadow, then check how close you got."]);
+    el("p", t("The meadow is 20 m by 20 m, split into 100 squares. Each square is 2 m by 2 m. You can only see plants in squares you count."), setup);
+    select(setup, "How to pick squares", "method", [["chosen", "I choose"], ["random", "Random"]], method, key => { method = key; renderQuadrat(); $("method").focus(); });
+    el("p", t("I choose: you click squares yourself. Random: the computer picks for you. Try both and compare."), setup);
     const state = quad[method], target = [3, 10, 20][state.stage];
     const ready = state.samples.length >= target, revealed = state.estimates.some(r => r.size === target);
-    el("p", t("Sample {target} quadrats, enter your estimate, then reveal. Compare both placement methods.", {target}), setup);
-    el("p", t("Estimate = mean count per quadrat × 100"), setup);
-    el("p", t("{count} quadrats sampled. Mean count: {mean}.", {count: state.samples.length, mean: state.samples.length ? (state.samples.reduce((sum, r) => sum + r.count, 0) / state.samples.length).toFixed(2) : "0.00"}), setup, {id: "zsa-ps-progress"});
-    const random = button("Random quadrat", setup, () => place(model.randomQuadrat(seed, state.samples.map(r => r.cell), state.samples.length), "random"), {id: "zsa-ps-random"});
+    el("p", t("Count {target} squares. Then estimate the whole meadow and check your answer.", {target}), setup);
+    el("p", t("Estimate = average plants per square × 100 squares"), setup);
+    const mean = state.samples.length ? state.samples.reduce((sum, r) => sum + r.count, 0) / state.samples.length : 0;
+    el("p", t("{count} of {target} squares counted. Average so far: {mean} plants per square.", {count: state.samples.length, target, mean: mean.toFixed(2)}), setup, {id: "zsa-ps-progress"});
+    const random = button("Pick a random square", setup, () => place(model.randomQuadrat(seed, state.samples.map(r => r.cell), state.samples.length), "random"), {id: "zsa-ps-random"});
     random.disabled = ready || method !== "random";
-    if (ready && !revealed) numberEntry(setup, "estimate", "Your population estimate", guess => {
-      state.estimates.push({size: target, guess}); renderQuadrat(); announce(t("True total: {truth}. Percent error: {error}%.", {truth: meadow.total, error: model.percentError(guess, meadow.total)})); $("quad-result").focus();
-    });
+    if (ready && !revealed) {
+      const auto = Math.round(mean * 100);
+      el("p", t("Average {mean} × 100 = {estimate}. We filled this in for you. Change it if you like, then check.", {mean: mean.toFixed(2), estimate: auto}), setup);
+      numberEntry(setup, "estimate", "Your estimate for the whole meadow", guess => {
+        state.estimates.push({size: target, guess}); renderQuadrat(); announce(t("The real total is {truth}. You were off by {error}%.", {truth: meadow.total, error: model.percentError(guess, meadow.total)})); $("quad-result").focus();
+      }, auto);
+    }
     if (revealed) {
       const last = state.estimates[state.estimates.length - 1];
-      el("p", t("Your estimate: {guess}. True total: {truth}. Percent error: {error}%.", {guess: last.guess, truth: meadow.total, error: model.percentError(last.guess, meadow.total)}), setup, {id: "zsa-ps-quad-result", tabindex: "-1", class: "zsa-ps-result"});
-      if (state.stage < 2) button("Next sample size", setup, () => { state.stage++; renderQuadrat(); $(method === "random" ? "random" : "grid").focus(); }, {id: "zsa-ps-next-size"});
-      else el("p", t("Series complete. Compare the other placement method and copy your worksheet data."), setup);
+      el("p", t("You guessed {guess}. The real total is {truth}. You were off by {error}%.", {guess: last.guess, truth: meadow.total, error: model.percentError(last.guess, meadow.total)}), setup, {id: "zsa-ps-quad-result", tabindex: "-1", class: "zsa-ps-result"});
+      if (state.stage < 2) button("Next: count more squares", setup, () => { state.stage++; renderQuadrat(); $(method === "random" ? "random" : "grid").focus(); }, {id: "zsa-ps-next-size"});
+      else el("p", t("Done with this method! Switch how you pick squares to compare, then copy your data below."), setup);
     }
-    const field = card(work, "Meadow grid", "meadow-title");
-    el("p", t("Hatched cells are possible plant habitat, not plant counts. Use arrow keys and Enter. On phones, each row wraps after five cells."), field);
-    const grid = el("div", null, field, {class: "zsa-ps-grid", role: "grid", "aria-label": t("Meadow quadrats"), id: "zsa-ps-grid", tabindex: "-1", "aria-rowcount": 10, "aria-colcount": 10});
+    const field = card(work, "The meadow", "meadow-title");
+    el("p", t("Striped squares look like good plant habitat, but you cannot see how many plants are there. Click a square to count it. Keyboard: arrow keys and Enter."), field);
+    const grid = el("div", null, field, {class: "zsa-ps-grid", role: "grid", "aria-label": t("Meadow squares"), id: "zsa-ps-grid", tabindex: "-1", "aria-rowcount": 10, "aria-colcount": 10});
     const cells = [];
     for (let row = 0; row < 10; row++) {
       const rowNode = el("div", null, grid, {role: "row", class: "zsa-ps-row", "aria-rowindex": row + 1});
@@ -189,10 +201,10 @@
         cells.push(node);
       }
     }
-    table(field, "Quadrat samples", quadHeaders, quadRows(state));
+    table(field, "Squares you counted", quadHeaders, quadRows(state));
     worksheet(work, 1);
     function place(index, usedMethod) {
-      if (ready || state.samples.some(r => r.cell === index)) { announce(t("Choose an unused quadrat before the next reveal.")); return; }
+      if (ready || state.samples.some(r => r.cell === index)) { announce(t("Pick a square you have not counted yet.")); return; }
       cellFocus = index;
       state.samples.push({cell: index, count: meadow.counts[index], method: usedMethod});
       renderQuadrat();
@@ -205,23 +217,23 @@
   function keyForPond() { return mode === "recapture" ? series : problem + (enabled ? "-on" : "-off"); }
   function pondDrawing(parent, state) {
     const node = el("div", null, parent, {class: "zsa-ps-pond"});
-    const image = drawing(node, "Pond and visible catch only. Fish outside the net are hidden.", 560, 210);
+    const image = drawing(node, "The pond. Only fish in your net are shown. All other fish are hidden.", 560, 210);
     svg("rect", {x: 5, y: 5, width: 550, height: 200, rx: 60, fill: "var(--zsa-sky)", stroke: "var(--zsa-blue)", "stroke-width": 3}, image);
     for (let i = 0; i < 5; i++) svg("path", {d: "M40 " + (35 + i * 35) + "q20 -10 40 0t40 0", fill: "none", stroke: "var(--zsa-blue)", "stroke-width": 2}, image);
     let ids = [], marks = [];
-    if (state.phase === 1 || state.phase === 2) { ids = state.pending.first; marks = state.phase === 2 ? ids : []; }
+    if (state.phase === 1 || state.phase === 3) { ids = state.pending.first; marks = state.phase === 3 ? ids : []; }
     else if (state.phase === 4) { const last = state.records[state.records.length - 1]; ids = last.second; marks = last.marked; }
     if (ids.length) {
-      if (state.phase !== 2) svg("rect", {x: 150, y: 14, width: 385, height: 180, rx: 6, fill: "white", stroke: "var(--zsa-navy)", "stroke-dasharray": "5 4", "stroke-width": 2}, image);
+      if (state.phase !== 3) svg("rect", {x: 150, y: 14, width: 385, height: 180, rx: 6, fill: "white", stroke: "var(--zsa-navy)", "stroke-dasharray": "5 4", "stroke-width": 2}, image);
       ids.forEach((id, i) => {
         const x = 174 + i % 10 * 36, y = 38 + Math.floor(i / 10) * 42;
         svg("path", {d: "M" + (x - 10) + " " + y + "q10 -12 20 0q-10 12 -20 0l-5 -6v12Z", fill: "var(--zsa-blue)", stroke: "var(--zsa-navy)"}, image);
         if (marks.includes(id)) svg("circle", {cx: x, cy: y, r: 14, fill: "none", stroke: "var(--zsa-navy)", "stroke-width": 3}, image);
       });
     }
-    const description = ["Fresh unmarked pond. True population hidden.", "First catch in the net. No fish marked yet.", "First catch marked with rings and released. Only those marked fish are shown; the rest stay hidden.", "Fish released and mixed. The whole population stays hidden.", "Second catch complete. Rings identify recaptured marked fish."][state.phase];
+    const description = ["A fresh pond with no tagged fish. You cannot see how many fish are in it.", "Your first catch is in the net. None are tagged yet.", "", "Your tagged fish (rings) were released and mixed back in. The untagged fish stay hidden.", "Your second catch is in the net. Fish with a ring were tagged earlier."][state.phase];
     el("p", t(description), parent);
-    el("p", t("Fish have a body and tail. Marked fish also have a ring. The dashed box is the net."), parent);
+    el("p", t("Fish with a ring around them are tagged. The dashed box is your net."), parent);
   }
   function plot(parent, state, sharedMax) {
     if (!state.records.length) return;
@@ -232,7 +244,7 @@
     svg("path", {d: "M80 30V" + (45 + state.records.length * 30) + "H550", stroke: "var(--zsa-navy)", fill: "none", "stroke-width": 2}, image);
     if (state.best !== null) {
       svg("line", {x1: scale(N), x2: scale(N), y1: 24, y2: 45 + state.records.length * 30, stroke: "var(--zsa-navy)", "stroke-dasharray": "6 3", "stroke-width": 3}, image);
-      svg("text", {x: scale(N), y: 16, "text-anchor": "middle", "font-size": 13}, image, t("True total: {truth}", {truth: N}));
+      svg("text", {x: scale(N), y: 16, "text-anchor": "middle", "font-size": 13}, image, t("Real total: {truth}", {truth: N}));
     }
     state.records.forEach((record, i) => {
       const y = 47 + i * 30;
@@ -248,25 +260,22 @@
     const key = keyForPond(), state = catches[key], wrong = mode === "problems";
     const setup = card(work, labels[mode], "mode-title");
     if (!wrong) {
-      el("p", t("Run five trials with M = 20, C = 20, then five with M = 40, C = 40. Each series allows up to 8 trials. Compare the spread of the estimates."), setup);
-      select(setup, "Comparison series", "series", [["small", "Small catches"], ["large", "Large catches"]], series, val => { series = val; renderPond(); $("series").focus(); });
+      idea(setup, ["You can't count every fish in a pond. Instead, catch some fish, tag them, and let them go. Later, catch a second batch. The share of tagged fish in that batch tells you how big the pond is.", "Example: tag 20 fish. Your next catch is 20 fish and 5 are tagged. That is 5 out of 20, or 1/4. So the 20 tagged fish are about 1/4 of the pond, and the pond holds about 80 fish. Math: 20 × 20 ÷ 5 = 80."]);
+      el("p", t("Do 5 trials with small catches (20 fish) and 5 with large catches (40 fish). Which group of estimates is closer together?"), setup);
+      select(setup, "Catch size", "series", [["small", "Small catches (20 fish)"], ["large", "Large catches (40 fish)"]], series, val => { series = val; renderPond(); $("series").focus(); });
     } else {
-      el("p", t("Compare five trials with each setting off and on. M = 30 and C = 30. Every trial starts with a fresh unmarked pond of the same size."), setup);
-      select(setup, "Problem", "problem", [["wear", "Marks wear off"], ["avoid", "Marked fish avoid the net"]], problem, val => { problem = val; renderPond(); $("problem").focus(); });
-      select(setup, "Setting", "setting", [["off", "Off"], ["on", "On"]], enabled ? "on" : "off", val => { enabled = val === "on"; renderPond(); $("setting").focus(); });
-      el("p", t(problem === "wear" ? "When on, each marked fish has a 25% chance of losing its mark before recapture." : "When on, marked fish are half as likely to enter the net as unmarked fish."), setup);
-      const field = chooser(setup, "Prediction: with the problem on, estimates will usually be...", "prediction", [["higher", "Higher"], ["lower", "Lower"], ["same", "About the same"]], state.prediction, val => { state.prediction = val; $("net").disabled = false; });
+      idea(setup, ["Mark and recapture only works if tagged fish act just like the other fish. What if they do not? Test two problems and see what happens to your estimates."]);
+      el("p", t("For each problem, run 5 trials with the problem off, then 5 with it on. Every trial tags 30 fish and then catches 30 more from a fresh pond of the same size."), setup);
+      select(setup, "Which problem?", "problem", [["wear", "Tags fall off"], ["avoid", "Tagged fish dodge the net"]], problem, val => { problem = val; renderPond(); $("problem").focus(); });
+      select(setup, "Is the problem happening?", "setting", [["off", "No (normal pond)"], ["on", "Yes (problem on)"]], enabled ? "on" : "off", val => { enabled = val === "on"; renderPond(); $("setting").focus(); });
+      el("p", t(problem === "wear" ? "Problem on: each tag has a 25% chance of falling off before the second catch." : "Problem on: tagged fish are half as likely to swim into the net as untagged fish."), setup);
+      const field = chooser(setup, "Predict first: when the problem is on, will estimates usually be too high, too low, or about right?", "prediction", [["higher", "Too high"], ["lower", "Too low"], ["same", "About right"]], state.prediction, val => { state.prediction = val; $("net").disabled = false; });
       if (state.records.length || state.phase) field.querySelectorAll("input").forEach(n => { n.disabled = true; });
     }
-    el("p", t("Estimate = M × C ÷ R"), setup);
-    if (!wrong) {
-      const m = select(setup, "First catch size (M)", "M", [[20, "20"], [30, "30"], [40, "40"]], state.M, val => { state.M = Number(val); });
-      m.disabled = state.phase > 0 && state.phase < 4 || state.best !== null;
-      const c = select(setup, "Second catch size (C)", "C", [[20, "20"], [30, "30"], [40, "40"]], state.C, val => { state.C = Number(val); });
-      c.disabled = state.phase === 4 || state.best !== null;
-    } else el("p", "M = 30, C = 30", setup);
+    el("p", t("Estimate = M × C ÷ R. M = fish tagged. C = size of the second catch. R = tagged fish in the second catch."), setup);
+    if (!wrong) el("p", t("Each catch is {size} fish.", {size: state.M}), setup);
     const actions = el("div", null, setup, {class: "zsa-ps-actions"});
-    const texts = ["Net first catch", "Mark and release", "Let the fish mix", "Net second catch", "Next trial"];
+    const texts = ["1. Catch the first batch", "2. Tag and release them", "", "3. Catch the second batch", "Next trial"];
     const run = button(texts[state.phase], actions, () => {
       if (state.best !== null || state.records.length >= 8) return;
       if (state.phase === 4) { state.phase = 0; state.pending = null; }
@@ -274,7 +283,7 @@
         const options = {M: state.M, C: state.C, trial: state.records.length, condition: wrong && enabled ? problem : "off", stream: wrong ? 100 : 0};
         if (state.phase === 0) state.pending = model.capture(seed, options);
         if (state.phase === 3) { state.pending = model.capture(seed, options); state.records.push(state.pending); }
-        state.phase++;
+        state.phase = state.phase === 1 ? 3 : state.phase + 1;
       }
       renderPond();
       if (state.phase === 4) $("pond-result").focus(); else $("net").focus();
@@ -282,13 +291,18 @@
     run.disabled = state.best !== null || state.records.length >= 8 || wrong && state.prediction === null;
     if (state.phase === 4) {
       const last = state.records[state.records.length - 1];
-      el("p", t("M: {M}. C: {C}. R: {R}. Estimate: {estimate}.", {M: last.M, C: last.C, R: last.R, estimate: resultEstimate(last.estimate)}), setup, {id: "zsa-ps-pond-result", tabindex: "-1", class: "zsa-ps-result"});
-      if (last.R === 0) el("p", t("No marked fish were caught, so this estimate cannot be made. Try a larger second catch."), setup);
+      el("p", last.R === 0 ? t("You tagged {M} fish. Your second catch had {C} fish, but none were tagged, so there is no estimate.", {M: last.M, C: last.C}) : t("You tagged {M} fish. Your second catch had {C} fish and {R} were tagged. Estimate: {M} × {C} ÷ {R} = {estimate}.", {M: last.M, C: last.C, R: last.R, estimate: last.estimate}), setup, {id: "zsa-ps-pond-result", tabindex: "-1", class: "zsa-ps-result"});
+      if (last.R === 0) el("p", t("This happens by chance. You cannot divide by zero, so just run another trial."), setup);
     }
-    el("p", t("{count} trials complete. Five trials are the guided goal.", {count: state.records.length}), setup);
-    if (state.records.length && (state.phase === 4 || state.phase === 0) && state.best === null) numberEntry(setup, "best", "Your best population estimate", guess => { state.best = guess; renderPond(); $("true-result").focus(); });
-    if (state.best !== null) el("p", t("Your estimate: {guess}. True total: {truth}. Percent error: {error}%.", {guess: state.best, truth: N, error: model.percentError(state.best, N)}), setup, {id: "zsa-ps-true-result", tabindex: "-1", class: "zsa-ps-result"});
-    const observation = card(work, "Pond observations", "pond-title");
+    el("p", t("{count} of 5 trials done. You can do up to 8.", {count: state.records.length}), setup);
+    const finite = state.records.filter(r => r.estimate !== null).map(r => r.estimate);
+    if (state.records.length >= 5 && (state.phase === 4 || state.phase === 0) && state.best === null) {
+      const auto = finite.length ? Math.round(finite.reduce((a, b) => a + b, 0) / finite.length) : "";
+      el("p", t("Now pick one number for the whole pond. We filled in the average of your trials. Change it if you like."), setup);
+      numberEntry(setup, "best", "Your best estimate for the pond", guess => { state.best = guess; renderPond(); $("true-result").focus(); }, auto);
+    }
+    if (state.best !== null) el("p", t("You guessed {guess}. The real total is {truth}. You were off by {error}%.", {guess: state.best, truth: N, error: model.percentError(state.best, N)}), setup, {id: "zsa-ps-true-result", tabindex: "-1", class: "zsa-ps-result"});
+    const observation = card(work, "What you see in the pond", "pond-title");
     pondDrawing(observation, state);
     const compareKeys = wrong ? ["wear-off", "wear-on", "avoid-off", "avoid-on"] : ["small", "large"];
     const sharedMax = Math.max(500, ...compareKeys.flatMap(k => catches[k].records.map(r => r.estimate || 0))) * 1.1;
@@ -297,8 +311,8 @@
     table(observation, "Catch trials", catchHeaders, catchRows(state));
     const others = compareKeys.filter(k => k !== key && catches[k].records.length);
     if (others.length) {
-      const comparison = card(work, "Series comparison", "comparison-title");
-      el("p", t("All plots in this investigation use the same horizontal scale. Compare their spread, and use the tables for exact values."), comparison);
+      const comparison = card(work, "Compare your results", "comparison-title");
+      el("p", t("Every graph uses the same scale, so you can compare how spread out the dots are. The tables show exact numbers."), comparison);
       others.forEach(k => { el("h3", t(content.series[k]), comparison); plot(comparison, catches[k], sharedMax); });
     }
     worksheet(work, wrong ? 3 : 2);

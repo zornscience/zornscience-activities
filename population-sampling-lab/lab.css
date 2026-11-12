@@ -42,3 +42,5 @@
 @media (prefers-reduced-motion: reduce) { .zsa-ps *, .zsa-ps *::before, .zsa-ps *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
 
 .zsa-ps-cell { width: 100%; }
+.zsa-ps-idea { background: var(--zsa-sky); border-left: 5px solid var(--zsa-blue, #1861b2); border-radius: 8px; padding: 4px 16px; margin: 0 0 16px; }
+.zsa-ps-idea h3 { margin: 12px 0 0; }

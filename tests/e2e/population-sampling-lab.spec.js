@@ -11,7 +11,7 @@ async function guess(page, id, value) { await $(page, id).fill(String(value)); a
 async function catchTrial(page) {
   const text = await $(page, "net").textContent();
   if (/Next|Siguiente/.test(text)) await $(page, "net").click();
-  for (let i = 0; i < 4; i++) await $(page, "net").click();
+  for (let i = 0; i < 3; i++) await $(page, "net").click();
 }
 async function audit(page) {
   await page.evaluate(fs.readFileSync(require.resolve("axe-core/axe.min.js"), "utf8"));
@@ -51,7 +51,7 @@ for (const lang of ["en", "es"]) {
     await expect(page).toHaveTitle(t("Population Sampling Lab") + " | ZornScience");
     await expect(page.locator("html")).toHaveAttribute("lang", lang === "es" ? "es-MX" : "en");
     const field = model.meadow(1);
-    await expect($(page, "work")).not.toContainText(t("True total:") + " " + field.total);
+    await expect($(page, "work")).not.toContainText(t("The real total is") + " " + field.total);
     expect(await page.locator('[data-cell] svg path').count()).toBe(0);
     for (const method of ["chosen", "random"]) {
       await $(page, "method").selectOption(method);
@@ -77,7 +77,7 @@ for (const lang of ["en", "es"]) {
     expect(await page.evaluate(() => window.__samplingCopies)).toEqual([]);
     await $(page, "copy").click();
     const text = await page.evaluate(() => window.__samplingCopies[0]);
-    expect(text).toContain([t("Sample"), t("Quadrat"), t("Method"), t("Plants")].join("\t"));
+    expect(text).toContain([t("#"), t("Square"), t("Method"), t("Plants")].join("\t"));
     expect(text).toContain("\n\n" + t("Estimates and true values") + "\n");
     expect(text).toContain("\t" + field.total + "\t");
     expect(text).toContain(t("Answer these in your document") + "\n1A. " + t(data.content.prompts[0][0]));
@@ -95,7 +95,7 @@ for (const lang of ["en", "es"]) {
         await catchTrial(page);
         const r = model.capture(1, {M: size, C: size, trial});
         const row = $(page, "work").locator("table").first().locator("tbody tr").last();
-        expect(await row.locator("td").allTextContents()).toEqual([String(trial + 1), String(size), String(size), String(r.R), String(r.estimate === null ? t("Undefined") : r.estimate), t("Hidden")]);
+        expect(await row.locator("td").allTextContents()).toEqual([String(trial + 1), String(size), String(size), String(r.R), String(r.estimate === null ? t("No estimate") : r.estimate), t("Hidden")]);
         await expect(page.locator(".zsa-ps-plot").first().locator("line")).toHaveCount(0);
       }
       await guess(page, "best", 300);
@@ -107,9 +107,9 @@ for (const lang of ["en", "es"]) {
     }
     await $(page, "copy").click();
     const text = await page.evaluate(() => window.__samplingCopies[0]);
-    expect(text).toContain([t("Trial"), "M", "C", "R", t("Estimate"), t("Percent error")].join("\t"));
+    expect(text).toContain([t("Trial"), t("Tagged (M)"), t("2nd catch (C)"), t("Recaptured (R)"), t("Estimate"), t("Off by")].join("\t"));
     expect(text).toContain("2A. " + t(data.content.prompts[1][0])); expect(text).toContain("2C. ");
-    expect(text).toContain(t("Small catches")); expect(text).toContain(t("Large catches"));
+    expect(text).toContain(t("Small catches (20 fish)")); expect(text).toContain(t("Large catches (40 fish)"));
     await audit(page);
   });
 
@@ -124,7 +124,7 @@ for (const lang of ["en", "es"]) {
         for (let trial = 0; trial < 5; trial++) {
           await catchTrial(page);
           const r = model.capture(1, {M: 30, C: 30, trial, condition: setting === "on" ? problem : "off", stream: 100});
-          await expect($(page, "pond-result")).toContainText("R: " + r.R + ".");
+          await expect($(page, "pond-result")).toContainText(r.R === 0 ? t("You tagged {M} fish. Your second catch had {C} fish, but none were tagged, so there is no estimate.").replace("{M}", "30").replace("{C}", "30") : (lang === "es" ? r.R + " estaban etiquetados" : r.R + " were tagged"));
         }
         await expect(page.locator('input[name="prediction"]').first()).toBeDisabled();
         await guess(page, "best", 300);
@@ -145,7 +145,7 @@ for (const lang of ["en", "es"]) {
     await page.keyboard.press("ArrowDown"); await page.keyboard.press("Enter");
     await expect($(page, "work").locator("table").first().locator("tbody tr")).toHaveCount(3);
     expect(await $(page, "work").locator("table").first().locator("tbody tr td:nth-child(2)").allTextContents()).toEqual(["A1", "A2", "B2"]);
-    await expect($(page, "estimate")).toBeFocused(); await page.keyboard.type("600"); await page.keyboard.press("Tab"); await page.keyboard.press("Enter");
+    await expect($(page, "estimate")).toBeFocused(); await $(page, "estimate").fill("600"); await page.keyboard.press("Tab"); await page.keyboard.press("Enter");
     await expect($(page, "estimate")).toHaveValue("610");
     await $(page, "instructions-open").focus(); await page.keyboard.press("Enter");
     await expect(page.locator("dialog")).toBeVisible();
@@ -175,7 +175,7 @@ test("population sampling: blocked clipboard gives selected read-only text, neve
   const fallback = page.locator(".zsa-ps-copy-text");
   await expect(fallback).toBeVisible();
   expect(await page.evaluate(() => getSelection().toString())).toBe(await fallback.textContent());
-  await expect(fallback).toContainText("Sample\tQuadrat\tMethod\tPlants\n1\tA1\tI choose\t");
+  await expect(fallback).toContainText("#\tSquare\tMethod\tPlants\n1\tA1\tI choose\t");
   await expect(fallback).toContainText("Answer these in your document\n1A.");
   await expect(page.locator('textarea,input[type=text],[contenteditable]')).toHaveCount(0);
   await $(page, "share-open").click(); await $(page, "share-copy").click();
@@ -205,7 +205,7 @@ test("population sampling: R zero is recorded, next trial is fresh, each series 
   for (let trial = 0; trial < 8; trial++) {
     await catchTrial(page);
     const r = model.capture(0, {trial});
-    if (r.R === 0) await expect($(page, "work")).toContainText("No marked fish were caught, so this estimate cannot be made. Try a larger second catch.");
+    if (r.R === 0) await expect($(page, "work")).toContainText("This happens by chance. You cannot divide by zero, so just run another trial.");
   }
   await expect($(page, "work").locator("table").first().locator("tbody tr")).toHaveCount(8);
   await expect($(page, "net")).toBeDisabled();
@@ -224,7 +224,7 @@ test("population sampling: no runtime network, no writing fields, reduced motion
   expect(await $(second, "work").locator("table").first().innerText()).toBe(record); await second.close();
   expect(requests.every(r => r.url.startsWith("http://127.0.0.1:4173/") && !["fetch", "xhr", "websocket", "eventsource"].includes(r.type))).toBe(true);
   await expect(page.locator('textarea,input[type=text],[contenteditable]')).toHaveCount(0);
-  expect(await page.locator('input[type=number]').count()).toBe(1);
+  expect(await page.locator("input[type=number]").count()).toBeLessThanOrEqual(1);
   await page.goto("/population-sampling-lab/?embed=1&seed=1");
   await expect(page.locator("main")).toHaveClass(/zsa--embedded/);
   await expect($(page, "back")).toBeHidden(); await expect(page.locator("[data-zsa-about]")).toBeHidden();
