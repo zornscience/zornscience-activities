@@ -5,8 +5,7 @@
     "titles": {
       "quadrat": "1. Count the Plants",
       "recapture": "2. Count the Fish",
-      "problems": "3. When Counting Goes Wrong",
-      "check": "Quick Check"
+      "problems": "3. When Counting Goes Wrong"
     },
     "series": {
       "small": "Small catches (20 fish)",
@@ -15,39 +14,7 @@
       "wear-on": "Tags fall off: problem on",
       "avoid-off": "Tagged fish dodge the net: normal pond",
       "avoid-on": "Tagged fish dodge the net: problem on"
-    },
-    "questions": [
-      {
-        "question": "Why pick squares at random?",
-        "choices": [
-          "Every square has a fair chance of being picked.",
-          "It makes plants grow evenly.",
-          "It always finds the thickest patch of plants."
-        ],
-        "correct": 0,
-        "explanation": "Random picking is fair. When you hand-pick, you tend to choose crowded patches, which makes the meadow look fuller than it is."
-      },
-      {
-        "question": "Why use bigger catches or more trials?",
-        "choices": [
-          "They guarantee the exact right answer.",
-          "They make one unusual sample matter less.",
-          "They change how many fish are in the pond."
-        ],
-        "correct": 1,
-        "explanation": "Bigger samples usually give answers that are closer together. More trials show how much estimates vary. Neither guarantees an exact answer."
-      },
-      {
-        "question": "A mark and recapture estimate came out too high. What probably happened to R (the tagged fish in the second catch)?",
-        "choices": [
-          "R was bigger than expected.",
-          "R equals the whole pond.",
-          "R was smaller than expected."
-        ],
-        "correct": 2,
-        "explanation": "R is on the bottom of M × C ÷ R, so a smaller R makes the estimate bigger. If R = 0, you cannot make an estimate at all."
-      }
-    ]
+    }
   };
   const es = {
     "Population Sampling Lab": "Laboratorio de muestreo de poblaciones",
@@ -154,8 +121,6 @@
     "Marks wear off: On": "Marcas que se borran: activada",
     "Net avoidance: Off": "Peces que evitan la red: desactivada",
     "Net avoidance: On": "Peces que evitan la red: activada",
-    "✓ Correct. {explanation}": "✓ Correcto. {explanation}",
-    "↻ Try again. {explanation}": "↻ Inténtalo de nuevo. {explanation}",
     "Link copied.": "Enlace copiado.",
     "Link selected. Press Ctrl+C, or Command+C on a Mac, to copy it.": "Enlace seleccionado. Presiona Ctrl+C, o Command+C en una Mac, para copiarlo.",
     "Compare your 3-quadrat estimate to your 20-quadrat estimate. Which was closer to the true total? Use your percent errors as evidence.": "Compara tu estimación de 3 cuadrantes con la de 20 cuadrantes. ¿Cuál se acercó más al total real? Usa tus errores porcentuales como evidencia.",
@@ -164,7 +129,6 @@
     "Name one assumption of mark and recapture and explain what happens if it is false.": "Menciona un supuesto de captura y recaptura y explica qué sucede si no se cumple.",
     "Why does random quadrat placement matter?": "¿Por qué importa colocar los cuadrantes al azar?",
     "Every quadrat has a fair chance of being sampled.": "Cada cuadrante tiene una oportunidad justa de ser muestreado.",
-    "It makes plants grow evenly.": "Hace que las plantas crezcan de manera uniforme.",
     "It always finds the densest patch.": "Siempre encuentra la zona más densa.",
     "Random placement reduces hand-picking bias. Dense patches alone can overestimate the meadow population.": "La colocación al azar reduce el sesgo de elegir tú las muestras. Usar solo zonas densas puede sobreestimar la población del prado.",
     "Why use larger catches or repeated trials?": "¿Por qué usar capturas más grandes o ensayos repetidos?",
@@ -188,7 +152,6 @@
     "1. Count the Plants": "1. Contar las plantas",
     "2. Count the Fish": "2. Contar los peces",
     "3. When Counting Goes Wrong": "3. Cuando el conteo falla",
-    "Quick Check": "Revisión rápida",
     "Small catches (20 fish)": "Capturas pequeñas (20 peces)",
     "Large catches (40 fish)": "Capturas grandes (40 peces)",
     "Tags fall off: normal pond": "Las etiquetas se caen: estanque normal",
@@ -269,20 +232,6 @@
     "Compare your results": "Compara tus resultados",
     "Every graph uses the same scale, so you can compare how spread out the dots are. The tables show exact numbers.": "Todas las gráficas usan la misma escala, así que puedes comparar qué tan dispersos están los puntos. Las tablas muestran los números exactos.",
     "Real total: {truth}": "Total real: {truth}",
-    "Why pick squares at random?": "¿Por qué elegir los cuadros al azar?",
-    "Every square has a fair chance of being picked.": "Cada cuadro tiene una oportunidad justa de ser elegido.",
-    "It always finds the thickest patch of plants.": "Siempre encuentra la zona con más plantas.",
-    "Random picking is fair. When you hand-pick, you tend to choose crowded patches, which makes the meadow look fuller than it is.": "Elegir al azar es justo. Cuando eliges a mano, tiendes a escoger las zonas llenas, y el prado parece más poblado de lo que es.",
-    "Why use bigger catches or more trials?": "¿Por qué usar capturas más grandes o más ensayos?",
-    "They guarantee the exact right answer.": "Garantizan la respuesta exacta.",
-    "They make one unusual sample matter less.": "Hacen que una muestra poco común importe menos.",
-    "They change how many fish are in the pond.": "Cambian cuántos peces hay en el estanque.",
-    "Bigger samples usually give answers that are closer together. More trials show how much estimates vary. Neither guarantees an exact answer.": "Las muestras más grandes suelen dar respuestas más juntas. Más ensayos muestran cuánto varían las estimaciones. Ninguno garantiza una respuesta exacta.",
-    "A mark and recapture estimate came out too high. What probably happened to R (the tagged fish in the second catch)?": "Una estimación de captura y recaptura salió demasiado alta. ¿Qué pasó probablemente con R (los peces etiquetados en la segunda captura)?",
-    "R was bigger than expected.": "R fue mayor de lo esperado.",
-    "R equals the whole pond.": "R es igual a todo el estanque.",
-    "R was smaller than expected.": "R fue menor de lo esperado.",
-    "R is on the bottom of M × C ÷ R, so a smaller R makes the estimate bigger. If R = 0, you cannot make an estimate at all.": "R está abajo en M × C ÷ R, así que una R menor hace la estimación mayor. Si R = 0, no se puede hacer ninguna estimación.",
     "Record your results and answer the questions on your worksheet. Nothing is saved or sent. Reloading or changing language clears your work.": "Anota tus resultados y responde las preguntas en tu hoja de trabajo. No se guarda ni se envía nada. Al recargar o cambiar de idioma, se borra tu trabajo.",
     "Done with this method! Switch how you pick squares to compare, then record your results on your worksheet.": "¡Terminaste con este método! Cambia cómo eliges los cuadros para comparar y luego anota tus resultados en tu hoja de trabajo."
   };

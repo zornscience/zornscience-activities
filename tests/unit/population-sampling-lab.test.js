@@ -118,10 +118,8 @@ test("population sampling: mark loss and avoidance lower R and bias finite estim
   }
 });
 
-test("population sampling: complete bilingual titles and plausible three-choice checks", () => {
-  assert.equal(content.questions.length, 3);
+test("population sampling: complete bilingual titles and series names", () => {
   const strings = [...Object.values(content.titles), ...Object.values(content.series)];
-  content.questions.forEach(q => { assert.equal(q.choices.length, 3); assert.ok(q.correct >= 0 && q.correct < 3); assert.equal(new Set(q.choices).size, 3); strings.push(q.question, ...q.choices, q.explanation); });
   strings.forEach(text => assert.ok(es[text], text));
   for (const [en, translated] of Object.entries(es)) {
     assert.deepEqual((en.match(/\{\w+\}/g) || []).sort(), (translated.match(/\{\w+\}/g) || []).sort(), en);

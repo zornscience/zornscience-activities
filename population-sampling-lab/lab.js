@@ -267,19 +267,9 @@
       others.forEach(k => { el("h3", t(content.series[k]), comparison); plot(comparison, catches[k], sharedMax); });
     }
   }
-  const quizAnswers = [-1, -1, -1];
-  function renderQuiz() {
-    const work = $("work"); work.replaceChildren();
-    const node = card(work, labels.check, "mode-title");
-    content.questions.forEach((question, index) => {
-      const field = chooser(node, question.question, "question-" + index, question.choices.map((choice, i) => [String(i), choice]), String(quizAnswers[index]), choice => { quizAnswers[index] = Number(choice); feedback.textContent = t(Number(choice) === question.correct ? "✓ Correct. {explanation}" : "↻ Try again. {explanation}", {explanation: t(question.explanation)}); });
-      const feedback = el("p", "", node, {role: "status"});
-      if (quizAnswers[index] >= 0) feedback.textContent = t(quizAnswers[index] === question.correct ? "✓ Correct. {explanation}" : "↻ Try again. {explanation}", {explanation: t(question.explanation)});
-    });
-  }
   function render() {
     root.querySelectorAll("[data-ps-mode]").forEach(node => node.setAttribute("aria-pressed", node.dataset.psMode === mode));
-    if (mode === "quadrat") renderQuadrat(); else if (mode === "check") renderQuiz(); else renderPond();
+    if (mode === "quadrat") renderQuadrat(); else renderPond();
   }
   Object.entries(labels).forEach(([key, text]) => button(text, $("tabs"), () => { mode = key; render(); $("mode-title").setAttribute("tabindex", "-1"); $("mode-title").focus(); }, {"data-ps-mode": key, "aria-pressed": key === mode}));
   const dialog = root.querySelector("#instructions");
