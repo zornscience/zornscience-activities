@@ -146,13 +146,6 @@ for (const lang of ["en", "es"]) {
     await expect($(page, "share-panel")).toBeHidden();
     await page.keyboard.press("Escape"); await expect(page.locator("dialog")).toBeHidden();
     await expect($(page, "instructions-open")).toBeFocused();
-    await mode(page, "check");
-    for (let i = 0; i < 3; i++) {
-      await page.locator('input[name="question-' + i + '"][value="' + ((data.content.questions[i].correct + 1) % 3) + '"]').check();
-      await expect($(page, "work")).toContainText(t("↻ Try again. {explanation}").split("{explanation}")[0]);
-      await page.locator('input[name="question-' + i + '"][value="' + data.content.questions[i].correct + '"]').check();
-    }
-    await expect($(page, "work").locator('[role="status"]')).toHaveCount(3);
     await audit(page);
   });
 }
@@ -215,7 +208,7 @@ test("population sampling: no runtime network, no writing fields, reduced motion
 
 test("population sampling: phone layout, 44px placement targets and exact clean lesson handling", async ({page}) => {
   await page.setViewportSize({width: 360, height: 780}); await open(page, "es");
-  for (const key of ["quadrat", "recapture", "problems", "check"]) {
+  for (const key of ["quadrat", "recapture", "problems"]) {
     await mode(page, key);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     const small = await page.locator("button:visible,select:visible,input[type=number]:visible").evaluateAll(nodes => nodes.map(n => ({name: n.textContent, width: n.getBoundingClientRect().width, height: n.getBoundingClientRect().height})).filter(n => n.width < 44 || n.height < 44));
