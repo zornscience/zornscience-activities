@@ -4,7 +4,7 @@ Version: 1.0.0
 
 Standalone Grade 9 Biology activity for the Population Sampling lesson. This is an illustrative teaching model, not real field data. It uses only its own files and the shared site chrome. There are no runtime dependencies on other activity folders, remote resources, accounts, saved answers, completion codes, or runtime requests.
 
-Students sample a clumped meadow, compare small and large pond catches, test two failures of mark and recapture, and answer three multiple-choice checks. Each investigation has read-only trial tables and stable worksheet prompts 1A to 3C. Students write explanations in their own document. The numeric estimate fields are the only writing controls. Copy runs only after a click and exports tab-separated tables with headers, blank lines between tables, and the numbered prompts. A blocked clipboard shows a selected read-only `pre` text area, with no editable text box or `textarea` element.
+Students sample a clumped meadow, compare small and large pond catches, test two failures of mark and recapture, and answer three multiple-choice checks. Each investigation has read-only trial tables. Students record results and answer questions on the teacher's own worksheet; the activity has no worksheet, prompts or copy button. The numeric estimate fields are the only writing controls.
 
 The meadow contains 100 quadrats of 4 m² in a 20 m by 20 m field. Six to nine Gaussian clusters distribute 480 to 720 plants. Only sampled cells show plants or counts. Hatched habitat cells suggest possible clumps without displaying outside counts. Both placement methods retain separate cumulative samples and estimates at 3, 10 and 20 quadrats. Repeated placements are rejected. The same meadow is used throughout the visit.
 
@@ -36,5 +36,6 @@ Native radios and selects work with the keyboard. Instructions uses a native mod
 
 ## Changelog
 
+- 1.2.0: Removed the in-page worksheet card and copy button. Meadow grid now looks like grass, with dark green stripes for habitat squares and tan squares once counted.
 - 1.1.0: Plain-language pass for Grade 9: a "big idea" box per part, squares instead of quadrats, tagged instead of marked, "Off by" instead of percent error, prefilled estimates, three-click catch cycle, fixed catch sizes, simpler prompts and checks.
 - 1.0.0: Three bilingual investigations, deterministic population models, worksheet exports, seed keys, knowledge checks, and site registrations.

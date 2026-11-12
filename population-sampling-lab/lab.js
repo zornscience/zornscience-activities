@@ -98,55 +98,6 @@
   function estimateRows() {
     return ["chosen", "random"].flatMap(key => quad[key].estimates.map(r => [methodName(key), r.size, r.guess, meadow.total, model.percentError(r.guess, meadow.total) + "%"]));
   }
-  function worksheet(parent, investigation) {
-    const node = card(parent, "Your data and questions", "worksheet-title");
-    if (investigation === 1) {
-      ["chosen", "random"].forEach(key => { if (quad[key].samples.length) { el("h3", methodName(key), node); table(node, "Squares you counted", quadHeaders, quadRows(quad[key])); } });
-      table(node, "Estimates and true values", estimateHeaders, estimateRows());
-    } else {
-      const keys = investigation === 2 ? ["small", "large"] : ["wear-off", "wear-on", "avoid-off", "avoid-on"];
-      keys.forEach(key => {
-        const state = catches[key]; if (!state.records.length) return;
-        el("h3", t(content.series[key]), node);
-        table(node, "Catch trials", catchHeaders, catchRows(state));
-        el("p", state.best === null ? t("Check your best estimate to see the real total.") : t("You guessed {guess}. The real total is {truth}. You were off by {error}%.", {guess: state.best, truth: N, error: model.percentError(state.best, N)}), node);
-      });
-    }
-    const copyStatus = el("p", "", node, {role: "status"});
-    const fallback = el("pre", "", node, {class: "zsa-ps-copy-text", tabindex: "0", "aria-label": t("Tables for manual copying"), hidden: ""});
-    button("Copy", node, async () => {
-      const text = copyText(investigation);
-      try {
-        if (!navigator.clipboard || !navigator.clipboard.writeText) throw new Error("Clipboard unavailable");
-        await navigator.clipboard.writeText(text); copyStatus.textContent = t("Tables copied.");
-      } catch (error) {
-        fallback.textContent = text; fallback.hidden = false; fallback.focus();
-        const range = document.createRange(); range.selectNodeContents(fallback);
-        const selection = getSelection(); selection.removeAllRanges(); selection.addRange(range);
-        copyStatus.textContent = t("Text selected. Press Ctrl+C, or Command+C on a Mac, to copy it.");
-      }
-    }, {id: "zsa-ps-copy"});
-    el("h3", t("Answer these in your document"), node);
-    const prompts = el("ol", null, node, {class: "zsa-ps-prompts"});
-    content.prompts[investigation - 1].forEach((text, i) => el("li", investigation + String.fromCharCode(65 + i) + ". " + t(text), prompts));
-  }
-  function copyText(investigation) {
-    const tables = [];
-    function add(title, headers, rows) { tables.push([title, headers.map(t).join("\t"), ...rows.map(row => row.join("\t"))].join("\n")); }
-    if (investigation === 1) {
-      ["chosen", "random"].forEach(key => { if (quad[key].samples.length) add(methodName(key), quadHeaders, quadRows(quad[key])); });
-      add(t("Estimates and true values"), estimateHeaders, estimateRows());
-    } else {
-      const keys = investigation === 2 ? ["small", "large"] : ["wear-off", "wear-on", "avoid-off", "avoid-on"];
-      keys.forEach(key => {
-        const state = catches[key]; if (!state.records.length) return;
-        add(t(content.series[key]), catchHeaders, catchRows(state));
-        add(t("Estimates and true values"), ["Your estimate", "Real total", "Off by"], [[state.best === null ? t("Hidden") : state.best, state.best === null ? t("Hidden") : N, state.best === null ? t("Hidden") : model.percentError(state.best, N) + "%"]]);
-      });
-    }
-    tables.push(t("Answer these in your document") + "\n" + content.prompts[investigation - 1].map((text, i) => investigation + String.fromCharCode(65 + i) + ". " + t(text)).join("\n"));
-    return tables.join("\n\n");
-  }
   function renderQuadrat() {
     const work = $("work"); work.replaceChildren();
     const setup = card(work, labels.quadrat, "mode-title");
@@ -173,7 +124,7 @@
       const last = state.estimates[state.estimates.length - 1];
       el("p", t("You guessed {guess}. The real total is {truth}. You were off by {error}%.", {guess: last.guess, truth: meadow.total, error: model.percentError(last.guess, meadow.total)}), setup, {id: "zsa-ps-quad-result", tabindex: "-1", class: "zsa-ps-result"});
       if (state.stage < 2) button("Next: count more squares", setup, () => { state.stage++; renderQuadrat(); $(method === "random" ? "random" : "grid").focus(); }, {id: "zsa-ps-next-size"});
-      else el("p", t("Done with this method! Switch how you pick squares to compare, then copy your data below."), setup);
+      else el("p", t("Done with this method! Switch how you pick squares to compare, then record your results on your worksheet."), setup);
     }
     const field = card(work, "The meadow", "meadow-title");
     el("p", t("Striped squares look like good plant habitat, but you cannot see how many plants are there. Click a square to count it. Keyboard: arrow keys and Enter."), field);
@@ -186,12 +137,12 @@
         const habitat = meadow.clusters.some(c => Math.hypot(col * 2 + 1 - c.x, row * 2 + 1 - c.y) < c.spread * 1.5);
         const wrapper = el("div", null, rowNode, {role: "gridcell", "aria-colindex": col + 1});
         const name = sample ? t("{cell}: {count} plants, {method}", {cell: cellName(index), count: sample.count, method: methodName(sample.method)}) : t("{cell}: not sampled", {cell: cellName(index)});
-        const node = button("", wrapper, () => { if (method === "chosen") place(index, "chosen"); }, {class: "zsa-ps-cell" + (habitat ? " zsa-ps-habitat" : ""), tabindex: index === cellFocus ? "0" : "-1", "aria-label": name, "aria-disabled": Boolean(sample) || ready || method !== "chosen", "data-cell": index});
+        const node = button("", wrapper, () => { if (method === "chosen") place(index, "chosen"); }, {class: "zsa-ps-cell" + (habitat ? " zsa-ps-habitat" : "") + (sample ? " zsa-ps-sampled" : ""), tabindex: index === cellFocus ? "0" : "-1", "aria-label": name, "aria-disabled": Boolean(sample) || ready || method !== "chosen", "data-cell": index});
         el("span", cellName(index) + (sample ? ": " + sample.count : ""), node);
         const image = svg("svg", {viewBox: "0 0 40 24", "aria-hidden": "true"}, node);
         if (sample) meadow.plants.filter(p => p.cell === index).forEach(p => {
-          const x = (p.x % 2) * 18 + 2, y = (p.y % 2) * 10 + 2;
-          svg("path", {d: "M" + x + " " + y + "l-2 4h4Z", fill: "var(--zsa-success)"}, image);
+          const x = (p.x % 2) * 17 + 4, y = (p.y % 2) * 8 + 2;
+          svg("path", {d: "M" + x + " " + y + "l-3 6h6Z", fill: "var(--zsa-success)"}, image);
         });
         node.addEventListener("focus", () => { cellFocus = index; cells.forEach((n, i) => { n.tabIndex = i === index ? 0 : -1; }); });
         node.addEventListener("keydown", event => {
@@ -202,7 +153,7 @@
       }
     }
     table(field, "Squares you counted", quadHeaders, quadRows(state));
-    worksheet(work, 1);
+    if (estimateRows().length) table(field, "Estimates and true values", estimateHeaders, estimateRows());
     function place(index, usedMethod) {
       if (ready || state.samples.some(r => r.cell === index)) { announce(t("Pick a square you have not counted yet.")); return; }
       cellFocus = index;
@@ -315,7 +266,6 @@
       el("p", t("Every graph uses the same scale, so you can compare how spread out the dots are. The tables show exact numbers."), comparison);
       others.forEach(k => { el("h3", t(content.series[k]), comparison); plot(comparison, catches[k], sharedMax); });
     }
-    worksheet(work, wrong ? 3 : 2);
   }
   const quizAnswers = [-1, -1, -1];
   function renderQuiz() {

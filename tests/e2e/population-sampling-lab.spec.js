@@ -74,14 +74,8 @@ for (const lang of ["en", "es"]) {
         if (target < 20) await $(page, "next-size").click();
       }
     }
-    expect(await page.evaluate(() => window.__samplingCopies)).toEqual([]);
-    await $(page, "copy").click();
-    const text = await page.evaluate(() => window.__samplingCopies[0]);
-    expect(text).toContain([t("#"), t("Square"), t("Method"), t("Plants")].join("\t"));
-    expect(text).toContain("\n\n" + t("Estimates and true values") + "\n");
-    expect(text).toContain("\t" + field.total + "\t");
-    expect(text).toContain(t("Answer these in your document") + "\n1A. " + t(data.content.prompts[0][0]));
-    expect(text).toContain("1B. " + t(data.content.prompts[0][1])); expect(text).toContain("1C. " + t(data.content.prompts[0][2]));
+    await expect($(page, "work").locator("table").last().locator("tbody tr")).toHaveCount(6);
+    await expect($(page, "work").locator("table").last().locator("tbody tr").first()).toContainText(String(field.total));
     await page.setViewportSize({width: 360, height: 780});
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await audit(page);
@@ -105,11 +99,8 @@ for (const lang of ["en", "es"]) {
       const r = model.capture(1, {M: size, C: size});
       await expect($(page, "work").locator("table").first().locator("tbody tr").first().locator("td").last()).toHaveText(model.percentError(r.estimate, model.pond(1)) + "%");
     }
-    await $(page, "copy").click();
-    const text = await page.evaluate(() => window.__samplingCopies[0]);
-    expect(text).toContain([t("Trial"), t("Tagged (M)"), t("2nd catch (C)"), t("Recaptured (R)"), t("Estimate"), t("Off by")].join("\t"));
-    expect(text).toContain("2A. " + t(data.content.prompts[1][0])); expect(text).toContain("2C. ");
-    expect(text).toContain(t("Small catches (20 fish)")); expect(text).toContain(t("Large catches (40 fish)"));
+    await expect($(page, "work")).toContainText(t("Small catches (20 fish)"));
+    await expect($(page, "work")).toContainText(t("Large catches (40 fish)"));
     await audit(page);
   });
 
@@ -130,9 +121,7 @@ for (const lang of ["en", "es"]) {
         await guess(page, "best", 300);
       }
     }
-    await $(page, "copy").click(); const text = await page.evaluate(() => window.__samplingCopies[0]);
-    for (const key of ["wear-off", "wear-on", "avoid-off", "avoid-on"]) expect(text).toContain(t(data.content.series[key]));
-    expect(text).toContain("3A. "); expect(text).toContain("3B. "); expect(text).toContain("3C. ");
+    for (const key of ["wear-off", "wear-on", "avoid-off", "avoid-on"]) await expect($(page, "work")).toContainText(t(data.content.series[key]));
     await audit(page);
   });
 
@@ -168,15 +157,9 @@ for (const lang of ["en", "es"]) {
   });
 }
 
-test("population sampling: blocked clipboard gives selected read-only text, never a writing field", async ({page}) => {
-  await open(page); await cell(page, 0).click();
+test("population sampling: Share copies a clean link and falls back to selected text", async ({page}) => {
+  await open(page);
   await page.evaluate(() => { navigator.clipboard.writeText = async () => { throw new Error("Blocked"); }; });
-  await $(page, "copy").click();
-  const fallback = page.locator(".zsa-ps-copy-text");
-  await expect(fallback).toBeVisible();
-  expect(await page.evaluate(() => getSelection().toString())).toBe(await fallback.textContent());
-  await expect(fallback).toContainText("#\tSquare\tMethod\tPlants\n1\tA1\tI choose\t");
-  await expect(fallback).toContainText("Answer these in your document\n1A.");
   await expect(page.locator('textarea,input[type=text],[contenteditable]')).toHaveCount(0);
   await $(page, "share-open").click(); await $(page, "share-copy").click();
   expect(await page.evaluate(() => getSelection().toString())).toBe("https://activities.zornscience.org/population-sampling-lab/");

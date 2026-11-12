@@ -16,23 +16,6 @@
       "avoid-off": "Tagged fish dodge the net: normal pond",
       "avoid-on": "Tagged fish dodge the net: problem on"
     },
-    "prompts": [
-      [
-        "Compare your 3-square estimate to your 20-square estimate. Which was closer to the real total? Use your \"off by\" percentages as evidence.",
-        "Compare your \"I choose\" estimate to your Random estimate. Why can picking squares yourself give a wrong (biased) estimate?",
-        "Why do scientists sample instead of counting every organism?"
-      ],
-      [
-        "Compare your five estimates from small catches (20 fish) with your five from large catches (40 fish). Which were closer together? What does that tell you?",
-        "In your own words, why does the number of tagged fish in the second catch (R) tell you how big the whole pond is?",
-        "What would you change to get a more reliable estimate?"
-      ],
-      [
-        "How did your estimates change when tags fell off? Explain why.",
-        "How did your estimates change when tagged fish dodged the net? Explain why.",
-        "Name one thing mark and recapture assumes (like tags staying on) and explain what happens if it is false."
-      ]
-    ],
     "questions": [
       {
         "question": "Why pick squares at random?",
@@ -125,11 +108,6 @@
     "Estimates and true values": "Estimaciones y valores reales",
     "Catch trials": "Ensayos de captura",
     "Lock in your best estimate to reveal the true total.": "Confirma tu mejor estimación para revelar el total real.",
-    "Tables for manual copying": "Tablas para copiar manualmente",
-    "Copy": "Copiar",
-    "Tables copied.": "Tablas copiadas.",
-    "Text selected. Press Ctrl+C, or Command+C on a Mac, to copy it.": "Texto seleccionado. Presiona Ctrl+C, o Command+C en una Mac, para copiarlo.",
-    "Answer these in your document": "Responde estas preguntas en tu documento",
     "Small catches": "Capturas pequeñas",
     "Large catches": "Capturas grandes",
     "Comparison series": "Serie de comparación",
@@ -181,13 +159,8 @@
     "Link copied.": "Enlace copiado.",
     "Link selected. Press Ctrl+C, or Command+C on a Mac, to copy it.": "Enlace seleccionado. Presiona Ctrl+C, o Command+C en una Mac, para copiarlo.",
     "Compare your 3-quadrat estimate to your 20-quadrat estimate. Which was closer to the true total? Use your percent errors as evidence.": "Compara tu estimación de 3 cuadrantes con la de 20 cuadrantes. ¿Cuál se acercó más al total real? Usa tus errores porcentuales como evidencia.",
-    "Compare your \"I choose\" estimate to your Random estimate. Explain why choosing the quadrats yourself can give a biased estimate.": "Compara tu estimación de \"Yo elijo\" con la de Al azar. Explica por qué elegir tú los cuadrantes puede dar una estimación sesgada.",
-    "Why do scientists sample instead of counting every organism?": "¿Por qué los científicos toman muestras en lugar de contar cada organismo?",
     "Describe how your five estimates with M = 20, C = 20 compare to your five with M = 40, C = 40. Use the spread of the dots as evidence.": "Describe cómo se comparan tus cinco estimaciones con M = 20, C = 20 con tus cinco con M = 40, C = 40. Usa la dispersión de los puntos como evidencia.",
     "Explain, in your own words, why the number of marked fish in the second catch (R) tells you about the whole pond.": "Explica, con tus propias palabras, por qué el número de peces marcados en la segunda captura (R) te da información sobre todo el estanque.",
-    "What would you change to get a more reliable estimate?": "¿Qué cambiarías para obtener una estimación más confiable?",
-    "How did your estimates change when marks wore off? Explain why.": "¿Cómo cambiaron tus estimaciones cuando se borraron las marcas? Explica por qué.",
-    "How did your estimates change when marked fish avoided the net? Explain why.": "¿Cómo cambiaron tus estimaciones cuando los peces marcados evitaron la red? Explica por qué.",
     "Name one assumption of mark and recapture and explain what happens if it is false.": "Menciona un supuesto de captura y recaptura y explica qué sucede si no se cumple.",
     "Why does random quadrat placement matter?": "¿Por qué importa colocar los cuadrantes al azar?",
     "Every quadrat has a fair chance of being sampled.": "Cada cuadrante tiene una oportunidad justa de ser muestreado.",
@@ -226,7 +199,6 @@
     "Part 1: Count the plants in a few squares of a meadow and estimate the whole meadow. Try picking the squares yourself, then try Random. Click a square to count it, or use arrow keys and Enter.": "Parte 1: Cuenta las plantas en unos pocos cuadros de un prado y estima todo el prado. Prueba a elegir los cuadros tú mismo y luego con Al azar. Haz clic en un cuadro para contarlo, o usa las flechas y Enter.",
     "Part 2: Catch fish, tag them, and release them. Catch a second batch and use the tagged fish you find to estimate the whole pond.": "Parte 2: Captura peces, etiquétalos y libéralos. Captura un segundo grupo y usa los peces etiquetados que encuentres para estimar todo el estanque.",
     "Part 3: See what happens when tags fall off or tagged fish dodge the net. Make a prediction first.": "Parte 3: Mira qué pasa cuando las etiquetas se caen o los peces etiquetados esquivan la red. Primero haz una predicción.",
-    "Copy your data from the bottom of each part and write your answers in your own document. Nothing is saved or sent. Reloading or changing language clears your work.": "Copia tus datos al final de cada parte y escribe tus respuestas en tu propio documento. No se guarda ni se envía nada. Al recargar o cambiar de idioma, se borra tu trabajo.",
     "The big idea": "La idea principal",
     "You can't count every plant in a big meadow. Scientists count a few small squares, find the average, and scale up. This meadow has 100 squares. (Scientists call these squares quadrats.)": "No puedes contar todas las plantas de un prado grande. Los científicos cuentan unos pocos cuadros pequeños, calculan el promedio y lo multiplican. Este prado tiene 100 cuadros. (Los científicos llaman cuadrantes a estos cuadros.)",
     "Your job: count plants in some squares, estimate the whole meadow, then check how close you got.": "Tu tarea: cuenta las plantas en algunos cuadros, estima todo el prado y comprueba qué tan cerca quedaste.",
@@ -243,9 +215,8 @@
     "The real total is {truth}. You were off by {error}%.": "El total real es {truth}. Te equivocaste por {error}%.",
     "You guessed {guess}. The real total is {truth}. You were off by {error}%.": "Estimaste {guess}. El total real es {truth}. Te equivocaste por {error}%.",
     "Next: count more squares": "Siguiente: contar más cuadros",
-    "Done with this method! Switch how you pick squares to compare, then copy your data below.": "¡Terminaste con este método! Cambia cómo eliges los cuadros para comparar y luego copia tus datos abajo.",
     "The meadow": "El prado",
-    "Striped squares look like good plant habitat, but you cannot see how many plants are there. Click a square to count it. Keyboard: arrow keys and Enter.": "Los cuadros con rayas parecen buen hábitat para plantas, pero no puedes ver cuántas hay. Haz clic en un cuadro para contarlo. Teclado: flechas y Enter.",
+    "Striped squares look like good plant habitat, but you cannot see how many plants are there. Click a square to count it. Keyboard: arrow keys and Enter.": "Los cuadros con rayas oscuras parecen buen hábitat para plantas, pero no puedes ver cuántas hay. Haz clic en un cuadro para contarlo. Teclado: flechas y Enter.",
     "Meadow squares": "Cuadros del prado",
     "Pick a square you have not counted yet.": "Elige un cuadro que aún no hayas contado.",
     "#": "#",
@@ -258,7 +229,6 @@
     "Recaptured (R)": "Recapturados (R)",
     "No estimate": "Sin estimación",
     "Squares you counted": "Cuadros que contaste",
-    "Your data and questions": "Tus datos y preguntas",
     "Check your best estimate to see the real total.": "Comprueba tu mejor estimación para ver el total real.",
     "You can't count every fish in a pond. Instead, catch some fish, tag them, and let them go. Later, catch a second batch. The share of tagged fish in that batch tells you how big the pond is.": "No puedes contar todos los peces de un estanque. En cambio, captura algunos, etiquétalos y suéltalos. Después captura un segundo grupo. La proporción de peces etiquetados en ese grupo te dice qué tan grande es el estanque.",
     "Example: tag 20 fish. Your next catch is 20 fish and 5 are tagged. That is 5 out of 20, or 1/4. So the 20 tagged fish are about 1/4 of the pond, and the pond holds about 80 fish. Math: 20 × 20 ÷ 5 = 80.": "Ejemplo: etiqueta 20 peces. Tu siguiente captura es de 20 peces y 5 están etiquetados. Eso es 5 de 20, o 1/4. Entonces los 20 peces etiquetados son más o menos 1/4 del estanque, y el estanque tiene unos 80 peces. Cálculo: 20 × 20 ÷ 5 = 80.",
@@ -299,13 +269,6 @@
     "Compare your results": "Compara tus resultados",
     "Every graph uses the same scale, so you can compare how spread out the dots are. The tables show exact numbers.": "Todas las gráficas usan la misma escala, así que puedes comparar qué tan dispersos están los puntos. Las tablas muestran los números exactos.",
     "Real total: {truth}": "Total real: {truth}",
-    "Compare your 3-square estimate to your 20-square estimate. Which was closer to the real total? Use your \"off by\" percentages as evidence.": "Compara tu estimación de 3 cuadros con la de 20 cuadros. ¿Cuál se acercó más al total real? Usa tus porcentajes de error como evidencia.",
-    "Compare your \"I choose\" estimate to your Random estimate. Why can picking squares yourself give a wrong (biased) estimate?": "Compara tu estimación de \"Yo elijo\" con la de Al azar. ¿Por qué elegir los cuadros tú mismo puede dar una estimación equivocada (sesgada)?",
-    "Compare your five estimates from small catches (20 fish) with your five from large catches (40 fish). Which were closer together? What does that tell you?": "Compara tus cinco estimaciones de capturas pequeñas (20 peces) con tus cinco de capturas grandes (40 peces). ¿Cuáles quedaron más juntas? ¿Qué te dice eso?",
-    "In your own words, why does the number of tagged fish in the second catch (R) tell you how big the whole pond is?": "Con tus propias palabras, ¿por qué el número de peces etiquetados en la segunda captura (R) te dice qué tan grande es todo el estanque?",
-    "How did your estimates change when tags fell off? Explain why.": "¿Cómo cambiaron tus estimaciones cuando las etiquetas se cayeron? Explica por qué.",
-    "How did your estimates change when tagged fish dodged the net? Explain why.": "¿Cómo cambiaron tus estimaciones cuando los peces etiquetados esquivaron la red? Explica por qué.",
-    "Name one thing mark and recapture assumes (like tags staying on) and explain what happens if it is false.": "Menciona algo que supone la captura y recaptura (como que las etiquetas se queden) y explica qué pasa si no se cumple.",
     "Why pick squares at random?": "¿Por qué elegir los cuadros al azar?",
     "Every square has a fair chance of being picked.": "Cada cuadro tiene una oportunidad justa de ser elegido.",
     "It always finds the thickest patch of plants.": "Siempre encuentra la zona con más plantas.",
@@ -319,7 +282,9 @@
     "R was bigger than expected.": "R fue mayor de lo esperado.",
     "R equals the whole pond.": "R es igual a todo el estanque.",
     "R was smaller than expected.": "R fue menor de lo esperado.",
-    "R is on the bottom of M × C ÷ R, so a smaller R makes the estimate bigger. If R = 0, you cannot make an estimate at all.": "R está abajo en M × C ÷ R, así que una R menor hace la estimación mayor. Si R = 0, no se puede hacer ninguna estimación."
+    "R is on the bottom of M × C ÷ R, so a smaller R makes the estimate bigger. If R = 0, you cannot make an estimate at all.": "R está abajo en M × C ÷ R, así que una R menor hace la estimación mayor. Si R = 0, no se puede hacer ninguna estimación.",
+    "Record your results and answer the questions on your worksheet. Nothing is saved or sent. Reloading or changing language clears your work.": "Anota tus resultados y responde las preguntas en tu hoja de trabajo. No se guarda ni se envía nada. Al recargar o cambiar de idioma, se borra tu trabajo.",
+    "Done with this method! Switch how you pick squares to compare, then record your results on your worksheet.": "¡Terminaste con este método! Cambia cómo eliges los cuadros para comparar y luego anota tus resultados en tu hoja de trabajo."
   };
   if (typeof module !== "undefined") module.exports = {content, es};
   if (typeof document === "undefined") return;
