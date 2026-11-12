@@ -1,6 +1,6 @@
 # Population Sampling Lab
 
-Version: 1.0.0
+Version: 1.2.0
 
 Standalone Grade 9 Biology activity for the Population Sampling lesson. This is an illustrative teaching model, not real field data. It uses only its own files and the shared site chrome. There are no runtime dependencies on other activity folders, remote resources, accounts, saved answers, completion codes, or runtime requests.
 
