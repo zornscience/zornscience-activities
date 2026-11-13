@@ -54,7 +54,11 @@
     {id:7, prefix:"GLC", slug:"gas-lab", setting:"Lab check", name:"Gas Laws and KMT Lab", maxItems:5,
       stats:[["boyle", "Squeeze the gas"], ["zero", "Find absolute zero"], ["speeds", "Light and heavy particles"],
         ["mix", "Share the pressure"], ["real", "When helium is not ideal"]],
-      totals:[["boyle"], ["zero"], ["speeds"], ["mix"], ["real"]], items:[0, 1, 2, 3, 4]}
+      totals:[["boyle"], ["zero"], ["speeds"], ["mix"], ["real"]], items:[0, 1, 2, 3, 4]},
+    {id:8, prefix:"ALC", slug:"atwood-machine", setting:"Lab check", name:"The Atwood Machine", maxItems:5,
+      stats:[["force", "Double the difference"], ["mass", "Add mass to both sides"], ["tension", "Tension in the string"],
+        ["balanced", "Equal masses"], ["time", "Time the fall"]],
+      totals:[["force"], ["mass"], ["tension"], ["balanced"], ["time"]], items:[0, 1, 2, 3, 4]}
   ];
   // The fixed fields, least significant first: [name, how many values]. Then one total per totals group (0 to
   // maxItems) and one first-try count per stat (0 to its total). Show me and Hint counts stop at their top value.
