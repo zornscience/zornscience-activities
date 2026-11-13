@@ -88,9 +88,12 @@ a temporary config that sets `executablePath`; the committed Playwright config i
 
 - `npm run test:unit`: 601 tests, 601 passed, 0 failed (including the 13 above).
 - `tests/e2e/yeast-fermentation-lab.spec.js`: 10 passed.
-- `labs-a11y.spec.js`, `activity-headers.spec.js` and `about.spec.js` filtered to this lab and the registry check:
-  all passed.
-- Full browser suite: see the commit message of the 1.0.0 commit for the run.
+- Every browser test the shared-file changes can reach (161 tests, 3 workers, 1.8 min, 161 passed): `about.spec.js`
+  for every registered page and the registry check, `seo.spec.js`, `activity-headers.spec.js` for every activity,
+  the landing page tests in `integration.spec.js`, `i18n.spec.js`, `a11y.spec.js` and `codes.spec.js`,
+  `labs-a11y.spec.js` for this lab in English and Spanish, and this lab's own spec.
+- The full browser suite (1,213 tests) was started but stopped after 163 tests (all passing) because this
+  container has 4 CPUs and would have needed about two hours; GitHub Actions runs it on the pull request.
 - Frame timing during the fast-forward and the cell animation at 1366x768, by DevTools CPU throttling: 60 fps at 1x
   and 4x, 57 fps at 6x (95th percentile frame 33 ms). This is an emulation in a fast container, not a real Chromebook.
 
