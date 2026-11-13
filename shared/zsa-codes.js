@@ -58,7 +58,15 @@
     {id:8, prefix:"ALC", slug:"atwood-machine", setting:"Lab check", name:"The Atwood Machine", maxItems:5,
       stats:[["force", "Double the difference"], ["mass", "Add mass to both sides"], ["tension", "Tension in the string"],
         ["balanced", "Equal masses"], ["time", "Time the fall"]],
-      totals:[["force"], ["mass"], ["tension"], ["balanced"], ["time"]], items:[0, 1, 2, 3, 4]}
+      totals:[["force"], ["mass"], ["tension"], ["balanced"], ["time"]], items:[0, 1, 2, 3, 4]},
+    {id:9, prefix:"PLC", slug:"pendulum-lab", setting:"Lab check", name:"The Simple Pendulum", maxItems:5,
+      stats:[["length", "Four times the length"], ["mass", "A heavier bob"], ["moon", "Take it to the Moon"],
+        ["angle", "A big release angle"], ["speed", "Speed at the bottom"]],
+      totals:[["length"], ["mass"], ["moon"], ["angle"], ["speed"]], items:[0, 1, 2, 3, 4]},
+    {id:10, prefix:"HLC", slug:"hookes-law-lab", setting:"Lab check", name:"Hooke’s Law & Harmonic Motion", maxItems:5,
+      stats:[["stiff", "A stiffer spring"], ["double", "Double the weight"], ["mass", "Mass and period"],
+        ["amplitude", "A bigger pull"], ["net", "Net force on the mass"]],
+      totals:[["stiff"], ["double"], ["mass"], ["amplitude"], ["net"]], items:[0, 1, 2, 3, 4]}
   ];
   // The fixed fields, least significant first: [name, how many values]. Then one total per totals group (0 to
   // maxItems) and one first-try count per stat (0 to its total). Show me and Hint counts stop at their top value.

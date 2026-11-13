@@ -24,6 +24,7 @@ var ALLOWED = {
   "act/act.css | .zsa-act-main:focus": "the main landmark receives script focus only",
   "act/act.css | .zsa-act-reader-handle": "decorative drag handle; its keyboard control has its own ring",
   "circuit-builder/lab.css | .zsa-cb-spot": "the shared ring from zsa-base.css, plus the board's own highlight rectangle",
+  "enzyme-lab/lab.css | .zsa-ez-marker:focus,.zsa-ez-point:focus": "the ruler marker and graph points (SVG sliders) show a blue .zsa-ez-marker-ring on :focus-visible",
   "gas-lab/gas-lab.css | .zsa-gl-pill input:focus-visible": "the pill (label) takes the ring through :has(input:focus-visible)",
   "home.css | .zsa-home-card h3 a:focus-visible": "the whole card takes the ring through :focus-within",
   "hookes-law-lab/lab.css | #hanger:focus": "#hanger:focus-visible > rect gets a thick yellow stroke (SVG shapes do not paint outlines in every browser)",

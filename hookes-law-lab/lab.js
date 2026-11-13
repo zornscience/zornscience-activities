@@ -8,6 +8,8 @@ if (root) root.dispatchEvent(new CustomEvent('zsa:request-i18n', {detail:{receiv
 const tr = (text, values) => i18n ? i18n.text(text, values) : text.replace(/\{(\w+)\}/g, (m, k) => values && values[k] !== undefined ? values[k] : m);
 let m=.2,k=20,b=0,y=0,v=0,t=0,running=false,dragging=false,points=[[0,0]],last=0,sample=0;
 const scale=350,zero=190;
+// The readout formatters, shared with the lab check so its choices match the screen exactly.
+const fixed2=x=>x.toFixed(2),fixed3=x=>x.toFixed(3);
 let plot='static',peaks=[],lastPeak=null,grabOffset=0;
 const tasks={
  spring:['Keep the same spring. Add 50 g at a time. What happens to extension when the total weight doubles?', 'At rest, spring force equals weight. Find k = weight / extension in meters, or use the slope of the force-extension graph. A steeper line means a stiffer spring.'],
@@ -44,8 +46,8 @@ for(let i=0;i<=4;i++){const xx=70+i/4*695;svg('text',{x:xx,y:200,'text-anchor':'
 svg('text',{x:70,y:16,fill:'#405b70','font-size':14},grid,tr('Displacement (cm), + downward'));svg('text',{x:765,y:220,'text-anchor':'end',fill:'#405b70','font-size':14},grid,tr('Time (s)'));
 $('trace').setAttribute('d',points.filter(p=>p[0]>=start).map((p,i)=>`${i?'L':'M'}${70+(p[0]-start)/span*695} ${104-p[1]*1200}`).join(' '));
 $('graph-dot').setAttribute('cx',70+(t-start)/span*695);$('graph-dot').setAttribute('cy',104-y*1200);
-if(peaks.length>=2){const a=peaks[peaks.length-2],c=peaks[peaks.length-1];if(a>=start){const x1=70+(a-start)/span*695,x2=70+(c-start)/span*695;svg('path',{d:`M${x1} 26V34H${x2}V26`,fill:'none',stroke:'#80561c','stroke-width':2},markers);svg('text',{x:(x1+x2)/2,y:52,'text-anchor':'middle',fill:'#80561c','font-size':13},markers,`T = ${(c-a).toFixed(3)} s`);}
-message('period-read',tr('Measured period: {period} s (successive positive peaks).',{period:(c-a).toFixed(3)}));
+if(peaks.length>=2){const a=peaks[peaks.length-2],c=peaks[peaks.length-1];if(a>=start){const x1=70+(a-start)/span*695,x2=70+(c-start)/span*695;svg('path',{d:`M${x1} 26V34H${x2}V26`,fill:'none',stroke:'#80561c','stroke-width':2},markers);svg('text',{x:(x1+x2)/2,y:52,'text-anchor':'middle',fill:'#80561c','font-size':13},markers,`T = ${fixed3(c-a)} s`);}
+message('period-read',tr('Measured period: {period} s (successive positive peaks).',{period:fixed3(c-a)}));
 }else message('period-read',tr(t>0?'Watch for two positive peaks to measure one full cycle.':'Pull and release to see the wave and measure its period.'));
 }
 function forces(end){
@@ -55,12 +57,12 @@ const arrow=(x,value,label,color)=>{const length=Math.abs(value)*15,dir=Math.sig
 arrow(690,weight,'mg','#f5d081');arrow(690,-spring,tr('Spring'),'#aadff8');
 // Three whole sentences, one template each.
 const netText=Math.abs(net)<.0005?(b>0?'Net force: {n} N (balanced) (includes damping).':'Net force: {n} N (balanced).'):net>0?(b>0?'Net force: {n} N down (includes damping).':'Net force: {n} N down.'):(b>0?'Net force: {n} N up (includes damping).':'Net force: {n} N up.');
-$('force-description').textContent=[tr('Weight: {w} N down.',{w:weight.toFixed(3)}),tr(spring>=0?'Spring force: {s} N up.':'Spring force: {s} N down.',{s:Math.abs(spring).toFixed(3)}),tr(netText,{n:Math.abs(net).toFixed(3)})].join(' ');
+$('force-description').textContent=[tr('Weight: {w} N down.',{w:fixed3(weight)}),tr(spring>=0?'Spring force: {s} N up.':'Spring force: {s} N down.',{s:fixed3(Math.abs(spring))}),tr(netText,{n:fixed3(Math.abs(net))})].join(' ');
 }
 function render(){const eq=zero+m*9.81/k*scale,end=eq+y*scale;let d='M465 120L465 128';for(let i=0;i<=96;i++){const f=i/96;d+=`L${465+18*Math.sin(f*12*Math.PI)} ${128+(end-138)*f}`;}d+=`L465 ${end}`;$('coil').setAttribute('d',d);$('hanger').setAttribute('transform',`translate(0 ${end})`);$('hanger').setAttribute('aria-valuenow',(y*100).toFixed(1));$('hanger').setAttribute('aria-valuetext',tr('{cm} centimeters from equilibrium, positive downward',{cm:(y*100).toFixed(1)}));$('equilibrium').setAttribute('d',`M400 ${eq}H625`);$('eq-label').setAttribute('y',eq+4);$('clock').textContent=t.toFixed(2);$('position').textContent=(y*100).toFixed(2)+' cm';$('state').textContent=tr(dragging?'HELD':running?'OSCILLATING':Math.abs(y)<.00001&&Math.abs(v)<.00001?'AT EQUILIBRIUM':'PAUSED');$('pause').textContent=tr(running?'Ⅱ Pause':'▶ Resume');$('pause').setAttribute('aria-pressed',String(!running));$('step').disabled=running||dragging;forces(end);graph();}
 function weights(){const g=$('weights');g.replaceChildren();const count=Math.round((m-.05)/.05);for(let i=0;i<count;i++){const yy=68-i*4;svg('path',{d:`M436 ${yy}Q465 ${yy-10} 494 ${yy}V${yy+4}Q465 ${yy+14} 436 ${yy+4}Z`,fill:'url(#brass)',stroke:'#bca56b','stroke-width':.6},g);svg('path',{d:`M466 ${yy-5}L476 ${yy-3}`,stroke:'#453c29','stroke-width':2},g);}svg('text',{x:465,y:64-count*4,'text-anchor':'middle',fill:'#e2c78a','font-size':10},g,tr('{g} g total',{g:Math.round(m*1000)}));}
 function fresh(){t=0;sample=0;points=[[0,y]];peaks=[];lastPeak=null;}
-function configure(){dragging=false;m=(Number($('mass').value)+50)/1000;k=Number($('spring').value);b=Number($('damping').value);y=0;v=0;running=false;fresh();$('mass-label').textContent=$('mass').value+' g';$('total').textContent=tr('{g} g total suspended mass',{g:Math.round(m*1000)});$('mass-read').textContent=Math.round(m*1000)+' g';$('extension').textContent=(m*9.81/k*100).toFixed(2)+' cm';$('extension-m').textContent=(m*9.81/k).toFixed(4)+' m';$('force').textContent=(m*9.81).toFixed(3)+' N';$('constant').textContent=tr('k = {f} N / {x} m = {k} N/m. Ideal T = {period} s (no damping).',{f:(m*9.81).toFixed(3),x:(m*9.81/k).toFixed(4),k:k,period:(2*Math.PI*Math.sqrt(m/k)).toFixed(3)});$('remove').disabled=+$('mass').value===0;$('add').disabled=+$('mass').value===500;selectPlot('static');weights();render();}
+function configure(){dragging=false;m=(Number($('mass').value)+50)/1000;k=Number($('spring').value);b=Number($('damping').value);y=0;v=0;running=false;fresh();$('mass-label').textContent=$('mass').value+' g';$('total').textContent=tr('{g} g total suspended mass',{g:Math.round(m*1000)});$('mass-read').textContent=Math.round(m*1000)+' g';$('extension').textContent=fixed2(m*9.81/k*100)+' cm';$('extension-m').textContent=(m*9.81/k).toFixed(4)+' m';$('force').textContent=fixed3(m*9.81)+' N';$('constant').textContent=tr('k = {f} N / {x} m = {k} N/m. Ideal T = {period} s (no damping).',{f:(m*9.81).toFixed(3),x:(m*9.81/k).toFixed(4),k:k,period:fixed3(2*Math.PI*Math.sqrt(m/k))});$('remove').disabled=+$('mass').value===0;$('add').disabled=+$('mass').value===500;selectPlot('static');weights();render();}
 function advance(dt){let remaining=dt;while(remaining>1e-9){const h=Math.min(.001,remaining); // Velocity Verlet with symmetric damping; stable across all supported masses.
 const oldV=v,oldT=t;const decay=Math.exp(-b*h/(2*m));v*=decay;v-=k/m*y*h/2;y+=v*h;v-=k/m*y*h/2;v*=decay;t+=h;
 if(oldV>0&&v<=0&&y>.0001){const peak=oldT+h*oldV/(oldV-v);if(lastPeak===null||peak-lastPeak>.1){peaks.push(peak);lastPeak=peak;peaks=peaks.slice(-4);}}
@@ -75,4 +77,11 @@ const hanger=$('hanger'),apparatus=$('apparatus');function pointerY(e){const p=a
 function move(e){y=Math.max(-.05,Math.min(.05,(pointerY(e)-grabOffset-zero-m*9.81/k*scale)/scale));v=0;render();}
 hanger.addEventListener('pointerdown',e=>{grabOffset=pointerY(e)-(zero+m*9.81/k*scale+y*scale);dragging=true;running=false;hanger.setPointerCapture(e.pointerId);selectPlot('motion');render();});hanger.addEventListener('pointermove',e=>{if(dragging)move(e);});hanger.addEventListener('pointerup',()=>{if(dragging){v=0;fresh();dragging=false;selectPlot('motion');running=true;render();}});hanger.addEventListener('pointercancel',()=>{dragging=false;running=false;render();});hanger.addEventListener('keydown',e=>{if(['ArrowUp','ArrowDown'].includes(e.key)){e.preventDefault();running=false;y=Math.max(-.05,Math.min(.05,y+(e.key==='ArrowDown'?.005:-.005)));v=0;fresh();render();}if(e.key==='Enter'||e.key===' '){e.preventDefault();v=0;fresh();selectPlot('motion');running=true;render();}});
 document.addEventListener('visibilitychange',()=>{last=0;});function frame(now){if(last&&running&&!dragging)advance(Math.min(.05,(now-last)/1000)*Number($('speed').value));last=now;requestAnimationFrame(frame);}task();amp();configure();requestAnimationFrame(frame);
+// The lab check (labcheck.js) reaches the lab through this event, never a global. setup() sets the Spring, Slotted
+// masses, Release displacement and Damping controls to a question's starting state (added mass in grams, amplitude in
+// cm), real-time playback, Show forces as asked (off by default), and Show spring constant unchecked and hidden. Then
+// configure() and amp() reset the readouts, graph and status exactly as a control change does: the mass at rest at
+// equilibrium. It never makes the question's change.
+function labSetup(q){$('spring').value=String(q.k);$('mass').value=String(q.added);$('amplitude').value=String(q.amplitude);$('damping').value=String(q.damping||0);$('speed').value='1';$('show-forces').checked=!!q.forces;$('reveal').checked=false;$('constant').hidden=true;configure();amp();$('status').textContent=tr('New setup at equilibrium. Pull and release to compare its motion.');}
+if(root)root.addEventListener('zsa-hl:request-lab',e=>e.detail.receive({setup:labSetup,format:{fixed2,fixed3}}));
 }());

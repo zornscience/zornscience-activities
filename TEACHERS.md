@@ -15,6 +15,8 @@ The checker runs in your browser. Nothing you paste is sent anywhere or saved.
    - Lewis Structure and VSEPR Builder: https://activities.zornscience.org/lewis-vsepr/ (octet rule), or https://activities.zornscience.org/lewis-vsepr/?set=ap for the AP setting (expanded octets and formal charge)
    - Gas Laws and KMT Lab: https://activities.zornscience.org/gas-lab/ (the code comes from the Investigations tab)
    - The Atwood Machine, Lab check: https://activities.zornscience.org/atwood-machine/?check=1 (five questions answered while using the lab; the code comes from the Lab check section below the apparatus)
+   - The Simple Pendulum, Lab check: https://activities.zornscience.org/pendulum-lab/?check=1 (five questions answered while using the lab; the code comes from the Lab check section below the apparatus)
+   - Hooke’s Law & Harmonic Motion, Lab check: https://activities.zornscience.org/hookes-law-lab/?check=1 (five questions answered while using the lab; the code comes from the Lab check section below the apparatus)
 3. In the instructions, ask students to finish one full round and paste their completion code. For an Assignment they can paste it as a private comment or in a Google Doc they turn in; for a Question they paste it as their answer.
 
 A sample instruction: "Open the link and finish one full round. At the end, select Copy code and paste the code here."
@@ -36,6 +38,8 @@ Example codes, one per activity (each checks as Valid):
 | Lewis Structure and VSEPR Builder, AP setting | `LVA-0DCQ-HDMD-G822-8096-N5` | Lewis Structure and VSEPR Builder (AP setting), 6 items, with a Formal charge line |
 | Gas Laws and KMT Lab | `GAS-0TNG-C228-0136-A` | Gas Laws and KMT Lab, 6 items |
 | The Atwood Machine, Lab check | `ALC-03EV-SG02-2F0H-8A9` | The Atwood Machine (Lab check), 5 items, "4 of 5 right on the first try.", Show me uses 1 |
+| The Simple Pendulum, Lab check | `PLC-02R2-SG02-2F0S-9CD` | The Simple Pendulum (Lab check), 5 items, "4 of 5 right on the first try.", Show me uses 1 |
+| Hooke’s Law & Harmonic Motion, Lab check | `HLC-0378-SG02-2F0S-AGV` | Hooke’s Law & Harmonic Motion (Lab check), 5 items, "4 of 5 right on the first try.", Show me uses 1 |
 
 The Lewis builder's code records whether the round was played with the octet rule or the AP setting, and the checker shows it after the activity name. The AP setting is the checkbox under Practice options (or the `?set=ap` link); it applies from the next round.
 

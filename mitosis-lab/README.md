@@ -96,7 +96,7 @@ the guide's autoplay (Previous and Next phase still step through). No flashing.
   33 px in testing): they tile the field with no gaps and meet WCAG 2.5.8 (24 px), but not the house 44 px. Tapping
   opens a zoomed sheet that shows which cell was chosen, so a near miss is easy to see and fix.
 - The lesson link points to the Biology course page until the cell division lesson's address is confirmed
-  (`bio-course` in `shared/zsa-about.js` and the back link in `index.html`).
+  (`bio-lessons` in `shared/zsa-about.js` and the back link in `index.html`).
 - The tour shows on every visit because the site stores nothing.
 - The cells are a stylized model (6 chromosome pairs, not an onion's 8), not photographs.
 

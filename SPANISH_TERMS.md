@@ -3466,6 +3466,39 @@ Fixed words retain Instrucciones, Compartir, Laboratorio virtual, tabla de datos
 vaso de precipitados, jeringa, ensayo and Ritmo de reproducción. Each explanatory
 sentence is translated as one template in leaf-disk-lab/data.js.
 
+## Feed the Yeast: Fermentation and Energy (pending proofreading)
+
+Mexican Spanish, tú, decimal points and unchanged units and formulas (CO₂, ATP). All of this lab's Spanish waits for a proofread before `spanishReady` is turned on; until then the lab opens in English. Reviewers can see it with `?lang=es&preview=1`.
+
+| English | Mexican Spanish | Review |
+| --- | --- | --- |
+| Feed the Yeast: Fermentation and Energy | Alimenta a la levadura: fermentación y energía | needs review |
+| yeast | levadura | |
+| fermentation | fermentación | |
+| cellular respiration | respiración celular | |
+| carbon dioxide | dióxido de carbono | |
+| ethanol | etanol | |
+| glucose | glucosa | |
+| fructose | fructosa | |
+| table sugar (sucrose) | azúcar de mesa (sacarosa) | |
+| artificial sweetener | edulcorante artificial | needs review (endulzante is also common in Mexico) |
+| starch | almidón | |
+| invertase | invertasa | |
+| transport protein | proteína de transporte | |
+| mitochondrion | mitocondria | |
+| vacuole | vacuola | |
+| cell wall, membrane | pared celular, membrana | |
+| fair test | prueba justa | needs review |
+| control (bottle) | control | |
+| trial, average | ensayo, promedio | |
+| levels off | se nivela | needs review |
+| balloon, tape measure | globo, cinta | |
+| water bath | baño de agua | |
+| lab partner | compañero de laboratorio | needs review (gender-neutral option) |
+| setup | montaje | needs review |
+| Hook, Zoom, Check (progress steps) | Inicio, Célula, Repaso | needs review |
+| conclusion sentence starters | inicios de oraciones para tus conclusiones | needs review |
+
 ## Population Sampling Lab
 
 Mexican Spanish, tú, decimal points unchanged. Previously approved equivalents are reused where recorded above. New classroom terms and provisional titles await review.
@@ -3519,7 +3552,7 @@ Mexican Spanish, tú, decimal points unchanged. The Spanish is written but not y
 | tally | conteo | needs review |
 | time card | tarjeta de tiempo | needs review |
 | sentence starter | inicio de oración | needs review |
-| Biology lessons (lesson link placeholder) | Lecciones de biología | needs review |
+| Biology lessons (lesson link placeholder, shared with other Biology labs) | Lecciones de Biología | needs review |
 
 ## Atwood Machine lab check (atwood-machine 1.2.0)
 
@@ -3537,3 +3570,91 @@ The shared Lab check labels are the Gas lab pilot's (Comprobación del laborator
 | statement (Which statement matches the lab?) | enunciado | Choice wording. |
 | fall freely | caer libremente | Free-fall distractor. |
 | What does the acceleration read now? | ¿Qué indica ahora la aceleración? | Same verb (indicar) as the Gas lab check. |
+
+## Osmosis Lab
+
+Mexican Spanish, tú, decimal points and unchanged units. All strings are in osmosis-lab/data.js. Not yet proofread: the page has no language toggle until it is (SPANISH_READY in data.js).
+
+| English | Mexican Spanish | Review |
+| --- | --- | --- |
+| Osmosis: Potato Cores in Sucrose Solutions | Ósmosis: cilindros de papa en soluciones de sacarosa | needs review |
+| potato core | cilindro de papa | needs review |
+| sucrose | sacarosa | |
+| osmosis | ósmosis | |
+| isotonic / hypotonic / hypertonic | isotónica / hipotónica / hipertónica (agrees with solución) | |
+| isotonic point | punto isotónico | |
+| cell membrane | membrana celular | |
+| blot dry | secar (con la toalla de papel) | needs review |
+| paper towel | toalla de papel | |
+| balance | balanza | |
+| beaker | vaso de precipitados (vaso for short) | |
+| starting mass / final mass | masa inicial / masa final | |
+| percent change | cambio porcentual | |
+| best-fit line | línea de mejor ajuste | |
+| tray | charola | needs review |
+| raisin / pickle / brine | pasa / pepinillo / salmuera | |
+| Fast-forward 24 hours | Adelantar 24 horas | needs review |
+| Cell transport (landing page topic) | Transporte celular | needs review |
+| Biology lessons (placeholder lesson link) | Lecciones de Biología | needs review |
+
+
+## Genetics Lab: Crossing Fruit Flies
+
+Mexican Spanish, tú. All strings are in fruit-fly-genetics-lab/data.js (one I18N object, en and es keyed by id). Not yet proofread: no language toggle, no Spanish hreflang, and "(en inglés)" on the landing page until SPANISH_PUBLISHED in data.js is true. Allele letters (N, n, R, r), genotypes and ratios stay unchanged.
+
+| English | Mexican Spanish | Review |
+| --- | --- | --- |
+| Genetics Lab: Crossing Fruit Flies | Laboratorio de genética: cruzas de moscas de la fruta | needs review |
+| fruit fly | mosca de la fruta | |
+| cross / test cross | cruza / cruza de prueba (cruza as in the pea plant cross above) | needs review |
+| parent | progenitor | needs review |
+| offspring | descendientes | needs review |
+| raise offspring | obtener descendientes | needs review |
+| allele / gamete | alelo / gameto | |
+| dominant / recessive | dominante / recesivo | |
+| genotype / phenotype | genotipo / fenotipo | |
+| homozygous / heterozygous | homocigoto / heterocigoto (homocigota / heterocigota for a mosca) | needs review |
+| true-breeding | de línea pura | needs review |
+| normal wings / vestigial wings | alas normales / alas vestigiales | |
+| red eyes / sepia eyes | ojos rojos / ojos sepia | |
+| Punnett square | cuadro de Punnett | |
+| vial | frasco | needs review |
+| allele tile / gamete tile | ficha de alelo / ficha de gameto | needs review |
+| percentage points | puntos porcentuales | |
+| Copy my data | Copiar mis datos | |
+| conclusion sentence starters | inicios de oraciones para tus conclusiones | needs review |
+| Genetics (landing page topic) | Genética | |
+
+## Simple Pendulum lab check (pendulum-lab 1.3.0)
+
+The shared Lab check labels are the Gas lab pilot's. Readout and control names follow the lab: periodo del modelo (MODEL PERIOD), periodo para ángulos pequeños (SMALL-ANGLE PERIOD), rapidez de la esfera (BOB SPEED), ángulo actual, ángulo de liberación, gravedad, Luna, Avanzar (the Step +0.05 s button), energía total, la parte más baja, puntos de retorno, control deslizante. KE and PE are written EC and EP.
+
+| English | Mexican Spanish | Use |
+| --- | --- | --- |
+| Four times the length | Cuatro veces la longitud | Question title. |
+| A heavier bob | Una esfera más pesada | Question title. |
+| Take it to the Moon | Llévalo a la Luna | Question title. |
+| A big release angle | Un ángulo de liberación grande | Question title. |
+| Speed at the bottom | Rapidez en la parte más baja | Question title. |
+| swing (one swing, the swing gets slower) | oscilación | As in the lab's oscillation counter. |
+| drop height / the bob drops | altura de caída / la esfera baja | Question 5. |
+| {start} s becomes {right} s | {start} s se convierte en {right} s | Explanations. |
+| About {percent}% longer / shorter | Aproximadamente {percent}% más largo / más corto | Question 4 choices. |
+| a weaker pull back toward the bottom | jala la esfera con menos fuerza de regreso hacia la parte más baja | Moon feedback. |
+
+## Hooke's Law lab check (hookes-law-lab 1.3.0)
+
+The shared Lab check labels are the Gas lab pilot's. Control and readout names follow the lab: resorte, Resorte A, Resorte C (rígido), constante del resorte, portapesas, pesas ranuradas, elongación en equilibrio, periodo medido, desplazamiento al soltar, Jalar y soltar, Mostrar fuerzas, fuerza del resorte, fuerza neta, peso. Question 3's title reuses the Investigate option Masa y periodo.
+
+| English | Mexican Spanish | Use |
+| --- | --- | --- |
+| A stiffer spring | Un resorte más rígido | Question title. |
+| Double the weight | El doble de peso | Question title. |
+| A bigger pull | Un jalón más grande | Question title; jalón as in the lab's "pull (noun)". |
+| Net force on the mass | Fuerza neta sobre la masa | Question title. |
+| stretch (noun) / it stretches | estiramiento / se estira | Hooke's law explanation; the readout itself is elongación. |
+| bounce (each bounce, bounce faster) | rebote / rebotar | Period distractors. |
+| the down arrow key | la tecla de flecha hacia abajo | Question 5. |
+| the force description | la descripción de las fuerzas | The Show forces sentence under the apparatus. |
+| The period grows by √2. | El periodo aumenta √2 veces. | Amplitude distractor. |
+
