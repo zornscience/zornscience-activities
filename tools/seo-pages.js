@@ -3,6 +3,7 @@
 // the canonical and hreflang links, and builds sitemap.xml and robots.txt. Edit descriptions here, never in the pages.
 // Descriptions are 110 to 160 characters, plain and student-facing, and name the topic and what the student does.
 // Keys are folder names; "" is the landing page. es: null = English only. sitemap: false = left out of sitemap.xml.
+// spanishPending: true = the page has Spanish text that is not yet proofread, so it is listed as English only for now.
 "use strict";
 module.exports = {
   "osmosis-lab": {
@@ -12,6 +13,12 @@ module.exports = {
   "population-sampling-lab": {
     en: "Estimate hidden plant and fish populations with quadrats and mark and recapture. Compare random samples, sample sizes and bias in this Biology lab.",
     es: "Estima poblaciones ocultas de plantas y peces con cuadrantes y captura y recaptura. Compara muestras al azar, tamaños y sesgo en este laboratorio."
+  },
+  "mitosis-lab": {
+    en: "Find dividing cells in an onion root tip under a virtual microscope. Tally the phases of mitosis and turn your counts into time in this Biology lab.",
+    // English only until the Spanish in mitosis-lab/data.js is proofread (FLAGS.spanishToggle).
+    es: null,
+    spanishPending: true
   },
   "enzyme-lab": {
     en: "Test what makes the enzyme catalase work best. Run a fair test of temperature or pH, measure foam, graph the optimum and see the active site denature.",

@@ -205,7 +205,8 @@ test("yeast: the whole lab, start to finish, matches the model and copies tab-se
   // Copy: exactly the model's tab-separated text for this visit.
   await expect(action(page)).toHaveText(t("copyButton"));
   await action(page).click();
-  await expect(page.getByText(t("copied"))).toBeVisible();
+  // The live region repeats this text 60 ms later, so look only inside the copy screen.
+  await expect(page.locator("#zsa-fy-screen-copy").getByText(t("copied"))).toBeVisible();
   await audit(page, "copy");
   await page.setViewportSize({width: 360, height: 640});
   await audit(page, "copy at 360");

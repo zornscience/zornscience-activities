@@ -3052,6 +3052,10 @@ test("landing page opens in Mexican Spanish with Spanish activity names and link
   for (const name of ["ACT Practice", "ACT Question Generator"]) {
     await expect(page.locator(".zsa-home-card h3").filter({has:page.getByRole("link", {name, exact:true})})).toHaveText(name + " (en inglés)");
   }
+  // Mitosis Detective's Spanish awaits proofreading (pendingSpanish in home.js): Spanish title, English page.
+  const mitosis = "Detective de la mitosis: dentro de la punta de una raíz de cebolla";
+  await expect(page.locator(".zsa-home-card h3").filter({has:page.getByRole("link", {name:mitosis, exact:true})})).toHaveText(mitosis + " (en inglés)");
+  await expect(page.getByRole("link", {name:mitosis, exact:true})).toHaveAttribute("href", "mitosis-lab/");
   await expect(page.getByRole("link", {name:"Revisar códigos de finalización (en inglés)", exact:true})).toBeVisible();
   const text = (await pageText(page, null)).replace(/ACT Practice|ACT Question Generator/g, "");
   expect(text).not.toMatch(english);

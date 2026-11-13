@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0"><title>Mitosis Detective: Inside an Onion Root Tip | ZornScience</title>
+<meta name="description" content="Find dividing cells in an onion root tip under a virtual microscope. Tally the phases of mitosis and turn your counts into time in this Biology lab.">
+<link rel="canonical" href="https://activities.zornscience.org/mitosis-lab/">
+<link rel="icon" href="../favicon.png?v=1.0.0" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=1.0.0">
+<link rel="stylesheet" href="lab.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.0.0" defer></script>
+<script src="data.js?v=1.0.0" defer></script>
+<script src="model.js?v=1.0.0" defer></script>
+<script src="cells.js?v=1.0.0" defer></script>
+<script src="lab.js?v=1.0.0" defer></script>
+<script src="share.js?v=1.0.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.0.0"><script src="../shared/zsa-about.js?v=1.0.0" defer></script></head><body><main class="zsa zsa-mt" data-zsa-activity="mitosis-lab">
+<header data-zsa-header class="zsa-th-header">
+<div data-zsa-header-row class="zsa-th-topline">
+<div data-zsa-header-identity class="zsa-th-identity"><a data-zsa-header-brand class="zsa-th-brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome>
+<img src="../favicon.png?v=1.0.0" alt="" width="40" height="40">
+</a><h1>Mitosis Detective: Inside an Onion Root Tip</h1></div>
+<nav data-zsa-header-tools class="zsa-th-header-tools" aria-label="Instructions and sharing">
+<div class="zsa-th-header-buttons">
+<button class="zsa-btn zsa-th-instructions-open" id="zsa-th-instructions-open" type="button" aria-haspopup="dialog" aria-controls="instructions">Instructions</button>
+<button class="zsa-btn zsa-th-share-toggle" id="zsa-th-share-toggle" type="button" aria-label="Share activity" aria-expanded="false" aria-controls="zsa-th-share-panel" data-zsa-chrome><span>Share</span></button>
+</div>
+</nav>
+</div>
+<section class="zsa-th-share-panel" id="zsa-th-share-panel" aria-labelledby="zsa-th-share-title" data-zsa-chrome hidden>
+<div class="zsa-th-share-heading">
+<h2 id="zsa-th-share-title">Share this activity</h2>
+<button class="zsa-th-icon-button" id="zsa-th-share-close" type="button" aria-label="Close share options"><span aria-hidden="true">×</span></button>
+</div>
+<p class="zsa-th-small">Share a fresh lab. Your tally and answers are not included.</p>
+<p class="zsa-th-share-label" id="zsa-mt-share-label">Share link</p>
+<div class="zsa-th-share-link">
+<a class="zsa-mt-share-url" id="zsa-mt-share-link" href="https://activities.zornscience.org/mitosis-lab/" aria-describedby="zsa-mt-share-label">https://activities.zornscience.org/mitosis-lab/</a>
+<button class="zsa-btn zsa-btn--primary" id="zsa-th-share-copy" type="button">Copy link</button>
+</div>
+<div class="zsa-th-share-options">
+<a id="zsa-th-share-email" href="#"><span>Email</span></a>
+<button class="zsa-btn" id="zsa-th-share-device" type="button" hidden>More share options</button>
+</div>
+<p class="zsa-th-share-status" id="zsa-th-share-status" aria-live="polite" aria-atomic="true"></p>
+</section>
+</header>
+<a class="zsa-back" id="zsa-mt-back" data-zsa-chrome href="https://zornscience.org/science/biology/">Back to the lesson</a>
+<div class="zsa-mt-bar" id="zsa-mt-bar">
+<nav class="zsa-mt-progress" id="zsa-mt-progress" aria-label="Lab progress"></nav>
+<div class="zsa-mt-tools">
+<button class="zsa-btn zsa-mt-tool" id="zsa-mt-guide-open" type="button" aria-haspopup="dialog" aria-controls="zsa-mt-guide"><span class="zsa-mt-tool-icon zsa-mt-tool-icon--guide" aria-hidden="true"></span><span>Cell guide</span></button>
+<button class="zsa-btn zsa-mt-tool" id="zsa-mt-reset" type="button" aria-haspopup="dialog" aria-controls="zsa-mt-reset-dialog"><span class="zsa-mt-tool-icon zsa-mt-tool-icon--reset" aria-hidden="true"></span><span>Start over</span></button>
+</div>
+</div>
+<aside class="zsa-mt-tour" id="zsa-mt-tour" aria-labelledby="zsa-mt-tour-title" hidden>
+<p class="zsa-mt-tour-count" id="zsa-mt-tour-count"></p>
+<h2 class="zsa-mt-tour-title" id="zsa-mt-tour-title"></h2>
+<p class="zsa-mt-tour-text" id="zsa-mt-tour-text"></p>
+<div class="zsa-mt-tour-buttons">
+<button class="zsa-btn zsa-mt-quiet" id="zsa-mt-tour-skip" type="button">Skip tour</button>
+<button class="zsa-btn zsa-btn--primary" id="zsa-mt-tour-next" type="button">Next tip</button>
+</div>
+</aside>
+<section class="zsa-mt-screen" id="zsa-mt-screen" aria-labelledby="zsa-mt-screen-title"></section>
+<div class="zsa-mt-action" id="zsa-mt-action" role="group" aria-label="What to do next">
+<button class="zsa-btn zsa-mt-prev" id="zsa-mt-prev" type="button">Back</button>
+<p class="zsa-mt-hint" id="zsa-mt-hint"></p>
+<button class="zsa-btn zsa-btn--primary zsa-mt-next" id="zsa-mt-next" type="button" aria-describedby="zsa-mt-hint">Next</button>
+</div>
+<p class="zsa-sr-only" id="zsa-mt-live" role="status" aria-live="polite" aria-atomic="true"></p>
+<!-- zsa-about --><section class="zsa-about" data-zsa-about="mitosis-lab" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Find the part of an onion root where cells divide, then identify and tally cells in each phase of mitosis. Turn your counts into percents and minutes.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="bio-lessons"><a href="https://zornscience.org/science/biology/">Biology lessons</a><span data-zsa-lesson-course>Biology</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer" data-zsa-chrome><span>ZornScience · CC BY-NC-SA 4.0</span><a href="../">All activities</a></footer>
+<dialog class="zsa-header-dialog" id="instructions" aria-labelledby="instructions-title">
+<div class="zsa-header-dialog-heading"><h2 id="instructions-title">Instructions</h2><button class="zsa-btn" id="close-instructions" type="button" aria-label="Close instructions" autofocus>×</button></div>
+<p>Be a detective inside an onion root. Find the part of the root that makes new cells, then count the cells in each phase of mitosis.</p>
+<p>Predict, choose a sample, use the microscope, analyze your counts, answer five questions, then copy your data into your lab document.</p>
+<p>Tap or click to choose. With a keyboard, use Tab, the arrow keys and Enter. The Next button at the bottom always shows what to do next. Open the Cell guide any time.</p>
+<p>Mistakes are safe here. Wrong answers never cost points, and Start over clears everything.</p>
+<p>The cells are drawn as a simple model of real stained onion root tip cells. Nothing is saved or sent. Reloading the page clears your work.</p>
+<p><button class="zsa-btn" id="zsa-mt-tour-again" type="button">Show the tour again</button></p>
+</dialog>
+<dialog class="zsa-mt-dialog zsa-mt-guide" id="zsa-mt-guide" aria-labelledby="zsa-mt-guide-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-mt-guide-title">Cell guide</h2><button class="zsa-btn" id="zsa-mt-guide-close" type="button" aria-label="Close cell guide" autofocus>×</button></div>
+<div id="zsa-mt-guide-body"></div>
+</dialog>
+<dialog class="zsa-mt-dialog zsa-mt-confirm" id="zsa-mt-reset-dialog" aria-labelledby="zsa-mt-reset-title">
+<h2 id="zsa-mt-reset-title">Start over?</h2>
+<p>This clears your prediction, tally and answers. You will get new cells to count.</p>
+<div class="zsa-mt-confirm-buttons">
+<button class="zsa-btn" id="zsa-mt-reset-cancel" type="button" autofocus>Keep working</button>
+<button class="zsa-btn zsa-btn--primary" id="zsa-mt-reset-confirm" type="button">Yes, start over</button>
+</div>
+</dialog><noscript>This simulation requires JavaScript.</noscript>
+</main></body></html>

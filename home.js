@@ -16,11 +16,15 @@
   "Enzyme Activity Lab": "Laboratorio de actividad enzimática",
   "Set up a fair test of how temperature or pH affects catalase. Measure the foam, graph the optimum and watch the active site lose its shape.": "Prepara una prueba justa de cómo la temperatura o el pH afectan a la catalasa. Mide la espuma, grafica el óptimo y observa cómo el sitio activo pierde su forma.",
   "Leaf Disk Lab": "Laboratorio de discos de hoja",
-  "Explore photosynthesis, cell transport, populations and genetics with evidence from virtual experiments.": "Explora la fotosíntesis, el transporte celular, las poblaciones y la genética con evidencia de experimentos virtuales.",
+  "Explore photosynthesis, cell transport, cell division, populations and genetics with evidence from virtual experiments.": "Explora la fotosíntesis, el transporte celular, la división celular, las poblaciones y la genética con evidencia de experimentos virtuales.",
   "Genetics": "Genética",
   // The genetics lab's Spanish is written but not yet proofread, so its card opens the English page (pendingSpanish below).
   "Genetics Lab: Crossing Fruit Flies": "Laboratorio de genética: cruzas de moscas de la fruta",
   "Breed fruit flies, build Punnett squares and watch real offspring counts approach your prediction. Then use a test cross to unmask a mystery parent.": "Cruza moscas de la fruta, construye cuadros de Punnett y observa cómo los conteos reales de descendientes se acercan a tu predicción. Luego usa una cruza de prueba para descubrir a un progenitor misterioso.",
+  // Mitosis Detective's Spanish is written but not yet proofread, so its card opens the English page (pendingSpanish below).
+  "Cell Division": "División celular",
+  "Mitosis Detective: Inside an Onion Root Tip": "Detective de la mitosis: dentro de la punta de una raíz de cebolla",
+  "Cut a sample from an onion root, focus a microscope and find cells in every phase of mitosis. Tally three fields and turn your counts into time.": "Corta una muestra de una raíz de cebolla, enfoca un microscopio y encuentra células en cada fase de la mitosis. Cuenta tres campos y convierte tus conteos en tiempo.",
   "Float spinach leaf disks to compare light color, brightness, temperature and bicarbonate. Use your data to explain the rate of photosynthesis.": "Haz flotar discos de hoja de espinaca para comparar el color y la intensidad de la luz, la temperatura y el bicarbonato. Usa tus datos para explicar la tasa de fotosíntesis.",
   "Population Sampling Lab": "Laboratorio de muestreo de poblaciones",
   "Osmosis: Potato Cores in Sucrose Solutions": "Ósmosis: cilindros de papa en soluciones de sacarosa",
@@ -269,8 +273,8 @@
   var links = Array.from(root.querySelectorAll("a[href]")).map(function (a) { return [a, a.getAttribute("href")]; });
   // Activities whose Spanish is written but not yet proofread open in English, and their Spanish card says so.
   // Remove an activity from this list when its flag is turned on (SPANISH_READY in osmosis-lab, SPANISH_PUBLISHED in
-  // fruit-fly-genetics-lab, spanishReady in yeast-fermentation-lab/data.js).
-  var pendingSpanish = ["osmosis-lab/", "fruit-fly-genetics-lab/", "yeast-fermentation-lab/"];
+  // fruit-fly-genetics-lab, spanishReady in yeast-fermentation-lab/data.js, FLAGS.spanishToggle in mitosis-lab/data.js).
+  var pendingSpanish = ["osmosis-lab/", "fruit-fly-genetics-lab/", "yeast-fermentation-lab/", "mitosis-lab/"];
   i18n.configure(copy);
   links.forEach(function (pair) {
     var href = pair[1], local = !/^(?:[a-z]+:|\/\/|#)/i.test(href);
