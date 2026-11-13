@@ -1,0 +1,193 @@
+/* Osmosis lab. Shared tokens and focus rings come from zsa-base.css and zsa-lab-a11y.css. Positions are SVG
+   attributes; nothing here is set from JavaScript. */
+.zsa-os {--zsa-max-width:1180px;max-width:1180px;margin:auto;padding:16px;font-size:16px;color:var(--zsa-slate);background:#f5f8f5;}
+.zsa-os *, .zsa-os *::before, .zsa-os *::after {box-sizing:border-box;}
+.zsa-os [hidden] {display:none !important;}
+.zsa-os h1 {font-size:clamp(1.25rem,3.4vw,1.9rem);line-height:1.2;}
+.zsa-os h2 {font-size:clamp(1.3rem,3vw,1.7rem);line-height:1.25;margin:0 0 10px;color:var(--zsa-navy);}
+.zsa-os h2:focus-visible {outline:var(--zsa-focus-ring);outline-offset:4px;}
+.zsa-os h3 {font-size:1.05rem;margin:4px 0 10px;color:var(--zsa-navy);}
+.zsa-os p, .zsa-os li {line-height:1.55;}
+.zsa-os .zsa-eyebrow {color:#2f5f45;font-size:12px;letter-spacing:1.4px;font-weight:700;text-transform:uppercase;margin:0 0 4px;}
+.zsa-os button, .zsa-os summary, .zsa-os select {min-height:44px;min-width:44px;font:inherit;}
+.zsa-os button {white-space:normal;}
+.zsa-os button:disabled {opacity:.55;cursor:default;}
+.zsa-os .zsa-btn--primary {background:#28593e;border-color:#28593e;color:#ffffff;}
+.zsa-os a {overflow-wrap:anywhere;}
+[data-zsa-header-tools] #zsa-os-reset {background:#fff7ec;border-color:#8a4b08;color:#6b3a06;}
+
+/* Step navigation */
+.zsa-os-steps ol {list-style:none;display:flex;flex-wrap:wrap;gap:8px;margin:16px 0;padding:10px;background:#e7eee7;border:1px solid #cad9cb;border-radius:12px;}
+.zsa-os-steps li {flex:1 1 140px;}
+.zsa-os-steps button {width:100%;display:flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid #829c8b;border-radius:10px;background:#ffffff;color:#1f3d2d;font-weight:600;text-align:left;}
+.zsa-os-step-number {display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;flex:0 0 28px;border-radius:50%;background:#e7eee7;color:#1f3d2d;font-weight:700;}
+.zsa-os-steps button[aria-current="step"] {background:var(--zsa-navy);border-color:var(--zsa-navy);color:#ffffff;}
+.zsa-os-steps button[aria-current="step"] .zsa-os-step-number {background:#ffffff;color:var(--zsa-navy);}
+.zsa-os-step {background:#ffffff;border:1px solid #d0ded4;border-top:4px solid #3c7455;border-radius:16px;padding:22px;margin:0 0 20px;box-shadow:0 4px 18px #213e2d0d;}
+.zsa-os-card {background:#ffffff;border:1px solid #d0ded4;border-radius:14px;padding:16px;margin:16px 0;min-width:0;}
+.zsa-os-pager {display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid #dce5dd;}
+.zsa-os-pager .zsa-btn--primary {margin-left:auto;}
+.zsa-os-small {font-size:14px;color:#3f5547;}
+.zsa-os-status {font-weight:600;color:#1f3d2d;min-height:1.5em;}
+.zsa-os-status:empty {min-height:0;}
+
+/* Hook and choices */
+.zsa-os-hook-art svg {display:block;width:100%;height:auto;max-width:760px;margin:8px auto;}
+.zsa-os svg text {font-family:var(--zsa-font);fill:#17324a;}
+.zsa-os .zsa-os-svg-label {font-size:17px;font-weight:650;}
+.zsa-os .zsa-os-svg-small {font-size:14px;}
+.zsa-os-predict {background:#f7faf7;}
+.zsa-os fieldset {border:1px solid #d0ded4;border-radius:12px;margin:12px 0;padding:12px;min-width:0;}
+.zsa-os legend {font-weight:650;color:var(--zsa-navy);padding:0 4px;}
+.zsa-os-choices {display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;}
+.zsa-os-choices legend {grid-column:1 / -1;}
+.zsa-os-choice {display:flex;align-items:center;gap:10px;min-height:48px;padding:10px 12px;margin:6px 0;border:2px solid #b9cbbd;border-radius:10px;background:#ffffff;cursor:pointer;}
+.zsa-os-choices .zsa-os-choice {margin:0;}
+.zsa-os-choice:has(input:checked) {border-color:var(--zsa-navy);background:var(--zsa-sky);font-weight:600;}
+.zsa-os input[type=radio], .zsa-os input[type=checkbox] {width:22px;height:22px;flex:0 0 22px;margin:0;accent-color:#28593e;}
+
+/* Bench */
+.zsa-os-trialbar {display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:12px 0;}
+.zsa-os-label {font-weight:650;color:#1f3d2d;margin-right:4px;}
+.zsa-os-trialbar button[aria-pressed="true"] {background:var(--zsa-navy);border-color:var(--zsa-navy);color:#ffffff;}
+/* Selected steps and choices keep their colors on hover; the shared hover color would hide their white text. */
+.zsa-os .zsa-os-steps button[aria-current="step"]:hover, .zsa-os .zsa-os-trialbar button[aria-pressed="true"]:hover {background:#16386f;color:#ffffff;}
+.zsa-os-next {margin:8px 0 12px;padding:10px 14px;background:#eef4ff;border-left:5px solid var(--zsa-blue);border-radius:8px;font-weight:600;color:#12305e;}
+.zsa-os-bench {display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,.8fr);gap:14px;padding:14px;border-radius:14px;background:linear-gradient(#efe7d6,#e4d8bf);border:1px solid #c9b896;}
+.zsa-os-station {background:#fffdf7;border:1px solid #d8c9a6;border-radius:12px;padding:10px;min-width:0;}
+.zsa-os-tray {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;}
+.zsa-os-item {display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:2px;width:100%;padding:6px;border:2px solid #b8a983;border-radius:10px;background:#ffffff;color:#1d2f24;font-size:14px;line-height:1.25;text-align:center;}
+.zsa-os-item svg {display:block;width:100%;height:auto;pointer-events:none;}
+.zsa-os-core-button svg {max-width:44px;}
+.zsa-os-item-label {font-weight:650;}
+.zsa-os-item-status {font-size:13px;color:#3f5547;}
+.zsa-os-picked {font-size:12px;font-weight:700;color:#7a4b00;}
+.zsa-os-picked:empty {display:none;}
+.zsa-os .zsa-os-has-core {cursor:grab;touch-action:none;}
+.zsa-os .zsa-os-selected {border:3px dashed #7a4b00;background:#fff4d6;}
+.zsa-os .zsa-os-drop {border:3px solid #1e7a3c;background:#e3f4e8;}
+.zsa-os-towel-station {margin-top:10px;}
+.zsa-os-towel svg {max-width:150px;}
+.zsa-os-balance svg {max-width:220px;}
+.zsa-os .zsa-os-lcd {font-family:ui-monospace,Menlo,Consolas,monospace;font-size:17px;fill:#9cf5b4;font-weight:700;}
+.zsa-os .zsa-os-core-letter {font-size:14px;font-weight:700;fill:#5a3d08;}
+.zsa-os-reading {font-size:1.35rem;font-weight:700;color:#1f3d2d;font-variant-numeric:tabular-nums;margin:8px 0;text-align:center;}
+.zsa-os-balance-station > .zsa-btn, .zsa-os-clock-station > .zsa-btn {width:100%;}
+.zsa-os-clock-station svg {display:block;width:100%;max-width:110px;height:auto;margin:auto;}
+.zsa-os-beakers {grid-column:1 / -1;}
+.zsa-os-beaker-row {display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;}
+.zsa-os-beaker svg {max-width:110px;}
+.zsa-os-drag-layer {position:fixed;left:0;top:0;width:100vw;height:100vh;pointer-events:none;z-index:50;display:none;}
+.zsa-os-drag-layer.zsa-os-drag-on {display:block;}
+.zsa-os-hint {margin:14px 0;padding:12px 16px;background:#fff4d6;border-left:6px solid #9a6a00;border-radius:8px;color:#3d2a00;}
+.zsa-os-tools {display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:12px 0;}
+.zsa-os-tools p {margin:0;}
+.zsa-os-data {background:#fbfdfb;}
+.zsa-os-calc {display:flex;flex-wrap:wrap;align-items:flex-start;gap:12px 24px;margin:10px 0;}
+.zsa-os-switch {display:flex;align-items:center;gap:10px;min-height:44px;font-weight:600;cursor:pointer;}
+.zsa-os-formula {flex:1 1 300px;}
+.zsa-os summary {cursor:pointer;padding:10px 0;font-weight:600;color:var(--zsa-navy);}
+.zsa-os-formula-text {font-weight:700;font-size:1.05rem;background:#eef4ff;padding:10px 12px;border-radius:8px;}
+.zsa-os-table-wrap {max-width:100%;overflow-x:auto;}
+.zsa-os table {border-collapse:collapse;width:100%;font-size:15px;margin:12px 0;text-align:left;font-variant-numeric:tabular-nums;}
+.zsa-os caption {text-align:left;font-weight:700;color:var(--zsa-navy);margin-bottom:6px;}
+.zsa-os th, .zsa-os td {border-bottom:1px solid #d0ded4;padding:6px 8px;vertical-align:middle;}
+.zsa-os thead th {background:#edf3ed;color:var(--zsa-navy);}
+.zsa-os-flag {display:block;font-size:12px;font-weight:700;color:#7a3e00;}
+.zsa-os .zsa-os-reveal {padding:6px 12px;font-size:14px;}
+
+/* Graph */
+.zsa-os-graph-layout {display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px;align-items:start;}
+.zsa-os-plot svg {display:block;width:100%;height:auto;}
+.zsa-os .zsa-os-grid {stroke:#dbe5dd;stroke-width:1;}
+.zsa-os .zsa-os-zero {stroke:#334155;stroke-width:2;stroke-dasharray:8 5;}
+.zsa-os .zsa-os-axis {fill:none;stroke:#334155;stroke-width:2;}
+.zsa-os .zsa-os-tick {font-size:14px;}
+.zsa-os .zsa-os-axis-label {font-size:15px;font-weight:650;}
+.zsa-os .zsa-os-line {stroke:#1d4ed8;stroke-width:3.5;}
+.zsa-os .zsa-os-best {stroke:#7a4b00;stroke-width:2.5;stroke-dasharray:10 6;}
+.zsa-os .zsa-os-mark {stroke:#8a1c5c;stroke-width:2.5;stroke-dasharray:4 4;}
+.zsa-os .zsa-os-untouched {opacity:.55;}
+.zsa-os .zsa-os-handle {cursor:grab;touch-action:none;}
+.zsa-os .zsa-os-hit {fill:transparent;}
+.zsa-os .zsa-os-ring {fill:none;stroke:transparent;stroke-width:4;}
+.zsa-os .zsa-os-handle:focus-visible .zsa-os-ring {stroke:#1d4ed8;}
+.zsa-os .zsa-os-point {fill:#16324f;stroke:#ffffff;stroke-width:2;}
+.zsa-os .zsa-os-point.zsa-os-untouched {fill:#ffffff;stroke:#16324f;stroke-width:2.5;stroke-dasharray:3 3;opacity:1;}
+.zsa-os .zsa-os-end {fill:#1d4ed8;stroke:#ffffff;stroke-width:2;}
+.zsa-os .zsa-os-mark-head {fill:#8a1c5c;stroke:#ffffff;stroke-width:2;}
+.zsa-os-feedback-list {list-style:none;padding:0;margin:0 0 8px;}
+.zsa-os-feedback-list li {display:flex;gap:8px;align-items:baseline;padding:3px 0;}
+.zsa-os-icon {display:inline-block;width:1.2em;font-weight:700;text-align:center;}
+.zsa-os meter {display:block;width:100%;height:20px;margin:4px 0 8px;}
+.zsa-os-reveal-text {padding:0;font-weight:600;color:#3d2a00;}
+.zsa-os-reveal-text:not(:empty) {padding:10px 12px;background:#fff4d6;border-radius:8px;}
+.zsa-os-graph-steps {padding-left:22px;}
+
+/* Zoom */
+.zsa-os-zoom svg {display:block;width:100%;max-width:820px;height:auto;margin:auto;border-radius:10px;}
+.zsa-os .zsa-os-cell-bg {fill:#f6efd2;}
+.zsa-os .zsa-os-out-bg {fill:#e3f1fb;}
+.zsa-os .zsa-os-head {fill:#c2577f;stroke:#7d2d4c;stroke-width:1;}
+.zsa-os .zsa-os-tail {stroke:#d9a3b8;stroke-width:6;}
+.zsa-os .zsa-os-channel {fill:#6b4fb0;}
+.zsa-os .zsa-os-water {fill:#1f6fc4;stroke:#ffffff;stroke-width:1.2;}
+.zsa-os .zsa-os-sugar {fill:#e59a1b;stroke:#7a4b00;stroke-width:1.5;}
+.zsa-os .zsa-os-arrow {fill:none;stroke:#17324a;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;}
+.zsa-os .zsa-os-flow text {font-weight:700;}
+.zsa-os-explain {font-size:1.05rem;padding:10px 14px;background:#f2f7f2;border-left:5px solid #3c7455;border-radius:8px;}
+.zsa-os-key {list-style:none;display:flex;flex-wrap:wrap;gap:8px 20px;padding:0;margin:8px 0 0;font-size:14px;}
+.zsa-os-key li {display:flex;align-items:center;gap:8px;}
+.zsa-os-swatch {display:inline-block;width:18px;height:18px;border-radius:50%;border:2px solid #ffffff;box-shadow:0 0 0 1px #334155;}
+.zsa-os-key-water {background:#1f6fc4;}
+.zsa-os-key-sugar {background:#e59a1b;border-radius:3px;}
+.zsa-os-key-membrane {background:#c2577f;}
+
+/* Check */
+.zsa-os-question legend {font-size:1.02rem;}
+.zsa-os-answer:empty {display:none;}
+.zsa-os-answer {margin:10px 0 0;padding:10px 14px;border-radius:8px;}
+.zsa-os-right {background:var(--zsa-success-bg);border-left:6px solid var(--zsa-success);color:#0f4d26;}
+.zsa-os-wrong {background:var(--zsa-error-bg);border-left:6px solid var(--zsa-error);color:#7a1414;}
+
+/* Copy */
+.zsa-os-preview {white-space:pre-wrap;overflow-wrap:anywhere;user-select:text;font:13px/1.5 ui-monospace,Menlo,Consolas,monospace;background:#f7faf7;border:1px solid #829c8b;border-radius:8px;padding:12px;max-height:340px;overflow:auto;tab-size:16;}
+
+/* Share panel */
+.zsa-os #zsa-os-share-panel {border:1px solid var(--zsa-border);padding:16px;}
+.zsa-os #zsa-os-share-panel .zsa-btn {margin:4px 8px 4px 0;}
+
+@media (max-width:900px) {
+  .zsa-os-bench {grid-template-columns:minmax(0,1fr) minmax(0,1fr);}
+  .zsa-os-tray-station {grid-column:1 / -1;}
+  .zsa-os-tray {grid-template-columns:repeat(6,minmax(0,1fr));}
+  .zsa-os-towel-station {max-width:220px;}
+  .zsa-os-beaker-row {grid-template-columns:repeat(3,minmax(0,1fr));}
+  .zsa-os-graph-layout {grid-template-columns:minmax(0,1fr);}
+}
+@media (max-width:560px) {
+  .zsa-os {padding:8px;}
+  .zsa-os-step {padding:14px 12px;border-radius:12px;}
+  .zsa-os-card {padding:12px;}
+  .zsa-os-steps ol {padding:6px;gap:6px;}
+  .zsa-os-steps li {flex:1 1 45%;}
+  .zsa-os-steps button {padding:6px 8px;font-size:14px;}
+  .zsa-os-bench {grid-template-columns:minmax(0,1fr) minmax(0,1fr);padding:8px;gap:8px;}
+  .zsa-os-tray {grid-template-columns:repeat(3,minmax(0,1fr));}
+  .zsa-os-towel-station {max-width:none;}
+  .zsa-os-item {font-size:13px;padding:4px;}
+  .zsa-os-reading {font-size:1.1rem;}
+  .zsa-os table {font-size:13px;}
+  .zsa-os th, .zsa-os td {padding:5px 4px;}
+  .zsa-os-pager .zsa-btn {flex:1 1 100%;}
+}
+/* Drawings shrink to about half size on phones, so their text is set larger there to stay readable. */
+@media (max-width:560px) {
+  .zsa-os .zsa-os-tick {font-size:22px;}
+  .zsa-os .zsa-os-axis-label {font-size:22px;}
+  .zsa-os .zsa-os-svg-label {font-size:22px;}
+  .zsa-os .zsa-os-svg-small {font-size:19px;}
+}
+@media (prefers-reduced-motion:reduce) {
+  .zsa-os *, .zsa-os *::before, .zsa-os *::after {animation:none !important;transition:none !important;scroll-behavior:auto !important;}
+}

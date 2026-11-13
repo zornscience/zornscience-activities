@@ -3511,3 +3511,57 @@ The shared Lab check labels are the Gas lab pilot's (Comprobación del laborator
 | statement (Which statement matches the lab?) | enunciado | Choice wording. |
 | fall freely | caer libremente | Free-fall distractor. |
 | What does the acceleration read now? | ¿Qué indica ahora la aceleración? | Same verb (indicar) as the Gas lab check. |
+
+## Osmosis Lab
+
+Mexican Spanish, tú, decimal points and unchanged units. All strings are in osmosis-lab/data.js. Not yet proofread: the page has no language toggle until it is (SPANISH_READY in data.js).
+
+| English | Mexican Spanish | Review |
+| --- | --- | --- |
+| Osmosis: Potato Cores in Sucrose Solutions | Ósmosis: cilindros de papa en soluciones de sacarosa | needs review |
+| potato core | cilindro de papa | needs review |
+| sucrose | sacarosa | |
+| osmosis | ósmosis | |
+| isotonic / hypotonic / hypertonic | isotónica / hipotónica / hipertónica (agrees with solución) | |
+| isotonic point | punto isotónico | |
+| cell membrane | membrana celular | |
+| blot dry | secar (con la toalla de papel) | needs review |
+| paper towel | toalla de papel | |
+| balance | balanza | |
+| beaker | vaso de precipitados (vaso for short) | |
+| starting mass / final mass | masa inicial / masa final | |
+| percent change | cambio porcentual | |
+| best-fit line | línea de mejor ajuste | |
+| tray | charola | needs review |
+| raisin / pickle / brine | pasa / pepinillo / salmuera | |
+| Fast-forward 24 hours | Adelantar 24 horas | needs review |
+| Cell transport (landing page topic) | Transporte celular | needs review |
+| Biology lessons (placeholder lesson link) | Lecciones de Biología | needs review |
+
+
+## Genetics Lab: Crossing Fruit Flies
+
+Mexican Spanish, tú. All strings are in fruit-fly-genetics-lab/data.js (one I18N object, en and es keyed by id). Not yet proofread: no language toggle, no Spanish hreflang, and "(en inglés)" on the landing page until SPANISH_PUBLISHED in data.js is true. Allele letters (N, n, R, r), genotypes and ratios stay unchanged.
+
+| English | Mexican Spanish | Review |
+| --- | --- | --- |
+| Genetics Lab: Crossing Fruit Flies | Laboratorio de genética: cruzas de moscas de la fruta | needs review |
+| fruit fly | mosca de la fruta | |
+| cross / test cross | cruza / cruza de prueba (cruza as in the pea plant cross above) | needs review |
+| parent | progenitor | needs review |
+| offspring | descendientes | needs review |
+| raise offspring | obtener descendientes | needs review |
+| allele / gamete | alelo / gameto | |
+| dominant / recessive | dominante / recesivo | |
+| genotype / phenotype | genotipo / fenotipo | |
+| homozygous / heterozygous | homocigoto / heterocigoto (homocigota / heterocigota for a mosca) | needs review |
+| true-breeding | de línea pura | needs review |
+| normal wings / vestigial wings | alas normales / alas vestigiales | |
+| red eyes / sepia eyes | ojos rojos / ojos sepia | |
+| Punnett square | cuadro de Punnett | |
+| vial | frasco | needs review |
+| allele tile / gamete tile | ficha de alelo / ficha de gameto | needs review |
+| percentage points | puntos porcentuales | |
+| Copy my data | Copiar mis datos | |
+| conclusion sentence starters | inicios de oraciones para tus conclusiones | needs review |
+| Genetics (landing page topic) | Genética | |

@@ -64,7 +64,7 @@ All Spanish is written in `data.js` but has not been proofread. Until it is:
 - The Spanish landing page shows the card's Spanish title with "(en inglés)" and links to the English page (`home.js`).
 - `?lang=es` still renders the page in Spanish for review.
 
-To publish: set `SPANISH_PUBLISHED = true`; add the Spanish description to `tools/seo-pages.js` and load `../shared/zsa-i18n.js` (the SEO tests expect a page with Spanish to load it) or adjust that test; remove the folder from the "(en inglés)" list in `home.js`; add the lab to `labs` in `tests/e2e/i18n.spec.js`; update the last unit test in `tests/unit/fruit-fly-genetics-lab.test.js`; run `node tools/build-seo.js`; bump the version.
+To publish: set `SPANISH_PUBLISHED = true`; add the Spanish description to `tools/seo-pages.js` and load `../shared/zsa-i18n.js` (the SEO tests expect a page with Spanish to load it) or adjust that test; remove the folder from `pendingSpanish` in `home.js`; add the lab to `labs` in `tests/e2e/i18n.spec.js`; update the last unit test in `tests/unit/fruit-fly-genetics-lab.test.js`; run `node tools/build-seo.js`; bump the version.
 
 ## Links and embedding
 
