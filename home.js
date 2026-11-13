@@ -16,6 +16,9 @@
   "Explore photosynthesis and respiration with evidence from a virtual experiment.": "Explora la fotosíntesis y la respiración con evidencia de un experimento virtual.",
   "Float spinach leaf disks to compare light color, brightness, temperature and bicarbonate. Use your data to explain the rate of photosynthesis.": "Haz flotar discos de hoja de espinaca para comparar el color y la intensidad de la luz, la temperatura y el bicarbonato. Usa tus datos para explicar la tasa de fotosíntesis.",
   "Population Sampling Lab": "Laboratorio de muestreo de poblaciones",
+  "Fermentation": "Fermentación",
+  "Feed the Yeast: Fermentation and Energy": "Alimenta a la levadura: fermentación y energía",
+  "Feed yeast four foods and measure the gas in balloons. Fix an unfair setup, graph where more sugar stops helping, and zoom inside a yeast cell.": "Alimenta a la levadura con cuatro alimentos y mide el gas en globos. Corrige un montaje injusto, grafica dónde más azúcar deja de ayudar y observa el interior de una célula de levadura.",
   "Populations": "Poblaciones",
   "Estimate hidden plant and fish populations with quadrats and mark and recapture. Compare sample sizes, random placement and sampling bias.": "Estima poblaciones ocultas de plantas y peces con cuadrantes y captura y recaptura. Compara tamaños de muestra, colocación al azar y sesgo de muestreo.",
   // Header and navigation
@@ -261,6 +264,11 @@
   if (i18n.lang !== "es") return;
   // The ACT activities have no Spanish version: their names stay in English, followed by " (en inglés)".
   root.querySelectorAll('.zsa-home-card h3 a[href^="act/"], .zsa-home-card h3 a[href^="act-question-generator/"]').forEach(function (a) {
+    a.parentNode.appendChild(document.createTextNode(" (en inglés)"));
+  });
+  // Feed the Yeast has Spanish written but not yet proofread, so it opens in English for now. Remove this when its
+  // data.js sets spanishReady to true (see yeast-fermentation-lab/README.md).
+  root.querySelectorAll('.zsa-home-card h3 a[href^="yeast-fermentation-lab/"]').forEach(function (a) {
     a.parentNode.appendChild(document.createTextNode(" (en inglés)"));
   });
 }());

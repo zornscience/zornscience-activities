@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0"><title>Feed the Yeast: Fermentation and Energy | ZornScience</title>
+<meta name="description" content="Feed yeast glucose, table sugar, sweetener and starch, measure the balloons, and graph where fermentation levels off in this Biology virtual lab.">
+<link rel="canonical" href="https://activities.zornscience.org/yeast-fermentation-lab/">
+<link rel="icon" href="../favicon.png?v=1.0.0" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=1.0.0">
+<link rel="stylesheet" href="lab.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="data.js?v=1.0.0" defer></script>
+<script src="model.js?v=1.0.0" defer></script>
+<script src="lab.js?v=1.0.0" defer></script>
+<script src="share.js?v=1.0.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.0.0"><script src="../shared/zsa-about.js?v=1.0.0" defer></script></head><body><main class="zsa zsa-fy" data-zsa-activity="yeast-fermentation-lab">
+<header data-zsa-header><div data-zsa-header-row><div data-zsa-header-identity>
+<a data-zsa-header-brand href="https://zornscience.org/" aria-label="ZornScience home" data-fy-aria="home" data-zsa-chrome><img src="../favicon.png?v=1.0.0" alt="" width="40" height="40"></a>
+<h1 data-fy-t="title">Feed the Yeast: Fermentation and Energy</h1></div>
+<nav data-zsa-header-tools aria-label="Instructions and sharing" data-fy-aria="tools">
+<button class="zsa-btn" id="zsa-fy-instructions-open" type="button" aria-haspopup="dialog" aria-controls="instructions" data-fy-t="instructions">Instructions</button>
+<button class="zsa-btn" id="zsa-fy-share-open" type="button" aria-label="Share activity" aria-expanded="false" aria-controls="zsa-fy-share-panel" data-zsa-chrome data-fy-aria="shareActivity"><span data-fy-t="share">Share</span></button>
+<div class="zsa-languages" id="zsa-fy-languages" role="group" aria-label="Language" data-fy-aria="language" data-zsa-chrome hidden><a class="zsa-btn" id="zsa-fy-lang-en" href="./" lang="en" aria-label="EN English">EN</a><a class="zsa-btn" id="zsa-fy-lang-es" href="./?lang=es" lang="es-MX" aria-label="ES Español">ES</a></div>
+</nav></div>
+<section class="zsa-fy-share" id="zsa-fy-share-panel" hidden data-zsa-chrome aria-labelledby="zsa-fy-share-title">
+<div class="zsa-fy-share-head"><h2 id="zsa-fy-share-title" data-fy-t="shareTitle">Share this activity</h2>
+<button class="zsa-fy-icon-btn" id="zsa-fy-share-close" type="button" aria-label="Close share options" data-fy-aria="shareClose"><span aria-hidden="true">×</span></button></div>
+<p data-fy-t="shareNote">Share a fresh lab. Your data are not included.</p>
+<label for="zsa-fy-share-url" data-fy-t="shareLink">Share link</label>
+<div class="zsa-fy-share-row"><input id="zsa-fy-share-url" type="text" readonly spellcheck="false">
+<button class="zsa-fy-btn zsa-fy-btn--secondary" id="zsa-fy-share-copy" type="button" data-fy-t="copyLink">Copy link</button></div>
+<div class="zsa-fy-share-row"><a id="zsa-fy-share-email" href="#" data-fy-t="email">Email</a>
+<button class="zsa-fy-btn zsa-fy-btn--secondary" id="zsa-fy-share-device" type="button" hidden data-fy-t="moreShare">More share options</button></div>
+<p class="zsa-fy-share-status" id="zsa-fy-share-status" aria-live="polite" aria-atomic="true"></p>
+</section></header>
+<a class="zsa-back" id="zsa-fy-back" data-zsa-chrome href="https://zornscience.org/science/biology/unit-8-photosynthesis-and-respiration/rates-of-photosynthesis/" data-fy-t="back">Back to the lesson</a>
+<div class="zsa-fy-stage" id="zsa-fy-stage">
+<nav class="zsa-fy-progress" aria-label="Lab progress" data-fy-aria="progress"><ol id="zsa-fy-steps"></ol></nav>
+<div id="zsa-fy-screens"></div>
+<section class="zsa-fy-guide" id="zsa-fy-guide" aria-label="What to do next" data-fy-aria="guideLabel">
+<div class="zsa-fy-guide-inner">
+<button class="zsa-fy-btn zsa-fy-btn--ghost" id="zsa-fy-prev" type="button" data-fy-t="backButton">Back</button>
+<p class="zsa-fy-guide-text" id="zsa-fy-guide-text"></p>
+<button class="zsa-fy-btn zsa-fy-btn--cta" id="zsa-fy-action" type="button">Next</button>
+</div></section>
+</div>
+<p class="zsa-sr-only" id="zsa-fy-live" role="status" aria-live="polite" aria-atomic="true"></p>
+<details class="zsa-fy-model"><summary data-fy-t="modelSummary">Model details</summary>
+<p data-fy-t="model1">This is an illustrative teaching model. Real yeast vary. The numbers are examples for comparing conditions, not predictions of a real lab.</p>
+<p data-fy-t="model2">Balloon size is the distance around the balloon. It grows more slowly than the amount of gas inside, because a balloon's volume depends on its size cubed. The graph still levels off in the same place.</p>
+<p data-fy-t="model3">In this model, yeast work fastest near 37 °C, and hot water near 50 °C harms them. Each visit, the plateau moves a little (between 9 and 11 g), and every measurement has a little noise, like a real tape.</p>
+</details>
+<!-- zsa-about --><section class="zsa-about" data-zsa-about="yeast-fermentation-lab" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Feed yeast four foods and measure the gas they make with balloons. Find out which sugars yeast can use, where the carbon dioxide comes from, and why more sugar stops helping.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="bio-photosynthesis"><a href="https://zornscience.org/science/biology/unit-8-photosynthesis-and-respiration/rates-of-photosynthesis/">Rates of Photosynthesis</a><span data-zsa-lesson-course>Biology</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer" data-zsa-chrome><span>ZornScience · CC BY-NC-SA 4.0</span><a href="../" data-fy-t="allActivities">All activities</a></footer>
+<dialog class="zsa-header-dialog" id="instructions" aria-labelledby="instructions-title">
+<div class="zsa-header-dialog-heading"><h2 id="instructions-title" data-fy-t="instructions">Instructions</h2><button class="zsa-btn" id="zsa-fy-instructions-close" type="button" autofocus data-fy-t="closeInstructions">Close instructions</button></div>
+<p data-fy-t="instructions1">Yeast are tiny living cells. Like you, they break down food to get energy. In this lab you feed yeast different foods and measure the gas they make.</p>
+<p data-fy-t="instructions2">Follow the bar at the bottom of the screen. It always says what to do next, and the coral button is your next step. Tap the progress bar at the top to go back to any part.</p>
+<p data-fy-t="instructions3">Hook: watch dough and a balloon rise, then predict. Part A: fix the setup so it is a fair test, then measure the balloons before and after 30 minutes. Part B: test 5 amounts of glucose, 3 times each. Then zoom into a yeast cell, answer 5 questions and copy your data.</p>
+<p data-fy-t="instructions4">You can drag the bars and points on the graphs, or use the arrow keys. Mistakes are fine: every part has a reset.</p>
+<p data-fy-t="instructions5">This is an illustrative teaching model, not real yeast data. Nothing is saved or sent. Reloading the page clears your work, so copy your data before you leave.</p>
+</dialog><noscript data-fy-t="noscript">This lab needs JavaScript.</noscript>
+</main></body></html>

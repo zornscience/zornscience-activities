@@ -3466,6 +3466,39 @@ Fixed words retain Instrucciones, Compartir, Laboratorio virtual, tabla de datos
 vaso de precipitados, jeringa, ensayo and Ritmo de reproducción. Each explanatory
 sentence is translated as one template in leaf-disk-lab/data.js.
 
+## Feed the Yeast: Fermentation and Energy (pending proofreading)
+
+Mexican Spanish, tú, decimal points and unchanged units and formulas (CO₂, ATP). All of this lab's Spanish waits for a proofread before `spanishReady` is turned on; until then the lab opens in English. Reviewers can see it with `?lang=es&preview=1`.
+
+| English | Mexican Spanish | Review |
+| --- | --- | --- |
+| Feed the Yeast: Fermentation and Energy | Alimenta a la levadura: fermentación y energía | needs review |
+| yeast | levadura | |
+| fermentation | fermentación | |
+| cellular respiration | respiración celular | |
+| carbon dioxide | dióxido de carbono | |
+| ethanol | etanol | |
+| glucose | glucosa | |
+| fructose | fructosa | |
+| table sugar (sucrose) | azúcar de mesa (sacarosa) | |
+| artificial sweetener | edulcorante artificial | needs review (endulzante is also common in Mexico) |
+| starch | almidón | |
+| invertase | invertasa | |
+| transport protein | proteína de transporte | |
+| mitochondrion | mitocondria | |
+| vacuole | vacuola | |
+| cell wall, membrane | pared celular, membrana | |
+| fair test | prueba justa | needs review |
+| control (bottle) | control | |
+| trial, average | ensayo, promedio | |
+| levels off | se nivela | needs review |
+| balloon, tape measure | globo, cinta | |
+| water bath | baño de agua | |
+| lab partner | compañero de laboratorio | needs review (gender-neutral option) |
+| setup | montaje | needs review |
+| Hook, Zoom, Check (progress steps) | Inicio, Célula, Repaso | needs review |
+| conclusion sentence starters | inicios de oraciones para tus conclusiones | needs review |
+
 ## Population Sampling Lab
 
 Mexican Spanish, tú, decimal points unchanged. Previously approved equivalents are reused where recorded above. New classroom terms and provisional titles await review.

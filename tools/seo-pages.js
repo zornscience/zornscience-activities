@@ -13,6 +13,10 @@ module.exports = {
     en: "Explore photosynthesis with floating spinach leaf disks. Compare light, temperature and bicarbonate in a bilingual Biology lab from ZornScience.",
     es: "Explora la fotosíntesis con discos de espinaca que flotan. Compara luz, temperatura y bicarbonato en un laboratorio bilingüe de ZornScience."
   },
+  "yeast-fermentation-lab": {
+    en: "Feed yeast glucose, table sugar, sweetener and starch, measure the balloons, and graph where fermentation levels off in this Biology virtual lab.",
+    es: null
+  },
   "": {
     en: "Free interactive chemistry and physics activities from ZornScience: virtual labs, simulations, AP Chemistry review and ACT practice, no login needed.",
     es: "Actividades interactivas gratuitas de química y física de ZornScience: laboratorios virtuales, simulaciones, repaso de Química AP y práctica para el ACT."
