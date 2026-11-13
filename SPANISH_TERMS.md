@@ -3495,6 +3495,32 @@ Mexican Spanish, tú, decimal points unchanged. Previously approved equivalents 
 | Data for your worksheet | Datos para tu hoja de trabajo | needs review |
 | Answer these in your document | Responde estas preguntas en tu documento | needs review |
 
+## Mitosis Detective (mitosis-lab 1.0.0)
+
+Mexican Spanish, tú, decimal points unchanged. The Spanish is written but not yet proofread: the page shows it only with `?lang=es`, and `FLAGS.spanishToggle` in `mitosis-lab/data.js` keeps the EN / ES toggle off until a reviewer approves it.
+
+| English | Mexican Spanish | Review |
+| --- | --- | --- |
+| Mitosis Detective: Inside an Onion Root Tip | Detective de la mitosis: dentro de la punta de una raíz de cebolla | needs review |
+| interphase, prophase, metaphase, anaphase, telophase | interfase, profase, metafase, anafase, telofase | needs review |
+| root cap | cofia | needs review |
+| meristem | meristemo | needs review |
+| elongation zone, mature zone | zona de elongación, zona de maduración | needs review |
+| root hairs | pelos radiculares | needs review |
+| sister chromatids | cromátidas hermanas | needs review |
+| cell plate | placa celular | needs review |
+| cell cycle | ciclo celular | needs review |
+| low power, high power | bajo aumento, alto aumento | needs review |
+| fine focus, auto focus | enfoque fino, enfoque automático | needs review |
+| objective lens | lente objetivo | needs review |
+| slide (move the slide) | portaobjetos | needs review |
+| field (field of view) | campo | needs review |
+| counting ring | anillo de conteo | needs review |
+| tally | conteo | needs review |
+| time card | tarjeta de tiempo | needs review |
+| sentence starter | inicio de oración | needs review |
+| Biology lessons (lesson link placeholder) | Lecciones de biología | needs review |
+
 ## Atwood Machine lab check (atwood-machine 1.2.0)
 
 The shared Lab check labels are the Gas lab pilot's (Comprobación del laboratorio, Preparar el laboratorio, Comprobar, Muéstrame, Empezar de nuevo, Código de finalización). Readout and button names follow the lab: fuerza neta (NET DRIVING FORCE), tensión de la cuerda, portapesas, Pasar 25 g →, Masas iguales, Soltar las masas, Recorrido completo, Flechas de gravedad y tensión, n/d.

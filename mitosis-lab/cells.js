@@ -40,7 +40,7 @@
     for (let i = K - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
     const spread = Math.min(hw * 0.7, L * 0.95);
     return order.map((slot, j) => {
-      const arm = L * (0.2 + r() * 0.12), angle = r() * Math.PI * 2, reach = nucleus.r * 0.5 * Math.sqrt((j + r()) / K);
+      const arm = L * (0.2 + r() * 0.12), angle = r() * Math.PI * 2, reach = nucleus.r * 0.6 * Math.sqrt((j + 0.5 + r() * 0.5) / K);
       const ca = (j + r() * 0.8) / K * Math.PI * 2;
       return {arm, angle, bend: (r() - 0.5) * arm * 1.4, wave: (r() - 0.5) * arm * 1.2, home: [nucleus.x, nucleus.y], homeR: nucleus.r,
         pro: [nucleus.x + Math.cos(ca) * reach, nucleus.y + Math.sin(ca) * reach],
@@ -54,7 +54,7 @@
     const sister = L * 0.045, rot = (x, y) => [x * Math.cos(c.angle) - y * Math.sin(c.angle), x * Math.sin(c.angle) + y * Math.cos(c.angle)];
     // Prophase: loose, wavy threads that stay inside the old nucleus.
     const pro = () => {
-      const long = c.arm * 0.95, o = rot(0, side * sister * 0.6), p0 = rot(-long, c.bend), p1 = rot(long, c.wave);
+      const long = c.arm * 0.82, o = rot(0, side * sister * 0.5), p0 = rot(-long, c.bend), p1 = rot(long, c.wave);
       const pts = [[c.pro[0] + p0[0] + o[0], c.pro[1] + p0[1] + o[1]], [c.pro[0] + o[0], c.pro[1] + o[1]], [c.pro[0] + p1[0] + o[0], c.pro[1] + p1[1] + o[1]]];
       return pts.map(([x, y]) => {
         const dx = x - c.home[0], dy = y - c.home[1], d = Math.hypot(dx, dy), max = c.homeR * 0.86;
@@ -185,7 +185,7 @@
     // Chromosomes: always the same deep indigo, thick enough to read in a small cell.
     const visible = smooth(0.32, 0.8, t) * (1 - smooth(3.78, 3.92, t));
     if (visible > 0.02) {
-      const width = Math.max(1.6, L * 0.095) * (t <= 1 ? lerp(0.45, 0.72, smooth(0.32, 1, t)) : lerp(0.72, 1, smooth(1, 1.6, t)));
+      const width = Math.max(1.6, L * 0.095) * (t <= 1 ? lerp(0.4, 0.62, smooth(0.32, 1, t)) : lerp(0.72, 1, smooth(1, 1.6, t)));
       ctx.lineCap = "round"; ctx.lineJoin = "round";
       const paths = [];
       list.forEach(c => [-1, 1].forEach(side => paths.push(chromatid(c, side, t, hw, hh, L))));

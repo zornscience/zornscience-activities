@@ -393,7 +393,8 @@
     state.power = power;
     scope.eye.setAttribute("data-power", power);
     if (power === "low") closeSheet(false);
-    updateScope(true);
+    // Start the zoom first; rebuild the panels on the next frame so the transition's first frame stays light.
+    requestAnimationFrame(() => updateScope(true));
   }
   function stopAuto() { if (scope && scope.auto) { cancelAnimationFrame(scope.auto); scope.auto = 0; } }
   function autoFocus() {
@@ -857,7 +858,7 @@
   // ---------- Step 5: check ----------
   // The question's picture is a different cell from the menu icons, so it cannot be matched by eye.
   const QUIZ_CELL = Object.freeze({w: 0.22, h: 0.27, rot: 0.05, tilt: 0.3, nx: 0, ny: 0, nr: 0.56, vacuole: 0, round: 0.2, detail: 987654321, region: "meristem"});
-  const QUIZ_T = Object.freeze({anaphase: 2.5});
+  const QUIZ_T = Object.freeze({anaphase: 2.64});
   function renderCheck(screen) {
     heading(screen, "check");
     const i = state.question, q = words.QUIZ[i], record = state.check[i];
