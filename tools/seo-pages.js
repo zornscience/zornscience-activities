@@ -5,9 +5,18 @@
 // Keys are folder names; "" is the landing page. es: null = English only. sitemap: false = left out of sitemap.xml.
 "use strict";
 module.exports = {
+  "osmosis-lab": {
+    en: "Soak potato cores in sucrose solutions, weigh them, graph percent change in mass and find the isotonic point in this grade 9 Biology lab.",
+    es: "Remoja cilindros de papa en soluciones de sacarosa, pésalos, grafica el cambio porcentual de masa y encuentra el punto isotónico."
+  },
   "population-sampling-lab": {
     en: "Estimate hidden plant and fish populations with quadrats and mark and recapture. Compare random samples, sample sizes and bias in this Biology lab.",
     es: "Estima poblaciones ocultas de plantas y peces con cuadrantes y captura y recaptura. Compara muestras al azar, tamaños y sesgo en este laboratorio."
+  },
+  // Spanish is written in data.js but not proofread yet, so the page is English only here until SPANISH_PUBLISHED.
+  "fruit-fly-genetics-lab": {
+    en: "Breed virtual fruit flies, build Punnett squares and compare predicted ratios with real offspring counts in a free Biology genetics lab.",
+    es: null
   },
   "leaf-disk-lab": {
     en: "Explore photosynthesis with floating spinach leaf disks. Compare light, temperature and bicarbonate in a bilingual Biology lab from ZornScience.",
