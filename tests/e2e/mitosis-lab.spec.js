@@ -296,7 +296,7 @@ test("mitosis: the whole lab in English, with wrong zones, a keyboard tally, dra
   // Every step is done and can be revisited from the tracker.
   const progress = page.getByRole("navigation", {name: en("nav.progress")});
   await expect(progress.getByText("✓")).toHaveCount(5);
-  await progress.getByRole("button", {name: "Microscope, done", exact: true}).click();
+  await progress.getByRole("button", {name: /^Microscope\s?, done$/}).click();
   await expect(title(page)).toHaveText(en("scope.title"));
   await expect(page.getByText(en("scope.allDone"))).toBeVisible();
 });

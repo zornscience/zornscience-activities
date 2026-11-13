@@ -364,9 +364,9 @@
     const es = {};
     Object.keys(STRINGS).forEach(id => { es[STRINGS[id].en] = STRINGS[id].es; });
     i18n.configure({title: STRINGS["app.title"].en, es});
-    // Hidden until the Spanish has been proofread (see FLAGS above).
+    // No language toggle until the Spanish has been proofread (see FLAGS above).
     const toggle = root.querySelector(".zsa-languages");
-    if (toggle && !FLAGS.spanishToggle) toggle.hidden = true;
+    if (toggle && !FLAGS.spanishToggle) toggle.remove();
   }
   root.addEventListener("mitosis-strings", event => event.detail.receive(Object.assign({lang, t: translator(lang)}, api)));
 }());

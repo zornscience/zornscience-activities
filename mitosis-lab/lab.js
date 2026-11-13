@@ -98,11 +98,12 @@
     STEPS.forEach((name, i) => {
       const done = complete(name), current = i === state.step, open = reachable(i);
       const mark = h("span", {class: "zsa-mt-step-mark", "aria-hidden": "true", text: done && !current ? "✓" : String(i + 1)});
-      const label = h("span", {class: "zsa-mt-step-name", text: t("step." + name)});
-      const name = t("step." + STEPS[i]) + ", " + t(current ? "nav.current" : done ? "nav.done" : "nav.notYet");
+      // The status sits inside the name, so screen readers hear "Microscope, done" with no stray space.
+      const status = t(current ? "nav.current" : done ? "nav.done" : "nav.notYet");
+      const label = h("span", {class: "zsa-mt-step-name"}, t("step." + name), h("span", {class: "zsa-sr-only", text: ", " + status}));
       const item = h("li", {class: "zsa-mt-step" + (current ? " is-current" : "") + (done ? " is-done" : "") + (open ? " is-open" : "")});
-      if (open && !current) item.append(h("button", {type: "button", class: "zsa-mt-step-link", "aria-label": name, onclick: () => show(i, true)}, mark, label));
-      else item.append(h("span", {class: "zsa-mt-step-link", "aria-current": current ? "step" : null}, mark, label, h("span", {class: "zsa-sr-only", text: ", " + t(current ? "nav.current" : done ? "nav.done" : "nav.notYet")})));
+      if (open && !current) item.append(h("button", {type: "button", class: "zsa-mt-step-link", onclick: () => show(i, true)}, mark, label));
+      else item.append(h("span", {class: "zsa-mt-step-link", "aria-current": current ? "step" : null}, mark, label));
       list.append(item);
     });
     nav.replaceChildren(list);
