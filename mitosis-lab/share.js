@@ -13,7 +13,10 @@
   url = i18n ? i18n.url(url) : url;
   var title = t("Mitosis Detective: Inside an Onion Root Tip") + " | ZornScience";
   var description = t("Find dividing cells in an onion root tip, tally the phases of mitosis and turn your counts into time.");
-  el("url").value = url;
+  // The link is shown as a link, not a text box: this lab has no text boxes at all.
+  var link = root.querySelector("#zsa-mt-share-link");
+  link.href = url;
+  link.textContent = url;
   el("email").href = "mailto:?subject=" + encodeURIComponent(title) + "&body=" + encodeURIComponent(description + "\n\n" + url);
   function close(restoreFocus) {
     panel.hidden = true;
@@ -40,8 +43,12 @@
       await navigator.clipboard.writeText(url);
       el("status").textContent = t("Link copied.");
     } catch (error) {
-      el("url").focus();
-      el("url").select();
+      var range = document.createRange();
+      range.selectNodeContents(link);
+      var selection = getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      link.focus();
       el("status").textContent = t("Link selected. Press Ctrl+C, or Command+C on a Mac, to copy it.");
     }
   });

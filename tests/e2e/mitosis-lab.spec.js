@@ -602,7 +602,14 @@ test("mitosis: copying falls back to selected text, and the page has no typing f
   await next(page).click();
   await finishCheck(page);
   await next(page).click();
-  expect(await page.locator("textarea, [contenteditable]").count()).toBe(0);
+  expect(await page.locator("textarea, [contenteditable], input[type=text], input:not([type])").count()).toBe(0);
+  // Share shows the address as a link, and its copy fallback selects that link's text.
+  await page.getByRole("button", {name: "Share activity"}).click();
+  await expect(page.locator("#zsa-mt-share-link")).toHaveAttribute("href", "https://activities.zornscience.org/mitosis-lab/");
+  await page.evaluate(() => Object.defineProperty(navigator, "clipboard", {configurable: true, value: {writeText: () => Promise.reject(new Error("blocked"))}}));
+  await page.getByRole("button", {name: "Copy link"}).click();
+  expect(await page.evaluate(() => getSelection().toString())).toBe("https://activities.zornscience.org/mitosis-lab/");
+  await page.keyboard.press("Escape");
   await page.evaluate(() => Object.defineProperty(navigator, "clipboard", {configurable: true, value: {writeText: () => Promise.reject(new Error("blocked"))}}));
   await page.getByRole("button", {name: en("copy.button")}).click();
   await expect(page.locator("#zsa-mt-copy-status")).toHaveText(en("copy.selected"));
