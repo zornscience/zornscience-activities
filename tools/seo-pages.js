@@ -13,6 +13,11 @@ module.exports = {
     en: "Estimate hidden plant and fish populations with quadrats and mark and recapture. Compare random samples, sample sizes and bias in this Biology lab.",
     es: "Estima poblaciones ocultas de plantas y peces con cuadrantes y captura y recaptura. Compara muestras al azar, tamaños y sesgo en este laboratorio."
   },
+  // Spanish is written in data.js but not proofread yet, so the page is English only here until SPANISH_PUBLISHED.
+  "fruit-fly-genetics-lab": {
+    en: "Breed virtual fruit flies, build Punnett squares and compare predicted ratios with real offspring counts in a free Biology genetics lab.",
+    es: null
+  },
   "leaf-disk-lab": {
     en: "Explore photosynthesis with floating spinach leaf disks. Compare light, temperature and bicarbonate in a bilingual Biology lab from ZornScience.",
     es: "Explora la fotosíntesis con discos de espinaca que flotan. Compara luz, temperatura y bicarbonato en un laboratorio bilingüe de ZornScience."
