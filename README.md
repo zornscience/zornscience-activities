@@ -85,6 +85,7 @@ free-energy-lab/          Free Energy Lab, v1.0.4 (entropy, Gibbs free energy, t
 chemical-bonding-lab/      Chemical Bonding Lab, v1.1.4 (four unknown solids tested for appearance, conductivity, melting, solubility and malleability; English and Mexican Spanish)
 metals-lab/                Metals, Nonmetals & Metalloids Lab, v1.1.4 (classify three unknown solids from physical and chemical evidence; English and Mexican Spanish)
 iodine-clock-lab/          Iodine Clock Lab, v1.1.4 (concentration and temperature trials with a timed blue endpoint and a 20-second challenge; English and Mexican Spanish)
+osmosis-lab/               Osmosis: Potato Cores in Sucrose Solutions, v1.0.0 (grade 9 Biology, seeded masses and noise, blotting, three trials, graphing to the isotonic point, membrane zoom and tab-separated data copy; Spanish written, toggle off until proofread)
 population-sampling-lab/   Population Sampling Lab, v1.0.0 (grade 9 Biology, seeded quadrats, mark and recapture, sampling bias and worksheet tables; English and Mexican Spanish)
 leaf-disk-lab/             Leaf Disk Lab, v1.1.0 (grade 9 Biology, floating spinach disks, guided photosynthesis investigations and graphs; English and Mexican Spanish)
 net-ionic-lab/             Net Ionic Reactions Lab, v1.1.3 (ten reagent pairs: precipitates, metal displacement and no visible reaction; English and Mexican Spanish)

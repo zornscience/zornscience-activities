@@ -3512,6 +3512,32 @@ The shared Lab check labels are the Gas lab pilot's (Comprobación del laborator
 | fall freely | caer libremente | Free-fall distractor. |
 | What does the acceleration read now? | ¿Qué indica ahora la aceleración? | Same verb (indicar) as the Gas lab check. |
 
+## Osmosis Lab
+
+Mexican Spanish, tú, decimal points and unchanged units. All strings are in osmosis-lab/data.js. Not yet proofread: the page has no language toggle until it is (SPANISH_READY in data.js).
+
+| English | Mexican Spanish | Review |
+| --- | --- | --- |
+| Osmosis: Potato Cores in Sucrose Solutions | Ósmosis: cilindros de papa en soluciones de sacarosa | needs review |
+| potato core | cilindro de papa | needs review |
+| sucrose | sacarosa | |
+| osmosis | ósmosis | |
+| isotonic / hypotonic / hypertonic | isotónica / hipotónica / hipertónica (agrees with solución) | |
+| isotonic point | punto isotónico | |
+| cell membrane | membrana celular | |
+| blot dry | secar (con la toalla de papel) | needs review |
+| paper towel | toalla de papel | |
+| balance | balanza | |
+| beaker | vaso de precipitados (vaso for short) | |
+| starting mass / final mass | masa inicial / masa final | |
+| percent change | cambio porcentual | |
+| best-fit line | línea de mejor ajuste | |
+| tray | charola | needs review |
+| raisin / pickle / brine | pasa / pepinillo / salmuera | |
+| Fast-forward 24 hours | Adelantar 24 horas | needs review |
+| Cell transport (landing page topic) | Transporte celular | needs review |
+| Biology lessons (placeholder lesson link) | Lecciones de Biología | needs review |
+
 ## Simple Pendulum lab check (pendulum-lab 1.3.0)
 
 The shared Lab check labels are the Gas lab pilot's. Readout and control names follow the lab: periodo del modelo (MODEL PERIOD), periodo para ángulos pequeños (SMALL-ANGLE PERIOD), rapidez de la esfera (BOB SPEED), ángulo actual, ángulo de liberación, gravedad, Luna, Avanzar (the Step +0.05 s button), energía total, la parte más baja, puntos de retorno, control deslizante. KE and PE are written EC and EP.
