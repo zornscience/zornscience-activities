@@ -61,7 +61,8 @@ update that check or load it), run `node tools/build-seo.js`, and confirm the Sp
 ## Links
 
 The back link and About section point to the Biology course page (`/science/biology/`) until the enzymes lesson
-address is confirmed. Update `bio-course` in `shared/zsa-about.js` and the back link in index.html together.
+address is confirmed. It uses the shared `bio-lessons` entry in `shared/zsa-about.js`; give it its own lesson key
+and update the back link in index.html together.
 
 ## Changelog
 

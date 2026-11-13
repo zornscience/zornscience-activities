@@ -42,9 +42,9 @@ for (const slug of slugs) {
       await page.keyboard.press('Escape');
       await expect(instructions).toBeFocused();
       await share.click();
-      if (slug === 'population-sampling-lab' || slug === 'enzyme-lab') {
+      if (slug === 'population-sampling-lab' || slug === 'osmosis-lab' || slug === 'enzyme-lab') {
         // These labs forbid text boxes, including read-only Share inputs.
-        const link = page.locator(slug === 'enzyme-lab' ? '#zsa-ez-share-link' : '#zsa-ps-share-link');
+        const link = page.locator('a[id$="-share-link"]');
         await expect(page.locator('input[type=text],textarea')).toHaveCount(0);
         await expect(link).toBeVisible();
         await expect(link).toHaveAttribute('href', 'https://activities.zornscience.org/' + slug + '/');

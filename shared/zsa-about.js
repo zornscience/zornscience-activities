@@ -16,9 +16,9 @@
   };
   // key: [course, path below the course, English title, Spanish title]
   var LESSONS = {
+    // Placeholder until the osmosis lesson's address is confirmed: the Biology course page.
+    "bio-lessons": ["bio", "", "Biology lessons", "Lecciones de Biología (needs review)"],
     "bio-population-sampling": ["bio", "unit-2-populations/population-sampling/", "Population Sampling", "Muestreo de poblaciones (needs review)"],
-    // The Enzyme Activity Lab links to the Biology course page until its enzymes lesson address is confirmed.
-    "bio-course": ["bio", "", "Biology course", "Curso de Biología (needs review)"],
     "bio-photosynthesis": ["bio", "unit-8-photosynthesis-and-respiration/rates-of-photosynthesis/", "Rates of Photosynthesis", "Tasas de fotosíntesis (needs review)"],
     "act-prep": ["students", "act/", "ACT Prep", "Preparación para el ACT"],
     "ap-unit-1": ["ap", "unit-1-atomic-structure-and-properties/", "Unit 1: Atomic Structure and Properties", "Unidad 1: Estructura atómica y propiedades"],
@@ -138,10 +138,13 @@
   // Activity folder: intro (one or two short sentences) and its lessons, most specific first. On pages whose
   // root has no side padding, wrap names the class that lines the section up with the page's footer.
   var ACTIVITIES = {
+    "osmosis-lab": {lessons: ["bio-lessons"],
+      en: "Soak potato cores in six sucrose solutions, weigh them before and after, graph the percent change in mass and find where water stops moving in or out.",
+      es: "Remoja cilindros de papa en seis soluciones de sacarosa, pésalos antes y después, grafica el cambio porcentual de masa y encuentra dónde el agua deja de entrar o salir."},
     "population-sampling-lab": {lessons: ["bio-population-sampling"],
       en: "Estimate hidden meadow and pond populations with quadrats and mark and recapture. Compare random placement, sample size, repeated trials and biased sampling.",
       es: "Estima las poblaciones ocultas de un prado y un estanque con cuadrantes y captura y recaptura. Compara la colocación al azar, el tamaño de muestra, los ensayos repetidos y el muestreo sesgado."},
-    "enzyme-lab": {lessons: ["bio-course"],
+    "enzyme-lab": {lessons: ["bio-lessons"],
       en: "Find out what makes catalase work best. Set up a fair test of temperature or pH, measure the foam, graph an optimum and zoom in on the active site.",
       es: "Descubre qué hace que la catalasa funcione mejor. Prepara una prueba justa de temperatura o pH, mide la espuma, grafica el óptimo y observa el sitio activo."},
     "leaf-disk-lab": {lessons: ["bio-photosynthesis"],

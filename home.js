@@ -19,6 +19,9 @@
   "Explore photosynthesis and respiration with evidence from a virtual experiment.": "Explora la fotosíntesis y la respiración con evidencia de un experimento virtual.",
   "Float spinach leaf disks to compare light color, brightness, temperature and bicarbonate. Use your data to explain the rate of photosynthesis.": "Haz flotar discos de hoja de espinaca para comparar el color y la intensidad de la luz, la temperatura y el bicarbonato. Usa tus datos para explicar la tasa de fotosíntesis.",
   "Population Sampling Lab": "Laboratorio de muestreo de poblaciones",
+  "Osmosis: Potato Cores in Sucrose Solutions": "Ósmosis: cilindros de papa en soluciones de sacarosa",
+  "Cell transport": "Transporte celular",
+  "Weigh potato cores before and after a day in six sugar solutions. Graph the percent change in mass to find where water stops moving.": "Pesa cilindros de papa antes y después de un día en seis soluciones de azúcar. Grafica el cambio porcentual de masa para encontrar dónde el agua deja de moverse.",
   "Populations": "Poblaciones",
   "Estimate hidden plant and fish populations with quadrats and mark and recapture. Compare sample sizes, random placement and sampling bias.": "Estima poblaciones ocultas de plantas y peces con cuadrantes y captura y recaptura. Compara tamaños de muestra, colocación al azar y sesgo de muestreo.",
   // Header and navigation
@@ -256,14 +259,21 @@
   // configure() rewrites every link as an absolute URL. The landing page keeps its links exactly as written, adding
   // only lang=es in Spanish, so English links are unchanged.
   var links = Array.from(root.querySelectorAll("a[href]")).map(function (a) { return [a, a.getAttribute("href")]; });
+  // Activities whose Spanish is written but not yet proofread open in English, and their Spanish card says so.
+  // Remove an activity from this list when its SPANISH_READY flag is turned on.
+  var pendingSpanish = ["osmosis-lab/"];
   i18n.configure(copy);
   links.forEach(function (pair) {
     var href = pair[1], local = !/^(?:[a-z]+:|\/\/|#)/i.test(href);
-    pair[0].setAttribute("href", local && i18n.lang === "es" ? href + (href.indexOf("?") >= 0 ? "&" : "?") + "lang=es" : href);
+    pair[0].setAttribute("href", local && i18n.lang === "es" && pendingSpanish.indexOf(href) < 0 ? href + (href.indexOf("?") >= 0 ? "&" : "?") + "lang=es" : href);
   });
   if (i18n.lang !== "es") return;
   // The ACT activities have no Spanish version: their names stay in English, followed by " (en inglés)".
   root.querySelectorAll('.zsa-home-card h3 a[href^="act/"], .zsa-home-card h3 a[href^="act-question-generator/"]').forEach(function (a) {
     a.parentNode.appendChild(document.createTextNode(" (en inglés)"));
+  });
+  pendingSpanish.forEach(function (href) {
+    var a = root.querySelector('.zsa-home-card h3 a[href="' + href + '"]');
+    if (a) a.parentNode.appendChild(document.createTextNode(" (en inglés)"));
   });
 }());
