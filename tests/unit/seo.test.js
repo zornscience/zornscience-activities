@@ -34,7 +34,8 @@ test("descriptions are 110 to 160 characters, unique, and Spanish exactly where 
   var seen = {};
   Object.keys(pages).forEach(function (slug) {
     var p = pages[slug];
-    var spanish = /zsa-i18n\.js/.test(page(slug));
+    // A page whose Spanish is written but not yet proofread (spanishPending) stays English only in search results.
+    var spanish = /zsa-i18n\.js/.test(page(slug)) && !p.spanishPending;
     assert.equal(!!p.es, spanish, slug + (spanish ? " has Spanish, so it needs es" : " is English only, so es is null"));
     ["en", "es"].forEach(function (lang) {
       if (!p[lang]) return;

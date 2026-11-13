@@ -3048,12 +3048,14 @@ test("landing page opens in Mexican Spanish with Spanish activity names and link
     await expect(link, slug).toHaveCount(1);
     await expect(link, slug).toHaveAttribute("href", slug + "/?lang=es");
   }
-  // The ACT activities and the teacher code checker have no Spanish version.
-  for (const name of ["ACT Practice", "ACT Question Generator"]) {
+  // The ACT activities and the teacher code checker have no Spanish version. Mitosis Detective's Spanish awaits
+  // proofreading, so it is listed in English and its card opens the English page.
+  for (const name of ["ACT Practice", "ACT Question Generator", "Mitosis Detective: Inside an Onion Root Tip"]) {
     await expect(page.locator(".zsa-home-card h3").filter({has:page.getByRole("link", {name, exact:true})})).toHaveText(name + " (en inglés)");
   }
+  await expect(page.getByRole("link", {name:"Mitosis Detective: Inside an Onion Root Tip", exact:true})).toHaveAttribute("href", "mitosis-lab/");
   await expect(page.getByRole("link", {name:"Revisar códigos de finalización (en inglés)", exact:true})).toBeVisible();
-  const text = (await pageText(page, null)).replace(/ACT Practice|ACT Question Generator/g, "");
+  const text = (await pageText(page, null)).replace(/ACT Practice|ACT Question Generator|Mitosis Detective: Inside an Onion Root Tip/g, "");
   expect(text).not.toMatch(english);
   expect(text).not.toMatch(/\b(?:Atoms|Reactions|Physics|Test prep|Lab tools|Jump|Explore|Build|Choose|Watch|Learn|Simulation|Virtual lab|Timed quiz|Untimed|questions|Your own data|teachers|Activities|activity|lesson|login|device)\b/i);
   // The gas laws card goes to the Spanish version.

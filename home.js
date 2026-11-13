@@ -13,7 +13,9 @@
   "Biology labs": "Laboratorios de biología",
   "Photosynthesis": "Fotosíntesis",
   "Leaf Disk Lab": "Laboratorio de discos de hoja",
-  "Explore photosynthesis and respiration with evidence from a virtual experiment.": "Explora la fotosíntesis y la respiración con evidencia de un experimento virtual.",
+  "Explore photosynthesis, populations and cell division with evidence from virtual experiments.": "Explora la fotosíntesis, las poblaciones y la división celular con evidencia de experimentos virtuales.",
+  "Cell Division": "División celular",
+  "Cut a sample from an onion root, focus a microscope and find cells in every phase of mitosis. Tally three fields and turn your counts into time.": "Corta una muestra de una raíz de cebolla, enfoca un microscopio y encuentra células en cada fase de la mitosis. Cuenta tres campos y convierte tus conteos en tiempo.",
   "Float spinach leaf disks to compare light color, brightness, temperature and bicarbonate. Use your data to explain the rate of photosynthesis.": "Haz flotar discos de hoja de espinaca para comparar el color y la intensidad de la luz, la temperatura y el bicarbonato. Usa tus datos para explicar la tasa de fotosíntesis.",
   "Population Sampling Lab": "Laboratorio de muestreo de poblaciones",
   "Populations": "Poblaciones",
@@ -254,13 +256,17 @@
   // only lang=es in Spanish, so English links are unchanged.
   var links = Array.from(root.querySelectorAll("a[href]")).map(function (a) { return [a, a.getAttribute("href")]; });
   i18n.configure(copy);
+  // Mitosis Detective's Spanish is written but not yet proofread (mitosis-lab/data.js, FLAGS.spanishToggle), so the
+  // Spanish landing page lists it in English, like the ACT activities. Remove it from SPANISH_PENDING to publish.
+  var SPANISH_PENDING = ["mitosis-lab/"];
   links.forEach(function (pair) {
     var href = pair[1], local = !/^(?:[a-z]+:|\/\/|#)/i.test(href);
-    pair[0].setAttribute("href", local && i18n.lang === "es" ? href + (href.indexOf("?") >= 0 ? "&" : "?") + "lang=es" : href);
+    var spanish = local && i18n.lang === "es" && SPANISH_PENDING.indexOf(href) < 0;
+    pair[0].setAttribute("href", spanish ? href + (href.indexOf("?") >= 0 ? "&" : "?") + "lang=es" : href);
   });
   if (i18n.lang !== "es") return;
   // The ACT activities have no Spanish version: their names stay in English, followed by " (en inglés)".
-  root.querySelectorAll('.zsa-home-card h3 a[href^="act/"], .zsa-home-card h3 a[href^="act-question-generator/"]').forEach(function (a) {
+  root.querySelectorAll('.zsa-home-card h3 a[href^="act/"], .zsa-home-card h3 a[href^="act-question-generator/"], .zsa-home-card h3 a[href="mitosis-lab/"]').forEach(function (a) {
     a.parentNode.appendChild(document.createTextNode(" (en inglés)"));
   });
 }());
