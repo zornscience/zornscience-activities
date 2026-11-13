@@ -117,7 +117,7 @@
 .zsa-mt-scope {display: grid; grid-template-columns: minmax(0, 560px) minmax(300px, 1fr); gap: 28px; align-items: start;}
 .zsa-mt-field-label {font-size: 17px; color: var(--mt-on-dark-muted); text-align: center;}
 .zsa-mt-field-label strong {color: var(--mt-on-dark);}
-.zsa-mt-eye-wrap {padding: 12px; border-radius: 50%; margin: 0 auto 18px; max-width: 560px;
+.zsa-mt-eye-wrap {padding: 12px; border-radius: 50%; margin: 0 auto 18px; max-width: min(560px, max(380px, calc(100vh - 300px)));
   background: conic-gradient(from 20deg, #555a7a, #c9cde0, #6a6f8f, #e8eaf3, #585d7c, #b7bbd1, #4f5474, #d6d9e6, #555a7a);
   box-shadow: 0 14px 40px rgba(0, 0, 0, .55), 0 0 90px rgba(255, 190, 225, .16);}
 .zsa-mt-eyepiece {position: relative; aspect-ratio: 1; border-radius: 50%; overflow: hidden; background: #fdf4f8; isolation: isolate; box-shadow: inset 0 0 0 3px #1b1e3a; --zsa-mt-soft: 1; --zsa-mt-heavy: 1;}
@@ -176,7 +176,7 @@
 .zsa-mt-side {display: flex; flex-direction: column; gap: 16px; min-width: 0;}
 .zsa-mt-side > * {background: var(--mt-night-2); border: 1px solid var(--mt-line); border-radius: 18px; padding: 16px 18px; margin: 0;}
 .zsa-mt-small-head {font-size: 19px !important; margin: 0 0 10px !important;}
-.zsa-mt-checklist {list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 14px;}
+.zsa-mt-checklist {list-style: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 14px; margin: 14px 0 0; padding: 14px 18px; background: var(--mt-night-2); border: 1px solid var(--mt-line); border-radius: 18px;}
 .zsa-mt-check-item {display: flex; align-items: center; gap: 10px; font-size: 17px; color: var(--mt-on-dark-muted);}
 .zsa-mt-check-mark {flex: 0 0 28px; height: 28px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; border: 2px solid var(--mt-line); font-weight: 700; font-size: 15px;}
 .zsa-mt-check-item.is-done {color: var(--mt-on-dark);}
@@ -200,8 +200,11 @@
 .zsa-mt .zsa-mt-phase:hover:not([aria-disabled="true"]) {border-color: var(--mt-gold);}
 .zsa-mt .zsa-mt-phase:active:not([aria-disabled="true"]) {transform: scale(.98);}
 .zsa-mt-phase .zsa-mt-icon {flex: 0 0 auto; border-radius: 8px; background: #fdf4f8;}
-.zsa-mt-phase-name {flex: 1 1 auto; min-width: 0; font-weight: 600; overflow-wrap: anywhere;}
+.zsa-mt-phase-name {flex: 1 1 auto; min-width: 0; font-weight: 600;}
 .zsa-mt-phase-mark {flex: 0 0 auto; margin-left: auto; padding-left: 4px; font-weight: 800; font-size: 20px;}
+/* In phase buttons the mark sits in the corner, so a name like Metaphase never breaks. */
+.zsa-mt .zsa-mt-phase {position: relative; padding-right: 22px;}
+.zsa-mt-phase .zsa-mt-phase-mark {position: absolute; top: 3px; right: 7px; padding: 0; font-size: 17px; line-height: 1;}
 .zsa-mt-phase-mark:empty {display: none;}
 .zsa-mt .zsa-mt-phase.is-missed {opacity: .62; cursor: default;}
 .zsa-mt .zsa-mt-phase.is-missed .zsa-mt-phase-mark {color: #ffb3d4;}
@@ -381,7 +384,7 @@
   .zsa-mt-message {order: 3; margin: 0;}
   .zsa-mt-goals {order: 4;}
   .zsa-mt-controls {order: 5; margin-top: 0;}
-  .zsa-mt-checklist {order: 6;}
+  .zsa-mt-checklist {order: 6; margin: 0;}
   .zsa-mt-tally {order: 7;}
   .zsa-mt-inspect {order: 8;}
   .zsa-mt-guide-watch {grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center;}

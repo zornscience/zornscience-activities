@@ -87,10 +87,11 @@
     ({predict: renderPredict, sample: renderSample, scope: renderScope, analyze: renderAnalyze, check: renderCheck, copy: renderCopy})[name](screen);
     renderProgress(); updateAction();
     if (moveFocus) {
+      // Line the new step up under the progress tracker, so the whole step starts in view.
       const title = $("screen-title");
       if (title) title.focus({preventScroll: true});
       const top = $("bar").getBoundingClientRect().top + window.scrollY - 8;
-      if (window.scrollY > top) window.scrollTo({top, behavior: still() ? "auto" : "smooth"});
+      window.scrollTo({top, behavior: still() ? "auto" : "smooth"});
     }
   }
   function renderProgress() {
@@ -376,10 +377,11 @@
     const tally = h("div", {class: "zsa-mt-tally"});
     const inspector = h("section", {class: "zsa-mt-inspect", id: "zsa-mt-inspect", "aria-labelledby": "zsa-mt-inspect-title"});
     const fieldLabel = h("p", {class: "zsa-mt-field-label"}, h("strong", {text: t("scope.field", {n: state.field + 1})}), " · ", h("span", {text: t("scope.ring")}));
+    // Laptop: the cell panel sits right beside the eyepiece, so choosing a phase never needs scrolling.
     screen.append(h("div", {class: "zsa-mt-scope"},
-      h("div", {class: "zsa-mt-bench"}, fieldLabel, h("div", {class: "zsa-mt-eye-wrap"}, eye), message,
+      h("div", {class: "zsa-mt-bench"}, fieldLabel, h("div", {class: "zsa-mt-eye-wrap"}, eye), message, checklist,
         h("div", {class: "zsa-mt-controls"}, powers, focusBox)),
-      h("div", {class: "zsa-mt-side"}, checklist, goals, inspector, tally)));
+      h("div", {class: "zsa-mt-side"}, inspector, goals, tally)));
     scope = {eye, optics, low, high, reticle, marks, grid, slider, focusState, message, steps: stepItems, goals, tally, inspector, fieldLabel, size: 0, auto: 0, signature: ""};
     cleanup.push(() => { stopAuto(); closeSheet(false); scope = null; });
     requestAnimationFrame(() => {
@@ -565,6 +567,10 @@
     if (!wide.matches) { scope.inspector.classList.add("is-open"); root.classList.add("zsa-mt-sheet-open"); }
     const title = $("inspect-title");
     if (title) title.focus({preventScroll: wide.matches});
+    if (wide.matches) {
+      const box = scope.inspector.getBoundingClientRect(), bar = $("action").getBoundingClientRect();
+      if (box.top < 0 || box.bottom > bar.top) scope.inspector.scrollIntoView({block: "nearest", behavior: still() ? "auto" : "smooth"});
+    }
   }
   function renderInspector(id) {
     if (!scope) return;

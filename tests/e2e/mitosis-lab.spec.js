@@ -361,9 +361,19 @@ test("mitosis: laptop layout at 1366 by 768 on every step", async ({page}) => {
   await highPower(page);
   await page.locator("[data-cell]").first().click();
   await layoutCheck(page, "microscope");
-  // On a laptop the eyepiece and the cell panel sit side by side.
+  // On a laptop the eyepiece and the cell panel sit side by side, and the whole eyepiece, every choice and the
+  // feedback after a wrong pick are on screen without scrolling (a Chromebook is 1366 by 768).
   const eye = await page.getByRole("img", {name: /^Microscope view/}).boundingBox(), panel = await page.locator("#zsa-mt-inspect").boundingBox();
   expect(panel.x).toBeGreaterThan(eye.x + eye.width);
+  const first = sample.fields[0].countable[0], firstPhase = sample.fields[0].cells[first].phase;
+  await page.locator('[data-cell="' + first + '"]').click();
+  await page.locator('#zsa-mt-inspect [data-phase="' + model.PHASES.find(p => p !== firstPhase) + '"]').click();
+  const bar = await page.locator("#zsa-mt-action").boundingBox();
+  for (const p of model.PHASES) await expect(page.locator('#zsa-mt-inspect [data-phase="' + p + '"]')).toBeInViewport({ratio: 1});
+  expect((await page.locator("#zsa-mt-feedback").boundingBox()).y + (await page.locator("#zsa-mt-feedback").boundingBox()).height).toBeLessThanOrEqual(bar.y);
+  const eyeNow = await page.getByRole("img", {name: /^Microscope view/}).boundingBox();
+  expect(eyeNow.y).toBeGreaterThanOrEqual(0);
+  expect(eyeNow.y + eyeNow.height).toBeLessThanOrEqual(bar.y);
   await finishScopeFromHere(page);
   await layoutCheck(page, "analyze");
   await finishAnalysis(page);
