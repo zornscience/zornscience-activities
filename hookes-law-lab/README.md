@@ -1,6 +1,6 @@
 # Hooke’s Law & Harmonic Motion
 
-A browser-local simulation with an illustrated retort stand, extension spring, slotted brass masses, calibrated ruler and timer. No student data entry or storage.
+A browser-local simulation with an illustrated retort stand, extension spring, slotted brass masses, calibrated ruler and timer. No student data entry or storage. An optional Lab check gives a completion code (see below).
 
 Three ideal spring constants (10, 20, 30 N/m); 50 g hanger plus 0-500 g slotted masses; ±5 cm displacement. Models mÿ + bẏ + ky = 0 around mg/k using 1 ms velocity Verlet substeps and symmetric damping. Time speed changes simulation time, not physics. Mass, spring or damping changes settle the setup and reset the trace.
 
@@ -8,7 +8,22 @@ Use the controls or drag the hanger. Keyboard: focus hanger, arrow keys displace
 
 Version 1.2.0. Shared branding and top controls adapted from Metals Lab.
 
-Version: 1.2.3
+Version: 1.3.0
+
+## Lab check (1.3.0)
+
+Open **Lab check** below the workspace and above "Physics behind the bench" for five questions a student answers while using the lab: A stiffer spring, Double the weight, Mass and period, A bigger pull, and Net force on the mass. It is closed by default and outside the controls. Link straight to it with `?check=1`; it also works with `?lang=es` and `embed=1` (for example `?check=1&lang=es&embed=1`). The question content is built only when the section opens. The Investigate menu, both graphs and the Show spring constant box are unchanged.
+
+Each question has **Set up the lab**. It sets the Spring menu, the Slotted masses slider, the Release displacement slider and the Damping menu to the question's starting state, sets Time speed to 1×, sets Show forces as the question needs (off for all five), unchecks and hides Show spring constant, then runs the lab's own `configure()` and `amp()`, so the readouts, graph and status reset exactly as a control change does, with the mass at rest at equilibrium. Setup never makes the question's change or presses Pull & release. Previous and Next move freely. A wrong answer shows that choice's feedback and the student tries again. After two wrong tries, Show me marks the right choice and shows the explanation, and the question counts as missed. A right answer shows the explanation. Start over clears every answer. Choices are shuffled each time a question is shown.
+
+When all five are done, the section shows the score in words ("4 of 5 right on the first try.") and an `HLC` completion code, for example `HLC-0378-SG02-2F0S-AGV` (4 of 5, one Show me). It is registry id 10, setting `Lab check`, slug `hookes-law-lab`, in `../shared/zsa-codes.js`; the teacher checker shows the score and a 0 or 1 for each question. Nothing is stored or sent: answers live in memory, and the code is the record.
+
+Files: `lab.js` answers a `zsa-hl:request-lab` event on the activity root with `setup({k, added, amplitude, damping, forces})` (k is the Spring option value, added the slotted masses in grams, amplitude in cm) and `format` (`fixed2` for the extension in cm, `fixed3` for periods and forces), the formatters its readouts now use. `data.js` holds the question data and every English sentence with its Mexican Spanish. `labcheck.js` fills every number from the lab's own formulas (g = 9.81 m/s², a 50 g hanger, extension mg/k, ideal period 2π√(m/k), spring force mg + ky, net force ky toward equilibrium with no damping) and those formatters, so the page source holds no answer. It then calls the shared runner (`../shared/zsa-labcheck.js`, `../shared/zsa-labcheck.css`) with `activity: "HLC"`.
+
+Decisions: question 5's setup gives no release displacement, so it keeps the lab's default of 4.0 cm; the question never releases. Question 3's title, "Mass and period", is also an Investigate menu option, so its Spanish is the menu's existing "Masa y periodo". The answers to questions 3 and 4 are the ideal period; the browser tests release at 1× and read the lab's measured period (from successive peaks) to confirm it shows the same value. Every value matched the brief.
+
+Rounding note (not changed here): the lab rounds an extension of 14.715 cm to "14.71 cm" (`toFixed(2)` on a binary value just below 14.715) but shows the same extension as "0.1472 m". Question 2 uses the cm readout, as the brief says.
+
 
 Version 1.2.3 improves keyboard and screen reader access. Section headings are now level 2 (they jumped from the page's heading 1 to level 3), with the same look. The footer text is darker to reach 4.5:1 contrast. Every focusable element, including summaries, text areas and custom controls, now shows the same visible focus ring (`shared/zsa-lab-a11y.css`), a blue ring with a white gap that reads on light and dark panels and in high contrast mode. `tests/e2e/labs-a11y.spec.js` now checks this lab in English and Mexican Spanish with axe-core, the Tab order, a visible focus indicator on every stop, names and states of custom controls, and text alternatives for drawings. The science, scoring and any completion code are unchanged.
 

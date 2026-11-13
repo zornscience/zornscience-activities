@@ -11,7 +11,7 @@ var {loadData} = require("../support/load-data");
 var ROOT = path.join(__dirname, "..", "..");
 var FAR = 8191; // a "today" after every encodable day
 // Payload characters per activity: the code is the prefix, the payload and 2 check characters in groups of 4.
-var LENGTH = {ICT: 12, IFB: 12, GAS: 11, PTR: 11, LVB: 16, LVA: 16, GLC: 13, ALC: 13};
+var LENGTH = {ICT: 12, IFB: 12, GAS: 11, PTR: 11, LVB: 16, LVA: 16, GLC: 13, ALC: 13, PLC: 13, HLC: 13};
 var RETIRED = ["ionic-formula-builder"];
 var SYMBOL = "[0-9A-HJKMNP-TV-Z]";
 function shape(spec) {
@@ -100,7 +100,7 @@ test("the registry matches the activities and their round summaries", function (
   // The ids and prefixes already in use never change.
   assert.deepEqual(codes.ACTIVITIES.map(function (a) { return [a.id, a.prefix, a.slug]; }), [
     [1, "ICT", "ion-charge-trainer"], [2, "IFB", "ionic-formula-builder"], [3, "GAS", "gas-lab"], [4, "PTR", "periodic-trends"],
-    [5, "LVB", "lewis-vsepr"], [6, "LVA", "lewis-vsepr"], [7, "GLC", "gas-lab"], [8, "ALC", "atwood-machine"]
+    [5, "LVB", "lewis-vsepr"], [6, "LVA", "lewis-vsepr"], [7, "GLC", "gas-lab"], [8, "ALC", "atwood-machine"], [9, "PLC", "pendulum-lab"], [10, "HLC", "hookes-law-lab"]
   ]);
 });
 
@@ -150,7 +150,7 @@ test("the example codes in the docs check as valid", function () {
       prefixes.add(d.activity.prefix);
     });
   });
-  assert.deepEqual(Array.from(prefixes).sort(), ["ALC", "GAS", "ICT", "IFB", "LVA", "LVB", "PTR"]);
+  assert.deepEqual(Array.from(prefixes).sort(), ["ALC", "GAS", "HLC", "ICT", "IFB", "LVA", "LVB", "PLC", "PTR"]);
 });
 
 // The new activities' codes: the fields a full round gives, read back exactly; the setting of the Lewis builder.
@@ -341,7 +341,7 @@ test("future dates, unknown activities and a mismatched prefix are flagged", fun
   assert.equal(future.status, "future", "made tomorrow");
   assert.equal(future.items, 10, "a future code still shows its fields");
   // A code from an activity this checker does not know (a newer site, say) is well formed but unknown.
-  var other = {id: 9, prefix: "ZZQ", slug: "not-here", name: "Not here", maxItems: 6, stats: [["0", "One"]], totals: [["0"]], items: [0]};
+  var other = {id: 31, prefix: "ZZQ", slug: "not-here", name: "Not here", maxItems: 6, stats: [["0", "One"]], totals: [["0"]], items: [0]};
   var unknown = codes.encode({version: "1.0.0", day: 10, items: 6, totals: {"0": 6}, results: {"0": 3}, show: 0, hints: 0}, other);
   assert.match(unknown, /^ZZQ-/);
   assert.equal(codes.decode(unknown, FAR).status, "unknown");

@@ -86,7 +86,7 @@ To publish the Spanish after proofreading:
 
 1. Set `spanishReady: true` in `data.js`.
 2. Add a Spanish description in `tools/seo-pages.js` and run `node tools/build-seo.js`.
-3. Remove the "(en inglés)" lines for this lab in `home.js`.
+3. Remove `"yeast-fermentation-lab/"` from `pendingSpanish` in `home.js`.
 4. Add `"yeast-fermentation-lab"` to the `labs` list in `tests/e2e/i18n.spec.js` and flip the Spanish assertions in
    `tests/e2e/yeast-fermentation-lab.spec.js` and `tests/unit/yeast-fermentation-lab.test.js`.
 5. Bump the version.

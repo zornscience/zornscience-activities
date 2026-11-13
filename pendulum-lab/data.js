@@ -6,7 +6,6 @@
   if (!root) return;
   var i18n;
   root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail:{receive:function (api) { i18n = api; }}}));
-  if (!i18n) return;
   var copy = {title:"The Simple Pendulum", es:{
   // Header, instructions and share
   "The Simple Pendulum": "El péndulo simple",
@@ -137,13 +136,164 @@
   "Length is measured from the pivot to the center of the bob. Watch how long a full return trip takes.": "La longitud se mide desde el pivote hasta el centro de la esfera. Observa cuánto tarda un viaje completo de ida y vuelta.",
   "The model period includes the release angle. The small-angle formula is a close approximation at 15° or less. Try a larger angle and compare.": "El periodo del modelo incluye el ángulo de liberación. La fórmula para ángulos pequeños es una buena aproximación a 15° o menos. Prueba un ángulo mayor y compara.",
   "About this model": "Acerca de este modelo",
-  "Motion follows θ″ = −(g/L)sin θ using a fixed-step fourth-order Runge-Kutta integrator. The period uses the complete elliptic integral. At exactly zero amplitude there is no oscillation; the small-angle period is the limiting prediction. The stand is an ideal, anchored support in every environment.": "El movimiento sigue θ″ = −(g/L)sin θ con un integrador de Runge-Kutta de cuarto orden y paso fijo. El periodo usa la integral elíptica completa. Con una amplitud exactamente de cero no hay oscilación; el periodo para ángulos pequeños es la predicción límite. El soporte es ideal y está fijo en todos los entornos."
+  "Motion follows θ″ = −(g/L)sin θ using a fixed-step fourth-order Runge-Kutta integrator. The period uses the complete elliptic integral. At exactly zero amplitude there is no oscillation; the small-angle period is the limiting prediction. The stand is an ideal, anchored support in every environment.": "El movimiento sigue θ″ = −(g/L)sin θ con un integrador de Runge-Kutta de cuarto orden y paso fijo. El periodo usa la integral elíptica completa. Con una amplitud exactamente de cero no hay oscilación; el periodo para ángulos pequeños es la predicción límite. El soporte es ideal y está fijo en todos los entornos.",
+  // Lab check: the shared labels, as in the Gas Laws and KMT Lab
+  "Lab check": "Comprobación del laboratorio",
+  "Question {current} of {total}": "Pregunta {current} de {total}",
+  "Set up the lab": "Preparar el laboratorio",
+  "The lab is set up. Follow the question and use the lab controls.": "El laboratorio está listo. Sigue la pregunta y usa los controles del laboratorio.",
+  "Check": "Comprobar",
+  "Show me": "Muéstrame",
+  "Previous": "Anterior",
+  "Next": "Siguiente",
+  "Start over": "Empezar de nuevo",
+  "Lab check started over. All answers are cleared.": "La comprobación del laboratorio empezó de nuevo. Se borraron todas las respuestas.",
+  "Correct answer": "Respuesta correcta",
+  "Correct. {explanation}": "Correcto. {explanation}",
+  "{feedback} Try again.": "{feedback} Inténtalo de nuevo.",
+  "Answer shown. {explanation}": "Respuesta mostrada. {explanation}",
+  "{score} of {total} right on the first try.": "{score} de {total} correctas al primer intento.",
+  "Completion code": "Código de finalización",
+  "Paste this code into your Google Classroom assignment.": "Pega este código en tu tarea de Google Classroom.",
+  // Lab check, question 1
+  "Four times the length": "Cuatro veces la longitud",
+  "Move the length to 1.40 m, four times as long. What does the model period read now?": "Cambia la longitud a 1.40 m, cuatro veces más larga. ¿Qué indica ahora el periodo del modelo?",
+  "That is the starting period. Length does change the period. Move the length to 1.40 m and read the lab again.": "Ese es el periodo inicial. La longitud sí cambia el periodo. Cambia la longitud a 1.40 m y vuelve a leer el laboratorio.",
+  "The period did not grow as fast as the length. Compare the two model periods and see how many times longer the new one is.": "El periodo no creció tan rápido como la longitud. Compara los dos periodos del modelo y observa cuántas veces más largo es el nuevo.",
+  "A longer string makes each swing take longer, not shorter. Watch the model period as you drag the length slider.": "Una cuerda más larga hace que cada oscilación tarde más, no menos. Observa el periodo del modelo mientras mueves el control deslizante de la longitud.",
+  "The period depends on the square root of the length. Four times the length gives √4 = 2 times the period: {start} s becomes {right} s.": "El periodo depende de la raíz cuadrada de la longitud. Cuatro veces la longitud da √4 = 2 veces el periodo: {start} s se convierte en {right} s.",
+  // Lab check, question 2
+  "A heavier bob": "Una esfera más pesada",
+  "Move the mass to 400 g. What happens to the model period and the total energy?": "Cambia la masa a 400 g. ¿Qué pasa con el periodo del modelo y con la energía total?",
+  "The model period stays {period} s, and the total energy grows from {energy} J to {heavyEnergy} J.": "El periodo del modelo se mantiene en {period} s, y la energía total aumenta de {energy} J a {heavyEnergy} J.",
+  "The model period doubles to {double} s, and the total energy grows to {heavyEnergy} J.": "El periodo del modelo se duplica a {double} s, y la energía total aumenta a {heavyEnergy} J.",
+  "The model period drops to {half} s, because the heavier bob swings faster.": "El periodo del modelo baja a {half} s, porque la esfera más pesada oscila más rápido.",
+  "The model period stays {period} s, and the total energy stays {energy} J.": "El periodo del modelo se mantiene en {period} s, y la energía total se mantiene en {energy} J.",
+  "Read the model period after you change the mass. Mass does not change how long a swing takes.": "Lee el periodo del modelo después de cambiar la masa. La masa no cambia cuánto tarda una oscilación.",
+  "A heavier bob feels a bigger pull from gravity, but it also has more inertia. Read the model period again after the change.": "Sobre una esfera más pesada, la gravedad jala con más fuerza, pero la esfera también tiene más inercia. Vuelve a leer el periodo del modelo después del cambio.",
+  "The period stays the same, but look at the Total energy readout. Lifting a heavier bob to the same height stores more energy.": "El periodo se mantiene igual, pero observa la lectura de la energía total. Subir una esfera más pesada a la misma altura almacena más energía.",
+  "Four times the mass means four times the gravitational force, but also four times the inertia, so the acceleration and the period stay the same. The energy at the release point is mgh, so four times the mass stores about four times the energy: {energy} J becomes {heavyEnergy} J.": "Cuatro veces la masa significa cuatro veces la fuerza de gravedad, pero también cuatro veces la inercia, así que la aceleración y el periodo se mantienen iguales. La energía en el punto de liberación es mgh, así que cuatro veces la masa almacena unas cuatro veces la energía: {energy} J se convierte en {heavyEnergy} J.",
+  // Lab check, question 3
+  "Take it to the Moon": "Llévalo a la Luna",
+  "Change Gravity to Moon (1.62 m/s²). What does the model period read now?": "Cambia la gravedad a Luna (1.62 m/s²). ¿Qué indica ahora el periodo del modelo?",
+  "That is the Earth period. Change the Gravity setting to Moon and read the model period again.": "Ese es el periodo en la Tierra. Cambia el ajuste de gravedad a Luna y vuelve a leer el periodo del modelo.",
+  "Gravity is about 6 times weaker on the Moon, but the period does not grow 6 times. Read the model period after the change.": "La gravedad en la Luna es unas 6 veces más débil, pero el periodo no crece 6 veces. Lee el periodo del modelo después del cambio.",
+  "Weaker gravity gives a weaker pull back toward the bottom, so the swing gets slower, not faster.": "Una gravedad más débil jala la esfera con menos fuerza de regreso hacia la parte más baja, así que la oscilación se vuelve más lenta, no más rápida.",
+  "The period depends on 1/√g. Moon gravity is 9.81 ÷ 1.62 ≈ 6.06 times weaker, so the period is √6.06 ≈ 2.46 times longer: {start} s becomes {right} s.": "El periodo depende de 1/√g. La gravedad de la Luna es 9.81 ÷ 1.62 ≈ 6.06 veces más débil, así que el periodo es √6.06 ≈ 2.46 veces más largo: {start} s se convierte en {right} s.",
+  // Lab check, question 4
+  "A big release angle": "Un ángulo de liberación grande",
+  "Move the release angle to 50°. Compare the small-angle period with the model period. About how much longer is the model period?": "Cambia el ángulo de liberación a 50°. Compara el periodo para ángulos pequeños con el periodo del modelo. ¿Aproximadamente cuánto más largo es el periodo del modelo?",
+  "About {percent}% longer": "Aproximadamente {percent}% más largo",
+  "0%. The period does not depend on the release angle.": "0%. El periodo no depende del ángulo de liberación.",
+  "About {decimal}% longer": "Aproximadamente {decimal}% más largo",
+  "About {percent}% shorter": "Aproximadamente {percent}% más corto",
+  "The small-angle formula ignores the angle, but the model period does not. Read both periods at 50°.": "La fórmula para ángulos pequeños no toma en cuenta el ángulo, pero el periodo del modelo sí. Lee los dos periodos a 50°.",
+  "Check the subtraction and the division. Find the difference of the two periods, divide by the small-angle period, then multiply by 100.": "Revisa la resta y la división. Encuentra la diferencia de los dos periodos, divídela entre el periodo para ángulos pequeños y luego multiplica por 100.",
+  "Read which period is bigger. At a large angle the model period is the larger one.": "Lee cuál periodo es mayor. Con un ángulo grande, el periodo del modelo es el mayor.",
+  "At 50° the model period is {model} s and the small-angle formula gives {small} s, a difference of {difference} s, or about {percent}%. The formula T ≈ 2π√(L/g) works well only for small angles. At large angles the restoring force is weaker than the formula assumes, so the real swing takes longer.": "A 50°, el periodo del modelo es {model} s y la fórmula para ángulos pequeños da {small} s, una diferencia de {difference} s, o aproximadamente {percent}%. La fórmula T ≈ 2π√(L/g) funciona bien solo para ángulos pequeños. Con ángulos grandes, la fuerza restauradora es más débil de lo que supone la fórmula, así que la oscilación real tarda más.",
+  // Lab check, question 5
+  "Speed at the bottom": "Rapidez en la parte más baja",
+  "Press Step 10 times, so the clock reads 0.50 s. The current angle is now close to 0°. What does the bob speed read?": "Presiona Avanzar 10 veces, para que el reloj indique 0.50 s. El ángulo actual ahora es cercano a 0°. ¿Qué indica la rapidez de la esfera?",
+  "The bob stops at the turning points, not at the bottom. Read the bob speed after 10 Steps.": "La esfera se detiene en los puntos de retorno, no en la parte más baja. Lee la rapidez de la esfera después de presionar Avanzar 10 veces.",
+  "The bob does not drop the whole length of the string. It drops only from its release height to the bottom of the arc.": "La esfera no baja toda la longitud de la cuerda. Solo baja desde su altura de liberación hasta la parte más baja del arco.",
+  "Check the drop height. The bob starts L cos θ below the pivot, so it drops L(1 − cos θ).": "Revisa la altura de caída. La esfera empieza L cos θ por debajo del pivote, así que baja L(1 − cos θ).",
+  "The bob drops h = L(1 − cos 40°) = 0.90 m × {drop} = {height} m. All of that potential energy becomes kinetic energy at the bottom, so v = √(2gh) = {speed} m/s. At {clock} s the lab reads PE {pe} J and KE {ke} J, which add up to the {total} J total.": "La esfera baja h = L(1 − cos 40°) = 0.90 m × {drop} = {height} m. Toda esa energía potencial se convierte en energía cinética en la parte más baja, así que v = √(2gh) = {speed} m/s. A {clock} s, el laboratorio indica EP {pe} J y EC {ke} J, que suman la energía total de {total} J."
 }};
-  i18n.configure(copy);
-  // Instruction step 2 holds the button name in bold. Spanish rebuilds it from one full template around that name.
-  var step = root.querySelector("#zsa-th-instructions li:nth-child(2)"), strong = step && step.querySelector("strong");
-  if (i18n.lang === "es" && strong) {
-    var parts = i18n.text("Select {button}. Watch the energy move between potential energy at the ends and kinetic energy at the bottom.").split("{button}");
-    step.replaceChildren(document.createTextNode(parts[0]), strong, document.createTextNode(parts[1] || ""));
+  if (i18n) {
+    i18n.configure(copy);
+    // Instruction step 2 holds the button name in bold. Spanish rebuilds it from one full template around that name.
+    var step = root.querySelector("#zsa-th-instructions li:nth-child(2)"), strong = step && step.querySelector("strong");
+    if (i18n.lang === "es" && strong) {
+      var parts = i18n.text("Select {button}. Watch the energy move between potential energy at the ends and kinetic energy at the bottom.").split("{button}");
+      step.replaceChildren(document.createTextNode(parts[0]), strong, document.createTextNode(parts[1] || ""));
+    }
   }
+
+  // Lab check (labcheck.js and ../shared/zsa-labcheck.js). Each choice is [value, label, feedback key]; the right
+  // choice has a null key. Every number in braces is filled in by labcheck.js from physics.js and the lab's own
+  // readout formatters, so no answer is written here. setup is the starting state: L in m, m in g, angle in
+  // degrees and world, the Gravity option value.
+  var check = {
+    labels: {
+      title: "Lab check",
+      progress: "Question {current} of {total}",
+      setupButton: "Set up the lab",
+      setupDone: "The lab is set up. Follow the question and use the lab controls.",
+      check: "Check",
+      show: "Show me",
+      previous: "Previous",
+      next: "Next",
+      restart: "Start over",
+      restarted: "Lab check started over. All answers are cleared.",
+      correctChoice: "Correct answer",
+      correct: "Correct. {explanation}",
+      retry: "{feedback} Try again.",
+      shown: "Answer shown. {explanation}",
+      score: "{score} of {total} right on the first try.",
+      completion: "Completion code",
+      codeNote: "Paste this code into your Google Classroom assignment."
+    },
+    questions: [
+      {id: "length", title: "Four times the length", setup: {L: 0.35, m: 150, angle: 10, world: "9.81"},
+        question: "Move the length to 1.40 m, four times as long. What does the model period read now?",
+        choices: [["right", "{right} s", null], ["sameT", "{start} s", "sameT"], ["linearL", "{four} s", "linearL"], ["inverseL", "{half} s", "inverseL"]],
+        feedback: {
+          sameT: "That is the starting period. Length does change the period. Move the length to 1.40 m and read the lab again.",
+          linearL: "The period did not grow as fast as the length. Compare the two model periods and see how many times longer the new one is.",
+          inverseL: "A longer string makes each swing take longer, not shorter. Watch the model period as you drag the length slider."
+        },
+        explanation: "The period depends on the square root of the length. Four times the length gives √4 = 2 times the period: {start} s becomes {right} s."},
+      {id: "mass", title: "A heavier bob", setup: {L: 0.80, m: 100, angle: 20, world: "9.81"},
+        question: "Move the mass to 400 g. What happens to the model period and the total energy?",
+        choices: [["right", "The model period stays {period} s, and the total energy grows from {energy} J to {heavyEnergy} J.", null],
+          ["heavySlow", "The model period doubles to {double} s, and the total energy grows to {heavyEnergy} J.", "heavySlow"],
+          ["heavyFast", "The model period drops to {half} s, because the heavier bob swings faster.", "heavyFast"],
+          ["sameEnergy", "The model period stays {period} s, and the total energy stays {energy} J.", "sameEnergy"]],
+        feedback: {
+          heavySlow: "Read the model period after you change the mass. Mass does not change how long a swing takes.",
+          heavyFast: "A heavier bob feels a bigger pull from gravity, but it also has more inertia. Read the model period again after the change.",
+          sameEnergy: "The period stays the same, but look at the Total energy readout. Lifting a heavier bob to the same height stores more energy."
+        },
+        explanation: "Four times the mass means four times the gravitational force, but also four times the inertia, so the acceleration and the period stay the same. The energy at the release point is mgh, so four times the mass stores about four times the energy: {energy} J becomes {heavyEnergy} J."},
+      {id: "moon", title: "Take it to the Moon", setup: {L: 0.50, m: 200, angle: 8, world: "9.81"},
+        question: "Change Gravity to Moon (1.62 m/s²). What does the model period read now?",
+        choices: [["right", "{right} s", null], ["sameG", "{start} s", "sameG"], ["ratioG", "{ratio} s", "ratioG"], ["fasterMoon", "{faster} s", "fasterMoon"]],
+        feedback: {
+          sameG: "That is the Earth period. Change the Gravity setting to Moon and read the model period again.",
+          ratioG: "Gravity is about 6 times weaker on the Moon, but the period does not grow 6 times. Read the model period after the change.",
+          fasterMoon: "Weaker gravity gives a weaker pull back toward the bottom, so the swing gets slower, not faster."
+        },
+        explanation: "The period depends on 1/√g. Moon gravity is 9.81 ÷ 1.62 ≈ 6.06 times weaker, so the period is √6.06 ≈ 2.46 times longer: {start} s becomes {right} s."},
+      {id: "angle", title: "A big release angle", setup: {L: 1.20, m: 250, angle: 10, world: "9.81"},
+        question: "Move the release angle to 50°. Compare the small-angle period with the model period. About how much longer is the model period?",
+        choices: [["right", "About {percent}% longer", null], ["noChange", "0%. The period does not depend on the release angle.", "noChange"],
+          ["decimal", "About {decimal}% longer", "decimal"], ["shorter", "About {percent}% shorter", "shorter"]],
+        feedback: {
+          noChange: "The small-angle formula ignores the angle, but the model period does not. Read both periods at 50°.",
+          decimal: "Check the subtraction and the division. Find the difference of the two periods, divide by the small-angle period, then multiply by 100.",
+          shorter: "Read which period is bigger. At a large angle the model period is the larger one."
+        },
+        explanation: "At 50° the model period is {model} s and the small-angle formula gives {small} s, a difference of {difference} s, or about {percent}%. The formula T ≈ 2π√(L/g) works well only for small angles. At large angles the restoring force is weaker than the formula assumes, so the real swing takes longer."},
+      {id: "speed", title: "Speed at the bottom", setup: {L: 0.90, m: 300, angle: 40, world: "9.81"},
+        question: "Press Step 10 times, so the clock reads 0.50 s. The current angle is now close to 0°. What does the bob speed read?",
+        choices: [["right", "{right} m/s", null], ["bottomStill", "{still} m/s", "bottomStill"], ["fullHeight", "{full} m/s", "fullHeight"], ["cosHeight", "{cos} m/s", "cosHeight"]],
+        feedback: {
+          bottomStill: "The bob stops at the turning points, not at the bottom. Read the bob speed after 10 Steps.",
+          fullHeight: "The bob does not drop the whole length of the string. It drops only from its release height to the bottom of the arc.",
+          cosHeight: "Check the drop height. The bob starts L cos θ below the pivot, so it drops L(1 − cos θ)."
+        },
+        explanation: "The bob drops h = L(1 − cos 40°) = 0.90 m × {drop} = {height} m. All of that potential energy becomes kinetic energy at the bottom, so v = √(2gh) = {speed} m/s. At {clock} s the lab reads PE {pe} J and KE {ke} J, which add up to the {total} J total."}
+    ]
+  };
+  // In Spanish only the words change: ids, setups, choice values and feedback keys stay as they are.
+  var text = function (value) { return i18n ? i18n.text(value) : value; };
+  var labels = {};
+  Object.keys(check.labels).forEach(function (k) { labels[k] = text(check.labels[k]); });
+  var localized = {labels: labels, questions: check.questions.map(function (q) {
+    var feedback = {};
+    Object.keys(q.feedback).forEach(function (k) { feedback[k] = text(q.feedback[k]); });
+    return {id: q.id, title: text(q.title), setup: q.setup, question: text(q.question),
+      choices: q.choices.map(function (c) { return [c[0], text(c[1]), c[2]]; }), feedback: feedback, explanation: text(q.explanation)};
+  })};
+  root.addEventListener("zsa:request-data", function (event) { event.detail.receive({check: localized}); });
 }());

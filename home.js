@@ -12,10 +12,21 @@
   var copy = {title:"Practice Activities", es:{
   "Biology labs": "Laboratorios de biología",
   "Photosynthesis": "Fotosíntesis",
+  "Enzymes": "Enzimas",
+  "Enzyme Activity Lab": "Laboratorio de actividad enzimática",
+  "Set up a fair test of how temperature or pH affects catalase. Measure the foam, graph the optimum and watch the active site lose its shape.": "Prepara una prueba justa de cómo la temperatura o el pH afectan a la catalasa. Mide la espuma, grafica el óptimo y observa cómo el sitio activo pierde su forma.",
   "Leaf Disk Lab": "Laboratorio de discos de hoja",
-  "Explore photosynthesis and respiration with evidence from a virtual experiment.": "Explora la fotosíntesis y la respiración con evidencia de un experimento virtual.",
+  "Explore photosynthesis, cell transport, populations and genetics with evidence from virtual experiments.": "Explora la fotosíntesis, el transporte celular, las poblaciones y la genética con evidencia de experimentos virtuales.",
+  "Genetics": "Genética",
+  // The genetics lab's Spanish is written but not yet proofread, so its card opens the English page (pendingSpanish below).
+  "Genetics Lab: Crossing Fruit Flies": "Laboratorio de genética: cruzas de moscas de la fruta",
+  "Breed fruit flies, build Punnett squares and watch real offspring counts approach your prediction. Then use a test cross to unmask a mystery parent.": "Cruza moscas de la fruta, construye cuadros de Punnett y observa cómo los conteos reales de descendientes se acercan a tu predicción. Luego usa una cruza de prueba para descubrir a un progenitor misterioso.",
   "Float spinach leaf disks to compare light color, brightness, temperature and bicarbonate. Use your data to explain the rate of photosynthesis.": "Haz flotar discos de hoja de espinaca para comparar el color y la intensidad de la luz, la temperatura y el bicarbonato. Usa tus datos para explicar la tasa de fotosíntesis.",
   "Population Sampling Lab": "Laboratorio de muestreo de poblaciones",
+  "Osmosis: Potato Cores in Sucrose Solutions": "Ósmosis: cilindros de papa en soluciones de sacarosa",
+  "Cell transport": "Transporte celular",
+  "Weigh potato cores before and after a day in six sugar solutions. Graph the percent change in mass to find where water stops moving.": "Pesa cilindros de papa antes y después de un día en seis soluciones de azúcar. Grafica el cambio porcentual de masa para encontrar dónde el agua deja de moverse.",
+  // Feed the Yeast's Spanish is written but not yet proofread, so its card opens the English page (pendingSpanish below).
   "Fermentation": "Fermentación",
   "Feed the Yeast: Fermentation and Energy": "Alimenta a la levadura: fermentación y energía",
   "Feed yeast four foods and measure the gas in balloons. Fix an unfair setup, graph where more sugar stops helping, and zoom inside a yeast cell.": "Alimenta a la levadura con cuatro alimentos y mide el gas en globos. Corrige un montaje injusto, grafica dónde más azúcar deja de ayudar y observa el interior de una célula de levadura.",
@@ -256,19 +267,22 @@
   // configure() rewrites every link as an absolute URL. The landing page keeps its links exactly as written, adding
   // only lang=es in Spanish, so English links are unchanged.
   var links = Array.from(root.querySelectorAll("a[href]")).map(function (a) { return [a, a.getAttribute("href")]; });
+  // Activities whose Spanish is written but not yet proofread open in English, and their Spanish card says so.
+  // Remove an activity from this list when its flag is turned on (SPANISH_READY in osmosis-lab, SPANISH_PUBLISHED in
+  // fruit-fly-genetics-lab, spanishReady in yeast-fermentation-lab/data.js).
+  var pendingSpanish = ["osmosis-lab/", "fruit-fly-genetics-lab/", "yeast-fermentation-lab/"];
   i18n.configure(copy);
   links.forEach(function (pair) {
     var href = pair[1], local = !/^(?:[a-z]+:|\/\/|#)/i.test(href);
-    pair[0].setAttribute("href", local && i18n.lang === "es" ? href + (href.indexOf("?") >= 0 ? "&" : "?") + "lang=es" : href);
+    pair[0].setAttribute("href", local && i18n.lang === "es" && pendingSpanish.indexOf(href) < 0 ? href + (href.indexOf("?") >= 0 ? "&" : "?") + "lang=es" : href);
   });
   if (i18n.lang !== "es") return;
   // The ACT activities have no Spanish version: their names stay in English, followed by " (en inglés)".
   root.querySelectorAll('.zsa-home-card h3 a[href^="act/"], .zsa-home-card h3 a[href^="act-question-generator/"]').forEach(function (a) {
     a.parentNode.appendChild(document.createTextNode(" (en inglés)"));
   });
-  // Feed the Yeast has Spanish written but not yet proofread, so it opens in English for now. Remove this when its
-  // data.js sets spanishReady to true (see yeast-fermentation-lab/README.md).
-  root.querySelectorAll('.zsa-home-card h3 a[href^="yeast-fermentation-lab/"]').forEach(function (a) {
-    a.parentNode.appendChild(document.createTextNode(" (en inglés)"));
+  pendingSpanish.forEach(function (href) {
+    var a = root.querySelector('.zsa-home-card h3 a[href="' + href + '"]');
+    if (a) a.parentNode.appendChild(document.createTextNode(" (en inglés)"));
   });
 }());

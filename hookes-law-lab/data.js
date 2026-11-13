@@ -6,7 +6,6 @@
   if (!root) return;
   var i18n;
   root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail:{receive:function (api) { i18n = api; }}}));
-  if (!i18n) return;
   var copy = {title:"Hooke’s Law & Harmonic Motion", es:{
   // Header, instructions and share
   "Hooke’s Law & Harmonic Motion": "Ley de Hooke y movimiento armónico",
@@ -154,22 +153,172 @@
   "Physics behind the bench": "La física del experimento",
   "At equilibrium: mg = kΔL. During motion: mÿ + bẏ + ky = 0, where y is displacement from equilibrium. With no damping, T = 2π√(m/k). Reveal the spring constant to check a value you determine from force and extension. The spring can both stretch and compress in this ideal model. The massless spring is ideal and stays elastic throughout this lab’s range. The hanger contributes 50 g. Real springs have mass and an elastic limit; excessive loading can permanently deform them.": "En equilibrio: mg = kΔL. Durante el movimiento: mÿ + bẏ + ky = 0, donde y es el desplazamiento desde el equilibrio. Sin amortiguamiento, T = 2π√(m/k). Revela la constante del resorte para comprobar el valor que determines a partir de la fuerza y la elongación. En este modelo ideal, el resorte puede estirarse y comprimirse. El resorte sin masa es ideal y se mantiene elástico en todo el rango de este laboratorio. El portapesas aporta 50 g. Los resortes reales tienen masa y un límite elástico; una carga excesiva puede deformarlos de forma permanente.",
   "The ruler’s zero aligns with the unloaded spring end; its pointer tracks the loaded end. Equipment is illustrated to scale along the motion axis; weights are enlarged for visibility. Changing spring, mass, or damping starts a fresh motion trace. No measurements are stored.": "El cero de la regla coincide con el extremo del resorte sin carga; su indicador sigue el extremo con carga. El equipo está dibujado a escala a lo largo del eje del movimiento; las pesas se agrandaron para que se vean mejor. Cambiar el resorte, la masa o el amortiguamiento inicia un trazo de movimiento nuevo. No se guarda ninguna medición.",
-  "ZornScience · Explore. Observe. Explain.": "ZornScience · Explora. Observa. Explica."
+  "ZornScience · Explore. Observe. Explain.": "ZornScience · Explora. Observa. Explica.",
+  // Lab check: the shared labels, as in the Gas Laws and KMT Lab
+  "Lab check": "Comprobación del laboratorio",
+  "Question {current} of {total}": "Pregunta {current} de {total}",
+  "Set up the lab": "Preparar el laboratorio",
+  "The lab is set up. Follow the question and use the lab controls.": "El laboratorio está listo. Sigue la pregunta y usa los controles del laboratorio.",
+  "Check": "Comprobar",
+  "Show me": "Muéstrame",
+  "Previous": "Anterior",
+  "Next": "Siguiente",
+  "Start over": "Empezar de nuevo",
+  "Lab check started over. All answers are cleared.": "La comprobación del laboratorio empezó de nuevo. Se borraron todas las respuestas.",
+  "Correct answer": "Respuesta correcta",
+  "Correct. {explanation}": "Correcto. {explanation}",
+  "{feedback} Try again.": "{feedback} Inténtalo de nuevo.",
+  "Answer shown. {explanation}": "Respuesta mostrada. {explanation}",
+  "{score} of {total} right on the first try.": "{score} de {total} correctas al primer intento.",
+  "Completion code": "Código de finalización",
+  "Paste this code into your Google Classroom assignment.": "Pega este código en tu tarea de Google Classroom.",
+  // Lab check, question 1
+  "A stiffer spring": "Un resorte más rígido",
+  "Change the spring to Spring C (firm). What does the equilibrium extension read now?": "Cambia el resorte al Resorte C (rígido). ¿Qué indica ahora la elongación en equilibrio?",
+  "That is the extension on Spring A. Change the spring and read the equilibrium extension again.": "Esa es la elongación con el Resorte A. Cambia el resorte y vuelve a leer la elongación en equilibrio.",
+  "A stiffer spring pulls back harder for each centimeter. It stretches less for the same weight, not more.": "Un resorte más rígido jala con más fuerza por cada centímetro. Se estira menos con el mismo peso, no más.",
+  "Check how much stiffer Spring C is than Spring A, then read the extension in the lab.": "Revisa cuántas veces más rígido es el Resorte C que el Resorte A y luego lee la elongación en el laboratorio.",
+  "At equilibrium the spring force equals the weight, so kx = mg and x = mg/k. The weight is the same ({weight} N), but Spring C is 3 times as stiff as Spring A, so it stretches one third as far: {start} cm becomes {right} cm.": "En equilibrio, la fuerza del resorte es igual al peso, así que kx = mg y x = mg/k. El peso es el mismo ({weight} N), pero el Resorte C es 3 veces más rígido que el Resorte A, así que se estira la tercera parte: {start} cm se convierte en {right} cm.",
+  // Lab check, question 2
+  "Double the weight": "El doble de peso",
+  "Press + 50 g three times, so the total mass is 300 g. What does the equilibrium extension read now?": "Presiona + 50 g tres veces, para que la masa total sea de 300 g. ¿Qué indica ahora la elongación en equilibrio?",
+  "That is the starting extension. Add the mass and read the lab again.": "Esa es la elongación inicial. Agrega la masa y vuelve a leer el laboratorio.",
+  "The weight doubled, so look at how many times larger the new extension is. It is not four times.": "El peso se duplicó, así que observa cuántas veces mayor es la nueva elongación. No es cuatro veces.",
+  "More weight pulls the spring farther down, not less. Read the extension after you add the mass.": "Más peso estira el resorte más hacia abajo, no menos. Lee la elongación después de agregar la masa.",
+  "Hooke's law says the stretch is proportional to the force. Doubling the weight from {startWeight} N to {weight} N doubles the extension from {start} cm to {right} cm. On the force and extension graph, both points sit on the same straight line through the origin.": "La ley de Hooke dice que el estiramiento es proporcional a la fuerza. Duplicar el peso de {startWeight} N a {weight} N duplica la elongación de {start} cm a {right} cm. En la gráfica de fuerza y elongación, los dos puntos están en la misma línea recta que pasa por el origen.",
+  // Lab check, question 3 (its title, "Mass and period", is the Investigate menu option above)
+  "Press Pull & release and read the measured period. Then move the slotted masses to 350 g (total 400 g), release again, and read the new measured period. What is it?": "Presiona Jalar y soltar y lee el periodo medido. Luego cambia las pesas ranuradas a 350 g (400 g en total), vuelve a soltar y lee el nuevo periodo medido. ¿Cuál es?",
+  "That is the period for 100 g. Change the mass, release again, and wait for the new measured period.": "Ese es el periodo para 100 g. Cambia la masa, vuelve a soltar y espera el nuevo periodo medido.",
+  "The mass grew 4 times, but the period did not. Compare the two measured periods and find how many times longer the new one is.": "La masa aumentó 4 veces, pero el periodo no. Compara los dos periodos medidos y encuentra cuántas veces más largo es el nuevo.",
+  "A heavier mass has more inertia, so each bounce takes longer, not shorter.": "Una masa más pesada tiene más inercia, así que cada rebote tarda más, no menos.",
+  "For a mass on a spring, T = 2π√(m/k). Four times the mass gives √4 = 2 times the period: {start} s becomes {right} s.": "Para una masa en un resorte, T = 2π√(m/k). Cuatro veces la masa da √4 = 2 veces el periodo: {start} s se convierte en {right} s.",
+  // Lab check, question 4
+  "A bigger pull": "Un jalón más grande",
+  "Press Pull & release and read the measured period. Then set the release displacement to 4.0 cm and release again. What do the two measured periods show?": "Presiona Jalar y soltar y lee el periodo medido. Luego cambia el desplazamiento al soltar a 4.0 cm y vuelve a soltar. ¿Qué muestran los dos periodos medidos?",
+  "Both read {right} s. The period does not depend on the pull.": "Los dos indican {right} s. El periodo no depende del jalón.",
+  "{right} s, then {double} s. Twice the pull doubles the period.": "{right} s y luego {double} s. El doble de jalón duplica el periodo.",
+  "{right} s, then {half} s. A bigger pull makes it bounce faster.": "{right} s y luego {half} s. Un jalón más grande hace que rebote más rápido.",
+  "{right} s, then {root} s. The period grows by √2.": "{right} s y luego {root} s. El periodo aumenta √2 veces.",
+  "A bigger pull makes a taller wave on the graph. Read the measured period, not the height of the wave.": "Un jalón más grande produce una onda más alta en la gráfica. Lee el periodo medido, no la altura de la onda.",
+  "The mass does move faster with a bigger pull, but it also travels farther. Read the measured period for both pulls.": "La masa sí se mueve más rápido con un jalón más grande, pero también recorre más distancia. Lee el periodo medido con los dos jalones.",
+  "Release from 4.0 cm and wait for two peaks. Compare the new measured period with the first one.": "Suelta desde 4.0 cm y espera dos picos. Compara el nuevo periodo medido con el primero.",
+  "A pull twice as big gives twice the restoring force at the start, so the mass moves faster, but it also has twice as far to go. The two effects cancel, so an ideal spring has the same period, {right} s, at any amplitude. Only mass and spring stiffness change the period.": "Un jalón del doble da el doble de fuerza restauradora al inicio, así que la masa se mueve más rápido, pero también tiene que recorrer el doble de distancia. Los dos efectos se cancelan, así que un resorte ideal tiene el mismo periodo, {right} s, con cualquier amplitud. Solo la masa y la rigidez del resorte cambian el periodo.",
+  // Lab check, question 5
+  "Net force on the mass": "Fuerza neta sobre la masa",
+  "Turn on Show forces. Select the mass and press the down arrow key 6 times, so the displacement reads 3.00 cm below equilibrium. What net force does the lab show?": "Activa Mostrar fuerzas. Selecciona la masa y presiona la tecla de flecha hacia abajo 6 veces, para que el desplazamiento indique 3.00 cm por debajo del equilibrio. ¿Qué fuerza neta muestra el laboratorio?",
+  "{net} N up": "{net} N hacia arriba",
+  "{net} N down": "{net} N hacia abajo",
+  "{spring} N up. That is the spring force.": "{spring} N hacia arriba. Esa es la fuerza del resorte.",
+  "{zero} N. The forces are balanced.": "{zero} N. Las fuerzas están equilibradas.",
+  "You pulled the mass down, but the spring now pulls up harder than gravity pulls down. Read the direction in the force description.": "Jalaste la masa hacia abajo, pero ahora el resorte jala hacia arriba con más fuerza que la gravedad hacia abajo. Lee la dirección en la descripción de las fuerzas.",
+  "That is the spring force alone. The net force is the spring force minus the weight.": "Esa es solo la fuerza del resorte. La fuerza neta es la fuerza del resorte menos el peso.",
+  "The forces balance only at equilibrium. At 3.00 cm below it, the spring pulls harder than the weight.": "Las fuerzas se equilibran solo en el equilibrio. A 3.00 cm por debajo, el resorte jala con más fuerza que el peso.",
+  "The spring force is now {spring} N up and the weight is {weight} N down, so the net force is {net} N up. That equals kx = (20 N/m)(0.030 m), pointing back toward equilibrium. This restoring force is what makes the mass oscillate.": "Ahora la fuerza del resorte es de {spring} N hacia arriba y el peso es de {weight} N hacia abajo, así que la fuerza neta es de {net} N hacia arriba. Eso es igual a kx = (20 N/m)(0.030 m), y apunta de regreso hacia el equilibrio. Esta fuerza restauradora es lo que hace que la masa oscile."
 }};
-  // The two instruction steps with a bold button name are rebuilt from one full template each, so Spanish keeps its own word order.
-  // Read their English before configure() translates the pieces.
-  var rich = Array.from(root.querySelectorAll("#zsa-th-instructions li")).filter(function (li) { return li.querySelector("strong"); }).map(function (li) {
-    return [li, Array.from(li.childNodes).map(function (n) { return n.nodeType === 1 ? "**" + n.textContent + "**" : n.textContent; }).join("")];
-  });
-  i18n.configure(copy);
-  rich.forEach(function (item) {
-    var li = item[0], text = i18n.text(item[1]);
-    if (text === item[1]) return;
-    li.replaceChildren();
-    text.split("**").forEach(function (part, i) {
-      if (!part) return;
-      if (i % 2) { var b = document.createElement("strong"); b.textContent = part; li.appendChild(b); }
-      else li.appendChild(document.createTextNode(part));
+  if (i18n) {
+    // The two instruction steps with a bold button name are rebuilt from one full template each, so Spanish keeps its own word order.
+    // Read their English before configure() translates the pieces.
+    var rich = Array.from(root.querySelectorAll("#zsa-th-instructions li")).filter(function (li) { return li.querySelector("strong"); }).map(function (li) {
+      return [li, Array.from(li.childNodes).map(function (n) { return n.nodeType === 1 ? "**" + n.textContent + "**" : n.textContent; }).join("")];
     });
-  });
+    i18n.configure(copy);
+    rich.forEach(function (item) {
+      var li = item[0], text = i18n.text(item[1]);
+      if (text === item[1]) return;
+      li.replaceChildren();
+      text.split("**").forEach(function (part, i) {
+        if (!part) return;
+        if (i % 2) { var b = document.createElement("strong"); b.textContent = part; li.appendChild(b); }
+        else li.appendChild(document.createTextNode(part));
+      });
+    });
+  }
+  // Lab check (labcheck.js and ../shared/zsa-labcheck.js). Each choice is [value, label, feedback key]; the right
+  // choice has a null key. Every number in braces is filled in by labcheck.js from the lab's formulas and its own
+  // readout formatters, so no answer is written here. setup is the starting state: k, the Spring option value
+  // (N/m); added, the slotted masses in grams (the 50 g hanger is extra); amplitude, the release displacement in cm;
+  // damping, the Damping option value; forces, Show forces.
+  var check = {
+    labels: {
+      title: "Lab check",
+      progress: "Question {current} of {total}",
+      setupButton: "Set up the lab",
+      setupDone: "The lab is set up. Follow the question and use the lab controls.",
+      check: "Check",
+      show: "Show me",
+      previous: "Previous",
+      next: "Next",
+      restart: "Start over",
+      restarted: "Lab check started over. All answers are cleared.",
+      correctChoice: "Correct answer",
+      correct: "Correct. {explanation}",
+      retry: "{feedback} Try again.",
+      shown: "Answer shown. {explanation}",
+      score: "{score} of {total} right on the first try.",
+      completion: "Completion code",
+      codeNote: "Paste this code into your Google Classroom assignment."
+    },
+    questions: [
+      {id: "stiff", title: "A stiffer spring", setup: {k: 10, added: 150, amplitude: 4, damping: 0, forces: false},
+        question: "Change the spring to Spring C (firm). What does the equilibrium extension read now?",
+        choices: [["right", "{right} cm", null], ["sameX", "{start} cm", "sameX"], ["stifferMore", "{triple} cm", "stifferMore"], ["halfX", "{half} cm", "halfX"]],
+        feedback: {
+          sameX: "That is the extension on Spring A. Change the spring and read the equilibrium extension again.",
+          stifferMore: "A stiffer spring pulls back harder for each centimeter. It stretches less for the same weight, not more.",
+          halfX: "Check how much stiffer Spring C is than Spring A, then read the extension in the lab."
+        },
+        explanation: "At equilibrium the spring force equals the weight, so kx = mg and x = mg/k. The weight is the same ({weight} N), but Spring C is 3 times as stiff as Spring A, so it stretches one third as far: {start} cm becomes {right} cm."},
+      {id: "double", title: "Double the weight", setup: {k: 20, added: 100, amplitude: 4, damping: 0, forces: false},
+        question: "Press + 50 g three times, so the total mass is 300 g. What does the equilibrium extension read now?",
+        choices: [["right", "{right} cm", null], ["same", "{start} cm", "same"], ["square", "{four} cm", "square"], ["inverse", "{half} cm", "inverse"]],
+        feedback: {
+          same: "That is the starting extension. Add the mass and read the lab again.",
+          square: "The weight doubled, so look at how many times larger the new extension is. It is not four times.",
+          inverse: "More weight pulls the spring farther down, not less. Read the extension after you add the mass."
+        },
+        explanation: "Hooke's law says the stretch is proportional to the force. Doubling the weight from {startWeight} N to {weight} N doubles the extension from {start} cm to {right} cm. On the force and extension graph, both points sit on the same straight line through the origin."},
+      {id: "mass", title: "Mass and period", setup: {k: 10, added: 50, amplitude: 4, damping: 0, forces: false},
+        question: "Press Pull & release and read the measured period. Then move the slotted masses to 350 g (total 400 g), release again, and read the new measured period. What is it?",
+        choices: [["right", "{right} s", null], ["sameT", "{start} s", "sameT"], ["linearM", "{four} s", "linearM"], ["heavyFast", "{half} s", "heavyFast"]],
+        feedback: {
+          sameT: "That is the period for 100 g. Change the mass, release again, and wait for the new measured period.",
+          linearM: "The mass grew 4 times, but the period did not. Compare the two measured periods and find how many times longer the new one is.",
+          heavyFast: "A heavier mass has more inertia, so each bounce takes longer, not shorter."
+        },
+        explanation: "For a mass on a spring, T = 2π√(m/k). Four times the mass gives √4 = 2 times the period: {start} s becomes {right} s."},
+      {id: "amplitude", title: "A bigger pull", setup: {k: 30, added: 200, amplitude: 2, damping: 0, forces: false},
+        question: "Press Pull & release and read the measured period. Then set the release displacement to 4.0 cm and release again. What do the two measured periods show?",
+        choices: [["right", "Both read {right} s. The period does not depend on the pull.", null],
+          ["ampDouble", "{right} s, then {double} s. Twice the pull doubles the period.", "ampDouble"],
+          ["ampFaster", "{right} s, then {half} s. A bigger pull makes it bounce faster.", "ampFaster"],
+          ["ampRoot", "{right} s, then {root} s. The period grows by √2.", "ampRoot"]],
+        feedback: {
+          ampDouble: "A bigger pull makes a taller wave on the graph. Read the measured period, not the height of the wave.",
+          ampFaster: "The mass does move faster with a bigger pull, but it also travels farther. Read the measured period for both pulls.",
+          ampRoot: "Release from 4.0 cm and wait for two peaks. Compare the new measured period with the first one."
+        },
+        explanation: "A pull twice as big gives twice the restoring force at the start, so the mass moves faster, but it also has twice as far to go. The two effects cancel, so an ideal spring has the same period, {right} s, at any amplitude. Only mass and spring stiffness change the period."},
+      {id: "net", title: "Net force on the mass", setup: {k: 20, added: 150, amplitude: 4, damping: 0, forces: false},
+        question: "Turn on Show forces. Select the mass and press the down arrow key 6 times, so the displacement reads 3.00 cm below equilibrium. What net force does the lab show?",
+        choices: [["right", "{net} N up", null], ["netDown", "{net} N down", "netDown"], ["springNotNet", "{spring} N up. That is the spring force.", "springNotNet"],
+          ["balanced", "{zero} N. The forces are balanced.", "balanced"]],
+        feedback: {
+          netDown: "You pulled the mass down, but the spring now pulls up harder than gravity pulls down. Read the direction in the force description.",
+          springNotNet: "That is the spring force alone. The net force is the spring force minus the weight.",
+          balanced: "The forces balance only at equilibrium. At 3.00 cm below it, the spring pulls harder than the weight."
+        },
+        explanation: "The spring force is now {spring} N up and the weight is {weight} N down, so the net force is {net} N up. That equals kx = (20 N/m)(0.030 m), pointing back toward equilibrium. This restoring force is what makes the mass oscillate."}
+    ]
+  };
+  // In Spanish only the words change: ids, setups, choice values and feedback keys stay as they are.
+  var text = function (value) { return i18n ? i18n.text(value) : value; };
+  var labels = {};
+  Object.keys(check.labels).forEach(function (k) { labels[k] = text(check.labels[k]); });
+  var localized = {labels: labels, questions: check.questions.map(function (q) {
+    var feedback = {};
+    Object.keys(q.feedback).forEach(function (k) { feedback[k] = text(q.feedback[k]); });
+    return {id: q.id, title: text(q.title), setup: q.setup, question: text(q.question),
+      choices: q.choices.map(function (c) { return [c[0], text(c[1]), c[2]]; }), feedback: feedback, explanation: text(q.explanation)};
+  })};
+  root.addEventListener("zsa:request-data", function (event) { event.detail.receive({check: localized}); });
 }());

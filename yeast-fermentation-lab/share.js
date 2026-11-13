@@ -1,6 +1,7 @@
 (function () {
   "use strict";
-  // Share panel: a clean activity link (only the language, and only once Spanish is live), copy and email.
+  // Share panel: a clean activity link (only the language, and only once Spanish is live), copy and email. The link is
+  // plain text in an anchor, not a text box: this lab has no typed boxes at all.
   var root = document.querySelector('[data-zsa-activity="yeast-fermentation-lab"]');
   if (!root) return;
   var words = null;
@@ -12,7 +13,9 @@
   var url = "https://activities.zornscience.org/yeast-fermentation-lab/" + (words && words.lang === "es" ? "?lang=es" : "");
   var title = t("title") + " | ZornScience";
   var description = t("shareDescription");
-  el("url").value = url;
+  var link = el("link");
+  link.href = url;
+  link.textContent = url;
   el("email").href = "mailto:?subject=" + encodeURIComponent(title) + "&body=" + encodeURIComponent(description + "\n\n" + url);
   function close(restoreFocus) {
     panel.hidden = true;
@@ -39,8 +42,11 @@
       await navigator.clipboard.writeText(url);
       el("status").textContent = t("linkCopied");
     } catch (error) {
-      el("url").focus();
-      el("url").select();
+      var range = document.createRange();
+      range.selectNodeContents(link);
+      var selection = getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
       el("status").textContent = t("linkSelected");
     }
   });

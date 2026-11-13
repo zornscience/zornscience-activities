@@ -370,7 +370,8 @@ test("yeast: the back link accepts only zornscience.org lessons; share and embed
     await expect(page.getByRole("link", {name: t("back")})).toHaveAttribute("href", lesson);
   }
   await page.getByRole("button", {name: t("shareActivity")}).click();
-  await expect(page.locator("#zsa-fy-share-url")).toHaveValue("https://activities.zornscience.org/yeast-fermentation-lab/");
+  await expect(page.getByRole("link", {name: "https://activities.zornscience.org/yeast-fermentation-lab/"})).toHaveAttribute("href", "https://activities.zornscience.org/yeast-fermentation-lab/");
+  await expect(page.locator("input[type=text],textarea"), "no typed boxes, not even for the share link").toHaveCount(0);
   await page.keyboard.press("Escape");
   await expect(page.getByRole("button", {name: t("shareActivity")})).toBeFocused();
   await page.goto("/yeast-fermentation-lab/?embed=1");

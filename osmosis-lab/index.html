@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0"><title>Osmosis: Potato Cores in Sucrose Solutions | ZornScience</title>
+<meta name="description" content="Soak potato cores in sucrose solutions, weigh them, graph percent change in mass and find the isotonic point in this grade 9 Biology lab." data-zsa-es="Remoja cilindros de papa en soluciones de sacarosa, pésalos, grafica el cambio porcentual de masa y encuentra el punto isotónico.">
+<link rel="canonical" href="https://activities.zornscience.org/osmosis-lab/">
+<link rel="alternate" hreflang="en" href="https://activities.zornscience.org/osmosis-lab/">
+<link rel="alternate" hreflang="es" href="https://activities.zornscience.org/osmosis-lab/?lang=es">
+<link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/osmosis-lab/">
+<link rel="icon" href="../favicon.png?v=1.0.0" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=1.0.0">
+<link rel="stylesheet" href="lab.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.0.0" defer></script>
+<script src="data.js?v=1.0.0" defer></script>
+<script src="model.js?v=1.0.0" defer></script>
+<script src="lab.js?v=1.0.0" defer></script>
+<script src="share.js?v=1.0.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.0.0"><script src="../shared/zsa-about.js?v=1.0.0" defer></script></head><body><main class="zsa zsa-os" data-zsa-activity="osmosis-lab">
+<header data-zsa-header><div data-zsa-header-row><div data-zsa-header-identity>
+<a data-zsa-header-brand href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png?v=1.0.0" alt="" width="40" height="40"></a>
+<h1>Osmosis: Potato Cores in Sucrose Solutions</h1></div>
+<nav data-zsa-header-tools aria-label="Instructions and sharing">
+<button class="zsa-btn" id="zsa-os-instructions-open" type="button" aria-haspopup="dialog" aria-controls="zsa-os-instructions">Instructions</button>
+<button class="zsa-btn" id="zsa-os-share-open" type="button" aria-expanded="false" aria-controls="zsa-os-share-panel" data-zsa-chrome>Share</button>
+<button class="zsa-btn" id="zsa-os-reset" type="button">Start over</button>
+</nav></div>
+<section class="zsa-os-card" id="zsa-os-share-panel" hidden data-zsa-chrome aria-labelledby="zsa-os-share-title">
+<h2 id="zsa-os-share-title">Share this activity</h2><p>Share a fresh lab. Only the language is included.</p>
+<p><a id="zsa-os-share-link" href="https://activities.zornscience.org/osmosis-lab/">Activity link</a></p>
+<button class="zsa-btn" id="zsa-os-share-copy" type="button">Copy link</button>
+<button class="zsa-btn" id="zsa-os-share-close" type="button">Close share options</button>
+<p id="zsa-os-share-status" role="status"></p></section></header>
+<a class="zsa-back" id="zsa-os-back" data-zsa-chrome href="https://zornscience.org/science/biology/">Back to the lesson</a>
+<nav class="zsa-os-steps" id="zsa-os-steps" aria-label="Lab steps"></nav>
+<section class="zsa-os-step" id="zsa-os-step-hook" hidden></section>
+<section class="zsa-os-step" id="zsa-os-step-bench" hidden></section>
+<section class="zsa-os-step" id="zsa-os-step-graph" hidden></section>
+<section class="zsa-os-step" id="zsa-os-step-zoom" hidden></section>
+<section class="zsa-os-step" id="zsa-os-step-check" hidden></section>
+<section class="zsa-os-step" id="zsa-os-step-copy" hidden></section>
+<p class="zsa-sr-only" id="zsa-os-live" role="status" aria-live="polite" aria-atomic="true"></p>
+<svg class="zsa-os-drag-layer" id="zsa-os-drag" aria-hidden="true" focusable="false"></svg>
+<!-- zsa-about --><section class="zsa-about" data-zsa-about="osmosis-lab" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Soak potato cores in six sucrose solutions, weigh them before and after, graph the percent change in mass and find where water stops moving in or out.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="bio-lessons"><a href="https://zornscience.org/science/biology/">Biology lessons</a><span data-zsa-lesson-course>Biology</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer" data-zsa-chrome><span>ZornScience · CC BY-NC-SA 4.0</span><a href="../">All activities</a></footer>
+<dialog class="zsa-header-dialog" id="zsa-os-instructions" aria-labelledby="zsa-os-instructions-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-os-instructions-title">Instructions</h2><button class="zsa-btn" id="zsa-os-instructions-close" type="button" autofocus>Close instructions</button></div>
+<p>This is a simulation. You will soak potato cores in six sugar solutions for 24 hours and find out which way water moves.</p>
+<p>To move a core, drag it. Or tap it, then tap where it should go. With a keyboard, use Tab and Enter.</p>
+<p>Weigh each core before it goes in a beaker. After 24 hours, blot each core dry on the paper towel before you weigh it again.</p>
+<p>You can redo any step. Nothing is saved or sent. Reloading the page clears your work, so copy your data at the end.</p>
+<p>This is an illustrative teaching model. Real potatoes vary.</p>
+</dialog><noscript>This simulation requires JavaScript.</noscript>
+</main></body></html>
