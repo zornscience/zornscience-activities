@@ -88,6 +88,7 @@ iodine-clock-lab/          Iodine Clock Lab, v1.1.4 (concentration and temperatu
 fruit-fly-genetics-lab/    Genetics Lab: Crossing Fruit Flies, v1.0.0 (grade 9 Biology, Punnett squares by drag, tap or keyboard, seeded offspring at 8, 40 and 200, F1 to F2, test crosses on mystery parents, check questions, optional dihybrid, tab-separated data copy; Spanish written, toggle off until proofread)
 osmosis-lab/               Osmosis: Potato Cores in Sucrose Solutions, v1.0.0 (grade 9 Biology, seeded masses and noise, blotting, three trials, graphing to the isotonic point, membrane zoom and tab-separated data copy; Spanish written, toggle off until proofread)
 population-sampling-lab/   Population Sampling Lab, v1.0.0 (grade 9 Biology, seeded quadrats, mark and recapture, sampling bias and worksheet tables; English and Mexican Spanish)
+enzyme-lab/                Enzyme Activity Lab, v1.0.0 (grade 9 Biology, catalase fair tests of temperature or pH, ruler measurement, graphing an optimum, active site zoom; Spanish drafted, hidden until proofread)
 leaf-disk-lab/             Leaf Disk Lab, v1.1.0 (grade 9 Biology, floating spinach disks, guided photosynthesis investigations and graphs; English and Mexican Spanish)
 net-ionic-lab/             Net Ionic Reactions Lab, v1.1.3 (ten reagent pairs: precipitates, metal displacement and no visible reaction; English and Mexican Spanish)
 flame-test-lab/            Virtual Flame Test Lab, v1.1.3 (eight known metal salts and an unknown in a Bunsen burner; English and Mexican Spanish)
