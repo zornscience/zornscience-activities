@@ -3494,3 +3494,20 @@ Mexican Spanish, tú, decimal points unchanged. Previously approved equivalents 
 | spread of estimates | dispersión de las estimaciones | needs review |
 | Data for your worksheet | Datos para tu hoja de trabajo | needs review |
 | Answer these in your document | Responde estas preguntas en tu documento | needs review |
+
+## Atwood Machine lab check (atwood-machine 1.2.0)
+
+The shared Lab check labels are the Gas lab pilot's (Comprobación del laboratorio, Preparar el laboratorio, Comprobar, Muéstrame, Empezar de nuevo, Código de finalización). Readout and button names follow the lab: fuerza neta (NET DRIVING FORCE), tensión de la cuerda, portapesas, Pasar 25 g →, Masas iguales, Soltar las masas, Recorrido completo, Flechas de gravedad y tensión, n/d.
+
+| English | Mexican Spanish | Use |
+| --- | --- | --- |
+| Double the difference | El doble de diferencia | Question title, noun phrase. |
+| Add mass to both sides | Más masa en los dos lados | Question title, noun phrase. |
+| Tension in the string | La tensión de la cuerda | Question title. |
+| Time the fall | Mide el tiempo de la caída | Question title. |
+| light hanger / heavy hanger | portapesas ligero / portapesas pesado | The two hangers in questions 3 and 4. |
+| (the hanger) speeds up | (el portapesas) aumenta su rapidez | Uses rapidez, as in the SPEED readout. |
+| readout (the tension readout) | lectura (la lectura de la tensión) | A number the lab shows. |
+| statement (Which statement matches the lab?) | enunciado | Choice wording. |
+| fall freely | caer libremente | Free-fall distractor. |
+| What does the acceleration read now? | ¿Qué indica ahora la aceleración? | Same verb (indicar) as the Gas lab check. |

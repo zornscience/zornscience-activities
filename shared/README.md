@@ -124,7 +124,7 @@ The round summary of a full mixed round, right under "Round complete", shows "Co
 
 There is no code for single practice, Practice my misses or an unfinished round, for a round started with any type other than `"mixed"` (Periodic Trends Practice starts a round of one trend as `"trend"`, so it gives no code), for an activity that is not registered, or when the result does not fit the activity's registered layout (then the summary is exactly as before).
 
-Activities with codes: the Ion Charge Trainer (`ICT`), the Ionic Formula Builder (`IFB`, retired; its codes still check), Periodic Trends Practice (`PTR`) and the Lewis Structure and VSEPR Builder (`LVB` with the octet rule, `LVA` with the AP setting).
+Activities with codes: the Ion Charge Trainer (`ICT`), the Ionic Formula Builder (`IFB`, retired; its codes still check), Periodic Trends Practice (`PTR`), the Lewis Structure and VSEPR Builder (`LVB` with the octet rule, `LVA` with the AP setting), the Gas Laws and KMT Lab (`GAS` for its Investigations, `GLC` for its Lab check) and the Atwood Machine Lab check (`ALC`, for example `ALC-03EV-SG02-2F0H-8A9`).
 
 ### Format
 

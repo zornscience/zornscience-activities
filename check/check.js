@@ -35,7 +35,8 @@
   function cells(row) {
     var r = row.result, ok = r.status === "valid" || r.status === "future";
     var steps = ok ? r.stats.filter(function (s) {return s.total > 0;}).map(function (s) {return s.label + ": " + s.correct + " / " + s.total;}) : [];
-    if (ok && r.activity.prefix === "GLC") {
+    // Every lab check (setting "Lab check": GLC, ALC, ...) also gets its first-try score in words.
+    if (ok && r.activity.setting === "Lab check") {
       var score = r.stats.reduce(function (sum, s) { return sum + s.correct; }, 0);
       steps.unshift(score + " of " + r.items + " right on the first try.");
     }

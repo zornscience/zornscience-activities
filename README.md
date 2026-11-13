@@ -67,7 +67,7 @@ qs-direct-and-inverse-relationships-practice/  Direct and Inverse Relationships 
 qs-exponents-and-logarithms-practice/  Exponents and Logarithms Practice, v1.0.1 (generated sets: exponent rules, scientific notation, logs of powers of ten, pH and [H+] with scored precision; English and Mexican Spanish)
 qs-trigonometry-basics-practice/  Trigonometry Basics Practice, v1.0.1 (generated sets: naming the sides, SOH CAH TOA, finding a side, finding an angle; labeled right triangle; English and Mexican Spanish)
 qs-vectors-practice/  Vectors Practice, v1.0.1 (generated sets: scalars and vectors, same and opposite directions, perpendicular vectors, components; English and Mexican Spanish)
-atwood-machine/           The Atwood Machine, v1.1.3 (ideal pulley, adjustable masses and live vectors; no data recording; English and Mexican Spanish)
+atwood-machine/           The Atwood Machine, v1.2.0 (ideal pulley, adjustable masses and live vectors; optional Lab check with an ALC completion code; English and Mexican Spanish)
 physics-graphing-lab/      Physics Graphing Lab, v1.1.3 (a cart with linked position, velocity and acceleration graphs; English and Mexican Spanish)
 collision-carts/           Collision Carts, v1.1.3 (two carts on a track, elastic and inelastic collisions, live velocity and momentum vectors; English and Mexican Spanish)
 ph-buffer-lab/             pH & Buffer Lab, v1.0.4 (pH exploration, buffer design, capacity experiments and challenges; English and Mexican Spanish)

@@ -10,6 +10,8 @@ function render(id,markup){
  $(id).replaceChildren(...Array.from(parsed.documentElement.childNodes).map(n=>document.importNode(n,true)));
 }
 let time=0,running=false,ended=false,last=null,model;
+// The readout formatters, shared with the lab check so its choices match the screen exactly.
+const fixed3=x=>x.toFixed(3),clock=t=>t.toFixed(2);
 const mass=i=>Number($('m'+i).value)/1000;
 function hanger(x,y,m,label){
  const count=Math.ceil((m*1000-50)/50),discHeight=count?Math.min(8,52/count):0;
@@ -28,13 +30,13 @@ function draw(){
  if(!ended&&$('forces').checked){for(const [x,y,m] of [[353,y1,mass(1)],[548,y2,mass(2)]])v+=arrow(x,y+25,m*9.81*15,'g','mg')+arrow(x,y+25,-model.tension*15,'t','T');}
  render('vectors',v);
  $('m1-value').textContent=mass(1)*1000+' g';$('m2-value').textContent=mass(2)*1000+' g';
- for(const [id,value,unit] of [['a',model.a,'m/s²'],['f',model.force,'N'],['t',model.tension,'N'],['v',Math.abs(model.a*time),'m/s']]) {const target=$(id+'-value');target.textContent=ended?t('n/a'):value.toFixed(3)+' ';if(!ended){const small=document.createElement('small');small.textContent=unit;target.append(small);}}
- $('clock').textContent=time.toFixed(2)+' s';
+ for(const [id,value,unit] of [['a',model.a,'m/s²'],['f',model.force,'N'],['t',model.tension,'N'],['v',Math.abs(model.a*time),'m/s']]) {const target=$(id+'-value');target.textContent=ended?t('n/a'):fixed3(value)+' ';if(!ended){const small=document.createElement('small');small.textContent=unit;target.append(small);}}
+ $('clock').textContent=clock(time)+' s';
  $('release').textContent=t(ended?'Travel complete':running?'Ⅱ Pause':time>0?'▶ Resume':'▶ Release masses');$('release').disabled=ended;
  $('state').textContent=t(ended?'TRAVEL LIMIT / RESET TO REPEAT':running?'IN MOTION':time>0?'PAUSED':'READY TO RELEASE');
  $('direction').textContent=t(ended?'Travel limit reached. Reset to repeat.':model.a===0?'Balanced: no acceleration.':model.a>0?'Right side accelerates down.':'Left side accelerates down.');
  $('insight').textContent=t(model.a===0?'Equal weights balance. Released from rest, both hangers remain stationary.':'The weight difference drives the motion; both masses contribute inertia.');
- $('scene-desc').textContent=t('Left mass {m1} grams, right mass {m2} grams. {direction} {motion}',{m1:mass(1)*1000,m2:mass(2)*1000,direction:$('direction').textContent,motion:ended?t('Free motion ended.'):t('Acceleration {a} meters per second squared.',{a:Math.abs(model.a).toFixed(3)})});
+ $('scene-desc').textContent=t('Left mass {m1} grams, right mass {m2} grams. {direction} {motion}',{m1:mass(1)*1000,m2:mass(2)*1000,direction:$('direction').textContent,motion:ended?t('Free motion ended.'):t('Acceleration {a} meters per second squared.',{a:fixed3(Math.abs(model.a))})});
 }
 function reset(){time=0;running=false;ended=false;last=null;draw();}
 for(const id of ['m1','m2'])$(id).addEventListener('input',reset);
@@ -51,4 +53,9 @@ document.addEventListener('visibilitychange',()=>{last=null;});
 function frame(now){if(running&&!document.hidden){if(last!==null){time+=Math.min((now-last)/1000,.05)*Number($('speed').value);if(model.a!==0){const endTime=Math.sqrt(2*P.limit/Math.abs(model.a));if(time>=endTime){time=endTime;running=false;ended=true;}}draw();}last=now;}else last=null;requestAnimationFrame(frame);}
 render('ruler','<path d="M742 230V430" stroke="#7894a4"/>'+Array.from({length:13},(_,i)=>`<path d="M742 ${230+i*(50/3)}h${i%2?7:12}" stroke="#7894a4"/>${i%2?'':`<text x="763" y="${234+i*(50/3)}">${(i/10).toFixed(1)}</text>`}`).join('')+'<text x="739" y="215">m</text>');
 reset();transferState();requestAnimationFrame(frame);
+// The lab check (labcheck.js) reaches the lab through this event, never a global. setup() puts both hangers at a
+// question's starting masses and does what a slider change does (reset, readouts, Transfer state), with real-time
+// playback, acceleration arrows on and gravity and tension arrows off. It never makes the question's change.
+function setup(s){$('m1').value=s.m1;$('m2').value=s.m2;$('speed').value='1';$('accel').checked=true;$('forces').checked=false;reset();transferState();}
+root.addEventListener('zsa-at:request-lab',e=>e.detail.receive({setup,physics:P,format:{fixed3,clock}}));
 }());
