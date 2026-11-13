@@ -3583,3 +3583,19 @@ The shared Lab check labels are the Gas lab pilot's. Readout and control names f
 | About {percent}% longer / shorter | Aproximadamente {percent}% más largo / más corto | Question 4 choices. |
 | a weaker pull back toward the bottom | jala la esfera con menos fuerza de regreso hacia la parte más baja | Moon feedback. |
 
+## Hooke's Law lab check (hookes-law-lab 1.3.0)
+
+The shared Lab check labels are the Gas lab pilot's. Control and readout names follow the lab: resorte, Resorte A, Resorte C (rígido), constante del resorte, portapesas, pesas ranuradas, elongación en equilibrio, periodo medido, desplazamiento al soltar, Jalar y soltar, Mostrar fuerzas, fuerza del resorte, fuerza neta, peso. Question 3's title reuses the Investigate option Masa y periodo.
+
+| English | Mexican Spanish | Use |
+| --- | --- | --- |
+| A stiffer spring | Un resorte más rígido | Question title. |
+| Double the weight | El doble de peso | Question title. |
+| A bigger pull | Un jalón más grande | Question title; jalón as in the lab's "pull (noun)". |
+| Net force on the mass | Fuerza neta sobre la masa | Question title. |
+| stretch (noun) / it stretches | estiramiento / se estira | Hooke's law explanation; the readout itself is elongación. |
+| bounce (each bounce, bounce faster) | rebote / rebotar | Period distractors. |
+| the down arrow key | la tecla de flecha hacia abajo | Question 5. |
+| the force description | la descripción de las fuerzas | The Show forces sentence under the apparatus. |
+| The period grows by √2. | El periodo aumenta √2 veces. | Amplitude distractor. |
+
