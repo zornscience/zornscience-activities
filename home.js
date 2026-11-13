@@ -26,6 +26,10 @@
   "Osmosis: Potato Cores in Sucrose Solutions": "Ósmosis: cilindros de papa en soluciones de sacarosa",
   "Cell transport": "Transporte celular",
   "Weigh potato cores before and after a day in six sugar solutions. Graph the percent change in mass to find where water stops moving.": "Pesa cilindros de papa antes y después de un día en seis soluciones de azúcar. Grafica el cambio porcentual de masa para encontrar dónde el agua deja de moverse.",
+  // Feed the Yeast's Spanish is written but not yet proofread, so its card opens the English page (pendingSpanish below).
+  "Fermentation": "Fermentación",
+  "Feed the Yeast: Fermentation and Energy": "Alimenta a la levadura: fermentación y energía",
+  "Feed yeast four foods and measure the gas in balloons. Fix an unfair setup, graph where more sugar stops helping, and zoom inside a yeast cell.": "Alimenta a la levadura con cuatro alimentos y mide el gas en globos. Corrige un montaje injusto, grafica dónde más azúcar deja de ayudar y observa el interior de una célula de levadura.",
   "Populations": "Poblaciones",
   "Estimate hidden plant and fish populations with quadrats and mark and recapture. Compare sample sizes, random placement and sampling bias.": "Estima poblaciones ocultas de plantas y peces con cuadrantes y captura y recaptura. Compara tamaños de muestra, colocación al azar y sesgo de muestreo.",
   // Header and navigation
@@ -265,8 +269,8 @@
   var links = Array.from(root.querySelectorAll("a[href]")).map(function (a) { return [a, a.getAttribute("href")]; });
   // Activities whose Spanish is written but not yet proofread open in English, and their Spanish card says so.
   // Remove an activity from this list when its flag is turned on (SPANISH_READY in osmosis-lab, SPANISH_PUBLISHED in
-  // fruit-fly-genetics-lab).
-  var pendingSpanish = ["osmosis-lab/", "fruit-fly-genetics-lab/"];
+  // fruit-fly-genetics-lab, spanishReady in yeast-fermentation-lab/data.js).
+  var pendingSpanish = ["osmosis-lab/", "fruit-fly-genetics-lab/", "yeast-fermentation-lab/"];
   i18n.configure(copy);
   links.forEach(function (pair) {
     var href = pair[1], local = !/^(?:[a-z]+:|\/\/|#)/i.test(href);
