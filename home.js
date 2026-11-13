@@ -13,7 +13,11 @@
   "Biology labs": "Laboratorios de biología",
   "Photosynthesis": "Fotosíntesis",
   "Leaf Disk Lab": "Laboratorio de discos de hoja",
-  "Explore photosynthesis and respiration with evidence from a virtual experiment.": "Explora la fotosíntesis y la respiración con evidencia de un experimento virtual.",
+  "Explore photosynthesis, populations and genetics with evidence from virtual experiments.": "Explora la fotosíntesis, las poblaciones y la genética con evidencia de experimentos virtuales.",
+  "Genetics": "Genética",
+  // The genetics lab's Spanish is written but not yet proofread, so its card opens the English page (see below).
+  "Genetics Lab: Crossing Fruit Flies": "Laboratorio de genética: cruzas de moscas de la fruta",
+  "Breed fruit flies, build Punnett squares and watch real offspring counts approach your prediction. Then use a test cross to unmask a mystery parent.": "Cruza moscas de la fruta, construye cuadros de Punnett y observa cómo los conteos reales de descendientes se acercan a tu predicción. Luego usa una cruza de prueba para descubrir a un progenitor misterioso.",
   "Float spinach leaf disks to compare light color, brightness, temperature and bicarbonate. Use your data to explain the rate of photosynthesis.": "Haz flotar discos de hoja de espinaca para comparar el color y la intensidad de la luz, la temperatura y el bicarbonato. Usa tus datos para explicar la tasa de fotosíntesis.",
   "Population Sampling Lab": "Laboratorio de muestreo de poblaciones",
   "Populations": "Poblaciones",
@@ -259,6 +263,14 @@
     pair[0].setAttribute("href", local && i18n.lang === "es" ? href + (href.indexOf("?") >= 0 ? "&" : "?") + "lang=es" : href);
   });
   if (i18n.lang !== "es") return;
+  // Activities whose Spanish is not proofread yet: the card links to the English page and says so. Remove a folder
+  // from this list when its Spanish is published (fruit-fly-genetics-lab: SPANISH_PUBLISHED in its data.js).
+  ["fruit-fly-genetics-lab/"].forEach(function (href) {
+    var a = root.querySelector('.zsa-home-card h3 a[href^="' + href + '"]');
+    if (!a) return;
+    a.setAttribute("href", href);
+    a.parentNode.appendChild(document.createTextNode(" (en inglés)"));
+  });
   // The ACT activities have no Spanish version: their names stay in English, followed by " (en inglés)".
   root.querySelectorAll('.zsa-home-card h3 a[href^="act/"], .zsa-home-card h3 a[href^="act-question-generator/"]').forEach(function (a) {
     a.parentNode.appendChild(document.createTextNode(" (en inglés)"));

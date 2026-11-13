@@ -17,6 +17,7 @@
   // key: [course, path below the course, English title, Spanish title]
   var LESSONS = {
     "bio-population-sampling": ["bio", "unit-2-populations/population-sampling/", "Population Sampling", "Muestreo de poblaciones (needs review)"],
+    "bio-course": ["bio", "", "Biology", "Biología"],
     "bio-photosynthesis": ["bio", "unit-8-photosynthesis-and-respiration/rates-of-photosynthesis/", "Rates of Photosynthesis", "Tasas de fotosíntesis (needs review)"],
     "act-prep": ["students", "act/", "ACT Prep", "Preparación para el ACT"],
     "ap-unit-1": ["ap", "unit-1-atomic-structure-and-properties/", "Unit 1: Atomic Structure and Properties", "Unidad 1: Estructura atómica y propiedades"],
@@ -139,6 +140,9 @@
     "population-sampling-lab": {lessons: ["bio-population-sampling"],
       en: "Estimate hidden meadow and pond populations with quadrats and mark and recapture. Compare random placement, sample size, repeated trials and biased sampling.",
       es: "Estima las poblaciones ocultas de un prado y un estanque con cuadrantes y captura y recaptura. Compara la colocación al azar, el tamaño de muestra, los ensayos repetidos y el muestreo sesgado."},
+    "fruit-fly-genetics-lab": {lessons: ["bio-course"],
+      en: "Breed fruit flies to follow wing shape and eye color. Build Punnett squares, compare predictions with offspring counts, and use a test cross to find a hidden genotype.",
+      es: "Cruza moscas de la fruta para seguir la forma de las alas y el color de los ojos. Construye cuadros de Punnett, compara predicciones con conteos de descendientes y usa una cruza de prueba para encontrar un genotipo oculto."},
     "leaf-disk-lab": {lessons: ["bio-photosynthesis"],
       en: "Measure photosynthesis with floating spinach leaf disks. Compare light color, brightness, temperature and bicarbonate, then explain your evidence.",
       es: "Mide la fotosíntesis con discos de hoja de espinaca que flotan. Compara el color y la intensidad de la luz, la temperatura y el bicarbonato, y explica tu evidencia."},
