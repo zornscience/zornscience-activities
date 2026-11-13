@@ -86,6 +86,7 @@ chemical-bonding-lab/      Chemical Bonding Lab, v1.1.4 (four unknown solids tes
 metals-lab/                Metals, Nonmetals & Metalloids Lab, v1.1.4 (classify three unknown solids from physical and chemical evidence; English and Mexican Spanish)
 iodine-clock-lab/          Iodine Clock Lab, v1.1.4 (concentration and temperature trials with a timed blue endpoint and a 20-second challenge; English and Mexican Spanish)
 population-sampling-lab/   Population Sampling Lab, v1.0.0 (grade 9 Biology, seeded quadrats, mark and recapture, sampling bias and worksheet tables; English and Mexican Spanish)
+enzyme-lab/                Enzyme Activity Lab, v1.0.0 (grade 9 Biology, catalase fair tests of temperature or pH, ruler measurement, graphing an optimum, active site zoom; Spanish drafted, hidden until proofread)
 leaf-disk-lab/             Leaf Disk Lab, v1.1.0 (grade 9 Biology, floating spinach disks, guided photosynthesis investigations and graphs; English and Mexican Spanish)
 net-ionic-lab/             Net Ionic Reactions Lab, v1.1.3 (ten reagent pairs: precipitates, metal displacement and no visible reaction; English and Mexican Spanish)
 flame-test-lab/            Virtual Flame Test Lab, v1.1.3 (eight known metal salts and an unknown in a Bunsen burner; English and Mexican Spanish)

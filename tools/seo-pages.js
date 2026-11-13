@@ -9,6 +9,10 @@ module.exports = {
     en: "Estimate hidden plant and fish populations with quadrats and mark and recapture. Compare random samples, sample sizes and bias in this Biology lab.",
     es: "Estima poblaciones ocultas de plantas y peces con cuadrantes y captura y recaptura. Compara muestras al azar, tamaños y sesgo en este laboratorio."
   },
+  "enzyme-lab": {
+    en: "Test what makes the enzyme catalase work best. Run a fair test of temperature or pH, measure foam, graph the optimum and see the active site denature.",
+    es: null
+  },
   "leaf-disk-lab": {
     en: "Explore photosynthesis with floating spinach leaf disks. Compare light, temperature and bicarbonate in a bilingual Biology lab from ZornScience.",
     es: "Explora la fotosíntesis con discos de espinaca que flotan. Compara luz, temperatura y bicarbonato en un laboratorio bilingüe de ZornScience."
