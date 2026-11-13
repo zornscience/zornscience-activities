@@ -19,6 +19,7 @@
     // Placeholder until the osmosis lesson's address is confirmed: the Biology course page.
     "bio-lessons": ["bio", "", "Biology lessons", "Lecciones de Biología (needs review)"],
     "bio-population-sampling": ["bio", "unit-2-populations/population-sampling/", "Population Sampling", "Muestreo de poblaciones (needs review)"],
+    "bio-course": ["bio", "", "Biology", "Biología"],
     "bio-photosynthesis": ["bio", "unit-8-photosynthesis-and-respiration/rates-of-photosynthesis/", "Rates of Photosynthesis", "Tasas de fotosíntesis (needs review)"],
     "act-prep": ["students", "act/", "ACT Prep", "Preparación para el ACT"],
     "ap-unit-1": ["ap", "unit-1-atomic-structure-and-properties/", "Unit 1: Atomic Structure and Properties", "Unidad 1: Estructura atómica y propiedades"],
@@ -147,6 +148,9 @@
     "enzyme-lab": {lessons: ["bio-lessons"],
       en: "Find out what makes catalase work best. Set up a fair test of temperature or pH, measure the foam, graph an optimum and zoom in on the active site.",
       es: "Descubre qué hace que la catalasa funcione mejor. Prepara una prueba justa de temperatura o pH, mide la espuma, grafica el óptimo y observa el sitio activo."},
+    "fruit-fly-genetics-lab": {lessons: ["bio-course"],
+      en: "Breed fruit flies to follow wing shape and eye color. Build Punnett squares, compare predictions with offspring counts, and use a test cross to find a hidden genotype.",
+      es: "Cruza moscas de la fruta para seguir la forma de las alas y el color de los ojos. Construye cuadros de Punnett, compara predicciones con conteos de descendientes y usa una cruza de prueba para encontrar un genotipo oculto."},
     "leaf-disk-lab": {lessons: ["bio-photosynthesis"],
       en: "Measure photosynthesis with floating spinach leaf disks. Compare light color, brightness, temperature and bicarbonate, then explain your evidence.",
       es: "Mide la fotosíntesis con discos de hoja de espinaca que flotan. Compara el color y la intensidad de la luz, la temperatura y el bicarbonato, y explica tu evidencia."},

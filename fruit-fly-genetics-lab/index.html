@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0"><title>Genetics Lab: Crossing Fruit Flies | ZornScience</title>
+<meta name="description" content="Breed virtual fruit flies, build Punnett squares and compare predicted ratios with real offspring counts in a free Biology genetics lab.">
+<link rel="canonical" href="https://activities.zornscience.org/fruit-fly-genetics-lab/">
+<link rel="icon" href="../favicon.png?v=1.0.0" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=1.0.0">
+<link rel="stylesheet" href="lab.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="data.js?v=1.0.0" defer></script>
+<script src="model.js?v=1.0.0" defer></script>
+<script src="lab.js?v=1.0.0" defer></script>
+<script src="share.js?v=1.0.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.0.0"><script src="../shared/zsa-about.js?v=1.0.0" defer></script></head><body><main class="zsa zsa-ff" data-zsa-activity="fruit-fly-genetics-lab">
+<header data-zsa-header class="zsa-th-header">
+<div data-zsa-header-row class="zsa-th-topline">
+<div data-zsa-header-identity class="zsa-th-identity"><a data-zsa-header-brand class="zsa-th-brand" href="https://zornscience.org/" aria-label="ZornScience home" data-i18n-label="ui.home" data-zsa-chrome>
+<img src="../ionic-reactions/zornscience-logo.png?v=1.0.0" alt="" width="40" height="39">
+</a><h1 data-i18n="title">Genetics Lab: Crossing Fruit Flies</h1></div>
+<nav data-zsa-header-tools class="zsa-th-header-tools" aria-label="Instructions and sharing" data-i18n-label="ui.toolsNav">
+<div class="zsa-th-header-buttons">
+<button class="zsa-btn zsa-th-instructions-open" id="zsa-th-instructions-open" type="button" aria-haspopup="dialog" aria-controls="instructions" data-i18n="ui.instructions">Instructions</button>
+<button class="zsa-btn zsa-th-share-toggle" id="zsa-th-share-toggle" type="button" aria-label="Share activity" data-i18n-label="ui.shareActivity" aria-expanded="false" aria-controls="zsa-th-share-panel" data-zsa-chrome><span data-i18n="ui.share">Share</span></button>
+</div>
+</nav>
+</div>
+<section class="zsa-th-share-panel" id="zsa-th-share-panel" aria-labelledby="zsa-th-share-title" data-zsa-chrome hidden>
+<div class="zsa-th-share-heading">
+<h2 id="zsa-th-share-title" data-i18n="ui.shareTitle">Share this activity</h2>
+<button class="zsa-th-icon-button" id="zsa-th-share-close" type="button" aria-label="Close share options" data-i18n-label="ui.closeShare"><span aria-hidden="true">×</span></button>
+</div>
+<p class="zsa-th-small" data-i18n="ui.shareNote">Share a fresh lab. Your flies and answers are not included.</p>
+<label class="zsa-th-share-label" for="zsa-th-share-url" data-i18n="ui.shareLink">Share link</label>
+<div class="zsa-th-share-link">
+<input id="zsa-th-share-url" type="text" readonly spellcheck="false">
+<button class="zsa-btn zsa-btn--primary" id="zsa-th-share-copy" type="button" data-i18n="ui.copyLink">Copy link</button>
+</div>
+<div class="zsa-th-share-options">
+<a id="zsa-th-share-email" href="#"><span data-i18n="ui.email">Email</span></a>
+<button class="zsa-btn" id="zsa-th-share-device" type="button" data-i18n="ui.moreShare" hidden>More share options</button>
+</div>
+<p class="zsa-th-share-status" id="zsa-th-share-status" aria-live="polite" aria-atomic="true"></p>
+</section>
+</header>
+<a class="zsa-back" id="zsa-ff-back" data-zsa-chrome href="https://zornscience.org/science/biology/" data-i18n="ui.back">Back to Biology</a>
+<nav class="zsa-ff-steps" aria-label="Lab steps" data-i18n-label="ui.stepsNav">
+<ol id="zsa-ff-step-list"></ol>
+<button class="zsa-btn zsa-ff-reset" id="zsa-ff-reset" type="button" aria-haspopup="dialog" data-i18n="ui.reset">Start over</button>
+</nav>
+<section class="zsa-ff-card" id="zsa-ff-stage" aria-labelledby="zsa-ff-step-title">
+<p class="zsa-eyebrow" id="zsa-ff-step-count">Step 1 of 9</p>
+<h2 id="zsa-ff-step-title" tabindex="-1">A family mystery</h2>
+<div id="zsa-ff-step-body"><noscript>This lab needs JavaScript.</noscript></div>
+</section>
+<div class="zsa-ff-pager">
+<button class="zsa-btn" id="zsa-ff-prev" type="button" data-i18n="ui.prev">Back</button>
+<button class="zsa-btn zsa-btn--primary" id="zsa-ff-next" type="button">Next</button>
+</div>
+<p class="zsa-sr-only" id="zsa-ff-live" aria-live="polite" aria-atomic="true"></p>
+<details class="zsa-ff-model"><summary data-i18n="ui.modelTitle">About this model</summary>
+<p data-i18n="ui.model1">This lab models two real fruit fly (Drosophila melanogaster) genes. Vestigial wings and sepia eyes are both recessive, and the two genes are on different chromosomes, so they are inherited independently.</p>
+<p data-i18n="ui.model2">Every offspring gets one random allele from each parent, like flipping a coin for each parent. That is why real counts only come close to the Punnett square prediction.</p>
+<p data-i18n="ui.model3">Real flies are more complicated. Some genes sit on the X chromosome, and temperature can change how vestigial wings look. This lab leaves those out.</p>
+</details>
+<!-- zsa-about --><section class="zsa-about" data-zsa-about="fruit-fly-genetics-lab" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Breed fruit flies to follow wing shape and eye color. Build Punnett squares, compare predictions with offspring counts, and use a test cross to find a hidden genotype.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="bio-course"><a href="https://zornscience.org/science/biology/">Biology</a><span data-zsa-lesson-course>Biology</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer" data-zsa-chrome><span>ZornScience · CC BY-NC-SA 4.0</span><a href="../" data-i18n="ui.allActivities">All activities</a></footer>
+<dialog class="zsa-header-dialog" id="instructions" aria-labelledby="instructions-title">
+<div class="zsa-header-dialog-heading"><h2 id="instructions-title" data-i18n="ui.instructions">Instructions</h2><button class="zsa-btn" id="close-instructions" type="button" aria-label="Close instructions" data-i18n-label="ui.closeInstructions" autofocus>×</button></div>
+<p data-i18n="instr.1">Breed fruit flies to see how two traits are passed from parents to offspring: wing shape and eye color.</p>
+<p data-i18n="instr.2">Work through the numbered steps. Tap or click to choose answers. In the Punnett square, drag an allele tile into a box, or tap a tile and then tap a box. With a keyboard, press Enter on a tile and then Enter on a box.</p>
+<p data-i18n="instr.3">You can go back and redo any step. Nothing is graded, and nothing is saved or sent. Reloading the page or pressing Start over clears your work.</p>
+<p data-i18n="instr.4">When you finish, open Copy my data. It copies your crosses and counts so you can paste them into your worksheet or document. Write your answers there.</p>
+</dialog>
+<dialog class="zsa-header-dialog zsa-ff-confirm" id="zsa-ff-reset-dialog" aria-labelledby="zsa-ff-reset-title">
+<h2 id="zsa-ff-reset-title" data-i18n="ui.resetTitle">Start over?</h2>
+<p data-i18n="ui.resetText">This clears every step on this page. You will get the same mystery flies again.</p>
+<div class="zsa-ff-row"><button class="zsa-btn zsa-btn--primary" id="zsa-ff-reset-confirm" type="button" data-i18n="ui.resetConfirm">Yes, start over</button><button class="zsa-btn" id="zsa-ff-reset-cancel" type="button" data-i18n="ui.cancel" autofocus>Cancel</button></div>
+</dialog>
+</main></body></html>

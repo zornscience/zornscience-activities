@@ -17,6 +17,11 @@ module.exports = {
     en: "Test what makes the enzyme catalase work best. Run a fair test of temperature or pH, measure foam, graph the optimum and see the active site denature.",
     es: null
   },
+  // Spanish is written in data.js but not proofread yet, so the page is English only here until SPANISH_PUBLISHED.
+  "fruit-fly-genetics-lab": {
+    en: "Breed virtual fruit flies, build Punnett squares and compare predicted ratios with real offspring counts in a free Biology genetics lab.",
+    es: null
+  },
   "leaf-disk-lab": {
     en: "Explore photosynthesis with floating spinach leaf disks. Compare light, temperature and bicarbonate in a bilingual Biology lab from ZornScience.",
     es: "Explora la fotosíntesis con discos de espinaca que flotan. Compara luz, temperatura y bicarbonato en un laboratorio bilingüe de ZornScience."
