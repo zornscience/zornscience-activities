@@ -3538,6 +3538,34 @@ Mexican Spanish, tú, decimal points and unchanged units. All strings are in osm
 | Cell transport (landing page topic) | Transporte celular | needs review |
 | Biology lessons (placeholder lesson link) | Lecciones de Biología | needs review |
 
+
+## Genetics Lab: Crossing Fruit Flies
+
+Mexican Spanish, tú. All strings are in fruit-fly-genetics-lab/data.js (one I18N object, en and es keyed by id). Not yet proofread: no language toggle, no Spanish hreflang, and "(en inglés)" on the landing page until SPANISH_PUBLISHED in data.js is true. Allele letters (N, n, R, r), genotypes and ratios stay unchanged.
+
+| English | Mexican Spanish | Review |
+| --- | --- | --- |
+| Genetics Lab: Crossing Fruit Flies | Laboratorio de genética: cruzas de moscas de la fruta | needs review |
+| fruit fly | mosca de la fruta | |
+| cross / test cross | cruza / cruza de prueba (cruza as in the pea plant cross above) | needs review |
+| parent | progenitor | needs review |
+| offspring | descendientes | needs review |
+| raise offspring | obtener descendientes | needs review |
+| allele / gamete | alelo / gameto | |
+| dominant / recessive | dominante / recesivo | |
+| genotype / phenotype | genotipo / fenotipo | |
+| homozygous / heterozygous | homocigoto / heterocigoto (homocigota / heterocigota for a mosca) | needs review |
+| true-breeding | de línea pura | needs review |
+| normal wings / vestigial wings | alas normales / alas vestigiales | |
+| red eyes / sepia eyes | ojos rojos / ojos sepia | |
+| Punnett square | cuadro de Punnett | |
+| vial | frasco | needs review |
+| allele tile / gamete tile | ficha de alelo / ficha de gameto | needs review |
+| percentage points | puntos porcentuales | |
+| Copy my data | Copiar mis datos | |
+| conclusion sentence starters | inicios de oraciones para tus conclusiones | needs review |
+| Genetics (landing page topic) | Genética | |
+
 ## Simple Pendulum lab check (pendulum-lab 1.3.0)
 
 The shared Lab check labels are the Gas lab pilot's. Readout and control names follow the lab: periodo del modelo (MODEL PERIOD), periodo para ángulos pequeños (SMALL-ANGLE PERIOD), rapidez de la esfera (BOB SPEED), ángulo actual, ángulo de liberación, gravedad, Luna, Avanzar (the Step +0.05 s button), energía total, la parte más baja, puntos de retorno, control deslizante. KE and PE are written EC and EP.
