@@ -3565,3 +3565,21 @@ Mexican Spanish, tú. All strings are in fruit-fly-genetics-lab/data.js (one I18
 | Copy my data | Copiar mis datos | |
 | conclusion sentence starters | inicios de oraciones para tus conclusiones | needs review |
 | Genetics (landing page topic) | Genética | |
+
+## Simple Pendulum lab check (pendulum-lab 1.3.0)
+
+The shared Lab check labels are the Gas lab pilot's. Readout and control names follow the lab: periodo del modelo (MODEL PERIOD), periodo para ángulos pequeños (SMALL-ANGLE PERIOD), rapidez de la esfera (BOB SPEED), ángulo actual, ángulo de liberación, gravedad, Luna, Avanzar (the Step +0.05 s button), energía total, la parte más baja, puntos de retorno, control deslizante. KE and PE are written EC and EP.
+
+| English | Mexican Spanish | Use |
+| --- | --- | --- |
+| Four times the length | Cuatro veces la longitud | Question title. |
+| A heavier bob | Una esfera más pesada | Question title. |
+| Take it to the Moon | Llévalo a la Luna | Question title. |
+| A big release angle | Un ángulo de liberación grande | Question title. |
+| Speed at the bottom | Rapidez en la parte más baja | Question title. |
+| swing (one swing, the swing gets slower) | oscilación | As in the lab's oscillation counter. |
+| drop height / the bob drops | altura de caída / la esfera baja | Question 5. |
+| {start} s becomes {right} s | {start} s se convierte en {right} s | Explanations. |
+| About {percent}% longer / shorter | Aproximadamente {percent}% más largo / más corto | Question 4 choices. |
+| a weaker pull back toward the bottom | jala la esfera con menos fuerza de regreso hacia la parte más baja | Moon feedback. |
+

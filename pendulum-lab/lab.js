@@ -6,7 +6,14 @@
   if (root) root.dispatchEvent(new CustomEvent('zsa:request-i18n', {detail: {receive: api => { i18n = api; }}}));
   // English is the fallback; data.js holds the Spanish for each full sentence template.
   const tr = (text, values) => i18n ? i18n.text(text, values) : text.replace(/\{(\w+)\}/g, (m, k) => values && values[k] !== undefined ? values[k] : m);
-  const svg = $('apparatus'), ns = 'http://www.w3.org/2000/svg', h = 1 / 240;
+  // The model (physics.js): the period, small-angle period, energy and RK4 step, shared with the lab check.
+  let P;
+  if (root) root.dispatchEvent(new CustomEvent('zsa-pl:request-physics', {detail: {receive: api => { P = api; }}}));
+  if (!P) return;
+  const {period, small, energy, integrate} = P;
+  // The readout formatters, shared with the lab check so its choices match the screen exactly.
+  const fixed3 = x => x.toFixed(3), fixed1 = x => x.toFixed(1), clock = x => x.toFixed(2);
+  const svg = $('apparatus'), ns = 'http://www.w3.org/2000/svg', h = P.h;
   let L, m, g, A, theta, w, t, running = false, started = false;
   let acc = 0, last = 0, dragging = false, side = 1, reference = null, experiment = '';
   function node(tag, attrs, text) {
@@ -27,13 +34,6 @@
     if (i % 2 === 0) $('ruler').append(node('text', {x: 767, y: 226 + i * 21.5, fill: '#453f32', 'font-size': 8, 'text-anchor': 'end'}, String(i * 10)));
   }
   $('ruler').append(node('text', {x: 785, y: 340, fill: '#b5cbd6', 'font-size': 11}, 'cm'));
-  function period(length, gravity, amplitude) {
-    if (!gravity || !amplitude) return null;
-    let a = 1, b = Math.cos(amplitude / 2);
-    for (let i = 0; i < 8; i++) { const c = (a + b) / 2; b = Math.sqrt(a * b); a = c; }
-    return 2 * Math.PI * Math.sqrt(length / gravity) / a;
-  }
-  function energy(mass, gravity, length, amplitude) { return mass * gravity * length * (1 - Math.cos(amplitude)); }
   function setRunning(value) {
     running = value;
     $('release').textContent = tr(running ? 'Ⅱ Pause' : started ? '▶ Resume' : '▶ Release bob');
@@ -59,9 +59,9 @@
     ['length', 'mass', 'angle'].forEach(id => $(id).setAttribute('aria-valuetext', $(id + '-value').textContent));
     // The badge is built from the English option name, then translated as a whole label.
     $('world-badge').textContent = tr({'9.81': 'EARTH', '1.62': 'MOON', '24.79': 'JUPITER', '0': 'ZERO GRAVITY'}[$('world').value] + ' LABORATORY');
-    $('period').textContent = g ? (2 * Math.PI * Math.sqrt(L / g)).toFixed(3) + ' s' : tr('No oscillation');
+    $('period').textContent = g ? fixed3(small(L, g)) + ' s' : tr('No oscillation');
     const actual = period(L, g, A);
-    $('actual').textContent = actual ? actual.toFixed(3) + ' s' : tr('No oscillation');
+    $('actual').textContent = actual ? fixed3(actual) + ' s' : tr('No oscillation');
     $('insight').textContent = tr(!g ? 'Without gravity there is no restoring force. A bob released from rest stays where it is.' : !A ? 'The bob is at equilibrium. Choose a release angle to start an oscillation.' : 'Length is measured from the pivot to the center of the bob. Watch how long a full return trip takes.');
     $('status').textContent = tr('Ready to release. Settings changes restart the motion.');
     reset();
@@ -82,14 +82,14 @@
     const scale = Math.max(E, refEnergy) || 1;
     ['pe', 'ke'].forEach((id, i) => {
       $(id).max = scale; $(id).value = i ? ke : pe;
-      $(id + '-value').textContent = (i ? ke : pe).toFixed(3) + ' J';
+      $(id + '-value').textContent = fixed3(i ? ke : pe) + ' J';
     });
-    $('total').textContent = tr('Total {energy} J', {energy: E.toFixed(3)});
-    $('energy-scale').textContent = reference ? tr('Same scale for both setups. Dashed reference total: {reference} J. Brass bob total: {total} J.', {reference: refEnergy.toFixed(3), total: E.toFixed(3)}) : tr('Both bars use the same joule scale. Total mechanical energy stays constant.');
+    $('total').textContent = tr('Total {energy} J', {energy: fixed3(E)});
+    $('energy-scale').textContent = reference ? tr('Same scale for both setups. Dashed reference total: {reference} J. Brass bob total: {total} J.', {reference: fixed3(refEnergy), total: fixed3(E)}) : tr('Both bars use the same joule scale. Total mechanical energy stays constant.');
     $('energy-cue').textContent = tr(!g ? 'Zero gravity: no gravitational potential energy and no motion from rest.' : !A ? 'At rest at the bottom: both energies are zero.' : Math.abs(theta) / A > .98 ? 'At a turning point: greatest height and potential energy; speed reaches zero.' : Math.abs(theta) / A < .12 ? 'At the bottom: lowest potential energy and greatest kinetic energy and speed.' : theta * w < 0 ? 'Moving down: potential energy transfers to kinetic energy. The bob speeds up.' : 'Moving up: kinetic energy transfers to potential energy. The bob slows down.');
-    $('velocity').textContent = (Math.abs(w) * L).toFixed(3) + ' m/s';
-    $('theta').textContent = (theta * 180 / Math.PI).toFixed(1) + '°';
-    $('clock').textContent = t.toFixed(2) + ' s';
+    $('velocity').textContent = fixed3(Math.abs(w) * L) + ' m/s';
+    $('theta').textContent = fixed1(theta * 180 / Math.PI) + '°';
+    $('clock').textContent = clock(t) + ' s';
     $('state').textContent = tr(running ? 'OSCILLATING' : started ? 'PAUSED' : 'READY TO RELEASE');
     const T = period(L, g, A), fraction = T ? t / T : 0, count = Math.floor(fraction);
     $('cycles').textContent = tr(count === 1 ? '{count} complete oscillation' : '{count} complete oscillations', {count: count});
@@ -100,12 +100,6 @@
       const labels = {mass: 'Only mass changes: 100 g → 200 g. Length, gravity and angle match. Predict: will the heavier bob swing faster?', length: 'Only length changes: 0.60 m → 1.20 m. Mass, gravity and angle match. Predict: will doubling length double the period?', moon: 'Only gravity changes: Earth → Moon. Mass, length and angle match. Predict: which pendulum will return first?'};
       $('comparison-result').textContent = tr(started ? experiment === 'mass' ? 'Same period, twice the energy. The dashed reference and brass bob stay together: extra mass increases both inertia and gravitational force.' : experiment === 'length' ? 'Twice the length gives √2 ≈ 1.41 times the period. The longer brass pendulum takes longer to return.' : 'The brass bob on the Moon has about 2.46 times Earth’s period. Weaker gravity gives a weaker restoring effect.' : labels[experiment]);
     }
-  }
-  function integrate(q, v, length, gravity, dt) {
-    const f = angle => -gravity / length * Math.sin(angle);
-    const a = v, b = f(q), c = v + dt * b / 2, d = f(q + dt * a / 2);
-    const e = v + dt * d / 2, f2 = f(q + dt * c / 2), j = v + dt * f2, k = f(q + dt * e);
-    return [q + dt * (a + 2 * c + 2 * e + j) / 6, v + dt * (b + 2 * d + 2 * f2 + k) / 6];
   }
   function step(dt) {
     [theta, w] = integrate(theta, w, L, g, dt);
@@ -130,7 +124,7 @@
   });
   $('step').addEventListener('click', () => {
     if (running || !g || !A) return;
-    started = true; for (let i = 0; i < 12; i++) step(h);
+    started = true; for (let i = 0; i < P.STEPS; i++) step(h);
     setRunning(false); draw(); $('status').textContent = tr('Advanced 0.05 seconds of simulation time.');
   });
   $('reset').addEventListener('click', () => { reset(); $('status').textContent = tr('Returned to the starting position. Ready to repeat.'); });
@@ -160,4 +154,17 @@
     if (document.hidden && running) { setRunning(false); draw(); $('status').textContent = tr('Paused while this tab was hidden. Resume when ready.'); }
   });
   setup(); requestAnimationFrame(frame);
+  // The lab check (labcheck.js) reaches the lab through this event, never a global. setup() does what Free
+  // exploration does, puts the sliders and the Gravity menu at a question's starting state (mass in grams), swings
+  // from the right (side 1) at real-time playback, then runs the lab's own setup() as a slider change does. On a
+  // phone it opens the collapsed apparatus settings so the sliders can be reached. It never makes the question's change.
+  function labSetup(s) {
+    clearComparison(); side = 1;
+    $('length').value = s.L; $('mass').value = s.m / 1000; $('angle').value = s.angle; $('world').value = s.world; $('speed').value = '1';
+    const toggle = $('settings-toggle'); // shown only on a phone layout
+    if (toggle.getClientRects().length && toggle.getAttribute('aria-expanded') !== 'true') toggle.click();
+    setup();
+  }
+  root.addEventListener('zsa-pl:request-lab', event => event.detail.receive({setup: labSetup, period, small, energy, integrate,
+    h, STEPS: P.STEPS, format: {fixed3, fixed1, clock}}));
 }());

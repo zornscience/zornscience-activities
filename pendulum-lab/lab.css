@@ -57,3 +57,5 @@ body:has(.metals){background:#edf2f7}.metals{--zsa-max-width:1400px;--zsa-navy:#
 .metals .settings-toggle{display:none}@media(max-width:760px){.metals .settings-toggle{display:inline-flex;margin-bottom:4px}.settings-toggle[aria-expanded="false"] + .workspace .controls{display:none}.scene-energy .energy{gap:6px 12px}}
 /* Spanish labels run longer: keep each slider value on one line. */
 html[lang=es-MX] .control-card output{white-space:nowrap}
+/* Lab check (../shared/zsa-labcheck.css): below the apparatus and above the model note, the full width of the lab. */
+.metals .labcheck-mount{margin-top:22px;min-width:0}.metals .labcheck-mount .zsa-labcheck{margin:0;border-color:#dce5ed;border-radius:12px}.metals .zsa-labcheck h2{font-size:1.15rem}
