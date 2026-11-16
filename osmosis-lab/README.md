@@ -1,6 +1,6 @@
 # Osmosis: Potato Cores in Sucrose Solutions
 
-Version: 1.0.0
+Version: 1.0.1
 
 Grade 9 Biology virtual lab. Students soak potato cores in 0, 0.2, 0.4, 0.6, 0.8 and 1.0 M sucrose, weigh them
 before and after 24 simulated hours, calculate percent change in mass, graph it and estimate the isotonic point
@@ -104,4 +104,5 @@ until the osmosis lesson's address is confirmed. ?from= accepts only an HTTPS zo
 
 ## Changelog
 
+- 1.0.1: "Back to the lesson" now goes to the Passive Transport lesson (Unit 6) instead of the Biology hub.
 - 1.0.0: First version.

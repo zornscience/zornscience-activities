@@ -16,15 +16,14 @@ var expected = {
   "yeast-fermentation-lab": ["unit-8-photosynthesis-and-respiration/fermentation/", "zsa-fy-back"],
   "leaf-disk-lab": ["unit-8-photosynthesis-and-respiration/rates-of-photosynthesis/", "zsa-ld-back"],
   "population-sampling-lab": ["unit-2-populations/population-sampling/", "zsa-ps-back"],
-  // Still wrong on main (back link goes to the hub); reported separately and not fixed here, so they are todo.
-  "osmosis-lab": ["unit-6-cells-and-homeostasis/passive-transport/", "zsa-os-back", true],
-  "enzyme-lab": ["unit-5-molecules-of-life/enzymes/", "zsa-ez-back", true],
-  "fruit-fly-genetics-lab": ["unit-10-heredity/punnett-squares/", "zsa-ff-back", true]
+  "osmosis-lab": ["unit-6-cells-and-homeostasis/passive-transport/", "zsa-os-back"],
+  "enzyme-lab": ["unit-5-molecules-of-life/enzymes/", "zsa-ez-back"],
+  "fruit-fly-genetics-lab": ["unit-10-heredity/punnett-squares/", "zsa-ff-back"]
 };
 
 Object.keys(expected).forEach(function (lab) {
   var e = expected[lab];
-  test(lab + " back link goes to its own lesson, not the hub", {todo: e[2] ? "back link still points to the Biology hub" : false}, function () {
+  test(lab + " back link goes to its own lesson, not the hub", function () {
     var html = fs.readFileSync(path.join(ROOT, lab, "index.html"), "utf8");
     var m = html.match(new RegExp('<a[^>]*id="' + e[1] + '"[^>]*href="([^"]+)"'));
     assert.ok(m, lab + " has a back link");

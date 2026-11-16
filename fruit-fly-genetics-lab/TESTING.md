@@ -1,6 +1,6 @@
 # Validation
 
-Version: 1.0.0
+Version: 1.0.1
 
 Run `npm ci`, `npm run test:unit` and the browser specs below. There is no build step. After any change to the About or SEO registration, run `node tools/build-about.js` and `node tools/build-seo.js`; both `--check` modes must pass.
 

@@ -1,6 +1,6 @@
 # Genetics Lab: Crossing Fruit Flies
 
-Version: 1.0.0
+Version: 1.0.1
 
 Standalone Grade 9 Biology lab. Students breed virtual fruit flies (Drosophila melanogaster) to follow two traits, build Punnett squares, compare predicted ratios with seeded offspring counts at growing sample sizes, and use test crosses to infer hidden genotypes. Plain HTML, CSS and classic deferred scripts in strict IIFEs. No build step, no runtime dependencies, no network calls, no storage, no completion code. Licensed CC BY-NC-SA 4.0.
 
@@ -72,4 +72,5 @@ The back link defaults to `https://zornscience.org/science/biology/` because no 
 
 ## Changelog
 
+- 1.0.1: "Back to the lesson" now goes to the Punnett Squares lesson (Unit 10), and the label now reads "Back to the lesson" (was "Back to Biology") instead of the Biology hub.
 - 1.0.0: First version. Two traits (vestigial wings, sepia eyes), nine steps with an optional dihybrid bonus, seeded offspring at 8, 40 and 200, mystery parents, four check questions, Copy my data, English and unpublished Mexican Spanish.

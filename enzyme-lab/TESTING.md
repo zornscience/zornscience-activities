@@ -1,6 +1,6 @@
 # Testing
 
-Version: 1.0.0
+Version: 1.0.1
 
 - `tests/unit/enzyme-lab.test.js` (Node, `npm run test:unit`): seed handling, no clock or ambient randomness, the
   temperature and pH curves, the tested optimum over 500 seeds, foam growth with enzyme and substrate, the tube cap,

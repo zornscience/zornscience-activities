@@ -194,7 +194,7 @@ test("fruit-fly-genetics-lab: the whole lab by tapping, with the copied data", a
   expect(lines.filter(l => l.includes("\t")).length).toBeGreaterThan(20);
   await expect(page.getByRole("button", {name: /^Step 9: Copy my data \(done\)/})).toBeVisible();
   expect(requests.every(u => u.startsWith("http://127.0.0.1:"))).toBe(true);
-  requests.filter(u => /\.(js|css|png)\?/.test(u)).forEach(u => expect(u).toMatch(/\?v=1\.0\.0$/));
+  requests.filter(u => /\.(js|css|png)\?/.test(u)).forEach(u => expect(u).toMatch(/\?v=1\.0\.1$/));
   expect(problems).toEqual([]);
 });
 
@@ -389,7 +389,7 @@ test("fruit-fly-genetics-lab: ?lang=es previews the unproofread Spanish without 
   await expect(page).toHaveTitle(I18N.es.title + " | ZornScience");
   await expect(page.locator("h1")).toHaveText(I18N.es.title);
   await expect(page.locator(".zsa-languages")).toHaveCount(0);
-  await expect(page.locator("#zsa-ff-back")).toHaveAttribute("href", "https://zornscience.org/es/science/biology/");
+  await expect(page.locator("#zsa-ff-back")).toHaveAttribute("href", "https://zornscience.org/es/science/biology/unit-10-heredity/punnett-squares/");
   await expect(page.locator("#zsa-th-share-url")).toHaveValue("https://activities.zornscience.org/fruit-fly-genetics-lab/");
   await page.locator('[data-key="nav:2"]').click();
   await fill(page, square("Nn", "nn"));
@@ -420,7 +420,7 @@ test("fruit-fly-genetics-lab: copy fallback, clean sharing and safe back links",
   await page.keyboard.press("Escape");
   for (const value of ["https://evil.example/a", "http://zornscience.org/a", "https://zornscience.org.evil.example/a", "https://user@zornscience.org/a", "https://zornscience.org:444/a", "javascript:alert(1)"]) {
     await page.goto(URL + "&from=" + encodeURIComponent(value));
-    await expect(page.locator("#zsa-ff-back")).toHaveAttribute("href", "https://zornscience.org/science/biology/");
+    await expect(page.locator("#zsa-ff-back")).toHaveAttribute("href", "https://zornscience.org/science/biology/unit-10-heredity/punnett-squares/");
   }
   await page.goto(URL + "&from=" + encodeURIComponent("https://zornscience.org/science/biology/unit-5/"));
   await expect(page.locator("#zsa-ff-back")).toHaveAttribute("href", "https://zornscience.org/science/biology/unit-5/");
