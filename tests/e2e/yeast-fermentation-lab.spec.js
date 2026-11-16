@@ -361,7 +361,7 @@ test("yeast: Copy my data falls back to selecting the data when the clipboard is
 });
 
 test("yeast: the back link accepts only zornscience.org lessons; share and embed give clean links", async ({page}) => {
-  const lesson = "https://zornscience.org/science/biology/unit-8-photosynthesis-and-respiration/rates-of-photosynthesis/";
+  const lesson = "https://zornscience.org/science/biology/unit-8-photosynthesis-and-respiration/fermentation/";
   await page.goto("/yeast-fermentation-lab/?tour=0");
   await expect(page.getByRole("link", {name: t("back")})).toHaveAttribute("href", lesson);
   await page.goto("/yeast-fermentation-lab/?tour=0&from=" + encodeURIComponent("https://zornscience.org/science/biology/cellular-respiration/"));
