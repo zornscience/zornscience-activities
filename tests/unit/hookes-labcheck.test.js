@@ -100,7 +100,7 @@ test("the HLC entry and all 32 first-try patterns with Show me counts round-trip
   }
 });
 
-test("existing codes read the same after HLC is registered, and the registry has 21 ids left", function () {
+test("existing codes read the same after HLC is registered, and HLC keeps registry id 10", function () {
   assert.equal(codes.encode({activity: "GAS", version: "1.1.2", day: 300, items: 6, totals: {predict: 6, test: 6, explain: 6},
     results: {predict: 4, test: 5, explain: 3}, show: 2, hints: 1}), "GAS-0ME0-442B-093D-C");
   [["ALC-03EV-SG02-2F0H-8A9", 8], ["PLC-02R2-SG02-2F0S-9CD", 9]].forEach(function (pair) {
@@ -111,9 +111,8 @@ test("existing codes read the same after HLC is registered, and the registry has
     if (a.prefix === "HLC") return;
     assert.ok(a.prefix.indexOf("HLC") !== 0 && "HLC".indexOf(a.prefix) !== 0, a.prefix);
   });
-  var used = codes.ACTIVITIES.map(function (a) { return a.id; });
-  assert.equal(Math.max.apply(null, used), 10);
-  assert.equal(31 - 10, 21);
+  // Later labs register after HLC (collision-carts-labcheck.test.js checks the ids left), so only HLC's own id is pinned here.
+  assert.equal(codes.activity("HLC").id, 10);
 });
 
 test("every Hooke's lab check sentence has Mexican Spanish with the same placeholders", function () {
