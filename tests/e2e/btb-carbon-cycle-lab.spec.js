@@ -104,17 +104,33 @@ test("btb: time slider, pattern aid, play and keyboard", async ({page}) => {
   await expect($(page, "step-title")).toHaveText("5. Check your understanding");
   await audit(page);
 });
-test("btb: the four checking questions give immediate feedback", async ({page}) => {
+test("btb: the four checking questions appear one at a time and give feedback", async ({page}) => {
   await page.goto(URL);
   await toPredict(page);
   await predictAndStart(page);
   await $(page, "next").click();
-  const sets = page.locator(".zsa-bt-panel:not([hidden]) fieldset");
-  await expect(sets).toHaveCount(4);
-  await sets.nth(2).locator("label", {hasText: "Photosynthesis used more CO2"}).click();
-  await expect(sets.nth(2).locator(".zsa-bt-feedback")).toContainText("Correct.");
-  await sets.nth(3).locator("label", {hasText: "Dissolved oxygen"}).click();
-  await expect(sets.nth(3).locator(".zsa-bt-feedback")).toContainText("Not quite.");
+  const quiz = page.locator("#zsa-bt-quiz");
+  await expect(quiz.locator("fieldset")).toHaveCount(1);
+  await expect(quiz).toContainText("Question 1 of 4");
+  await quiz.locator("label", {hasText: "The foil released an acid."}).click();
+  await expect(quiz.locator("fieldset")).toHaveCount(0);
+  await expect(quiz).not.toContainText("The foil released an acid.");
+  await expect(quiz.locator(".zsa-bt-feedback")).toContainText("Not quite.");
+  await expect($(page, "answer-title")).toBeFocused();
+  await $(page, "next-question").click();
+  await expect(quiz).toContainText("Question 2 of 4");
+  await quiz.locator("label", {hasText: "It shows what happens to the BTB with no plant"}).click();
+  await expect(quiz.locator(".zsa-bt-feedback")).toContainText("Correct.");
+  await $(page, "next-question").click();
+  await quiz.locator("label", {hasText: "Photosynthesis used more CO2"}).click();
+  await expect(quiz.locator(".zsa-bt-feedback")).toContainText("Correct.");
+  await $(page, "next-question").click();
+  await expect(quiz).toContainText("Question 4 of 4");
+  await quiz.locator("label", {hasText: "Changes in CO2, through acidity"}).click();
+  await expect($(page, "next-question")).toHaveText("Finish");
+  await $(page, "next-question").click();
+  await expect($(page, "quiz-done")).toBeVisible();
+  await audit(page);
 });
 test("btb es: Spanish on every step and the language reloads", async ({page}) => {
   await page.goto(URL + "&lang=es");

@@ -245,21 +245,44 @@
     // Step 5: check understanding.
     el("p", t("Choose an answer. You get feedback right away."), panels[4]);
     const rnd = model.random(seed ^ 0x5bd1e995);
-    questions.forEach((q, qi) => {
+    const orders = questions.map(q => {
       const order = q.choices.map((_, i) => i);
       for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
-      const box = el("fieldset", null, panels[4]);
+      return order;
+    });
+    nodes.quiz = el("div", null, panels[4], {id: "zsa-bt-quiz"});
+    // One question at a time. After an answer, the question is replaced by its explanation.
+    function showQuestion(qi) {
+      const q = questions[qi];
+      nodes.quiz.replaceChildren();
+      const box = el("fieldset", null, nodes.quiz);
       el("legend", t("Question {n} of {total}", {n: qi + 1, total: questions.length}) + ": " + t(q.prompt), box);
-      const feedback = el("p", "", box, {class: "zsa-bt-feedback", "aria-live": "polite"});
-      order.forEach((ci, k) => {
+      orders[qi].forEach((ci, k) => {
         const label = el("label", null, box, {class: "zsa-bt-choice", for: "zsa-bt-q" + qi + "-" + k});
         const input = el("input", null, label, {type: "radio", name: "zsa-bt-q" + qi, id: "zsa-bt-q" + qi + "-" + k, value: String(ci)});
         el("span", t(q.choices[ci]), label);
-        input.addEventListener("change", () => {
-          feedback.textContent = (ci === q.answer ? t("Correct. ") : t("Not quite. ")) + t(q.why);
-        });
+        input.addEventListener("change", () => showAnswer(qi, ci === q.answer));
       });
-    });
+    }
+    function showAnswer(qi, correct) {
+      nodes.quiz.replaceChildren();
+      const box = el("div", null, nodes.quiz, {class: "zsa-bt-answer"});
+      el("h3", t("Question {n} of {total}", {n: qi + 1, total: questions.length}), box, {tabindex: "-1", id: "zsa-bt-answer-title"});
+      el("p", (correct ? t("Correct. ") : t("Not quite. ")) + t(questions[qi].why), box, {class: "zsa-bt-feedback", role: "status"});
+      const last = qi === questions.length - 1;
+      const next = el("button", last ? t("Finish") : t("Next question"), box, {class: "zsa-btn zsa-btn--primary", type: "button", id: "zsa-bt-next-question"});
+      next.addEventListener("click", () => {
+        if (last) {
+          nodes.quiz.replaceChildren();
+          el("p", t("You finished all four questions."), nodes.quiz, {class: "zsa-bt-note", id: "zsa-bt-quiz-done", role: "status"});
+        } else {
+          showQuestion(qi + 1);
+          nodes.quiz.querySelector("input").focus();
+        }
+      });
+      $("answer-title").focus();
+    }
+    showQuestion(0);
   }
   function updateFlask(speak) {
     const id = startColorId(), n = state.breaths;
