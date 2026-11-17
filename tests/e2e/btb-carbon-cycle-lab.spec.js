@@ -32,7 +32,8 @@ test("btb: the guided path gives blue, yellow and green with matching prediction
   await expect(page.locator(".zsa-bt-note").first()).toContainText("green");
   await $(page, "next").click();
   await expect($(page, "step-title")).toHaveText("2. Set up three tubes");
-  await expect(page.getByText("Your setup is a fair test.")).toBeVisible();
+  await expect(page.locator("#zsa-bt-setup li")).toHaveCount(3);
+  await expect($(page, "spinach-0")).toHaveCount(0);
   await $(page, "next").click();
   await expect($(page, "next")).toBeDisabled();
   await $(page, "start").click();
@@ -49,14 +50,12 @@ test("btb: the guided path gives blue, yellow and green with matching prediction
   await expect($(page, "readouts")).toContainText("Tube 2: yellow. CO2: high");
   await audit(page);
 });
-test("btb: setup mistakes are named, predictions lock, and reset reloads", async ({page}) => {
+test("btb: setup is fixed, predictions lock, and reset reloads", async ({page}) => {
   await page.goto(URL);
   await blowGreen(page);
   await $(page, "next").click();
-  await $(page, "spinach-2").selectOption("1");
-  await expect(page.getByText("No tube without spinach")).toBeVisible();
-  await $(page, "cap-0").selectOption("0");
-  await expect(page.getByText("A tube is open")).toBeVisible();
+  await expect(page.locator(".zsa-bt-panel:not([hidden]) select")).toHaveCount(0);
+  await expect($(page, "setup")).toContainText("Tube 2: 2 spinach strips, Wrapped in foil (dark), Capped");
   await $(page, "next").click();
   await predictAndStart(page, ["yellow", "blue", "green"]);
   await $(page, "prev").click();
@@ -69,6 +68,21 @@ test("btb: setup mistakes are named, predictions lock, and reset reloads", async
   await $(page, "reset").click();
   await expect($(page, "step-title")).toHaveText("1. Prepare the indicator");
   await expect($(page, "blow")).toBeEnabled();
+});
+test("btb: the 24 hours play by themselves in about 10 seconds and results appear at the end", async ({page}) => {
+  await page.goto(URL);
+  await toPredict(page);
+  await predictAndStart(page);
+  await expect($(page, "play")).toHaveText("Pause");
+  await expect($(page, "results")).toBeHidden();
+  const began = Date.now();
+  await expect($(page, "clock")).toHaveText("Hour 24", {timeout: 15000});
+  const took = Date.now() - began;
+  expect(took).toBeGreaterThan(5000);
+  expect(took).toBeLessThan(12500);
+  await expect($(page, "results")).toBeVisible();
+  await expect($(page, "play")).toHaveText("Play");
+  await expect(page.locator("#zsa-bt-table tbody tr")).toHaveCount(3);
 });
 test("btb: a yellow start is allowed and explained", async ({page}) => {
   await page.goto(URL);
@@ -87,6 +101,8 @@ test("btb: time slider, pattern aid, play and keyboard", async ({page}) => {
   await page.goto(URL);
   await toPredict(page);
   await predictAndStart(page);
+  await $(page, "play").click();
+  await $(page, "time").fill("0");
   await expect($(page, "clock")).toHaveText("Hour 0");
   await $(page, "time").focus();
   for (let i = 0; i < 8; i++) await page.keyboard.press("ArrowRight");
