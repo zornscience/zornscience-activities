@@ -3658,3 +3658,21 @@ The shared Lab check labels are the Gas lab pilot's. Control and readout names f
 | the force description | la descripción de las fuerzas | The Show forces sentence under the apparatus. |
 | The period grows by √2. | El periodo aumenta √2 veces. | Amplitude distractor. |
 
+
+## Collision Carts lab check (collision-carts 1.2.0)
+
+The shared Lab check labels are the Gas lab pilot's. Readout and control names follow the lab: Velocidad del carrito A, Cantidad de movimiento total, Energía cinética, parachoques magnéticos, almohadillas de velcro, colisión elástica, energía interna. The lab already says cantidad de movimiento (not momento) for momentum and colisión (not choque) for collision, so the lab check does too.
+
+| English | Mexican Spanish | Use |
+| --- | --- | --- |
+| Equal masses, one at rest | Masas iguales, uno en reposo | Question title; as in the Try a setup menu. |
+| Carts that stick | Carritos que se pegan | Question title. |
+| Heavy cart meets light cart | Un carrito pesado choca con uno ligero | Question title; the Try a setup option. |
+| Head-on, equal and opposite | De frente, velocidades iguales y opuestas | Question title. |
+| Predict, then launch | Predice y luego lanza | Question title. |
+| the Cart B velocity readout | la lectura Velocidad del carrito B | Questions 1 and 3; the readout's own name follows "lectura". |
+| the hit (the moment of impact) | el golpe | Question 1 feedback. |
+| kilograms (as a count of mass moving) | kilogramos | Question 5 feedback. |
+| shoots ahead | sale disparado | Question 3 explanation. |
+| stuck carts / the carts stick | carritos pegados / los carritos se pegan | Questions 2, 4 and 5. |
+| plain average | promedio simple | Question 5 feedback. |

@@ -69,7 +69,7 @@ qs-trigonometry-basics-practice/  Trigonometry Basics Practice, v1.0.1 (generate
 qs-vectors-practice/  Vectors Practice, v1.0.1 (generated sets: scalars and vectors, same and opposite directions, perpendicular vectors, components; English and Mexican Spanish)
 atwood-machine/           The Atwood Machine, v1.2.0 (ideal pulley, adjustable masses and live vectors; optional Lab check with an ALC completion code; English and Mexican Spanish)
 physics-graphing-lab/      Physics Graphing Lab, v1.1.3 (a cart with linked position, velocity and acceleration graphs; English and Mexican Spanish)
-collision-carts/           Collision Carts, v1.1.3 (two carts on a track, elastic and inelastic collisions, live velocity and momentum vectors; English and Mexican Spanish)
+collision-carts/           Collision Carts, v1.2.0 (two carts on a track, elastic and inelastic collisions, live velocity and momentum vectors; optional Lab check with a CLC completion code; English and Mexican Spanish)
 ph-buffer-lab/             pH & Buffer Lab, v1.0.4 (pH exploration, buffer design, capacity experiments and challenges; English and Mexican Spanish)
 titration-lab/             Virtual Titration Simulator, v1.1.3 (burette, indicators and a live pH curve for strong and weak acids and bases)
 kinetics-lab/              Kinetics and Collision Theory Sandbox, v1.1.3 (colliding particles, temperature, concentration, activation energy and a catalyst, with a live concentration graph)

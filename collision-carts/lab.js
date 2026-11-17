@@ -135,6 +135,22 @@
     reset();
   });
 
+  // The lab check (labcheck.js) reaches the lab through this event, never a global. setup() puts the controls in a
+  // question's starting state: the Bumper type select, both Total mass sliders (kg) and both Starting velocity
+  // sliders (m/s), then reset() does exactly what a slider input does, so the carts return to the start, the run
+  // stops and the readouts and clock reset. Playback is 1x, Show vectors keeps Velocity on and Momentum off, and the
+  // Try a setup menu is left alone. It never launches the carts. format is the readout formatter fmt(v, d).
+  function labSetup(q) {
+    $("mode").value = q.mode;
+    ["mass0", "mass1"].forEach(function (id, i) { $(id).value = String(q.mass[i]); });
+    ["velocity0", "velocity1"].forEach(function (id, i) { $(id).value = String(q.velocity[i]); });
+    $("speed").value = "1";
+    $("show-v").checked = true;
+    $("show-p").checked = false;
+    reset();
+  }
+  root.addEventListener("zsa-cc:request-lab", function (event) { event.detail.receive({setup: labSetup, format: fmt}); });
+
   function frame(now) {
     if (running) tick(Math.min((now - last) / 1000, 0.05) * +$("speed").value);
     last = now;
