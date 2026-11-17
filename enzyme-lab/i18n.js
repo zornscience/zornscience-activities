@@ -24,7 +24,7 @@
     "share-close": {en: "Close share options", es: "Cerrar opciones para compartir"},
     "share-copied": {en: "Link copied.", es: "Enlace copiado."},
     "share-selected": {en: "Link selected. Press Ctrl+C, or Command+C on a Mac, to copy it.", es: "Enlace seleccionado. Presiona Ctrl+C, o Command+C en una Mac, para copiarlo."},
-    "back": {en: "Back to Biology", es: "Volver a Biología"},
+    "back": {en: "Back to the lesson", es: "Volver a la lección"},
     "steps-label": {en: "Lab steps", es: "Pasos del laboratorio"},
     "noscript": {en: "This lab needs JavaScript.", es: "Este laboratorio necesita JavaScript."},
     "languages": {en: "Language", es: "Idioma"},

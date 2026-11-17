@@ -1,6 +1,6 @@
 # Testing
 
-Version: 1.0.0
+Version: 1.0.1
 
 No build step. From the repository root:
 

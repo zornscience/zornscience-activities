@@ -1,6 +1,6 @@
 # Enzyme Activity Lab
 
-Version: 1.0.0
+Version: 1.0.1
 
 Grade 9 Biology: "What makes catalase work best?" Students set up a fair test of temperature or pH, measure oxygen
 foam with a virtual ruler over three trials, graph the averages, find the optimum and see the active site denature.
@@ -66,4 +66,5 @@ and update the back link in index.html together.
 
 ## Changelog
 
+- 1.0.1: "Back to the lesson" now goes to the Enzymes lesson (Unit 5), and the label now reads "Back to the lesson" (was "Back to Biology") instead of the Biology hub.
 - 1.0.0: Initial lab.
