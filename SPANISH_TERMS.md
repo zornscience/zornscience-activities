@@ -3676,3 +3676,22 @@ The shared Lab check labels are the Gas lab pilot's. Readout and control names f
 | shoots ahead | sale disparado | Question 3 explanation. |
 | stuck carts / the carts stick | carritos pegados / los carritos se pegan | Questions 2, 4 and 5. |
 | plain average | promedio simple | Question 5 feedback. |
+
+## BTB Carbon Cycle Lab (btb-carbon-cycle-lab/data.js)
+
+Sources compared: Mexican secondary and preparatoria Biology and chemistry textbooks, SEP and UNAM Biology materials, Khan Academy Spanish, and university lab glossaries. Most agree on "azul de bromotimol", with "AZB" less common but used in lab guides; the page spells the name out in the title and intro and uses AZB afterward.
+
+English | Mexican Spanish
+--- | ---
+bromothymol blue (BTB) | azul de bromotimol (AZB)
+indicator | indicador
+control tube | tubo de control
+aluminum foil (wrapped in foil) | papel aluminio (envuelto en papel aluminio)
+spinach strip | tira de espinaca
+straw | popote
+flask | matraz
+rack | gradilla
+breath (blowing through a straw) | soplido
+pattern aid | patrones para distinguir colores
+time-lapse | avance en el tiempo
+yellow-green / blue-green | verde amarillento / azul verdoso

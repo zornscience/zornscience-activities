@@ -16,6 +16,7 @@ const activities = {
 const labs = {
   "population-sampling-lab":"Laboratorio de muestreo de poblaciones",
   "leaf-disk-lab":"Laboratorio de discos de hoja",
+  "btb-carbon-cycle-lab":"Laboratorio del ciclo del carbono con azul de bromotimol",
   "atwood-machine":"La máquina de Atwood",
   "beers-law-lab":"Laboratorio de la ley de Beer con espectrofotómetro",
   "calorimetry-lab":"Laboratorio de calorimetría y entalpía",

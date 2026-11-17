@@ -14,6 +14,7 @@ var HUB = BIO;
 var expected = {
   "mitosis-lab": ["unit-7-cell-division/mitosis/", "zsa-mt-back"],
   "yeast-fermentation-lab": ["unit-8-photosynthesis-and-respiration/fermentation/", "zsa-fy-back"],
+  "btb-carbon-cycle-lab": ["unit-8-photosynthesis-and-respiration/rates-of-photosynthesis/", "zsa-bt-back"],
   "leaf-disk-lab": ["unit-8-photosynthesis-and-respiration/rates-of-photosynthesis/", "zsa-ld-back"],
   "population-sampling-lab": ["unit-2-populations/population-sampling/", "zsa-ps-back"],
   "osmosis-lab": ["unit-6-cells-and-homeostasis/passive-transport/", "zsa-os-back"],
