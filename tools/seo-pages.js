@@ -33,6 +33,10 @@ module.exports = {
     en: "Explore photosynthesis with floating spinach leaf disks. Compare light, temperature and bicarbonate in a bilingual Biology lab from ZornScience.",
     es: "Explora la fotosíntesis con discos de espinaca que flotan. Compara luz, temperatura y bicarbonato en un laboratorio bilingüe de ZornScience."
   },
+  "btb-carbon-cycle-lab": {
+    en: "Does spinach add or remove carbon dioxide? Predict, then watch three BTB tubes change over 24 hours in this free Biology virtual lab.",
+    es: "¿La espinaca agrega o quita dióxido de carbono? Predice y observa cómo cambian tres tubos con azul de bromotimol durante 24 horas en este laboratorio virtual."
+  },
   "yeast-fermentation-lab": {
     en: "Feed yeast glucose, table sugar, sweetener and starch, measure the balloons, and graph where fermentation levels off in this Biology virtual lab.",
     es: null
