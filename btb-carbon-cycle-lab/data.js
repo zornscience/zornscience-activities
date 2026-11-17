@@ -40,7 +40,7 @@
     "The flask is green. This is the best color to start with.": "El matraz está verde. Es el mejor color para empezar.",
     "The flask is yellow-green. It has a lot of CO2.": "El matraz está verde amarillento. Tiene mucho CO2.",
     "The flask is yellow. It has a lot of CO2.": "El matraz está amarillo. Tiene mucho CO2.",
-    "Green leaves room to see the color go both ways. Yellow hides the CO2 that spinach adds. Blue hides the CO2 that spinach removes.": "El verde deja espacio para ver el color cambiar hacia los dos lados. El amarillo oculta el CO2 que agrega la espinaca. El azul oculta el CO2 que quita la espinaca.",
+    "BTB is an indicator. CO2 in water makes it more acidic. More CO2 turns BTB yellow. Less CO2 turns it blue. A medium amount makes it green. Starting at green lets the color move either way, so you can see spinach add or remove CO2.": "El AZB es un indicador. El CO2 en el agua la vuelve más ácida. Más CO2 pone el AZB amarillo. Menos CO2 lo pone azul. Una cantidad media lo pone verde. Empezar en verde permite que el color cambie hacia cualquier lado, así que puedes ver cómo la espinaca agrega o quita CO2.",
     "Plants and CO2 in BTB": "Plantas y CO2 en el AZB",
     "Each tube holds 10 mL of your BTB. Choose what goes in each tube. The paper lab used these three setups.": "Cada tubo tiene 10 mL de tu AZB. Elige qué va en cada tubo. El laboratorio en papel usó estas tres preparaciones.",
     "Tube {n}": "Tubo {n}",

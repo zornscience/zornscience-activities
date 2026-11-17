@@ -188,7 +188,7 @@
     nodes.fresh = el("button", t("Start over with fresh BTB"), row, {class: "zsa-btn", type: "button", id: "zsa-bt-fresh"});
     nodes.breaths = el("p", "", panels[0], {class: "zsa-bt-readout"});
     nodes.flaskNote = el("p", "", panels[0], {class: "zsa-bt-note"});
-    el("p", t("Green leaves room to see the color go both ways. Yellow hides the CO2 that spinach adds. Blue hides the CO2 that spinach removes."), panels[0], {class: "zsa-bt-hint"});
+    el("p", t("BTB is an indicator. CO2 in water makes it more acidic. More CO2 turns BTB yellow. Less CO2 turns it blue. A medium amount makes it green. Starting at green lets the color move either way, so you can see spinach add or remove CO2."), panels[0], {class: "zsa-bt-hint"});
     nodes.blow.addEventListener("click", () => {
       if (state.breaths >= model.MAX_BREATHS) return;
       state.breaths += 1;
