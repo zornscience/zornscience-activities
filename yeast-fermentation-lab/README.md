@@ -1,6 +1,6 @@
 # Feed the Yeast: Fermentation and Energy
 
-Version: 1.0.0
+Version: 1.0.1
 
 Grade 9 Biology virtual lab. Students feed yeast different foods, measure the carbon dioxide they make with balloons
 and a virtual tape, test how much glucose yeast can use, and zoom into a yeast cell to connect fermentation with
@@ -109,4 +109,5 @@ behavior and hides the tour.
 
 ## Changelog
 
+- 1.0.1: "Back to the lesson" now goes to the Fermentation lesson (Unit 8) instead of Rates of Photosynthesis.
 - 1.0.0: First version.

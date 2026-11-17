@@ -434,7 +434,7 @@ test("mitosis: Spanish is written but hidden behind its flag, and ?lang=es previ
   await expect(page.getByRole("heading", {level: 1})).toHaveText(es("app.title"));
   // The toggle exists for the shared header but stays hidden until FLAGS.spanishToggle is true.
   await expect(page.getByRole("link", {name: "ES Español"})).toBeHidden();
-  await expect(page.locator("#zsa-mt-back")).toHaveAttribute("href", "https://zornscience.org/es/science/biology/");
+  await expect(page.locator("#zsa-mt-back")).toHaveAttribute("href", "https://zornscience.org/es/science/biology/unit-7-cell-division/mitosis/");
   const english = /\b(Next|Back|Cell guide|Start over|Predict|Sample|Microscope|Analyze|Check|Copy|Interphase|Prophase|Metaphase|Anaphase|Telophase|Field|Focus|Sharp|Blurry|Instructions|Share|Tip|Day|cells?|the|your)\b/;
   const visibleText = () => page.locator("main").evaluate(main => {
     const parts = [];
@@ -575,12 +575,12 @@ test("mitosis: the tour, the cell guide, start over, embed mode and lesson links
   await expect(page.getByRole("radio", {name: en("predict.a")})).not.toBeChecked();
   await expect(page.locator("#zsa-mt-live")).toHaveText(en("reset.done"));
   // Lesson links: the Biology course by default, a zornscience.org lesson from ?from=, nothing else.
-  await expect(page.locator("#zsa-mt-back")).toHaveAttribute("href", "https://zornscience.org/science/biology/");
+  await expect(page.locator("#zsa-mt-back")).toHaveAttribute("href", "https://zornscience.org/science/biology/unit-7-cell-division/mitosis/");
   await page.goto("/mitosis-lab/?from=" + encodeURIComponent("https://zornscience.org/science/biology/cells/"));
   await expect(page.locator("#zsa-mt-back")).toHaveAttribute("href", "https://zornscience.org/science/biology/cells/");
   for (const bad of ["https://evil.example/", "http://zornscience.org/x/", "javascript:alert(1)", "https://zornscience.org.evil.example/"]) {
     await page.goto("/mitosis-lab/?from=" + encodeURIComponent(bad));
-    await expect(page.locator("#zsa-mt-back")).toHaveAttribute("href", "https://zornscience.org/science/biology/");
+    await expect(page.locator("#zsa-mt-back")).toHaveAttribute("href", "https://zornscience.org/science/biology/unit-7-cell-division/mitosis/");
   }
   // Embed mode hides the site chrome and the tour.
   await page.goto("/mitosis-lab/?embed=1");

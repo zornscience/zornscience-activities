@@ -1,6 +1,6 @@
 # Mitosis Detective: Inside an Onion Root Tip
 
-Version: 1.0.0
+Version: 1.0.1
 
 Grade 9 Biology virtual lab. Students find the part of an onion root where cells divide, focus a microscope, identify
 and tally cells in each phase of mitosis across three fields, turn counts into percents and minutes, answer five
@@ -102,5 +102,6 @@ the guide's autoplay (Previous and Next phase still step through). No flashing.
 
 ## Changelog
 
+- 1.0.1: "Back to the lesson" now goes to the Mitosis lesson (Unit 7, Cell Division) instead of the Biology hub.
 - 1.0.0: First release. Six steps, three seeded fields, keyboard tally, drag and drop minutes, cycle wheel, cell guide
   with an animated division, five questions, tab-separated copy, English and unpublished Mexican Spanish.

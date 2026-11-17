@@ -1,6 +1,6 @@
 # Validation
 
-Version: 1.0.0
+Version: 1.0.1
 
 Run `npm ci`, `npm run test:unit` and the Playwright specs below. No build step. After any change to registrations,
 run `node tools/build-seo.js` and `node tools/build-about.js`; both `--check` modes must pass.
