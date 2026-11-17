@@ -85,14 +85,6 @@
   }
   function colorName(id) { return t(id); }
   function tableColor(id) { return t(colorLabels[id]); }
-  function issues() {
-    const list = [], s = state.setup;
-    if (!s.some(c => !c.spinach)) list.push("No tube without spinach. You cannot tell if the BTB changed on its own.");
-    if (!s.some(c => c.spinach && !c.light)) list.push("No tube with spinach in the dark. You cannot see respiration alone.");
-    if (!s.some(c => c.spinach && c.light)) list.push("No tube with spinach in the light. You cannot see photosynthesis.");
-    if (s.some(c => !c.capped)) list.push("A tube is open. It trades CO2 with the air, so it is not a fair test.");
-    return list;
-  }
   function startColorId() { return model.colorClass(model.ph(state.startDIC)); }
   // The bench drawing. Colors are SVG attributes, never inline styles.
   let flaskLiquid, flaskPattern, tubeParts = [], defsNode;
@@ -200,18 +192,11 @@
       state.startDIC = model.blown(0);
       updateFlask(true);
     });
-    // Step 2: three tubes.
-    el("p", t("Each tube holds 10 mL of your BTB. Choose what goes in each tube. The paper lab used these three setups."), panels[1]);
-    nodes.setupSelects = [];
-    state.setup.forEach((c, i) => {
-      const box = el("fieldset", null, panels[1]);
-      el("legend", t("Tube {n}", {n: i + 1}), box);
-      const a = select(box, "spinach-" + i, t("Spinach"), [["1", t("2 spinach strips")], ["0", t("No spinach")]], String(c.spinach), v => { c.spinach = Number(v); afterSetup(); });
-      const b = select(box, "light-" + i, t("Light"), [["1", t("In the light")], ["0", t("Wrapped in foil (dark)")]], c.light ? "1" : "0", v => { c.light = v === "1"; afterSetup(); });
-      const d = select(box, "cap-" + i, t("Cap"), [["1", t("Capped")], ["0", t("Open")]], c.capped ? "1" : "0", v => { c.capped = v === "1"; afterSetup(); });
-      nodes.setupSelects.push(a, b, d);
-    });
-    nodes.setupIssues = el("div", null, panels[1], {class: "zsa-bt-issues", "aria-live": "polite"});
+    // Step 2: three tubes, fixed to match the paper lab.
+    el("p", t("Each tube holds 10 mL of your BTB. These three setups are the same as the paper lab."), panels[1]);
+    const setupList = el("ul", null, panels[1], {class: "zsa-bt-setup", id: "zsa-bt-setup"});
+    state.setup.forEach((c, i) => el("li", t("Tube {n}", {n: i + 1}) + ": " + setupText(c), setupList));
+    el("p", t("Tube 2 is wrapped in foil, so it stays dark. Tube 3 has no spinach. It is the control."), panels[1], {class: "zsa-bt-hint"});
     // Step 3: predictions.
     el("p", t("Choose a color for each tube after 24 hours. Think about CO2. Your predictions lock when the 24 hours begin."), panels[2]);
     nodes.predictSelects = [];
@@ -224,7 +209,7 @@
     nodes.start.addEventListener("click", startTrial);
     nodes.locked = el("p", t("Predictions are locked."), panels[2], {class: "zsa-bt-note", hidden: ""});
     // Step 4: watch.
-    el("p", t("Drag the time slider or press Play. The CO2 bar shows relative CO2, not an exact amount."), panels[3]);
+    el("p", t("The 24 hours play by themselves. You can also drag the time slider. The CO2 bar shows relative CO2, not an exact amount."), panels[3]);
     const timeRow = el("div", null, panels[3], {class: "zsa-bt-time"});
     el("label", t("Time (hours)"), timeRow, {for: "zsa-bt-time"});
     nodes.time = el("input", null, timeRow, {id: "zsa-bt-time", type: "range", min: 0, max: 24, step: 0.5, value: 0});
@@ -236,7 +221,7 @@
     nodes.pattern = el("input", null, patternLabel, {type: "checkbox", id: "zsa-bt-pattern"});
     el("span", t("Pattern aid for colors"), patternLabel);
     nodes.readouts = el("ul", null, panels[3], {class: "zsa-bt-readouts", id: "zsa-bt-readouts"});
-    nodes.results = el("div", null, panels[3], {class: "zsa-bt-results"});
+    nodes.results = el("div", null, panels[3], {class: "zsa-bt-results", id: "zsa-bt-results", hidden: ""});
     nodes.time.addEventListener("input", () => { stopPlay(); setHour(Number(nodes.time.value)); });
     nodes.jump.addEventListener("click", () => { stopPlay(); setHour(24); });
     nodes.pattern.addEventListener("change", () => { state.pattern = nodes.pattern.checked; paintScene(); });
@@ -294,30 +279,19 @@
     refreshNav();
     if (speak) announce(t(notes[id]));
   }
-  function afterSetup() {
-    const list = issues();
-    nodes.setupIssues.replaceChildren();
-    if (list.length === 0) {
-      el("p", t("Your setup is a fair test."), nodes.setupIssues, {class: "zsa-bt-note"});
-    } else {
-      el("h3", t("Check your setup"), nodes.setupIssues);
-      const ul = el("ul", null, nodes.setupIssues);
-      list.forEach(text => el("li", t(text), ul));
-    }
-    paintScene();
-  }
   function startTrial() {
     if (state.prediction.some(p => !p)) {
       announce(t("Choose a color for each tube after 24 hours. Think about CO2. Your predictions lock when the 24 hours begin."));
       return;
     }
     state.result = model.trial(state.setup, state.startDIC, seed);
-    nodes.setupSelects.concat(nodes.predictSelects, [nodes.start, nodes.blow, nodes.fresh]).forEach(node => { node.disabled = true; });
+    nodes.predictSelects.concat([nodes.start, nodes.blow, nodes.fresh]).forEach(node => { node.disabled = true; });
     nodes.locked.hidden = false;
     renderResults();
     goTo(3, true);
     setHour(0);
     announce(t("Predictions are locked."));
+    if (reduced) setHour(24); else startPlay();
   }
   function renderResults() {
     const box = nodes.results;
@@ -351,14 +325,10 @@
     notes.add("Plants respire in the light and in the dark. In the light, photosynthesis can use more CO2 than respiration makes.");
     const ul = el("ul", null, box);
     notes.forEach(text => el("li", t(text), ul));
-    const list = issues(), startId = startColorId();
-    const extra = list.slice();
-    if (startId === "yellow" || startId === "yellow-green" || startId === "blue") extra.push(null);
-    if (extra.length) {
+    const startId = startColorId();
+    if (startId === "yellow" || startId === "yellow-green" || startId === "blue") {
       el("h3", t("Check your setup"), box);
-      const ul2 = el("ul", null, box);
-      list.forEach(text => el("li", t(text), ul2));
-      if (extra.includes(null)) el("li", t("The BTB started {color}. Color changes are harder to read from there.", {color: colorName(startId)}), ul2);
+      el("p", t("The BTB started {color}. Color changes are harder to read from there.", {color: colorName(startId)}), box);
     }
     el("p", t("BTB shows CO2 through acidity. It does not measure oxygen. This is a teaching model, so real tubes will differ."), box, {class: "zsa-bt-hint"});
   }
@@ -367,6 +337,7 @@
     nodes.time.value = String(state.hour);
     nodes.time.setAttribute("aria-valuetext", t("Hour {hour}", {hour: state.hour}));
     nodes.clock.textContent = t("Hour {hour}", {hour: state.hour});
+    nodes.results.hidden = state.hour < 24;
     nodes.readouts.replaceChildren();
     state.result.forEach((r, i) => {
       const a = model.at(r, state.hour), li = el("li", null, nodes.readouts);
@@ -379,7 +350,7 @@
     if (!state.playing) return;
     const dt = Math.min(100, now - state.last);
     state.last = now;
-    setHour(state.hour + dt * 24 / 14000);
+    setHour(state.hour + dt * 24 / 10000);
     if (state.hour >= 24) { stopPlay(); return; }
     state.frame = requestAnimationFrame(tick);
   }
@@ -393,7 +364,6 @@
     $("step-title").textContent = t(stepTitles[state.step]);
     $("step-count").textContent = t("Step {n} of 5", {n: state.step + 1});
     $("progress").value = state.step + 1;
-    if (state.step === 1) afterSetup();
     if (state.step === 3 && state.result) setHour(state.hour);
     if (state.step !== 3) stopPlay();
     paintScene();
