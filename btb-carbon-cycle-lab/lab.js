@@ -69,6 +69,7 @@
     if (parent) parent.append(node);
     return node;
   }
+  function fmtHour(h) { return String(Number(h.toFixed(1))); }
   function hex(rgb) { return "#" + rgb.map(v => Math.round(v).toString(16).padStart(2, "0")).join(""); }
   function liquidColor(pH) {
     if (pH <= anchors[0][0]) return hex(anchors[0][1]);
@@ -87,7 +88,7 @@
   function tableColor(id) { return t(colorLabels[id]); }
   function startColorId() { return model.colorClass(model.ph(state.startDIC)); }
   // The bench drawing. Colors are SVG attributes, never inline styles.
-  let flaskLiquid, flaskPattern, tubeParts = [], defsNode;
+  let flaskLiquid, flaskPattern, tubeParts = [], defsNode, bubbles;
   function buildScene() {
     const host = $("scene");
     host.replaceChildren();
@@ -98,6 +99,9 @@
       const p = svg("pattern", {id: "zsa-bt-pat-" + id, width: 8, height: 8, patternUnits: "userSpaceOnUse"}, defsNode);
       svg("path", {d: patternTiles[id], fill: id === "blue" || id === "yellow" ? "#1f2a2a" : "none", stroke: "#1f2a2a", "stroke-width": 1.2, "stroke-opacity": .7}, p);
     });
+    const glow = svg("radialGradient", {id: "zsa-bt-glow"}, defsNode);
+    svg("stop", {offset: "0%", "stop-color": "#fff3a8", "stop-opacity": .85}, glow);
+    svg("stop", {offset: "100%", "stop-color": "#fff3a8", "stop-opacity": 0}, glow);
     const glass = svg("linearGradient", {id: "zsa-bt-glass", x2: "1", y2: "0"}, defsNode);
     [["0%", .55], ["20%", .08], ["80%", .04], ["100%", .5]].forEach(([o, a]) => svg("stop", {offset: o, "stop-color": "#ffffff", "stop-opacity": a}, glass));
     svg("rect", {width: 760, height: 420, fill: "#eef4f0"}, scene);
@@ -112,6 +116,8 @@
     svg("path", {d: flaskPath, fill: "url(#zsa-bt-glass)", stroke: "#5f8089", "stroke-width": 2.5}, scene);
     svg("path", {d: "M110 84L128 270", stroke: "#e3544a", "stroke-width": 7, "stroke-linecap": "round"}, scene);
     svg("path", {d: "M108 84L112 110", stroke: "#b53a31", "stroke-width": 7, "stroke-linecap": "round"}, scene);
+    bubbles = svg("g", {class: "zsa-bt-bubbles"}, scene);
+    [[116, 262, 4], [124, 270, 3], [132, 258, 5], [120, 276, 3], [128, 252, 4]].forEach(([x, y, r]) => svg("circle", {cx: x, cy: y, r, fill: "#ffffff", stroke: "#8fb0b8", "stroke-width": 1, opacity: 0}, bubbles));
     svg("text", {x: 120, y: 372, "text-anchor": "middle", "font-size": 16}, scene, t("Flask"));
     svg("text", {x: 150, y: 76, "font-size": 15}, scene, t("Straw"));
     // Rack with three tubes.
@@ -125,8 +131,11 @@
       const liquid = svg("rect", {x: x - 30, y: 150, width: 60, height: 165, "clip-path": "url(#zsa-bt-clip-" + i + ")", fill: "#2a5cc0", opacity: 0}, group);
       const pattern = svg("rect", {x: x - 30, y: 150, width: 60, height: 165, "clip-path": "url(#zsa-bt-clip-" + i + ")", fill: "none"}, group);
       const strips = svg("g", {}, group);
-      svg("rect", {x: x - 17, y: 235, width: 22, height: 8, rx: 3, fill: "#2f6b3a", stroke: "#1b4a26", transform: "rotate(-18 " + x + " 239)"}, strips);
-      svg("rect", {x: x - 5, y: 262, width: 22, height: 8, rx: 3, fill: "#38803f", stroke: "#1b4a26", transform: "rotate(14 " + x + " 266)"}, strips);
+      [[x - 6, 239, -18, "#2f6b3a"], [x + 6, 266, 14, "#38803f"]].forEach(([cx, cy, rot, fill]) => {
+        const leaf = svg("g", {transform: "rotate(" + rot + " " + cx + " " + cy + ")"}, strips);
+        svg("ellipse", {cx, cy, rx: 15, ry: 5.5, fill, stroke: "#1b4a26"}, leaf);
+        svg("path", {d: "M" + (cx - 13) + " " + cy + "H" + (cx + 13), stroke: "#a5d6a1", "stroke-width": 1.2}, leaf);
+      });
       svg("path", {d: "M" + (x - 28) + " 80V285Q" + (x - 28) + " 312 " + x + " 312Q" + (x + 28) + " 312 " + (x + 28) + " 285V80Z", fill: "url(#zsa-bt-glass)", stroke: "#5f8089", "stroke-width": 2.5}, group);
       const cap = svg("rect", {x: x - 32, y: 70, width: 64, height: 16, rx: 5, fill: "#e8e2d4", stroke: "#8d8a7e"}, group);
       const foil = svg("g", {}, group);
@@ -134,6 +143,8 @@
       svg("path", {d: "M" + (x - 22) + " 118L" + (x - 8) + " 236M" + (x + 6) + " 112L" + (x + 20) + " 232", stroke: "#e3e8ea", "stroke-width": 3, "stroke-linecap": "round"}, foil);
       svg("text", {x, y: 345, "text-anchor": "middle", "font-size": 17, "font-weight": 650}, scene, t("Tube {n}", {n: i + 1}));
       const sun = svg("g", {}, scene);
+      svg("circle", {cx: x, cy: 40, r: 46, fill: "url(#zsa-bt-glow)"}, sun);
+      svg("path", {d: "M" + (x - 14) + " 62L" + (x - 20) + " 98M" + x + " 62V100M" + (x + 14) + " 62L" + (x + 20) + " 98", stroke: "#f0c419", "stroke-width": 2, "stroke-dasharray": "2 7", "stroke-linecap": "round", opacity: .8}, sun);
       svg("circle", {cx: x, cy: 40, r: 9, fill: "#ffd84a", stroke: "#b58a00", "stroke-width": 1.5}, sun);
       [0, 45, 90, 135, 180, 225, 270, 315].forEach(a => svg("path", {d: "M" + (x + 13 * Math.cos(a * Math.PI / 180)) + " " + (40 + 13 * Math.sin(a * Math.PI / 180)) + "L" + (x + 18 * Math.cos(a * Math.PI / 180)) + " " + (40 + 18 * Math.sin(a * Math.PI / 180)), stroke: "#b58a00", "stroke-width": 2, "stroke-linecap": "round"}, sun));
       tubeParts.push({liquid, pattern, strips, cap, foil, sun});
@@ -156,6 +167,20 @@
       parts.foil.setAttribute("opacity", !c.light && filled ? "1" : "0");
       parts.sun.setAttribute("opacity", c.light && filled ? "1" : "0");
     });
+  }
+  // A color key with swatches, shown beside the bench and in the prediction step.
+  function buildKey(parent) {
+    const box = el("div", null, parent, {class: "zsa-bt-key"});
+    el("h3", t("BTB color key"), box);
+    const list = el("ul", null, box);
+    [["yellow", "Yellow: a lot of CO2. The water is more acidic."], ["green", "Green: a medium amount of CO2."], ["blue", "Blue: very little CO2. The water is less acidic."]].forEach(([id, text]) => {
+      const li = el("li", null, list);
+      const mark = svg("svg", {viewBox: "0 0 24 24", width: 24, height: 24, "aria-hidden": "true", focusable: "false", class: "zsa-bt-swatch"}, li);
+      svg("circle", {cx: 12, cy: 12, r: 10, fill: liquidColor(id === "yellow" ? 5.9 : id === "green" ? 7.0 : 7.9), stroke: "#37524a", "stroke-width": 1.5}, mark);
+      el("span", t(text), li);
+    });
+    el("p", t("Yellow-green and blue-green are in between."), box, {class: "zsa-bt-hint"});
+    return box;
   }
   // Panels are built once and shown or hidden by step.
   function select(parent, id, label, options, value, onChange) {
@@ -185,6 +210,9 @@
       if (state.breaths >= model.MAX_BREATHS) return;
       state.breaths += 1;
       state.startDIC = model.blown(state.breaths);
+      bubbles.classList.remove("is-blowing");
+      bubbles.getBoundingClientRect();
+      bubbles.classList.add("is-blowing");
       updateFlask(true);
     });
     nodes.fresh.addEventListener("click", () => {
@@ -197,12 +225,18 @@
     const setupList = el("ul", null, panels[1], {class: "zsa-bt-setup", id: "zsa-bt-setup"});
     state.setup.forEach((c, i) => el("li", t("Tube {n}", {n: i + 1}) + ": " + setupText(c), setupList));
     el("p", t("Tube 2 is wrapped in foil, so it stays dark. Tube 3 has no spinach. It is the control."), panels[1], {class: "zsa-bt-hint"});
-    // Step 3: predictions.
-    el("p", t("Choose a color for each tube after 24 hours. Think about CO2. Your predictions lock when the 24 hours begin."), panels[2]);
+    // Step 3: predictions, with the clues students need.
+    el("p", t("Predict the color of each tube after 24 hours. Use the color key and the clues. Your predictions lock when the 24 hours begin."), panels[2]);
+    buildKey(panels[2]);
+    el("h3", t("Think it through"), panels[2]);
+    const clues = el("ul", null, panels[2], {class: "zsa-bt-clues"});
+    ["Spinach respires all the time, in the light and in the dark. Respiration adds CO2 to the water.", "In the light, spinach also does photosynthesis. Photosynthesis uses CO2.", "With no spinach, nothing adds or removes CO2.", "For each tube, ask: does the CO2 go up, go down, or stay the same?"].forEach(text => el("li", t(text), clues));
     nodes.predictSelects = [];
     state.setup.forEach((c, i) => {
+      const box = el("fieldset", null, panels[2]);
+      el("legend", t("Tube {n}", {n: i + 1}) + ": " + setupText(c), box);
       const options = [["", "-"]].concat(colorIds.map(id => [id, t(colorLabels[id])]));
-      const node = select(panels[2], "predict-" + i, t("Color of Tube {n} after 24 hours", {n: i + 1}), options, "", v => { state.prediction[i] = v || null; });
+      const node = select(box, "predict-" + i, t("Color of Tube {n} after 24 hours", {n: i + 1}), options, "", v => { state.prediction[i] = v || null; });
       nodes.predictSelects.push(node);
     });
     nodes.start = el("button", t("Start the 24 hours"), panels[2], {class: "zsa-btn zsa-btn--primary", type: "button", id: "zsa-bt-start"});
@@ -235,39 +269,65 @@
       for (let i = order.length - 1; i > 0; i--) { const j = Math.floor(rnd() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; }
       return order;
     });
+    const quiz = {results: questions.map(() => null), first: null, queue: [], pos: 0};
     nodes.quiz = el("div", null, panels[4], {id: "zsa-bt-quiz"});
-    // One question at a time. After an answer, the question is replaced by its explanation.
-    function showQuestion(qi) {
-      const q = questions[qi];
+    function startRound(list) { quiz.queue = list; quiz.pos = 0; showQuestion(); }
+    function showQuestion() {
+      const qi = quiz.queue[quiz.pos], q = questions[qi];
       nodes.quiz.replaceChildren();
       const box = el("fieldset", null, nodes.quiz);
-      el("legend", t("Question {n} of {total}", {n: qi + 1, total: questions.length}) + ": " + t(q.prompt), box);
+      el("legend", t("Question {n} of {total}", {n: quiz.pos + 1, total: quiz.queue.length}) + ": " + t(q.prompt), box);
+      const labels = [];
       orders[qi].forEach((ci, k) => {
         const label = el("label", null, box, {class: "zsa-bt-choice", for: "zsa-bt-q" + qi + "-" + k});
         const input = el("input", null, label, {type: "radio", name: "zsa-bt-q" + qi, id: "zsa-bt-q" + qi + "-" + k, value: String(ci)});
         el("span", t(q.choices[ci]), label);
-        input.addEventListener("change", () => showAnswer(qi, ci === q.answer));
+        labels.push({label, ci});
+        input.addEventListener("change", () => answer(qi, ci, box, labels));
       });
     }
-    function showAnswer(qi, correct) {
-      nodes.quiz.replaceChildren();
-      const box = el("div", null, nodes.quiz, {class: "zsa-bt-answer"});
-      el("h3", t("Question {n} of {total}", {n: qi + 1, total: questions.length}), box, {tabindex: "-1", id: "zsa-bt-answer-title"});
-      el("p", (correct ? t("Correct. ") : t("Not quite. ")) + t(questions[qi].why), box, {class: "zsa-bt-feedback", role: "status"});
-      const last = qi === questions.length - 1;
-      const next = el("button", last ? t("Finish") : t("Next question"), box, {class: "zsa-btn zsa-btn--primary", type: "button", id: "zsa-bt-next-question"});
+    function answer(qi, ci, box, labels) {
+      const q = questions[qi], correct = ci === q.answer;
+      quiz.results[qi] = correct;
+      box.querySelectorAll("input").forEach(input => { input.disabled = true; });
+      labels.forEach(item => {
+        if (item.ci === q.answer) { item.label.classList.add("is-correct"); el("strong", t("Correct answer"), item.label, {class: "zsa-bt-tag"}); }
+        else if (item.ci === ci) { item.label.classList.add("is-wrong"); el("strong", t("Your answer"), item.label, {class: "zsa-bt-tag"}); }
+      });
+      const callout = el("div", null, nodes.quiz, {class: "zsa-bt-callout " + (correct ? "is-correct" : "is-wrong"), role: "status"});
+      el("h3", correct ? t("Correct!") : t("Not quite."), callout, {tabindex: "-1", id: "zsa-bt-callout-title"});
+      el("p", t(q.why), callout, {class: "zsa-bt-feedback"});
+      const last = quiz.pos === quiz.queue.length - 1;
+      const next = el("button", last ? t("See results") : t("Next question"), callout, {class: "zsa-btn zsa-btn--primary", type: "button", id: "zsa-bt-next-question"});
       next.addEventListener("click", () => {
-        if (last) {
-          nodes.quiz.replaceChildren();
-          el("p", t("You finished all four questions."), nodes.quiz, {class: "zsa-bt-note", id: "zsa-bt-quiz-done", role: "status"});
-        } else {
-          showQuestion(qi + 1);
-          nodes.quiz.querySelector("input").focus();
-        }
+        if (last) { showSummary(); return; }
+        quiz.pos += 1;
+        showQuestion();
+        nodes.quiz.querySelector("input").focus();
       });
-      $("answer-title").focus();
+      $("callout-title").focus();
     }
-    showQuestion(0);
+    function showSummary() {
+      const total = questions.length, score = quiz.results.filter(Boolean).length;
+      const missed = quiz.results.map((r, i) => r ? -1 : i).filter(i => i >= 0);
+      if (quiz.first === null) quiz.first = score;
+      nodes.quiz.replaceChildren();
+      const box = el("div", null, nodes.quiz, {class: "zsa-bt-summary", id: "zsa-bt-summary"});
+      el("h3", t("Your results"), box, {tabindex: "-1", id: "zsa-bt-summary-title"});
+      el("p", t("You got {score} of {total} correct.", {score, total}), box, {class: "zsa-bt-score"});
+      if (quiz.first !== score) el("p", t("On your first try: {score} of {total}.", {score: quiz.first, total}), box, {class: "zsa-bt-hint"});
+      if (missed.length === 0) {
+        el("p", t("You answered every question correctly."), box, {class: "zsa-bt-note"});
+      } else {
+        el("h3", t("Questions to review"), box);
+        const list = el("ul", null, box);
+        missed.forEach(i => el("li", t(questions[i].prompt), list));
+        const retry = el("button", t("Try the missed questions again"), box, {class: "zsa-btn zsa-btn--primary", type: "button", id: "zsa-bt-retry"});
+        retry.addEventListener("click", () => { startRound(missed); nodes.quiz.querySelector("input").focus(); });
+      }
+      $("summary-title").focus();
+    }
+    startRound(questions.map((_, i) => i));
   }
   function updateFlask(speak) {
     const id = startColorId(), n = state.breaths;
@@ -335,8 +395,8 @@
   function setHour(h) {
     state.hour = Math.max(0, Math.min(24, h));
     nodes.time.value = String(state.hour);
-    nodes.time.setAttribute("aria-valuetext", t("Hour {hour}", {hour: state.hour}));
-    nodes.clock.textContent = t("Hour {hour}", {hour: state.hour});
+    nodes.time.setAttribute("aria-valuetext", t("Hour {hour}", {hour: fmtHour(state.hour)}));
+    nodes.clock.textContent = t("Hour {hour}", {hour: fmtHour(state.hour)});
     nodes.results.hidden = state.hour < 24;
     nodes.readouts.replaceChildren();
     state.result.forEach((r, i) => {
@@ -364,6 +424,7 @@
     $("step-title").textContent = t(stepTitles[state.step]);
     $("step-count").textContent = t("Step {n} of 5", {n: state.step + 1});
     $("progress").value = state.step + 1;
+    nodes.benchKey.hidden = state.step === 2;
     if (state.step === 3 && state.result) setHour(state.hour);
     if (state.step !== 3) stopPlay();
     paintScene();
@@ -377,6 +438,7 @@
   }
   function init() {
     buildScene();
+    nodes.benchKey = buildKey($("scene").parentNode);
     buildPanels();
     $("prev").addEventListener("click", () => goTo(state.step - 1, true));
     $("next").addEventListener("click", () => goTo(state.step + 1, true));
