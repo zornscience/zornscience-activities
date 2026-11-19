@@ -55,13 +55,42 @@ lab list includes it. Shared about and SEO tests cover both registrations.
 
 ## Execution evidence
 
-Final command results are recorded in the pull request description. The first
-activity-only model run completed with 11 passed and 0 failed. The first browser
-attempt had 9 launch failures because the bundled Playwright executable was
-missing. Using the existing system Chromium, all 9 activity browser tests ran
-and passed with 0 failed. The initial full unit run had 571 passed and 12 failed,
-all 12 from missing PHP in the environment. A local PHP runtime supplies the
-existing WordPress test prerequisite. No workflow files are changed.
+The latest resumed verification uses main at fab4614, project Playwright 1.56.1,
+system Chromium 154.0.8037.57, and a local PHP 8.4 runtime with SQLite for the
+existing WordPress tests. These are test tools, not activity dependencies.
+
+| Command | Completed result |
+| --- | --- |
+| `node --test tests/unit/natural-selection-lab.test.js tests/unit/static.test.js tests/unit/seo.test.js tests/unit/focus-css.test.js` | 27 passed, 0 failed |
+| `npx playwright test tests/e2e/natural-selection-lab.spec.js tests/e2e/labs-a11y.spec.js tests/e2e/activity-headers.spec.js tests/e2e/about.spec.js --grep 'natural.selection' --workers=2` | 17 passed, 0 failed |
+| `npm run test:unit` with the local PHP runtime on PATH | 704 passed, 0 failed |
+| `node tools/build-about.js` and `node tools/build-seo.js` after rebasing | Completed; only this activity's generated registration changed |
+| Both build tools with `--check` | Exit 0 |
+| `node natural-selection-lab/tools/build-teacher-notes.js --check` | All 42 generated tables match |
+| `git diff --check` | Exit 0 |
+
+Full repository browser and parity results, including any earlier failed
+attempts and their reruns, belong in the pull request evidence report. The full
+browser command is `npm run test:browser -- --workers=2`; the full parity command
+is `npm run parity`. Do not describe an unrun or interrupted check as passing.
+
+Earlier completed development checks included 11 model tests, 9 activity browser
+tests, and 16 shared static tests with no failures. Missing test prerequisites
+initially caused 9 browser launch failures and 12 PHP failures; the prerequisites
+were then supplied. A full browser run on the earlier base completed with 1173
+passed and 8 failed. Its corrected header case and six resource-sensitive checks
+passed in an isolated rerun. The remaining Leaf Disk clock assertion passed
+following its upstream fix and rebase; that rebase's affected browser run had
+62 passed and 0 failed. Its full unit run had 593 passed and 0 failed. A later
+15-test flow and accessibility rerun passed after restricting graph label
+connectors to completed runs.
+
+The first full parity run completed with 11 scenarios, 3723 compared states,
+3296 screenshot pairs and no differences. A later run on the updated base
+reported one 300-pixel difference confined to the unchanged Ion Charge Trainer's
+native select text, with no DOM, layout or computed-style difference. The
+resumed task reruns the final parity check and reports its actual result in the
+pull request. There are no workflow changes in this branch.
 
 ## Brief interpretation
 
