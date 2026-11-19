@@ -52,6 +52,20 @@ A chemistry, physics, and biology tutor for students. It guides students with qu
 
 == Changelog ==
 
+= 1.7.0 (security and privacy) =
+* Based on 1.6.1. Before installing, merge in any changes made in the live 1.6.2.
+* The note under the chat matches the live 1.6.2 note (automated program, not a person; messages go to Anthropic; privacy link). Keep the 1.6.2 wording if it differs.
+* Visitor counters use a salted IP hash that changes every day, so counters from different days cannot be linked.
+* Limits are counted with atomic increments when the site has a shared object cache, so parallel requests cannot slip past a limit.
+* Requests over 4.5 MB or with more than 100 messages are refused before any work is done.
+* Photos: real content is checked, sides over 3072 px or over 9.5 megapixels are refused, and every photo is re-saved on the server as a plain JPEG, which drops metadata such as location tags.
+* Each tutor reply is signed. Earlier tutor turns sent back without a valid signature are dropped, so a caller cannot write fake tutor turns.
+* All tutor responses, including errors, are sent with Cache-Control: no-store.
+* KaTeX files from jsDelivr load with Subresource Integrity hashes (version 0.16.11 pinned).
+* The API key can be set as ZST_API_KEY in wp-config.php, which keeps it out of the database.
+* The Usage panel counts replies the model declined for safety (refusals). Counts only, no message text.
+* "New chat" also stops voice typing and clears the text box.
+
 = 1.6.1 =
 * The note under the chat no longer says "AI". It now reads "Your tutor can make mistakes, so double-check important work" (and the Spanish version). The tutor instructions are unchanged, so the tutor still answers honestly if a student asks what it is.
 

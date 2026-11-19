@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       ZornScience Tutor
  * Description:       A chemistry, physics, and biology tutor for students. Guides students with questions instead of giving answers. Supports photos of student work and voice typing. Use the [zornscience_tutor] shortcode on any page.
- * Version:           1.6.1
+ * Version:           1.7.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            ZornScience
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZST_VERSION', '1.6.1' );
+define( 'ZST_VERSION', '1.7.0' );
 define( 'ZST_FILE', __FILE__ );
 define( 'ZST_DIR', plugin_dir_path( __FILE__ ) );
 define( 'ZST_URL', plugin_dir_url( __FILE__ ) );
@@ -22,6 +22,23 @@ define( 'ZST_OPTION', 'zst_settings' );
 define( 'ZST_KEY_OPTION', 'zst_api_key' );
 define( 'ZST_STATS_OPTION', 'zst_usage_stats' );
 define( 'ZST_API_URL', 'https://api.anthropic.com/v1/messages' );
+// Request and image limits. The browser sends one JPEG of at most 1568 px a side,
+// so these only stop oversized requests that do not come from the chat page.
+define( 'ZST_MAX_BODY_BYTES', 4500000 );
+define( 'ZST_MAX_MESSAGES', 100 );
+define( 'ZST_MAX_IMAGE_EDGE', 3072 );
+define( 'ZST_MAX_IMAGE_PIXELS', 9500000 );
+
+/**
+ * The Anthropic API key. A ZST_API_KEY constant in wp-config.php wins over the
+ * key saved in Settings, so the key can be kept out of the database and backups.
+ */
+function zst_api_key() {
+	if ( defined( 'ZST_API_KEY' ) && is_string( ZST_API_KEY ) && '' !== trim( ZST_API_KEY ) ) {
+		return trim( ZST_API_KEY );
+	}
+	return (string) get_option( ZST_KEY_OPTION, '' );
+}
 
 /* -------------------------------------------------------------------------
  * Settings
@@ -228,8 +245,9 @@ function zst_render_settings_page() {
 		return;
 	}
 	$s       = zst_get_settings();
-	$key     = (string) get_option( ZST_KEY_OPTION, '' );
+	$key     = zst_api_key();
 	$has_key = '' !== $key;
+	$key_in_config = defined( 'ZST_API_KEY' ) && '' !== trim( (string) ZST_API_KEY );
 	$stats   = zst_get_stats();
 	?>
 	<div class="wrap">
@@ -276,7 +294,7 @@ function zst_render_settings_page() {
 				?>
 			</tbody>
 		</table>
-		<p class="description">Cached input is billed at a tenth of the normal input price. Cost is an estimate from the prices below. Your Anthropic Console shows the exact bill. Messages blocked by limits today: <?php echo esc_html( number_format_i18n( $stats['today']['blocked'] ) ); ?>.</p>
+		<p class="description">Cached input is billed at a tenth of the normal input price. Cost is an estimate from the prices below. Your Anthropic Console shows the exact bill. Messages blocked by limits today: <?php echo esc_html( number_format_i18n( $stats['today']['blocked'] ) ); ?>. Replies the model declined for safety (refusals): <?php echo esc_html( number_format_i18n( $stats['today']['ref'] ) ); ?> today, <?php echo esc_html( number_format_i18n( $stats['month']['ref'] ) ); ?> this month. These are counts only. No message text is kept.</p>
 
 		<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
 			<input type="hidden" name="action" value="zst_save_settings">
@@ -296,7 +314,7 @@ function zst_render_settings_page() {
 						<?php if ( $has_key ) : ?>
 							<br><label><input type="checkbox" name="remove_key" value="1"> Remove saved key</label>
 						<?php endif; ?>
-						<p class="description">Stored on your server only. It is never sent to visitors' browsers. Use a key from a dedicated Console workspace with a monthly spend limit.</p>
+						<p class="description">Stored on your server only. It is never sent to visitors' browsers. Use a key from a dedicated Console workspace with a monthly spend limit.<?php echo $key_in_config ? ' <strong>The key set as ZST_API_KEY in wp-config.php is in use, so this field is ignored.</strong>' : ' To keep the key out of the database and backups, define ZST_API_KEY in wp-config.php instead.'; ?></p>
 					</td>
 				</tr>
 				<tr>
@@ -313,7 +331,7 @@ function zst_render_settings_page() {
 					<td>
 						<input type="number" min="1" name="per_visitor_hour" value="<?php echo esc_attr( $s['per_visitor_hour'] ); ?>" class="small-text"> per hour,
 						<input type="number" min="1" name="per_visitor_day" value="<?php echo esc_attr( $s['per_visitor_day'] ); ?>" class="small-text"> per day
-						<p class="description">Visitors are identified by an anonymous hash of their IP address. No names or accounts.</p>
+						<p class="description">Visitors are counted by a salted hash of their IP address that changes every day. The plain IP address is not stored, and counters from different days cannot be linked. No names or accounts.</p>
 					</td>
 				</tr>
 				<tr>
@@ -326,7 +344,7 @@ function zst_render_settings_page() {
 					<td>
 						<label><input type="checkbox" name="images_enabled" value="1" <?php checked( $s['images_enabled'], 1 ); ?>> Let students attach a photo or screenshot of their work</label><br>
 						<input type="number" min="1" name="images_per_day" value="<?php echo esc_attr( $s['images_per_day'] ); ?>" class="small-text"> photos per visitor per day
-						<p class="description">Photos are shrunk in the browser before upload and only the newest one is sent, so each costs a fraction of a cent. Photos are not saved on your server.</p>
+						<p class="description">Photos are shrunk in the browser before upload and only the newest one is sent, so each costs a fraction of a cent. The server re-saves each photo as a plain JPEG, which drops hidden data such as location tags. Photos are not saved on your server.</p>
 					</td>
 				</tr>
 				<tr>
@@ -476,7 +494,7 @@ function zst_language_instruction( $lang ) {
  * ---------------------------------------------------------------------- */
 
 function zst_empty_row() {
-	return array( 'msgs' => 0, 'in' => 0, 'out' => 0, 'blocked' => 0, 'cr' => 0, 'cw' => 0 );
+	return array( 'msgs' => 0, 'in' => 0, 'out' => 0, 'blocked' => 0, 'cr' => 0, 'cw' => 0, 'ref' => 0 );
 }
 
 function zst_get_stats() {
@@ -496,7 +514,7 @@ function zst_get_stats() {
 	return $stats;
 }
 
-function zst_record_stats( $in_tokens, $out_tokens, $blocked = false, $cache_read = 0, $cache_write = 0 ) {
+function zst_record_stats( $in_tokens, $out_tokens, $blocked = false, $cache_read = 0, $cache_write = 0, $refused = false ) {
 	$stats = zst_get_stats();
 	foreach ( array( 'today', 'month', 'total' ) as $k ) {
 		if ( $blocked ) {
@@ -507,6 +525,9 @@ function zst_record_stats( $in_tokens, $out_tokens, $blocked = false, $cache_rea
 			$stats[ $k ]['out'] += (int) $out_tokens;
 			$stats[ $k ]['cr']  += (int) $cache_read;
 			$stats[ $k ]['cw']  += (int) $cache_write;
+			if ( $refused ) {
+				$stats[ $k ]['ref']++;
+			}
 		}
 	}
 	update_option(
@@ -528,8 +549,39 @@ function zst_record_stats( $in_tokens, $out_tokens, $blocked = false, $cache_rea
 
 function zst_visitor_id() {
 	$ip = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : 'unknown';
-	// Anonymous, salted hash. The raw IP is never stored.
-	return substr( hash_hmac( 'sha256', $ip, wp_salt( 'auth' ) ), 0, 20 );
+	// Salted hash that changes every day (UTC), so counters from different days
+	// cannot be linked to each other. The raw IP is never stored.
+	return substr( hash_hmac( 'sha256', $ip . '|' . gmdate( 'Ymd' ), wp_salt( 'auth' ) ), 0, 20 );
+}
+
+/**
+ * Reads a counter. Uses the shared object cache when the site has one, otherwise a transient.
+ */
+function zst_counter_get( $key ) {
+	if ( wp_using_ext_object_cache() ) {
+		return (int) wp_cache_get( $key, 'zst' );
+	}
+	return (int) get_transient( $key );
+}
+
+/**
+ * Adds $delta to a counter and returns the new value. With a shared object cache
+ * the increment is atomic, so parallel requests cannot all slip under a limit.
+ * Without one it falls back to a transient, which is close but not atomic.
+ */
+function zst_counter_add( $key, $delta, $ttl ) {
+	if ( wp_using_ext_object_cache() ) {
+		wp_cache_add( $key, 0, 'zst', $ttl );
+		$n = ( $delta >= 0 ) ? wp_cache_incr( $key, $delta, 'zst' ) : wp_cache_decr( $key, -$delta, 'zst' );
+		if ( false === $n ) {
+			$n = max( 0, (int) wp_cache_get( $key, 'zst' ) + $delta );
+			wp_cache_set( $key, $n, 'zst', $ttl );
+		}
+		return (int) $n;
+	}
+	$n = max( 0, (int) get_transient( $key ) + $delta );
+	set_transient( $key, $n, $ttl );
+	return $n;
 }
 
 /**
@@ -544,26 +596,39 @@ function zst_limit_buckets( $settings ) {
 	);
 }
 
+function zst_limit_error( $bucket ) {
+	if ( 'site' === $bucket['msg'] ) {
+		$text = zst_t( "The tutor has helped a lot of students today and is resting until tomorrow. Try again then!" );
+	} elseif ( 'hour' === $bucket['msg'] ) {
+		$text = zst_t( "You've reached the limit for this hour. Take a few minutes to try the next step on your own, then come back. You've got this!" );
+	} else {
+		$text = zst_t( "You've reached today's limit. Come back tomorrow, and keep practicing in the meantime!" );
+	}
+	return new WP_Error( 'zst_limited', $text, array( 'status' => 429 ) );
+}
+
 /**
  * Checks limits and, if allowed, reserves one message. Returns true or a WP_Error.
+ * Counters are incremented first and checked after, so two requests at the
+ * same moment cannot both use the last message.
  */
 function zst_reserve_message( $settings ) {
 	$buckets = zst_limit_buckets( $settings );
 	foreach ( $buckets as $b ) {
-		$count = (int) get_transient( $b['key'] );
-		if ( $count >= $b['limit'] ) {
-			if ( 'site' === $b['msg'] ) {
-				$text = zst_t( "The tutor has helped a lot of students today and is resting until tomorrow. Try again then!" );
-			} elseif ( 'hour' === $b['msg'] ) {
-				$text = zst_t( "You've reached the limit for this hour. Take a few minutes to try the next step on your own, then come back. You've got this!" );
-			} else {
-				$text = zst_t( "You've reached today's limit. Come back tomorrow, and keep practicing in the meantime!" );
-			}
-			return new WP_Error( 'zst_limited', $text, array( 'status' => 429 ) );
+		if ( zst_counter_get( $b['key'] ) >= $b['limit'] ) {
+			return zst_limit_error( $b );
 		}
 	}
+	$done = array();
 	foreach ( $buckets as $b ) {
-		set_transient( $b['key'], (int) get_transient( $b['key'] ) + 1, $b['ttl'] );
+		$n      = zst_counter_add( $b['key'], 1, $b['ttl'] );
+		$done[] = $b;
+		if ( $n > $b['limit'] ) {
+			foreach ( $done as $d ) {
+				zst_counter_add( $d['key'], -1, $d['ttl'] );
+			}
+			return zst_limit_error( $b );
+		}
 	}
 	return true;
 }
@@ -573,10 +638,7 @@ function zst_reserve_message( $settings ) {
  */
 function zst_release_message( $settings ) {
 	foreach ( zst_limit_buckets( $settings ) as $b ) {
-		$count = (int) get_transient( $b['key'] );
-		if ( $count > 0 ) {
-			set_transient( $b['key'], $count - 1, $b['ttl'] );
-		}
+		zst_counter_add( $b['key'], -1, $b['ttl'] );
 	}
 }
 
@@ -589,7 +651,36 @@ function zst_image_bucket( $settings ) {
 }
 
 /**
+ * Re-saves an image as a plain JPEG on a white background. This drops metadata
+ * (such as GPS location tags) and anything hidden after the image data.
+ * Returns the JPEG bytes, false if the image cannot be decoded, or null when
+ * the GD library is missing (the caller then keeps the checked original).
+ */
+function zst_reencode_image( $bin ) {
+	if ( ! function_exists( 'imagecreatefromstring' ) || ! function_exists( 'imagejpeg' ) ) {
+		return null;
+	}
+	$src = @imagecreatefromstring( $bin ); // phpcs:ignore
+	if ( ! $src ) {
+		return false;
+	}
+	$w   = imagesx( $src );
+	$h   = imagesy( $src );
+	$dst = imagecreatetruecolor( $w, $h );
+	imagefilledrectangle( $dst, 0, 0, $w, $h, imagecolorallocate( $dst, 255, 255, 255 ) );
+	imagecopy( $dst, $src, 0, 0, 0, 0, $w, $h );
+	ob_start();
+	$ok  = imagejpeg( $dst, null, 85 );
+	$out = ob_get_clean();
+	imagedestroy( $src );
+	imagedestroy( $dst );
+	return ( $ok && is_string( $out ) && '' !== $out ) ? $out : false;
+}
+
+/**
  * Validates an uploaded image. Returns array( media_type, data ) or WP_Error.
+ * Checks the real file content (not the name or the type the browser claims),
+ * limits its size, and re-saves it as a JPEG.
  */
 function zst_validate_image( $image ) {
 	if ( ! is_array( $image ) || empty( $image['data'] ) || ! is_string( $image['data'] ) ) {
@@ -608,12 +699,22 @@ function zst_validate_image( $image ) {
 	if ( ! $info || empty( $info['mime'] ) || ! in_array( $info['mime'], $allowed, true ) ) {
 		return new WP_Error( 'zst_img', zst_t( 'Please upload a JPG, PNG, or WebP image.' ) );
 	}
-	if ( $info[0] < 10 || $info[1] < 10 || $info[0] > 8000 || $info[1] > 8000 ) {
+	if ( $info[0] < 10 || $info[1] < 10 || $info[0] > ZST_MAX_IMAGE_EDGE || $info[1] > ZST_MAX_IMAGE_EDGE || $info[0] * $info[1] > ZST_MAX_IMAGE_PIXELS ) {
 		return new WP_Error( 'zst_img', zst_t( 'That photo size is not supported. Please try another one.' ) );
 	}
+	$clean = zst_reencode_image( $bin );
+	if ( false === $clean ) {
+		return new WP_Error( 'zst_img', zst_t( 'That photo could not be read. Please try another one.' ) );
+	}
+	if ( null === $clean ) {
+		return array(
+			'media_type' => $info['mime'],
+			'data'       => base64_encode( $bin ),
+		);
+	}
 	return array(
-		'media_type' => $info['mime'],
-		'data'       => base64_encode( $bin ),
+		'media_type' => 'image/jpeg',
+		'data'       => base64_encode( $clean ),
 	);
 }
 
@@ -625,7 +726,7 @@ function zst_validate_image( $image ) {
  * Calls the Messages API. Returns array( text, in, out, stop ) or WP_Error.
  */
 function zst_call_claude( $messages, $settings ) {
-	$key = (string) get_option( ZST_KEY_OPTION, '' );
+	$key = zst_api_key();
 	if ( '' === $key ) {
 		return new WP_Error( 'zst_no_key', 'No API key saved.' );
 	}
@@ -885,6 +986,20 @@ function zst_origin_ok( WP_REST_Request $request ) {
 }
 
 /**
+ * Signature for a tutor reply. The browser sends earlier replies back with each
+ * question, so the server signs each reply and only accepts earlier "tutor"
+ * turns that carry a valid signature. This stops a caller from writing fake
+ * tutor turns to talk the model out of its rules.
+ */
+function zst_sign_reply( $text ) {
+	return substr( hash_hmac( 'sha256', 'zst_reply|' . (string) $text, wp_salt( 'nonce' ) ), 0, 32 );
+}
+
+function zst_reply_sig_ok( $m ) {
+	return isset( $m['sig'] ) && is_string( $m['sig'] ) && hash_equals( zst_sign_reply( $m['content'] ), $m['sig'] );
+}
+
+/**
  * Cleans the conversation the browser sends: valid roles, alternating turns,
  * trimmed lengths, only the most recent messages, ending on a user turn.
  */
@@ -901,6 +1016,9 @@ function zst_clean_messages( $raw, $settings ) {
 			continue;
 		}
 		$role = ( 'assistant' === $m['role'] ) ? 'assistant' : 'user';
+		if ( 'assistant' === $role && ! zst_reply_sig_ok( $m ) ) {
+			continue; // Unsigned or altered tutor turn: leave it out.
+		}
 		$cap  = ( 'user' === $role ) ? (int) $settings['max_input_chars'] : 6000;
 		$text = trim( wp_check_invalid_utf8( $m['content'] ) );
 		if ( '' === $text ) {
@@ -932,16 +1050,26 @@ function zst_clean_messages( $raw, $settings ) {
 function zst_rest_chat( WP_REST_Request $request ) {
 	$settings = zst_get_settings();
 	$params   = $request->get_json_params();
+	if ( ! is_array( $params ) ) {
+		$params = array();
+	}
 	zst_lang( isset( $params['lang'] ) && is_string( $params['lang'] ) ? $params['lang'] : 'en' );
 	$settings['system_prompt'] .= zst_site_prompt( $settings );
 	$settings['system_extra']   = zst_language_instruction( zst_lang() );
 
-	if ( empty( $settings['enabled'] ) || '' === (string) get_option( ZST_KEY_OPTION, '' ) ) {
+	if ( empty( $settings['enabled'] ) || '' === zst_api_key() ) {
 		return new WP_REST_Response( array( 'error' => zst_t( 'The tutor is taking a break right now. Please check back later.' ) ), 503 );
 	}
 
 	if ( ! zst_origin_ok( $request ) ) {
 		return new WP_REST_Response( array( 'error' => zst_t( 'This chat only works on ZornScience.org.' ) ), 403 );
+	}
+
+	if ( strlen( (string) $request->get_body() ) > ZST_MAX_BODY_BYTES ) {
+		return new WP_REST_Response( array( 'error' => zst_t( 'That photo is too large. Please try a smaller one.' ) ), 413 );
+	}
+	if ( is_array( $params['messages'] ?? null ) && count( $params['messages'] ) > ZST_MAX_MESSAGES ) {
+		return new WP_REST_Response( array( 'error' => zst_t( 'Invalid conversation.' ) ), 400 );
 	}
 
 	$last   = is_array( $params['messages'] ?? null ) ? end( $params['messages'] ) : null;
@@ -966,19 +1094,22 @@ function zst_rest_chat( WP_REST_Request $request ) {
 			return new WP_REST_Response( array( 'error' => $image->get_error_message() ), 400 );
 		}
 		$img_bucket = zst_image_bucket( $settings );
-		if ( (int) get_transient( $img_bucket['key'] ) >= $img_bucket['limit'] ) {
+		if ( zst_counter_add( $img_bucket['key'], 1, $img_bucket['ttl'] ) > $img_bucket['limit'] ) {
+			zst_counter_add( $img_bucket['key'], -1, $img_bucket['ttl'] );
 			return new WP_REST_Response( array( 'error' => zst_t( "You've used today's photo uploads. You can still type out the problem and I'll help!" ), 'imageLimited' => true ), 429 );
 		}
 	}
 
 	$reserved = zst_reserve_message( $settings );
 	if ( is_wp_error( $reserved ) ) {
+		if ( $img_bucket ) {
+			zst_counter_add( $img_bucket['key'], -1, $img_bucket['ttl'] );
+		}
 		zst_record_stats( 0, 0, true );
 		return new WP_REST_Response( array( 'error' => $reserved->get_error_message(), 'limited' => true ), 429 );
 	}
 
 	if ( $image ) {
-		set_transient( $img_bucket['key'], (int) get_transient( $img_bucket['key'] ) + 1, $img_bucket['ttl'] );
 		$last                         = count( $messages ) - 1;
 		$messages[ $last ]['content'] = array(
 			array(
@@ -1001,8 +1132,7 @@ function zst_rest_chat( WP_REST_Request $request ) {
 	if ( is_wp_error( $result ) ) {
 		zst_release_message( $settings );
 		if ( $img_bucket ) {
-			$n = (int) get_transient( $img_bucket['key'] );
-			set_transient( $img_bucket['key'], max( 0, $n - 1 ), $img_bucket['ttl'] );
+			zst_counter_add( $img_bucket['key'], -1, $img_bucket['ttl'] );
 		}
 		$data = $result->get_error_data();
 		$http = is_array( $data ) && isset( $data['http'] ) ? (int) $data['http'] : 0;
@@ -1017,11 +1147,27 @@ function zst_rest_chat( WP_REST_Request $request ) {
 		return new WP_REST_Response( array( 'error' => $msg ), 502 );
 	}
 
-	zst_record_stats( $result['in'], $result['out'], false, $result['cr'], $result['cw'] );
+	zst_record_stats( $result['in'], $result['out'], false, $result['cr'], $result['cw'], 'refusal' === $result['stop'] );
 	$result['text'] = zst_filter_links( $result['text'], $settings );
 
-	$response = new WP_REST_Response( array( 'reply' => $result['text'] ), 200 );
-	$response->header( 'Cache-Control', 'no-store' );
+	return new WP_REST_Response(
+		array(
+			'reply' => $result['text'],
+			'sig'   => zst_sign_reply( $result['text'] ),
+		),
+		200
+	);
+}
+
+/**
+ * Every tutor response, including errors, is marked as not cacheable.
+ */
+add_filter( 'rest_post_dispatch', 'zst_response_headers', 10, 3 );
+function zst_response_headers( $response, $server, $request ) {
+	if ( $response instanceof WP_REST_Response && 0 === strpos( (string) $request->get_route(), '/zst/v1/' ) ) {
+		$response->header( 'Cache-Control', 'no-store' );
+		$response->header( 'X-Content-Type-Options', 'nosniff' );
+	}
 	return $response;
 }
 
@@ -1040,6 +1186,37 @@ function zst_register_assets() {
 
 	wp_register_style( 'zst-chat', ZST_URL . 'assets/chat.css', array(), ZST_VERSION );
 	wp_register_script( 'zst-chat', ZST_URL . 'assets/chat.js', array( 'zst-katex', 'zst-katex-mhchem' ), ZST_VERSION, true );
+}
+
+/**
+ * Subresource Integrity for the pinned KaTeX files on jsDelivr. If the CDN ever
+ * served different code, the browser would refuse to run it (math would then
+ * show as plain text instead).
+ */
+function zst_sri_hashes() {
+	return array(
+		'zst-katex'        => 'sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg',
+		'zst-katex-mhchem' => 'sha384-ifpG+NlgMq0kvOSGqGQxW1mJKpjjMDmZdpKGq3tbvD3WPhyshCEEYClriK/wRVU0',
+		'zst-katex-css'    => 'sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+',
+	);
+}
+
+add_filter( 'script_loader_tag', 'zst_script_sri', 10, 2 );
+function zst_script_sri( $tag, $handle ) {
+	$h = zst_sri_hashes();
+	if ( isset( $h[ $handle ] ) && false === strpos( $tag, 'integrity=' ) ) {
+		$tag = str_replace( '<script ', '<script integrity="' . esc_attr( $h[ $handle ] ) . '" crossorigin="anonymous" ', $tag );
+	}
+	return $tag;
+}
+
+add_filter( 'style_loader_tag', 'zst_style_sri', 10, 2 );
+function zst_style_sri( $tag, $handle ) {
+	$h = zst_sri_hashes();
+	if ( 'zst-katex' === $handle && false === strpos( $tag, 'integrity=' ) ) {
+		$tag = str_replace( '<link ', '<link integrity="' . esc_attr( $h['zst-katex-css'] ) . '" crossorigin="anonymous" ', $tag );
+	}
+	return $tag;
 }
 
 add_shortcode( 'zornscience_tutor', 'zst_shortcode' );
@@ -1062,6 +1239,8 @@ function zst_shortcode( $atts ) {
 		'images'       => (bool) $s['images_enabled'],
 		'voice'        => (bool) $s['voice_enabled'],
 		'siteHost'     => wp_parse_url( home_url(), PHP_URL_HOST ),
+		'privacyUrl'   => esc_url_raw( home_url( '/privacy/#student-privacy' ) ),
+		'privacyUrlEs' => esc_url_raw( home_url( '/es/privacy/#privacidad-estudiantil' ) ),
 	);
 
 	ob_start();
@@ -1104,7 +1283,7 @@ function zst_shortcode( $atts ) {
 			<button type="button" class="zst-icon-btn zst-mic" data-zst-mic hidden aria-pressed="false" title="Start voice input" aria-label="Start voice input"></button>
 			<button type="submit" class="zst-send" data-zst-send aria-label="Send"><span class="zst-btn-text" data-zst-i18n="send">Send</span><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 12l15-7-5 15-2.6-5.4z M11.4 14.6L19 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></svg></button>
 		</form>
-		<p class="zst-note" data-zst-note>Your tutor can make mistakes, so double-check important work. Please don't share personal information, and crop names out of photos.</p>
+		<p class="zst-note" data-zst-note>The ZornScience tutor is an automated program, not a person. Your message and recent messages from this chat are sent to Anthropic to generate a reply. Please leave out names, contact details, grades, and other private information, and crop names out of photos. <a href="<?php echo esc_url( home_url( '/privacy/#student-privacy' ) ); ?>">Read the privacy policy.</a> Your tutor can make mistakes, so double-check important work.</p>
 	</div>
 	<?php
 	return ob_get_clean();
