@@ -69,6 +69,10 @@ Two known findings are recorded in the tests rather than fixed, because fixing t
 - The Ion Charge Trainer's embed mode hides its whole header, so the framed page has no heading 1. This is axe's best-practice rule `page-has-heading-one`, not a WCAG failure.
 - At 360 px, the Ion Charge Trainer's seven "how many electrons" buttons are about 38 px wide. That meets WCAG 2.2's 24 px minimum but not the house 44 px.
 
+## PHP requirements
+
+The WordPress plugin tests (`tests/unit/act-history.test.js` and `tests/unit/language.test.js`) run PHP from the command line. The PHP on the path needs these extensions loaded: `ctype`, `iconv`, `pdo` and `pdo_sqlite` (check with `php -m`). `iconv` is used to encode accented letters and curly quotes in the ACT history PDF as Windows-1252, and `pdo_sqlite` backs the stand-in for the WordPress database. A minimal PHP build or a scratch `php.ini` can leave `iconv` out; the first test in `act-history.test.js` names any missing extension. The CI workflow runs the same `php -m` check before the unit tests.
+
 ## Behavior parity
 
 `npm run parity` exports a base git ref (default `origin/main`) and serves it next to the working tree. It opens both in Chromium with the same seeded `Math.random`, makes the same clicks and key presses, and compares after every action:

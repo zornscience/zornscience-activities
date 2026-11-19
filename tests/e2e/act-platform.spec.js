@@ -250,8 +250,15 @@ test("English with the drafts: mixed practice is 2 passages in 14 minutes, the f
   await expect(page.getByRole("button", {name: /^Mixed practice 2 passages timed at ACT pace \(14 minutes\)/})).toBeVisible();
   await page.getByRole("button", {name: /^Full section/}).click();
   await expect(page.getByText("This section has 5 passages and 50 questions.", {exact: false})).toBeVisible();
+  // Freeze the page clock before the section starts so the first reading is exactly the full duration,
+  // then advance it by a controlled amount. With a running clock the first observation can already be 34:59.
+  await page.clock.pauseAt(new Date(Date.now() + 60 * 1000));
   await startSection(page, "English");
   await expect(page.getByRole("timer")).toHaveText("Time left 35:00");
+  await page.clock.runFor(1000);
+  await expect(page.getByRole("timer")).toHaveText("Time left 34:59");
+  await page.clock.runFor(59 * 1000);
+  await expect(page.getByRole("timer")).toHaveText("Time left 34:00");
   await expect(nav(page).getByRole("button")).toHaveCount(50);
   // Question 50 is the last question of the fifth passage, and its numbered part is numbered 50 in the passage.
   await nav(page).getByRole("button", {name: /^Question 41,/}).click();
