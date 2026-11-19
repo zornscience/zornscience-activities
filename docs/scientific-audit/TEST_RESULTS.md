@@ -1,0 +1,47 @@
+# Scientific audit test results
+
+## Setup
+
+- Baseline: commit `f59c899e57c8d965abfd247326c3b8ee124a4972`, preserved in a separate checkout while testing changes.
+- Environment: Node v24.19.0, `@playwright/test` 1.56.1 and system Chromium 154.0.8037.57. Browser runs served the relevant checkout over localhost. The temporary Playwright configuration extended the repo's configuration with `launchOptions.executablePath = "/usr/bin/chromium"`, test directory, web server working directory and two workers.
+- Initial `npm ci --no-audit --no-fund` failed because the default cache under `/home/agent/.npm` was unavailable. `npm ci --cache /workspace/.npm-cache --no-audit --no-fund` installed the four locked packages.
+- For replay with Playwright's bundled Chromium, install Chromium through Playwright and omit the temporary `--config` switch. With system Chromium, use an equivalent config override.
+
+## Baseline and reproductions
+
+| Command | Executed result |
+|---|---|
+| `npm run test:unit` | 681 passed, 12 failed. PHP-based WordPress tests failed with `spawnSync php ENOENT`. The workspace package recovery attempt could not retrieve Debian packages due to proxy HTTP 403. |
+| `npm run test:browser -- --config /workspace/.zsa-playwright.config.cjs --output /workspace/work/baseline-playwright` | 296 passed. The 1,339-case run was stopped after 27.8 minutes to preserve the audit results. Two in-flight cases were interrupted and 1,041 did not run. |
+| `node --test tests/unit/scientific-audit-regressions.test.js` before the first changes | Two passed, four failed as intended. The Beer’s Law and equilibrium scoring assertions reproduced the baseline problems. The iodine dilution/time and osmosis expected mass assertions already passed. |
+| `ZSA_PORT=4191 npm run test:browser -- --config /workspace/work/audit-playwright.cjs --output /workspace/work/red-playwright --workers=1 --timeout=20000 tests/e2e/scientific-audit.spec.js` | Three failed on the baseline. Beer’s Law awarded credit without standards, the osmosis page still used the prior wording, and iodine copy lacked the new explicit relative-rate definition. |
+| `node --test --test-name-pattern 'AP Chemistry 8.4-6' tests/unit/scientific-audit-regressions.test.js` | Failed on the old display, 0.00600 mol. |
+| `node --test --test-name-pattern 'ACT catalase extrapolation' tests/unit/scientific-audit-regressions.test.js` | Failed on the prior explanation. The sample table reproduced the two equal initial increases. |
+| `ZSA_PORT=4193 npm run test:browser -- --config /workspace/work/audit-playwright.cjs --output /workspace/work/population-red --workers=1 --grep 'ten guided recapture trials' tests/e2e/population-sampling-lab.spec.js` | Two failed before the uncertainty note was present, in English and Spanish. |
+| `ZSA_PORT=4201 npm run test:browser -- --config /workspace/work/audit-playwright.cjs --output /workspace/work/valid-bonding-red --workers=1 --grep 'preserves keyboard focus' tests/e2e/chemical-bonding-lab.spec.js` | Failed as expected. The clock advanced, then the focused button had been replaced. |
+
+## Final and targeted runs
+
+| Command | Executed result |
+|---|---|
+| `npm run test:unit` | 689 passed, 12 failed with the same missing-PHP errors. This run preceded the final Fruit Fly Genetics copy correction and its additional unit test. The final copy and regression were exercised in the targeted run below. |
+| `node --test tests/unit/scientific-audit-regressions.test.js tests/unit/beers-law-lab.test.js tests/unit/equilibrium-k-lab.test.js tests/unit/iodine-clock.test.js tests/unit/osmosis-lab.test.js` | 44 passed in the first targeted run, including the six original audit cases. |
+| `node --test tests/unit/scientific-audit-regressions.test.js tests/unit/apchem-unit8-practice.test.js tests/unit/act.test.js tests/unit/population-sampling-lab.test.js` | 33 passed, including the added AP and ACT cases. An earlier Unit 8 run exposed a test assumption that every decimal-precision item was unitless. The logarithm explanation assertion now applies to those items only. |
+| `ZSA_PORT=4191 npm run test:browser -- --config /workspace/work/audit-playwright.cjs --output /workspace/work/green-playwright --workers=2 tests/e2e/scientific-audit.spec.js tests/e2e/beers-law-lab.spec.js tests/e2e/equilibrium-k-lab.spec.js tests/e2e/osmosis-lab.spec.js` | 34 passed. Includes the initial three new cases and the existing lab suites. |
+| `ZSA_PORT=4193 npm run test:browser -- --config /workspace/work/audit-playwright.cjs --output /workspace/work/cross-playwright --workers=2 tests/e2e/population-sampling-lab.spec.js tests/e2e/gravimetric-lab.spec.js tests/e2e/faraday-lab.spec.js tests/e2e/standing-waves-lab.spec.js tests/e2e/chemical-bonding-lab.spec.js tests/e2e/metals-lab.spec.js --grep 'ten guided recapture trials\|follows the procedure\|flux, current reversal\|harmonics obey\|node locations\|fundamental preset\|all unknowns\|all tests'` | Seven passed. The Chemical Bonding solvent test timed out waiting for the “Advance to 5:00” button because the DOM node was repeatedly replaced. The remaining seven included both Population Sampling recapture runs. |
+| `ZSA_PORT=4197 npm run test:browser -- --config /workspace/work/audit-playwright.cjs --output /workspace/work/broad-playwright --workers=2 tests/e2e/scientific-audit.spec.js tests/e2e/apchem-unit8-practice.spec.js tests/e2e/act.spec.js tests/e2e/btb-carbon-cycle-lab.spec.js tests/e2e/equipotential.spec.js tests/e2e/gas-lab.spec.js tests/e2e/kinetics-lab.spec.js tests/e2e/ph-buffer-lab.spec.js tests/e2e/titration-lab.spec.js --grep 'prerequisite appears\|remaining acid uses\|one passage, all correct\|guided path gives\|Coulomb potential\|mixtures show moles\|real gas mode shows\|the catalyst halves\|dilute acid\|stress reference\|endpoint, checking'` | 11 passed. Includes the Spanish Beer’s Law mobile and bilingual AP Chemistry mobile regressions. |
+| `ZSA_PORT=4201 npm run test:browser -- --config /workspace/work/audit-playwright.cjs --output /workspace/work/bonding-green --workers=1 tests/e2e/chemical-bonding-lab.spec.js` | Four passed, including the formerly timed-out all-unknowns flow and the new focus regression. |
+| `node --test --test-name-pattern 'distinct standards' tests/unit/scientific-audit-regressions.test.js` | Failed before the flat-regression roundoff fix. Two identical 0.480 absorbances had produced a positive residual slope of about 4.34 × 10⁻¹³ M⁻¹. |
+| `node --test tests/unit/scientific-audit-regressions.test.js tests/unit/beers-law-lab.test.js tests/unit/static.test.js` | 24 passed with the final calibration changes and Markdown style fixes. |
+| `ZSA_PORT=4203 npm run test:browser -- --config /workspace/work/audit-playwright.cjs --output /workspace/work/beer-final --workers=2 tests/e2e/beers-law-lab.spec.js tests/e2e/scientific-audit.spec.js --grep 'standards: readings\|the unknown: random\|CSV export\|scoring needs\|prerequisite appears'` | Five passed, including the final English and Spanish assessment checks and CSV case. |
+| `ZSA_CHROMIUM=/usr/bin/chromium node tests/support/scientific-audit-catalog.js` | Completed 368 successful English/Spanish loads across 76 routes, with no failed responses, missing headings, language mismatches, material horizontal overflow or page errors in the recorded cases. The audit-branch sweep completed before the final Fruit Fly Genetics wording update. That activity was subsequently checked through its specific unit and browser cases. |
+| `node --test tests/unit/fruit-fly-genetics-lab.test.js tests/unit/seo.test.js tests/unit/static.test.js` | 26 passed with the final bilingual and static English copy. A direct check against the baseline reproduced the “real offspring counts” wording. An intermediate run caught the static English paragraph still using the earlier text. Its source and translation now match. |
+| `ZSA_PORT=4205 npm run test:browser -- --config /workspace/work/audit-playwright.cjs --output /workspace/work/genetics-browser --workers=2 tests/e2e/fruit-fly-genetics-lab.spec.js tests/e2e/snells-law.spec.js --grep 'previews the unproofread Spanish\|same flies for the same seed\|^.*critical angle'` | Three passed, including seeded samples, Spanish preview and critical-angle graphics. |
+| `node tools/build-about.js --check`, `node tools/build-seo.js --check` and `git diff --check` | Passed. |
+
+## Evidence scope
+
+- The numerical references include independently evaluated concentration, rates, conservation, probability and subtraction precision. Existing checks cover the full AP Chemistry key set, qualitative and quantitative generator cases, 16,000 gas sandbox settings and randomized collision and circuit invariants.
+- Existing targeted browser cases exercised the Beer’s Law CSV, Equilibrium Constant CSV, osmosis tab-separated export and related on-screen data. The browser runs also checked selected graphics, keyboard operation, mobile layouts and Spanish values. The catalog sweep covers page load and rendering checks at its sampled sizes.
+- Direct shell downloads returned proxy HTTP 403. The web reader recovered the three teacher indexes, live osmosis description and the four PDF pairs linked in the final report. It provided the page images for selected iodine, Snell and Population Sampling pages. The remainder of the worksheet inventory and exact deployment revision checks are pending.
+- Row-level coverage is in [ACTIVITY_COVERAGE.md](ACTIVITY_COVERAGE.md). Full worksheet, content and visual certification remains open.
