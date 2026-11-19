@@ -48,6 +48,11 @@ for (const slug of slugs) {
         await expect(page.locator('input[type=text],textarea')).toHaveCount(0);
         await expect(link).toBeVisible();
         await expect(link).toHaveAttribute('href', 'https://activities.zornscience.org/' + slug + '/');
+      } else if (slug === 'natural-selection-lab') {
+        // This activity forbids every text input, including a read-only Share link.
+        await expect(page.locator('input:not([type=radio]), textarea')).toHaveCount(0);
+        await expect(page.locator('#zsa-nsl-share-url')).toBeVisible();
+        await expect(page.locator('#zsa-nsl-share-url')).toHaveText('https://activities.zornscience.org/' + slug + '/');
       } else {
         const input = page.locator('input[readonly]:visible');
         await expect(input).toHaveCount(1);

@@ -29,6 +29,10 @@ module.exports = {
     en: "Breed virtual fruit flies, build Punnett squares and compare predicted ratios with simulated offspring counts in a free Biology genetics lab.",
     es: null
   },
+  "natural-selection-lab": {
+    en: "Explore natural selection with beetles. Compare camouflage, changing ground, variation and population size in a bilingual ZornScience Biology lab.",
+    es: "Explora la selección natural con escarabajos. Compara camuflaje, suelo cambiante, variación y tamaño de población en un laboratorio de ZornScience."
+  },
   "leaf-disk-lab": {
     en: "Explore photosynthesis with floating spinach leaf disks. Compare light, temperature and bicarbonate in a bilingual Biology lab from ZornScience.",
     es: "Explora la fotosíntesis con discos de espinaca que flotan. Compara luz, temperatura y bicarbonato en un laboratorio bilingüe de ZornScience."
