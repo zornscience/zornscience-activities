@@ -1,6 +1,6 @@
 # Exponents and Logarithms Practice
 
-Version: 1.0.1
+Version: 1.0.2
 
 Generated practice for the Quantitative Skills lesson [Exponents and Logarithms](https://zornscience.org/science/quantitative-skills/advanced-tools/exponents-and-logarithms/). Every set has new numbers. Four skills: exponent rules, scientific notation, logarithms, and pH. A skill gives 8 questions; Mixed review gives 12, three of each. English: `/qs-exponents-and-logarithms-practice/`. Mexican Spanish: `/qs-exponents-and-logarithms-practice/?lang=es`.
 

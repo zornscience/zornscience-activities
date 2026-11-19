@@ -1,6 +1,6 @@
 # Percents Practice
 
-Version: 1.0.1
+Version: 1.0.2
 
 Generated practice for the Quantitative Skills lesson [Percents](https://zornscience.org/science/quantitative-skills/ratios-and-percents/percents/). Every set has new numbers. Four skills: percents and decimals, percent of a whole, percent composition, and percent yield. A skill gives 8 questions; Mixed review gives 12, three of each. English: `/qs-percents-practice/`. Mexican Spanish: `/qs-percents-practice/?lang=es`.
 

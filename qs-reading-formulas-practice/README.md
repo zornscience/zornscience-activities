@@ -1,6 +1,6 @@
 # Reading Formulas Practice
 
-Version: 1.0.1
+Version: 1.0.2
 
 Generated practice for the Quantitative Skills lesson [Reading Formulas](https://zornscience.org/science/quantitative-skills/equations/reading-formulas/). Every set is new. Four skills: symbols and subscripts, formulas in words, change (final minus initial), and one-step substitution. A skill gives 8 questions; Mixed review gives 12, three of each. English: `/qs-reading-formulas-practice/`. Mexican Spanish: `/qs-reading-formulas-practice/?lang=es`.
 

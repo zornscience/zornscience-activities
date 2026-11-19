@@ -1,6 +1,6 @@
 # Unit Conversions Practice
 
-Version: 1.0.1
+Version: 1.0.2
 
 Generated practice for the Quantitative Skills lesson [Unit Conversions](https://zornscience.org/science/quantitative-skills/units/unit-conversions/). Every set has new numbers. Three skills: conversion factors, setting up and converting, and exact factors and significant figures. A skill gives 8 questions; Mixed review gives 12, four of each. English: `/qs-unit-conversions-practice/`. Mexican Spanish: `/qs-unit-conversions-practice/?lang=es`.
 

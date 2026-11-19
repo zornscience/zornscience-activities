@@ -137,6 +137,33 @@
     return fixed(div(r.value, scale(e)), r.place - e) + "e" + e;
   }
   // For prompts and answers: a true minus sign, commas in numbers of five or more digits, and × 10 with a superscript.
+  // Spoken form of notation a screen reader mangles: subscripts (H₂O), charges (NH₄⁺), powers of ten (10⁻³) and reaction
+  // arrows. Reads the sub and sup markup of authored content plus the Unicode sub and superscript characters.
+  // Returns "" when the text has none of these, so plain text is left alone.
+  var SUB = "\u2080\u2081\u2082\u2083\u2084\u2085\u2086\u2087\u2088\u2089", SUP = {"\u2070":"0", "\u00B9":"1", "\u00B2":"2", "\u00B3":"3", "\u2074":"4", "\u2075":"5", "\u2076":"6", "\u2077":"7", "\u2078":"8", "\u2079":"9", "\u207A":"+", "\u207B":"-"};
+  var SAY = {
+    en:{sub:"sub", power:"to the power of", charge:"charge", sup:"superscript", plus:"plus", minus:"minus", negative:"negative", yields:"yields", eq:"is in equilibrium with", times:"times", over:"over"},
+    es:{sub:"subíndice", power:"a la potencia", charge:"carga", sup:"superíndice", plus:"más", minus:"menos", negative:"menos", yields:"produce", eq:"está en equilibrio con", times:"por", over:"entre"}
+  };
+  function spoken(text, lang) {
+    var w = SAY[lang] || SAY.en, src = String(text), found = false;
+    src = src.replace(/[\u2080-\u2089]+/g, function (m) { found = true; return "<sub>" + m.split("").map(function (c) { return SUB.indexOf(c); }).join("") + "</sub>"; });
+    src = src.replace(/[\u2070\u00B9\u00B2\u00B3\u2074-\u207B]+/g, function (m) { found = true; return "<sup>" + m.split("").map(function (c) { return SUP[c] || c; }).join("") + "</sup>"; });
+    if (/<su[bp]>/.test(src)) found = true;
+    if (/[\u2192\u21CC\u21C4\u2194]/.test(src)) found = true;
+    if (!found) return "";
+    function sign(v) { return v.replace(/^[\u2212-]/, w.negative + " ").replace(/\u2212/g, "-"); }
+    src = src.replace(/<sub>([^<]*)<\/sub>/g, function (m, v) { return " " + w.sub + " " + v + " "; });
+    src = src.replace(/(10|\u00D710)\s*<sup>([^<]*)<\/sup>/g, function (m, base, v) { return base + " " + w.power + " " + sign(v) + " "; });
+    src = src.replace(/<sup>([^<]*)<\/sup>/g, function (m, v) {
+      var c = /^(\d*)([+\u2212-])$/.exec(v);
+      if (c) return " " + w.charge + " " + (c[1] ? c[1] + " " : "") + (c[2] === "+" ? w.plus : w.minus) + " ";
+      return " " + w.sup + " " + sign(v) + " ";
+    });
+    src = src.replace(/\u2192/g, " " + w.yields + " ").replace(/[\u21CC\u21C4]/g, " " + w.eq + " ");
+    return src.replace(/\s+/g, " ").trim();
+  }
+
   function pretty(text) {
     var m = String(text).match(/^([+-]?)(\d+)(\.\d+)?(?:e([+-]?\d+))?$/i);
     if (!m) return String(text);
@@ -333,7 +360,7 @@
 
   var api = {shuffle:shuffle, makeSet:makeSet, parse:parse, inspect:inspect, lessonLink:lessonLink,
     exact:exact, add:add, sub:sub, mul:mul, div:div, neg:neg, abs:abs, cmp:cmp, sign:sign, toNumber:toNumber, scale:scale,
-    magnitude:magnitude, roundAt:roundAt, rounded:rounded, fixed:fixed, write:write, pretty:pretty,
+    magnitude:magnitude, roundAt:roundAt, rounded:rounded, fixed:fixed, write:write, pretty:pretty, spoken:spoken,
     read:read, unitKey:unitKey, unitSame:unitSame, judge:judge, figures:figures, places:places, interfaceEs:interfaceEs,
     int:int, pick:pick, generatedBank:generatedBank};
   if (typeof module === "object" && module.exports) module.exports = api;

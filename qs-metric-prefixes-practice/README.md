@@ -1,6 +1,6 @@
 # Metric Prefixes Practice
 
-Version: 1.0.1
+Version: 1.0.2
 
 Generated practice for the Quantitative Skills lesson [Metric Prefixes](https://zornscience.org/science/quantitative-skills/units/metric-prefixes/). Every set has new numbers. Three skills: prefix meanings, the prefix ladder, and converting. A skill gives 8 questions; Mixed review gives 12, four of each. English: `/qs-metric-prefixes-practice/`. Mexican Spanish: `/qs-metric-prefixes-practice/?lang=es`.
 

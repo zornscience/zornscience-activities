@@ -1,6 +1,6 @@
 # Scientific Notation Practice
 
-Version: 1.0.1
+Version: 1.0.2
 
 Generated practice for the Quantitative Skills lesson [Scientific Notation](https://zornscience.org/science/quantitative-skills/numbers/scientific-notation/). Every set has new numbers. Three skills: writing numbers in scientific notation, writing them back in standard notation, and reading scientific notation. A skill gives 8 questions; Mixed review gives 12, four of each. English: `/qs-scientific-notation-practice/`. Mexican Spanish: `/qs-scientific-notation-practice/?lang=es`.
 

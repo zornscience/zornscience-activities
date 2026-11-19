@@ -24,7 +24,18 @@
       return el;
     }
     // Only sub and sup in authored content become elements. Everything else stays text.
+    // Each word with a subscript, charge, power of ten or reaction arrow is wrapped as an image with its spoken form as
+    // the name ("H sub 2 O", "10 to the power of negative 3"), since screen readers read the bare markup as "H2O" or "10 -3".
     function chemistry(el, text) {
+      (String(text).match(/(?:<su[bp]>[^<]*<\/su[bp]>|\S)+|\s+/g) || []).forEach(function (word) {
+        var say = word && M.spoken ? M.spoken(word, i18n.lang) : "";
+        if (!say) { build(el, word); return; }
+        var span = node("span"); span.className = "zsa-math"; span.setAttribute("role", "img"); span.setAttribute("aria-label", say);
+        el.appendChild(build(span, word));
+      });
+      return el;
+    }
+    function build(el, text) {
       var current = el;
       String(text).split(/(<\/?(?:sub|sup)>)/g).forEach(function (part) {
         if (part === "<sub>" || part === "<sup>") {

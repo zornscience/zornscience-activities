@@ -1,6 +1,6 @@
 # AP Chemistry Unit 9 Practice
 
-Version: 1.0.2
+Version: 1.0.3
 
 Original bilingual ZornScience practice aligned to College Board CED Unit 9, Thermodynamics and Electrochemistry. Each of eleven topics has six questions: four multiple choice and two numeric entry. There are 66 questions, 44 multiple choice and 22 numeric, with individual English and Mexican Spanish explanations for all 132 distractors. These are original aligned questions, not official College Board exam items.
 

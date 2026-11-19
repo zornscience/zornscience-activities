@@ -1,6 +1,6 @@
 # Direct and Inverse Relationships Practice
 
-Version: 1.0.1
+Version: 1.0.2
 
 Generated practice for the Quantitative Skills lesson [Direct and Inverse Relationships](https://zornscience.org/science/quantitative-skills/graphs-and-change/direct-and-inverse-relationships/). Every set has new numbers. Four skills: identifying relationships, changing x, finding the constant, and predictions. A skill gives 8 questions; Mixed review gives 12, three of each. English: `/qs-direct-and-inverse-relationships-practice/`. Mexican Spanish: `/qs-direct-and-inverse-relationships-practice/?lang=es`.
 

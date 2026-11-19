@@ -1,6 +1,6 @@
 # AP Chemistry Unit 8 Practice
 
-Version: 1.0.2
+Version: 1.0.3
 
 Original bilingual ZornScience practice aligned to College Board CED Unit 8, Acids and Bases. Each of eleven topics has six questions: four multiple choice and two numeric entry. Total: 66 questions, 44 multiple choice and 22 numeric, with individual explanations for all 132 distractors in English and Mexican Spanish. These are original aligned questions, not official College Board exam items.
 
