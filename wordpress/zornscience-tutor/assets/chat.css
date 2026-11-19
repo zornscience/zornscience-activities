@@ -202,7 +202,7 @@
   line-height: 1.4;
   margin: 0;
 }
-.zst-chat .zst-input:focus { outline: none; border-color: var(--zst-blue); box-shadow: 0 0 0 3px rgba(29, 95, 209, 0.15); }
+.zst-chat .zst-input:focus { border-color: #0b3d91; }
 .zst-chat .zst-send {
   appearance: none;
   background: var(--zst-blue);
@@ -217,10 +217,13 @@
 }
 .zst-chat .zst-send:hover { background: var(--zst-blue-dark); }
 .zst-chat .zst-send:disabled,
-.zst-chat .zst-input:disabled { opacity: 0.6; cursor: not-allowed; }
-.zst-chat .zst-send:focus-visible,
-.zst-chat .zst-new:focus-visible,
-.zst-chat .zst-chips button:focus-visible { outline: 3px solid #9cc0ff; outline-offset: 2px; }
+.zst-chat .zst-input:disabled,
+.zst-chat .zst-send[aria-disabled="true"],
+.zst-chat .zst-input[readonly] { opacity: 0.6; cursor: not-allowed; }
+/* Focus rings: dark blue on the light surfaces, white on the blue header. Each is at least 3:1 against what is next to it. */
+.zst-chat :focus-visible { outline: 3px solid #0b3d91; outline-offset: 2px; }
+.zst-chat .zst-header :focus-visible { outline-color: #fff; }
+.zst-chat .zst-log:focus-visible { outline-offset: -3px; }
 
 .zst-chat .zst-note {
   margin: 0;
@@ -235,7 +238,6 @@
   text-decoration: underline;
   font-weight: 600;
 }
-.zst-chat .zst-note a.zst-note-link:focus-visible { outline: 3px solid #9cc0ff; outline-offset: 2px; }
 .zst-chat .zst-sr {
   position: absolute !important;
   width: 1px; height: 1px;
@@ -271,8 +273,8 @@
 }
 .zst-chat .zst-icon-btn svg { width: 100%; height: 100%; display: block; }
 .zst-chat .zst-icon-btn:hover { border-color: var(--zst-blue); background: var(--zst-blue-soft); }
-.zst-chat .zst-icon-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.zst-chat .zst-icon-btn:focus-visible { outline: 3px solid #9cc0ff; outline-offset: 2px; }
+.zst-chat .zst-icon-btn:disabled,
+.zst-chat .zst-icon-btn[aria-disabled="true"] { opacity: 0.5; cursor: not-allowed; }
 
 /* Read-aloud toggle sits in the blue header */
 .zst-chat .zst-speak-toggle {
@@ -402,48 +404,43 @@
   margin: 0;
 }
 
-/* ---------- v1.3: language toggle (flags) ---------- */
+/* ---------- v1.3: language toggle ---------- */
 .zst-chat .zst-lang {
   display: inline-flex;
   flex: 0 0 auto;
   gap: 2px;
   padding: 3px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(0, 0, 0, 0.22);
 }
 .zst-chat .zst-lang button {
   appearance: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 28px;
-  padding: 0;
+  min-width: 24px;
+  min-height: 28px;
+  padding: 2px 12px;
   margin: 0;
   border: 0;
   border-radius: 999px;
   background: transparent;
+  color: #fff;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.2;
   cursor: pointer;
-  opacity: 0.6;
-  transition: opacity 0.15s ease, background-color 0.15s ease;
+  transition: background-color 0.15s ease;
 }
-.zst-chat .zst-lang button svg {
-  width: 26px;
-  height: 17px;
-  display: block;
-  border-radius: 3px;
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
-}
-.zst-chat .zst-lang button:hover { opacity: 0.9; }
-.zst-chat .zst-lang button.zst-on { background: #fff; opacity: 1; }
-.zst-chat .zst-lang button:focus-visible { outline: 3px solid #9cc0ff; outline-offset: 1px; }
+.zst-chat .zst-lang button:hover { background: rgba(255, 255, 255, 0.18); }
+.zst-chat .zst-lang button.zst-on { background: #fff; color: var(--zst-blue-dark); }
 
 @media (max-width: 520px) {
   .zst-chat .zst-header { gap: 8px; padding: 10px 12px; }
   .zst-chat .zst-avatar { flex-basis: 38px; width: 38px; height: 38px; }
   .zst-chat .zst-new { padding: 6px 10px; }
-  .zst-chat .zst-lang button { width: 32px; height: 26px; }
-  .zst-chat .zst-lang button svg { width: 22px; height: 15px; }
+  .zst-chat .zst-lang button { padding: 2px 9px; font-size: 0.8rem; }
 }
 
 /* ---------- v1.4: header controls, full screen, phone layout ---------- */

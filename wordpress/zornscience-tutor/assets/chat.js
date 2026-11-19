@@ -59,6 +59,9 @@
       noConnect: "I couldn't connect. Check your internet connection and try again.",
       earlierPhoto: '(I shared a photo with this message earlier.)',
       loadFail: 'The tutor could not load. Please refresh the page.',
+      transcript: 'Conversation with the tutor',
+      sending: 'Sending your question. The tutor is thinking.',
+      fullscreenDialog: 'ZornScience tutor, full screen',
       micLang: 'en-US',
       recLang: 'en-US'
     },
@@ -110,6 +113,9 @@
       noConnect: 'No me pude conectar. Revisa tu conexión a internet e inténtalo de nuevo.',
       earlierPhoto: '(Compartí una foto con este mensaje antes.)',
       loadFail: 'No se pudo cargar el tutor. Actualiza la página.',
+      transcript: 'Conversación con el tutor',
+      sending: 'Enviando tu pregunta. El tutor está pensando.',
+      fullscreenDialog: 'Tutor de ZornScience, pantalla completa',
       micLang: 'es-US',
       recLang: 'es-MX'
     }
@@ -360,13 +366,37 @@
   function localSet(key, val) {
     try { window.localStorage.setItem(key, val); } catch (e) { /* ignore */ }
   }
-  function loadHistory() {
+  // Chats saved before each message carried a language have none. Guess it from the words (accents, inverted
+  // punctuation and common function words), and when that cannot tell, use the message before it.
+  var ES_WORDS = /(?:^|[^a-záéíóúñü])(el|la|los|las|un|una|unos|unas|del|que|qué|es|en|y|para|con|por|cómo|como|cuántos|cuántas|cuál|tiene|tienen|se|su|mi|tu|no|más|hola|gracias|puedo|puedes|está|son|me|te|lo|al)(?![a-záéíóúñü])/gi;
+  var EN_WORDS = /(?:^|[^a-z])(the|is|are|of|to|and|for|with|what|how|why|my|your|this|that|it|in|on|can|you|i|do|does|was|were|have|has|an|help|please)(?![a-z])/gi;
+  function guessLang(text, fallback) {
+    var t = String(text || '');
+    var es = (t.match(ES_WORDS) || []).length + (/[¿¡áéíóúñü]/i.test(t) ? 3 : 0);
+    var en = (t.match(EN_WORDS) || []).length;
+    if (es > en) return 'es';
+    if (en > es) return 'en';
+    return fallback;
+  }
+  function loadHistory(current) {
+    var list;
     try {
       var parsed = JSON.parse(storeGet(STORE_KEY) || '[]');
-      return Array.isArray(parsed) ? parsed : [];
+      list = Array.isArray(parsed) ? parsed : [];
     } catch (e) {
       return [];
     }
+    var changed = false;
+    list.forEach(function (m, i) {
+      if (!m || typeof m !== 'object') return;
+      if (m.lang !== 'en' && m.lang !== 'es') {
+        m.lang = guessLang(m.content, i > 0 && list[i - 1] && list[i - 1].lang ? list[i - 1].lang : current);
+        changed = true;
+      }
+    });
+    list = list.filter(function (m) { return m && typeof m.content === 'string'; });
+    if (changed) saveHistory(list);
+    return list;
   }
   function saveHistory(h) {
     storeSet(STORE_KEY, JSON.stringify(h.slice(-40)));
@@ -451,8 +481,10 @@
     var narrowMq = window.matchMedia ? window.matchMedia('(max-width: 560px)') : null;
     var isFullscreen = false;
 
-    var history = loadHistory();
+    var history = loadHistory(lang);
     var busy = false;
+    var typingRow = null;
+    var status = root.querySelector('[data-zst-status]');
     var pendingImage = null;
     var listening = false;
 
@@ -473,7 +505,7 @@
       log.scrollTop = log.scrollHeight;
     }
 
-    function addBubble(role, text, extraClass, imageUrl, hadImage) {
+    function addBubble(role, text, extraClass, imageUrl, hadImage, msgLang) {
       var row = document.createElement('div');
       row.className = 'zst-row zst-' + role + (extraClass ? ' ' + extraClass : '');
       if (role === 'bot') {
@@ -484,6 +516,7 @@
       }
       var bubble = document.createElement('div');
       bubble.className = 'zst-bubble';
+      bubble.setAttribute('lang', msgLang || lang);
       if (role === 'bot') {
         bubble.innerHTML = renderText(text);
       } else {
@@ -514,7 +547,7 @@
       row.className = 'zst-row zst-bot zst-typing';
       row.innerHTML =
         '<div class="zst-mini-avatar">' + avatarHtml() + '</div>' +
-        '<div class="zst-bubble" aria-label="' + escapeHtml(T('thinking')) + '"><span></span><span></span><span></span></div>';
+        '<div class="zst-bubble" aria-hidden="true"><span></span><span></span><span></span></div>';
       log.appendChild(row);
       scrollDown();
       return row;
@@ -522,11 +555,28 @@
 
     function renderAll() {
       log.innerHTML = '';
+      typingRow = null;
       addBubble('bot', welcomeText());
       history.forEach(function (m) {
-        addBubble(m.role === 'assistant' ? 'bot' : 'user', m.content, '', null, !!m.img);
+        addBubble(m.role === 'assistant' ? 'bot' : 'user', m.content, '', null, !!m.img, m.lang);
       });
+      // A reply still on its way keeps its waiting indicator when the language changes.
+      if (busy) typingRow = addTyping();
       chips.hidden = history.length > 0;
+    }
+
+    function removeTyping() {
+      if (typingRow && typingRow.parentNode) typingRow.parentNode.removeChild(typingRow);
+      typingRow = null;
+    }
+
+    var sayTimer = null;
+    function say(msg) {
+      if (!status) return;
+      // A change is what gets announced, so an identical message is cleared first.
+      clearTimeout(sayTimer);
+      status.textContent = '';
+      if (msg) sayTimer = setTimeout(function () { status.textContent = msg; }, 30);
     }
 
     function renderChips() {
@@ -542,10 +592,14 @@
 
     function setBusy(b) {
       busy = b;
-      send.disabled = b;
-      input.disabled = b;
-      if (attachBtn) attachBtn.disabled = b;
-      if (micBtn) micBtn.disabled = b;
+      // Nothing is disabled: a disabled control that has focus drops it to the page. The box is read-only and the
+      // buttons are marked unavailable instead, so focus stays where the student left it.
+      var v = b ? 'true' : null;
+      [send, attachBtn, micBtn].forEach(function (el) {
+        if (!el) return;
+        if (v) el.setAttribute('aria-disabled', v); else el.removeAttribute('aria-disabled');
+      });
+      input.readOnly = b;
       root.classList.toggle('zst-is-busy', b);
     }
 
@@ -896,12 +950,57 @@
     }
 
     var pushedState = false;
+    var ignorePop = false;
+    var inerted = [];
+
+    // Everything outside the chat is made inert while full screen is open, so the page behind it is not in the
+    // Tab order and not read by a screen reader.
+    function inertBackground() {
+      inerted = [];
+      for (var node = root; node && node !== document.documentElement; node = node.parentElement) {
+        var parent = node.parentElement;
+        if (!parent) break;
+        Array.prototype.forEach.call(parent.children, function (sib) {
+          if (sib === node || /^(SCRIPT|STYLE|LINK|META|TEMPLATE)$/.test(sib.tagName)) return;
+          if (sib.hasAttribute('inert')) return;
+          sib.setAttribute('inert', '');
+          inerted.push(sib);
+        });
+        if (parent === document.body) break;
+      }
+    }
+    function restoreBackground() {
+      inerted.forEach(function (el) { el.removeAttribute('inert'); });
+      inerted = [];
+    }
+
+    function focusableInside() {
+      var sel = 'a[href], button, textarea, input:not([type="hidden"]), select, [tabindex]';
+      return Array.prototype.filter.call(root.querySelectorAll(sel), function (el) {
+        if (el.disabled || el.hidden || el.closest('[hidden]')) return false;
+        var ti = el.getAttribute('tabindex');
+        if (ti !== null && parseInt(ti, 10) < 0) return false;
+        if (!el.getClientRects().length) return false;
+        return window.getComputedStyle(el).visibility !== 'hidden';
+      });
+    }
 
     function setFullscreen(on, fromHistory) {
       if (on === isFullscreen) return;
       isFullscreen = on;
       root.classList.toggle('zst-fullscreen', on);
       document.documentElement.classList.toggle('zst-noscroll', on);
+      if (on) {
+        root.setAttribute('role', 'dialog');
+        root.setAttribute('aria-modal', 'true');
+        root.setAttribute('aria-label', T('fullscreenDialog'));
+        inertBackground();
+      } else {
+        root.removeAttribute('role');
+        root.removeAttribute('aria-modal');
+        root.removeAttribute('aria-label');
+        restoreBackground();
+      }
       updateFsBtn();
       if (on) {
         // Let the phone's back button close full screen instead of leaving the page.
@@ -911,21 +1010,47 @@
         } catch (e) { pushedState = false; }
       } else if (pushedState && !fromHistory) {
         pushedState = false;
-        try { window.history.back(); } catch (e) { /* ignore */ }
+        ignorePop = true;
+        try { window.history.back(); } catch (e) { ignorePop = false; }
       } else {
         pushedState = false;
       }
       scrollDown();
-      if (!narrowMq || !narrowMq.matches) input.focus();
+      // In: the question box on a wide screen, the Exit button on a phone (so the keyboard does not open over the
+      // chat). Out: back to the button that opened it, however it was closed.
+      if (on) {
+        if (!narrowMq || !narrowMq.matches) input.focus(); else if (fsBtn) fsBtn.focus();
+      } else if (fsBtn) {
+        fsBtn.focus();
+      }
     }
 
     if (fsBtn) {
       fsBtn.addEventListener('click', function () { setFullscreen(!isFullscreen); });
       window.addEventListener('popstate', function () {
+        if (ignorePop) { ignorePop = false; return; }
         if (isFullscreen) setFullscreen(false, true);
       });
       document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && isFullscreen) setFullscreen(false);
+        if (!isFullscreen) return;
+        if (e.key === 'Escape') {
+          setFullscreen(false);
+        } else if (e.key === 'Tab') {
+          // Keep Tab and Shift+Tab inside the dialog.
+          var items = focusableInside();
+          if (!items.length) return;
+          var first = items[0], last = items[items.length - 1], active = document.activeElement;
+          if (!root.contains(active)) {
+            e.preventDefault();
+            (e.shiftKey ? last : first).focus();
+          } else if (e.shiftKey && active === first) {
+            e.preventDefault();
+            last.focus();
+          } else if (!e.shiftKey && active === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
       });
     }
 
@@ -958,6 +1083,9 @@
         newBtn.setAttribute('aria-label', T('newChat'));
       }
       send.setAttribute('aria-label', T('send'));
+      log.setAttribute('aria-label', T('transcript'));
+      if (isFullscreen) root.setAttribute('aria-label', T('fullscreenDialog'));
+      if (busy) say(T('sending'));
       updateFsBtn();
       if (attachBtn) {
         attachBtn.title = T('attach');
@@ -1007,18 +1135,40 @@
       }
 
       stopSpeaking();
+      // A suggestion button disappears when it is used, so focus moves to the question box first.
+      if (chips.contains(document.activeElement)) input.focus();
       chips.hidden = true;
       var image = pendingImage;
-      var entry = { role: 'user', content: text };
+      // The reply is written in the language the page asked for now, whatever the page shows by the time it arrives.
+      var reqLang = lang;
+      var entry = { role: 'user', content: text, lang: reqLang };
       if (image) entry.img = 1;
       history.push(entry);
       saveHistory(history);
-      addBubble('user', text, '', image ? image.dataUrl : null);
+      addBubble('user', text, '', image ? image.dataUrl : null, false, reqLang);
       input.value = '';
       autosize();
       clearImage();
       setBusy(true);
-      var typing = addTyping();
+      typingRow = addTyping();
+      say(T('sending'));
+
+      // Puts the question back in the box and takes it out of the conversation so the student can send it again.
+      function failed(message, messageLang, keepText, keepImage) {
+        history.pop();
+        saveHistory(history);
+        renderAll();
+        addBubble('bot', message, 'zst-error', null, false, messageLang).setAttribute('aria-live', 'off');
+        say(message);
+        if (keepText) {
+          input.value = usedDefault ? '' : text;
+          autosize();
+        }
+        if (image && keepImage) {
+          pendingImage = image;
+          showPreview(image);
+        }
+      }
 
       var limit = CFG.historyLimit || 12;
       var outgoing = history.slice(-limit).map(function (m, idx, arr) {
@@ -1044,44 +1194,34 @@
           });
         })
         .then(function (r) {
-          typing.remove();
+          removeTyping();
+          setBusy(false);
           if (r.ok && r.data && r.data.reply) {
-            var reply = { role: 'assistant', content: r.data.reply };
+            var reply = { role: 'assistant', content: r.data.reply, lang: reqLang };
             if (typeof r.data.sig === 'string') reply.sig = r.data.sig;
             history.push(reply);
             saveHistory(history);
-            addBubble('bot', r.data.reply);
+            addBubble('bot', r.data.reply, '', null, false, reqLang);
+            say('');
             speak(r.data.reply);
+          } else if (r.data && r.data.error) {
+            // The server's message is in the language of the request.
+            failed(r.data.error, reqLang, true, !r.data.imageLimited);
           } else {
-            // Take the unanswered question back out so the student can retry.
-            history.pop();
-            saveHistory(history);
-            addBubble('bot', (r.data && r.data.error) || T('genericError'), 'zst-error');
-            if (!(r.data && r.data.limited)) {
-              input.value = usedDefault ? '' : text;
-              autosize();
-              if (image && !(r.data && r.data.imageLimited)) {
-                pendingImage = image;
-                showPreview(image);
-              }
-            }
+            failed(T('genericError'), lang, true, true);
           }
         })
         .catch(function () {
-          typing.remove();
-          history.pop();
-          saveHistory(history);
-          addBubble('bot', T('noConnect'), 'zst-error');
-          input.value = usedDefault ? '' : text;
-          autosize();
-          if (image) {
-            pendingImage = image;
-            showPreview(image);
-          }
+          removeTyping();
+          setBusy(false);
+          failed(T('noConnect'), lang, true, true);
         })
         .then(function () {
           setBusy(false);
-          input.focus();
+          // Back to the question box only if focus was still on the box or on Send. If the student has moved on to
+          // something else, the reply must not take focus from it.
+          var a = document.activeElement;
+          if (a === send || a === input || a === attachBtn || a === micBtn) input.focus();
         });
     }
 

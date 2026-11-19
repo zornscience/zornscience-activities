@@ -2,7 +2,7 @@
 /**
  * Plugin Name:       ZornScience Tutor
  * Description:       A chemistry, physics, and biology tutor for students. Guides students with questions instead of giving answers. Supports photos of student work and voice typing. Use the [zornscience_tutor] shortcode on any page.
- * Version:           1.7.1
+ * Version:           1.7.2
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            ZornScience
@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'ZST_VERSION', '1.7.1' );
+define( 'ZST_VERSION', '1.7.2' );
 define( 'ZST_FILE', __FILE__ );
 define( 'ZST_DIR', plugin_dir_path( __FILE__ ) );
 define( 'ZST_URL', plugin_dir_url( __FILE__ ) );
@@ -1254,8 +1254,8 @@ function zst_shortcode( $atts ) {
 			</div>
 			<div class="zst-controls">
 			<div class="zst-lang" role="group" aria-label="Language" data-zst-langgroup>
-				<button type="button" data-zst-lang="en" aria-pressed="true" lang="en" title="English" aria-label="English"><svg viewBox="0 0 38 20" aria-hidden="true" focusable="false"><rect width="38" height="20" fill="#B22234"/><g fill="#fff"><rect y="1.54" width="38" height="1.54"/><rect y="4.62" width="38" height="1.54"/><rect y="7.69" width="38" height="1.54"/><rect y="10.77" width="38" height="1.54"/><rect y="13.85" width="38" height="1.54"/><rect y="16.92" width="38" height="1.54"/></g><rect width="15.2" height="10.77" fill="#3C3B6E"/><g fill="#fff"><circle cx="2.3" cy="1.9" r=".55"/><circle cx="5.3" cy="1.9" r=".55"/><circle cx="8.3" cy="1.9" r=".55"/><circle cx="11.3" cy="1.9" r=".55"/><circle cx="3.8" cy="3.8" r=".55"/><circle cx="6.8" cy="3.8" r=".55"/><circle cx="9.8" cy="3.8" r=".55"/><circle cx="12.8" cy="3.8" r=".55"/><circle cx="2.3" cy="5.7" r=".55"/><circle cx="5.3" cy="5.7" r=".55"/><circle cx="8.3" cy="5.7" r=".55"/><circle cx="11.3" cy="5.7" r=".55"/><circle cx="3.8" cy="7.6" r=".55"/><circle cx="6.8" cy="7.6" r=".55"/><circle cx="9.8" cy="7.6" r=".55"/><circle cx="12.8" cy="7.6" r=".55"/><circle cx="2.3" cy="9.4" r=".55"/><circle cx="5.3" cy="9.4" r=".55"/><circle cx="8.3" cy="9.4" r=".55"/><circle cx="11.3" cy="9.4" r=".55"/></g></svg></button>
-				<button type="button" data-zst-lang="es" aria-pressed="false" lang="es" title="Español" aria-label="Español"><svg viewBox="0 0 28 16" aria-hidden="true" focusable="false"><rect width="9.34" height="16" fill="#006847"/><rect x="9.33" width="9.34" height="16" fill="#fff"/><rect x="18.66" width="9.34" height="16" fill="#CE1126"/><ellipse cx="14" cy="8.3" rx="2.6" ry="2.4" fill="none" stroke="#5C8A3A" stroke-width=".7"/><ellipse cx="14" cy="7.6" rx="1.4" ry="1.6" fill="#8C5A2B"/><path d="M12.6 9.6h2.8" stroke="#2E7D32" stroke-width=".6"/></svg></button>
+				<button type="button" data-zst-lang="en" aria-pressed="true" lang="en">English</button>
+				<button type="button" data-zst-lang="es" aria-pressed="false" lang="es">Español</button>
 			</div>
 			<button type="button" class="zst-icon-btn zst-speak-toggle" data-zst-speak hidden aria-pressed="false" title="Read replies aloud" aria-label="Read replies aloud"></button>
 			<button type="button" class="zst-new" data-zst-new title="New chat" aria-label="New chat"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg><span class="zst-btn-text" data-zst-i18n="newChat">New chat</span></button>
@@ -1266,7 +1266,7 @@ function zst_shortcode( $atts ) {
 			<label for="zst-voice" data-zst-i18n="voice">Voice</label>
 			<select id="zst-voice" data-zst-voice></select>
 		</div>
-		<div class="zst-log" data-zst-log role="log" aria-live="polite"></div>
+		<div class="zst-log" data-zst-log role="log" aria-live="polite" aria-label="Conversation with the tutor" tabindex="0"></div>
 		<div class="zst-chips" data-zst-chips>
 			<button type="button" data-zst-chip="I'm stuck on a stoichiometry problem. Can you help me get started?">Stuck on stoichiometry</button>
 			<button type="button" data-zst-chip="Can you explain Newton's second law in simple terms?">Explain Newton's 2nd law</button>
@@ -1275,6 +1275,7 @@ function zst_shortcode( $atts ) {
 		</div>
 		<div class="zst-preview" data-zst-preview hidden></div>
 		<p class="zst-mic-status" data-zst-micstatus role="status" aria-live="polite" hidden></p>
+		<p class="zst-sr" data-zst-status role="status" aria-live="polite"></p>
 		<form class="zst-form" data-zst-form>
 			<button type="button" class="zst-icon-btn zst-attach" data-zst-attach hidden title="Attach a photo of your work" aria-label="Attach a photo of your work"></button>
 			<input type="file" accept="image/*" data-zst-file hidden>
