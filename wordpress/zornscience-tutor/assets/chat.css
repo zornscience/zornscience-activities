@@ -230,6 +230,12 @@
   background: #fff;
   text-align: center;
 }
+.zst-chat .zst-note a.zst-note-link {
+  color: var(--zst-blue-dark);
+  text-decoration: underline;
+  font-weight: 600;
+}
+.zst-chat .zst-note a.zst-note-link:focus-visible { outline: 3px solid #9cc0ff; outline-offset: 2px; }
 .zst-chat .zst-sr {
   position: absolute !important;
   width: 1px; height: 1px;
