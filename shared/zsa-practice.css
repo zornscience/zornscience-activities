@@ -46,3 +46,6 @@
   .zsa-practice .zsa-practice-status p {margin-bottom:8px;}
   .zsa-practice .zsa-footer {gap:8px;}
 }
+
+/* Notation with a spoken name (subscripts, charges, powers of ten) keeps its look. */
+.zsa-math {white-space:nowrap;}

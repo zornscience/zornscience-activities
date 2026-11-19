@@ -1,5 +1,5 @@
 # Verification record
-Version: 1.1.3
+Version: 1.1.4
 Date: 2026-10-18
 Reviewer: Claude (built and tested 1.0.0)
 
@@ -18,6 +18,7 @@ PASS means the check was run on version 1.0.0 as committed and passed. Browser c
 | Starting circuits | PASS | All ten: announcement, insight, meter caption, every bulb's brightness and one lead per part on the board; loading a circuit can be undone. |
 | Dragging | PASS | A bulb dragged from the palette replaces a wire (11% in three-in-series), the picked tool does not change, a part dragged to an empty spot moves (the loop opens), dragged off the board it is removed, and a drop that misses every spot places nothing. |
 | Tapping, painting, erasing, selecting | PASS | A battery, a bulb and painted wires build a lit circuit that matches the model; erase paints; undo brings back each step; tapping selects and an empty spot clears the selection; Clear board and its undo. |
+| Move selected part | PASS | `tests/e2e/circuit-builder.spec.js`: a resistor set to 30 Ω and a flipped 12 V battery moved from A1 to B1 to B1 to C1 by drag, keyboard, a tap and the list give identical rows, panel text, spots and Undo state (same id, value and + end); Undo restores the part; Escape cancels from the list and the board and returns focus to the opener; an occupied spot is refused and the list offers only empty spots while moving; a touch tap; at 320 px the list places and moves a resistor with 44 px controls and no sideways scrolling; English and Mexican Spanish announcements; axe-core in both languages with a move waiting and after it. |
 | Keyboard | PASS | The palette, the board's single tab stop, the arrow keys, Enter to place, Delete to remove, Escape and Space; the tab stop survives a resize. |
 | Multimeter | PASS | Probes by select and by tapping the board, swap (sign flips), no-reading reasons, current mode by tapping a wire and by select, the band and direction arrow, back to voltage mode. |
 | Selected part | PASS | Closing and opening a parallel switch (Bulb 1 stays at 100%; focus stays on the button), 12 V gives 400%, Flip battery, Measure voltage across it and current through it, a resistor's value, Remove sends focus to the empty spot. |

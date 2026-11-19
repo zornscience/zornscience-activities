@@ -1,6 +1,6 @@
 # Significant Figures Practice
 
-Version: 1.0.1
+Version: 1.0.2
 
 Generated practice for the Quantitative Skills lesson [Significant Figures](https://zornscience.org/science/quantitative-skills/numbers/significant-figures/). Every set has new numbers. Four skills: counting significant figures, rounding, multiplying and dividing, and adding and subtracting. A skill gives 8 questions; Mixed review gives 12, three of each. English: `/qs-significant-figures-practice/`. Mexican Spanish: `/qs-significant-figures-practice/?lang=es`.
 

@@ -79,12 +79,11 @@ The Spanish is written but has not been proofread. Until it is:
 
 - data.js has SPANISH_READY = false, which removes the EN / ES toggle from the page. ?lang=es still shows the
   Spanish, for the proofreader.
-- home.js lists osmosis-lab/ in pendingSpanish, so the Spanish landing page opens this lab in English and marks
+- shared/zsa-locales.js lists osmosis-lab/ as "review", so the Spanish landing page opens this lab in English and marks
   the card "(en inglés)".
-- Known gap: tools/seo-pages.js must have a Spanish description for any page that loads zsa-i18n.js (a unit test
-  requires it), so the ?lang=es address already appears in hreflang tags and sitemap.xml.
+- tools/seo-pages.js marks osmosis-lab spanishPending, so search results and sitemap.xml list it as English only.
 
-After proofreading: set SPANISH_READY to true, remove osmosis-lab/ from pendingSpanish in home.js, update the
+After proofreading: set SPANISH_READY to true, delete the osmosis-lab line in shared/zsa-locales.js, set spanishPending to false and add the Spanish description in tools/seo-pages.js, update the
 two landing page tests in tests/e2e/osmosis-lab.spec.js, add the lab to the labs list in tests/e2e/i18n.spec.js,
 bump the version, and run the tests.
 

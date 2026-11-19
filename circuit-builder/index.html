@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.1.3">
+<meta name="zsa-version" content="1.1.4">
 <title>Circuit Builder | ZornScience</title>
 <meta name="description" content="Build circuits with batteries, wires, resistors, switches and bulbs, then probe voltage and current with a multimeter, from ZornScience." data-zsa-es="Construye circuitos con baterías, cables, resistencias, interruptores y focos, y luego mide el voltaje y la corriente con un multímetro.">
 <link rel="canonical" href="https://activities.zornscience.org/circuit-builder/">
@@ -12,14 +12,14 @@
 <link rel="alternate" hreflang="es" href="https://activities.zornscience.org/circuit-builder/?lang=es">
 <link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/circuit-builder/">
 <link rel="icon" href="../favicon.png" type="image/png">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.1.3"><link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=1.1.3">
-<link rel="stylesheet" href="lab.css?v=1.1.3">
-<script src="../shared/zsa-embed.js?v=1.1.3" defer></script>
-<script src="../shared/zsa-i18n.js?v=1.1.3" defer></script>
-<script src="data.js?v=1.1.3" defer></script>
-<script src="model.js?v=1.1.3" defer></script>
-<script src="lab.js?v=1.1.3" defer></script>
-<link rel="stylesheet" href="../shared/zsa-header.css?v=1.1.3"><script src="../shared/zsa-header.js?v=1.1.3" defer></script><link rel="stylesheet" href="../shared/zsa-about.css?v=1.1.3"><script src="../shared/zsa-about.js?v=1.1.3" defer></script></head>
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.1.4"><link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=1.1.4">
+<link rel="stylesheet" href="lab.css?v=1.1.4">
+<script src="../shared/zsa-embed.js?v=1.1.4" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.1.4" defer></script>
+<script src="data.js?v=1.1.4" defer></script>
+<script src="model.js?v=1.1.4" defer></script>
+<script src="lab.js?v=1.1.4" defer></script>
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.1.4"><script src="../shared/zsa-header.js?v=1.1.4" defer></script><link rel="stylesheet" href="../shared/zsa-about.css?v=1.1.4"><script src="../shared/zsa-about.js?v=1.1.4" defer></script></head>
 <body>
 <main class="zsa zsa-cb" data-zsa-activity="circuit-builder">
 <header data-zsa-header class="zsa-cb-header">
@@ -59,7 +59,19 @@
 <div class="zsa-cb-bench">
 <div class="zsa-cb-boardwrap">
 <svg class="zsa-cb-board" id="zsa-cb-board" role="group" aria-labelledby="zsa-cb-board-name" aria-describedby="zsa-cb-board-help"><title id="zsa-cb-board-name">Circuit board: points in columns A to G and rows 1 to 5</title></svg>
-<p class="zsa-cb-small zsa-cb-boardhelp" id="zsa-cb-board-help">Each spot between two dots holds one part. Tap a part to select it; drag it to move it, or off the board to remove it.</p>
+<p class="zsa-cb-small zsa-cb-boardhelp" id="zsa-cb-board-help">Each spot between two dots holds one part. Tap a part to select it; drag it to move it, or off the board to remove it. To move without dragging, select a part and press Move selected part.</p>
+<section class="zsa-cb-spotlist" id="zsa-cb-spotlist" aria-labelledby="zsa-cb-spotlist-title">
+<h3 id="zsa-cb-spotlist-title">Place or move from a list</h3>
+<p class="zsa-cb-small" id="zsa-cb-spotlist-help">An alternative to tapping the small spots. Pick a part in Parts, choose a spot here, then press Place picked part here. To move a part, select it, press Move selected part, choose an empty spot here, then press Move here. Escape cancels a move.</p>
+<label class="zsa-cb-field" for="zsa-cb-spotpick">Spot</label>
+<select id="zsa-cb-spotpick" aria-describedby="zsa-cb-spotlist-status"></select>
+<div class="zsa-cb-part-controls">
+<button class="zsa-btn zsa-btn--primary" id="zsa-cb-spot-place" type="button">Place picked part here</button>
+<button class="zsa-btn zsa-btn--primary" id="zsa-cb-spot-move" type="button" hidden>Move here</button>
+<button class="zsa-btn" id="zsa-cb-move-cancel" type="button" hidden>Cancel move</button>
+</div>
+<p class="zsa-cb-small" id="zsa-cb-spotlist-status"></p>
+</section>
 </div>
 <div class="zsa-cb-panel">
 <section class="zsa-cb-meter" aria-labelledby="zsa-cb-meter-title">
@@ -100,6 +112,7 @@
 <button class="zsa-btn zsa-btn--primary" id="zsa-cb-toggle" type="button">Close switch</button>
 <button class="zsa-btn" id="zsa-cb-measure-v" type="button">Measure voltage across it</button>
 <button class="zsa-btn" id="zsa-cb-measure-a" type="button">Measure current through it</button>
+<button class="zsa-btn" id="zsa-cb-move" type="button" aria-pressed="false">Move selected part</button>
 <button class="zsa-btn" id="zsa-cb-remove" type="button">Remove</button>
 </div>
 </section>

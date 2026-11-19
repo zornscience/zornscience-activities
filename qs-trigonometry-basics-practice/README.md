@@ -1,6 +1,6 @@
 # Trigonometry Basics Practice
 
-Version: 1.0.1
+Version: 1.0.2
 
 Generated practice for the Quantitative Skills lesson [Trigonometry Basics](https://zornscience.org/science/quantitative-skills/advanced-tools/trigonometry-basics/). Every set has new numbers. Four skills: naming the sides, SOH CAH TOA, finding a side and finding an angle. A skill gives 8 questions; Mixed review gives 12, three of each. English: `/qs-trigonometry-basics-practice/`. Mexican Spanish: `/qs-trigonometry-basics-practice/?lang=es`.
 

@@ -1,6 +1,8 @@
 # Virtual Lab Graphing Tool
 
-Version: 1.2.3
+Version: 1.2.4
+
+Version 1.2.4 reports only the cell at fault. A number written with a decimal comma (1,5) marks that one cell, and the message names it ("row 1, x value") and shows the accepted format (1.5, not 1,5), in English and Spanish. Import errors are attached to the paste box (and the file button) and mark it invalid, a failed import leaves the table as it was, and the messages name the line, the cell and the fix: a comma is always a column separator, so a decimal comma in a comma-separated line is explained as that, and a semicolon is named as the wrong separator.
 
 Version 1.2.3 improves keyboard and screen reader access. Every focusable element, including summaries, text areas and custom controls, now shows the same visible focus ring (`shared/zsa-lab-a11y.css`), a blue ring with a white gap that reads on light and dark panels and in high contrast mode. `tests/e2e/labs-a11y.spec.js` now checks this lab in English and Mexican Spanish with axe-core, the Tab order, a visible focus indicator on every stop, names and states of custom controls, and text alternatives for drawings. The science, scoring and any completion code are unchanged.
 

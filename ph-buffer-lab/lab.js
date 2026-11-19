@@ -82,7 +82,7 @@
     el.appendChild(svg('text',{x:115,y:95,'text-anchor':'middle'},volume.toFixed(1)+' mL'));
   }
   function graph(){var el=$('stress-graph'),w=Math.max(240,el.clientWidth||640),h=320,l=42,r=12,top=18,bottom=55,pw=w-l-r,ph=h-top-bottom,max=Math.max(5,Math.ceil(points[points.length-1].volume/5)*5);
-    el.setAttribute('viewBox','0 0 '+w+' '+h);var current=points[points.length-1];el.replaceChildren(svg('title',{id:'graph-desc'},t('pH vs. cumulative volume. {n} readings. Latest: {v} mL, water pH {water}, buffer pH {buffer}.',{n:points.length,v:f(current.volume),water:f(current.water.pH),buffer:f(current.buffer.pH)})));
+    el.setAttribute('viewBox','0 0 '+w+' '+h);var current=points[points.length-1];el.replaceChildren(svg('title',{id:'graph-desc'},points.length===1?t('pH vs. cumulative volume. {one} reading. Latest: {v} mL, water pH {water}, buffer pH {buffer}.',{one:points.length,v:f(current.volume),water:f(current.water.pH),buffer:f(current.buffer.pH)}):t('pH vs. cumulative volume. {n} readings. Latest: {v} mL, water pH {water}, buffer pH {buffer}.',{n:points.length,v:f(current.volume),water:f(current.water.pH),buffer:f(current.buffer.pH)})));
     function x(v){return l+v/max*pw;}function y(p){return top+(14-Math.max(0,Math.min(14,p)))/14*ph;}
     for(var tick=0;tick<=14;tick+=2){el.appendChild(svg('line',{x1:l,y1:y(tick),x2:w-r,y2:y(tick),class:'zsa-pb-grid'}));el.appendChild(svg('text',{x:l-8,y:y(tick)+4,'text-anchor':'end'},String(tick)));}
     var tickStep=max<=5?1:5*Math.ceil(max/25);max=Math.ceil(max/tickStep)*tickStep;
@@ -97,7 +97,7 @@
   function row(p,label){var tr=node('tr');[label,f(p.volume),f(p.acidML),f(p.baseML),f(p.water.pH),f(p.buffer.pH)].forEach(function(value){tr.appendChild(node('td',value));});$('data-body').appendChild(tr);}
   function stress(){var p=points[points.length-1];concentration('capacity');put('water-ph','pH {pH}',{pH:f(p.water.pH)});put('buffer-ph','pH {pH}',{pH:f(p.buffer.pH)});beaker('water-beaker',p.water.pH,100+p.volume);beaker('buffer-beaker',p.buffer.pH,100+p.volume);graph();moles(p);
     put('stress-volumes','Total added: {v} mL. HCl: {acid} mL. NaOH: {base} mL.',{v:f(p.volume),acid:f(acidML),base:f(baseML)});
-    put('capacity-note','Initial capacity to consume either component: {v} mL of 0.10 M titrant. More total buffer means more capacity.',{v:f(p.capacityML)});
+    put('capacity-note','Initial capacity: {v} mL of 0.10 M HCl would consume all of the conjugate base (A⁻), and {v} mL of 0.10 M NaOH would consume all of the weak acid (HA). More total buffer means more capacity.',{v:f(p.capacityML)});
     put('stress-status',p.hhValid?'Both components remain. Compare the small buffer pH change with water.':'A component is nearly exhausted. Henderson-Hasselbalch with stoichiometric amounts is unreliable. The pH uses full equilibrium, including any strong acid or base excess.');
     if(!p.hhValid&&$('stress-pair').value==='phosphate')$('stress-status').appendChild(node('p',t('Phosphate can also accept or lose another proton. Neighboring equilibria soften the change after this pair is depleted.')));
     put('data-caption','Pair: {pair}. Initial total buffer: {c} M. Initial volume: 100.0 mL per beaker.',{pair:M.PAIRS[$('stress-pair').value].acid+' / '+M.PAIRS[$('stress-pair').value].base,c:sci(cval('capacity'))});

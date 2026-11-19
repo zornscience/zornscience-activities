@@ -129,6 +129,10 @@ html[lang="es-MX"] .zsa-cb-tool[aria-pressed="true"] {padding:5px 3px;}
 .zsa-cb-part-reading {font-size:var(--zsa-text-sm);margin:0 0 8px;font-variant-numeric:tabular-nums;}
 .zsa-cb-part-controls {display:flex;flex-wrap:wrap;gap:8px;}
 .zsa-cb-part-controls .zsa-btn {padding:8px 14px;min-height:44px;}
+.zsa-cb-spotlist {border:1px solid var(--zsa-border);border-left:6px solid var(--zsa-blue);border-radius:var(--zsa-radius);padding:2px 14px 12px;margin-top:12px;}
+.zsa-cb-spotlist h3 {margin-top:10px;}
+.zsa-cb-spotlist select {width:100%;min-height:44px;}
+.zsa-cb-spotlist .zsa-btn {padding:8px 14px;min-height:44px;}
 .zsa-cb-part-field {flex:1 1 100%;}
 .zsa-cb-part-field .zsa-cb-field {margin-top:0;}
 .zsa-cb-insight {border-left:6px solid var(--zsa-blue);background:var(--zsa-sky);border-radius:var(--zsa-radius);padding:10px 14px;margin:12px 0 0;font-size:var(--zsa-text-sm);color:var(--zsa-navy);}

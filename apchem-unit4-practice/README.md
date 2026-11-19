@@ -1,6 +1,6 @@
 # AP Chemistry Unit 4 Practice
 
-Version: 1.0.4
+Version: 1.0.5
 
 Version 1.0.2 adds search engine tags to the page head: a canonical link to the clean activity address, English and Spanish hreflang links (Spanish is ?lang=es), and a English and Mexican Spanish meta description from `tools/seo-pages.js`. Run `node tools/build-seo.js` after changing them.
 

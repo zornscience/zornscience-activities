@@ -3730,3 +3730,17 @@ provisional, matching the Leaf Disk Lab registration convention.
 Prediction, feedback and worksheet prompts are complete sentence templates in
 data.js. Prompt identifiers 1A to 3C are unchanged in Spanish. No typed answers
 are collected. Selector labels use población inicial and tamaño de la población.
+
+## pH & Buffer Lab and Titration Simulator terminology (accessibility pass, Nov 2026)
+
+Standardized on "solución amortiguadora" (the Style Kit section 6 term for buffer) in the pH & Buffer Lab, the landing card and the SEO description. The noun "amortiguador" alone is no longer used there. "capacidad amortiguadora" and the glossary phrase "región de amortiguador" are unchanged. No new terms and nothing pending approval.
+
+English | Mexican Spanish
+--- | ---
+buffer (the solution) | solución amortiguadora
+buffer capacity | capacidad amortiguadora
+1 reading (singular) | 1 lectura
+pH = pKa of NH₄⁺ (weak base half-equivalence) | pH = pKa de NH₄⁺
+endpoint vs equivalence point | punto final vs punto de equivalencia (kept distinct)
+
+Still using "amortiguador" as a noun (outside this pass): apchem-unit8 and enzyme-lab.

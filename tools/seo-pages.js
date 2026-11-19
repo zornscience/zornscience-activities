@@ -8,7 +8,9 @@
 module.exports = {
   "osmosis-lab": {
     en: "Soak potato cores in sucrose solutions, weigh them, graph percent change in mass and find the isotonic point in this grade 9 Biology lab.",
-    es: "Remoja cilindros de papa en soluciones de sacarosa, pésalos, grafica el cambio porcentual de masa y encuentra el punto isotónico."
+    // English only until the Spanish in osmosis-lab/data.js is reviewed (SPANISH_READY).
+    es: null,
+    spanishPending: true
   },
   "population-sampling-lab": {
     en: "Estimate hidden plant and fish populations with quadrats and mark and recapture. Compare random samples, sample sizes and bias in this Biology lab.",
@@ -220,15 +222,15 @@ module.exports = {
   },
   "ph-buffer-lab": {
     en: "Explore pH, design buffers from conjugate pairs, and compare buffer capacity with water using a live graph in the ZornScience pH and Buffer Lab.",
-    es: "Explora el pH, prepara amortiguadores con pares conjugados y compara su capacidad con la del agua en una gráfica en vivo, de ZornScience."
+    es: "Explora el pH, prepara soluciones amortiguadoras con pares conjugados y compara su capacidad con la del agua en una gráfica en vivo, de ZornScience."
   },
   "physics-graphing-lab": {
     en: "Predict, observe and explain one-dimensional motion with a moving cart and linked position, velocity and acceleration graphs, from ZornScience.",
     es: "Predice, observa y explica el movimiento en una dimensión con un carrito y gráficas enlazadas de posición, velocidad y aceleración, de ZornScience."
   },
   "polyatomic-ion-trainer": {
-    en: "Learn polyatomic ion names, formulas and charges. Flip flashcards or race a five-minute multiple-choice challenge, then review your misses.",
-    es: "Aprende los nombres, las fórmulas y las cargas de los iones poliatómicos. Usa tarjetas o un reto de cinco minutos y luego repasa tus errores."
+    en: "Learn polyatomic ion names, formulas and charges. Flip flashcards or take an untimed quiz with an optional 20-second challenge, then review your misses.",
+    es: "Aprende nombres, fórmulas y cargas de iones poliatómicos. Usa tarjetas o un cuestionario sin límite de tiempo, con reto opcional de 20 segundos."
   },
   "projectile-lab": {
     en: "Fire a cannon from any height, angle and speed, and watch live velocity and acceleration vectors on the projectile, from ZornScience.",

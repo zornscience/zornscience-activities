@@ -119,8 +119,9 @@
     var data=model.pairs(rows()); points=data.points; result=model.fit(points);
     el("pointcount").textContent=points.length===1?say("{count} point",{count:1}):say("{count} points",{count:points.length});
     el("xheading").textContent=label("x");el("yheading").textContent=label("y");
-    Array.from(tbody.rows).forEach(function(tr,i){tr.querySelectorAll("input").forEach(function(input){input.setAttribute("aria-invalid",data.errors.indexOf(i+1)>=0?"true":"false");});});
-    el("data-error").textContent=data.errors.length?say(data.errors.length>1?"Not plotted: rows {rows}. Enter both x and y as numbers (magnitude from 1e-100 to 1e100, or zero).":"Not plotted: row {rows}. Enter both x and y as numbers (magnitude from 1e-100 to 1e100, or zero).",{rows:data.errors.join(", ")}):"";
+    Array.from(tbody.rows).forEach(function(tr,i){tr.querySelectorAll("input").forEach(function(input,j){input.setAttribute("aria-invalid",data.cells.some(function(c){return c.row===i+1&&c.column===(j?"y":"x");})?"true":"false");});});
+    // Only the cells at fault are named ("row 1, x value"), with what a good entry looks like.
+    el("data-error").textContent=data.cells.length?say("Not plotted: {cells}. Enter a number, with a decimal point as in 1.5 (not 1,5).",{cells:data.cells.map(function(c){return say("row {row}, {column} value",{row:c.row,column:c.column});}).join("; ")}):"";
     ["png","svg","csv","print"].forEach(function(id){el(id).disabled=!points.length;});
     var show=el("fit").checked&&!result.error;el("stats").hidden=!show;
     el("fit-message").textContent=!el("fit").checked?say("Best-fit line is off. The scatter plot shows your measurements only."):result.error||say("Least-squares linear regression, calculated from all complete data pairs.");
@@ -144,15 +145,21 @@
   el("predict-x").addEventListener("input",predict);
   el("add").addEventListener("click",function(){addRow();tbody.lastElementChild.querySelector("input").focus();});
   el("clear").addEventListener("click",function(){if(!replaceOK())return;replaceRows([]);el("predict-x").value="";update();speak(say("Data cleared. Axis labels kept."));});
-  el("load").addEventListener("click",function(){if(!replaceOK())return;var example=examples[value("example")];fields.forEach(function(id){el(id).value=example[id];});replaceRows(example.rows);el("predict-x").value="";el("fit").checked=value("example")!=="gas";el("import-error").textContent="";update();speak(say(value("example")==="gas"?"Lesson example loaded. This pattern curves and levels off; a straight line is not a good description.":"Lesson example loaded. "));});
+  el("load").addEventListener("click",function(){if(!replaceOK())return;var example=examples[value("example")];fields.forEach(function(id){el(id).value=example[id];});replaceRows(example.rows);el("predict-x").value="";el("fit").checked=value("example")!=="gas";importProblem("");update();speak(say(value("example")==="gas"?"Lesson example loaded. This pattern curves and levels off; a straight line is not a good description.":"Lesson example loaded. "));});
+  function importProblem(message) {
+    el("import-error").textContent=message;
+    // The message belongs to the paste box (and, for a chosen file, to the file button), so a screen reader reads it with them.
+    [el("paste"),el("file")].forEach(function(field){field.setAttribute("aria-invalid",message?"true":"false");});
+  }
   function importText(text) {
+    importProblem("");
     try {var parsed=model.parse(text);if(!replaceOK())return;
       if(parsed.labels) parsed.labels.forEach(function(s,i){var l=model.splitLabel(s),a=i?"y":"x";el(a+"name").value=l.name;el(a+"unit").value=l.unit;});
-      replaceRows(parsed.rows);el("import-error").textContent="";update();speak(parsed.rows.length===1?say("Imported {one} points.",{one:1}):say("Imported {count} points.",{count:parsed.rows.length}));
-    } catch(error) {el("import-error").textContent=error.message;}
+      replaceRows(parsed.rows);update();speak(parsed.rows.length===1?say("Imported {one} points.",{one:1}):say("Imported {count} points.",{count:parsed.rows.length}));
+    } catch(error) {importProblem(error.message);}
   }
   el("import").addEventListener("click",function(){importText(el("paste").value);});
-  el("file").addEventListener("change",function(){var file=this.files[0];if(!file)return;if(file.size>1000000){el("import-error").textContent=say("Choose a file smaller than 1 MB.");this.value="";return;}var reader=new FileReader();reader.onload=function(){importText(String(reader.result));};reader.onerror=function(){el("import-error").textContent=say("This file could not be read. Try pasting the data instead.");};reader.readAsText(file);this.value="";});
+  el("file").addEventListener("change",function(){var file=this.files[0];if(!file)return;if(file.size>1000000){importProblem(say("Choose a file smaller than 1 MB."));this.value="";return;}var reader=new FileReader();reader.onload=function(){importText(String(reader.result));};reader.onerror=function(){importProblem(say("This file could not be read. Try pasting the data instead."));};reader.readAsText(file);this.value="";});
   function download(href,extension) {var a=document.createElement("a");a.href=href;var name=value("title");if(spanish)name=name.normalize("NFD").replace(/[\u0300-\u036f]/g,"");
     a.download=(name.replace(/[^a-z0-9_-]+/gi,"-").slice(0,70)||say("zornscience-graph"))+"."+extension;root.appendChild(a);a.click();a.remove();speak(say("{format} download ready.",{format:extension.toUpperCase()}));}
   function svgSource() {return new XMLSerializer().serializeToString(svg);}

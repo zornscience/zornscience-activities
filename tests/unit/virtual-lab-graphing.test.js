@@ -52,3 +52,22 @@ test("CSV round-trip retains numeric precision and labels", () => {
   const parsed=M.parse(M.csv(data,labels));assert.deepEqual(parsed.labels,labels);
   assert.deepEqual(parsed.rows.map(r=>r.map(Number)),data.map(p=>[p.x,p.y]));
 });
+test("only the cell at fault is reported, and the reason is named", () => {
+  // x written with a decimal comma and a good y: one cell.
+  const p = M.pairs([["1,5","2"], ["3","4"], ["5",""], ["bad","oops"]]);
+  assert.deepEqual(p.errors, [1, 3, 4]);
+  assert.deepEqual(p.cells, [{row:1, column:"x"}, {row:3, column:"y"}, {row:4, column:"x"}, {row:4, column:"y"}]);
+  assert.equal(M.problem("1,5"), "format");
+  assert.equal(M.problem(""), "empty");
+  assert.equal(M.problem("1e200"), "range");
+  assert.equal(M.problem("1.5"), "");
+});
+test("import errors name the line, the cell and the fix, and never half-import", () => {
+  const message = text => { try { M.parse(text); } catch (error) { return error.message; } return ""; };
+  assert.match(message("1,5\t2"), /^Line 1: the x value is not a number\. Enter a number, with a decimal point as in 1\.5 \(not 1,5\)\.$/);
+  assert.match(message("x,y\n1,2\n3,2,5"), /^Line 3: expected exactly two columns.*Write decimals with a point, as in 1\.5, because a comma starts a new column\.$/);
+  assert.match(message("1;2"), /^Line 1: separate the two columns with a comma or a tab, not a semicolon\.$/);
+  assert.match(message("1,2\n1e200,3"), /^Line 2: the x value is out of range\./);
+  // A tab-separated line keeps its comma inside the cell, so it is reported as a bad number, not as a third column.
+  assert.match(message("1\t2,5"), /^Line 1: the y value is not a number\./);
+});

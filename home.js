@@ -2,8 +2,8 @@
   "use strict";
   // Landing page: every English string with its Mexican Spanish translation, for shared/zsa-i18n.js. English is the
   // default and the fallback. Activity names match each activity's own Spanish title, and topic names follow the
-  // Style Kit's official lesson titles where one exists. The ACT activities stay in English, so in Spanish their
-  // links are followed by " (en inglés)", as is the teacher-only code checker.
+  // Style Kit's official lesson titles where one exists. An activity that opens in English (see shared/zsa-locales.js)
+  // has " (en inglés)" inside its link in Spanish, as does the teacher-only code checker.
   var root = document.querySelector('[data-zsa-activity="home"]');
   if (!root) return;
   var i18n;
@@ -24,10 +24,10 @@
   "Leaf Disk Lab": "Laboratorio de discos de hoja",
   "Explore photosynthesis, cell transport, cell division, populations and genetics with evidence from virtual experiments.": "Explora la fotosíntesis, el transporte celular, la división celular, las poblaciones y la genética con evidencia de experimentos virtuales.",
   "Genetics": "Genética",
-  // The genetics lab's Spanish is written but not yet proofread, so its card opens the English page (pendingSpanish below).
+  // The genetics lab's Spanish is written but not yet proofread, so its card opens the English page (shared/zsa-locales.js).
   "Genetics Lab: Crossing Fruit Flies": "Laboratorio de genética: cruzas de moscas de la fruta",
   "Breed virtual fruit flies, build Punnett squares and compare predicted ratios with simulated offspring proportions. Then use a test cross to identify a mystery parent.": "Cruza moscas de la fruta virtuales, construye cuadros de Punnett y compara las proporciones que predices con las de los descendientes simulados. Luego usa una cruza de prueba para identificar a un progenitor misterioso.",
-  // Mitosis Detective's Spanish is written but not yet proofread, so its card opens the English page (pendingSpanish below).
+  // Mitosis Detective's Spanish is written but not yet proofread, so its card opens the English page (shared/zsa-locales.js).
   "Cell Division": "División celular",
   "Mitosis Detective: Inside an Onion Root Tip": "Detective de la mitosis: dentro de la punta de una raíz de cebolla",
   "Cut a sample from an onion root, focus a microscope and find cells in every phase of mitosis. Tally three fields and turn your counts into time.": "Corta una muestra de una raíz de cebolla, enfoca un microscopio y encuentra células en cada fase de la mitosis. Cuenta tres campos y convierte tus conteos en tiempo.",
@@ -35,8 +35,8 @@
   "Population Sampling Lab": "Laboratorio de muestreo de poblaciones",
   "Osmosis: Potato Cores in Sucrose Solutions": "Ósmosis: cilindros de papa en soluciones de sacarosa",
   "Cell transport": "Transporte celular",
-  "Weigh potato cores before and after a day in six sugar solutions. Graph the percent change in mass to find the concentration where there is no net movement of water.": "Pesa cilindros de papa antes y después de un día en seis soluciones de azúcar. Grafica el cambio porcentual de masa para encontrar la concentración en la que no hay movimiento neto de agua.",
-  // Feed the Yeast's Spanish is written but not yet proofread, so its card opens the English page (pendingSpanish below).
+  "Weigh potato cores before and after a day in six sugar solutions. Graph the percent change in mass to estimate the concentration where there is no net movement of water.": "Pesa cilindros de papa antes y después de un día en seis soluciones de azúcar. Grafica el cambio porcentual de masa para estimar la concentración en la que no hay movimiento neto de agua.",
+  // Feed the Yeast's Spanish is written but not yet proofread, so its card opens the English page (shared/zsa-locales.js).
   "Fermentation": "Fermentación",
   "Feed the Yeast: Fermentation and Energy": "Alimenta a la levadura: fermentación y energía",
   "Feed yeast four foods and measure the gas in balloons. Fix an unfair setup, graph where more sugar stops helping, and zoom inside a yeast cell.": "Alimenta a la levadura con cuatro alimentos y mide el gas en globos. Corrige un montaje injusto, grafica dónde más azúcar deja de ayudar y observa el interior de una célula de levadura.",
@@ -90,7 +90,9 @@
   "Reference": "Consulta",
   "Practice": "Práctica",
   "Completion code": "Código de finalización",
-  "Timed quiz": "Cuestionario cronometrado",
+  "Optional timer": "Cronómetro opcional",
+  "English only": "Solo en inglés",
+  "Available in English and Spanish": "Disponible en inglés y español",
   "Simulation": "Simulación",
   "Virtual lab": "Laboratorio virtual",
   "Untimed": "Sin límite de tiempo",
@@ -109,7 +111,7 @@
   "Predicting Ion Charge Trainer": "Práctica de predicción de la carga de iones",
   "Find valence electrons, decide what changes, and check your reasoning with hints and feedback.": "Encuentra los electrones de valencia, decide qué cambia y revisa tu razonamiento con pistas y retroalimentación.",
   "Polyatomic Ion Trainer": "Práctica de iones poliatómicos",
-  "Race the five-minute clock to recall polyatomic ion names, formulas and charges. Revisit missed questions and review your results.": "Compite contra el reloj de cinco minutos para recordar los nombres, las fórmulas y las cargas de los iones poliatómicos. Vuelve a las preguntas que fallaste y revisa tus resultados.",
+  "Practice polyatomic ion names, formulas and charges at your own pace, or turn on the optional 20-second-per-question challenge. Revisit missed questions and review your results.": "Practica los nombres, las fórmulas y las cargas de los iones poliatómicos a tu propio ritmo, o activa el reto opcional de 20 segundos por pregunta. Vuelve a las preguntas que fallaste y revisa tus resultados.",
   "Covalent Bonding": "Enlace covalente",
   "Lewis Structure and VSEPR Builder": "Constructor de estructuras de Lewis y VSEPR",
   "Count valence electrons, build each Lewis structure, then predict its shape, bond angle and polarity.": "Cuenta los electrones de valencia, construye cada estructura de Lewis y luego predice su forma, su ángulo de enlace y su polaridad.",
@@ -173,7 +175,7 @@
   "Move a piston, heat and add gas, and watch particles hit the walls. Graph the gas laws, compare speed distributions, mix gases and see when real gases stop acting ideal.": "Mueve un pistón, calienta y agrega gas, y observa cómo las partículas chocan con las paredes. Grafica las leyes de los gases, compara distribuciones de rapidez, mezcla gases y ve cuándo los gases reales dejan de comportarse como ideales.",
   "AP Chemistry · Acids and Bases": "Química AP · Ácidos y bases",
   "pH & Buffer Lab": "Laboratorio de pH y soluciones amortiguadoras",
-  "Explore pH, build conjugate pairs, and add acid or base to water and a buffer. Compare buffer capacity with a live graph and downloadable data.": "Explora el pH, prepara pares conjugados y agrega ácido o base al agua y a un amortiguador. Compara la capacidad amortiguadora con una gráfica en vivo y datos descargables.",
+  "Explore pH, build conjugate pairs, and add acid or base to water and a buffer. Compare buffer capacity with a live graph and downloadable data.": "Explora el pH, prepara pares conjugados y agrega ácido o base al agua y a una solución amortiguadora. Compara la capacidad amortiguadora con una gráfica en vivo y datos descargables.",
   "Virtual Titration Simulator": "Simulador virtual de titulación",
   "Pick an analyte, a titrant and an indicator, then add titrant drop by drop and watch the pH curve grow. Find the equivalence point, and read the pKa at the half-equivalence point.": "Elige un analito, un titulante y un indicador, y luego agrega el titulante gota a gota y observa cómo crece la curva de pH. Encuentra el punto de equivalencia y lee el pKa en el punto de semiequivalencia.",
   "AP Chemistry · Kinetics": "Química AP · Cinética",
@@ -277,22 +279,43 @@
   // configure() rewrites every link as an absolute URL. The landing page keeps its links exactly as written, adding
   // only lang=es in Spanish, so English links are unchanged.
   var links = Array.from(root.querySelectorAll("a[href]")).map(function (a) { return [a, a.getAttribute("href")]; });
-  // Activities whose Spanish is written but not yet proofread open in English, and their Spanish card says so.
-  // Remove an activity from this list when its flag is turned on (SPANISH_READY in osmosis-lab, SPANISH_PUBLISHED in
-  // fruit-fly-genetics-lab, spanishReady in yeast-fermentation-lab/data.js, FLAGS.spanishToggle in mitosis-lab/data.js).
-  var pendingSpanish = ["osmosis-lab/", "fruit-fly-genetics-lab/", "yeast-fermentation-lab/", "mitosis-lab/"];
+  var titles = new Map();
+  root.querySelectorAll(".zsa-home-card h3 a").forEach(function (a) { titles.set(a, a.textContent); });
+  // Which activities open in Spanish, which wait for review and which are English only is decided in one place,
+  // shared/zsa-locales.js. The card links, the EN / ES badges and the "(en inglés)" notices all come from it.
+  var locales;
+  root.dispatchEvent(new CustomEvent("zsa:request-locales", {detail:{receive:function (api) { locales = api; }}}));
+  if (!locales) return;
   i18n.configure(copy);
   links.forEach(function (pair) {
-    var href = pair[1], local = !/^(?:[a-z]+:|\/\/|#)/i.test(href);
-    pair[0].setAttribute("href", local && i18n.lang === "es" && pendingSpanish.indexOf(href) < 0 ? href + (href.indexOf("?") >= 0 ? "&" : "?") + "lang=es" : href);
+    var a = pair[0], href = pair[1], local = !/^(?:[a-z]+:|\/\/|#)/i.test(href);
+    if (!local) return;
+    if (a.closest(".zsa-home-card")) a.setAttribute("href", locales.link(href, i18n.lang));
+    else a.setAttribute("href", i18n.lang === "es" ? href + (href.indexOf("?") >= 0 ? "&" : "?") + "lang=es" : href);
   });
-  if (i18n.lang !== "es") return;
-  // The ACT activities have no Spanish version: their names stay in English, followed by " (en inglés)".
-  root.querySelectorAll('.zsa-home-card h3 a[href^="act/"], .zsa-home-card h3 a[href^="act-question-generator/"]').forEach(function (a) {
-    a.parentNode.appendChild(document.createTextNode(" (en inglés)"));
-  });
-  pendingSpanish.forEach(function (href) {
-    var a = root.querySelector('.zsa-home-card h3 a[href="' + href + '"]');
-    if (a) a.parentNode.appendChild(document.createTextNode(" (en inglés)"));
+  root.querySelectorAll(".zsa-home-card").forEach(function (card) {
+    var a = card.querySelector("h3 a"), href = a.getAttribute("href"), status = locales.status(href), tags = card.querySelector(".zsa-home-tags");
+    if (tags) {
+      Array.from(tags.querySelectorAll(".zsa-home-tag")).forEach(function (tag) {
+        if (/^(?:EN \/ ES|English only|Solo en inglés)$/.test(tag.textContent.trim())) tag.remove();
+      });
+      // The visible badge is short; the words after it say the same thing in full for a screen reader.
+      var badge = locales.badge(href, i18n.lang), tag = document.createElement("span");
+      tag.className = "zsa-home-tag";
+      tag.setAttribute("data-zsa-locale", status);
+      var shown = document.createElement("span"), words = document.createElement("span");
+      shown.setAttribute("aria-hidden", "true"); shown.textContent = badge.text;
+      words.className = "zsa-sr-only"; words.textContent = badge.words;
+      tag.appendChild(shown); tag.appendChild(words);
+      tags.appendChild(tag);
+    }
+    if (i18n.lang !== "es" || status === "es") return;
+    // This activity opens in English. The words " (en inglés)" are inside the link, so they are read before the
+    // link is followed, and a title that has no Spanish version is marked as English.
+    if (a.textContent === titles.get(a)) a.setAttribute("lang", "en");
+    var note = document.createElement("span");
+    note.setAttribute("lang", "es-MX");
+    note.textContent = locales.EN_NOTE;
+    a.appendChild(note);
   });
 }());

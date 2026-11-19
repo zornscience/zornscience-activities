@@ -1,5 +1,5 @@
 # Verification record
-Version: 1.1.3
+Version: 1.1.4
 Date: 2026-10-18
 Reviewer: Claude (built and tested 1.0.0)
 

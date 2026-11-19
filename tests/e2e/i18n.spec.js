@@ -2933,14 +2933,14 @@ test("virtual-lab-graphing opens in Mexican Spanish and translates the data tabl
   await page.getByRole("textbox", {name:"Valor de x, fila 1", exact:true}).fill("0");
   await page.getByRole("textbox", {name:"Valor de y, fila 1", exact:true}).fill("0");
   await page.getByRole("textbox", {name:"Valor de x, fila 2", exact:true}).fill("2e-3");
-  await expect(page.locator(id("data-error"))).toHaveText("Sin graficar: fila 2. Escribe los valores de x y de y como números (de magnitud entre 1e-100 y 1e100, o cero).");
+  await expect(page.locator(id("data-error"))).toHaveText("Sin graficar: fila 2, valor de y. Escribe un número, con punto decimal como en 1.5 (no 1,5).");
   await expect(page.locator(id("pointcount"))).toHaveText("1 punto");
   await expect(page.locator(id("chartnote"))).toHaveText("1 medición graficada. Se excluyen las filas incompletas o no válidas. Punto azul: tu medición.");
   await expect(page.locator(id("fit-message"))).toHaveText("Agrega al menos dos puntos completos para obtener una línea de mejor ajuste.");
   await expect(page.locator(id("chart"))).toContainText("ZornScience · 1 punto");
   await expect(page.locator(id("live"))).toHaveText("1 punto graficado. Algunas filas necesitan atención.");
   await page.getByRole("textbox", {name:"Valor de x, fila 3", exact:true}).fill("1,5");
-  await expect(page.locator(id("data-error"))).toHaveText("Sin graficar: filas 2, 3. Escribe los valores de x y de y como números (de magnitud entre 1e-100 y 1e100, o cero).");
+  await expect(page.locator(id("data-error"))).toHaveText("Sin graficar: fila 2, valor de y; fila 3, valor de x; fila 3, valor de y. Escribe un número, con punto decimal como en 1.5 (no 1,5).");
   await page.getByRole("textbox", {name:"Valor de x, fila 3", exact:true}).fill("");
   await page.getByRole("textbox", {name:"Valor de y, fila 2", exact:true}).fill("4e-3");
   await expect(page.locator(id("equation"))).toHaveText("y = 2x + 0");
@@ -2960,7 +2960,7 @@ test("virtual-lab-graphing opens in Mexican Spanish and translates the data tabl
   await expect(page.locator(id("live"))).toHaveText("Se importaron 3 puntos.");
   await expect(page.locator("#zsa-vlg-svg-desc")).toContainText("R al cuadrado indefinido porque y es constante.");
   await expect(page.locator(id("chart"))).toContainText("y = 0x + 4; R² = indefinido");
-  for (const [text, message] of [["0,1\n2,bad", "Línea 2: usa números de magnitud entre 1e-100 y 1e100, o cero."], ["1,2,3", "Línea 1: se esperaban exactamente dos columnas, separadas por comas o tabulaciones."],
+  for (const [text, message] of [["0,1\n2,bad", "Línea 2: el valor de y no es un número. Escribe un número, con punto decimal como en 1.5 (no 1,5)."], ["1,2,3", "Línea 1: se esperaban exactamente dos columnas, separadas por comas o tabulaciones. Escribe los decimales con punto, como en 1.5, porque una coma inicia una columna nueva."], ["1;2", "Línea 1: separa las dos columnas con una coma o una tabulación, no con punto y coma."], ["1,5\t2", "Línea 1: el valor de x no es un número. Escribe un número, con punto decimal como en 1.5 (no 1,5)."], ["1e200,2", "Línea 1: el valor de x está fuera del intervalo. Usa una magnitud entre 1e-100 y 1e100, o cero."],
     ["x,y", "Agrega al menos un par de datos debajo del encabezado."], ['"1,2', "A un valor del CSV entre comillas le falta la comilla de cierre."], ['"1"x,2', "Hay texto inesperado después de un valor del CSV entre comillas."]]) {
     await page.getByLabel("Datos en dos columnas").fill(text);
     await page.getByRole("button", {name:"Usar los datos pegados", exact:true}).click();
@@ -3054,16 +3054,21 @@ test("landing page opens in Mexican Spanish with Spanish activity names and link
   }
   // The ACT activities and the teacher code checker have no Spanish version.
   for (const name of ["ACT Practice", "ACT Question Generator"]) {
-    await expect(page.locator(".zsa-home-card h3").filter({has:page.getByRole("link", {name, exact:true})})).toHaveText(name + " (en inglés)");
+    const link = page.getByRole("link", {name:name + " (en inglés)", exact:true});
+    await expect(page.locator(".zsa-home-card h3").filter({has:link})).toHaveText(name + " (en inglés)");
+    // The English title is marked as English, and the Spanish notice is inside the link, so it is read before the link is used.
+    await expect(link).toHaveAttribute("lang", "en");
+    await expect(link.locator('span[lang="es-MX"]')).toHaveText("(en inglés)");
   }
-  // Mitosis Detective's Spanish awaits proofreading (pendingSpanish in home.js): Spanish title, English page.
+  // Mitosis Detective's Spanish awaits proofreading (shared/zsa-locales.js): Spanish title, English page.
   const mitosis = "Detective de la mitosis: dentro de la punta de una raíz de cebolla";
-  await expect(page.locator(".zsa-home-card h3").filter({has:page.getByRole("link", {name:mitosis, exact:true})})).toHaveText(mitosis + " (en inglés)");
-  await expect(page.getByRole("link", {name:mitosis, exact:true})).toHaveAttribute("href", "mitosis-lab/");
+  await expect(page.locator(".zsa-home-card h3").filter({has:page.getByRole("link", {name:mitosis + " (en inglés)", exact:true})})).toHaveText(mitosis + " (en inglés)");
+  await expect(page.getByRole("link", {name:mitosis + " (en inglés)", exact:true})).toHaveAttribute("href", "mitosis-lab/");
+  await expect(page.getByRole("link", {name:mitosis + " (en inglés)", exact:true})).not.toHaveAttribute("lang", "en");
   await expect(page.getByRole("link", {name:"Revisar códigos de finalización (en inglés)", exact:true})).toBeVisible();
   const text = (await pageText(page, null)).replace(/ACT Practice|ACT Question Generator/g, "");
   expect(text).not.toMatch(english);
-  expect(text).not.toMatch(/\b(?:Atoms|Reactions|Physics|Test prep|Lab tools|Jump|Explore|Build|Choose|Watch|Learn|Simulation|Virtual lab|Timed quiz|Untimed|questions|Your own data|teachers|Activities|activity|lesson|login|device)\b/i);
+  expect(text).not.toMatch(/\b(?:Atoms|Reactions|Physics|Test prep|Lab tools|Jump|Explore|Build|Choose|Watch|Learn|Simulation|Virtual lab|Optional timer|English only|Untimed|questions|Your own data|teachers|Activities|activity|lesson|login|device)\b/i);
   // The gas laws card goes to the Spanish version.
   await page.getByRole("link", {name:"Explorador de las leyes de los gases", exact:true}).click();
   await expect(page).toHaveTitle("Explorador de las leyes de los gases | ZornScience");
@@ -3147,3 +3152,60 @@ test("Spanish activity headers fit narrow screens", async ({page}) => {
     }
   }
 });
+
+// One list (shared/zsa-locales.js) decides every card's link, badge and notice, in both languages.
+for (const lang of ["en", "es"]) {
+  test("landing page (" + lang + "): every card says what language it opens in, and English-only links warn before they are used", async ({page}) => {
+    const errors = [];
+    page.on("pageerror", e => errors.push(e.message));
+    page.on("console", m => { if (m.type() === "error" || m.type() === "warning") errors.push(m.text()); });
+    await page.goto(lang === "es" ? "/?lang=es" : "/");
+    const cards = page.locator(".zsa-home-card");
+    expect(await cards.count()).toBe(77);
+    // Every card has exactly one language badge: 70 with Spanish, 7 without (4 awaiting review, Enzyme and the 2 ACT tools).
+    await expect(page.locator('.zsa-home-card [data-zsa-locale="es"]')).toHaveCount(70);
+    await expect(page.locator('.zsa-home-card [data-zsa-locale="review"], .zsa-home-card [data-zsa-locale="en"]')).toHaveCount(7);
+    expect(await cards.evaluateAll(list => list.filter(c => c.querySelectorAll("[data-zsa-locale]").length !== 1).length)).toBe(0);
+    const full = lang === "es" ? "Disponible en inglés y español" : "Available in English and Spanish";
+    const only = lang === "es" ? "Solo en inglés" : "English only";
+    await expect(page.locator('.zsa-home-card [data-zsa-locale="es"]').first()).toContainText("EN / ES");
+    await expect(page.locator('.zsa-home-card [data-zsa-locale="es"]').first().locator(".zsa-sr-only")).toHaveText(full);
+    await expect(page.locator('.zsa-home-card [data-zsa-locale="review"]').first()).toContainText(only);
+    // Where each card goes: Spanish ones to ?lang=es in Spanish, and the seven without Spanish never do.
+    const hrefs = await cards.evaluateAll(list => list.map(c => { const a = c.querySelector("h3 a"); return [a.getAttribute("href"), c.querySelector("[data-zsa-locale]").getAttribute("data-zsa-locale"), a.getAttribute("lang"), a.textContent]; }));
+    for (const [href, status, aLang, text] of hrefs) {
+      if (status === "es") expect(href, text).toBe(lang === "es" ? href.replace(/\?lang=es$/, "") + "?lang=es" : href.replace(/\?lang=es$/, ""));
+      else expect(href, text).not.toContain("lang=es");
+      if (lang === "es" && status !== "es") expect(text, href).toMatch(/ \(en inglés\)$/);
+      else expect(text, href).not.toMatch(/\(en inglés\)/);
+      if (status === "es" || href !== "act/" && href !== "act-question-generator/") expect(aLang, href).toBeNull();
+    }
+    // Enzyme Activity Lab has a Spanish card and an English page: the notice is in its link.
+    if (lang === "es") {
+      const enzyme = page.getByRole("link", {name:"Laboratorio de actividad enzimática (en inglés)", exact:true});
+      await expect(enzyme).toHaveAttribute("href", "enzyme-lab/");
+    }
+    // The four Spanish previews wait for bilingual review, so their cards say English only in both languages.
+    for (const slug of ["osmosis-lab/", "mitosis-lab/", "fruit-fly-genetics-lab/", "yeast-fermentation-lab/"]) {
+      const card = cards.filter({has:page.locator('h3 a[href="' + slug + '"]')});
+      await expect(card.locator("[data-zsa-locale]")).toHaveAttribute("data-zsa-locale", "review");
+      await expect(card.locator(".zsa-home-tag").last()).toContainText(only);
+    }
+    // The Osmosis card says "estimate", not "find", the concentration with no net movement of water.
+    const osmosis = cards.filter({has:page.locator('h3 a[href="osmosis-lab/"]')});
+    await expect(osmosis).toContainText(lang === "es" ? "Grafica el cambio porcentual de masa para estimar la concentración en la que no hay movimiento neto de agua." : "Graph the percent change in mass to estimate the concentration where there is no net movement of water.");
+    // The Polyatomic Ion Trainer: untimed practice with an optional 20-second challenge, no five-minute race.
+    const poly = cards.filter({has:page.locator('h3 a[href^="polyatomic-ion-trainer/"]')});
+    await expect(poly).toContainText(lang === "es" ? "activa el reto opcional de 20 segundos por pregunta" : "turn on the optional 20-second-per-question challenge");
+    await expect(poly).not.toContainText(/five-minute|cinco minutos/);
+    // axe on the entry screen, and no sideways scrolling at 320 px.
+    await page.evaluate(require("node:fs").readFileSync(require.resolve("axe-core/axe.min.js"), "utf8"));
+    for (const width of [1280, 320]) {
+      await page.setViewportSize({width, height:800});
+      expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), "at " + width).toBeLessThanOrEqual(0);
+      const found = await page.evaluate(() => window.axe.run(document, {runOnly:{type:"tag", values:["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"]}}));
+      expect(found.violations.map(v => v.id + " " + v.nodes.map(n => n.target.join(" ")).join(", ")), lang + " at " + width).toEqual([]);
+    }
+    expect(errors).toEqual([]);
+  });
+}

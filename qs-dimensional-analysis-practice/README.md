@@ -1,6 +1,6 @@
 # Dimensional Analysis Practice
 
-Version: 1.0.1
+Version: 1.0.2
 
 Generated practice for the Quantitative Skills lesson [Dimensional Analysis](https://zornscience.org/science/quantitative-skills/units/dimensional-analysis/). Every set has new numbers. Four skills: chains of factors, rates and densities, squared and cubed units, and units of the result. A skill gives 8 questions; Mixed review gives 12, three of each. English: `/qs-dimensional-analysis-practice/`. Mexican Spanish: `/qs-dimensional-analysis-practice/?lang=es`.
 
