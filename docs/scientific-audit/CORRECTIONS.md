@@ -3,9 +3,9 @@
 ## ZA-001 · Beer's Law Spectrophotometer Lab · Medium
 
 - **Original problem and cause.** `check()` could score against the hidden concentration before it had a usable calibration. It also accepted the hidden value when the student's measured line implied a different answer.
-- **Change.** Score against `(A − b)/m` from distinct standards with a positive finite slope and a finite, nonnegative estimate. Equal readings produce zero slope and undefined R², including when roundoff in the regression sums would otherwise leave a positive residual. Retain the fitted estimate tolerance of 1% or 0.001 M, whichever is larger. The modeled concentration is available for comparison. The existing extrapolation guidance remains applicable.
+- **Change.** Score against `(A − b)/m` from distinct standards with a positive finite slope and a finite, nonnegative estimate. Equal readings produce zero slope and undefined R², including when roundoff in the regression sums would otherwise leave a positive residual. Retain the fitted estimate tolerance of 1% or 0.001 M, whichever is larger. After independent review, scoring also requires a calibration that is usable for the unknown: the standards' readings span at least 0.05 absorbance, and the unknown's reading lies between the end standards within three noise standard deviations. Otherwise the check gives the matching hint instead of a score, and the extrapolation note uses the same limits. A correct answer now states the student's calculation first, then the simulated concentration and the percent difference.
 - **Files.** `beers-law-lab/{model.js,lab.js,data.js,README.md}`.
-- **Regression and result.** Unit and Playwright tests cover zero and duplicate standards, invalid slopes, unknown reading, nonzero intercept, correct numerical inference, score count, Spanish feedback and CSV. The existing valid calibration and answer-reveal flows passed. [Activity](https://activities.zornscience.org/beers-law-lab/)
+- **Regression and result.** Unit and Playwright tests cover zero and duplicate standards, invalid slopes, unknown reading, nonzero intercept, correct numerical inference, score count, Spanish feedback and CSV. Review follow-up cases cover near-identical readings, extrapolation above and below the standards, reading noise at the top standard, and 500 seeded calibrations at 950 nm (none scored) and 510 nm (all scored). The existing valid calibration and answer-reveal flows passed. [Activity](https://activities.zornscience.org/beers-law-lab/)
 
 ## ZA-002 · Osmosis · Medium
 
@@ -38,9 +38,9 @@
 ## ZA-008 · Chemical Bonding Lab · Medium, accessibility
 
 - **Original problem and cause.** Every solvent observation tick called the full renderer, replacing the Advance to 5:00 button while it had keyboard focus. The existing Playwright click also timed out when the node repeatedly detached.
-- **Change.** Update the timer's progress and text in place while the test runs. The existing five-minute simulated endpoint and violet iodine observation still follow the same phase transition.
+- **Change.** Update the timer's progress and text in place while the test runs. The existing five-minute simulated endpoint and violet iodine observation still follow the same phase transition. After independent review: when the observation ends, by Enter or on its own, the replaced button's focus moves to the next action, Repeat with fresh portion, if focus was at the bench. Focus elsewhere on the page is left alone.
 - **Files.** `chemical-bonding-lab/lab.js`.
-- **Regression and result.** The new Playwright case advances the clock, checks that focus remains on the action, and submits with Enter to reach the violet endpoint. It reproduced the focus loss and all four Chemical Bonding Playwright cases passed after the correction. [Activity](https://activities.zornscience.org/chemical-bonding-lab/)
+- **Regression and result.** The new Playwright case advances the clock, checks that focus remains on the action, and submits with Enter to reach the violet endpoint. It reproduced the focus loss and all four Chemical Bonding Playwright cases passed after the correction. A follow-up case checks focus at completion by Enter and by the clock, and that focus elsewhere stays put. It failed without the completion change. [Activity](https://activities.zornscience.org/chemical-bonding-lab/)
 
 ## ZA-010 · Fruit Fly Genetics Lab · Low
 

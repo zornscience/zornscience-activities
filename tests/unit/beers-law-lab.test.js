@@ -127,7 +127,7 @@ test("checking the answer: tolerances, blanks and a hint for each kind of mistak
   assert.ok(blank.blank && !blank.ok);
   assert.ok(M.check(lab, NaN).blank);
   assert.equal(M.check(lab, 0.125).ok, true);
-  assert.match(M.check(lab, 0.125).text, /^✓ Correct\. The model concentration is 0\.125 M\.$/);
+  assert.equal(M.check(lab, 0.125).text, "✓ Correct. Your calibration gives c = (A − b) ÷ m = (0.600 − 0.000) ÷ 4.800 = 0.125 M. The simulated sample was made at 0.125 M (0.0% difference).");
   assert.equal(M.check(lab, 0.1262).ok, true, "within 1% of the fitted value");
   assert.equal(M.check(lab, 0.1238).ok, true, "within 1% of the fitted value");
   assert.equal(M.check(lab, 0.119).ok, false, "outside the fitted range");

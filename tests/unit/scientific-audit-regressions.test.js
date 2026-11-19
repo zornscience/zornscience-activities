@@ -35,6 +35,43 @@ test("Beer-Lambert scoring uses the measured calibration, with truth for compari
   }
 });
 
+test("Beer-Lambert scoring rejects calibrations with no usable signal and answers extended past the standards", () => {
+  // Near-identical readings give a tiny positive slope and an estimate above the solution's range.
+  const weak = {solution: "cocl2", points: [[0.05, 0.480], [0.30, 0.481]], unknown: 0.15, unknownA: 0.482};
+  assert.equal(Beer.usable(weak), "span");
+  assert.equal(Beer.check(weak, Beer.fromLine(Beer.fit(weak.points), weak.unknownA)).ok, false);
+  assert.match(Beer.check(weak, 0.55).text, /differ by less than 0\.05/);
+  // An unknown outside the standards is sent back for a bracketing standard, in either direction.
+  const above = {solution: "cocl2", points: [[0.05, 0.24], [0.15, 0.72]], unknown: 0.30, unknownA: 1.44};
+  const below = {solution: "cocl2", points: [[0.05, 0.24], [0.15, 0.72]], unknown: 0.03, unknownA: 0.144};
+  assert.equal(Beer.usable(above), "above");
+  assert.equal(Beer.check(above, 0.300).ok, false);
+  assert.match(Beer.check(above, 0.300).text, /above your highest standard/);
+  assert.equal(Beer.usable(below), "below");
+  assert.match(Beer.check(below, 0.030).text, /below your lowest standard/);
+  // Reading noise at the top standard does not reject an unknown that the standards bracket.
+  const edge = {solution: "cocl2", points: [[0.05, 0.244], [0.1, 0.479], [0.2, 0.957], [0.3, 1.426]], unknown: 0.296, unknownA: 1.433};
+  assert.equal(Beer.usable(edge), null);
+  assert.equal(Beer.check(edge, Beer.fromLine(Beer.fit(edge.points), edge.unknownA)).ok, true);
+});
+
+test("Beer-Lambert scoring never accepts a calibration made where the solution does not absorb", () => {
+  let seed = 1;
+  const rng = () => (seed = seed * 16807 % 2147483647) / 2147483647, s = Beer.solution("cocl2");
+  let scored = 0, peak = 0;
+  for (let i = 0; i < 500; i++) {
+    const unknown = Beer.drawUnknown(s, rng);
+    for (const nm of [950, 510]) {
+      const points = [0.05, 0.10, 0.20, 0.30].map(c => [c, Beer.reading(s, c, nm, rng)]);
+      const lab = {solution: "cocl2", points, unknown, unknownA: Beer.reading(s, unknown, nm, rng)};
+      const estimate = Beer.fromLine(Beer.fit(points), lab.unknownA);
+      if (estimate !== null && Beer.check(lab, estimate).ok) nm === 950 ? scored++ : peak++;
+    }
+  }
+  assert.equal(scored, 0, "950 nm calibrations scored");
+  assert.equal(peak, 500, "510 nm calibrations scored");
+});
+
 test("the 5% shortcut uses hydrogen depletion of three times the ammonia reaction extent", () => {
   // K = (2x)^2 / (0.25 × 0.15^3) when the reactant concentrations are held fixed.
   const x = Math.sqrt(0.06 * 0.25 * 0.15 ** 3) / 2;

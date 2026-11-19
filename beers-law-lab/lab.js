@@ -404,7 +404,6 @@
     if (r.ok) {
       if (!shown && !foundThis) { found++; foundThis = true; }
       shown = true;
-      text += " " + M.solveLine(lab);
     }
     feedback(r.ok ? "zsa-bl-ok" : "zsa-bl-notyet", text);
     redraw();

@@ -216,9 +216,9 @@ test("the unknown: random each time, checked with hints, shown, and replaced", a
   // The right answer from the line on the page.
   await answer.fill(mine.toFixed(3));
   await button(page, "Check my answer").click();
-  await expect(page.locator("#zsa-bl-feedback .zsa-bl-ok")).toHaveText(/^✓ Correct\. The model concentration is [\d.]+ M\. Your best-fit line gives c = \(A − b\) ÷ m = /);
+  await expect(page.locator("#zsa-bl-feedback .zsa-bl-ok")).toHaveText(/^✓ Correct\. Your calibration gives c = \(A − b\) ÷ m = .* = [\d.]+ M\. The simulated sample was made at [\d.]+ M \([\d.]+% difference\)\.$/);
   await expect(page.locator("#zsa-bl-solved")).toHaveText(/^Unknowns found: 1\./);
-  var text = await page.locator("#zsa-bl-feedback").textContent(), truth = parseFloat(text.match(/The model concentration is ([\d.]+) M/)[1]);
+  var text = await page.locator("#zsa-bl-feedback").textContent(), truth = parseFloat(text.match(/The simulated sample was made at ([\d.]+) M/)[1]);
   expect(truth).toBeGreaterThanOrEqual(0.053);
   expect(truth).toBeLessThanOrEqual(0.297);
   noisy(a, M.reading(CO, truth, 510));

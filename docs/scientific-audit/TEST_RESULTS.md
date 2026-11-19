@@ -39,6 +39,17 @@
 | `ZSA_PORT=4205 npm run test:browser -- --config /workspace/work/audit-playwright.cjs --output /workspace/work/genetics-browser --workers=2 tests/e2e/fruit-fly-genetics-lab.spec.js tests/e2e/snells-law.spec.js --grep 'previews the unproofread Spanish\|same flies for the same seed\|^.*critical angle'` | Three passed, including seeded samples, Spanish preview and critical-angle graphics. |
 | `node tools/build-about.js --check`, `node tools/build-seo.js --check` and `git diff --check` | Passed. |
 
+## Independent review follow-up
+
+PR CI run 390 at `8264014` reported 1,344 browser passes and one failure: `tests/e2e/i18n.spec.js:324` still expected the replaced Spanish Beer’s Law success text. The local full browser run had stopped at 296 cases, before that file. The test now answers with the line’s estimate, since scoring no longer uses the simulated value.
+
+| Command | Executed result |
+|---|---|
+| `npm run test:unit` | 702 passed at `8264014`, including the 12 PHP-based tests, with PHP and SQLite available. |
+| Full `npx playwright test --workers=4` at `8264014` | 1,341 passed and 4 failed. Alone with one worker, Mitosis frame rate, Lewis routing and Yeast motion passed. `i18n.spec.js:287` failed again, and passed at `f59c899`. |
+| `node --test tests/unit/beers-law-lab.test.js tests/unit/scientific-audit-regressions.test.js` | Passed after the calibration gate, including the new extrapolation, span and 950 nm cases. |
+| `npx playwright test tests/e2e/chemical-bonding-lab.spec.js tests/e2e/beers-law-lab.spec.js tests/e2e/i18n.spec.js:287 tests/e2e/scientific-audit.spec.js` | 23 passed. The new completion focus case failed without the completion change. |
+
 ## Evidence scope
 
 - The numerical references include independently evaluated concentration, rates, conservation, probability and subtraction precision. Existing checks cover the full AP Chemistry key set, qualitative and quantitative generator cases, 16,000 gas sandbox settings and randomized collision and circuit invariants.

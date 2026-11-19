@@ -206,7 +206,13 @@
     if(phase>=3)clock();
     note(t("30× time: five simulated minutes takes ten seconds. Cyclohexane is a nonpolar solvent; this station uses no heat."));
   }
-  function finishSolvent(){stop();elapsed=300;phase=4;say(t("{observation} Observation after five simulated minutes.",{observation:t(samples[selected].cyclo)}));render();}
+  function finishSolvent(){
+    // The advance button is replaced when the observation ends. Keep keyboard focus at the bench (on the next
+    // action) if it was there, and leave it alone otherwise.
+    var hadFocus=$("interaction").contains(document.activeElement);
+    stop();elapsed=300;phase=4;say(t("{observation} Observation after five simulated minutes.",{observation:t(samples[selected].cyclo)}));render();
+    if(hadFocus){var next=$("interaction").querySelector(".actions button");if(next)next.focus();}
+  }
   document.querySelectorAll("[data-sample]").forEach(function(b){b.addEventListener("click",function(){selected=Number(b.dataset.sample);reset();});});
   document.querySelectorAll("[data-station]").forEach(function(b){b.addEventListener("click",function(){station=b.dataset.station;reset();});});
   $("reset").addEventListener("click",reset);
