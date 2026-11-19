@@ -288,7 +288,7 @@
     var a = pair[0], href = pair[1], local = !/^(?:[a-z]+:|\/\/|#)/i.test(href);
     if (!local) return;
     if (a.closest(".zsa-home-card")) a.setAttribute("href", locales.link(href, i18n.lang));
-    else if (i18n.lang === "es") a.setAttribute("href", href + (href.indexOf("?") >= 0 ? "&" : "?") + "lang=es");
+    else a.setAttribute("href", i18n.lang === "es" ? href + (href.indexOf("?") >= 0 ? "&" : "?") + "lang=es" : href);
   });
   root.querySelectorAll(".zsa-home-card").forEach(function (card) {
     var a = card.querySelector("h3 a"), href = a.getAttribute("href"), status = locales.status(href), tags = card.querySelector(".zsa-home-tags");
