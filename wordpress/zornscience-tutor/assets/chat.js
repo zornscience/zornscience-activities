@@ -23,11 +23,9 @@
       send: 'Send',
       voice: 'Voice',
       language: 'Language',
-      noteAuto: 'The ZornScience tutor is an automated program, not a person.',
-      notePrivacy: 'Your message and recent messages from this chat are sent to Anthropic to generate a reply. Please leave out names, contact details, grades, and other private information, and crop names out of photos.',
+      note: 'The ZornScience tutor is an automated program, not a person. Your message and recent messages from this chat are sent to Anthropic to generate a reply. Please leave out names, contact details, grades, and other private information, and crop names out of photos.',
+      noteAfter: ' Your tutor can make mistakes, so double-check important work.',
       privacyLink: 'Read the privacy policy.',
-      privacyUrl: '/privacy/#student-privacy',
-      note: 'Your tutor can make mistakes, so double-check important work.',
       noteVoice: " Voice typing uses your browser's speech recognition. ZornScience does not record or save your voice.",
       chips: [
         ['Stuck on stoichiometry', "I'm stuck on a stoichiometry problem. Can you help me get started?"],
@@ -76,11 +74,9 @@
       send: 'Enviar',
       voice: 'Voz',
       language: 'Idioma',
-      noteAuto: 'El tutor de ZornScience es un programa automatizado, no una persona.',
-      notePrivacy: 'Tu mensaje y los mensajes recientes de este chat se envían a Anthropic para generar una respuesta. Por favor, no escribas nombres, datos de contacto, calificaciones ni otra información privada, y recorta los nombres de tus fotos.',
+      note: 'El tutor de ZornScience es un programa automatizado, no una persona. Tu mensaje y los mensajes recientes de este chat se envían a Anthropic para generar una respuesta. Por favor, no escribas nombres, datos de contacto, calificaciones ni otra información privada, y recorta los nombres de tus fotos.',
+      noteAfter: ' Tu tutor puede equivocarse, así que revisa bien el trabajo importante.',
       privacyLink: 'Lee el aviso de privacidad.',
-      privacyUrl: '/es/privacy/#privacidad-estudiantil',
-      note: 'Tu tutor puede equivocarse, así que revisa bien el trabajo importante.',
       noteVoice: ' Escribir con la voz usa el reconocimiento de voz de tu navegador. ZornScience no graba ni guarda tu voz.',
       chips: [
         ['Ayuda con estequiometría', 'No me sale un problema de estequiometría. ¿Me ayudas a empezar?'],
@@ -942,18 +938,19 @@
       });
       var note = root.querySelector('[data-zst-note]');
       if (note) {
-        // Automated-program line and privacy notice first, with a link to the
-        // Student Privacy page, then the "can make mistakes" and voice sentences.
-        while (note.firstChild) note.removeChild(note.firstChild);
-        note.appendChild(document.createTextNode(T('noteAuto') + ' ' + T('notePrivacy') + ' '));
-        var privacyLink = document.createElement('a');
-        privacyLink.className = 'zst-note-link';
-        privacyLink.href = T('privacyUrl');
-        privacyLink.target = '_blank';
-        privacyLink.rel = 'noopener';
-        privacyLink.textContent = T('privacyLink');
-        note.appendChild(privacyLink);
-        note.appendChild(document.createTextNode(' ' + T('note') + (CFG.voice && Recognition ? T('noteVoice') : '')));
+        note.textContent = T('note');
+        var privacyUrl = lang === 'es' ? (CFG.privacyUrlEs || CFG.privacyUrl) : CFG.privacyUrl;
+        if (privacyUrl && /^https?:\/\//i.test(privacyUrl)) {
+          note.appendChild(document.createTextNode(' '));
+          var pa = document.createElement('a');
+          pa.className = 'zst-note-link';
+          pa.href = privacyUrl;
+          pa.target = '_blank';
+          pa.rel = 'noopener';
+          pa.textContent = T('privacyLink');
+          note.appendChild(pa);
+        }
+        note.appendChild(document.createTextNode(T('noteAfter') + (CFG.voice && Recognition ? T('noteVoice') : '')));
       }
       input.placeholder = listening ? T('listeningPlaceholder') : idlePlaceholder();
       if (newBtn) {
@@ -1028,7 +1025,9 @@
         var c = m.content;
         // Earlier photos are not re-sent, so leave a note in their place.
         if (m.img && idx < arr.length - 1) c = c + '\n\n' + T('earlierPhoto');
-        return { role: m.role, content: c };
+        var out = { role: m.role, content: c };
+        if (m.role === 'assistant' && typeof m.sig === 'string') out.sig = m.sig;
+        return out;
       });
       var payload = { messages: outgoing, lang: lang };
       if (image) payload.image = { media_type: image.mediaType, data: image.data };
@@ -1047,7 +1046,9 @@
         .then(function (r) {
           typing.remove();
           if (r.ok && r.data && r.data.reply) {
-            history.push({ role: 'assistant', content: r.data.reply });
+            var reply = { role: 'assistant', content: r.data.reply };
+            if (typeof r.data.sig === 'string') reply.sig = r.data.sig;
+            history.push(reply);
             saveHistory(history);
             addBubble('bot', r.data.reply);
             speak(r.data.reply);
@@ -1125,6 +1126,9 @@
     newBtn.addEventListener('click', function () {
       if (busy) return;
       stopSpeaking();
+      if (listening && recognizer) recognizer.abort();
+      input.value = '';
+      autosize();
       history = [];
       storeDel(STORE_KEY);
       clearImage();
