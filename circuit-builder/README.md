@@ -1,5 +1,7 @@
 # Circuit Builder
-Version: 1.1.3
+Version: 1.1.4
+
+Version 1.1.4 adds a way to move and place parts without dragging. Select a part and press Move selected part, then choose an empty spot by pressing Enter on it or tapping it, or from the list under the board (Place or move from a list, with 44 px controls at every width). Escape cancels, Undo reverses a move, and the part keeps its number, value, + end and switch state on every path, the same as a drag. Placing a picked part from the list works the same way. The science, scoring and any completion code are unchanged.
 
 Version 1.1.3 improves keyboard and screen reader access. Every focusable element, including summaries, text areas and custom controls, now shows the same visible focus ring (`shared/zsa-lab-a11y.css`), a blue ring with a white gap that reads on light and dark panels and in high contrast mode. `tests/e2e/labs-a11y.spec.js` now checks this lab in English and Mexican Spanish with axe-core, the Tab order, a visible focus indicator on every stop, names and states of custom controls, and text alternatives for drawings. The science, scoring and any completion code are unchanged.
 

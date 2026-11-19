@@ -122,7 +122,7 @@ test("drag a bulb from the palette onto the board, move it, and drag it off to r
   await expect(tool(page, "Select and move")).toHaveAttribute("aria-pressed", "true");
   // Move Bulb 3 to an empty spot: the loop opens there and everything goes dark.
   await drag(page, await spotCenter(page, "h:3,1"), await spotCenter(page, "h:3,4"));
-  await heard(page, /^Bulb 3 moved to D5 to E5\./);
+  await heard(page, /^Bulb 3 moved\. Before: D\d to E\d\. Now: D5 to E5\./);
   await expect(page.locator("#zsa-cb-insight")).toHaveText(/^No current: there is no complete loop/);
   await expect(spot(page, "h:3,1")).toHaveAccessibleName("D2 to E2: empty");
   // Off the board removes it.
@@ -405,6 +405,193 @@ test("CSV download and printing a long reflection", async ({page, problems}) => 
   await page.evaluate(() => { window.print = () => document.body.setAttribute("data-printed", "yes"); });
   await page.getByRole("button", {name: "Print lab"}).click();
   await expect(page.locator("body")).toHaveAttribute("data-printed", "yes");
+});
+
+// Move selected part (WCAG 2.1.1, 2.5.7, 2.5.8): the same relocation by drag, by keyboard, by a tap and from the list.
+function moveButton(page) { return page.getByRole("button", {name: "Move selected part"}); }
+function spotPick(page) { return page.getByLabel("Spot", {exact: true}); }
+// Everything that says where a part is and what it is: the row, the panel title, both spots and Undo.
+async function snapshot(page, partName, from, to) {
+  return {
+    row: await row(page, partName).locator("td").allTextContents(),
+    title: await page.locator("#zsa-cb-part-title").textContent(),
+    reading: await page.locator("#zsa-cb-part-reading").textContent(),
+    from: await spot(page, from).getAttribute("aria-label"),
+    to: await spot(page, to).getAttribute("aria-label"),
+    undo: await page.getByRole("button", {name: "Undo", exact: true}).isEnabled()
+  };
+}
+// Place a part on A1 to B1 with the keyboard, give it a nondefault setting and select it.
+async function setUp(page, kind) {
+  await page.setViewportSize({width: 1366, height: 1100});
+  await go(page, "?circuit=empty");
+  await tool(page, kind === "resistor" ? "Resistor" : "Battery").click();
+  await spot(page, "h:0,0").focus();
+  await page.keyboard.press("Enter");
+  if (kind === "resistor") await page.getByLabel("Resistance", {exact: true}).selectOption("30");
+  else {
+    await page.getByLabel("Battery voltage", {exact: true}).selectOption("12");
+    await page.getByRole("button", {name: "Flip battery"}).click();
+  }
+  await expect(page.locator("#zsa-cb-part-title")).toHaveText((kind === "resistor" ? "Resistor 1" : "Battery 1") + ", A1 to B1");
+  await tool(page, "Select and move").click();
+}
+var METHODS = {
+  drag: async (page) => { await drag(page, await spotCenter(page, "h:0,0"), await spotCenter(page, "h:1,0")); },
+  keyboard: async (page) => {
+    await moveButton(page).focus();
+    await page.keyboard.press("Enter");
+    await expect(spotPick(page)).toBeFocused();
+    await spot(page, "h:1,0").focus();
+    await page.keyboard.press("Enter");
+  },
+  tap: async (page) => {
+    await moveButton(page).click();
+    var c = await spotCenter(page, "h:1,0");
+    await page.mouse.click(c.x, c.y);
+  },
+  list: async (page) => {
+    await moveButton(page).click();
+    await spotPick(page).selectOption("h:1,0");
+    await page.getByRole("button", {name: "Move here"}).click();
+  }
+};
+
+for (let kind of ["resistor", "battery"]) {
+  test("move selected part: drag, keyboard, tap and the list give the same " + kind + " (same id, value and + end)", async ({page, problems}) => {
+    void problems;
+    var name = kind === "resistor" ? "Resistor 1" : "Battery 1", results = {};
+    for (var m of Object.keys(METHODS)) {
+      await setUp(page, kind);
+      var before = await row(page, name).locator("td").allTextContents();
+      await METHODS[m](page);
+      await expect(page.locator("#zsa-cb-part-title")).toHaveText(name + ", B1 to C1");
+      await expect(spot(page, "h:0,0")).toHaveAccessibleName("A1 to B1: empty");
+      results[m] = await snapshot(page, name, "h:0,0", "h:1,0");
+      // Where changes; the setting, and for a battery the + end, do not.
+      var after = results[m].row;
+      expect(after[1], m).toBe(before[1]);
+      if (kind === "resistor") expect(after[1], m).toBe("30 Ω");
+      // The row lists the − end first: the + end stays at the part's first end, so it is A1, then B1.
+      else { expect(after[1], m).toBe("12.0 V"); expect(before[0], m).toBe("B1 (−) to A1 (+)"); expect(after[0], m).toBe("C1 (−) to B1 (+)"); }
+      await heard(page, new RegExp("^" + name + " moved\\. Before: A1 to B1\\. Now: B1 to C1\\. "));
+    }
+    var keys = Object.keys(results);
+    for (var k of keys.slice(1)) expect(results[k], k + " equals " + keys[0]).toEqual(results[keys[0]]);
+    expect(results.keyboard.undo).toBe(true);
+  });
+}
+
+test("move selected part: Undo brings the part back, Escape cancels from the list and from the board", async ({page, problems}) => {
+  void problems;
+  await setUp(page, "resistor");
+  await METHODS.list(page);
+  await expect(moveButton(page)).toBeFocused();
+  await page.getByRole("button", {name: "Undo", exact: true}).click();
+  await heard(page, /^Undone\. /);
+  await expect(row(page, "Resistor 1").locator("td").first()).toHaveText("A1 to B1");
+  await expect(row(page, "Resistor 1").locator("td").nth(1)).toHaveText("30 Ω");
+  // Escape in the list: nothing moves, the announcement names the part and its spot, focus returns to the opener.
+  await moveButton(page).click();
+  await expect(moveButton(page)).toHaveAttribute("aria-pressed", "true");
+  await heard(page, "Moving Resistor 1 from A1 to B1. Choose an empty spot on the board or in the list, then press Move here. Escape cancels.");
+  await spotPick(page).selectOption("h:2,0");
+  await page.keyboard.press("Escape");
+  await heard(page, "Move cancelled. Resistor 1 stays at A1 to B1.");
+  await expect(moveButton(page)).toBeFocused();
+  await expect(moveButton(page)).toHaveAttribute("aria-pressed", "false");
+  await expect(row(page, "Resistor 1").locator("td").first()).toHaveText("A1 to B1");
+  // Escape on the board cancels the move and leaves focus on the spot.
+  await moveButton(page).click();
+  await spot(page, "h:3,0").focus();
+  await page.keyboard.press("Escape");
+  await heard(page, "Move cancelled. Resistor 1 stays at A1 to B1.");
+  await expect(spot(page, "h:3,0")).toBeFocused();
+  await expect(page.getByRole("button", {name: "Move here"})).toBeHidden();
+  await expect(row(page, "Resistor 1").locator("td").first()).toHaveText("A1 to B1");
+});
+
+test("move selected part: an occupied spot is refused, and the list offers only empty spots while moving", async ({page, problems}) => {
+  void problems;
+  await go(page, "?circuit=empty");
+  await tool(page, "Resistor").click();
+  for (var s of ["h:0,0", "h:1,0"]) { await spot(page, s).focus(); await page.keyboard.press("Enter"); }
+  await tool(page, "Select and move").click();
+  await spot(page, "h:0,0").focus();
+  await page.keyboard.press("Enter");
+  await moveButton(page).click();
+  await expect(spotPick(page).locator("option")).toHaveCount(M.allSlots().length - 2);
+  await spot(page, "h:1,0").focus();
+  await page.keyboard.press("Enter");
+  await heard(page, "Spot B1 to C1 is not empty. Choose an empty spot to move Resistor 1.");
+  await expect(page.getByRole("button", {name: "Move here"})).toBeVisible();
+  await expect(row(page, "Resistor 1").locator("td").first()).toHaveText("A1 to B1");
+  // Choosing another part ends the move.
+  await spot(page, "h:1,0").focus();
+  await page.mouse.click(...Object.values(await spotCenter(page, "h:1,0")));
+  await expect(page.getByRole("button", {name: "Move here"})).toBeHidden();
+  await expect(page.locator("#zsa-cb-part-title")).toHaveText("Resistor 2, B1 to C1");
+});
+
+test.describe("touch", () => {
+  test.use({hasTouch: true});
+  test("move selected part: one tap on an empty spot is the destination, as with a mouse", async ({page, problems}) => {
+    void problems;
+    await setUp(page, "resistor");
+    await moveButton(page).tap();
+    var c = await spotCenter(page, "h:1,0");
+    await page.touchscreen.tap(c.x, c.y);
+    await expect(page.locator("#zsa-cb-part-title")).toHaveText("Resistor 1, B1 to C1");
+    await expect(row(page, "Resistor 1").locator("td").nth(1)).toHaveText("30 Ω");
+  });
+});
+
+test("320 px: place and move a resistor from the list with 44 px controls, no dragging and no tiny spots", async ({page, problems}) => {
+  void problems;
+  await page.setViewportSize({width: 320, height: 568});
+  await go(page, "?circuit=empty", {clock: false});
+  // The spots on the board are smaller than 44 px here; the list is the large-target path (WCAG 2.5.8).
+  var small = await page.locator(".zsa-cb-spot rect").first().boundingBox();
+  expect(small.height).toBeLessThan(44);
+  await tool(page, "Resistor").click();
+  await spotPick(page).selectOption("h:1,1");
+  await page.getByRole("button", {name: "Place picked part here"}).click();
+  await expect(page.locator("#zsa-cb-part-title")).toHaveText("Resistor 1, B2 to C2");
+  await page.getByLabel("Resistance", {exact: true}).selectOption("50");
+  await moveButton(page).click();
+  await spotPick(page).selectOption("v:3,2");
+  await page.getByRole("button", {name: "Move here"}).click();
+  await expect(page.locator("#zsa-cb-part-title")).toHaveText("Resistor 1, D3 to D4");
+  await expect(row(page, "Resistor 1").locator("td").nth(1)).toHaveText("50 Ω");
+  var controls = await page.locator("#zsa-cb-spotlist button:visible, #zsa-cb-spotlist select:visible, #zsa-cb-move").evaluateAll((els) => els.map((e) => { var r = e.getBoundingClientRect(); return {name: e.textContent.trim() || e.id, w: r.width, h: r.height}; }).filter((r) => r.w < 44 || r.h < 44));
+  expect(controls).toEqual([]);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  // Picking a part first is required to place one.
+  await tool(page, "Select and move").click();
+  await page.getByRole("button", {name: "Place picked part here"}).click();
+  await expect(live(page)).toHaveText("Pick a part in Parts first.");
+});
+
+test("move selected part: Spanish names, buttons and announcements, and axe-core in both languages with a move waiting", async ({page, problems}) => {
+  void problems;
+  for (var lang of ["en", "es"]) {
+    await page.setViewportSize({width: 390, height: 664});
+    await page.goto("/circuit-builder/?circuit=empty" + (lang === "es" ? "&lang=es" : ""));
+    await page.waitForSelector(".zsa-cb-spot");
+    var T = lang === "es" ? {res: "Resistencia", pick: "Piezas", sel: "Seleccionar y mover", move: "Mover la pieza seleccionada", here: "Mover aquí", place: "Colocar la pieza elegida aquí", cancel: "Cancelar movimiento"} :
+      {res: "Resistor", pick: "Parts", sel: "Select and move", move: "Move selected part", here: "Move here", place: "Place picked part here", cancel: "Cancel move"};
+    await page.getByRole("group", {name: T.pick}).getByRole("button", {name: T.res, exact: true}).click();
+    await page.locator("#zsa-cb-spotpick").selectOption("h:0,0");
+    await page.getByRole("button", {name: T.place, exact: true}).click();
+    await page.getByRole("button", {name: T.move, exact: true}).click();
+    await expect(page.getByRole("button", {name: T.here, exact: true})).toBeVisible();
+    await expect(page.getByRole("button", {name: T.cancel, exact: true})).toBeVisible();
+    await audit(page, lang + " move waiting");
+    await page.locator("#zsa-cb-spotpick").selectOption("h:1,0");
+    await page.getByRole("button", {name: T.here, exact: true}).click();
+    await expect(live(page)).toHaveText(lang === "es" ? /^Se movió Resistencia 1\. Antes: de A1 a B1\. Ahora: de B1 a C1\. / : /^Resistor 1 moved\. Before: A1 to B1\. Now: B1 to C1\. /);
+    await audit(page, lang + " after move");
+  }
 });
 
 test("layout: no sideways scrolling from 320 to 1920 px and at 200% zoom; 44 px targets; the board fits its card", async ({page, problems}) => {
