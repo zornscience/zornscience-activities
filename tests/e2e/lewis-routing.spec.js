@@ -25,17 +25,53 @@ function sampleWrong(it, ap, per, max) {
 var COUNTS = {};
 function tally(k) { COUNTS[k] = (COUNTS[k] || 0) + 1; }
 
+// Every item lands in exactly one of GROUPS groups (index modulo GROUPS), so no question or answer choice is dropped.
+// Group 2 of 4 used to carry far more work than the others, so the split is finer to keep each test short.
+var GROUPS = 12;
+// Build-step plans for one item: every accepted structure in every arrangement, then a sample of wrong ones.
+var BUILD_CHUNK = 120, buildCache = {};
+function buildPlans(it, ap) {
+  var key = (ap ? "ap:" : "octet:") + it.id;
+  if (!buildCache[key]) {
+    var ans = lv.answers(it, ap);
+    var good = lv.accepted(it, ap).flatMap(function (st) { return lv.arrangementsOf(it, st); });
+    var wrong = sampleWrong(it, ap, 12, 90);
+    buildCache[key] = good.concat(wrong).map(function (st) { return {id: it.id, ap: ap, ans: ans, kind: "build", build: st}; });
+  }
+  return buildCache[key];
+}
+async function checkBuilds(page, it, ap, bplans) {
+  var r = lv.refFor(it), builds = 0;
+  var bres = await page.evaluate((plans) => window.__lv.run(plans), bplans);
+  bres.forEach(function (res, i) {
+    var st = bplans[i].build, k = ref.buildKey(r, st, ap), where = it.id + (ap ? " AP" : "") + " build " + JSON.stringify(st);
+    builds++; tally("buildStructures");
+    if (k === null) {
+      tally("buildAccepted");
+      expect(res.kind, where + " accepted").not.toBe("build");
+      expect(res.after.last ? res.after.last.text : res.after.live, where).toMatch(/^✓ Correct\. All \d+ electrons are placed/);
+      return;
+    }
+    tally(k);
+    expect(res.kind, where + " stays").toBe("build");
+    var fb = res.after.feedback.text;
+    expect(matched(fb), where + ": " + fb).toEqual([k]);
+    expect(res.after.live, where + " announced").toBe(res.after.feedback.spoken);
+  });
+  return builds;
+}
+
 for (var mode of ["octet", "ap"]) {
   (function (ap) {
     var items = lv.data.items.filter(function (it) { return ap || it.set !== "ap"; });
     // Split into groups so the browser workers share the load.
-    for (var g = 0; g < 4; g++) {
+    for (var g = 0; g < GROUPS; g++) {
       (function (group) {
         test("Lewis builder" + (ap ? " (AP)" : "") + ": every choice routes to the right feedback, group " + (group + 1), async ({page, open}) => {
-          test.setTimeout(400000);
+          test.setTimeout(200000);
           await lv.openLv(page, open);
           var combos = 0, builds = 0;
-          for (var it of items.filter(function (x, i) { return i % 4 === group; })) {
+          for (var it of items.filter(function (x, i) { return i % GROUPS === group; })) {
             var ans = lv.answers(it, ap), r = lv.refFor(it), kinds = lv.kindsOf(it, ap);
             expect(await page.evaluate((p) => { window.__lv.single(p.id, p.ap); return window.__zsa.state().progress; }, {id: it.id, ap: ap}),
               it.id + " step count").toMatch(new RegExp("Step 1 of " + kinds.length + "$"));
@@ -81,25 +117,8 @@ for (var mode of ["octet", "ap"]) {
               });
             }
             // Build step: every accepted structure in every arrangement, then the sample of wrong ones.
-            var good = lv.accepted(it, ap).flatMap(function (st) { return lv.arrangementsOf(it, st); });
-            var wrong = sampleWrong(it, ap, 12, 90);
-            var bplans = good.concat(wrong).map(function (st) { return {id: it.id, ap: ap, ans: ans, kind: "build", build: st}; });
-            var bres = await page.evaluate((plans) => window.__lv.run(plans), bplans);
-            bres.forEach(function (res, i) {
-              var st = bplans[i].build, k = ref.buildKey(r, st, ap), where = it.id + (ap ? " AP" : "") + " build " + JSON.stringify(st);
-              builds++; tally("buildStructures");
-              if (k === null) {
-                tally("buildAccepted");
-                expect(res.kind, where + " accepted").not.toBe("build");
-                expect(res.after.last ? res.after.last.text : res.after.live, where).toMatch(/^✓ Correct\. All \d+ electrons are placed/);
-                return;
-              }
-              tally(k);
-              expect(res.kind, where + " stays").toBe("build");
-              var fb = res.after.feedback.text;
-              expect(matched(fb), where + ": " + fb).toEqual([k]);
-              expect(res.after.live, where + " announced").toBe(res.after.feedback.spoken);
-            });
+            // A test checks its first BUILD_CHUNK structures here; the rest of a large item run in the chunk tests below.
+            builds += await checkBuilds(page, it, ap, buildPlans(it, ap).slice(0, BUILD_CHUNK));
           }
           expect(combos).toBeGreaterThan(100);
           expect(builds).toBeGreaterThan(50);
@@ -107,6 +126,26 @@ for (var mode of ["octet", "ap"]) {
       })(g);
     }
   })(mode === "ap");
+}
+
+// The structures beyond each test's first BUILD_CHUNK run here, BUILD_CHUNK at a time, so no structure goes unchecked.
+for (var cmode of ["octet", "ap"]) {
+  (function (ap) {
+    lv.data.items.filter(function (it) { return ap || it.set !== "ap"; }).forEach(function (it) {
+      var total = buildPlans(it, ap).length;
+      for (var from = BUILD_CHUNK; from < total; from += BUILD_CHUNK) {
+        (function (start) {
+          test("Lewis builder" + (ap ? " (AP)" : "") + ": build structures of " + it.id + ", " + (start + 1) + " to " + Math.min(start + BUILD_CHUNK, total), async ({page, open}) => {
+            test.setTimeout(200000);
+            await lv.openLv(page, open);
+            await page.evaluate((p) => { window.__lv.single(p.id, p.ap); }, {id: it.id, ap: ap});
+            var n = await checkBuilds(page, it, ap, buildPlans(it, ap).slice(start, start + BUILD_CHUNK));
+            expect(n).toBeGreaterThan(0);
+          });
+        })(from);
+      }
+    });
+  })(cmode === "ap");
 }
 function data_angle(key) { return lv.data.ui.angles[key]; }
 
