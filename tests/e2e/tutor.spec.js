@@ -16,12 +16,14 @@ var AXE = fs.readFileSync(require.resolve("axe-core/axe.min.js"), "utf8");
 var PORT = Number(process.env.ZSA_PORT || 4173);
 var ORIGIN = "http://127.0.0.1:" + PORT;
 var MARKUP = execFileSync("php", [path.join(ROOT, "tests", "php", "tutor-markup.php"), ORIGIN], {encoding: "utf8"});
+// The same widget as [zornscience_tutor lang="es"] prints it, for the Spanish tutor page.
+var MARKUP_ES = execFileSync("php", [path.join(ROOT, "tests", "php", "tutor-markup.php"), ORIGIN, "es"], {encoding: "utf8"});
 
-function pageHtml() {
+function pageHtml(markup) {
   return '<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Tutor | ZornScience</title>' +
     '<link rel="stylesheet" href="/wordpress/zornscience-tutor/assets/chat.css"><style>body{margin:0;font-family:sans-serif;background:#fff;color:#14213d}header,footer,main{padding:12px 16px}nav a,footer a{margin-right:16px;color:#0b3d91}</style></head><body>' +
     '<header><nav aria-label="Main"><a href="/">Home</a><a href="/science/">Science</a><a href="/es/students/">Estudiantes</a></nav></header>' +
-    '<main id="main"><h1>Tutor</h1><p>Ask the tutor a question.</p>' + MARKUP + '<p><a href="/after/">After the tutor</a></p></main>' +
+    '<main id="main"><h1>Tutor</h1><p>Ask the tutor a question.</p>' + (markup || MARKUP) + '<p><a href="/after/">After the tutor</a></p></main>' +
     '<footer><a href="/privacy/">Privacy</a><a href="/contact/">Contact</a></footer>' +
     '<script src="/wordpress/zornscience-tutor/assets/chat.js"></script></body></html>';
 }
@@ -48,7 +50,7 @@ function gate() {
 async function openTutor(page, opts) {
   opts = opts || {};
   var calls = [];
-  await page.route(ORIGIN + "/tutor/", (r) => r.fulfill({status: 200, contentType: "text/html; charset=utf-8", body: pageHtml()}));
+  await page.route(ORIGIN + "/tutor/", (r) => r.fulfill({status: 200, contentType: "text/html; charset=utf-8", body: pageHtml(opts.es ? MARKUP_ES : MARKUP)}));
   await page.route("**/wp-json/zst/v1/chat", async (route) => {
     var body = route.request().postDataJSON();
     calls.push(body);
@@ -62,7 +64,7 @@ async function openTutor(page, opts) {
       if (o.lang) localStorage.setItem("zst_lang_v1", o.lang);
       if (o.history) sessionStorage.setItem("zst_chat_v1", JSON.stringify(o.history));
     } catch (e) { /* no storage */ }
-  }, {lang: opts.lang || "en", history: opts.history || null, mark: "seed" + (++seeds)});
+  }, {lang: opts.lang === null ? null : (opts.lang || "en"), history: opts.history || null, mark: "seed" + (++seeds)});
   await page.goto(ORIGIN + "/tutor/");
   await expect(page.getByRole("heading", {level: 1, name: "Tutor"})).toBeVisible();
   return calls;
@@ -378,3 +380,17 @@ for (var lang of ["en", "es"]) {
   });
   }(lang));
 }
+
+test("a tutor page set to Spanish starts in Spanish, and the student's own choice still wins", async ({page, problems}) => {
+  void problems;
+  await openTutor(page, {es: true, lang: null});
+  await expect(widget(page)).toHaveAttribute("lang", "es");
+  await expect(page.getByRole("button", {name: "Español", exact: true})).toHaveAttribute("aria-pressed", "true");
+  await expect(input(page, "es")).toBeVisible();
+  await expect(page.getByRole("link", {name: T("es").privacy})).toHaveAttribute("href", ORIGIN + "/es/privacy/#privacidad-estudiantil");
+  await expect(bubbleWith(page, "Hola")).toHaveAttribute("lang", "es");
+  // Choosing English is remembered, even on this Spanish page.
+  await page.getByRole("button", {name: "English", exact: true}).click();
+  await page.reload();
+  await expect(widget(page)).toHaveAttribute("lang", "en");
+});

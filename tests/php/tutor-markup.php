@@ -27,4 +27,5 @@ function esc_html( $t ) { return htmlspecialchars( $t, ENT_QUOTES ); }
 function wp_json_encode( $v ) { return json_encode( $v, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ); }
 
 require dirname( __DIR__, 2 ) . '/wordpress/zornscience-tutor/zornscience-tutor.php';
-echo zst_shortcode( array() );
+// Second argument "es" prints the markup of [zornscience_tutor lang="es"].
+echo zst_shortcode( isset( $argv[2] ) ? array( 'lang' => $argv[2] ) : array() );

@@ -405,6 +405,7 @@
   function startingLang() {
     var saved = localGet(LANG_KEY);
     if (saved === 'en' || saved === 'es') return saved;
+    if (CFG.startLang === 'es') return 'es';
     var nav = (navigator.languages && navigator.languages[0]) || navigator.language || '';
     return /^es\b/i.test(nav) ? 'es' : 'en';
   }

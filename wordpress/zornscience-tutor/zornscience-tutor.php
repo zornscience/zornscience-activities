@@ -1241,6 +1241,9 @@ function zst_shortcode( $atts ) {
 		'siteHost'     => wp_parse_url( home_url(), PHP_URL_HOST ),
 		'privacyUrl'   => esc_url_raw( home_url( '/privacy/#student-privacy' ) ),
 		'privacyUrlEs' => esc_url_raw( home_url( '/es/privacy/#privacidad-estudiantil' ) ),
+		// [zornscience_tutor lang="es"] on the Spanish tutor page starts the widget in Spanish. A student's own
+		// choice (the English / Español buttons) still wins on later visits.
+		'startLang'    => ( is_array( $atts ) && isset( $atts['lang'] ) && 'es' === $atts['lang'] ) ? 'es' : '',
 	);
 
 	ob_start();

@@ -59,6 +59,7 @@ A chemistry, physics, and biology tutor for students. It guides students with qu
 * Every message keeps the language it was written in, even after the student switches language or switches while a reply is pending. Chats saved before this update are read and labeled when they load.
 * The conversation has a name in both languages and can be scrolled with the keyboard.
 * The language buttons say "English" and "Español" instead of showing flags.
+* New shortcode option: [zornscience_tutor lang="es"] starts the chat in Spanish on the Spanish tutor page. A student's own language choice still wins.
 
 = 1.7.1 =
 * The note under the chat now says "The ZornScience tutor is an AI program, not a person." (Spanish: "El tutor de ZornScience es un programa de inteligencia artificial (IA), no una persona.") so students are told plainly that they are talking to an AI.
