@@ -15,7 +15,7 @@ test('Q predictions and 7.10 species and volume stresses',()=>{
  near(M.quotient(R.hi,[.2,.1,.707]),25,.01);assert.equal(M.shift(M.quotient(R.hi,[.2,.1,.707]),50),'right');
  near(M.quotient(R.n2o4,[.2,.04]),.008);near(M.quotient(R.n2o4,[.4,.08]),.016);assert.equal(M.shift(.016,.008),'left');
 });
-test('7.7 shortcut is separate, percent uses x, strict less than 5, failure falls back to exact',()=>{
+test('7.7 shortcut is separate, checks reactant changes, and requires strictly less than 5 percent',()=>{
  const s=M.shortcut(R.no,[.8,.2,0],1e-5),e=M.solve(R.no,[.8,.2,0],1e-5);near(s.values[2],.0013,.00005);near(s.percent,.32,.005);assert.equal(s.valid,true);assert.equal(s.values[2].toPrecision(2),e.values[2].toPrecision(2));
  const fail=M.shortcut(R.n2o4,[.1,0],.02);assert.equal(fail.valid,false);near(M.solve(R.n2o4,[.1,0],.02).q,.02);
  const boundary=M.shortcut(R.ab,[1,0],.05);assert.equal(boundary.percent,5);assert.equal(boundary.valid,false);

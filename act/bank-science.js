@@ -42,7 +42,7 @@
         {skill: "inter", difficulty: 2,
           stem: "Based on Table 1, if the students had used 6% H<sub>2</sub>O<sub>2</sub>, the volume of O<sub>2</sub> collected would most likely have been:",
           choices: ["less than 30 mL.", "between 30 mL and 35 mL.", "between 37 mL and 40 mL.", "greater than 50 mL."], answer: 2,
-          explanation: "Each increase adds less than the one before (+9, +9, +5, +2), so the next value should be only slightly above 37 mL."},
+          explanation: "The increases are +9, +9, +5, and +2 mL. The last two increases are smaller, so the pattern suggests a value only slightly above 37 mL at 6%."},
         {skill: "design", difficulty: 2,
           stem: "Which variable was held constant in the trials shown in Table 1 but changed in the trials shown in Figure 1?",
           choices: ["H<sub>2</sub>O<sub>2</sub> concentration", "Temperature", "Collection time", "Volume of O<sub>2</sub> collected"], answer: 1,

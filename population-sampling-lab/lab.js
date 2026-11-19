@@ -224,6 +224,7 @@
       if (state.records.length || state.phase) field.querySelectorAll("input").forEach(n => { n.disabled = true; });
     }
     el("p", t("Estimate = M × C ÷ R. M = fish tagged. C = size of the second catch. R = tagged fish in the second catch."), setup);
+    el("p", t("With few recaptures, one more or one fewer tagged fish can change the estimate a lot. With no recaptures, the formula gives no estimate."), setup);
     if (!wrong) el("p", t("Each catch is {size} fish.", {size: state.M}), setup);
     const actions = el("div", null, setup, {class: "zsa-ps-actions"});
     const texts = ["1. Catch the first batch", "2. Tag and release them", "", "3. Catch the second batch", "Next trial"];

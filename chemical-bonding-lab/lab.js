@@ -119,8 +119,19 @@
     var input=document.createElement("input");input.type="range";input.id="equipment-control";input.min=min;input.max=max;input.value=value;input.addEventListener("input",function(){fn(Number(input.value));});
     $("interaction").append(lab,input);
   }
+  function updateClock(clock) {
+    clock.querySelector("progress").value = elapsed;
+    clock.querySelector("span").textContent = Math.floor(elapsed / 60) + ":" + String(Math.floor(elapsed % 60)).padStart(2, "0") + " / 5:00";
+  }
   function clock() {
-    var c=document.createElement("div");c.className="clock";var p=document.createElement("progress");p.max=300;p.value=elapsed;p.setAttribute("aria-label",t("Solvent observation time"));var span=document.createElement("span");span.textContent=Math.floor(elapsed/60)+":"+String(Math.floor(elapsed%60)).padStart(2,"0")+" / 5:00";c.append(p,span);$("interaction").appendChild(c);
+    var container = document.createElement("div");
+    container.className = "clock";
+    var progress = document.createElement("progress");
+    progress.max = 300;
+    progress.setAttribute("aria-label", t("Solvent observation time"));
+    container.append(progress, document.createElement("span"));
+    $("interaction").appendChild(container);
+    updateClock(container);
   }
   function timed(duration, end) {
     busy=true;var passed=0;render();timer=setInterval(function(){passed+=100;if(passed>=duration){stop();end();render();}},100);
@@ -178,7 +189,16 @@
         phase++;
         if(phase===1)say(t("The graduated cylinder contains 5.0 mL of cyclohexane."));
         else if(phase===2)say(t("The solvent and a small spatula-tip portion of Unknown {n} are in the test tube. Stir to mix them.",{n:selected}));
-        else {busy=true;say(t("The mixture is stirred with a coffee stirrer. Observe five simulated minutes for dissolution."));timer=setInterval(function(){elapsed=Math.min(300,elapsed+3);if(elapsed>=300){finishSolvent();}else{render();}},100);}
+        else {
+          busy = true;
+          say(t("The mixture is stirred with a coffee stirrer. Observe five simulated minutes for dissolution."));
+          timer = setInterval(function () {
+            elapsed = Math.min(300, elapsed + 3);
+            if (elapsed >= 300) finishSolvent();
+            // Keep the advance button and the stirrer animation in place between ticks.
+            else updateClock($("interaction").querySelector(".clock"));
+          }, 100);
+        }
         render();
       },false,true]]);
     } else if(phase===3) actions([[t("Advance to 5:00"),finishSolvent,false,true]]);
@@ -186,7 +206,13 @@
     if(phase>=3)clock();
     note(t("30× time: five simulated minutes takes ten seconds. Cyclohexane is a nonpolar solvent; this station uses no heat."));
   }
-  function finishSolvent(){stop();elapsed=300;phase=4;say(t("{observation} Observation after five simulated minutes.",{observation:t(samples[selected].cyclo)}));render();}
+  function finishSolvent(){
+    // The advance button is replaced when the observation ends. Keep keyboard focus at the bench (on the next
+    // action) if it was there, and leave it alone otherwise.
+    var hadFocus=$("interaction").contains(document.activeElement);
+    stop();elapsed=300;phase=4;say(t("{observation} Observation after five simulated minutes.",{observation:t(samples[selected].cyclo)}));render();
+    if(hadFocus){var next=$("interaction").querySelector(".actions button");if(next)next.focus();}
+  }
   document.querySelectorAll("[data-sample]").forEach(function(b){b.addEventListener("click",function(){selected=Number(b.dataset.sample);reset();});});
   document.querySelectorAll("[data-station]").forEach(function(b){b.addEventListener("click",function(){station=b.dataset.station;reset();});});
   $("reset").addEventListener("click",reset);

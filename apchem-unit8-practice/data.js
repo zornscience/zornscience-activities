@@ -1123,19 +1123,19 @@
       "topic": "8.4",
       "type": "numeric",
       "prompt": {
-        "en": "A solution initially has 0.0100 mol weak monoprotic acid HA. It reacts with 0.00400 mol NaOH. How many moles of HA remain after the complete neutralization?",
-        "es": "Una solución tiene inicialmente 0.0100 mol de un ácido débil monoprótico HA. Reacciona con 0.00400 mol de NaOH. ¿Cuántos moles de HA quedan después de la neutralización completa?"
+        "en": "A solution initially has 0.0100 mol weak monoprotic acid HA. It reacts with 0.00400 mol NaOH. How many moles of HA remain after all the added hydroxide has reacted?",
+        "es": "Una solución tiene inicialmente 0.0100 mol de un ácido débil monoprótico HA. Reacciona con 0.00400 mol de NaOH. ¿Cuántos moles de HA quedan después de que reaccione todo el hidróxido añadido?"
       },
       "value": 0.006,
-      "display": "0.00600",
+      "display": "0.0060",
       "unit": "mol",
       "precision": {
-        "sf": 3
+        "decimals": 4
       },
-      "tolerance": 5.500000000000001e-06,
+      "tolerance": 0.000055,
       "explanation": {
-        "en": "HA(aq) + OH<sup>−</sup>(aq) → A<sup>−</sup>(aq) + H<sub>2</sub>O(l). HA remaining = 0.0100 − 0.00400 = 0.00600 mol. The produced conjugate base and remaining acid form a buffer.",
-        "es": "HA(aq) + OH<sup>−</sup>(aq) → A<sup>−</sup>(aq) + H<sub>2</sub>O(l). HA restante = 0.0100 − 0.00400 = 0.00600 mol. La base conjugada producida y el ácido restante forman un amortiguador."
+        "en": "HA(aq) + OH<sup>−</sup>(aq) → A<sup>−</sup>(aq) + H<sub>2</sub>O(l). HA remaining = 0.0100 − 0.00400 = 0.0060 mol. Report four decimal places, as in 0.0100 mol. The produced conjugate base and remaining acid form a buffer.",
+        "es": "HA(aq) + OH<sup>−</sup>(aq) → A<sup>−</sup>(aq) + H<sub>2</sub>O(l). HA restante = 0.0100 − 0.00400 = 0.0060 mol. Reporta cuatro decimales, como en 0.0100 mol. La base conjugada producida y el ácido restante forman un amortiguador."
       }
     },
     {

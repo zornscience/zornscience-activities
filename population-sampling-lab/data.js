@@ -93,6 +93,7 @@
     "Lower": "Menores",
     "About the same": "Casi iguales",
     "Estimate = M × C ÷ R": "Estimación = M × C ÷ R",
+    "With few recaptures, one more or one fewer tagged fish can change the estimate a lot. With no recaptures, the formula gives no estimate.": "Con pocas recapturas, un pez etiquetado más o menos puede cambiar mucho la estimación. Si no hay recapturas, la fórmula no da una estimación.",
     "First catch size (M)": "Tamaño de la primera captura (M)",
     "Second catch size (C)": "Tamaño de la segunda captura (C)",
     "Net first catch": "Primera captura con la red",

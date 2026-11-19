@@ -53,7 +53,7 @@ test("22 numeric keys independently solve logarithms, weak equilibria, neutraliz
     "8.1-5":[(2e-7)**2,"ratio",{sf:3}],"8.1-6":[-Math.log10(Math.sqrt(4e-14)),"ratio",{decimals:2}],
     "8.2-5":[-Math.log10(.00250),"ratio",{decimals:3}],"8.2-6":[-Math.log10(2*.015),"ratio",{decimals:2}],
     "8.3-5":[-Math.log10(root),"ratio",{decimals:2}],"8.3-6":[14+Math.log10(root),"ratio",{decimals:2}],
-    "8.4-5":[-Math.log10((.0300*.100-.0200*.100)/.0500),"ratio",{decimals:3}],"8.4-6":[.0100-.00400,"mol",{sf:3}],
+    "8.4-5":[-Math.log10((.0300*.100-.0200*.100)/.0500),"ratio",{decimals:3}],"8.4-6":[.0100-.00400,"mol",{decimals:4}],
     "8.5-5":[-Math.log10(1.8e-5),"ratio",{decimals:2}],"8.5-6":[25*.100/.100,"mL",{sf:3}],
     "8.6-5":[-Math.log10(6.8e-4),"ratio",{decimals:2}],"8.6-6":[1e-14/1.8e-5,"ratio",{sf:2}],
     "8.7-5":[-Math.log10(1.80e-5),"ratio",{decimals:3}],"8.7-6":[10**(5.74-4.74),"ratio",{sf:2}],
@@ -75,8 +75,10 @@ test("22 numeric keys independently solve logarithms, weak equilibria, neutraliz
       assert.equal(M.inspect(q,String(value+sign*q.tolerance*1.01),unit).correct,false,id+" outside");
     }
     if(precision.decimals) {
-      assert.equal(q.unit,"ratio");assert.match(q.explanation.en,/Log rule:.*decimal places.*significant figures/);
-      assert.match(q.explanation.es,/Regla de logaritmos:.*decimales.*cifras significativas/);
+      if (q.unit === "ratio") {
+        assert.match(q.explanation.en, /Log rule:.*decimal places.*significant figures/);
+        assert.match(q.explanation.es, /Regla de logaritmos:.*decimales.*cifras significativas/);
+      }
       const extra=q.display+"0";assert.ok(M.inspect(q,extra,unit).correct);assert.equal(M.inspect(q,extra,unit).precisionOK,false);
     }
   }

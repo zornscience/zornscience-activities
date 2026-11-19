@@ -318,10 +318,12 @@ test("beers-law-lab opens in Mexican Spanish and translates measuring, the curve
   await page.locator("#zsa-bl-new").click();
   await page.locator("#zsa-bl-unknown").click();
   await page.locator("#zsa-bl-show").click();
-  const c2 = (await page.locator("#zsa-bl-feedback").textContent()).match(/es ([\d.]+) M/)[1];
-  await page.locator("#zsa-bl-answer").fill(c2);
+  const shownText = await page.locator("#zsa-bl-feedback").textContent();
+  const c2 = shownText.match(/es ([\d.]+) M/)[1], fromLine = shownText.match(/= ([\d.]+) M, a /)[1];
+  // Scoring uses the student's calibration line, so answer with the line's estimate, not the simulated value.
+  await page.locator("#zsa-bl-answer").fill(fromLine);
   await page.locator("#zsa-bl-check").click();
-  await expect(page.locator("#zsa-bl-feedback")).toHaveText(new RegExp("^✓ Correcto\\. La concentración de la muestra desconocida es " + c2.replace(".", "\\.") + " M\\. "));
+  await expect(page.locator("#zsa-bl-feedback")).toHaveText(new RegExp("^✓ Correcto\\. Tu calibración da c = \\(A − b\\) ÷ m = .* = " + fromLine.replace(".", "\\.") + " M\\. La muestra simulada se preparó a " + c2.replace(".", "\\.") + " M \\(diferencia de [\\d.]+%\\)\\.$"));
   expect(c).toMatch(/^\d/);
   await page.locator("#zsa-bl-fit").click();
   await expect(page.locator("#zsa-bl-equation")).toHaveText("Línea de mejor ajuste oculta. Calcula la pendiente con tus datos.");

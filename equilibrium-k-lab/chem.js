@@ -45,7 +45,30 @@
     return rows;
   }
   function temperature(k,dh,t1,t2){return k*Math.exp(-dh*1000/8.314462618*(1/t2-1/t1));}
-  function shortcut(r,c,k){var product=1,power=0,factor=1; r.nu.forEach(function(n,i){if(!active(r,i))return;if(n<0)product*=Math.pow(c[i],-n);else{power+=n;factor*=Math.pow(n,n);}});var x=Math.pow(k*product/factor,1/power);var limiting=Math.min(...c.filter(function(v,i){return r.nu[i]<0&&active(r,i);}));var percent=100*x/limiting;return {x:x,values:at(r,c,x),percent:percent,valid:percent<5};}
+  // Forward shortcut with initially absent products. Hold each active reactant at its initial concentration.
+  function shortcut(r,c,k){
+    var product=1,power=0,factor=1,reactants=[];
+    var inapplicable={x:NaN,values:c.slice(),percent:Infinity,valid:false};
+    if(c.length!==r.nu.length||!Number.isFinite(k)||k<=0)return inapplicable;
+    for(var i=0;i<r.nu.length;i++){
+      if(!active(r,i))continue;
+      var n=r.nu[i],initial=c[i];
+      if(n<0){
+        if(!Number.isFinite(initial)||initial<=0)return inapplicable;
+        product*=Math.pow(initial,-n);
+        reactants.push({coefficient:-n,initial:initial});
+      }else if(n>0){
+        if(initial!==0)return inapplicable;
+        power+=n;
+        factor*=Math.pow(n,n);
+      }
+    }
+    if(!reactants.length||!power)return inapplicable;
+    var x=Math.pow(k*product/factor,1/power);
+    if(!Number.isFinite(x)||x<=0)return inapplicable;
+    var percent=Math.max(...reactants.map(function(r){return 100*(r.coefficient*x/r.initial);}));
+    return {x:x,values:at(r,c,x),percent:percent,valid:percent<5};
+  }
   function combine(steps){var net={},k=1;steps.forEach(function(s){k*=Math.pow(s.k,s.scale);Object.keys(s.net).forEach(function(id){net[id]=(net[id]||0)+s.net[id]*s.scale;});});Object.keys(net).forEach(function(id){if(Math.abs(net[id])<1e-10)delete net[id];});return {net:net,k:k};}
   var SALTS={
     agcl:{name:'AgCl',ions:['Ag⁺','Cl⁻'],nu:[1,1],k:1.8e-10},

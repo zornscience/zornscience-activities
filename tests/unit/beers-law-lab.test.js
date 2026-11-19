@@ -127,13 +127,14 @@ test("checking the answer: tolerances, blanks and a hint for each kind of mistak
   assert.ok(blank.blank && !blank.ok);
   assert.ok(M.check(lab, NaN).blank);
   assert.equal(M.check(lab, 0.125).ok, true);
-  assert.match(M.check(lab, 0.125).text, /^✓ Correct\. The unknown is 0\.125 M\.$/);
-  assert.equal(M.check(lab, 0.1299).ok, true, "within 4%");
-  assert.equal(M.check(lab, 0.1201).ok, true, "within 4%");
-  assert.equal(M.check(lab, 0.119).ok, false, "outside 4%");
+  assert.equal(M.check(lab, 0.125).text, "✓ Correct. Your calibration gives c = (A − b) ÷ m = (0.600 − 0.000) ÷ 4.800 = 0.125 M. The simulated sample was made at 0.125 M (0.0% difference).");
+  assert.equal(M.check(lab, 0.1262).ok, true, "within 1% of the fitted value");
+  assert.equal(M.check(lab, 0.1238).ok, true, "within 1% of the fitted value");
+  assert.equal(M.check(lab, 0.119).ok, false, "outside the fitted range");
   // The student's own line: 0.6 on a line through 0.126 M is accepted within 1% of it.
   var off = {solution: "cocl2", wavelength: 510, points: [[0.05, 0.24], [0.1, 0.47], [0.15, 0.7], [0.2, 0.93]], unknown: 0.12, unknownA: 0.6};
-  var mine = M.fromLine(M.fit(off.points), 0.6);
+  // These standards define A = 4.6c + 0.01.
+  var mine = (0.6 - 0.01) / 4.6;
   assert.ok(Math.abs(mine - 0.12) > 0.04 * 0.12, "the line is off by more than 4%: " + mine);
   assert.equal(M.check(off, mine).ok, true);
   assert.equal(M.check(off, mine * 1.03).ok, false);
@@ -141,11 +142,10 @@ test("checking the answer: tolerances, blanks and a hint for each kind of mistak
   assert.match(hint(0.6), /That is the unknown's absorbance/);
   assert.match(hint(2.88), /multiplied by the slope/);
   assert.match(hint(125), /Check the units/);
-  assert.match(hint(0.135), /Close, but not within 4%/);
+  assert.match(hint(0.135), /Close. Use more digits/);
   assert.match(hint(0.3), /^Not yet\. Find where the unknown's absorbance, 0\.600, meets your best-fit line/);
   var withB = {solution: "cocl2", wavelength: 510, points: [[0.05, 0.29], [0.1, 0.53], [0.15, 0.77], [0.2, 1.01]], unknown: 0.115, unknownA: 0.6};
-  var f = M.fit(withB.points);
-  assert.match(hint((0.6 + f.b) / f.m, withB), /sign of the intercept/);
+  assert.match(hint((0.6 + 0.05) / 4.8, withB), /sign of the intercept/);
   assert.match(hint(0.2, {solution: "cocl2", wavelength: 510, points: [[0.1, 0.48]], unknown: 0.125, unknownA: 0.6}), /at least two standards/);
 });
 

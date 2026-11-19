@@ -30,6 +30,12 @@
   var NOISE = {base: 0.002, rel: 0.004};
   // At most this many standards on one calibration curve.
   var MAX_STANDARDS = 12;
+  // A calibration can be scored only when its standards span at least this much absorbance (25 times the baseline
+  // noise), so a line through readings that differ only by noise cannot be used.
+  var MIN_SPAN = 0.05;
+  // The unknown's reading may lie up to this many noise standard deviations (at that reading) outside the standards'
+  // readings and still count as inside them, so noise at the end standards does not reject a bracketed unknown.
+  var BRACKET = 3;
   // An unknown is drawn from this part of the solution's range, to the nearest 0.001 M.
   var UNKNOWN = {from: 0.15, to: 0.85};
 
@@ -95,32 +101,57 @@
     points.forEach(function (p) { sx += p[0]; sy += p[1]; sxx += p[0] * p[0]; sxy += p[0] * p[1]; });
     var den = n * sxx - sx * sx;
     if (Math.abs(den) < 1e-12) return null;
+    // Equal instrument readings carry no concentration signal. Avoid a residual slope from rounding the sums.
+    if (points.every(function (p) { return p[1] === points[0][1]; })) return {m: 0, b: points[0][1], r2: null, n: n};
     var m = (n * sxy - sx * sy) / den, b = (sy - m * sx) / n, mean = sy / n, res = 0, tot = 0;
     points.forEach(function (p) { res += Math.pow(p[1] - (m * p[0] + b), 2); tot += Math.pow(p[1] - mean, 2); });
-    return {m: m, b: b, r2: tot === 0 ? 1 : 1 - res / tot, n: n};
+    return {m: m, b: b, r2: 1 - res / tot, n: n};
   }
   // The concentration a line gives for an absorbance: c = (A − b) ÷ m.
-  function fromLine(line, a) { return line && line.m !== 0 ? (a - line.b) / line.m : null; }
+  function fromLine(line, a) {
+    if (!line || !(line.m > 0) || !Number.isFinite(line.m) || !Number.isFinite(a)) return null;
+    var c = (a - line.b) / line.m;
+    return Number.isFinite(c) ? c : null;
+  }
 
-  // The check on a student's answer. lab: {solution, unknown (the true concentration), unknownA (the reading, or null),
-  // points}. Returns {ok, blank, text}. Right is within 4% of the true concentration (at least 0.002 M), or within 1%
-  // (at least 0.001 M) of what the student's own line gives. Wrong answers get a hint about the likely mistake.
+  // How far a reading may fall outside the standards' readings and still count as inside them.
+  function margin(a) { return BRACKET * (NOISE.base + NOISE.rel * Math.abs(a)); }
+  // Whether a calibration can be used for the unknown's reading: null if it can, otherwise "span" (the standards'
+  // readings barely differ, so the slope is mostly noise), "above" or "below" (the reading is outside the standards,
+  // so the answer would come from extending the line past the data).
+  function usable(lab) {
+    var pts = lab.points, a = lab.unknownA;
+    var lo = Math.min.apply(null, pts.map(function (p) { return p[1]; })), hi = Math.max.apply(null, pts.map(function (p) { return p[1]; }));
+    if (!(hi - lo >= MIN_SPAN)) return "span";
+    if (a > hi + margin(hi)) return "above";
+    if (a < lo - margin(lo)) return "below";
+    return null;
+  }
+
+  // The assessment uses the calibration estimate, within 1% or 0.001 M, whichever is larger, once the calibration is
+  // usable for this unknown. The simulated concentration is shown afterwards so students can compare it with their
+  // estimate.
   function check(lab, answer) {
-    var line = fit(lab.points), a = lab.unknownA;
-    if (a === null || a === undefined) return {ok: false, blank: true, text: t("Measure the unknown first, then use its absorbance.")};
-    if (answer === null || answer === undefined || !Number.isFinite(answer)) return {ok: false, blank: true, text: t("Enter the unknown's concentration in M.")};
-    var c = lab.unknown, mine = fromLine(line, a);
-    var near = function (x, target, rel, abs) { return target !== null && Math.abs(x - target) <= Math.max(rel * Math.abs(target), abs); };
-    if (near(answer, c, 0.04, 0.002) || near(answer, mine, 0.01, 0.001)) {
-      return {ok: true, blank: false, text: t("✓ Correct. The unknown is {c} M.", {c: fmt(c, 3)})};
-    }
-    var hint, v = {formula: "c = (A − b) ÷ m", a: fmt(a, 3)};
-    if (lab.points.length < 2 || !line) hint = t("Measure at least two standards to make a calibration curve, then find where the unknown's absorbance meets the line.");
-    else if (near(answer, a, 0.01, 0.0005)) hint = t("That is the unknown's absorbance, not its concentration. Use the calibration line to convert it: {formula}.", v);
+    var a = lab.unknownA;
+    if (!Number.isFinite(a)) return {ok: false, blank: true, text: t("Measure the unknown first, then use its absorbance.")};
+    if (!Number.isFinite(answer)) return {ok: false, blank: true, text: t("Enter the unknown's concentration in M.")};
+    var line = fit(lab.points), mine = fromLine(line, a);
+    var near = function (x, target, rel, abs) { return Math.abs(x - target) <= Math.max(rel * Math.abs(target), abs); };
+    var hint, v = {formula: "c = (A − b) ÷ m", a: fmt(a, 3)}, issue = line && mine !== null && mine >= 0 ? usable(lab) : null;
+    if (!line) hint = t("Measure at least two standards at different concentrations to make a calibration curve.");
+    else if (mine === null || mine < 0) hint = t("Remeasure your standards. A useful calibration has a positive slope and gives a nonnegative concentration for the unknown.");
+    else if (issue === "span") hint = t("Your standards' absorbances differ by less than {span}, too little to calculate a concentration. Measure at a wavelength where the solution absorbs strongly, near λmax ({peak} nm), or spread your standards farther apart.",
+      {span: fmt(MIN_SPAN, 2), peak: lambdaMax(solution(lab.solution))});
+    else if (issue === "above") hint = t("The unknown's absorbance, {a}, is above your highest standard, so you would be extending the line past your data. Add a standard above it.", v);
+    else if (issue === "below") hint = t("The unknown's absorbance, {a}, is below your lowest standard, so you would be extending the line past your data. Add a standard below it.", v);
+    else if (answer >= 0 && near(answer, mine, 0.01, 0.001)) {
+      return {ok: true, blank: false, text: t("✓ Correct. Your calibration gives c = (A − b) ÷ m = ({a} − {b}) ÷ {m} = {mine} M. The simulated sample was made at {c} M ({err}% difference).",
+        {a: fmt(a, 3), b: paren(line.b, 3), m: sig(line.m, 4), mine: fmt(mine, 3), c: fmt(lab.unknown, 3), err: fmt(Math.abs(mine - lab.unknown) / lab.unknown * 100, 1)})};
+    } else if (near(answer, a, 0.01, 0.0005)) hint = t("That is the unknown's absorbance, not its concentration. Use the calibration line to convert it: {formula}.", v);
     else if (near(answer, a * line.m, 0.03, 0.001) || near(answer, a * line.m + line.b, 0.03, 0.001)) hint = t("It looks like you multiplied by the slope. Divide by it instead: {formula}.", v);
-    else if (near(answer, c * 1000, 0.04, 1) || near(answer, mine * 1000, 0.01, 1)) hint = t("Check the units. Give the concentration in mol/L (M), not mmol/L.");
+    else if (near(answer, mine * 1000, 0.01, 1)) hint = t("Check the units. Give the concentration in mol/L (M), not mmol/L.");
     else if (near(answer, (a + line.b) / line.m, 0.01, 0.0005) && Math.abs(line.b) > 0.002) hint = t("Check the sign of the intercept: subtract b from the absorbance before dividing by the slope.");
-    else if (near(answer, c, 0.15, 0.004)) hint = t("Close, but not within 4%. Use more digits from your best-fit line and check your rounding.");
+    else if (near(answer, mine, 0.10, 0.004)) hint = t("Close. Use more digits from your best-fit line and check your rounding.");
     else hint = t("Find where the unknown's absorbance, {a}, meets your best-fit line, or solve A = mc + b for c: {formula}.", v);
     return {ok: false, blank: false, text: t("Not yet. {hint}", {hint: hint})};
   }
@@ -133,8 +164,9 @@
   // The part of the worked answer from the student's own line, or null without a line or a reading.
   function solveLine(lab) {
     var line = fit(lab.points), a = lab.unknownA, c = lab.unknown;
-    if (!(line && a !== null && a !== undefined)) return null;
-    var mine = fromLine(line, a), err = Math.abs(mine - c) / c * 100;
+    var mine = fromLine(line, a);
+    if (mine === null || mine < 0) return null;
+    var err = Math.abs(mine - c) / c * 100;
     return t("Your best-fit line gives c = (A − b) ÷ m = ({a} − {b}) ÷ {m} = {mine} M, {err}% from the actual value.",
       {a: fmt(a, 3), b: paren(line.b, 3), m: sig(line.m, 4), mine: fmt(mine, 3), err: fmt(err, 1)});
   }
@@ -194,14 +226,19 @@
     return "A = " + sig(line.m, 4) + "c " + (line.b < 0 ? "− " : "+ ") + fmt(Math.abs(line.b), 3);
   }
 
+  function fitQuality(line) {
+    return line.r2 === null ? t("undefined") : fmt(line.r2, 4);
+  }
+
   // A short explanation of the calibration curve so far.
   function insight(lab) {
     var s = solution(lab.solution), pts = lab.points, line = fit(pts), peak = lambdaMax(s), out = [];
     if (!pts.length) return t("Measure standards of known concentration. Each one adds a point to the calibration curve.");
     if (!line) return pts.length === 1 ? t("One standard gives one point. Measure at least one more, at a different concentration, so you can draw a line.") :
       t("Your standards all have the same concentration. Measure standards at different concentrations to draw a line.");
-    var r2 = {r2: fmt(line.r2, 4)};
-    out.push((line.r2 >= 0.99 ? t("Your standards fall on a straight line (R² = {r2}): absorbance is proportional to concentration, as Beer's law, A = εbc, predicts.", r2) :
+    if (!(line.m > 0)) return t("Absorbance should increase with concentration. Use a wavelength where the solution absorbs strongly and remeasure your standards.");
+    var r2 = {r2: fitQuality(line)};
+    out.push((line.r2 >= 0.99 ? t("Your standards fall on a straight line (R² = {r2}): absorbance changes linearly with concentration over your measured range.", r2) :
       t("Your points scatter around the line (R² = {r2}). Remeasure or remove any standard that is far from it.", r2)) + " " +
       t("The slope, {m} M⁻¹, equals εb, so ε = {e} L/(mol·cm) at {nm} nm with the {b} cm cuvette.", {m: sig(line.m, 4), e: sig(line.m / PATH, 3), nm: lab.wavelength, b: fmt(PATH)}) +
       (Math.abs(line.b) <= 0.01 ? " " + t("The intercept is close to 0 because the blank set A = 0 for 0 M.") : ""));
@@ -213,8 +250,8 @@
     }
     if (lab.unknownA !== null && lab.unknownA !== undefined) {
       var lo = Math.min.apply(null, pts.map(function (p) { return p[1]; })), hi = Math.max.apply(null, pts.map(function (p) { return p[1]; }));
-      if (lab.unknownA > hi || lab.unknownA < lo) {
-        out.push(t(lab.unknownA > hi ? "The unknown's absorbance, {a}, is above your highest standard, so you would be extending the line past your data. Add a standard above it." :
+      if (lab.unknownA > hi + margin(hi) || lab.unknownA < lo - margin(lo)) {
+        out.push(t(lab.unknownA > hi + margin(hi) ? "The unknown's absorbance, {a}, is above your highest standard, so you would be extending the line past your data. Add a standard above it." :
           "The unknown's absorbance, {a}, is below your lowest standard, so you would be extending the line past your data. Add a standard below it.", {a: fmt(lab.unknownA, 3)}));
       }
     }
@@ -260,7 +297,7 @@
       var cs = pts.map(function (p) { return p[0]; }), as = pts.map(function (p) { return p[1]; });
       text += t(pts.length === 1 ? "{n} standard from {c0} to {c1} M, absorbance {a0} to {a1}." : "{n} standards from {c0} to {c1} M, absorbance {a0} to {a1}.",
         {n: pts.length, c0: fmt(Math.min.apply(null, cs), 3), c1: fmt(Math.max.apply(null, cs), 3), a0: fmt(Math.min.apply(null, as), 3), a1: fmt(Math.max.apply(null, as), 3)});
-      if (line && showFit) text += " " + t("Best-fit line {eq}, R² = {r2}.", {eq: equation(line), r2: fmt(line.r2, 4)});
+      if (line && showFit) text += " " + t("Best-fit line {eq}, R² = {r2}.", {eq: equation(line), r2: fitQuality(line)});
     }
     if (lab.unknownA !== null && lab.unknownA !== undefined) text += " " + t("The unknown's absorbance, {a}, is drawn as a horizontal line.", {a: fmt(lab.unknownA, 3)});
     if (shown) text += " " + t("The unknown is marked at {c} M.", {c: fmt(lab.unknown, 3)});
@@ -293,9 +330,9 @@
   }
 
   var api = {
-    PATH: PATH, RANGE: RANGE, STRAY: STRAY, NOISE: NOISE, MAX_STANDARDS: MAX_STANDARDS, UNKNOWN: UNKNOWN, SOLUTIONS: SOLUTIONS,
+    PATH: PATH, RANGE: RANGE, STRAY: STRAY, NOISE: NOISE, MAX_STANDARDS: MAX_STANDARDS, MIN_SPAN: MIN_SPAN, BRACKET: BRACKET, UNKNOWN: UNKNOWN, SOLUTIONS: SOLUTIONS,
     solution: solution, epsilon: epsilon, lambdaMax: lambdaMax, absorbance: absorbance, transmittance: transmittance, reading: reading,
-    drawUnknown: drawUnknown, fit: fit, fromLine: fromLine, check: check, solve: solve, solveLine: solveLine, lightColor: lightColor, lightName: lightName,
+    drawUnknown: drawUnknown, fit: fit, fromLine: fromLine, fitQuality: fitQuality, usable: usable, check: check, solve: solve, solveLine: solveLine, lightColor: lightColor, lightName: lightName,
     sampleColor: sampleColor, solutionText: solutionText, equation: equation, insight: insight, describeInstrument: describeInstrument,
     lower: lower, scales: scales, describeGraph: describeGraph, fmt: fmt, sig: sig, plain: plain, csv: csv
   };

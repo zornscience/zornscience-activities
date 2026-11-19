@@ -69,3 +69,52 @@ test("header dialogs, keyboard, SVG and mobile layout", async function ({page}) 
   }
   expect(await page.locator("[data-sample]").evaluateAll(function(buttons){return buttons.every(function(b){var r=b.getBoundingClientRect();return Array.from(b.children).every(function(c){var q=c.getBoundingClientRect();return q.left>=r.left-0.5&&q.right<=r.right+0.5;});});})).toBe(true);
 });
+
+test("solvent observation timer preserves keyboard focus on its advance control", async ({page}) => {
+  await page.clock.install();
+  await page.goto("/chemical-bonding-lab/");
+  await page.locator('[data-sample="4"]').click();
+  await page.locator('[data-station="cyclohexane"]').click();
+  for (const name of ["Measure 5.0 mL cyclohexane", "Add solvent & spatula-tip solid", "Stir & start observation"]) {
+    await page.getByRole("button", {name, exact: true}).click();
+  }
+  const advance = page.getByRole("button", {name: "Advance to 5:00", exact: true});
+  await advance.focus();
+  await page.clock.runFor(300);
+  const clock = page.getByRole("progressbar", {name: "Solvent observation time"});
+  expect(await clock.evaluate(progress => progress.value)).toBeGreaterThan(0);
+  await expect(advance).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#observation")).toHaveText(/violet solution.*five simulated minutes/);
+});
+
+test("solvent observation keeps keyboard focus at the bench when it finishes, and leaves focus elsewhere alone", async ({page}) => {
+  await page.clock.install();
+  await page.goto("/chemical-bonding-lab/");
+  async function start() {
+    await page.locator('[data-station="cyclohexane"]').click();
+    for (const name of ["Measure 5.0 mL cyclohexane", "Add solvent & spatula-tip solid", "Stir & start observation"]) {
+      await page.getByRole("button", {name, exact: true}).click();
+    }
+  }
+  const repeat = page.getByRole("button", {name: "Repeat with fresh portion", exact: true});
+  // Finished early with the keyboard: focus moves to the next action, not to the page.
+  await start();
+  await page.getByRole("button", {name: "Advance to 5:00", exact: true}).focus();
+  await page.keyboard.press("Enter");
+  await expect(repeat).toBeFocused();
+  // Finished on its own while the advance control has focus: the same.
+  await repeat.click();
+  await start();
+  await page.getByRole("button", {name: "Advance to 5:00", exact: true}).focus();
+  await page.clock.runFor(11000);
+  await expect(page.locator("#observation")).toHaveText(/five simulated minutes/);
+  await expect(repeat).toBeFocused();
+  // Finished on its own while focus is elsewhere on the page: focus stays there.
+  await repeat.click();
+  await start();
+  await page.locator("#reset").focus();
+  await page.clock.runFor(11000);
+  await expect(page.locator("#observation")).toHaveText(/five simulated minutes/);
+  await expect(page.locator("#reset")).toBeFocused();
+});
