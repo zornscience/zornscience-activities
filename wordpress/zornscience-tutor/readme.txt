@@ -52,6 +52,20 @@ A chemistry, physics, and biology tutor for students. It guides students with qu
 
 == Changelog ==
 
+= 1.7.0 (security and privacy) =
+* Built on the live 1.6.2.
+* The note under the chat keeps the 1.6.2 wording (automated program, not a person; messages go to Anthropic; privacy link).
+* Visitor counters use a salted IP hash that changes every day, so counters from different days cannot be linked.
+* Limits are counted with atomic increments when the site has a shared object cache, so parallel requests cannot slip past a limit.
+* Requests over 4.5 MB or with more than 100 messages are refused before any work is done.
+* Photos: real content is checked, sides over 3072 px or over 9.5 megapixels are refused, and every photo is re-saved on the server as a plain JPEG, which drops metadata such as location tags.
+* Each tutor reply is signed. Earlier tutor turns sent back without a valid signature are dropped, so a caller cannot write fake tutor turns.
+* All tutor responses, including errors, are sent with Cache-Control: no-store.
+* KaTeX files from jsDelivr load with Subresource Integrity hashes (version 0.16.11 pinned).
+* The API key can be set as ZST_API_KEY in wp-config.php, which keeps it out of the database.
+* The Usage panel counts replies the model declined for safety (refusals). Counts only, no message text.
+* "New chat" also stops voice typing and clears the text box.
+
 = 1.6.2 =
 * The note under the chat now starts with "The ZornScience tutor is an automated program, not a person." It also says that messages are sent to Anthropic to write a reply, asks students to leave out private information, and links to the Student Privacy page (/privacy/ in English, /es/privacy/ in Spanish). The "can make mistakes" and voice typing sentences follow. Tutor behavior, instructions, limits, and age handling are unchanged.
 
