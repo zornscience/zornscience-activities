@@ -22,6 +22,8 @@ function sampleWrong(it, ap, per, max) {
   return out;
 }
 
+// Every item lands in exactly one of GROUPS groups (index modulo GROUPS), so no question or answer choice is dropped.
+var GROUPS = 8;
 var COUNTS = {};
 function tally(k) { COUNTS[k] = (COUNTS[k] || 0) + 1; }
 
@@ -29,13 +31,13 @@ for (var mode of ["octet", "ap"]) {
   (function (ap) {
     var items = lv.data.items.filter(function (it) { return ap || it.set !== "ap"; });
     // Split into groups so the browser workers share the load.
-    for (var g = 0; g < 4; g++) {
+    for (var g = 0; g < GROUPS; g++) {
       (function (group) {
         test("Lewis builder" + (ap ? " (AP)" : "") + ": every choice routes to the right feedback, group " + (group + 1), async ({page, open}) => {
-          test.setTimeout(400000);
+          test.setTimeout(200000);
           await lv.openLv(page, open);
           var combos = 0, builds = 0;
-          for (var it of items.filter(function (x, i) { return i % 4 === group; })) {
+          for (var it of items.filter(function (x, i) { return i % GROUPS === group; })) {
             var ans = lv.answers(it, ap), r = lv.refFor(it), kinds = lv.kindsOf(it, ap);
             expect(await page.evaluate((p) => { window.__lv.single(p.id, p.ap); return window.__zsa.state().progress; }, {id: it.id, ap: ap}),
               it.id + " step count").toMatch(new RegExp("Step 1 of " + kinds.length + "$"));
@@ -101,8 +103,9 @@ for (var mode of ["octet", "ap"]) {
               expect(res.after.live, where + " announced").toBe(res.after.feedback.spoken);
             });
           }
-          expect(combos).toBeGreaterThan(100);
-          expect(builds).toBeGreaterThan(50);
+          // Sanity floors that the group did real work; they were 100 and 50 when there were 4 groups.
+          expect(combos).toBeGreaterThan(100 * 4 / GROUPS);
+          expect(builds).toBeGreaterThan(50 * 4 / GROUPS);
         });
       })(g);
     }

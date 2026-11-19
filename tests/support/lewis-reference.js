@@ -82,7 +82,14 @@ function key(it, st) { return st.c + "|" + st.o.map(function (p, i) { return it.
 // (one structure per Lewis structure, not per drawing).
 var OPTIONS = [];
 for (var ob = 1; ob <= 3; ob++) for (var ol = 0; ol <= 4; ol++) OPTIONS.push([ob, ol]);
+// Enumerating every placement of the electrons is slow for large items such as SF6, and the accepted-structure and
+// feedback rules call it many times for the same item, so the result is kept per item (callers only filter it).
+var ENUM_CACHE = {};
 function enumerate(it) {
+  var ck = it.total + "|" + it.outer.join(",");
+  return ENUM_CACHE[ck] || (ENUM_CACHE[ck] = enumerateAll(it));
+}
+function enumerateAll(it) {
   var out = [], n = it.outer.length;
   (function rec(i, o, left) {
     if (i === n) {

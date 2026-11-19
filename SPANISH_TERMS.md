@@ -3696,6 +3696,41 @@ pattern aid | patrones para distinguir colores
 time-lapse | avance en el tiempo
 yellow-green / blue-green | verde amarillento / azul verdoso
 
+## Natural Selection Lab
+
+Mexican Spanish, tú, decimal points retained. Terms without an earlier approved
+entry remain needs review. The /es/ lesson page does not exist yet. Its title is
+provisional, matching the Leaf Disk Lab registration convention.
+
+| English | Mexican Spanish | Review |
+| --- | --- | --- |
+| Natural Selection Lab | Laboratorio de selección natural | needs review |
+| Natural Selection | Selección natural | needs review, provisional lesson title |
+| natural selection | selección natural | needs review |
+| variation | variación | needs review |
+| heritable | hereditario | needs review |
+| generation | generación | needs review |
+| predator | depredador | needs review |
+| camouflage | camuflaje | needs review |
+| survive | sobrevivir | needs review |
+| offspring | descendencia | needs review |
+| population | población | needs review |
+| trait | rasgo | needs review |
+| beetle | escarabajo | needs review |
+| inheritance | herencia | needs review |
+| survival | supervivencia | needs review |
+| shell | caparazón | needs review |
+| drought | sequía | needs review |
+| rare random change | cambio aleatorio poco frecuente | needs review |
+| Data for your worksheet | Datos para tu hoja de trabajo | needs review |
+| Answer these in your document | Responde estas preguntas en tu documento | needs review |
+| run | ensayo | approved in earlier labs |
+| illustrative teaching model | modelo ilustrativo para la enseñanza | approved in Leaf Disk Lab |
+
+Prediction, feedback and worksheet prompts are complete sentence templates in
+data.js. Prompt identifiers 1A to 3C are unchanged in Spanish. No typed answers
+are collected. Selector labels use población inicial and tamaño de la población.
+
 ## pH & Buffer Lab and Titration Simulator terminology (accessibility pass, Nov 2026)
 
 Standardized on "solución amortiguadora" (the Style Kit section 6 term for buffer) in the pH & Buffer Lab, the landing card and the SEO description. The noun "amortiguador" alone is no longer used there. "capacidad amortiguadora" and the glossary phrase "región de amortiguador" are unchanged. No new terms and nothing pending approval.

@@ -91,6 +91,7 @@ population-sampling-lab/   Population Sampling Lab, v1.0.0 (grade 9 Biology, see
 enzyme-lab/                Enzyme Activity Lab, v1.0.1 (grade 9 Biology, catalase fair tests of temperature or pH, ruler measurement, graphing an optimum, active site zoom; Spanish drafted, hidden until proofread)
 mitosis-lab/               Mitosis Detective: Inside an Onion Root Tip, v1.0.1 (grade 9 Biology, root zones, a focusing microscope, seeded cell tallies, percents to minutes, cycle wheel and copied data; English, Mexican Spanish written but hidden until proofread)
 btb-carbon-cycle-lab/      BTB Carbon Cycle Lab, v1.0.0 (grade 9 Biology, spinach and bromothymol blue in light, dark and control tubes over 24 hours; English and Mexican Spanish)
+natural-selection-lab/     Natural Selection Lab, v1.0.0 (grade 9 Biology, beetle generations, camouflage, environmental change and variation; English and Mexican Spanish)
 leaf-disk-lab/             Leaf Disk Lab, v1.1.0 (grade 9 Biology, floating spinach disks, guided photosynthesis investigations and graphs; English and Mexican Spanish)
 yeast-fermentation-lab/    Feed the Yeast: Fermentation and Energy, v1.0.1 (grade 9 Biology: which foods yeast can use, a fair test checker, a glucose saturation curve, plotted graphs, an animated yeast cell, five checks and tab-separated data to copy; Mexican Spanish written, hidden until proofread)
 net-ionic-lab/             Net Ionic Reactions Lab, v1.1.3 (ten reagent pairs: precipitates, metal displacement and no visible reaction; English and Mexican Spanish)

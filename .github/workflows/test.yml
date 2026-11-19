@@ -28,6 +28,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps chromium
+      - name: PHP extensions needed by the plugin tests
+        run: |
+          for m in ctype iconv pdo pdo_sqlite; do
+            php -m | grep -ixq "$m" || { echo "Missing PHP extension: $m"; exit 1; }
+          done
       - run: npm run test:unit
       - run: npx playwright test
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
