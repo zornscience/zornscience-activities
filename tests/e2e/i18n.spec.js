@@ -2932,14 +2932,14 @@ test("virtual-lab-graphing opens in Mexican Spanish and translates the data tabl
   await page.getByRole("textbox", {name:"Valor de x, fila 1", exact:true}).fill("0");
   await page.getByRole("textbox", {name:"Valor de y, fila 1", exact:true}).fill("0");
   await page.getByRole("textbox", {name:"Valor de x, fila 2", exact:true}).fill("2e-3");
-  await expect(page.locator(id("data-error"))).toHaveText("Sin graficar: fila 2. Escribe los valores de x y de y como números (de magnitud entre 1e-100 y 1e100, o cero).");
+  await expect(page.locator(id("data-error"))).toHaveText("Sin graficar: fila 2, valor de y. Escribe un número, con punto decimal como en 1.5 (no 1,5).");
   await expect(page.locator(id("pointcount"))).toHaveText("1 punto");
   await expect(page.locator(id("chartnote"))).toHaveText("1 medición graficada. Se excluyen las filas incompletas o no válidas. Punto azul: tu medición.");
   await expect(page.locator(id("fit-message"))).toHaveText("Agrega al menos dos puntos completos para obtener una línea de mejor ajuste.");
   await expect(page.locator(id("chart"))).toContainText("ZornScience · 1 punto");
   await expect(page.locator(id("live"))).toHaveText("1 punto graficado. Algunas filas necesitan atención.");
   await page.getByRole("textbox", {name:"Valor de x, fila 3", exact:true}).fill("1,5");
-  await expect(page.locator(id("data-error"))).toHaveText("Sin graficar: filas 2, 3. Escribe los valores de x y de y como números (de magnitud entre 1e-100 y 1e100, o cero).");
+  await expect(page.locator(id("data-error"))).toHaveText("Sin graficar: fila 2, valor de y; fila 3, valor de x; fila 3, valor de y. Escribe un número, con punto decimal como en 1.5 (no 1,5).");
   await page.getByRole("textbox", {name:"Valor de x, fila 3", exact:true}).fill("");
   await page.getByRole("textbox", {name:"Valor de y, fila 2", exact:true}).fill("4e-3");
   await expect(page.locator(id("equation"))).toHaveText("y = 2x + 0");
@@ -2959,7 +2959,7 @@ test("virtual-lab-graphing opens in Mexican Spanish and translates the data tabl
   await expect(page.locator(id("live"))).toHaveText("Se importaron 3 puntos.");
   await expect(page.locator("#zsa-vlg-svg-desc")).toContainText("R al cuadrado indefinido porque y es constante.");
   await expect(page.locator(id("chart"))).toContainText("y = 0x + 4; R² = indefinido");
-  for (const [text, message] of [["0,1\n2,bad", "Línea 2: usa números de magnitud entre 1e-100 y 1e100, o cero."], ["1,2,3", "Línea 1: se esperaban exactamente dos columnas, separadas por comas o tabulaciones."],
+  for (const [text, message] of [["0,1\n2,bad", "Línea 2: el valor de y no es un número. Escribe un número, con punto decimal como en 1.5 (no 1,5)."], ["1,2,3", "Línea 1: se esperaban exactamente dos columnas, separadas por comas o tabulaciones. Escribe los decimales con punto, como en 1.5, porque una coma inicia una columna nueva."], ["1;2", "Línea 1: separa las dos columnas con una coma o una tabulación, no con punto y coma."], ["1,5\t2", "Línea 1: el valor de x no es un número. Escribe un número, con punto decimal como en 1.5 (no 1,5)."], ["1e200,2", "Línea 1: el valor de x está fuera del intervalo. Usa una magnitud entre 1e-100 y 1e100, o cero."],
     ["x,y", "Agrega al menos un par de datos debajo del encabezado."], ['"1,2', "A un valor del CSV entre comillas le falta la comilla de cierre."], ['"1"x,2', "Hay texto inesperado después de un valor del CSV entre comillas."]]) {
     await page.getByLabel("Datos en dos columnas").fill(text);
     await page.getByRole("button", {name:"Usar los datos pegados", exact:true}).click();

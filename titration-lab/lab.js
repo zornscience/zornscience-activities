@@ -237,7 +237,9 @@
         marks.appendChild(svg("line", {x1: L, y1: Y(kp.pHhalf), x2: X(kp.half), y2: Y(kp.pHhalf), class: "zsa-ti-key-line"}));
         marks.appendChild(svg("line", {x1: X(kp.half), y1: Y(kp.pHhalf), x2: X(kp.half), y2: B, class: "zsa-ti-key-line"}));
         marks.appendChild(svg("rect", {x: X(kp.half) - 5, y: Y(kp.pHhalf) - 5, width: 10, height: 10, class: "zsa-ti-key-point"}));
-        label(X(kp.half), Y(kp.pHhalf) + (up ? 22 : -12), t("Half-equivalence: pH = pKa = {pH}", {pH: M.fmt(kp.pHhalf)}), "pH = pKa = " + M.fmt(kp.pHhalf), 1, "zsa-ti-key-label");
+        // For a weak base the pKa that pH equals belongs to its conjugate acid, so the label names it.
+        var baseIon = up ? "" : M.species(setup.analyte).ion;
+        label(X(kp.half), Y(kp.pHhalf) + (up ? 22 : -12), up ? t("Half-equivalence: pH = pKa = {pH}", {pH: M.fmt(kp.pHhalf)}) : t("Half-equivalence: pH = pKa of {ion} = {pH}", {ion: baseIon, pH: M.fmt(kp.pHhalf)}), up ? "pH = pKa = " + M.fmt(kp.pHhalf) : "pH = pKa of " + baseIon + " = " + M.fmt(kp.pHhalf), 1, "zsa-ti-key-label");
       }
     }
     var up0 = M.species(setup.analyte).type === "acid";
@@ -484,7 +486,7 @@
     link.click();
     root.removeChild(link);
     window.setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-    announce(t("Titration data downloaded as zornscience-titration-data.csv: {n} readings of volume and pH.", {n: data.length}));
+    announce(data.length === 1 ? t("Titration data downloaded as zornscience-titration-data.csv: {one} reading of volume and pH.", {one: data.length}) : t("Titration data downloaded as zornscience-titration-data.csv: {n} readings of volume and pH.", {n: data.length}));
   });
 
   // ---------- Deep links and the back link ----------

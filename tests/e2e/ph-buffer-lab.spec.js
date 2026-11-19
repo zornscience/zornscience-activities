@@ -53,7 +53,7 @@ for(const lang of ['en','es'])test(lang+' mobile modes, keyboard tabs, offline o
   for(const n of await page.locator('[role="tabpanel"]:visible button').all()){const box=await n.boundingBox();expect(box.height).toBeGreaterThanOrEqual(44);expect(box.x+box.width).toBeLessThanOrEqual(width+1);}
  }}
  await page.locator('#tab-explore').focus();await page.keyboard.press('ArrowRight');await expect(page.locator('#tab-buffer')).toBeFocused();await expect(page.locator('#panel-buffer')).toBeVisible();
- if(lang==='es'){await expect(page.locator('html')).toHaveAttribute('lang','es-MX');await expect(page.locator('h1')).toHaveText('Laboratorio de pH y soluciones amortiguadoras');await expect(page.locator('#nonbuffer-why')).toContainText('no es amortiguador');}
+ if(lang==='es'){await expect(page.locator('html')).toHaveAttribute('lang','es-MX');await expect(page.locator('h1')).toHaveText('Laboratorio de pH y soluciones amortiguadoras');await expect(page.locator('#nonbuffer-why')).toContainText('no forma una solución amortiguadora');}
  await page.evaluate(fs.readFileSync(require.resolve('axe-core/axe.min.js'),'utf8'));
  for(const mode of ['explore','buffer','stress','challenge']){await page.locator('#tab-'+mode).click();const violations=await page.evaluate(async()=>{const r=await axe.run(document,{runOnly:{type:'tag',values:['wcag2a','wcag2aa','wcag21aa']}});return r.violations.map(x=>({id:x.id,nodes:x.nodes.map(n=>n.target)}));});expect(violations).toEqual([]);}
  expect(errors).toEqual([]);expect(external).toEqual([]);
@@ -61,7 +61,7 @@ for(const lang of ['en','es'])test(lang+' mobile modes, keyboard tabs, offline o
 test('Spanish dynamic feedback, CSV, share dialog, embed mode and index card',async({page})=>{
  await page.goto('/ph-buffer-lab/?lang=es&mode=challenge');await page.locator('#challenge-ratio').fill('0.57544');await page.locator('#check-design').click();await expect(page.locator('#design-feedback')).toContainText('Correcto.');
  await page.locator('#indicator').selectOption('phenolphthalein');await expect(page.locator('#indicator-feedback')).toContainText('incoloro a rosa');
- await page.locator('#tab-stress').click();await page.locator('#acid-large').click();await expect(page.locator('#stress-reaction')).toContainText('Reacción del amortiguador');
+ await page.locator('#tab-stress').click();await page.locator('#acid-large').click();await expect(page.locator('#stress-reaction')).toContainText('Reacción de la solución amortiguadora');
  const download=page.waitForEvent('download');await page.locator('#download-data').click();expect(fs.readFileSync(await(await download).path(),'utf8')).toContain('pH del agua');
  await page.getByRole('button',{name:'Compartir actividad'}).click();await expect(page.locator('#zsa-header-share-url')).toHaveValue('https://activities.zornscience.org/ph-buffer-lab/?lang=es');await page.keyboard.press('Escape');
  await page.goto('/ph-buffer-lab/?embed=1');await expect(page.locator('.zsa-back')).toBeHidden();await expect(page.locator('footer')).toBeHidden();
@@ -98,3 +98,22 @@ test('default 0.020 M buffer exhausts at 10 mL, with six addition buttons and in
   }
  }
 });
+for(const lang of ['en','es']){
+ test('singular reading, capacity note and buffer terminology in '+lang,async({page})=>{
+  await page.goto('/ph-buffer-lab/?mode=stress&pair=acetate&capacity=0.20'+(lang==='es'?'&lang=es':''));
+  const desc=await page.locator('#graph-desc').textContent();
+  const note=await page.locator('#capacity-note').textContent();
+  if(lang==='en'){
+   expect(desc).toMatch(/1 reading\./);expect(desc).not.toMatch(/1 readings/);
+   expect(note).toMatch(/would consume all of the conjugate base \(A⁻\), and .* would consume all of the weak acid \(HA\)\. More total buffer means more capacity\./);
+  }else{
+   expect(desc).toMatch(/1 lectura\./);expect(desc).not.toMatch(/1 lecturas/);
+   expect(note).toMatch(/consumirían toda la base conjugada \(A⁻\).*consumirían todo el ácido débil \(HA\)/);
+   const text=await page.locator('body').innerText();
+   expect(text).not.toMatch(/\b(el|un|del) amortiguador\b/i);
+  }
+  await page.locator('#acid-large').click();
+  const desc2=await page.locator('#graph-desc').textContent();
+  expect(desc2).toMatch(lang==='en'?/2 readings\./:/2 lecturas\./);
+ });
+}

@@ -218,7 +218,7 @@ module.exports = {
   },
   "ph-buffer-lab": {
     en: "Explore pH, design buffers from conjugate pairs, and compare buffer capacity with water using a live graph in the ZornScience pH and Buffer Lab.",
-    es: "Explora el pH, prepara amortiguadores con pares conjugados y compara su capacidad con la del agua en una gráfica en vivo, de ZornScience."
+    es: "Explora el pH, prepara soluciones amortiguadoras con pares conjugados y compara su capacidad con la del agua en una gráfica en vivo, de ZornScience."
   },
   "physics-graphing-lab": {
     en: "Predict, observe and explain one-dimensional motion with a moving cart and linked position, velocity and acceleration graphs, from ZornScience.",
