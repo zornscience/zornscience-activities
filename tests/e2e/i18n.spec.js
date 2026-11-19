@@ -3161,9 +3161,9 @@ for (const lang of ["en", "es"]) {
     page.on("console", m => { if (m.type() === "error" || m.type() === "warning") errors.push(m.text()); });
     await page.goto(lang === "es" ? "/?lang=es" : "/");
     const cards = page.locator(".zsa-home-card");
-    expect(await cards.count()).toBe(76);
-    // Every card has exactly one language badge: 69 with Spanish, 7 without (4 awaiting review, Enzyme and the 2 ACT tools).
-    await expect(page.locator('.zsa-home-card [data-zsa-locale="es"]')).toHaveCount(69);
+    expect(await cards.count()).toBe(77);
+    // Every card has exactly one language badge: 70 with Spanish, 7 without (4 awaiting review, Enzyme and the 2 ACT tools).
+    await expect(page.locator('.zsa-home-card [data-zsa-locale="es"]')).toHaveCount(70);
     await expect(page.locator('.zsa-home-card [data-zsa-locale="review"], .zsa-home-card [data-zsa-locale="en"]')).toHaveCount(7);
     expect(await cards.evaluateAll(list => list.filter(c => c.querySelectorAll("[data-zsa-locale]").length !== 1).length)).toBe(0);
     const full = lang === "es" ? "Disponible en inglés y español" : "Available in English and Spanish";

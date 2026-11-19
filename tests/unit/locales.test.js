@@ -20,11 +20,11 @@ const FLAGS = {
   "yeast-fermentation-lab": ["yeast-fermentation-lab/data.js", /spanishReady: false,/]
 };
 
-test("the list covers the landing page: 76 cards, 69 with Spanish, 7 without", () => {
-  assert.equal(cards.length, 76);
-  assert.equal(new Set(cards).size, 76);
+test("the list covers the landing page: 77 cards, 70 with Spanish, 7 without", () => {
+  assert.equal(cards.length, 77);
+  assert.equal(new Set(cards).size, 77);
   Object.keys(locales.NOT_PUBLISHED).forEach(slug => assert.ok(cards.includes(slug), slug + " is on the landing page"));
-  assert.equal(cards.filter(slug => locales.status(slug + "/") === "es").length, 69);
+  assert.equal(cards.filter(slug => locales.status(slug + "/") === "es").length, 70);
   assert.equal(cards.filter(slug => locales.status(slug + "/") !== "es").length, 7);
 });
 
