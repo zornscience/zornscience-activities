@@ -52,6 +52,9 @@ A chemistry, physics, and biology tutor for students. It guides students with qu
 
 == Changelog ==
 
+= 1.6.2 =
+* The note under the chat now starts with "The ZornScience tutor is an automated program, not a person." It also says that messages are sent to Anthropic to write a reply, asks students to leave out private information, and links to the Student Privacy page (/privacy/ in English, /es/privacy/ in Spanish). The "can make mistakes" and voice typing sentences follow. Tutor behavior, instructions, limits, and age handling are unchanged.
+
 = 1.6.1 =
 * The note under the chat no longer says "AI". It now reads "Your tutor can make mistakes, so double-check important work" (and the Spanish version). The tutor instructions are unchanged, so the tutor still answers honestly if a student asks what it is.
 

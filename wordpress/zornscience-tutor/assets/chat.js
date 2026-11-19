@@ -23,7 +23,11 @@
       send: 'Send',
       voice: 'Voice',
       language: 'Language',
-      note: "Your tutor can make mistakes, so double-check important work. Please don't share personal information, and crop names out of photos.",
+      noteAuto: 'The ZornScience tutor is an automated program, not a person.',
+      notePrivacy: 'Your message and recent messages from this chat are sent to Anthropic to generate a reply. Please leave out names, contact details, grades, and other private information, and crop names out of photos.',
+      privacyLink: 'Read the privacy policy.',
+      privacyUrl: '/privacy/#student-privacy',
+      note: 'Your tutor can make mistakes, so double-check important work.',
       noteVoice: " Voice typing uses your browser's speech recognition. ZornScience does not record or save your voice.",
       chips: [
         ['Stuck on stoichiometry', "I'm stuck on a stoichiometry problem. Can you help me get started?"],
@@ -72,7 +76,11 @@
       send: 'Enviar',
       voice: 'Voz',
       language: 'Idioma',
-      note: 'Tu tutor puede equivocarse, así que revisa bien el trabajo importante. No compartas información personal y recorta los nombres de tus fotos.',
+      noteAuto: 'El tutor de ZornScience es un programa automatizado, no una persona.',
+      notePrivacy: 'Tu mensaje y los mensajes recientes de este chat se envían a Anthropic para generar una respuesta. Por favor, no escribas nombres, datos de contacto, calificaciones ni otra información privada, y recorta los nombres de tus fotos.',
+      privacyLink: 'Lee el aviso de privacidad.',
+      privacyUrl: '/es/privacy/#privacidad-estudiantil',
+      note: 'Tu tutor puede equivocarse, así que revisa bien el trabajo importante.',
       noteVoice: ' Escribir con la voz usa el reconocimiento de voz de tu navegador. ZornScience no graba ni guarda tu voz.',
       chips: [
         ['Ayuda con estequiometría', 'No me sale un problema de estequiometría. ¿Me ayudas a empezar?'],
@@ -933,7 +941,20 @@
         el.textContent = T(el.getAttribute('data-zst-i18n'));
       });
       var note = root.querySelector('[data-zst-note]');
-      if (note) note.textContent = T('note') + (CFG.voice && Recognition ? T('noteVoice') : '');
+      if (note) {
+        // Automated-program line and privacy notice first, with a link to the
+        // Student Privacy page, then the "can make mistakes" and voice sentences.
+        while (note.firstChild) note.removeChild(note.firstChild);
+        note.appendChild(document.createTextNode(T('noteAuto') + ' ' + T('notePrivacy') + ' '));
+        var privacyLink = document.createElement('a');
+        privacyLink.className = 'zst-note-link';
+        privacyLink.href = T('privacyUrl');
+        privacyLink.target = '_blank';
+        privacyLink.rel = 'noopener';
+        privacyLink.textContent = T('privacyLink');
+        note.appendChild(privacyLink);
+        note.appendChild(document.createTextNode(' ' + T('note') + (CFG.voice && Recognition ? T('noteVoice') : '')));
+      }
       input.placeholder = listening ? T('listeningPlaceholder') : idlePlaceholder();
       if (newBtn) {
         newBtn.title = T('newChat');
