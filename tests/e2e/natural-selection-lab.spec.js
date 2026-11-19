@@ -43,11 +43,14 @@ for (const lang of ["en", "es"]) {
     await expect(page.locator(id("prediction") + " input").first()).toBeDisabled();
     await assertRows(page, 0, model.createRun({}, 1));
     await expect(page.locator(id("graph") + " [data-generation]")).toHaveCount(1);
+    await expect(page.locator(id("graph") + " [data-nsl-label-leader]")).toHaveCount(0);
     await page.locator(id("next")).click();
     await expect(page.locator(id("tables") + " tbody tr")).toHaveCount(2);
     await expect(page.locator(id("graph") + " [data-generation]")).toHaveCount(2);
+    await expect(page.locator(id("graph") + " [data-nsl-label-leader]")).toHaveCount(0);
     await page.locator(id("finish")).click();
     await assertRows(page, 0, model.runTo(model.createRun({}, 1), 15));
+    await expect(page.locator(id("graph") + " [data-nsl-label-leader]")).toHaveCount(1);
     await expect(page.locator(id("next"))).toBeDisabled();
     await page.locator(id("copy")).click();
     let text = await page.evaluate(() => window.__writes.at(-1));

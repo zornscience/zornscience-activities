@@ -84,7 +84,7 @@
       "options": [
         "They survive more often and have more offspring that inherit the color.",
         "They choose dark shells because they need camouflage.",
-        "Birds teach them to change their color."
+        "Dark beetles always have more offspring, whatever the ground looks like."
       ],
       "correct": 0,
       "explanation": "Birds are less likely to see matching beetles. More survivors can pass their heritable color to offspring."
@@ -94,7 +94,7 @@
       "options": [
         "Every beetle becomes darker as it grows.",
         "The mix of inherited colors changes across generations.",
-        "The ground paints the beetles."
+        "Each beetle changes color when the ground changes."
       ],
       "correct": 1,
       "explanation": "An individual keeps its color. Different survival and reproduction change the mix of traits in the next generation."
@@ -206,12 +206,12 @@
   "Why do dark beetles become more common on dark ground?": "¿Por qué se vuelven más comunes los escarabajos oscuros en suelo oscuro?",
   "They survive more often and have more offspring that inherit the color.": "Sobreviven con más frecuencia y tienen más descendencia que hereda el color.",
   "They choose dark shells because they need camouflage.": "Eligen caparazones oscuros porque necesitan camuflaje.",
-  "Birds teach them to change their color.": "Las aves les enseñan a cambiar de color.",
+  "Dark beetles always have more offspring, whatever the ground looks like.": "Los escarabajos oscuros siempre tienen más descendencia, sin importar cómo sea el suelo.",
   "Birds are less likely to see matching beetles. More survivors can pass their heritable color to offspring.": "Es menos probable que las aves vean a los escarabajos que se parecen al suelo. Más sobrevivientes pueden transmitir su color hereditario a la descendencia.",
   "How can the population change if individual beetles do not change color?": "¿Cómo puede cambiar la población si los escarabajos individuales no cambian de color?",
   "Every beetle becomes darker as it grows.": "Todos los escarabajos se vuelven más oscuros al crecer.",
   "The mix of inherited colors changes across generations.": "La proporción de colores heredados cambia entre generaciones.",
-  "The ground paints the beetles.": "El suelo pinta a los escarabajos.",
+  "Each beetle changes color when the ground changes.": "Cada escarabajo cambia de color cuando cambia el suelo.",
   "An individual keeps its color. Different survival and reproduction change the mix of traits in the next generation.": "Cada individuo conserva su color. Las diferencias en supervivencia y reproducción cambian la proporción de rasgos en la siguiente generación.",
   "What happens when there is no variation in shell color?": "¿Qué pasa cuando no hay variación en el color del caparazón?",
   "A new color appears immediately because the beetles need it.": "Aparece un color nuevo de inmediato porque los escarabajos lo necesitan.",

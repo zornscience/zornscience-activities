@@ -154,12 +154,17 @@
     $("legend").replaceChildren();
     const sorted = session().runs.slice().sort((a, b) => last(b).percentDark - last(a).percentDark);
     session().runs.forEach(run => {
-      const i = run.index, tail = last(run), labelY = 70 + sorted.indexOf(run) * 32;
+      const i = run.index, tail = last(run), complete = tail.generation === limits[mode];
+      const labelY = complete ? 70 + sorted.indexOf(run) * 32 : Math.max(64, Math.min(258, y(tail.percentDark) - 12));
+      const labelLeft = !complete && tail.generation > limits[mode] / 2;
+      const textX = complete ? labelX + 6 : x(tail.generation) + (labelLeft ? -8 : 8);
       const group = svg("g", {"data-run": i + 1}, graph);
       svg("path", {d: run.history.map((r, j) => (j ? "L" : "M") + x(r.generation) + " " + y(r.percentDark)).join(" "), class: "zsa-nsl-curve", "stroke-dasharray": dashes[i]}, group);
       run.history.forEach(r => svg("text", {x: x(r.generation), y: y(r.percentDark) + 4, "text-anchor": "middle", "font-size": 12, "data-generation": r.generation}, group, markers[i]));
-      svg("path", {d: "M" + x(tail.generation) + " " + y(tail.percentDark) + "L" + labelX + " " + labelY, stroke: "#334155", "stroke-dasharray": dashes[i], fill: "none"}, group);
-      svg("text", {x: labelX + 6, y: labelY + 4, "font-size": font}, group, markers[i] + " " + t("Run {run}", {run: i + 1}));
+      // Completed runs use connectors only outside the plotting area. Active and
+      // extinct runs have adjacent labels, so annotations cannot suggest future data.
+      if (complete) svg("path", {d: "M" + x(tail.generation) + " " + y(tail.percentDark) + "L" + labelX + " " + labelY, stroke: "#334155", "stroke-dasharray": dashes[i], fill: "none", "data-nsl-label-leader": ""}, group);
+      svg("text", {x: textX, y: labelY + 4, "font-size": font, "text-anchor": labelLeft ? "end" : "start"}, group, markers[i] + " " + t("Run {run}", {run: i + 1}));
       const item = el("li", null, $("legend"));
       const key = svg("svg", {viewBox: "0 0 44 20", "aria-hidden": "true"}, item);
       svg("path", {d: "M0 10H44", class: "zsa-nsl-curve", "stroke-dasharray": dashes[i]}, key);
