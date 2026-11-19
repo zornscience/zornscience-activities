@@ -252,3 +252,27 @@ for(const lang of ["en","es"]) test("topic IDs 8.1, 8.10 and 8.11 stay distinct 
     await el(page,"choose").click();
   }
 });
+
+test("remaining acid uses four decimal places in English and Spanish", async ({page, problems}) => {
+  void problems;
+  await page.setViewportSize({width: 390, height: 844});
+  for (const lang of ["en", "es"]) {
+    await page.goto(slug + "?lang=" + lang);
+    await start(page, "8.4");
+    for (let i = 0; i < 6; i++) {
+      const q = await question(page);
+      if (q.id === "8.4-6") {
+        await expect(el(page, "question")).toContainText(lang === "es" ? "reaccione todo el hidróxido añadido" : "all the added hydroxide has reacted");
+        await el(page, "value").fill("0.0060");
+        await el(page, "unit").selectOption("mol");
+        await el(page, "check").click();
+        await expect(el(page, "feedback")).toContainText(lang === "es" ? "Correcto." : "Correct.");
+        await expect(el(page, "feedback")).toContainText("0.0060 mol");
+        break;
+      }
+      await answer(page, q);
+      await el(page, "next").click();
+    }
+    await expect(el(page, "play")).toHaveAttribute("data-question-id", "8.4-6");
+  }
+});

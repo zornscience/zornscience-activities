@@ -313,7 +313,7 @@
     el.appendChild(marks);
     $("graph-desc").textContent = M.describeGraph(lab, showFit, shown);
     $("equation").textContent = !fit ? t("Measure two or more standards at different concentrations to draw the best-fit line.") :
-      showFit ? t("{eq}, R² = {r2} (c in M)", {eq: M.equation(fit), r2: M.fmt(fit.r2, 4)}) : t("Best-fit line hidden. Work out the slope from your data.");
+      showFit ? t("{eq}, R² = {r2} (c in M)", {eq: M.equation(fit), r2: M.fitQuality(fit)}) : t("Best-fit line hidden. Work out the slope from your data.");
   }
   if (typeof ResizeObserver !== "undefined") {
     new ResizeObserver(function () {
@@ -326,7 +326,7 @@
     $("fit").setAttribute("aria-pressed", String(showFit));
     drawGraph();
     var fit = line();
-    announce(showFit ? t("Best-fit line shown.") + (fit ? " " + t("{eq}, R² = {r2}.", {eq: M.equation(fit), r2: M.fmt(fit.r2, 4)}) : "") : t("Best-fit line hidden."));
+    announce(showFit ? t("Best-fit line shown.") + (fit ? " " + t("{eq}, R² = {r2}.", {eq: M.equation(fit), r2: M.fitQuality(fit)}) : "") : t("Best-fit line hidden."));
   });
 
   // ---------- The table and the unknown ----------
@@ -404,9 +404,7 @@
     if (r.ok) {
       if (!shown && !foundThis) { found++; foundThis = true; }
       shown = true;
-      // The worked line, after "Correct" has already given the concentration (the whole answer when there is no line).
-      var more = M.solveLine(lab);
-      text += " " + (more === null ? M.solve(lab) : more);
+      text += " " + M.solveLine(lab);
     }
     feedback(r.ok ? "zsa-bl-ok" : "zsa-bl-notyet", text);
     redraw();
@@ -440,7 +438,7 @@
     var fit = line();
     var n = lab.points.length, answer = $("answer").value.trim();
     $("print-summary").textContent = t("Beer's law lab: {name} at {nm} nm, {b} cm cuvette.", {name: M.lower(sol()), nm: lab.wavelength, b: M.fmt(M.PATH)}) + " " +
-      t(n === 1 ? "{n} standard." : "{n} standards.", {n: n}) + (fit ? " " + t("Best-fit line: {eq} (R² = {r2}).", {eq: M.equation(fit), r2: M.fmt(fit.r2, 4)}) : "") +
+      t(n === 1 ? "{n} standard." : "{n} standards.", {n: n}) + (fit ? " " + t("Best-fit line: {eq} (R² = {r2}).", {eq: M.equation(fit), r2: M.fitQuality(fit)}) : "") +
       (lab.unknownA !== null ? " " + t("Unknown's absorbance: {a}.", {a: M.fmt(lab.unknownA, 3)}) : "") + (answer ? " " + t("My answer: {answer} M.", {answer: answer}) : "");
   }
   // A print copy of the reflection: a text area prints only its visible lines, a paragraph prints all of it.

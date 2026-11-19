@@ -69,3 +69,21 @@ test("header dialogs, keyboard, SVG and mobile layout", async function ({page}) 
   }
   expect(await page.locator("[data-sample]").evaluateAll(function(buttons){return buttons.every(function(b){var r=b.getBoundingClientRect();return Array.from(b.children).every(function(c){var q=c.getBoundingClientRect();return q.left>=r.left-0.5&&q.right<=r.right+0.5;});});})).toBe(true);
 });
+
+test("solvent observation timer preserves keyboard focus on its advance control", async ({page}) => {
+  await page.clock.install();
+  await page.goto("/chemical-bonding-lab/");
+  await page.locator('[data-sample="4"]').click();
+  await page.locator('[data-station="cyclohexane"]').click();
+  for (const name of ["Measure 5.0 mL cyclohexane", "Add solvent & spatula-tip solid", "Stir & start observation"]) {
+    await page.getByRole("button", {name, exact: true}).click();
+  }
+  const advance = page.getByRole("button", {name: "Advance to 5:00", exact: true});
+  await advance.focus();
+  await page.clock.runFor(300);
+  const clock = page.getByRole("progressbar", {name: "Solvent observation time"});
+  expect(await clock.evaluate(progress => progress.value)).toBeGreaterThan(0);
+  await expect(advance).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(page.locator("#observation")).toHaveText(/violet solution.*five simulated minutes/);
+});

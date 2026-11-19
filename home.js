@@ -32,7 +32,7 @@
   "Population Sampling Lab": "Laboratorio de muestreo de poblaciones",
   "Osmosis: Potato Cores in Sucrose Solutions": "Ósmosis: cilindros de papa en soluciones de sacarosa",
   "Cell transport": "Transporte celular",
-  "Weigh potato cores before and after a day in six sugar solutions. Graph the percent change in mass to find where water stops moving.": "Pesa cilindros de papa antes y después de un día en seis soluciones de azúcar. Grafica el cambio porcentual de masa para encontrar dónde el agua deja de moverse.",
+  "Weigh potato cores before and after a day in six sugar solutions. Graph the percent change in mass to find the concentration where there is no net movement of water.": "Pesa cilindros de papa antes y después de un día en seis soluciones de azúcar. Grafica el cambio porcentual de masa para encontrar la concentración en la que no hay movimiento neto de agua.",
   // Feed the Yeast's Spanish is written but not yet proofread, so its card opens the English page (pendingSpanish below).
   "Fermentation": "Fermentación",
   "Feed the Yeast: Fermentation and Energy": "Alimenta a la levadura: fermentación y energía",

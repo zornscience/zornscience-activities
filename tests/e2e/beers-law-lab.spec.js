@@ -216,9 +216,9 @@ test("the unknown: random each time, checked with hints, shown, and replaced", a
   // The right answer from the line on the page.
   await answer.fill(mine.toFixed(3));
   await button(page, "Check my answer").click();
-  await expect(page.locator("#zsa-bl-feedback .zsa-bl-ok")).toHaveText(/^✓ Correct\. The unknown is [\d.]+ M\. Your best-fit line gives c = \(A − b\) ÷ m = /);
+  await expect(page.locator("#zsa-bl-feedback .zsa-bl-ok")).toHaveText(/^✓ Correct\. The model concentration is [\d.]+ M\. Your best-fit line gives c = \(A − b\) ÷ m = /);
   await expect(page.locator("#zsa-bl-solved")).toHaveText(/^Unknowns found: 1\./);
-  var text = await page.locator("#zsa-bl-feedback").textContent(), truth = parseFloat(text.match(/The unknown is ([\d.]+) M/)[1]);
+  var text = await page.locator("#zsa-bl-feedback").textContent(), truth = parseFloat(text.match(/The model concentration is ([\d.]+) M/)[1]);
   expect(truth).toBeGreaterThanOrEqual(0.053);
   expect(truth).toBeLessThanOrEqual(0.297);
   noisy(a, M.reading(CO, truth, 510));
@@ -236,11 +236,12 @@ test("the unknown: random each time, checked with hints, shown, and replaced", a
   await expect(page.locator("#zsa-bl-rows tr")).toHaveCount(4);
   await expect(page.locator("#zsa-bl-graph .zsa-bl-unk-point")).toHaveCount(0);
   await button(page, "Measure the unknown").click();
+  var nextAbsorbance = await absorbance(page);
   var next = await reveal(page);
   expect(Math.abs(next - truth)).toBeGreaterThanOrEqual(0.05 * CO.max - 1e-9);
   await expect(page.locator("#zsa-bl-feedback")).toContainText(/Your best-fit line gives c = .* from the actual value\./);
   // Found after it was shown does not count.
-  await answer.fill(next.toFixed(3));
+  await answer.fill(((nextAbsorbance - fit.b) / fit.m).toFixed(3));
   await button(page, "Check my answer").click();
   await expect(page.locator("#zsa-bl-feedback .zsa-bl-ok")).toBeVisible();
   await expect(page.locator("#zsa-bl-solved")).toHaveText(/^Unknowns found: 1\./);
@@ -255,7 +256,7 @@ test("a wrong answer with few standards, and showing the answer before measuring
   await button(page, "Measure the unknown").click();
   await page.getByLabel("Concentration of the unknown (M)").fill("0.9");
   await button(page, "Check my answer").click();
-  await expect(page.locator("#zsa-bl-feedback")).toHaveText("Not yet. Measure at least two standards to make a calibration curve, then find where the unknown's absorbance meets the line.");
+  await expect(page.locator("#zsa-bl-feedback")).toHaveText("Not yet. Measure at least two standards at different concentrations to make a calibration curve.");
   await expect(page.locator("#zsa-bl-insight")).toHaveText(/^One standard gives one point/);
   await button(page, "New unknown").click();
   await button(page, "Show the answer").click();

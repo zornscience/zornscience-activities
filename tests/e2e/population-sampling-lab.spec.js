@@ -83,6 +83,7 @@ for (const lang of ["en", "es"]) {
 
   test("population sampling " + lang + ": ten guided recapture trials, reveal gates and exact tables", async ({page}) => {
     await open(page, lang); await mode(page, "recapture");
+    await expect(page.getByText(lang === "es" ? /Con pocas recapturas/ : /With few recaptures/)).toBeVisible();
     for (const [series, size] of [["small", 20], ["large", 40]]) {
       await $(page, "series").selectOption(series);
       for (let trial = 0; trial < 5; trial++) {

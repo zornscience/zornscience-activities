@@ -122,7 +122,7 @@
   "Exact x = {x}; final K = {k}": "x exacta = {x}; K final = {k}",
   "Final concentrations (M): {values}": "Concentraciones finales (M): {values}",
   "5% check": "Verificación del 5%",
-  "(x ÷ starting concentration) × 100 should be less than 5%.": "(x ÷ concentración inicial) × 100 debe ser menor que 5%.",
+  "For each reactant held constant, (|coefficient × x| ÷ starting concentration) × 100 should be less than 5%.": "Para cada reactivo que se mantiene constante, (|coeficiente × x| ÷ concentración inicial) × 100 debe ser menor que 5%.",
   "Shortcut x = {x}; 5% check = {percent}%.": "x aproximada = {x}; verificación del 5% = {percent}%.",
   "The shortcut passes. Compare with the exact solution.": "La aproximación cumple. Compara con la solución exacta.",
   "The shortcut fails. Use the exact solution from bisection.": "La aproximación no cumple. Usa la solución exacta por bisección.",

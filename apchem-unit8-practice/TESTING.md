@@ -33,7 +33,7 @@ ID | Work and reasoning | Expected answer
 8.4-3 | Equal moles weak acid and strong base leave predominantly A<sup>−</sup>, with only trace hydrolysis-produced HA. | Basic solution, no appreciable buffer pair
 8.4-4 | Adding strong acid to HA does not supply appreciable A<sup>−</sup>. | Not a buffer
 8.4-5 | (0.0300 × 0.100 − 0.0200 × 0.100)/(0.0300 + 0.0200) = 0.0200 M hydronium. pH = 1.69897000. | 1.699, no units, 3 decimals
-8.4-6 | 0.0100 mol HA − 0.00400 mol hydroxide = 0.00600 mol HA left. | 0.00600 mol, 3 sf
+8.4-6 | Added hydroxide is limiting. 0.0100 mol HA − 0.00400 mol hydroxide = 0.0060 mol HA left. | 0.0060 mol, 4 decimal places
 8.5-1 | Weak acid titrated by strong base leaves a basic conjugate base at equivalence. Model equivalence at 25.0 mL, pH above 7. | Equivalence pH above 7
 8.5-2 | Weak base titrated by strong acid leaves an acidic conjugate acid. | Equivalence pH below 7
 8.5-3 | Strong acid plus strong base leaves neutral spectator ions at 25 °C. | Equivalence pH 7.00
