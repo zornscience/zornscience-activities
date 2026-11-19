@@ -247,3 +247,15 @@ test("genetics: the Spanish stays unpublished until it is proofread", () => {
   assert.doesNotMatch(html, /zsa-i18n\.js|hreflang="es"/);
   assert.equal(require("../../tools/seo-pages.js")["fruit-fly-genetics-lab"].es, null);
 });
+
+test("genetics: student copy identifies the seeded offspring as simulated", () => {
+  for (const [lang, word] of [["en", /simulat/], ["es", /simula/]]) {
+    for (const key of ["ui.shareDescription", "ui.model2", "run.intro"]) {
+      assert.match(content.I18N[lang][key], word, lang + " " + key);
+    }
+  }
+  const homepage = fs.readFileSync(path.join(DIR, "..", "index.html"), "utf8");
+  const activity = fs.readFileSync(path.join(DIR, "index.html"), "utf8");
+  assert.match(homepage, /simulated offspring proportions/);
+  assert.match(activity, /simulated offspring counts/);
+});

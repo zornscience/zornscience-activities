@@ -26,7 +26,7 @@ module.exports = {
   },
   // Spanish is written in data.js but not proofread yet, so the page is English only here until SPANISH_PUBLISHED.
   "fruit-fly-genetics-lab": {
-    en: "Breed virtual fruit flies, build Punnett squares and compare predicted ratios with real offspring counts in a free Biology genetics lab.",
+    en: "Breed virtual fruit flies, build Punnett squares and compare predicted ratios with simulated offspring counts in a free Biology genetics lab.",
     es: null
   },
   "leaf-disk-lab": {

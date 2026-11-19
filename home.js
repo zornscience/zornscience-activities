@@ -23,7 +23,7 @@
   "Genetics": "Genética",
   // The genetics lab's Spanish is written but not yet proofread, so its card opens the English page (pendingSpanish below).
   "Genetics Lab: Crossing Fruit Flies": "Laboratorio de genética: cruzas de moscas de la fruta",
-  "Breed fruit flies, build Punnett squares and watch real offspring counts approach your prediction. Then use a test cross to unmask a mystery parent.": "Cruza moscas de la fruta, construye cuadros de Punnett y observa cómo los conteos reales de descendientes se acercan a tu predicción. Luego usa una cruza de prueba para descubrir a un progenitor misterioso.",
+  "Breed virtual fruit flies, build Punnett squares and compare predicted ratios with simulated offspring proportions. Then use a test cross to identify a mystery parent.": "Cruza moscas de la fruta virtuales, construye cuadros de Punnett y compara las proporciones que predices con las de los descendientes simulados. Luego usa una cruza de prueba para identificar a un progenitor misterioso.",
   // Mitosis Detective's Spanish is written but not yet proofread, so its card opens the English page (pendingSpanish below).
   "Cell Division": "División celular",
   "Mitosis Detective: Inside an Onion Root Tip": "Detective de la mitosis: dentro de la punta de una raíz de cebolla",
