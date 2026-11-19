@@ -52,6 +52,9 @@ A chemistry, physics, and biology tutor for students. It guides students with qu
 
 == Changelog ==
 
+= 1.7.1 =
+* The note under the chat now says "The ZornScience tutor is an AI program, not a person." (Spanish: "El tutor de ZornScience es un programa de inteligencia artificial (IA), no una persona.") so students are told plainly that they are talking to an AI.
+
 = 1.7.0 (security and privacy) =
 * Built on the live 1.6.2.
 * The note under the chat keeps the 1.6.2 wording (automated program, not a person; messages go to Anthropic; privacy link).
