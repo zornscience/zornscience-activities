@@ -507,8 +507,15 @@ test("gas lab: axe-core finds no violations in 8 states", async ({page, problems
     if (name === "graph with table") { await page.click("#zsa-gl-sweep"); await page.click("#zsa-gl-table-toggle"); }
     if (name === "investigation feedback") {
       var wrong = page.locator("#zsa-gl-work > fieldset [data-zsa-part] button");
-      for (var i = 0; i < await wrong.count(); i++) { await wrong.nth(i).click(); if (await page.locator("#zsa-gl-work > fieldset > p").first().isVisible()) break; }
-      await page.locator("#zsa-gl-work > fieldset .zsa-actions button").first().click();
+      // The investigation and the order of its choices are random, and a correct pick moves on to the next step, so keep
+      // picking (cycling through the choices) until some pick is wrong and the feedback with its action buttons appears.
+      var actions = page.locator("#zsa-gl-work > fieldset .zsa-actions button");
+      for (var i = 0; i < 40 && !(await actions.count()); i++) {
+        var n = await wrong.count();
+        if (!n) break;
+        await wrong.nth(i % n).click();
+      }
+      await actions.first().click();
     }
     await audit(page, name);
   }
