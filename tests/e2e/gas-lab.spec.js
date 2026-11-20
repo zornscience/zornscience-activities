@@ -506,9 +506,13 @@ test("gas lab: axe-core finds no violations in 8 states", async ({page, problems
     if (name === "speeds compare") await page.click("#zsa-gl-preset-t");
     if (name === "graph with table") { await page.click("#zsa-gl-sweep"); await page.click("#zsa-gl-table-toggle"); }
     if (name === "investigation feedback") {
-      var wrong = page.locator("#zsa-gl-work > fieldset [data-zsa-part] button");
-      for (var i = 0; i < await wrong.count(); i++) { await wrong.nth(i).click(); if (await page.locator("#zsa-gl-work > fieldset > p").first().isVisible()) break; }
-      await page.locator("#zsa-gl-work > fieldset .zsa-actions button").first().click();
+      // The investigation and the order of its choices are random, and a correct pick moves on to the next step, so keep
+      // picking untried choices until one is wrong and the wrong-answer feedback shows. Hint and Show me always exist,
+      // so only the feedback itself says a wrong pick happened.
+      var choices = page.locator('#zsa-gl-work > fieldset [data-zsa-part] button:not([aria-disabled="true"])');
+      var feedback = page.locator("#zsa-gl-work > fieldset .zsa-feedback--wrong");
+      for (var i = 0; i < 40 && !(await feedback.isVisible()); i++) await choices.first().click();
+      await expect(feedback).toBeVisible();
     }
     await audit(page, name);
   }
