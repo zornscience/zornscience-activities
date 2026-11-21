@@ -127,7 +127,8 @@ test("the landing page links every published activity, and each subject count ma
   }).map(function (e) { return e.name; });
   folders.forEach(function (slug) {
     var linked = page.indexOf('href="' + slug + '/"') >= 0;
-    if (unlisted.indexOf(slug) >= 0) assert.ok(!linked, slug + " should not be listed");
+    var development = /<meta name="robots" content="noindex, nofollow">/.test(read(path.join(slug, "index.html")));
+    if (development || unlisted.indexOf(slug) >= 0) assert.ok(!linked, slug + " should not be listed");
     else if (/^(templates|shared|wordpress)$/.test(slug)) return;
     else assert.ok(linked, slug + " is published but missing from the landing page");
   });

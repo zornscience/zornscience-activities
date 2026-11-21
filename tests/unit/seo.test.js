@@ -20,6 +20,10 @@ var folders = fs.readdirSync(ROOT, {withFileTypes: true}).filter(function (e) {
 test("every published page has an entry, and the pages, sitemap.xml and robots.txt are up to date", function () {
   folders.forEach(function (slug) {
     if (REDIRECTS.indexOf(slug) >= 0) assert.ok(!pages[slug], slug + " is a redirect");
+    else if (/<meta name="robots" content="noindex, nofollow">/.test(page(slug))) {
+      assert.ok(!pages[slug], slug + " is a development preview");
+      assert.ok(!read("sitemap.xml").includes("<loc>" + seo.address(slug)), slug + " should not be in the sitemap");
+    }
     else assert.ok(pages[slug], slug + " needs an entry in tools/seo-pages.js");
   });
   Object.keys(pages).forEach(function (slug) {
