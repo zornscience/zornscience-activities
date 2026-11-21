@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="zsa-version" content="0.1.0">
+  <title>The Molar Mass Trap Lab | ZornScience</title>
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <link rel="stylesheet" href="../shared/zsa-base.css?v=0.1.0">
+  <link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=0.1.0">
+  <link rel="stylesheet" href="../shared/zsa-header.css?v=0.1.0">
+  <link rel="stylesheet" href="lab.css?v=0.1.0">
+  <script src="../shared/zsa-embed.js?v=0.1.0" defer></script>
+  <script src="../shared/zsa-i18n.js?v=0.1.0" defer></script>
+  <script src="model.js?v=0.1.0" defer></script>
+  <script src="data.js?v=0.1.0" defer></script>
+  <script src="lab.js?v=0.1.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=0.1.0"><script src="../shared/zsa-about.js?v=0.1.0" defer></script></head>
+<body>
+<main class="zsa zsa-mmt" data-zsa-activity="molar-mass-trap-lab">
+  <header data-zsa-header class="header">
+    <div data-zsa-header-row>
+      <div data-zsa-header-identity class="identity">
+        <a data-zsa-header-brand class="brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../ionic-reactions/zornscience-logo.png?v=0.1.0" width="34" height="33" alt=""></a>
+        <h1>The Molar Mass Trap Lab</h1>
+      </div>
+      <nav data-zsa-header-tools aria-label="Activity tools">
+        <button id="instructions-open" class="zsa-btn" aria-haspopup="dialog" aria-controls="instructions" type="button">Instructions</button>
+        <button id="share-open" class="zsa-btn" aria-haspopup="dialog" aria-controls="share" data-zsa-chrome type="button"><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button>
+      </nav>
+    </div>
+  </header>
+  <noscript><p>This simulation needs JavaScript.</p><p lang="es-MX">Esta simulación necesita JavaScript.</p></noscript>
+
+  <div class="zsa-mmt-stations" role="group" aria-label="Lab stations">
+    <button type="button" data-station="wax" aria-pressed="true">
+      <small>Test 1</small><strong>Bead or spread?</strong>
+    </button>
+    <button type="button" data-station="shot" aria-pressed="false">
+      <small>Test 2</small><strong>Steel shot race</strong><span class="zsa-mmt-preview-tag">Preview</span>
+    </button>
+    <button type="button" data-station="mixing" aria-pressed="false">
+      <small>Test 3</small><strong>Mix or layer?</strong><span class="zsa-mmt-preview-tag">Preview</span>
+    </button>
+  </div>
+
+  <div class="zsa-mmt-workspace">
+    <section class="zsa-mmt-panel zsa-mmt-bench" aria-labelledby="station-title">
+      <div class="zsa-mmt-title-row">
+        <h2 id="station-title">Cohesion on wax paper</h2>
+        <span id="station-tag" class="zsa-mmt-tag">Simulated dimensions</span>
+      </div>
+      <p id="bench-instruction" class="zsa-mmt-instruction" role="status" aria-atomic="true">Add 3 drops of water to one spot in box W.</p>
+
+      <div id="wax-bench">
+        <div id="bottles" class="zsa-mmt-bottles" role="group" aria-label="Dropper bottles"></div>
+        <div class="zsa-mmt-scene">
+          <svg id="wax-paper" viewBox="0 0 218 238" role="img" aria-labelledby="wax-paper-title wax-paper-desc">
+            <title id="wax-paper-title">Wax-paper square</title>
+            <desc id="wax-paper-desc">A 15 cm by 15 cm square with a box for each liquid. The selected box is outlined.</desc>
+            <defs>
+              <linearGradient id="mmt-wax" x2=".75" y2="1">
+                <stop stop-color="#fff9e7"/><stop offset=".54" stop-color="#eae2ca"/><stop offset="1" stop-color="#f7efd7"/>
+              </linearGradient>
+            </defs>
+            <path d="M16 0H201V238H16Z" fill="#172e3f"/>
+            <path d="M16 0v238m185-238v238" fill="none" stroke="#375166"/>
+            <text x="109" y="24" class="zsa-mmt-scene-label" text-anchor="middle">Wax paper</text>
+            <path d="M36 49h152v151H36z" fill="#091c2a" opacity=".8"/>
+            <path d="M34 42h150v138l-12 12H34Z" fill="url(#mmt-wax)" stroke="#fff3cf"/>
+            <path d="M172 192v-12h12Z" fill="#c7bd9d"/>
+            <path d="M38 49q24-4 50-2m28 140q21 2 49-1M37 118l-1 42m145-102 1 34M53 138q24 3 36-1" fill="none" stroke="#b3ac94" stroke-opacity=".36"/>
+            <path d="M109 42v150m-75-75h150" fill="none" stroke="#91876e" stroke-dasharray="3 3"/>
+            <g id="wax-boxes"></g>
+            <path d="M34 206v7m150-7v7M34 210h150" fill="none" stroke="#809aa8"/>
+            <text x="109" y="229" class="zsa-mmt-scene-label" text-anchor="middle">15 cm × 15 cm</text>
+          </svg>
+
+          <svg id="inspection" viewBox="0 0 420 238" role="img" aria-labelledby="inspection-title inspection-desc">
+            <title id="inspection-title">Puddle close-up and millimeter ruler</title>
+            <desc id="inspection-desc">Top and eye-level views of the selected box use the same scale. The ruler moves left and right.</desc>
+            <defs>
+              <linearGradient id="mmt-inspection-mat" x2="1" y2="1">
+                <stop stop-color="#2d4a5c"/><stop offset="1" stop-color="#142c3c"/>
+              </linearGradient>
+              <linearGradient id="mmt-ruler-metal" x2="0" y2="1">
+                <stop stop-color="#f1e4b8"/><stop offset=".84" stop-color="#cabb87"/><stop offset="1" stop-color="#a2966d"/>
+              </linearGradient>
+              <radialGradient id="mmt-water" cx=".28" cy=".20" r=".82">
+                <stop stop-color="#7fdcf9"/><stop offset=".42" stop-color="#2da7dd"/><stop offset="1" stop-color="#0d518d"/>
+              </radialGradient>
+              <radialGradient id="mmt-clear" cx=".26" cy=".14" r=".95">
+                <stop stop-color="#e3f3f7" stop-opacity=".57"/><stop offset=".52" stop-color="#c9e7ee" stop-opacity=".16"/><stop offset="1" stop-color="#b9dbe6" stop-opacity=".37"/>
+              </radialGradient>
+              <radialGradient id="mmt-oil" cx=".26" cy=".2" r=".83">
+                <stop stop-color="#ffbb99"/><stop offset=".38" stop-color="#e66a54"/><stop offset="1" stop-color="#8b2f39"/>
+              </radialGradient>
+            </defs>
+            <rect width="420" height="238" rx="8" fill="url(#mmt-inspection-mat)"/>
+            <path d="M14 150h392M14 197h392" stroke="#7294a7" stroke-opacity=".24"/>
+            <path d="M16 58v-6h7m381 6v-6h-7M16 131v6h7m381-6v6h-7" fill="none" stroke="#7b9eaf" stroke-opacity=".62"/>
+            <text x="16" y="25" class="zsa-mmt-scene-label">Top view</text>
+            <text x="16" y="218" class="zsa-mmt-scene-label">Eye-level view</text>
+            <g id="footprint" data-liquid="W" transform="translate(203 81)" visibility="hidden">
+              <ellipse id="puddle-top" class="zsa-mmt-fluid"/>
+              <ellipse id="puddle-glint" class="zsa-mmt-glint"/>
+            </g>
+            <path id="target-mark" d="M197 81h12m-6-6v12" stroke="#aac3d0" stroke-opacity=".8" fill="none"/>
+            <ellipse id="falling-drop" class="zsa-mmt-fluid" data-liquid="W" cx="203" cy="26" rx="5" ry="7" visibility="hidden"/>
+            <path d="M139 223h128" stroke="#8e9d9a" stroke-width="1.5"/>
+            <g id="silhouette" data-liquid="W" transform="translate(203 223)" visibility="hidden">
+              <ellipse id="puddle-contact" cy="1" ry="1.8" fill="#101d28"/>
+              <path id="puddle-side" class="zsa-mmt-fluid"/>
+            </g>
+            <g id="ruler" transform="translate(119 153)" aria-hidden="true">
+              <path id="ruler-zero" d="M0 0V-116" stroke="#e9d999" stroke-dasharray="4 3" visibility="hidden"/>
+              <rect id="ruler-hit" x="-5" width="194" height="35" rx="3" fill="url(#mmt-ruler-metal)" stroke="#f2e4a9"/>
+              <g id="ruler-ticks" pointer-events="none"></g>
+            </g>
+          </svg>
+        </div>
+
+        <div class="zsa-mmt-actions">
+          <button id="dispense" class="zsa-btn zsa-mmt-primary" type="button">Add a drop</button>
+          <button id="advance" class="zsa-btn" type="button" aria-disabled="true">Advance to 30 s</button>
+          <p class="zsa-mmt-sample-status"><span id="drop-count"></span><span id="settle-clock" hidden></span></p>
+          <button id="reset-sample" class="zsa-btn zsa-mmt-quiet" type="button" aria-disabled="true">Reset sample</button>
+        </div>
+        <div id="measure-tools" class="zsa-mmt-measure" hidden>
+          <label for="ruler-position">Ruler position</label>
+          <input id="ruler-position" type="range" aria-describedby="ruler-help">
+          <button id="read-edges" class="zsa-btn" type="button">Read edges</button>
+          <p id="ruler-help">Drag the ruler or use the arrow keys on the slider.</p>
+          <p id="edge-reading" role="status" aria-atomic="true"></p>
+        </div>
+      </div>
+
+      <div id="shot-preview" class="zsa-mmt-preview" hidden>
+        <svg viewBox="0 0 420 232" role="img" aria-labelledby="shot-drawing-title shot-drawing-desc">
+          <title id="shot-drawing-title">Steel shot equipment</title>
+          <desc id="shot-drawing-desc">Four sealed tubes labeled W, G, O and M, each with a steel ball, and a magnet next to the rack.</desc>
+          <defs>
+            <linearGradient id="mmt-glass"><stop stop-color="#d5eff4" stop-opacity=".57"/><stop offset=".22" stop-color="#c4e5ee" stop-opacity=".13"/><stop offset=".78" stop-color="#c4e5ee" stop-opacity=".05"/><stop offset="1" stop-color="#daf5fa" stop-opacity=".65"/></linearGradient>
+            <radialGradient id="mmt-steel" cx=".3" cy=".24" r=".6"><stop stop-color="#fff"/><stop offset=".43" stop-color="#afc5d4"/><stop offset="1" stop-color="#536e82"/></radialGradient>
+            <g id="mmt-sealed-tube">
+              <path d="M-14 39v113a14 14 0 0 0 28 0V39Z" fill="url(#mmt-glass)" stroke="#c2e0e9"/>
+              <path d="M-10 46v101" stroke="#e9f9f9" stroke-opacity=".48"/>
+              <path d="M-15 33h30v12h-30Z" fill="#775c46" stroke="#b99768"/>
+              <circle cx="0" cy="157" r="6" fill="url(#mmt-steel)" stroke="#1b2f3f"/>
+            </g>
+          </defs>
+          <rect width="420" height="232" rx="8" fill="url(#mmt-inspection-mat)"/>
+          <path d="M61 154H307v33H61Z" fill="#143344" stroke="#54788b"/>
+          <g transform="translate(91 0)"><path d="M-13 58q13-4 26 0v93a13 13 0 0 1-26 0Z" fill="#147fac"/><use href="#mmt-sealed-tube"/><text y="208">W</text></g>
+          <g transform="translate(153 0)"><path d="M-13 58q13-4 26 0v93a13 13 0 0 1-26 0Z" fill="#afc3c7" opacity=".35"/><use href="#mmt-sealed-tube"/><text y="208">G</text></g>
+          <g transform="translate(215 0)"><path d="M-13 58q13-4 26 0v93a13 13 0 0 1-26 0Z" fill="#afc3c7" opacity=".35"/><use href="#mmt-sealed-tube"/><text y="208">O</text></g>
+          <g transform="translate(277 0)"><path d="M-13 58q13-4 26 0v93a13 13 0 0 1-26 0Z" fill="#bb4b42"/><use href="#mmt-sealed-tube"/><text y="208">M</text></g>
+          <path d="M61 172h246v14H61z" fill="#3e6275" stroke="#668696"/>
+          <path d="M341 142v16c0 16 26 16 26 0v-16" fill="none" stroke="#d76051" stroke-width="10"/>
+          <path d="M341 141v10m26-10v10" stroke="#c1d2d9" stroke-width="10"/>
+        </svg>
+      </div>
+      <div id="mixing-preview" class="zsa-mmt-preview" hidden>
+        <svg viewBox="0 0 420 232" role="img" aria-labelledby="mixing-drawing-title mixing-drawing-desc">
+          <title id="mixing-drawing-title">Mixing rack</title>
+          <desc id="mixing-drawing-desc">An empty rack setup with five numbered test tubes and a transfer pipette.</desc>
+          <defs>
+            <g id="mmt-empty-tube">
+              <path d="M-14 42v108a14 14 0 0 0 28 0V42Z" fill="url(#mmt-glass)" stroke="#c2e0e9"/>
+              <ellipse cy="42" rx="15" ry="3" fill="#1f3849" stroke="#c2e0e9"/>
+              <path d="M-9 49v92" stroke="#e9f9f9" stroke-opacity=".47"/>
+            </g>
+          </defs>
+          <rect width="420" height="232" rx="8" fill="url(#mmt-inspection-mat)"/>
+          <path d="M52 143h267v41H52Z" fill="#143344" stroke="#54788b"/>
+          <g transform="translate(82 0)"><use href="#mmt-empty-tube"/><text y="208">1</text></g>
+          <g transform="translate(134 0)"><use href="#mmt-empty-tube"/><text y="208">2</text></g>
+          <g transform="translate(186 0)"><use href="#mmt-empty-tube"/><text y="208">3</text></g>
+          <g transform="translate(238 0)"><use href="#mmt-empty-tube"/><text y="208">4</text></g>
+          <g transform="translate(290 0)"><use href="#mmt-empty-tube"/><text y="208">5</text></g>
+          <path d="M52 166h267v19H52Z" fill="#3e6275" stroke="#668696"/>
+          <path d="M358 123h9v34l-3 6v10h-3v-10l-3-6Z" fill="url(#mmt-glass)" stroke="#bcdce5"/>
+          <rect x="355" y="104" width="15" height="23" rx="6" fill="#d7a65c"/>
+          <path d="M360 135h5m-5 7h5m-5 7h5" stroke="#e2f2f5"/>
+        </svg>
+      </div>
+    </section>
+
+    <section class="zsa-mmt-panel zsa-mmt-notebook" aria-labelledby="notebook-title">
+      <div class="zsa-mmt-title-row">
+        <h2 id="notebook-title">Lab notebook</h2>
+        <button id="print-notebook" type="button" class="zsa-btn zsa-mmt-quiet">Print notebook</button>
+      </div>
+      <h3>Test 1</h3>
+      <p class="zsa-mmt-notebook-help">Record each diameter and choose a matching side-view sketch.</p>
+      <table>
+        <thead>
+          <tr><th scope="col">Liquid</th><th id="diameter-heading" scope="col">Diameter (mm)</th><th id="profile-heading" scope="col">Side view</th></tr>
+        </thead>
+        <tbody id="notebook-entries"></tbody>
+      </table>
+      <div id="profile-key" class="zsa-mmt-profiles" aria-label="Side-view sketches" role="group"></div>
+      <label class="zsa-mmt-notes-label" for="wax-notes">Other observations</label>
+      <textarea id="wax-notes" rows="3" spellcheck="false"></textarea>
+      <p id="print-notes" class="zsa-mmt-print-only"></p>
+      <div class="zsa-mmt-notebook-footer">
+        <p>Entries stay on this page until you reload or close it.</p>
+        <button id="restart-open" type="button" class="zsa-btn zsa-mmt-quiet" aria-haspopup="dialog" aria-controls="restart">Start fresh</button>
+      </div>
+    </section>
+  </div>
+
+  <details class="zsa-mmt-model">
+    <summary>About this simulation</summary>
+    <p>Each sample uses about 0.15 mL on the same wax paper. The puddle dimensions are simulated. Wetting depends on cohesion within the liquid and adhesion to the wax. A diameter describes spreading on this surface.</p>
+  </details>
+  <!-- zsa-about --><section class="zsa-about" data-zsa-about="molar-mass-trap-lab" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Compare how four liquids bead or spread on wax paper. Measure each puddle and record its side view to describe how the liquids wet the same surface.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="chem-imf-properties"><a href="https://zornscience.org/science/chemistry/unit-4-covalent-bonding/properties-due-to-imf/">Properties Due to IMF</a><span data-zsa-lesson-course>Chemistry</span></li><li data-zsa-lesson="chem-imf-types"><a href="https://zornscience.org/science/chemistry/unit-4-covalent-bonding/types-of-imf/">Types of IMF</a><span data-zsa-lesson-course>Chemistry</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer">
+    <span>ZornScience</span><a href="../" data-zsa-chrome>All activities</a><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+  </footer>
+  <dialog id="instructions" class="zsa-header-dialog" aria-labelledby="instructions-title">
+    <div class="zsa-header-dialog-heading"><h2 id="instructions-title">Wax-paper investigation</h2><button class="zsa-btn zsa-mmt-close" type="button" data-close="instructions" aria-label="Close instructions" autofocus>×</button></div>
+    <ol>
+      <li>Choose W, G, O or M. Add three drops into one spot in its box.</li>
+      <li>Wait 30 s or advance time. Look from above and at eye level.</li>
+      <li>Move the ruler so its zero mark lines up with the left edge. Read the right edge in mm. Use Read edges to hear or see both readings.</li>
+      <li>Record the diameter and side-view shape in your notebook, or sketch the profile on your lab worksheet. Repeat for all four liquids.</li>
+    </ol>
+  </dialog>
+  <dialog id="share" class="zsa-header-dialog" aria-labelledby="share-title" data-zsa-chrome>
+    <div class="zsa-header-dialog-heading"><h2 id="share-title">Share this activity</h2><button class="zsa-btn zsa-mmt-close" type="button" data-close="share" aria-label="Close share options" autofocus>×</button></div>
+    <p>Each link opens a fresh lab bench.</p>
+    <label for="share-url">Activity link</label>
+    <div class="zsa-header-share-link"><input id="share-url" readonly type="text" spellcheck="false"><button class="zsa-btn zsa-mmt-primary" id="copy-link" type="button">Copy link</button></div>
+    <p id="share-status" role="status"></p>
+  </dialog>
+  <dialog id="restart" class="zsa-header-dialog" aria-labelledby="restart-title" aria-describedby="restart-warning">
+    <div class="zsa-header-dialog-heading"><h2 id="restart-title">Start fresh?</h2><button class="zsa-btn zsa-mmt-close" type="button" data-close="restart" aria-label="Close restart dialog">×</button></div>
+    <p id="restart-warning">This clears the bench and your notebook entries.</p>
+    <div class="zsa-mmt-dialog-actions"><button class="zsa-btn" type="button" data-close="restart" autofocus>Cancel</button><button id="restart-confirm" class="zsa-btn zsa-mmt-primary" type="button">Clear bench and notebook</button></div>
+  </dialog>
+</main>
+</body>
+</html>

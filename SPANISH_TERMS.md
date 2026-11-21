@@ -3744,3 +3744,20 @@ pH = pKa of NH₄⁺ (weak base half-equivalence) | pH = pKa de NH₄⁺
 endpoint vs equivalence point | punto final vs punto de equivalencia (kept distinct)
 
 Still using "amortiguador" as a noun (outside this pass): apchem-unit8 and enzyme-lab.
+
+## The Molar Mass Trap Lab
+
+The virtual lab follows Style Kit 1.32 and the published Spanish procedure. The station and instrument labels keep W, G, O and M and the symbols mL, mm and s.
+
+| English | Mexican Spanish |
+| --- | --- |
+| wax paper / box | papel encerado / casilla |
+| dropper bottle | frasco gotero |
+| bead / puddle | gota / charco |
+| tall bead / flat puddle | gota alta / charco plano |
+| top view / eye-level view | vista desde arriba / vista lateral |
+| millimeter ruler | regla milimetrada |
+| wetting | humectación |
+| steel shot / sealed tube | perdigón de acero / tubo sellado |
+| lab notebook | cuaderno de laboratorio |
+| station preview | vista previa de la estación |
