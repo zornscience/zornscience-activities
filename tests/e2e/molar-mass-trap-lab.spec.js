@@ -217,8 +217,7 @@ test("Mexican Spanish covers the live bench, print, dialogs, previews, and share
 
   await page.getByRole("button", {name: "Compartir", exact: true}).click();
   const share = await page.getByLabel("Enlace de la actividad").inputValue();
-  expect(new URL(share).pathname).toBe(LAB);
-  expect(new URL(share).search).toBe("?lang=es");
+  expect(share).toBe("https://activities.zornscience.org" + LAB + "?lang=es");
   await page.keyboard.press("Escape");
   await page.getByRole("link", {name: "EN English"}).click();
   await expect(row.getByRole("combobox")).toHaveValue("flat");
@@ -235,7 +234,8 @@ test("Mexican Spanish covers the live bench, print, dialogs, previews, and share
   await expect(row.getByText("Charco plano", {exact: true}).last()).toBeVisible();
   await expect(page.getByText("El 1-octanol se extendió.", {exact: true})).toBeVisible();
   await page.emulateMedia({media: "screen"});
-  await page.goto(share + "&embed=1");
+  // Open the shared query on the local server instead of the live site.
+  await page.goto(LAB + new URL(share).search + "&embed=1");
   await expect(page.getByRole("button", {name: "Compartir", exact: true})).toBeHidden();
   await expect(page.getByRole("heading", {name: "Acerca de esta actividad"})).toBeHidden();
   await expect(row.getByRole("textbox")).toHaveValue("");

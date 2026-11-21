@@ -436,7 +436,7 @@
       if (id === "share") {
         shareMessage = "";
         setText($("share-status"), "");
-        $("share-url").value = i18n.url(new URL("./", location.href).href);
+        $("share-url").value = i18n.url("https://activities.zornscience.org/molar-mass-trap-lab/");
       }
       $(id).showModal();
     });
