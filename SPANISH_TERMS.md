@@ -3762,5 +3762,9 @@ The virtual lab follows Style Kit 1.32 and the published Spanish procedure. The 
 | millimeter ruler | regla milimetrada |
 | wetting | humectación |
 | steel shot / sealed tube | perdigón de acero / tubo sellado |
+| stopwatch / timing mode | cronómetro / modo de cronometraje |
+| stopper / first contact with the bottom | tapón / primer contacto con el fondo |
+| trial / average | ensayo / promedio |
+| event-timed | por eventos |
 | lab notebook | cuaderno de laboratorio |
 | station preview | vista previa de la estación |

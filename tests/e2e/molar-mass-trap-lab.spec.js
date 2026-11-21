@@ -275,8 +275,9 @@ test("Mexican Spanish covers the live bench, print, dialogs, previews, and share
   await page.getByRole("link", {name: "ES Español"}).click();
   await page.locator('[data-station="shot"]').click();
   await expect(page.getByRole("img", {name: "Equipo de la prueba con perdigones"})).toBeVisible();
-  await expect(page.locator("#station-tag")).toHaveText("Vista previa");
+  await expect(page.locator("#station-tag")).toHaveText("Tiempos simulados");
   await page.locator('[data-station="mixing"]').click();
+  await expect(page.locator("#station-tag")).toHaveText("Vista previa");
   await expect(page.getByRole("img", {name: "Gradilla de mezclas"})).toBeVisible();
   await page.emulateMedia({media: "print"});
   await expect(row.getByText("20", {exact: true})).toBeVisible();

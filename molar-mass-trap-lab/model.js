@@ -13,7 +13,21 @@
     diameterMm: Object.freeze({W: 10, G: 12, O: 20, M: 22})
   });
   const ruler = Object.freeze({minMm: -25, maxMm: 5, startMm: -14, lengthMm: 30, stepMm: 0.5, unitsPerMm: 6});
-  const shot = Object.freeze({manualThresholdS: 0.5});
+  const shot = Object.freeze({
+    manualThresholdS: 0.5,
+    temperatureC: 22,
+    travelMm: 90,
+    airGapMm: 8,
+    diameterMm: 4,
+    // Demonstration times for one fixed apparatus. Replace with measured trial data when available.
+    travelMs: Object.freeze({W: 270, G: 6400, O: 980, M: 2250}),
+    tiltMs: 720,
+    uprightMs: 460,
+    magnetMs: 680,
+    releaseMs: 160,
+    minimumReplayMs: 1400,
+    manualWindowMs: 350
+  });
   const mixing = Object.freeze({
     inversionCount: 5,
     settleMs: 60000,
@@ -34,23 +48,32 @@
     return {drops: 0, dropLandsAt: null, settlesAt: null, zeroMm: ruler.startMm, edgeReading: null};
   }
 
+  function createShotTube() {
+    return {
+      orientation: "upright",
+      phase: "at-bottom",
+      phaseAt: null,
+      trial: {
+        mode: "manual", departedAt: null, contactedAt: null, startedAt: null, stoppedAt: null,
+        pausedAt: null, pausedMs: 0, recorded: false
+      }
+    };
+  }
+
   function createState() {
     const codes = Object.keys(liquids);
     const tubes = Object.keys(mixing.recipesMl);
     return {
       station: "wax",
       wax: {liquid: "W", samples: byKey(codes, createWaxSample)},
-      shot: {liquid: "W", tubes: byKey(codes, () => ({
-        orientation: "upright", phase: "at-bottom",
-        trial: {mode: "manual", departedAt: null, contactedAt: null, startedAt: null, stoppedAt: null, pausedAt: null, pausedMs: 0}
-      }))},
+      shot: {liquid: "W", tubes: byKey(codes, createShotTube)},
       mixing: {tube: 1, tubes: byKey(tubes, () => ({
         aliquots: [], stoppered: false, upright: true, inversions: 0, settlesAt: null, disposed: false
       }))},
       notebook: {
         wax: byKey(codes, () => ({diameter: "", profile: ""})),
         waxNotes: "",
-        // Each trial can carry measured seconds or a censoring bound in seconds.
+        // Preserve the student's raw entry alongside any checked result.
         shot: byKey(codes, () => ({trials: [], studentMean: null, computed: null})),
         mixing: byKey(tubes, () => ({layerCount: null, dyeLocation: ""}))
       }
@@ -115,8 +138,170 @@
     return {left: round(-radiusMm - zeroMm), right: round(radiusMm - zeroMm)};
   }
 
+  function shotTime(tube, wallTime) {
+    const {pausedAt, pausedMs} = tube.trial;
+    return (pausedAt ?? wallTime) - pausedMs;
+  }
+
+  function shotDuration(phase, code) {
+    switch (phase) {
+      case "tilting": return shot.tiltMs;
+      case "uprighting": return shot.uprightMs;
+      case "magnet-return": return shot.magnetMs;
+      case "releasing": return shot.releaseMs;
+      case "falling": return shot.travelMs[code];
+      case "replaying": return Math.max(shot.travelMs[code], shot.minimumReplayMs);
+      default: return 0;
+    }
+  }
+
+  function setShotPhase(tube, phase, at) {
+    tube.phase = phase;
+    tube.phaseAt = at;
+  }
+
+  function updateShot(tube, code, wallTime) {
+    const now = shotTime(tube, wallTime);
+    const trial = tube.trial;
+    let duration = shotDuration(tube.phase, code);
+    // A delayed frame can cross departure and contact. Both still use their scheduled instants.
+    while (duration && now >= tube.phaseAt + duration) {
+      const at = tube.phaseAt + duration;
+      switch (tube.phase) {
+        case "tilting":
+          tube.orientation = "tilted";
+          setShotPhase(tube, "at-stopper", at);
+          break;
+        case "magnet-return":
+          setShotPhase(tube, "at-stopper", at);
+          break;
+        case "uprighting":
+        case "releasing":
+          tube.orientation = "upright";
+          trial.departedAt = at;
+          if (trial.mode === "event") trial.startedAt = at;
+          setShotPhase(tube, "falling", at);
+          break;
+        case "falling":
+          trial.contactedAt = at;
+          if (trial.mode === "event") trial.stoppedAt = at;
+          setShotPhase(tube, "at-bottom", at);
+          break;
+        case "replaying":
+          setShotPhase(tube, "at-bottom", at);
+          break;
+      }
+      duration = shotDuration(tube.phase, code);
+    }
+  }
+
+  function stopwatchRunning(trial) {
+    return trial.startedAt !== null && trial.stoppedAt === null;
+  }
+
+  function pauseShot(tube, code, wallTime) {
+    updateShot(tube, code, wallTime);
+    if (tube.trial.pausedAt === null && (shotDuration(tube.phase, code) || stopwatchRunning(tube.trial))) {
+      tube.trial.pausedAt = wallTime;
+    }
+  }
+
+  function resumeShot(tube, wallTime) {
+    const trial = tube.trial;
+    if (trial.pausedAt === null) return;
+    trial.pausedMs += wallTime - trial.pausedAt;
+    trial.pausedAt = null;
+  }
+
+  function operateShot(tube, code, wallTime) {
+    updateShot(tube, code, wallTime);
+    const trial = tube.trial;
+    if (trial.pausedAt !== null) return;
+    const now = shotTime(tube, wallTime);
+    if (tube.phase === "at-bottom" && !stopwatchRunning(trial)) {
+      const phase = trial.contactedAt === null ? "tilting" : "magnet-return";
+      Object.assign(trial, {departedAt: null, contactedAt: null, startedAt: null, stoppedAt: null, recorded: false});
+      setShotPhase(tube, phase, now);
+    } else if (tube.phase === "at-stopper") {
+      setShotPhase(tube, tube.orientation === "tilted" ? "uprighting" : "releasing", now);
+    }
+  }
+
+  function canStartStopwatch(tube) {
+    const trial = tube.trial;
+    return trial.mode === "manual" && trial.pausedAt === null && trial.startedAt === null &&
+      ["at-stopper", "uprighting", "releasing", "falling"].includes(tube.phase);
+  }
+
+  function toggleStopwatch(tube, code, wallTime) {
+    updateShot(tube, code, wallTime);
+    const trial = tube.trial;
+    if (trial.mode !== "manual" || trial.pausedAt !== null) return;
+    const at = shotTime(tube, wallTime);
+    if (stopwatchRunning(trial)) trial.stoppedAt = at;
+    else if (canStartStopwatch(tube)) trial.startedAt = at;
+  }
+
+  function playShotReplay(tube, code, wallTime) {
+    updateShot(tube, code, wallTime);
+    const trial = tube.trial;
+    if (tube.phase === "at-bottom" && trial.contactedAt !== null && !stopwatchRunning(trial) && trial.pausedAt === null) {
+      setShotPhase(tube, "replaying", shotTime(tube, wallTime));
+    }
+  }
+
+  function shotSnapshot(tube, code, wallTime) {
+    const now = shotTime(tube, wallTime);
+    const trial = tube.trial;
+    const duration = shotDuration(tube.phase, code);
+    const remaining = duration ? Math.max(0, tube.phaseAt + duration - now) : Infinity;
+    const progress = duration ? 1 - remaining / duration : 0;
+    const running = stopwatchRunning(trial);
+    return {
+      progress,
+      remaining,
+      running,
+      stopwatchMs: trial.startedAt === null ? 0 : (trial.stoppedAt ?? now) - trial.startedAt
+    };
+  }
+
+  function manualTimingIssue(trial) {
+    if (trial.mode !== "manual" || trial.stoppedAt === null) return null;
+    if (trial.contactedAt === null || trial.stoppedAt < trial.contactedAt) return "early-stop";
+    if (trial.stoppedAt - trial.contactedAt > shot.manualWindowMs) return "late-stop";
+    if (Math.abs(trial.startedAt - trial.departedAt) > shot.manualWindowMs || trial.startedAt >= trial.contactedAt) return "start";
+    return null;
+  }
+
+  function parseShotReading(input) {
+    const value = String(input ?? "").trim();
+    if (/^(?:<\s*|less than\s+|menos de\s+)0?\.5(?:0*)\s*s?$/i.test(value)) {
+      return {kind: "below", seconds: shot.manualThresholdS};
+    }
+    if (!/^(?:\d+(?:\.\d{1,3})?|\.\d{1,3})\s*s?$/i.test(value)) return null;
+    const seconds = Number(value.replace(/s$/i, ""));
+    return Number.isFinite(seconds) && seconds > 0 ? {kind: "exact", seconds} : null;
+  }
+
+  function summarizeShotTrials(entries) {
+    const readings = entries.map((entry) => parseShotReading(entry));
+    if (!readings[0] || !readings[1]) return null;
+    const exact = readings.flatMap((reading, index) => reading?.kind === "exact" ? [index] : []);
+    const indices = exact.length >= 2 ? exact.slice(0, 2) : [0, 1];
+    const pair = indices.map((index) => readings[index]);
+    const trials = indices.map((index) => index + 1);
+    if (pair.every(({kind}) => kind === "exact")) {
+      return {kind: "exact", seconds: (pair[0].seconds + pair[1].seconds) / 2, trials};
+    }
+    if (pair.every(({kind}) => kind === "below")) return {kind: "below", upper: shot.manualThresholdS, trials};
+    const lower = pair.find(({kind}) => kind === "exact").seconds / 2;
+    return {kind: "bound", lower, upper: lower + shot.manualThresholdS / 2, trials};
+  }
+
   const api = {liquids, wax, ruler, shot, mixing, createWaxSample, createState, dispense, landDrop, elapsedMs,
-    isSettled, capGeometry, waxGeometry, edgeReadings};
+    isSettled, capGeometry, waxGeometry, edgeReadings, createShotTube, updateShot, pauseShot, resumeShot,
+    operateShot, canStartStopwatch, toggleStopwatch, playShotReplay, shotSnapshot, manualTimingIssue,
+    parseShotReading, summarizeShotTrials};
   if (typeof module === "object" && module.exports) module.exports = api;
   if (typeof document === "undefined") return;
   const root = document.querySelector('[data-zsa-activity="molar-mass-trap-lab"]');

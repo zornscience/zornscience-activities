@@ -1,12 +1,12 @@
 # The Molar Mass Trap Lab
 
-Version: 0.1.1
+Version: 0.2.0
 
-A virtual investigation for Chemistry and Honors Chemistry Unit 4. This development build has the full wax-paper procedure and previews of the steel shot race and mixing rack.
+A virtual investigation for Chemistry and Honors Chemistry Unit 4. This development build has the wax-paper investigation, the steel shot race and a preview of the mixing rack.
 
 ## Run the bench
 
-From the repository root, run `npm run serve` and open `http://127.0.0.1:8000/molar-mass-trap-lab/`. Add `?lang=es` for Mexican Spanish. The notebook holds editable measurements, shape choices and notes until the page is reloaded or closed. **Print notebook** sends the current entries to the browser's print or PDF dialog. **Reset sample** clears the selected wax-paper portion. **Start fresh** clears all portions and notebook entries after confirmation.
+From the repository root, run `npm run serve` and open `http://127.0.0.1:8000/molar-mass-trap-lab/`. Add `?lang=es` for Mexican Spanish. The notebook holds editable measurements, shape choices and notes until the page is reloaded or closed. **Print notebook** sends both tests to the browser's print or PDF dialog. **Reset sample** and **Reset tube** clear the selected apparatus. **Start fresh** clears the bench and notebook after confirmation.
 
 ## Measurement model
 
@@ -21,7 +21,26 @@ These are the uncalibrated example dimensions at 0.15 mL. The initial width uses
 | O, 1-octanol | 20 | 0.95 |
 | M, mineral oil | 22 | 0.79 |
 
-The two preview stations have separate state for each sealed tube and each mixing tube. The shot notebook supports additional trials and separates the student's mean from the computed result or bound. The mixing notebook has per-tube layer and dye observations. The 0.5 s reporting threshold and mixing recipes come from the physical procedure. Shot travel times will be set in the shot milestone.
+## Steel shot race
+
+Select a sealed tube, tilt it, and turn it upright. Start the manual stopwatch when the shot leaves the stopper and stop it on first contact with the bottom. Event timing marks those same instants automatically. A manual reading preserves the time between the student's clicks. The feedback flags an early stop or a start or late stop more than 0.35 s from its event. The external magnet returns the shot to the stopper for another run.
+
+The shot position and stopwatch use one elapsed-time clock. Switching tubes or stations, or hiding the tab, pauses the active trial. Resume explicitly on return. Replay shows both events using the same simulated fall time. Short replays are slowed so both events can be observed.
+
+Record two trials in seconds. For a fall too fast to time, record `<0.5`. Two readings below 0.5 s give a mean below 0.5 s. One such reading and one measured time give a lower and upper bound. Students can add another trial and check the average of the first two measured times, with both trial numbers shown. The notebook retains all original observations and the student's own calculation.
+
+### Example calibration
+
+The demonstration assumes identical tubes, a 90 mm shot travel, an 8 mm air gap, a 4 mm steel shot and a room temperature of 22 °C. Values in `model.js` reproduce the order described by the teacher guide. The times and apparatus dimensions are illustrative. Class measurements, tube dimensions, temperature and the mineral oil grade can replace this calibration.
+
+| Liquid | Example fall time (s) |
+| --- | ---: |
+| W, water | 0.27 |
+| G, glycerin | 6.40 |
+| O, 1-octanol | 0.98 |
+| M, mineral oil | 2.25 |
+
+The comparison uses the same geometry and shot for each liquid. Density and drag also affect the measured fall time.
 
 The public catalog listing and SEO entries belong to the release candidate, after the full classroom walkthrough in the handoff. See the physical lab procedure for the source setup. [English procedure](https://zornscience.org/teaching/physical-labs/molar-mass-trap-imf-lab/) · [Spanish procedure](https://zornscience.org/es/teaching/physical-labs/molar-mass-trap-imf-lab/)
 

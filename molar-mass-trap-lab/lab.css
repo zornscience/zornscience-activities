@@ -514,6 +514,139 @@ body {
   display: none;
 }
 
+.zsa-mmt-shot-liquid {
+  fill: var(--mmt-bottle-fill);
+  fill-opacity: .62;
+  stroke: var(--mmt-liquid-stroke);
+  stroke-opacity: .7;
+  stroke-width: .7;
+}
+
+.zsa-mmt-shot-liquid[data-liquid="G"],
+.zsa-mmt-shot-liquid[data-liquid="O"] {
+  fill-opacity: .18;
+  stroke-opacity: .58;
+}
+
+.zsa-mmt-shot-rack-outline {
+  fill: transparent;
+  stroke: transparent;
+}
+
+#shot-rack-content [data-selected="true"] .zsa-mmt-shot-rack-outline {
+  fill: #254656;
+  stroke: #7bb1c8;
+}
+
+.zsa-mmt-shot-markers {
+  fill: #b7d0da;
+  font-size: 13px;
+}
+
+.zsa-mmt-shot-markers [data-active="true"] {
+  fill: #f4d783;
+  stroke: #ffe8ad;
+}
+
+.zsa-mmt-bottles.zsa-mmt-shot-tubes button {
+  justify-content: center;
+  min-height: 44px;
+  text-align: center;
+}
+
+.zsa-mmt-shot-console {
+  display: grid;
+  gap: 8px;
+  padding: 10px;
+  margin-top: 10px;
+  background: #f3f8fb;
+  border: 1px solid #cbdde9;
+  border-radius: 8px;
+}
+
+.zsa-mmt-shot-console-heading,
+.zsa-mmt-shot-clock-line,
+.zsa-mmt-shot-modes,
+.zsa-mmt-shot-record {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.zsa-mmt-shot-console-heading {
+  justify-content: space-between;
+}
+
+.zsa-mmt-shot-console h3,
+.zsa-mmt-shot-card h4 {
+  margin: 0;
+  color: #173951;
+  font-size: 15px;
+  font-weight: 650;
+}
+
+.zsa-mmt .zsa-mmt-shot-modes [aria-pressed="true"],
+.zsa-mmt .zsa-mmt-shot-modes [aria-pressed="true"]:hover {
+  border-color: #5384a0;
+  background: #dfedf6;
+  color: #163b57;
+}
+
+.zsa-mmt-shot-clock {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 6ch;
+  padding: 4px 10px;
+  border: 1px solid #375668;
+  border-radius: 6px;
+  background: #183f4e;
+  color: #eef8f3;
+  font-size: 22px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.zsa-mmt-shot-feedback,
+.zsa-mmt-shot-summary {
+  margin: 0;
+  color: #244c63;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.zsa-mmt-shot-card {
+  display: grid;
+  gap: 7px;
+  margin-top: 8px;
+  padding: 9px;
+  border: 1px solid #d9d7ca;
+  border-radius: 8px;
+  background: #f7f5ec;
+}
+
+.zsa-mmt-shot-trials,
+.zsa-mmt-shot-mean {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  align-items: end;
+}
+
+.zsa-mmt-shot-field {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  font-size: 13px;
+  font-weight: 550;
+}
+
+.zsa-mmt-shot-card .zsa-mmt-quiet {
+  justify-self: start;
+}
+
 @media (max-width: 890px) {
   .zsa-mmt-workspace {
     grid-template-columns: minmax(0, 1fr);
@@ -570,7 +703,8 @@ body {
     justify-items: center;
   }
 
-  #wax-paper {
+  #wax-paper,
+  #shot-rack {
     max-width: 188px;
   }
 
@@ -606,8 +740,22 @@ body {
   }
 
   .zsa-mmt-workspace,
-  .zsa-mmt-print-only {
+  .zsa-mmt-print-only,
+  .zsa-mmt #wax-notebook[hidden],
+  .zsa-mmt #shot-notebook[hidden] {
     display: block;
+  }
+
+  .zsa-mmt #shot-entries {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5px 12px;
+  }
+
+  .zsa-mmt [data-shot-card] {
+    display: grid;
+    break-inside: avoid;
+    background: #fff;
   }
 
   .zsa-mmt-notebook {

@@ -65,7 +65,7 @@ test("steep caps conserve volume and keep the measured width above their contact
   assert.ok(Math.abs(4 / 3 * Math.PI * sphere.radiusMm ** 3 - 150) < 0.00001);
 });
 
-test("preview tubes and future notebook entries start independent and support all five recipes", () => {
+test("shot and mixing tubes have independent state and support all five mixing recipes", () => {
   const state = model.createState();
   assert.deepEqual(model.mixing.recipesMl, {
     1: {W: 1, G: 1}, 2: {W: 1, M: 1}, 3: {W: 1, O: 0.5}, 4: {M: 1, O: 0.5}, 5: {G: 1, M: 1}
@@ -73,7 +73,7 @@ test("preview tubes and future notebook entries start independent and support al
   state.mixing.tubes[3].aliquots.push({code: "O", ml: 0.5});
   state.mixing.tubes[5].inversions++;
   state.shot.tubes.M.trial.pausedAt = 180;
-  state.notebook.shot.W.trials.push({kind: "below", seconds: 0.5}, {kind: "measured", seconds: 0.7}, {kind: "measured", seconds: 0.8});
+  state.notebook.shot.W.trials.push("<0.5", "0.70", "0.80");
   state.notebook.shot.W.studentMean = "0.75";
   state.notebook.shot.W.computed = {kind: "bound", upperSeconds: 2 / 3};
   state.notebook.mixing[3].layerCount = 2;
