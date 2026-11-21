@@ -391,11 +391,11 @@ body {
 }
 
 .zsa-mmt-notebook th:first-child {
-  width: 34%;
+  width: 31%;
 }
 
-.zsa-mmt-notebook thead th:nth-child(2) {
-  width: 25%;
+.zsa-mmt-notebook thead th:last-child {
+  width: 28%;
 }
 
 .zsa-mmt-notebook tbody th {
@@ -428,7 +428,7 @@ body {
 
 .zsa-mmt-profiles {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 5px;
   margin: 8px 0 10px;
 }

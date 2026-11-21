@@ -19,11 +19,11 @@
   };
   const profiles = {
     tall: {label: "Tall bead", radiusMm: 5},
-    low: {label: "Low bead", radiusMm: 7.5},
     flat: {label: "Flat puddle", radiusMm: 11}
   };
   const centerX = 203;
   const rulerY = 153;
+  const sideY = 229;
   const waxBoxes = {};
   const bottleNames = {};
   const notebookFields = {};
@@ -59,10 +59,17 @@
     $(id).setAttribute("aria-disabled", String(!available));
   }
 
-  function capPath(radius, height) {
+  function capPath(geometry, scale) {
+    const height = geometry.heightMm * scale;
     if (!height) return "";
-    const curveRadius = (radius ** 2 + height ** 2) / (2 * height);
-    return `M ${-radius} 0 A ${curveRadius} ${curveRadius} 0 0 1 ${radius} 0 Z`;
+    const contact = geometry.contactRadiusMm * scale;
+    const curveRadius = (contact ** 2 + height ** 2) / (2 * height);
+    if (!contact) {
+      const arc = `A ${curveRadius} ${curveRadius} 0 0 1`;
+      return `M 0 0 ${arc} 0 ${-height} ${arc} 0 0 Z`;
+    }
+    const largeArc = height > contact ? 1 : 0;
+    return `M ${-contact} 0 A ${curveRadius} ${curveRadius} 0 ${largeArc} 1 ${contact} 0 Z`;
   }
 
   function bottleArt() {
@@ -140,7 +147,7 @@
     const profilePrint = element("span", "zsa-mmt-print-only");
     const profileCell = element("td");
     profileCell.append(profile, profilePrint);
-    row.append(heading, diameterCell, profileCell);
+    row.append(heading, profileCell, diameterCell);
     $("notebook-entries").append(row);
     notebookFields[code] = {name, diameter, profile, diameterPrint, profilePrint};
 
@@ -157,10 +164,10 @@
   function addProfile(key, profile) {
     const outline = svg("svg", {viewBox: "0 0 72 18", "aria-hidden": "true", focusable: "false"});
     const scale = 2.6;
-    const height = model.capHeightMm(profile.radiusMm, wax.dropMl * wax.dropCount * 1000);
+    const geometry = model.capGeometry(profile.radiusMm, wax.dropMl * wax.dropCount * 1000);
     outline.append(
       svg("path", {d: "M3 14h66", stroke: "#647687", "stroke-width": ".8"}),
-      svg("path", {d: capPath(profile.radiusMm * scale, height * scale), transform: "translate(36 14)", fill: "#a9cbd7", stroke: "#294e64"})
+      svg("path", {d: capPath(geometry, scale), transform: "translate(36 14)", fill: "#a9cbd7", stroke: "#294e64"})
     );
     const figure = element("figure");
     profileCaptions[key] = element("figcaption", "", profile.label);
@@ -212,7 +219,7 @@
       setText(bottleNames[code], t(liquids[code]));
       setText(field.name, t(liquids[code]));
       for (const option of field.profile.options) {
-        setText(option, t(option.value ? profiles[option.value].label : "Choose a shape"));
+        setText(option, t(option.value ? profiles[option.value].label : "Choose"));
       }
       field.diameter.value = entry.diameter;
       field.profile.value = entry.profile;
@@ -243,7 +250,6 @@
 
   function renderWaxArt(code, geometry, settled) {
     const radius = geometry.radiusMm * ruler.unitsPerMm;
-    const height = geometry.heightMm * ruler.unitsPerMm;
     for (const id of ["footprint", "silhouette"]) {
       $(id).dataset.liquid = code;
       $(id).setAttribute("visibility", radius ? "visible" : "hidden");
@@ -253,9 +259,10 @@
     const glint = $("puddle-glint");
     glint.setAttribute("cx", -.36 * radius);
     glint.setAttribute("cy", -.44 * radius);
-    circle(glint, .3 * radius, .12 * radius);
-    $("puddle-contact").setAttribute("rx", radius + 2);
-    $("puddle-side").setAttribute("d", capPath(radius, height));
+    const height = geometry.heightMm * ruler.unitsPerMm;
+    circle(glint, .3 * radius, Math.min(.12 * radius, .55 * height));
+    $("puddle-contact").setAttribute("rx", geometry.contactRadiusMm * ruler.unitsPerMm + 2);
+    $("puddle-side").setAttribute("d", capPath(geometry, ruler.unitsPerMm));
     $("ruler-zero").setAttribute("visibility", settled ? "visible" : "hidden");
     $("ruler").dataset.draggable = String(settled);
   }
@@ -279,7 +286,8 @@
     cancelAnimationFrame(frame);
     clearTimeout(wake);
     const now = clock();
-    for (const sample of Object.values(state.wax.samples)) model.landDrop(sample, now);
+    const samples = Object.values(state.wax.samples);
+    for (const sample of samples) model.landDrop(sample, now);
 
     const station = state.station;
     const [title, tag, preview] = stations[station];
@@ -333,19 +341,22 @@
     drop.setAttribute("visibility", animate ? "visible" : "hidden");
     if (document.hidden) return;
     if (animate) {
-      paintDrop(now, 218 - geometry.heightMm * ruler.unitsPerMm);
+      paintDrop(now, sideY - 5 - geometry.heightMm * ruler.unitsPerMm);
       return;
     }
     // No frame loop while the apparatus is still. Only wake for a drop landing or a settling tick.
-    const nextLanding = Math.min(...Object.values(state.wax.samples).map((entry) => entry.dropLandsAt ?? Infinity));
-    const nextTick = settling && !settled ? now + 1000 - elapsed % 1000 : Infinity;
+    const nextLanding = Math.min(...samples.map((entry) => entry.dropLandsAt ?? Infinity));
+    const nextTick = Math.min(...samples.map(({settlesAt}) =>
+      settlesAt > now ? Math.min(settlesAt, now + 1000) : Infinity
+    ));
     const next = Math.min(nextLanding, nextTick);
     if (Number.isFinite(next)) wake = setTimeout(renderBench, Math.max(1, Math.ceil(next - now)));
   }
 
   function updateZero(value) {
     const sample = selectedSample();
-    const mm = Math.max(ruler.minMm, Math.min(ruler.maxMm, Math.round(value)));
+    const rounded = Math.round(value / ruler.stepMm) * ruler.stepMm;
+    const mm = Math.max(ruler.minMm, Math.min(ruler.maxMm, rounded));
     if (mm !== sample.zeroMm) sample.edgeReading = null;
     sample.zeroMm = mm;
     renderRuler(sample);
@@ -365,7 +376,7 @@
   };
   slider.min = ruler.minMm;
   slider.max = ruler.maxMm;
-  slider.step = 1;
+  slider.step = ruler.stepMm;
   addRulerMarks();
   codes.forEach((code, index) => {
     addBottle(code);

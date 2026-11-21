@@ -27,14 +27,13 @@ test("wax footprints and side profiles share the same volume as each sample grow
   const whole = {};
   for (const code of ["W", "G", "O", "M"]) {
     const sample = model.createWaxSample();
-    assert.deepEqual(model.waxGeometry(code, sample, 0), {radiusMm: 0, heightMm: 0});
+    assert.deepEqual(model.waxGeometry(code, sample, 0), {radiusMm: 0, contactRadiusMm: 0, heightMm: 0});
     for (let i = 0; i < 3; i++) {
       model.dispense(sample, i * 500);
       model.landDrop(sample, i * 500 + model.wax.dropMs);
       for (const elapsed of [0, 15000, 30000]) {
-        const {radiusMm, heightMm} = model.waxGeometry(code, sample, 1260 + elapsed);
-        assert.ok(heightMm < radiusMm, "top-view diameter describes the footprint");
-        const volume = Math.PI * heightMm * (3 * radiusMm ** 2 + heightMm ** 2) / 6;
+        const {contactRadiusMm, heightMm} = model.waxGeometry(code, sample, 1260 + elapsed);
+        const volume = Math.PI * heightMm * (3 * contactRadiusMm ** 2 + heightMm ** 2) / 6;
         assert.ok(Math.abs(volume - 50 * (i + 1)) < 0.00001, "same volume from either view");
       }
     }
@@ -49,6 +48,21 @@ test("wax footprints and side profiles share the same volume as each sample grow
   assert.deepEqual(model.edgeReadings(6, -14), {left: 8, right: 20});
   assert.deepEqual(model.edgeReadings(6, -6), {left: 0, right: 12});
   assert.deepEqual(model.edgeReadings(6, -5), {left: -1, right: 11});
+  assert.deepEqual(model.edgeReadings(3.5, -3.5), {left: 0, right: 7});
+});
+
+test("steep caps conserve volume and keep the measured width above their contact line", () => {
+  const {radiusMm, contactRadiusMm, heightMm} = model.capGeometry(3.5, 150);
+  assert.equal(radiusMm, 3.5);
+  assert.ok(heightMm > radiusMm);
+  assert.ok(contactRadiusMm < radiusMm);
+  assert.ok(Math.abs((contactRadiusMm ** 2 + heightMm ** 2) / (2 * heightMm) - radiusMm) < 0.000001);
+  const volume = Math.PI * heightMm * (3 * contactRadiusMm ** 2 + heightMm ** 2) / 6;
+  assert.ok(Math.abs(volume - 150) < 0.00001);
+  const sphere = model.capGeometry(3.25, 150);
+  assert.equal(sphere.contactRadiusMm, 0);
+  assert.equal(sphere.heightMm, 2 * sphere.radiusMm);
+  assert.ok(Math.abs(4 / 3 * Math.PI * sphere.radiusMm ** 3 - 150) < 0.00001);
 });
 
 test("preview tubes and future notebook entries start independent and support all five recipes", () => {
@@ -59,12 +73,15 @@ test("preview tubes and future notebook entries start independent and support al
   state.mixing.tubes[3].aliquots.push({code: "O", ml: 0.5});
   state.mixing.tubes[5].inversions++;
   state.shot.tubes.M.trial.pausedAt = 180;
-  state.notebook.shot.W.trials[0] = {kind: "below", seconds: 0.5};
+  state.notebook.shot.W.trials.push({kind: "below", seconds: 0.5}, {kind: "measured", seconds: 0.7}, {kind: "measured", seconds: 0.8});
+  state.notebook.shot.W.studentMean = "0.75";
+  state.notebook.shot.W.computed = {kind: "bound", upperSeconds: 2 / 3};
   state.notebook.mixing[3].layerCount = 2;
   assert.deepEqual(state.mixing.tubes[5].aliquots, []);
   assert.equal(state.mixing.tubes[3].inversions, 0);
   assert.equal(state.shot.tubes.O.trial.pausedAt, null);
-  assert.deepEqual(state.notebook.shot.M.trials, [null, null]);
+  assert.equal(state.notebook.shot.W.trials.length, 3);
+  assert.deepEqual(state.notebook.shot.M, {trials: [], studentMean: null, computed: null});
   assert.equal(state.notebook.mixing[5].layerCount, null);
   assert.equal(model.createState().mixing.tubes[3].aliquots.length, 0);
 });

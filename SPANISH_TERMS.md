@@ -3751,6 +3751,9 @@ The virtual lab follows Style Kit 1.32 and the published Spanish procedure. The 
 
 | English | Mexican Spanish |
 | --- | --- |
+| Bead or spread? | ¿Gota alta o charco plano? |
+| Steel shot race | Carrera del perdigón de acero |
+| Mix or layer? | ¿Se mezclan o forman capas? |
 | wax paper / box | papel encerado / casilla |
 | dropper bottle | frasco gotero |
 | bead / puddle | gota / charco |

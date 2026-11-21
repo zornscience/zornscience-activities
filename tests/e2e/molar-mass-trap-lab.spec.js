@@ -55,6 +55,7 @@ test("all four puddles merge in their own boxes, settle independently, and prese
   const expected = {W: 10, G: 12, O: 20, M: 22};
   const heights = {};
   await expect(page.getByRole("group", {name: "Lab stations"}).getByRole("button")).toHaveCount(3);
+  await expect(page.getByRole("columnheader")).toHaveText(["Liquid", "Puddle sketch (side view)", "Puddle diameter (mm)"]);
   await expect(page.locator("#notebook-entries input")).toHaveCount(4);
   for (const code of ["M", "W", "O", "G"]) {
     await page.locator('[data-bottle="' + code + '"]').click();
@@ -112,6 +113,50 @@ test("all four puddles merge in their own boxes, settle independently, and prese
   expect(errors).toEqual([]);
 });
 
+test("the wax overview updates a settling puddle while another liquid is selected", async ({page}) => {
+  await page.clock.install();
+  await page.goto(LAB);
+  await page.locator('[data-bottle="M"]').click();
+  await addDrops(page);
+  await page.locator('[data-bottle="W"]').click();
+  const mineralOil = page.locator('#wax-boxes [data-liquid="M"] ellipse');
+  expect(Number(await mineralOil.getAttribute("rx"))).toBeLessThan(11);
+  await page.clock.fastForward(31000);
+  await expect(mineralOil).toHaveAttribute("rx", "11");
+  await expect(page.locator('[data-bottle="W"]')).toHaveAttribute("aria-pressed", "true");
+});
+
+test("the ruler and side view agree for a calibrated bead above 90 degrees", async ({page}) => {
+  await page.route("**/molar-mass-trap-lab/model.js?*", async (route) => {
+    const response = await route.fetch();
+    const source = await response.text();
+    await route.fulfill({
+      response,
+      body: source.replace(/diameterMm: Object.freeze\(\{W: [\d.]+/, "diameterMm: Object.freeze({W: 7")
+    });
+  });
+  await page.clock.install();
+  await page.goto(LAB);
+  await addDrops(page);
+  const initial = await inspectGeometry(page);
+  expect(initial.profileHeight).toBeCloseTo(initial.diameter, 4);
+  await page.locator("#advance").click();
+  const settled = await inspectGeometry(page);
+  expect(settled.diameter).toBeCloseTo(7, 4);
+  expect(settled.profileWidth).toBeCloseTo(settled.diameter, 4);
+  expect(settled.profileHeight).toBeCloseTo(5.1974, 4);
+  const ruler = page.getByRole("slider", {name: "Ruler position"});
+  await ruler.focus();
+  for (let i = 0; i < 21; i++) await page.keyboard.press("ArrowRight");
+  await expect(ruler).toHaveValue("-3.5");
+  const aligned = await inspectGeometry(page);
+  expect(aligned.zero).toBeCloseTo(aligned.left, 3);
+  await page.getByRole("button", {name: "Read edges"}).click();
+  await expect(page.locator("#edge-reading")).toHaveText(
+    "Left edge 0 mm. Right edge 7 mm. Side-view height about 5.2 mm."
+  );
+});
+
 test("keyboard only can align zero for clear glycerin, record the profile, and keep it through both previews", async ({page}) => {
   const errors = collectErrors(page);
   await page.clock.install();
@@ -135,17 +180,17 @@ test("keyboard only can align zero for clear glycerin, record the profile, and k
   await page.keyboard.press("Enter");
   await expect(page.locator("#edge-reading")).toHaveText(/Left edge 8 mm. Right edge 20 mm/);
   await tabTo(page, range, "Shift+Tab");
-  for (let i = 0; i < 8; i++) await page.keyboard.press("ArrowRight");
+  for (let i = 0; i < 16; i++) await page.keyboard.press("ArrowRight");
   await expect(range).toHaveAttribute("aria-valuetext", "Zero 6 mm left of center");
   await tabTo(page, edges);
   await page.keyboard.press("Enter");
   await expect(page.locator("#edge-reading")).toHaveText(/Left edge 0 mm. Right edge 12 mm/);
-  await tabTo(page, row.getByRole("textbox"));
-  await page.keyboard.type("12");
   await tabTo(page, row.getByRole("combobox"));
   await page.keyboard.press("ArrowDown");
   await page.keyboard.press("Enter");
   await expect(row.getByRole("combobox")).toHaveValue("tall");
+  await tabTo(page, row.getByRole("textbox"));
+  await page.keyboard.type("12");
 
   for (const station of ["mixing", "shot", "wax"]) {
     const button = page.locator('[data-station="' + station + '"]');
@@ -207,8 +252,12 @@ test("Mexican Spanish covers the live bench, print, dialogs, previews, and share
   await page.getByRole("button", {name: "Leer los bordes"}).click();
   await expect(page.locator("#edge-reading")).toHaveText(/Borde izquierdo 4 mm. Borde derecho 24 mm/);
   const row = page.locator("#liquid-O").locator("..");
-  await row.getByRole("textbox", {name: /Diámetro \(mm\)/}).fill("20");
-  await row.getByRole("combobox", {name: /Vista lateral/}).selectOption({label: "Charco plano"});
+  await expect(page.getByRole("columnheader")).toHaveText(["Líquido", "Dibujo del charco (vista lateral)", "Diámetro del charco (mm)"]);
+  await expect(page.locator('[data-station="wax"]')).toContainText("¿Gota alta o charco plano?");
+  await expect(page.locator('[data-station="shot"]')).toContainText("Carrera del perdigón de acero");
+  await expect(page.locator('[data-station="mixing"]')).toContainText("¿Se mezclan o forman capas?");
+  await row.getByRole("textbox", {name: /Diámetro del charco \(mm\)/}).fill("20");
+  await row.getByRole("combobox", {name: /vista lateral/}).selectOption({label: "Charco plano"});
   await page.getByLabel("Otras observaciones").fill("El 1-octanol se extendió.");
   await page.getByRole("button", {name: "Instrucciones"}).click();
   await expect(page.getByRole("dialog", {name: "Investigación con papel encerado"})).toBeVisible();
