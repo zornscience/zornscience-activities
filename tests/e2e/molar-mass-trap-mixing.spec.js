@@ -120,6 +120,8 @@ test("students choose any two liquids and the settled layers respond to what the
     await expect(page.locator("#mix-elapsed")).toHaveText("60 / 60 s");
     await page.locator("#mix-read").click();
     await expect(page.locator("#mix-observation")).toHaveText(note);
+    // A settled tube needs no more inversions, so the icon button is hidden and out of the tab order.
+    await expect(action(page)).toBeHidden();
     const steadyBands = glass.locator('[data-mix-band][visibility="visible"]');
     await expect(steadyBands).toHaveCount(tints.length);
     for (let i = 0; i < tints.length; i++) await expect(steadyBands.nth(i)).toHaveAttribute("data-tint", tints[i]);

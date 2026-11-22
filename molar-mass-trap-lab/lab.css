@@ -668,8 +668,8 @@ body {
   color: #3e5b6e;
 }
 
-/* Buttons that carry the eyedropper icon beside their text. */
-.zsa-mmt .zsa-mmt-icon-btn {
+/* Buttons that carry the eyedropper icon beside their text. The flex layout must not override [hidden]. */
+.zsa-mmt .zsa-mmt-icon-btn:not([hidden]) {
   display: inline-flex;
   align-items: center;
   gap: 6px;
