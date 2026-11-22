@@ -5,26 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="zsa-version" content="0.2.2">
+  <meta name="zsa-version" content="0.3.1">
   <title>The Molar Mass Trap Lab | ZornScience</title>
   <link rel="icon" href="../favicon.png" type="image/png">
-  <link rel="stylesheet" href="../shared/zsa-base.css?v=0.2.2">
-  <link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=0.2.2">
-  <link rel="stylesheet" href="../shared/zsa-header.css?v=0.2.2">
-  <link rel="stylesheet" href="lab.css?v=0.2.2">
-  <script src="../shared/zsa-embed.js?v=0.2.2" defer></script>
-  <script src="../shared/zsa-i18n.js?v=0.2.2" defer></script>
-  <script src="model.js?v=0.2.2" defer></script>
-  <script src="data.js?v=0.2.2" defer></script>
-  <script src="shot.js?v=0.2.2" defer></script>
-  <script src="lab.js?v=0.2.2" defer></script>
-<link rel="stylesheet" href="../shared/zsa-about.css?v=0.2.2"><script src="../shared/zsa-about.js?v=0.2.2" defer></script></head>
+  <link rel="stylesheet" href="../shared/zsa-base.css?v=0.3.1">
+  <link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=0.3.1">
+  <link rel="stylesheet" href="../shared/zsa-header.css?v=0.3.1">
+  <link rel="stylesheet" href="lab.css?v=0.3.1">
+  <script src="../shared/zsa-embed.js?v=0.3.1" defer></script>
+  <script src="../shared/zsa-i18n.js?v=0.3.1" defer></script>
+  <script src="model.js?v=0.3.1" defer></script>
+  <script src="data.js?v=0.3.1" defer></script>
+  <script src="shot.js?v=0.3.1" defer></script>
+  <script src="mixing.js?v=0.3.1" defer></script>
+  <script src="lab.js?v=0.3.1" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=0.3.1"><script src="../shared/zsa-about.js?v=0.3.1" defer></script></head>
 <body>
 <main class="zsa zsa-mmt" data-zsa-activity="molar-mass-trap-lab">
   <header data-zsa-header class="header">
     <div data-zsa-header-row>
       <div data-zsa-header-identity class="identity">
-        <a data-zsa-header-brand class="brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../ionic-reactions/zornscience-logo.png?v=0.2.2" width="34" height="33" alt=""></a>
+        <a data-zsa-header-brand class="brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../ionic-reactions/zornscience-logo.png?v=0.3.1" width="34" height="33" alt=""></a>
         <h1>The Molar Mass Trap Lab</h1>
       </div>
       <nav data-zsa-header-tools aria-label="Activity tools">
@@ -43,7 +44,7 @@
       <small>Test 2</small><strong>Steel shot race</strong>
     </button>
     <button type="button" data-station="mixing" aria-pressed="false">
-      <small>Test 3</small><strong>Mix or layer?</strong><span class="zsa-mmt-preview-tag">Preview</span>
+      <small>Test 3</small><strong>Mix or layer?</strong>
     </button>
   </div>
 
@@ -208,29 +209,70 @@
           <p id="shot-feedback" class="zsa-mmt-shot-feedback" role="status" aria-atomic="true"></p>
         </div>
       </div>
-      <div id="mixing-preview" class="zsa-mmt-preview" hidden>
-        <svg viewBox="0 0 420 232" role="img" aria-labelledby="mixing-drawing-title mixing-drawing-desc">
-          <title id="mixing-drawing-title">Mixing rack</title>
-          <desc id="mixing-drawing-desc">An empty rack setup with five numbered test tubes and a transfer pipette.</desc>
-          <defs>
-            <g id="mmt-empty-tube">
-              <path d="M-14 42v108a14 14 0 0 0 28 0V42Z" fill="url(#mmt-glass)" stroke="#c2e0e9"/>
-              <ellipse cy="42" rx="15" ry="3" fill="#1f3849" stroke="#c2e0e9"/>
-              <path d="M-9 49v92" stroke="#e9f9f9" stroke-opacity=".47"/>
+      <div id="mixing-bench" hidden>
+        <div class="zsa-mmt-scene zsa-mmt-mix-scene">
+          <div class="zsa-mmt-mix-rack" role="group" aria-labelledby="mix-rack-title">
+            <h3 id="mix-rack-title">Mixing rack</h3>
+            <div id="mix-rack" class="zsa-mmt-mix-slots"></div>
+          </div>
+          <svg id="mix-inspection" viewBox="0 0 368 224" role="img" aria-labelledby="mix-inspection-title mix-inspection-desc">
+            <title id="mix-inspection-title">Mixing tube close-up</title>
+            <desc id="mix-inspection-desc">A test tube against a light and dark card, a graduated transfer pipette, and a labeled waste beaker. Use Read layers to describe what is in the tube.</desc>
+            <defs>
+              <clipPath id="mmt-mix-interior"><path d="M-14-60H14V50a14 14 0 0 1-28 0Z"/></clipPath>
+              <linearGradient id="mmt-mix-glass"><stop stop-color="#d5eff4" stop-opacity=".56"/><stop offset=".24" stop-color="#c4e5ee" stop-opacity=".08"/><stop offset=".76" stop-color="#c4e5ee" stop-opacity=".12"/><stop offset="1" stop-color="#daf5fa" stop-opacity=".48"/></linearGradient>
+              <linearGradient id="mmt-mix-cork"><stop stop-color="#856446"/><stop offset=".39" stop-color="#c8a675"/><stop offset="1" stop-color="#91724d"/></linearGradient>
+              <linearGradient id="mmt-mix-blue"><stop stop-color="#23649a" stop-opacity=".85"/><stop offset=".53" stop-color="#44a8db" stop-opacity=".72"/><stop offset="1" stop-color="#23679e" stop-opacity=".89"/></linearGradient>
+              <linearGradient id="mmt-mix-red"><stop stop-color="#a23e3c" stop-opacity=".88"/><stop offset=".54" stop-color="#e37462" stop-opacity=".74"/><stop offset="1" stop-color="#a3453b" stop-opacity=".89"/></linearGradient>
+              <linearGradient id="mmt-mix-clear"><stop stop-color="#92b8be" stop-opacity=".45"/><stop offset=".55" stop-color="#d8edf2" stop-opacity=".15"/><stop offset="1" stop-color="#b5d3d9" stop-opacity=".49"/></linearGradient>
+            </defs>
+            <rect x="19" y="14" width="218" height="176" rx="7" fill="#526f80"/>
+            <path d="M128 15h102q6 0 6 6v162q0 6-6 6H128Z" fill="#314959"/>
+            <path d="M128 15H26q-6 0-6 6v162q0 6 6 6h102Z" fill="#d2dde1"/>
+            <path d="M18 192H352" stroke="#4d6c7c"/>
+            <ellipse cx="128" cy="176" rx="31" ry="5" fill="#102b3b" opacity=".22"/>
+            <g id="mix-active-tube"></g>
+            <g id="mix-surface" class="zsa-mmt-mix-surface" visibility="hidden">
+              <path d="M0 0H17"/>
+              <text x="21" y="4">Surface</text>
             </g>
-          </defs>
-          <rect width="420" height="232" rx="8" fill="url(#mmt-inspection-mat)"/>
-          <path d="M52 143h267v41H52Z" fill="#143344" stroke="#54788b"/>
-          <g transform="translate(82 0)"><use href="#mmt-empty-tube"/><text y="208">1</text></g>
-          <g transform="translate(134 0)"><use href="#mmt-empty-tube"/><text y="208">2</text></g>
-          <g transform="translate(186 0)"><use href="#mmt-empty-tube"/><text y="208">3</text></g>
-          <g transform="translate(238 0)"><use href="#mmt-empty-tube"/><text y="208">4</text></g>
-          <g transform="translate(290 0)"><use href="#mmt-empty-tube"/><text y="208">5</text></g>
-          <path d="M52 166h267v19H52Z" fill="#3e6275" stroke="#668696"/>
-          <path d="M358 123h9v34l-3 6v10h-3v-10l-3-6Z" fill="url(#mmt-glass)" stroke="#bcdce5"/>
-          <rect x="355" y="104" width="15" height="23" rx="6" fill="#d7a65c"/>
-          <path d="M360 135h5m-5 7h5m-5 7h5" stroke="#e2f2f5"/>
-        </svg>
+            <g id="mix-pipette-art" transform="translate(258 83) rotate(19)">
+              <path d="M-6-33Q-9-38-8-44Q-8-52 0-52Q8-52 8-44Q9-38 6-33V8L2 17v13h-4V17L-6 8Z" fill="url(#mmt-mix-glass)" stroke="#c4dce4"/>
+              <path id="mix-pipette-fill" d="M-4-5H4V8L1 17v12h-2V17L-4 8Z" class="zsa-mmt-bottle-liquid" visibility="hidden"/>
+              <path d="M-6-23H2m-8 5h4m-4 5h8m-8 5h4m-4 5h8" stroke="#d7ecf3" stroke-width="1"/>
+            </g>
+            <path id="mix-pour-stream" d="M128 49v54" fill="none" stroke="var(--mmt-bottle-fill)" stroke-width="2" visibility="hidden"/>
+            <ellipse cx="295" cy="188" rx="35" ry="6" fill="#101f2a"/>
+            <path d="M267 135H326l-6 43q-1 9-24 9t-24-9Z" fill="url(#mmt-mix-glass)" stroke="#b5d1dc"/>
+            <path id="mix-waste-fill" fill="#ab8276" stroke="#d0a697" visibility="hidden"/>
+            <ellipse cx="296" cy="135" rx="30" ry="5" fill="#203e4f" stroke="#b5d1dc"/>
+            <path d="M276 148h9m-8 8h6m-5 8h8" fill="none" stroke="#a0bbc9"/>
+            <text id="mix-art-label" x="19" y="211" class="zsa-mmt-scene-label"></text>
+            <text x="295" y="211" class="zsa-mmt-scene-label zsa-mmt-waste-label" text-anchor="middle">Mixture waste</text>
+          </svg>
+        </div>
+        <div class="zsa-mmt-mix-recipe">
+          <strong id="mix-recipe"></strong>
+          <output id="mix-volume" aria-label="Total in selected tube" aria-live="off"></output>
+        </div>
+        <div id="mix-pipettes" class="zsa-mmt-mix-pipettes" role="group" aria-label="Graduated transfer pipettes">
+          <label for="mix-liquid">Liquid in pipette</label>
+          <label for="mix-amount">Pipette volume</label>
+          <select id="mix-liquid"></select>
+          <select id="mix-amount"></select>
+        </div>
+        <div class="zsa-mmt-actions">
+          <button id="mix-action" type="button" class="zsa-btn zsa-mmt-primary" aria-disabled="true">Dispense aliquot</button>
+          <button id="mix-stand" type="button" class="zsa-btn zsa-mmt-primary" hidden>Set upright</button>
+          <button id="mix-read" type="button" class="zsa-btn" hidden>Read layers</button>
+          <button id="mix-empty" type="button" class="zsa-btn zsa-mmt-quiet" aria-disabled="true">Empty tube</button>
+        </div>
+        <div id="mix-progress" class="zsa-mmt-mix-progress" hidden>
+          <output id="mix-inversions" aria-label="Completed inversions" aria-live="off"></output>
+          <output id="mix-elapsed" class="zsa-mmt-shot-clock" aria-label="Elapsed settling time" aria-live="off" tabindex="-1" hidden></output>
+          <button id="mix-advance" type="button" class="zsa-btn" hidden>Advance to 60 s</button>
+        </div>
+        <p id="mix-observation" class="zsa-mmt-mix-observation" role="status" aria-atomic="true"></p>
       </div>
     </section>
 
@@ -240,6 +282,19 @@
         <button id="print-notebook" type="button" class="zsa-btn zsa-mmt-quiet">Print notebook</button>
       </div>
       <div class="zsa-mmt-notebook-tests">
+        <section id="mix-notebook" aria-labelledby="mix-notebook-title" hidden>
+          <h3 id="mix-notebook-title">Test 3</h3>
+          <p class="zsa-mmt-notebook-help">After 60 s of settling, record the layers and where you see the dye.</p>
+          <table class="zsa-mmt-mix-table" aria-labelledby="mix-notebook-title">
+            <thead><tr>
+              <th scope="col">Tube</th>
+              <th scope="col">Pair</th>
+              <th id="mix-layer-heading" scope="col">One layer or two?</th>
+              <th id="mix-dye-heading" scope="col">Where did the dye go?</th>
+            </tr></thead>
+            <tbody id="mix-entries"></tbody>
+          </table>
+        </section>
         <section id="shot-notebook" aria-labelledby="shot-notebook-title" hidden>
           <h3 id="shot-notebook-title">Test 2</h3>
           <p class="zsa-mmt-notebook-help">Record two trials per liquid. Use &lt;0.5 if the fall is too fast to time manually.</p>
@@ -281,8 +336,9 @@
     <summary>About this simulation</summary>
     <p>Each sample uses about 0.15 mL on the same wax paper. The puddle dimensions are simulated. Wetting depends on cohesion within the liquid and adhesion to the wax. A diameter describes spreading on this surface.</p>
     <p>The shot times are simulated for one set of sealed tubes at room temperature. The same shot and travel distance are used in each tube. Density and drag also affect the fall time.</p>
+    <p>The mixing rack shows approximate layer volumes for these recipes. The dyes help you see where the liquids went. Two visible layers can still contain a small amount of each other.</p>
   </details>
-  <!-- zsa-about --><section class="zsa-about" data-zsa-about="molar-mass-trap-lab" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Compare how four liquids bead or spread on wax paper. Time a steel shot through each liquid and record both sets of observations in your notebook.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="chem-imf-properties"><a href="https://zornscience.org/science/chemistry/unit-4-covalent-bonding/properties-due-to-imf/">Properties Due to IMF</a><span data-zsa-lesson-course>Chemistry</span></li><li data-zsa-lesson="chem-imf-types"><a href="https://zornscience.org/science/chemistry/unit-4-covalent-bonding/types-of-imf/">Types of IMF</a><span data-zsa-lesson-course>Chemistry</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer">
+  <!-- zsa-about --><section class="zsa-about" data-zsa-about="molar-mass-trap-lab" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Compare how four liquids spread on wax paper, time a steel shot through each one, and see which pairs form layers. Record the evidence in your notebook.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="chem-imf-properties"><a href="https://zornscience.org/science/chemistry/unit-4-covalent-bonding/properties-due-to-imf/">Properties Due to IMF</a><span data-zsa-lesson-course>Chemistry</span></li><li data-zsa-lesson="chem-imf-types"><a href="https://zornscience.org/science/chemistry/unit-4-covalent-bonding/types-of-imf/">Types of IMF</a><span data-zsa-lesson-course>Chemistry</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer">
     <span>ZornScience</span><a href="../" data-zsa-chrome>All activities</a><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
   </footer>
   <dialog id="instructions" class="zsa-header-dialog" aria-labelledby="instructions-title">
@@ -299,7 +355,12 @@
       <li>Record two trials and find the average in seconds. If the shot falls too fast to time, record less than 0.5 s.</li>
       <li>Use the magnet outside the tube to return the shot for another trial.</li>
     </ol>
-    <p id="mixing-instructions" hidden>The mixing rack is a preview. Choose Test 1 or Test 2 to collect data.</p>
+    <ol id="mixing-instructions" hidden>
+      <li>Choose any numbered tube. Use the graduated pipette to dispense both amounts in its recipe.</li>
+      <li>Add a stopper. Gently invert five times, then set the tube upright.</li>
+      <li>Let it stand for 60 s, or advance time. Count the liquid layers below the curved surface. Use Read layers to hear or see the bands.</li>
+      <li>Record the number of layers and where the dye went. Pour the mixture into the waste beaker and repeat with the other tubes.</li>
+    </ol>
   </dialog>
   <dialog id="share" class="zsa-header-dialog" aria-labelledby="share-title" data-zsa-chrome>
     <div class="zsa-header-dialog-heading"><h2 id="share-title">Share this activity</h2><button class="zsa-btn zsa-mmt-close" type="button" data-close="share" aria-label="Close share options" autofocus>×</button></div>

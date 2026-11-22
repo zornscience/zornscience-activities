@@ -4,11 +4,12 @@
   const root = document.querySelector('[data-zsa-activity="molar-mass-trap-lab"]');
   const $ = (id) => document.getElementById(id);
   const svgNs = "http://www.w3.org/2000/svg";
-  let i18n, copy, model, createShotStation;
+  let i18n, copy, model, createShotStation, createMixingStation;
   root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: (api) => { i18n = api; }}}));
   root.dispatchEvent(new CustomEvent("zsa:molar-mass-copy", {detail: (data) => { copy = data; }}));
   root.dispatchEvent(new CustomEvent("zsa:molar-mass-model", {detail: (api) => { model = api; }}));
   root.dispatchEvent(new CustomEvent("zsa:molar-mass-shot", {detail: (create) => { createShotStation = create; }}));
+  root.dispatchEvent(new CustomEvent("zsa:molar-mass-mixing", {detail: (create) => { createMixingStation = create; }}));
   const t = (key, values) => i18n.text(key, values);
 
   const {liquids, wax, ruler} = model;
@@ -16,7 +17,7 @@
   const stations = {
     wax: ["Cohesion on wax paper", "Simulated dimensions"],
     shot: ["Steel shot race", "Simulated times"],
-    mixing: ["Mix or layer?", "Preview", "The five numbered tubes are for comparing liquids that mix or form layers in a future version."]
+    mixing: ["Mix or layer?", "Simulated mixtures"]
   };
   const profiles = {
     tall: {label: "Tall bead", radiusMm: 5},
@@ -283,12 +284,12 @@
     frame = requestAnimationFrame((time) => paintDrop(time, endY));
   }
 
-  function paintShot(force) {
+  function paintStation(controller, force) {
     const motion = !reducedMotion.matches;
-    const timing = shotStation.paint(clock(), motion, force);
+    const timing = controller.paint(clock(), motion, force);
     if (document.hidden) return;
-    if (timing.moving && motion) frame = requestAnimationFrame(() => paintShot(false));
-    else if (Number.isFinite(timing.next)) wake = setTimeout(() => paintShot(false), Math.max(1, Math.ceil(timing.next)));
+    if (timing.moving && motion) frame = requestAnimationFrame(() => paintStation(controller, false));
+    else if (Number.isFinite(timing.next)) wake = setTimeout(() => paintStation(controller, false), Math.max(1, Math.ceil(timing.next)));
   }
 
   function renderBench() {
@@ -301,24 +302,25 @@
     const station = state.station;
     const shotActive = station === "shot";
     const mixingActive = station === "mixing";
-    const [title, tag, preview] = stations[station];
+    const [title, tag] = stations[station];
     for (const button of buttons) button.setAttribute("aria-pressed", String(button.dataset.station === station));
     setText($("station-title"), t(title));
     setText($("station-tag"), t(tag));
     $("wax-bench").hidden = station !== "wax";
     $("shot-bench").hidden = !shotActive;
-    $("mixing-preview").hidden = !mixingActive;
+    $("mixing-bench").hidden = !mixingActive;
+    $("mix-notebook").hidden = !mixingActive;
     $("shot-notebook").hidden = !shotActive;
     $("wax-instructions").hidden = station !== "wax";
     $("shot-instructions").hidden = !shotActive;
     $("mixing-instructions").hidden = !mixingActive;
     setText($("instructions-title"), t(station === "wax" ? "Wax-paper investigation" : title));
     if (shotActive) {
-      paintShot(true);
+      paintStation(shotStation, true);
       return;
     }
-    if (preview) {
-      setText($("bench-instruction"), t(preview));
+    if (mixingActive) {
+      paintStation(mixingStation, true);
       return;
     }
 
@@ -388,13 +390,16 @@
 
   const updateStatic = staticCopy();
   i18n.configure(copy);
-  const shotStation = createShotStation({
+  const stationOptions = {
     model, t, svg, element, setText, setAvailability, clock, getState: () => state, refresh: renderBench
-  });
+  };
+  const shotStation = createShotStation(stationOptions);
+  const mixingStation = createMixingStation(stationOptions);
   i18n.onChange = () => {
     updateStatic();
     renderNotebook();
     shotStation.renderNotebook();
+    mixingStation.renderNotebook();
     renderBench();
     setText($("share-status"), shareMessage ? t(shareMessage) : "");
   };
@@ -485,6 +490,7 @@
     drag = null;
     renderNotebook();
     shotStation.renderNotebook();
+    mixingStation.reset();
     renderBench();
     $("restart").close();
   });
@@ -506,5 +512,6 @@
   reducedMotion.addEventListener("change", renderBench);
   renderNotebook();
   shotStation.renderNotebook();
+  mixingStation.renderNotebook();
   renderBench();
 }());

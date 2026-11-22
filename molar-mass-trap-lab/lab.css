@@ -59,7 +59,6 @@ body {
   line-height: 1.25;
 }
 
-.zsa-mmt-preview-tag,
 .zsa-mmt-tag {
   justify-self: start;
   padding: 3px 8px;
@@ -195,32 +194,16 @@ body {
   background: #142939;
 }
 
-.zsa-mmt-scene svg,
-.zsa-mmt-preview svg {
+.zsa-mmt-scene svg {
   display: block;
   width: 100%;
   height: auto;
 }
 
-.zsa-mmt-scene-label,
-.zsa-mmt-preview svg text {
+.zsa-mmt-scene-label {
   fill: #e3eff4;
   font-size: 14px;
   font-weight: 600;
-}
-
-.zsa-mmt-preview {
-  border-radius: 9px;
-  background: #152e40;
-}
-
-.zsa-mmt-preview svg {
-  max-width: 560px;
-  margin: 0 auto;
-}
-
-.zsa-mmt-preview svg text {
-  text-anchor: middle;
 }
 
 .zsa-mmt-fluid {
@@ -679,10 +662,191 @@ body {
   margin-top: 8px;
 }
 
-#shot-notebook:not([hidden]) + #wax-notebook {
+#shot-notebook:not([hidden]) + #wax-notebook,
+#mix-notebook:not([hidden]) ~ #wax-notebook {
   border-top: 1px solid #d8d7ce;
   margin-top: 14px;
   padding-top: 7px;
+}
+
+.zsa-mmt-mix-scene {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.zsa-mmt-mix-rack {
+  flex: 1 1 238px;
+  min-width: 0;
+  padding: 8px 5px 10px;
+  border: 1px solid #38566a;
+  border-radius: 7px;
+  background: #182f41;
+}
+
+.zsa-mmt-mix-rack h3 {
+  margin: 0 0 7px;
+  color: #e6f1f5;
+  font-size: 14px;
+  text-align: center;
+}
+
+.zsa-mmt-mix-slots {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 2px;
+  border-block-end: 5px solid #55798a;
+  border-radius: 4px;
+  background: #203c4d;
+}
+
+.zsa-mmt-mix-slot {
+  display: grid;
+  justify-items: center;
+  min-width: 0;
+  min-height: 44px;
+  padding: 4px 0 3px;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  background: transparent;
+  color: #e8f5fa;
+  font-weight: 650;
+}
+
+.zsa-mmt-mix-slot:hover,
+.zsa-mmt-mix-slot[aria-pressed="true"] {
+  border-color: #82b5cb;
+  background: #315367;
+}
+
+.zsa-mmt .zsa-mmt-mix-slot:focus-visible {
+  outline-color: #acdff2;
+  outline-offset: -2px;
+}
+
+.zsa-mmt-mix-slots .zsa-mmt-mix-slot svg {
+  width: 30px;
+  max-width: 95%;
+  height: 70px;
+}
+
+#mix-inspection {
+  flex: 2 1 265px;
+  width: 0;
+  min-width: 0;
+}
+
+.zsa-mmt-mix-boundary,
+.zsa-mmt-mix-meniscus {
+  fill: none;
+  stroke-width: 1.6;
+}
+
+.zsa-mmt-mix-boundary {
+  stroke: #b0e1ec;
+}
+
+.zsa-mmt-mix-meniscus {
+  stroke: #f2fafb;
+}
+
+.zsa-mmt-mix-refraction {
+  fill: none;
+  stroke: #e6f7f9;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+}
+
+.zsa-mmt-mix-surface path {
+  stroke: #d2e4ed;
+  stroke-dasharray: 2 2;
+}
+
+.zsa-mmt-mix-surface text,
+.zsa-mmt-waste-label {
+  fill: #e3eff4;
+  font-size: 11px;
+}
+
+.zsa-mmt-mix-recipe,
+.zsa-mmt-mix-progress {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 4px 12px;
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.zsa-mmt-mix-recipe output {
+  font-variant-numeric: tabular-nums;
+}
+
+.zsa-mmt-mix-pipettes {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 4px 8px;
+  max-width: 440px;
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.zsa-mmt-mix-pipettes label {
+  align-self: end;
+  font-weight: 650;
+}
+
+.zsa-mmt-mix-pipettes select {
+  min-width: 0;
+  min-height: 44px;
+  padding: 4px 7px;
+  border: 1px solid #b4c6d1;
+  border-radius: 6px;
+  background: #fff;
+  color: #213e51;
+  font: inherit;
+}
+
+.zsa-mmt-mix-progress {
+  justify-content: flex-start;
+  font-weight: 650;
+}
+
+.zsa-mmt-mix-observation {
+  margin: 7px 0 0;
+  color: #173e54;
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.zsa-mmt-mix-observation:empty {
+  margin: 0;
+}
+
+.zsa-mmt-notebook .zsa-mmt-mix-table th:first-child {
+  width: 12%;
+}
+
+.zsa-mmt-notebook .zsa-mmt-mix-table th:nth-child(2) {
+  width: 16%;
+}
+
+.zsa-mmt-notebook .zsa-mmt-mix-table th:nth-child(3) {
+  width: 32%;
+}
+
+.zsa-mmt-notebook .zsa-mmt-mix-table th:last-child {
+  width: 40%;
+}
+
+.zsa-mmt-notebook .zsa-mmt-mix-table :is(th, select) {
+  font-size: 12px;
+}
+
+.zsa-mmt-mix-pair-codes {
+  white-space: nowrap;
 }
 
 @media (max-width: 890px) {
@@ -715,7 +879,6 @@ body {
     font-size: 13px;
   }
 
-  .zsa-mmt-preview-tag,
   .zsa-mmt-tag {
     padding-inline: 5px;
     font-size: 11px;
@@ -746,6 +909,15 @@ body {
     max-width: 188px;
   }
 
+  .zsa-mmt-mix-rack {
+    padding-block: 5px 6px;
+  }
+
+  .zsa-mmt-mix-slots .zsa-mmt-mix-slot svg {
+    width: 24px;
+    height: 48px;
+  }
+
   .zsa-mmt-sample-status {
     flex-basis: 100%;
   }
@@ -773,13 +945,15 @@ body {
   .zsa-mmt [data-zsa-chrome],
   .zsa-mmt .zsa-mmt-notebook-help,
   .zsa-mmt .zsa-mmt-notebook-footer,
+  .zsa-mmt-mix-pair-codes,
   .zsa-mmt-notebook :is(input, select, textarea, button) {
     display: none !important;
   }
 
   .zsa-mmt-workspace,
   .zsa-mmt-print-only,
-  .zsa-mmt #shot-notebook[hidden] {
+  .zsa-mmt #shot-notebook[hidden],
+  .zsa-mmt #mix-notebook[hidden] {
     display: block;
   }
 
@@ -789,10 +963,14 @@ body {
   }
 
   .zsa-mmt #wax-notebook {
-    order: -1;
+    order: -2;
     border-top: 0;
     margin-top: 0;
     padding-top: 0;
+  }
+
+  #shot-notebook {
+    order: -1;
   }
 
   .zsa-mmt #shot-extras [data-shot-extra] {
@@ -814,8 +992,39 @@ body {
 
   .zsa-mmt-notebook th,
   .zsa-mmt-notebook td {
-    padding-block: 8px;
+    padding-block: 5px;
     overflow-wrap: anywhere;
+  }
+
+  .zsa-mmt-notebook .zsa-mmt-mix-table th:nth-child(2) {
+    width: 27%;
+  }
+
+  .zsa-mmt-notebook .zsa-mmt-mix-table th:nth-child(3) {
+    width: 19%;
+  }
+
+  .zsa-mmt-notebook .zsa-mmt-mix-table th:last-child {
+    width: 42%;
+  }
+
+  .zsa-mmt-mix-pair-names {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    white-space: normal;
+  }
+
+  .zsa-mmt-notebook h3,
+  .zsa-mmt-notebook thead {
+    break-after: avoid;
+  }
+
+  .zsa-mmt .zsa-footer {
+    margin-top: 18px;
+    padding-block: 6px;
+    break-inside: avoid;
   }
 
   .zsa-mmt-notebook tr,
@@ -823,7 +1032,8 @@ body {
     break-inside: avoid;
   }
 
-  #print-notes {
+  #print-notes,
+  .zsa-mmt-print-dye {
     margin-top: 3px;
     white-space: pre-wrap;
     overflow-wrap: anywhere;

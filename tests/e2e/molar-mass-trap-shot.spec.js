@@ -304,10 +304,10 @@ test("Mexican Spanish keyboard flow, reduced motion and the printable notebook r
   await expect(octanol.getByRole("textbox", {name: "Fall time, trial 1 (s)"})).toHaveValue("0.98");
   await page.getByRole("link", {name: "ES Español"}).click();
   await station(page, "mixing").click();
-  await expect(page.locator("#station-tag")).toHaveText("Vista previa");
+  await expect(page.locator("#station-tag")).toHaveText("Mezclas simuladas");
   await page.getByRole("button", {name: "Instrucciones"}).click();
   await expect(page.getByRole("dialog", {name: "¿Se mezclan o forman capas?"}))
-    .toContainText("La gradilla de mezclas es una vista previa.");
+    .toContainText("Invierte el tubo con cuidado cinco veces");
   await page.keyboard.press("Escape");
   await station(page, "shot").click();
   await expect(octanol.getByRole("textbox", {name: "Tiempo de caída, ensayo 1 (s)"})).toHaveValue("0.98");

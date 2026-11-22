@@ -31,12 +31,26 @@
   const mixing = Object.freeze({
     inversionCount: 5,
     settleMs: 60000,
+    pourMs: 420,
+    invertMs: 720,
+    standMs: 280,
+    aliquotMl: Object.freeze([0.5, 1]),
+    // Approximate room-temperature densities in g/mL. Before inversion, a denser aliquot sinks below the other.
+    densityGmL: Object.freeze({G: 1.26, W: 1.00, M: 0.86, O: 0.83}),
     recipesMl: Object.freeze({
       1: Object.freeze({W: 1, G: 1}),
       2: Object.freeze({W: 1, M: 1}),
       3: Object.freeze({W: 1, O: 0.5}),
       4: Object.freeze({M: 1, O: 0.5}),
       5: Object.freeze({G: 1, M: 1})
+    }),
+    // Liquid groups from bottom to top for the amounts in the teacher's setup.
+    settledBands: Object.freeze({
+      1: Object.freeze(["WG"]),
+      2: Object.freeze(["W", "M"]),
+      3: Object.freeze(["W", "O"]),
+      4: Object.freeze(["MO"]),
+      5: Object.freeze(["G", "M"])
     })
   });
 
@@ -60,6 +74,10 @@
     };
   }
 
+  function createMixTube() {
+    return {aliquots: [], stoppered: false, upright: true, inversions: 0, settlesAt: null, motion: null, disposed: false};
+  }
+
   function createState() {
     const codes = Object.keys(liquids);
     const tubes = Object.keys(mixing.recipesMl);
@@ -67,9 +85,7 @@
       station: "wax",
       wax: {liquid: "W", samples: byKey(codes, createWaxSample)},
       shot: {liquid: "W", tubes: byKey(codes, createShotTube)},
-      mixing: {tube: 1, tubes: byKey(tubes, () => ({
-        aliquots: [], stoppered: false, upright: true, inversions: 0, settlesAt: null, disposed: false
-      }))},
+      mixing: {tube: 1, tubes: byKey(tubes, createMixTube), wasteMl: 0},
       notebook: {
         wax: byKey(codes, () => ({diameter: "", profile: ""})),
         waxNotes: "",
@@ -322,10 +338,105 @@
     return Math.abs(reading.seconds - checked.seconds) <= tolerance + Number.EPSILON * Math.max(1, checked.seconds);
   }
 
+  function matchesMixRecipe(tube, number) {
+    const recipe = mixing.recipesMl[number];
+    const [first, second] = tube.aliquots;
+    return (!second || first.code !== second.code) && tube.aliquots.every(({code, ml}) => recipe[code] === ml);
+  }
+
+  function mixStage(tube, number, now) {
+    if (tube.motion) return tube.motion.kind;
+    if (tube.settlesAt !== null) return now >= tube.settlesAt ? "settled" : "settling";
+    if (tube.stoppered) return tube.inversions < mixing.inversionCount ? "invert-ready" : "stand-ready";
+    if (!matchesMixRecipe(tube, number)) return "incorrect";
+    return tube.aliquots.length === 2 ? "seal-ready" : "fill-ready";
+  }
+
+  function pourMixAliquot(tube, number, code, ml, now) {
+    if (!Object.hasOwn(liquids, code) || !mixing.aliquotMl.includes(ml) || mixStage(tube, number, now) !== "fill-ready") return false;
+    tube.disposed = false;
+    tube.motion = {kind: "pouring", start: now, end: now + mixing.pourMs, portion: {code, ml}};
+    return true;
+  }
+
+  function stopperMixTube(tube, number, now) {
+    if (mixStage(tube, number, now) !== "seal-ready") return false;
+    tube.stoppered = true;
+    return true;
+  }
+
+  function invertMixTube(tube, now) {
+    if (tube.motion || !tube.stoppered || tube.inversions >= mixing.inversionCount) return false;
+    tube.motion = {kind: "inverting", start: now, end: now + mixing.invertMs};
+    tube.upright = false;
+    return true;
+  }
+
+  function standMixTube(tube, now) {
+    if (tube.motion || !tube.stoppered || tube.upright || tube.inversions !== mixing.inversionCount) return false;
+    tube.motion = {kind: "placing", start: now, end: now + mixing.standMs};
+    return true;
+  }
+
+  function updateMixTube(tube, now) {
+    const motion = tube.motion;
+    if (!motion || now < motion.end) return;
+    tube.motion = null;
+    if (motion.kind === "pouring") tube.aliquots.push(motion.portion);
+    else if (motion.kind === "inverting") tube.inversions++;
+    else {
+      tube.upright = true;
+      tube.settlesAt = motion.end + mixing.settleMs;
+    }
+  }
+
+  function mixElapsedMs(tube, now) {
+    if (tube.settlesAt === null) return 0;
+    return Math.min(mixing.settleMs, Math.max(0, mixing.settleMs + now - tube.settlesAt));
+  }
+
+  function advanceMixTime(tube, now) {
+    if (tube.settlesAt === null || now >= tube.settlesAt) return false;
+    tube.settlesAt = now;
+    return true;
+  }
+
+  function mixVolume(tube) {
+    return tube.aliquots.reduce((volume, portion) => volume + portion.ml, 0);
+  }
+
+  function mixBand(codes, ml) {
+    const tint = codes.includes("W") ? "blue" : codes.includes("M") ? "red" : "clear";
+    return {ml, tint};
+  }
+
+  // Unmixed portions, bottom to top. Pour order never puts a denser liquid above a lighter one.
+  function mixPouredBands(portions) {
+    return portions.map((portion, order) => ({...portion, order}))
+      .sort((a, b) => mixing.densityGmL[b.code] - mixing.densityGmL[a.code] || a.order - b.order)
+      .map(({code, ml}) => mixBand(code, ml));
+  }
+
+  function mixSettledBands(number) {
+    return mixing.settledBands[number].map((codes) => mixBand(codes,
+      Array.from(codes).reduce((volume, code) => volume + mixing.recipesMl[number][code], 0)));
+  }
+
+  function emptyMixTube(rack, number) {
+    const tube = rack.tubes[number];
+    if (tube.motion || !tube.aliquots.length) return false;
+    rack.wasteMl += mixVolume(tube);
+    rack.tubes[number] = createMixTube();
+    rack.tubes[number].disposed = true;
+    return true;
+  }
+
   const api = {liquids, wax, ruler, shot, mixing, createWaxSample, createState, dispense, landDrop, elapsedMs,
     isSettled, capGeometry, waxGeometry, edgeReadings, createShotTube, updateShot, pauseShot, resumeShot,
     operateShot, canStartStopwatch, toggleStopwatch, playShotReplay, shotSnapshot, manualTimingIssue,
-    parseShotReading, summarizeShotTrials, formatShotAverage, shotMeanMatches};
+    parseShotReading, summarizeShotTrials, formatShotAverage, shotMeanMatches, mixStage, pourMixAliquot,
+    stopperMixTube, invertMixTube, standMixTube, updateMixTube, mixElapsedMs, advanceMixTime, mixVolume,
+    mixBand, mixPouredBands, mixSettledBands, emptyMixTube};
   if (typeof module === "object" && module.exports) module.exports = api;
   if (typeof document === "undefined") return;
   const root = document.querySelector('[data-zsa-activity="molar-mass-trap-lab"]');
