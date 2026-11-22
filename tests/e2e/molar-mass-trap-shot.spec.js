@@ -54,7 +54,8 @@ test("water and glycerin share event timing at different frame cadences and repl
   const errors = errorsFrom(page);
   await openShot(page);
   await expect(page.locator("#shot-tubes button")).toHaveCount(4);
-  for (const [key, time, flight, stepped] of [["W", "0.27", 270, false], ["G", "6.40", 6400, true]]) {
+  // Event timing shows "<0.5" below the hand-held threshold, as the worksheet asks.
+  for (const [key, time, flight, stepped] of [["W", "<0.5", 270, false], ["G", "6.40", 6400, true]]) {
     await selector(page, key).click();
     await page.locator("#shot-mode-event").click();
     const fill = page.locator("#shot-active-tube .zsa-mmt-shot-liquid");
@@ -78,21 +79,25 @@ test("water and glycerin share event timing at different frame cadences and repl
       await expect(clock(page)).toBeFocused();
       await page.clock.runFor(flight);
     } else {
-      await page.clock.fastForward(flight + 540);
+      // Partway through the water fall, the event timer still shows no sub-threshold digits.
+      await page.clock.runFor(460 + 150);
+      await expect(clock(page)).toHaveText("<0.5 s");
+      await page.clock.fastForward(flight + 540 - 610);
     }
     await expect(clock(page)).toHaveText(time + " s");
     await expect(action).toHaveText("Use magnet");
     await page.locator("#shot-record").evaluate((button) => { button.click(); button.click(); });
     const first = card(page, key).getByRole("textbox", {name: "Fall time, trial 1 (s)"});
     await expect(first).toHaveValue(time);
-    await expect(first).toHaveAccessibleDescription("Instrument-timed");
+    // A "<0.5" reading is not marked as instrument-timed, so it matches a hand-timed one.
+    await expect(first).toHaveAccessibleDescription(key === "W" ? "" : "Instrument-timed");
     await expect(card(page, key).getByRole("textbox", {name: "Fall time, trial 2 (s)"})).toHaveValue("");
 
     await page.locator("#shot-replay").click();
     const instruction = page.locator("#bench-instruction");
     await expect(instruction).toHaveText(key === "W" ? /Slow-motion replay/ : /Replay. The shot leaves the stopper/);
     await page.clock.fastForward(Math.max(flight, 1400) + 80);
-    await expect(instruction).toHaveText(key === "W" ? /The original fall took 0\.27 s/ : /First contact came 6\.40 s/);
+    await expect(instruction).toHaveText(key === "W" ? /The original fall took less than 0\.5 s/ : /First contact came 6\.40 s/);
     await expect(clock(page)).toHaveText(time + " s");
     await expect(card(page, key).getByRole("textbox", {name: "Fall time, trial 2 (s)"})).toHaveValue("");
   }

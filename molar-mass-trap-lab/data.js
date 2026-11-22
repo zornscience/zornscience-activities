@@ -156,6 +156,8 @@
       "Slow-motion replay. Watch for departure and first contact.": "Repetición en cámara lenta. Observa la salida y el primer contacto.",
       "Slow-motion replay complete. The markers show when to start and stop timing.": "Terminó la repetición en cámara lenta. Las marcas indican cuándo iniciar y detener el cronómetro.",
       "Slow-motion replay complete. The original fall took {seconds} s.": "Terminó la repetición en cámara lenta. La caída original duró {seconds} s.",
+      "Slow-motion replay complete. The original fall took less than 0.5 s.": "Terminó la repetición en cámara lenta. La caída original duró menos de 0.5 s.",
+      "Replay complete. First contact came less than 0.5 s after departure.": "Repetición completa. El perdigón tocó el fondo menos de 0.5 s después de salir del tapón.",
       "Reading {seconds} s saved as trial {number}.": "Se guardó la lectura de {seconds} s como ensayo {number}.",
       "Tilt the selected tube to bring the shot to the stopper.": "Inclina el tubo seleccionado para llevar el perdigón al tapón.",
       "The shot touched the bottom. Stop timing.": "El perdigón tocó el fondo. Detén el cronómetro.",

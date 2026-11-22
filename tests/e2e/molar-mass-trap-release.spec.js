@@ -58,7 +58,7 @@ async function timeShot(page, code) {
   if (code === "W") await page.locator("#shot-mode-event").click();
   await operate.click();
   await page.clock.fastForward(shotMs[code] + 250);
-  await expect(page.locator("#shot-time")).toHaveText((shotMs[code] / 1000).toFixed(2) + " s");
+  await expect(page.locator("#shot-time")).toHaveText(code === "W" ? "<0.5 s" : (shotMs[code] / 1000).toFixed(2) + " s");
   await page.locator("#shot-record").click();
 }
 
@@ -114,7 +114,7 @@ for (const order of orders) {
     await expect(mixRow(page, 3).getByRole("textbox")).toHaveValue(mixes[3].dye);
     await station(page, "shot").click();
     await expect(shotRow(page, "W").getByRole("textbox").nth(0)).toHaveValue("<0.5");
-    await expect(shotRow(page, "W").getByRole("textbox").nth(1)).toHaveValue("0.27");
+    await expect(shotRow(page, "W").getByRole("textbox").nth(1)).toHaveValue("<0.5");
   });
 }
 
@@ -151,7 +151,7 @@ test("the entire interleaved classroom walkthrough prints and reopens with brows
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   for (const code of ["M", "O", "G"]) await timeShot(page, code);
   await page.locator("#shot-check-averages").click();
-  const means = ["0.135 to <0.385 s", "6.40 s", "0.98 s", "2.25 s"];
+  const means = ["<0.5 s", "6.40 s", "0.98 s", "2.25 s"];
   await expect(page.locator("#shot-entries .zsa-mmt-shot-result")).toHaveText(means);
   await station(page, "wax").click();
   for (const code of ["G", "M", "O"]) await measureWax(page, code);
@@ -196,7 +196,7 @@ test("the entire interleaved classroom walkthrough prints and reopens with brows
     const values = shotRow(page, code).locator("td .zsa-mmt-print-only");
     const time = (shotMs[code] / 1000).toFixed(2);
     await expect(values.nth(0)).toHaveText(code === "W" ? "<0.5" : time);
-    await expect(values.nth(1)).toHaveText(time);
+    await expect(values.nth(1)).toHaveText(code === "W" ? "<0.5" : time);
   }
   await expect(page.locator("#shot-entries .zsa-mmt-shot-result")).toHaveText(means);
   for (const [number, {layers, dye}] of Object.entries(mixes)) {
@@ -236,7 +236,7 @@ test("the entire interleaved classroom walkthrough prints and reopens with brows
   await expect(mixRow(page, 3).getByRole("status")).toHaveText("Prediction differed");
   await station(page, "shot").click();
   await expect(page.locator("#shot-entries .zsa-mmt-shot-result")).toHaveText(means);
-  await expect(shotRow(page, "W").getByRole("textbox").nth(1)).toHaveAccessibleDescription("Instrument-timed");
+  await expect(shotRow(page, "G").getByRole("textbox").nth(1)).toHaveAccessibleDescription("Instrument-timed");
   await page.locator("#restart-open").click();
   await page.locator("#restart-confirm").click();
   await expect(waxRow(page, "W").getByRole("textbox")).toHaveValue("");

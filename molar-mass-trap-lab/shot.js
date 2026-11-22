@@ -275,6 +275,15 @@
       }
     }
 
+    // Event timing reads to the same 0.5 s floor as a hand-held stopwatch, so a fast fall gives the worksheet's "<0.5".
+    function belowEventFloor(trial, elapsedMs) {
+      return trial.mode === "event" && trial.startedAt !== null && elapsedMs < shot.manualThresholdS * 1000;
+    }
+
+    function readingText(trial, elapsedMs) {
+      return belowEventFloor(trial, elapsedMs) ? "<0.5" : (elapsedMs / 1000).toFixed(2);
+    }
+
     function appendReading(value) {
       const live = tube();
       if (live.trial.recorded) return;
@@ -297,7 +306,7 @@
       if (trial.startedAt === null || trial.stoppedAt === null || model.manualTimingIssue(trial)) return;
       const elapsedMs = trial.stoppedAt - trial.startedAt;
       if (elapsedMs < 5) return;
-      const reading = (elapsedMs / 1000).toFixed(2);
+      const reading = readingText(trial, elapsedMs);
       notice = {key: code(), reading, number: appendReading(reading)};
     }
 
@@ -372,6 +381,10 @@
             if (trial.mode !== "event") return t(slowReplay ?
               "Slow-motion replay complete. The markers show when to start and stop timing." :
               "Replay complete. Compare the marked departure and first contact with your stopwatch.");
+            if (shot.travelMs[key] < shot.manualThresholdS * 1000) {
+              return t(slowReplay ? "Slow-motion replay complete. The original fall took less than 0.5 s." :
+                "Replay complete. First contact came less than 0.5 s after departure.");
+            }
             return t(slowReplay ? "Slow-motion replay complete. The original fall took {seconds} s." :
               "Replay complete. First contact came {seconds} s after departure.", {seconds: (shot.travelMs[key] / 1000).toFixed(2)});
           }
@@ -441,7 +454,7 @@
         updateControls(sample, key, view, phase === "replaying" && sample.phase === "at-bottom");
       }
       paintArt(sample, key, view, motion, force, now);
-      setText($("shot-time"), (view.stopwatchMs / 1000).toFixed(2) + " s");
+      setText($("shot-time"), readingText(sample.trial, view.stopwatchMs) + " s");
       return {
         moving: !paused && Number.isFinite(view.remaining),
         next: paused ? Infinity : Math.min(view.remaining, view.running ? 100 : Infinity)
@@ -487,7 +500,7 @@
     action("shot-record", () => {
       const now = clock();
       const view = model.shotSnapshot(tube(), code(), now);
-      appendReading((view.stopwatchMs / 1000).toFixed(2));
+      appendReading(readingText(tube().trial, view.stopwatchMs));
     });
     action("shot-record-below", () => appendReading("<0.5"));
     return {paint, pause, renderNotebook};
