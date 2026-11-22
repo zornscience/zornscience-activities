@@ -584,6 +584,11 @@ body {
   margin: 0 0 10px;
 }
 
+/* Keep formula subscripts from widening the gap between lines. */
+.zsa-mmt sub {
+  line-height: 0;
+}
+
 .zsa-mmt .zsa-about {
   margin-inline: 0;
 }
