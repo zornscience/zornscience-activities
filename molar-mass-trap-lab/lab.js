@@ -263,19 +263,20 @@
     const geometry = model.waxGeometry(code, sample, now);
     renderWaxArt(code, geometry, settled);
     setAvailability("dispense", !pending && sample.drops < wax.dropCount);
-    setAvailability("advance", settling && !settled);
     setAvailability("reset-sample", pending || sample.drops > 0);
 
     let instruction = "Add 3 drops to one spot in box {code}.";
     if (pending) instruction = "The drop is falling into box {code}.";
     else if (settled) instruction = "Align zero with the left edge. Read the right edge in mm and record the side view.";
-    else if (settling) instruction = "Let the puddle settle for 30 s, or advance time.";
+    else if (settling) instruction = "The puddle is settling for 30 s.";
     setText($("bench-instruction"), t(instruction, {code}));
     setText($("drop-count"), t("{count} / 3 drops · {volume} mL", {
       count: sample.drops, volume: (sample.drops * wax.dropMl).toFixed(2)
     }));
     $("settle-clock").hidden = !settling;
-    setText($("settle-clock"), t(settled ? "Settled · 30 s" : "Settling {elapsed} / 30 s", {elapsed: Math.floor(elapsed / 1000)}));
+    // The clock counts the full 30 s while real time runs faster.
+    const shownSeconds = Math.floor(elapsed / wax.settleMs * wax.settleDisplayS);
+    setText($("settle-clock"), t(settled ? "Settled · 30 s" : "Settling {elapsed} / 30 s", {elapsed: shownSeconds}));
     $("measure-tools").hidden = !settled;
     renderRuler(sample);
 
@@ -291,7 +292,7 @@
     // No frame loop while the apparatus is still. Only wake for a drop landing or a settling tick.
     const nextLanding = Math.min(...samples.map((entry) => entry.dropLandsAt ?? Infinity));
     const nextTick = Math.min(...samples.map(({settlesAt}) =>
-      settlesAt > now ? Math.min(settlesAt, now + 1000) : Infinity
+      settlesAt > now ? Math.min(settlesAt, now + wax.settleMs / wax.settleDisplayS) : Infinity
     ));
     const next = Math.min(nextLanding, nextTick);
     if (Number.isFinite(next)) wake = setTimeout(renderBench, Math.max(1, Math.ceil(next - now)));
@@ -332,6 +333,24 @@
     addWaxBox(code, index);
   });
 
+  // The intro screen introduces the liquids. The bench stays hidden until the student starts the lab.
+  function showIntro(open) {
+    $("intro").hidden = !open;
+    $("stations").hidden = open;
+    $("workspace").hidden = open;
+    $("intro-open").hidden = open;
+  }
+  $("intro-start").addEventListener("click", () => {
+    showIntro(false);
+    renderBench();
+    buttons.find((button) => button.getAttribute("aria-pressed") === "true").focus();
+  });
+  $("intro-open").addEventListener("click", () => {
+    if (state.station === "shot") shotStation.pause(clock());
+    showIntro(true);
+    $("intro-title").focus();
+  });
+
   for (const button of buttons) button.addEventListener("click", () => {
     if (state.station === "shot" && button.dataset.station !== "shot") shotStation.pause(clock());
     state.station = button.dataset.station;
@@ -346,13 +365,6 @@
     const sample = selectedSample();
     model.landDrop(sample, now);
     if (model.dispense(sample, now)) renderBench();
-  });
-  $("advance").addEventListener("click", () => {
-    const now = clock();
-    const sample = selectedSample();
-    if (sample.settlesAt === null || model.isSettled(sample, now)) return;
-    sample.settlesAt = now;
-    renderBench();
   });
   $("reset-sample").addEventListener("click", () => {
     state.wax.samples[state.wax.liquid] = model.createWaxSample();

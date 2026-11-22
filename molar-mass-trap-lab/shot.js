@@ -18,7 +18,6 @@
     const innerBend = bottom + radius - 12;
     const outerBend = bottom + radius + 1 - 14;
     const tubeSelector = $("shot-tubes");
-    const magnet = $("shot-magnet");
     const activeTube = $("shot-active-tube");
     const artLiquid = $("shot-art-liquid");
 
@@ -56,6 +55,12 @@
       liquid.dataset.liquid = key;
       const label = svg("text", {x, y: 222, "text-anchor": "middle", class: "zsa-mmt-scene-label"});
       label.textContent = key;
+      // Clicking a tube in the rack selects it, like its named button. The rack is a pointer shortcut,
+      // hidden from assistive technology; keyboard and screen reader users use the named buttons.
+      for (const target of [group, label]) {
+        target.dataset.shotRackTube = key;
+        target.addEventListener("click", () => chooseTube(key));
+      }
       $("shot-rack-content").append(group, label);
       racks[key] = {group, drawing, ball};
     }
@@ -105,7 +110,6 @@
     function position(sample, progress) {
       switch (sample.phase) {
         case "tilting": return 1 - Math.max(0, (progress - .35) / .65);
-        case "magnet-return": return 1 - progress;
         case "falling":
         case "replaying": return progress;
         case "at-bottom": return 1;
@@ -126,11 +130,6 @@
       racks[key].drawing.setAttribute("visibility", angle > 1 ? "hidden" : "visible");
       racks[key].ball.setAttribute("cy", y);
       $("shot-markers").setAttribute("visibility", angle > 1 ? "hidden" : "visible");
-      const near = sample.phase === "magnet-return" || (sample.phase === "at-stopper" && sample.orientation === "upright");
-      const retract = sample.phase === "releasing" ? p : 1;
-      const magnetX = near ? 240 : 240 + 111 * retract;
-      const magnetY = near ? 119 + y : 119 + top + (155 - 119 - top) * retract;
-      magnet.setAttribute("transform", `translate(${magnetX} ${magnetY})`);
 
       if (force) {
         setText(artLiquid, liquidName(key));
@@ -155,11 +154,8 @@
       if (trial.pausedAt !== null) return t("Trial paused. Resume when you are ready.");
       switch (sample.phase) {
         case "tilting": return t("The shot is moving toward the stopper.");
-        case "magnet-return": return t("The magnet is moving the shot toward the stopper.");
-        case "at-stopper": return t(sample.orientation === "tilted" ?
-          "The shot is at the stopper. Turn the tube upright." : "The shot is at the stopper. Release it by moving the magnet away.");
-        case "uprighting":
-        case "releasing": return t("Watch for the shot to leave the stopper.");
+        case "at-stopper": return t("The shot is at the stopper. Turn the tube upright.");
+        case "uprighting": return t("Watch for the shot to leave the stopper.");
         case "falling": return t("The shot left the stopper. The stopwatch is running.");
         case "replaying": return t(slowReplay ? "Slow-motion replay. Watch for departure and first contact." :
           "Replay. The shot leaves the stopper. Watch for first contact.");
@@ -173,7 +169,7 @@
               "Replay complete. First contact came {seconds} s after departure.", {seconds: (shot.travelMs[key] / 1000).toFixed(2)});
           }
           if (trial.contactedAt === null) return t("Tilt the selected tube to bring the shot to the stopper.");
-          return t("The shot touched the bottom. Record the time on your lab worksheet, then use the magnet for another trial.");
+          return t("The shot touched the bottom. Record the time on your lab worksheet, then tilt the tube for another trial.");
       }
     }
 
@@ -184,9 +180,7 @@
       const atStopper = sample.phase === "at-stopper";
       const hasFall = atBottom && trial.contactedAt !== null;
       setText($("bench-instruction"), instruction(sample, view, justReplayed, key));
-      let operation = trial.departedAt !== null || sample.phase === "magnet-return" ? "Use magnet" : "Tilt tube";
-      if (sample.phase === "uprighting" || (atStopper && sample.orientation === "tilted")) operation = "Turn upright";
-      else if (sample.phase === "releasing" || atStopper) operation = "Release shot";
+      const operation = sample.phase === "uprighting" || atStopper ? "Turn upright" : "Tilt tube";
       setText($("shot-operate"), t(operation));
       $("shot-resume").hidden = !paused;
       setAvailability("shot-operate", !paused && (atStopper || (atBottom && !view.running)));

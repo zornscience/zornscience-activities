@@ -7,11 +7,11 @@
   function createMixingStation({model, t, svg, element, setText, setAvailability, clock, getState, refresh}) {
     const $ = (id) => document.getElementById(id);
     const {liquids, mixing} = model;
-    const tubes = Object.keys(mixing.recipesMl).map(Number);
-    const settledBands = Object.fromEntries(tubes.map((number) => [number, model.mixSettledBands(number)]));
+    const tubes = Array.from({length: mixing.tubeCount}, (_, index) => index + 1);
     const liquid = $("mix-liquid");
-    const amount = $("mix-amount");
     const action = $("mix-action");
+    const actionLabel = $("mix-action-label");
+    const actionIcon = $("mix-action-icon");
     const stand = $("mix-stand");
     const advance = $("mix-advance");
     const settleClock = $("mix-elapsed");
@@ -87,7 +87,7 @@
       button.addEventListener("click", () => {
         if (rack().tube === number) return;
         rack().tube = number;
-        liquid.value = amount.value = "";
+        liquid.value = "";
         requestedReading = false;
         refresh();
       });
@@ -102,17 +102,16 @@
     function renderLabels() {
       setText(liquid.options[0], t("Choose liquid"));
       for (const item of Array.from(liquid.options).slice(1)) setText(item, liquidLabel(item.value));
-      setText(amount.options[0], t("Choose amount"));
     }
 
     function motionProgress(tube, now) {
       return tube.motion ? Math.max(0, (now - tube.motion.start) / (tube.motion.end - tube.motion.start)) : 0;
     }
 
-    function layerDrawing(tube, number, now, progress) {
+    function layerDrawing(tube, now, progress) {
       const stage = tube.motion?.kind;
       if (stage === "inverting" || tube.inversions) {
-        return {bands: settledBands[number], streaks: 1 - model.mixElapsedMs(tube, now) / mixing.settleMs};
+        return {bands: model.mixSettledBands(tube), streaks: 1 - model.mixElapsedMs(tube, now) / mixing.settleMs};
       }
       const portions = [...tube.aliquots];
       if (stage === "pouring" && progress > 0.28) {
@@ -153,7 +152,7 @@
       visible(art.streaks, streaks > 0);
       if (streaks > 0) {
         setAttr(art.cloud, "d", bandPath(airLine, tubeBottom, curve, true));
-        const base = bands.find(({tint}) => tint !== "clear").tint;
+        const base = bands.find(({tint}) => tint !== "clear")?.tint ?? "clear";
         setAttr(art.cloud, "fill", `url(#mmt-mix-${base})`);
         setAttr(art.cloud, "fill-opacity", streaks);
         const tracer = bands.length === 2 && bands.every(({tint}) => tint !== "clear") ? "#eb8b81" : "#e5f4f8";
@@ -172,7 +171,7 @@
       return airLine;
     }
 
-    function paintCloseUp(tube, number, stage, now, animate) {
+    function paintCloseUp(tube, stage, now, animate) {
       const progress = motionProgress(tube, now);
       let angle = tube.upright ? 0 : heldAngle;
       if (stage === "inverting") {
@@ -181,10 +180,10 @@
       } else if (stage === "placing") angle = heldAngle * (1 - progress);
       if (!animate) angle = 0;
       setAttr(holder, "transform", `translate(${centerX} ${centerY}) rotate(${angle})`);
-      const y = paintTube(drawing, tube, layerDrawing(tube, number, now, progress), angle < -90);
+      const y = paintTube(drawing, tube, layerDrawing(tube, now, progress), angle < -90);
       setAttr($("mix-surface"), "transform", `translate(${centerX + 18} ${centerY + y})`);
       visible($("mix-surface"), tube.upright && tube.aliquots.length > 0 && stage !== "pouring");
-      const portion = stage === "pouring" ? tube.motion.portion : {code: liquid.value, ml: Number(amount.value)};
+      const portion = stage === "pouring" ? tube.motion.portion : {code: liquid.value, ml: mixing.aliquotMl};
       const pouring = stage === "pouring" && animate;
       setAttr($("mix-pipette-art"), "transform", pouring ? `translate(${centerX} 19)` : "translate(258 83) rotate(19)");
       const pipetteFill = $("mix-pipette-fill");
@@ -203,58 +202,70 @@
       }
     }
 
-    function describeLayers(number) {
-      const [lower, upper] = settledBands[number];
-      if (!upper) return t(lower.tint === "blue" ? "One uniform blue-tinted layer." : "One uniform red-tinted layer.");
-      if (upper.tint === "clear") return t("A smaller clear band above a blue band.");
-      return t(lower.tint === "blue" ? "A red band above a blue band." : "A red band above a clear band.");
+    const oneLayer = {
+      blue: "One uniform blue-tinted layer.", red: "One uniform red-tinted layer.", clear: "One uniform clear layer."
+    };
+
+    // Describe the bands for whatever the student mixed, bottom to top.
+    function describeBands([lower, upper]) {
+      if (!upper) return t(oneLayer[lower.tint]);
+      return t("A {upper} band above a {lower} band.", {upper: t(upper.tint), lower: t(lower.tint)});
     }
 
-    function describeObservation(tube, number, stage, elapsed) {
-      if (stage === "settled") return describeLayers(number);
+    function describeObservation(tube, stage, elapsed) {
+      if (stage === "settled") return describeBands(model.mixSettledBands(tube));
       if (stage === "invert-ready" && tube.inversions === 0) {
-        const [lower, upper] = model.mixPouredBands(tube.aliquots);
-        return t("Before inversion, a {upper} band sits above a {lower} band.", {upper: t(upper.tint), lower: t(lower.tint)});
+        const bands = model.mixPouredBands(tube.aliquots);
+        if (bands.length === 1) return describeBands(bands);
+        return t("Before inversion, a {upper} band sits above a {lower} band.", {upper: t(bands[1].tint), lower: t(bands[0].tint)});
       }
-      if (stage === "settling" && elapsed >= 30) {
-        return t(settledBands[number].length === 1 ? "The tint is becoming more even as the streaks fade." :
+      if (stage === "settling" && elapsed >= mixing.settleDisplayS / 2) {
+        return t(model.mixSettledBands(tube).length === 1 ? "The tint is becoming more even as the streaks fade." :
           "The boundary between the bands is becoming clearer as the streaks fade.");
       }
       return t("Streaks are visible in the tube. Read the settled layers after five inversions and 60 s upright.");
     }
 
     const actions = {
-      "fill-ready": "Dispense aliquot", pouring: "Dispense aliquot", "seal-ready": "Add stopper",
+      "fill-ready": "Dispense liquid", pouring: "Dispense liquid", "seal-ready": "Add stopper",
       "invert-ready": "Gently invert", inverting: "Gently invert", "stand-ready": "Gently invert", placing: "Gently invert",
       settling: "Gently invert"
     };
     const instructions = {
-      "fill-ready": "Choose the liquid and pipette volume for the next aliquot.",
-      pouring: "The pipette is transferring the aliquot.",
-      "seal-ready": "Both aliquots are in the tube. Add a stopper.",
+      "fill-ready": "Choose a liquid for the pipette. Each tube holds two 1.0 mL portions.",
+      pouring: "The pipette is adding the liquid.",
+      "seal-ready": "Both portions are in the tube. Add a stopper.",
       "invert-ready": "Gently invert the stoppered tube five times.",
       inverting: "Watch the liquids move as you invert the tube.",
       "stand-ready": "Five inversions complete. Set the tube upright.",
       placing: "The tube is returning to the rack.",
       settling: "Let the tube stand for 60 s, or advance time.",
-      settled: "Count the layers below the curved surface. Record where the dye went.",
-      incorrect: "The amounts or liquids differ from this recipe. Empty this tube and try again."
+      settled: "Count the layers below the curved surface. Record where the dye went."
     };
+
+    // Show what the student has added so far, never a recipe.
+    function contents(tube, number) {
+      const added = tube.aliquots.map(({code, ml}) => liquidLabel(code) + " " + volumeLabel(ml));
+      return tubeLabel(number) + " · " + (added.length ? added.join(" + ") : t("Empty"));
+    }
 
     function updateControls(tube, number, stage, elapsed) {
       const focused = document.activeElement;
       const note = tube.disposed ? "Tube {number} is empty. Its contents are in the waste beaker." : instructions[stage];
       setText($("bench-instruction"), t(note, {number}));
+      setText($("mix-recipe"), contents(tube, number));
       setText($("mix-volume"), volumeLabel(model.mixVolume(tube)) + " " + t("total"));
       $("mix-pipettes").hidden = stage !== "fill-ready" && stage !== "pouring";
-      liquid.disabled = amount.disabled = stage === "pouring";
+      liquid.disabled = stage === "pouring";
       $("mix-progress").hidden = !tube.stoppered;
       settleClock.hidden = tube.settlesAt === null;
       setText($("mix-inversions"), t("{count} / 5 inversions", {count: tube.inversions}));
-      setText(settleClock, `${elapsed} / 60 s`);
+      setText(settleClock, `${elapsed} / ${mixing.settleDisplayS} s`);
       action.hidden = !actions[stage];
-      if (!action.hidden) setText(action, t(actions[stage]));
-      const canDispense = stage === "fill-ready" && Boolean(liquid.value && amount.value);
+      if (!action.hidden) setText(actionLabel, t(actions[stage]));
+      // SVG elements have no hidden property, so set the attribute the stylesheet hides.
+      actionIcon.toggleAttribute("hidden", !["fill-ready", "pouring"].includes(stage));
+      const canDispense = stage === "fill-ready" && Boolean(liquid.value);
       setAvailability("mix-action", canDispense || stage === "seal-ready" || stage === "invert-ready");
       stand.hidden = !["stand-ready", "placing", "settling"].includes(stage);
       setAvailability("mix-stand", stage === "stand-ready");
@@ -266,7 +277,7 @@
       else if (action.hidden && focused === action) empty.focus();
       else if (stage === "settling" && lastStage === "placing" && focused === stand) settleClock.focus();
 
-      setText($("mix-observation"), requestedReading ? describeObservation(tube, number, stage, elapsed) : "");
+      setText($("mix-observation"), requestedReading ? describeObservation(tube, stage, elapsed) : "");
     }
 
     function paintRack(bench, now) {
@@ -274,12 +285,12 @@
         const tube = bench.tubes[number];
         const {button, small, icon} = slots[number];
         const volume = model.mixVolume(tube);
-        const stage = model.mixStage(tube, number, now);
+        const stage = model.mixStage(tube, now);
         setAttr(button, "aria-label", tubeLabel(number));
         setAttr(button, "aria-description", stage === "settling" ? t("{volume} · Settling", {volume: volumeLabel(volume)}) : volumeLabel(volume));
         setAttr(button, "aria-pressed", String(number === bench.tube));
         visible(icon, tube.upright);
-        paintTube(small, tube, layerDrawing(tube, number, now, 0), false);
+        paintTube(small, tube, layerDrawing(tube, now, 0), false);
       }
       const waste = $("mix-waste-fill");
       const y = 181 - Math.min(37, bench.wasteMl * 3.5);
@@ -296,20 +307,18 @@
         model.updateMixTube(tube, now);
         changed ||= previous !== tube.motion;
         if (tube.motion) next = Math.min(next, tube.motion.end - now);
-        if (tube.settlesAt > now) next = Math.min(next, tube.settlesAt - now, 1000 - model.mixElapsedMs(tube, now) % 1000);
+        // Wake for each simulated second the clock shows.
+        const tick = mixing.settleMs / mixing.settleDisplayS;
+        if (tube.settlesAt > now) next = Math.min(next, tube.settlesAt - now, tick - model.mixElapsedMs(tube, now) % tick);
       }
       const tube = bench.tubes[bench.tube];
-      const stage = model.mixStage(tube, bench.tube, now);
-      const elapsed = Math.floor(model.mixElapsedMs(tube, now) / 1000);
+      const stage = model.mixStage(tube, now);
+      const elapsed = model.mixDisplaySeconds(tube, now);
       const second = Math.floor(now / 1000);
-      if (force) {
-        const recipe = Object.entries(mixing.recipesMl[bench.tube]).map(([code, ml]) => liquidLabel(code) + " " + volumeLabel(ml));
-        setText($("mix-recipe"), tubeLabel(bench.tube) + " · " + recipe.join(" + "));
-        setText($("mix-art-label"), tubeLabel(bench.tube));
-      }
+      if (force) setText($("mix-art-label"), tubeLabel(bench.tube));
       if (force || changed || second !== lastSecond || elapsed !== lastElapsed) paintRack(bench, now);
       if (force || stage !== lastStage || elapsed !== lastElapsed) updateControls(tube, bench.tube, stage, elapsed);
-      paintCloseUp(tube, bench.tube, stage, now, animate);
+      paintCloseUp(tube, stage, now, animate);
       lastStage = stage;
       lastSecond = second;
       lastElapsed = elapsed;
@@ -317,14 +326,8 @@
     }
 
     liquid.append(...["", ...Object.keys(liquids)].map(option));
-    amount.append(option(""));
-    for (const ml of mixing.aliquotMl) {
-      const item = option(ml);
-      setText(item, volumeLabel(ml));
-      amount.append(item);
-    }
     for (const number of tubes) addSlot(number);
-    for (const input of [liquid, amount]) input.addEventListener("change", refresh);
+    liquid.addEventListener("change", refresh);
     for (const control of [action, stand, advance, empty]) {
       control.addEventListener("keydown", (event) => {
         if (event.repeat && event.key === "Enter") event.preventDefault();
@@ -333,14 +336,13 @@
     action.addEventListener("click", () => {
       if (action.getAttribute("aria-disabled") === "true") return;
       const tube = selectedTube();
-      const number = rack().tube;
       const now = clock();
       requestedReading = false;
-      switch (model.mixStage(tube, number, now)) {
+      switch (model.mixStage(tube, now)) {
         case "fill-ready":
-          if (model.pourMixAliquot(tube, number, liquid.value, Number(amount.value), now)) liquid.value = amount.value = "";
+          if (model.pourMixAliquot(tube, liquid.value, now)) liquid.value = "";
           break;
-        case "seal-ready": model.stopperMixTube(tube, number, now); break;
+        case "seal-ready": model.stopperMixTube(tube, now); break;
         case "invert-ready": model.invertMixTube(tube, now); break;
       }
       refresh();
@@ -357,12 +359,12 @@
     });
     empty.addEventListener("click", () => {
       if (!model.emptyMixTube(rack(), rack().tube)) return;
-      liquid.value = amount.value = "";
+      liquid.value = "";
       requestedReading = false;
       refresh();
     });
     return {paint, renderLabels, reset() {
-      liquid.value = amount.value = "";
+      liquid.value = "";
       requestedReading = false;
     }};
   }

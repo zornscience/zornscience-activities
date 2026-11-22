@@ -33,6 +33,7 @@
         <h1>The Molar Mass Trap Lab</h1>
       </div>
       <nav data-zsa-header-tools aria-label="Activity tools">
+        <button id="intro-open" class="zsa-btn" type="button" aria-controls="intro" hidden>Intro</button>
         <button id="instructions-open" class="zsa-btn" aria-haspopup="dialog" aria-controls="instructions" type="button">Instructions</button>
         <button id="share-open" class="zsa-btn" aria-haspopup="dialog" aria-controls="share" data-zsa-chrome type="button"><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button>
       </nav>
@@ -40,7 +41,55 @@
   </header>
   <noscript><p>This simulation needs JavaScript.</p><p lang="es-MX">Esta simulación necesita JavaScript.</p></noscript>
 
-  <div class="zsa-mmt-stations" role="group" aria-label="Lab stations">
+  <section id="intro" class="zsa-mmt-intro" aria-labelledby="intro-title">
+    <h2 id="intro-title" tabindex="-1">Meet the four liquids</h2>
+    <p class="zsa-mmt-intro-lead">Water is the lightest molecule in this lab at 18 g/mol. Mineral oil molecules are more than 15 times heavier. If molar mass were all that mattered, water would lose every test. Find out where water wins, where it loses, and which intermolecular forces explain each result.</p>
+    <ul class="zsa-mmt-liquids">
+      <li class="zsa-mmt-liquid-card" data-liquid="W">
+        <div class="zsa-mmt-liquid-head"><span class="zsa-mmt-bottle-code">W</span><h3>Water</h3><span class="zsa-mmt-liquid-tint">Tinted blue</span></div>
+        <div class="zsa-mmt-lewis-frame"><svg class="zsa-mmt-lewis" viewBox="0 0 140 60" width="140" height="60" role="img" aria-label="Lewis structure of water. An oxygen atom bonds to two hydrogen atoms and has two lone pairs."><g class="zsa-mmt-lewis-bonds"><path d="M29 30H61"/><path d="M79 30H111"/></g><g class="zsa-mmt-lewis-pairs"><circle cx="66" cy="15" r="1.7"/><circle cx="74" cy="15" r="1.7"/><circle cx="66" cy="45" r="1.7"/><circle cx="74" cy="45" r="1.7"/></g><g class="zsa-mmt-lewis-atoms"><text x="20" y="30">H</text><text x="70" y="30" class="zsa-mmt-lewis-o">O</text><text x="120" y="30">H</text></g></svg></div>
+        <dl class="zsa-mmt-liquid-facts">
+          <div><dt>Formula</dt><dd>H<sub>2</sub>O</dd></div>
+          <div><dt>Molar mass</dt><dd>18 g/mol</dd></div>
+        </dl>
+        <div class="zsa-mmt-mass-bar" aria-hidden="true"><span></span></div>
+      </li>
+      <li class="zsa-mmt-liquid-card" data-liquid="G">
+        <div class="zsa-mmt-liquid-head"><span class="zsa-mmt-bottle-code">G</span><h3>Glycerin</h3><span class="zsa-mmt-liquid-tint">Clear</span></div>
+        <div class="zsa-mmt-lewis-frame"><svg class="zsa-mmt-lewis" viewBox="0 0 240 150" width="240" height="150" role="img" aria-label="Lewis structure of glycerin. A chain of three carbon atoms. Each carbon bonds to one OH group, and each oxygen has two lone pairs."><g class="zsa-mmt-lewis-bonds"><path d="M60 45V28"/><path d="M60 65V87"/><path d="M60 107V125"/><path d="M120 45V28"/><path d="M120 65V87"/><path d="M120 107V125"/><path d="M69 55H111"/><path d="M180 45V28"/><path d="M180 65V87"/><path d="M180 107V125"/><path d="M129 55H171"/><path d="M31 55H51"/><path d="M189 55H209"/></g><g class="zsa-mmt-lewis-pairs"><circle cx="47" cy="93" r="1.7"/><circle cx="47" cy="101" r="1.7"/><circle cx="73" cy="93" r="1.7"/><circle cx="73" cy="101" r="1.7"/><circle cx="107" cy="93" r="1.7"/><circle cx="107" cy="101" r="1.7"/><circle cx="133" cy="93" r="1.7"/><circle cx="133" cy="101" r="1.7"/><circle cx="167" cy="93" r="1.7"/><circle cx="167" cy="101" r="1.7"/><circle cx="193" cy="93" r="1.7"/><circle cx="193" cy="101" r="1.7"/></g><g class="zsa-mmt-lewis-atoms"><text x="60" y="55">C</text><text x="60" y="18">H</text><text x="60" y="97" class="zsa-mmt-lewis-o">O</text><text x="60" y="135">H</text><text x="120" y="55">C</text><text x="120" y="18">H</text><text x="120" y="97" class="zsa-mmt-lewis-o">O</text><text x="120" y="135">H</text><text x="180" y="55">C</text><text x="180" y="18">H</text><text x="180" y="97" class="zsa-mmt-lewis-o">O</text><text x="180" y="135">H</text><text x="22" y="55">H</text><text x="218" y="55">H</text></g></svg></div>
+        <dl class="zsa-mmt-liquid-facts">
+          <div><dt>Formula</dt><dd>C<sub>3</sub>H<sub>5</sub>(OH)<sub>3</sub></dd></div>
+          <div><dt>Molar mass</dt><dd>92 g/mol</dd></div>
+        </dl>
+        <div class="zsa-mmt-mass-bar" aria-hidden="true"><span></span></div>
+      </li>
+      <li class="zsa-mmt-liquid-card" data-liquid="O">
+        <div class="zsa-mmt-liquid-head"><span class="zsa-mmt-bottle-code">O</span><h3>1-octanol</h3><span class="zsa-mmt-liquid-tint">Clear</span></div>
+        <div class="zsa-mmt-lewis-frame"><svg class="zsa-mmt-lewis" viewBox="0 0 396 110" width="396" height="110" role="img" aria-label="Lewis structure of 1-octanol. A chain of eight carbon atoms with an OH group at one end. The oxygen has two lone pairs."><g class="zsa-mmt-lewis-bonds"><path d="M40 45V28"/><path d="M40 65V82"/><path d="M78 45V28"/><path d="M78 65V82"/><path d="M49 55H69"/><path d="M116 45V28"/><path d="M116 65V82"/><path d="M87 55H107"/><path d="M154 45V28"/><path d="M154 65V82"/><path d="M125 55H145"/><path d="M192 45V28"/><path d="M192 65V82"/><path d="M163 55H183"/><path d="M230 45V28"/><path d="M230 65V82"/><path d="M201 55H221"/><path d="M268 45V28"/><path d="M268 65V82"/><path d="M239 55H259"/><path d="M306 45V28"/><path d="M306 65V82"/><path d="M277 55H297"/><path d="M17 55H31"/><path d="M315 55H335"/><path d="M353 55H373"/></g><g class="zsa-mmt-lewis-pairs"><circle cx="340" cy="40" r="1.7"/><circle cx="348" cy="40" r="1.7"/><circle cx="340" cy="70" r="1.7"/><circle cx="348" cy="70" r="1.7"/></g><g class="zsa-mmt-lewis-atoms"><text x="40" y="55">C</text><text x="40" y="18">H</text><text x="40" y="92">H</text><text x="78" y="55">C</text><text x="78" y="18">H</text><text x="78" y="92">H</text><text x="116" y="55">C</text><text x="116" y="18">H</text><text x="116" y="92">H</text><text x="154" y="55">C</text><text x="154" y="18">H</text><text x="154" y="92">H</text><text x="192" y="55">C</text><text x="192" y="18">H</text><text x="192" y="92">H</text><text x="230" y="55">C</text><text x="230" y="18">H</text><text x="230" y="92">H</text><text x="268" y="55">C</text><text x="268" y="18">H</text><text x="268" y="92">H</text><text x="306" y="55">C</text><text x="306" y="18">H</text><text x="306" y="92">H</text><text x="8" y="55">H</text><text x="344" y="55" class="zsa-mmt-lewis-o">O</text><text x="382" y="55">H</text></g></svg></div>
+        <dl class="zsa-mmt-liquid-facts">
+          <div><dt>Formula</dt><dd>C<sub>8</sub>H<sub>17</sub>OH</dd></div>
+          <div><dt>Molar mass</dt><dd>130 g/mol</dd></div>
+        </dl>
+        <div class="zsa-mmt-mass-bar" aria-hidden="true"><span></span></div>
+      </li>
+      <li class="zsa-mmt-liquid-card" data-liquid="M">
+        <div class="zsa-mmt-liquid-head"><span class="zsa-mmt-bottle-code">M</span><h3>Mineral oil</h3><span class="zsa-mmt-liquid-tint">Tinted red</span></div>
+        <div class="zsa-mmt-lewis-frame"><svg class="zsa-mmt-lewis" viewBox="0 0 218 110" width="218" height="110" role="img" aria-label="Lewis structure of part of a mineral oil molecule. Four carbon atoms from a long chain, each bonded to two hydrogen atoms. The chain continues at both ends."><g class="zsa-mmt-lewis-bonds"><path d="M52 45V28"/><path d="M52 65V82"/><path d="M90 45V28"/><path d="M90 65V82"/><path d="M61 55H81"/><path d="M128 45V28"/><path d="M128 65V82"/><path d="M99 55H119"/><path d="M166 45V28"/><path d="M166 65V82"/><path d="M137 55H157"/><path d="M14 55H43M175 55H204" stroke-dasharray="3 3"/></g><g class="zsa-mmt-lewis-pairs"></g><g class="zsa-mmt-lewis-atoms"><text x="52" y="55">C</text><text x="52" y="18">H</text><text x="52" y="92">H</text><text x="90" y="55">C</text><text x="90" y="18">H</text><text x="90" y="92">H</text><text x="128" y="55">C</text><text x="128" y="18">H</text><text x="128" y="92">H</text><text x="166" y="55">C</text><text x="166" y="18">H</text><text x="166" y="92">H</text></g></svg></div>
+        <dl class="zsa-mmt-liquid-facts">
+          <div><dt>Formula</dt><dd><span>Mixture of long alkanes</span>, C<sub>15</sub> <span>to</span> C<sub>40</sub></dd></div>
+          <div><dt>Molar mass</dt><dd><span>Roughly 300 g/mol or more</span></dd></div>
+        </dl>
+        <div class="zsa-mmt-mass-bar" aria-hidden="true"><span></span></div>
+      </li>
+    </ul>
+    <p class="zsa-mmt-intro-note">The bars compare molar masses. Mineral oil is a mixture, so its chain shows only part of one molecule.</p>
+    <div class="zsa-mmt-intro-actions">
+      <p>Test 1 checks how each liquid beads or spreads on wax paper. Test 2 times a steel shot falling through each liquid. Test 3 mixes pairs of liquids to see if they form layers.</p>
+      <button id="intro-start" type="button" class="zsa-btn zsa-mmt-primary">Start the lab</button>
+    </div>
+  </section>
+
+  <div id="stations" class="zsa-mmt-stations" role="group" aria-label="Lab stations" hidden>
     <button type="button" data-station="wax" aria-pressed="true">
       <small>Test 1</small><strong>Bead or spread?</strong>
     </button>
@@ -52,7 +101,7 @@
     </button>
   </div>
 
-  <div class="zsa-mmt-workspace">
+  <div id="workspace" class="zsa-mmt-workspace" hidden>
     <section class="zsa-mmt-panel zsa-mmt-bench" aria-labelledby="station-title">
       <div class="zsa-mmt-title-row">
         <h2 id="station-title">Cohesion on wax paper</h2>
@@ -130,8 +179,7 @@
         </div>
 
         <div class="zsa-mmt-actions">
-          <button id="dispense" class="zsa-btn zsa-mmt-primary" type="button">Add a drop</button>
-          <button id="advance" class="zsa-btn" type="button" aria-disabled="true">Advance to 30 s</button>
+          <button id="dispense" class="zsa-btn zsa-mmt-primary zsa-mmt-icon-btn" type="button"><svg class="zsa-mmt-btn-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.6 4.2a2.7 2.7 0 0 1 3.9 0l1.3 1.3a2.7 2.7 0 0 1 0 3.9l-1.6 1.6-5.2-5.2Z"/><path d="m11.4 7.4 5.2 5.2"/><path d="M13 9 6.4 15.6 5.6 18.4l2.8-.8L15 11"/><path d="M4.4 20.9c-.6 0-1-.4-1-1 0-.7 1-1.9 1-1.9s1 1.2 1 1.9c0 .6-.4 1-1 1Z" fill="currentColor" stroke="none"/></svg><span>Add a drop</span></button>
           <p class="zsa-mmt-sample-status"><span id="drop-count"></span><span id="settle-clock" hidden></span></p>
           <button id="reset-sample" class="zsa-btn zsa-mmt-quiet" type="button" aria-disabled="true">Reset sample</button>
         </div>
@@ -158,15 +206,12 @@
             <path d="M10 0h198v238H10Z" fill="#172e3f" stroke="#375166"/>
             <text x="109" y="25" text-anchor="middle" class="zsa-mmt-scene-label">Sealed tubes</text>
             <path d="M19 162h180v40H19Z" fill="#173545" stroke="#4f7082"/>
-            <g id="shot-rack-content"></g>
+            <g id="shot-rack-content" aria-hidden="true"></g>
             <path d="M19 192h180v10H19Z" fill="#3f6272" stroke="#638597"/>
           </svg>
           <svg id="shot-inspection" viewBox="0 0 420 238" role="img" aria-labelledby="shot-drawing-title shot-drawing-desc">
             <title id="shot-drawing-title">Steel shot equipment</title>
-            <desc id="shot-drawing-desc">The selected sealed tube in close-up. The stopper and bottom are marked, and the magnet stays outside the glass.</desc>
-            <defs>
-              <linearGradient id="mmt-shot-magnet" x2="0" y2="1"><stop stop-color="#ec886e"/><stop offset=".55" stop-color="#c1544e"/><stop offset="1" stop-color="#913b47"/></linearGradient>
-            </defs>
+            <desc id="shot-drawing-desc">The selected sealed tube in close-up. The stopper and bottom are marked.</desc>
             <rect width="420" height="238" rx="8" fill="url(#mmt-inspection-mat)"/>
             <path d="M0 200h420v30q0 8-8 8H8q-8 0-8-8Z" fill="#172c3a"/>
             <path d="M0 200h420" stroke="#537485" stroke-opacity=".58"/>
@@ -180,11 +225,6 @@
               <circle id="shot-bottom-marker" cx="214" cy="196" r="2.7"/>
               <text x="251" y="58">Stopper</text>
               <text x="251" y="199">Bottom</text>
-            </g>
-            <g id="shot-magnet" transform="translate(351 155)">
-              <path d="M-14-11V7a14 14 0 0 0 28 0v-18" fill="none" stroke="#142c39" stroke-width="14"/>
-              <path d="M-14-11V7a14 14 0 0 0 28 0v-18" fill="none" stroke="url(#mmt-shot-magnet)" stroke-width="11"/>
-              <path d="M-14-12v9m28-9v9" stroke="#d3e1e7" stroke-width="11"/>
             </g>
           </svg>
         </div>
@@ -251,12 +291,11 @@
         </div>
         <div id="mix-pipettes" class="zsa-mmt-mix-pipettes" role="group" aria-label="Graduated transfer pipettes">
           <label for="mix-liquid">Liquid in pipette</label>
-          <label for="mix-amount">Pipette volume</label>
-          <select id="mix-liquid"></select>
-          <select id="mix-amount"></select>
+          <select id="mix-liquid" aria-describedby="mix-amount-note"></select>
+          <p id="mix-amount-note" class="zsa-mmt-mix-amount">The pipette adds 1.0 mL each time.</p>
         </div>
         <div class="zsa-mmt-actions">
-          <button id="mix-action" type="button" class="zsa-btn zsa-mmt-primary" aria-disabled="true">Dispense aliquot</button>
+          <button id="mix-action" type="button" class="zsa-btn zsa-mmt-primary zsa-mmt-icon-btn" aria-disabled="true"><svg id="mix-action-icon" class="zsa-mmt-btn-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.6 4.2a2.7 2.7 0 0 1 3.9 0l1.3 1.3a2.7 2.7 0 0 1 0 3.9l-1.6 1.6-5.2-5.2Z"/><path d="m11.4 7.4 5.2 5.2"/><path d="M13 9 6.4 15.6 5.6 18.4l2.8-.8L15 11"/><path d="M4.4 20.9c-.6 0-1-.4-1-1 0-.7 1-1.9 1-1.9s1 1.2 1 1.9c0 .6-.4 1-1 1Z" fill="currentColor" stroke="none"/></svg><span id="mix-action-label">Dispense liquid</span></button>
           <button id="mix-stand" type="button" class="zsa-btn zsa-mmt-primary" hidden>Set upright</button>
           <button id="mix-read" type="button" class="zsa-btn" hidden>Read layers</button>
           <button id="mix-empty" type="button" class="zsa-btn zsa-mmt-quiet" aria-disabled="true">Empty tube</button>
@@ -275,7 +314,8 @@
     <summary>About this simulation</summary>
     <p>Each sample uses about 0.15 mL on the same wax paper. The puddle dimensions are simulated. Wetting depends on cohesion within the liquid and adhesion to the wax. A diameter describes spreading on this surface.</p>
     <p>The shot times are simulated for one set of sealed tubes at room temperature. The same shot and travel distance are used in each tube. Density and drag also affect the fall time.</p>
-    <p>The mixing rack shows approximate layer volumes for these recipes. The dyes help you see where the liquids went. Two visible layers can still contain a small amount of each other.</p>
+    <p>The mixing rack shows approximate layer volumes for any two liquids. The dyes help you see where the liquids went. Two visible layers can still contain a small amount of each other. Glycerin and 1-octanol are not paired in the classroom lab. The simulation shows them as two layers because they barely dissolve in each other.</p>
+    <p>The clocks run faster than real time. The 30 s wax-paper settling takes about 2.5 s, and the 60 s mixing stand takes 10 s.</p>
   </details>
   <!-- zsa-about --><section class="zsa-about" data-zsa-about="molar-mass-trap-lab" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Compare how four liquids spread on wax paper, time a steel shot through each one, and see which pairs form layers. Record the evidence on your lab worksheet.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="chem-imf-properties"><a href="https://zornscience.org/science/chemistry/unit-4-covalent-bonding/properties-due-to-imf/">Properties Due to IMF</a><span data-zsa-lesson-course>Chemistry</span></li><li data-zsa-lesson="chem-imf-types"><a href="https://zornscience.org/science/chemistry/unit-4-covalent-bonding/types-of-imf/">Types of IMF</a><span data-zsa-lesson-course>Chemistry</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer">
     <span>ZornScience</span><a href="../" data-zsa-chrome>All activities</a><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
@@ -284,7 +324,7 @@
     <div class="zsa-header-dialog-heading"><h2 id="instructions-title">Wax-paper investigation</h2><button class="zsa-btn zsa-mmt-close" type="button" data-close="instructions" aria-label="Close instructions" autofocus>×</button></div>
     <ol id="wax-instructions">
       <li>Choose W, G, O or M. Add three drops into one spot in its box.</li>
-      <li>Wait 30 s or advance time. Look from above and at eye level.</li>
+      <li>Watch the puddle settle for 30 s. Look from above and at eye level.</li>
       <li>Move the ruler so its zero mark lines up with the left edge. Read the right edge in mm. Use Read edges to hear or see both readings.</li>
       <li>Record the diameter and sketch the side view on your lab worksheet. Repeat for all four liquids.</li>
     </ol>
@@ -292,10 +332,10 @@
       <li>Choose a sealed tube. Tilt it to move the shot to the stopper.</li>
       <li>Turn the tube upright. The stopwatch starts when the shot leaves the stopper and stops when it first touches the bottom.</li>
       <li>Record two trials on your lab worksheet and find the average in seconds. A fall faster than 0.5 s reads less than 0.5 s.</li>
-      <li>Use the magnet outside the tube to return the shot for another trial.</li>
+      <li>Tilt the tube again to return the shot to the stopper for another trial.</li>
     </ol>
     <ol id="mixing-instructions" hidden>
-      <li>Choose any numbered tube. Use the graduated pipette to dispense both amounts in its recipe.</li>
+      <li>Choose any numbered tube. Use the pipette to add 1.0 mL of each of two liquids. Your lab worksheet lists the pairs to test.</li>
       <li>Add a stopper. Gently invert five times, then set the tube upright.</li>
       <li>Let it stand for 60 s, or advance time. Count the liquid layers below the curved surface. Use Read layers to hear or see the bands.</li>
       <li>Record the number of layers and where the dye went. Pour the mixture into the waste beaker and repeat with the other tubes.</li>

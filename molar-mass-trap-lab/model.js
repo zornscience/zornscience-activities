@@ -7,7 +7,9 @@
     dropMl: 0.05,
     dropCount: 3,
     dropMs: 260,
-    settleMs: 30000,
+    // A 30 s settling time shown on the clock, compressed into 2.5 s of real time.
+    settleMs: 2500,
+    settleDisplayS: 30,
     unsettledWidthRatio: 0.93,
     // Illustrative diameters seen from above, pending measurements at 0.15 mL.
     diameterMm: Object.freeze({W: 10, G: 12, O: 20, M: 22})
@@ -22,36 +24,27 @@
     diameterMm: 4,
     // Demonstration times for one fixed apparatus. Replace with measured trial data when available.
     travelMs: Object.freeze({W: 270, G: 6400, O: 980, M: 2250}),
+    // Tilting returns the shot to the stopper, before the first run and after each fall.
     tiltMs: 720,
     uprightMs: 460,
-    magnetMs: 680,
-    releaseMs: 160,
     minimumReplayMs: 1400
   });
   const mixing = Object.freeze({
+    tubeCount: 5,
     inversionCount: 5,
-    settleMs: 60000,
+    // A 60 s stand shown on the clock, compressed into 10 s of real time.
+    settleMs: 10000,
+    settleDisplayS: 60,
     pourMs: 420,
     invertMs: 720,
     standMs: 280,
-    aliquotMl: Object.freeze([0.5, 1]),
-    // Approximate room-temperature densities in g/mL. Before inversion, a denser aliquot sinks below the other.
+    // The pipette always delivers 1.0 mL.
+    aliquotMl: 1,
+    // Approximate room-temperature densities in g/mL. The denser liquid sits below the other.
     densityGmL: Object.freeze({G: 1.26, W: 1.00, M: 0.86, O: 0.83}),
-    recipesMl: Object.freeze({
-      1: Object.freeze({W: 1, G: 1}),
-      2: Object.freeze({W: 1, M: 1}),
-      3: Object.freeze({W: 1, O: 0.5}),
-      4: Object.freeze({M: 1, O: 0.5}),
-      5: Object.freeze({G: 1, M: 1})
-    }),
-    // Liquid groups from bottom to top for the amounts in the teacher's setup.
-    settledBands: Object.freeze({
-      1: Object.freeze(["WG"]),
-      2: Object.freeze(["W", "M"]),
-      3: Object.freeze(["W", "O"]),
-      4: Object.freeze(["MO"]),
-      5: Object.freeze(["G", "M"])
-    })
+    // Pairs that form one layer, from the teacher guide. Every other pair of different liquids forms two layers.
+    // Glycerin with 1-octanol is not in the physical lab; it is shown as two layers because they barely dissolve in each other.
+    oneLayerPairs: Object.freeze(["GW", "MO"])
   });
 
   function byKey(keys, create) {
@@ -80,7 +73,7 @@
 
   function createState() {
     const codes = Object.keys(liquids);
-    const tubes = Object.keys(mixing.recipesMl);
+    const tubes = Array.from({length: mixing.tubeCount}, (_, index) => String(index + 1));
     return {
       station: "wax",
       wax: {liquid: "W", samples: byKey(codes, createWaxSample)},
@@ -156,8 +149,6 @@
     switch (phase) {
       case "tilting": return shot.tiltMs;
       case "uprighting": return shot.uprightMs;
-      case "magnet-return": return shot.magnetMs;
-      case "releasing": return shot.releaseMs;
       case "falling": return shot.travelMs[code];
       case "replaying": return Math.max(shot.travelMs[code], shot.minimumReplayMs);
       default: return 0;
@@ -181,11 +172,7 @@
           tube.orientation = "tilted";
           setShotPhase(tube, "at-stopper", at);
           break;
-        case "magnet-return":
-          setShotPhase(tube, "at-stopper", at);
-          break;
         case "uprighting":
-        case "releasing":
           tube.orientation = "upright";
           trial.departedAt = at;
           // The stopwatch is event-timed: it starts as the shot leaves the stopper.
@@ -229,11 +216,10 @@
     if (trial.pausedAt !== null) return;
     const now = shotTime(tube, wallTime);
     if (tube.phase === "at-bottom" && !stopwatchRunning(trial)) {
-      const phase = trial.contactedAt === null ? "tilting" : "magnet-return";
       Object.assign(trial, {departedAt: null, contactedAt: null, startedAt: null, stoppedAt: null});
-      setShotPhase(tube, phase, now);
+      setShotPhase(tube, "tilting", now);
     } else if (tube.phase === "at-stopper") {
-      setShotPhase(tube, tube.orientation === "tilted" ? "uprighting" : "releasing", now);
+      setShotPhase(tube, "uprighting", now);
     }
   }
 
@@ -260,29 +246,23 @@
     };
   }
 
-  function matchesMixRecipe(tube, number) {
-    const recipe = mixing.recipesMl[number];
-    const [first, second] = tube.aliquots;
-    return (!second || first.code !== second.code) && tube.aliquots.every(({code, ml}) => recipe[code] === ml);
-  }
-
-  function mixStage(tube, number, now) {
+  function mixStage(tube, now) {
     if (tube.motion) return tube.motion.kind;
     if (tube.settlesAt !== null) return now >= tube.settlesAt ? "settled" : "settling";
     if (tube.stoppered) return tube.inversions < mixing.inversionCount ? "invert-ready" : "stand-ready";
-    if (!matchesMixRecipe(tube, number)) return "incorrect";
     return tube.aliquots.length === 2 ? "seal-ready" : "fill-ready";
   }
 
-  function pourMixAliquot(tube, number, code, ml, now) {
-    if (!Object.hasOwn(liquids, code) || !mixing.aliquotMl.includes(ml) || mixStage(tube, number, now) !== "fill-ready") return false;
+  // Students choose any liquid for each of the two portions.
+  function pourMixAliquot(tube, code, now) {
+    if (!Object.hasOwn(liquids, code) || mixStage(tube, now) !== "fill-ready") return false;
     tube.disposed = false;
-    tube.motion = {kind: "pouring", start: now, end: now + mixing.pourMs, portion: {code, ml}};
+    tube.motion = {kind: "pouring", start: now, end: now + mixing.pourMs, portion: {code, ml: mixing.aliquotMl}};
     return true;
   }
 
-  function stopperMixTube(tube, number, now) {
-    if (mixStage(tube, number, now) !== "seal-ready") return false;
+  function stopperMixTube(tube, now) {
+    if (mixStage(tube, now) !== "seal-ready") return false;
     tube.stoppered = true;
     return true;
   }
@@ -317,6 +297,11 @@
     return Math.min(mixing.settleMs, Math.max(0, mixing.settleMs + now - tube.settlesAt));
   }
 
+  // The clock reading in simulated seconds, matching the worksheet's one-minute stand.
+  function mixDisplaySeconds(tube, now) {
+    return Math.floor(mixElapsedMs(tube, now) / mixing.settleMs * mixing.settleDisplayS);
+  }
+
   function advanceMixTime(tube, now) {
     if (tube.settlesAt === null || now >= tube.settlesAt) return false;
     tube.settlesAt = now;
@@ -332,16 +317,31 @@
     return {ml, tint};
   }
 
-  // Unmixed portions, bottom to top. Pour order never puts a denser liquid above a lighter one.
+  // Unmixed portions, bottom to top. Pour order never puts a denser liquid above a lighter one,
+  // and two portions of the same liquid form one band.
   function mixPouredBands(portions) {
-    return portions.map((portion, order) => ({...portion, order}))
+    const bands = [];
+    portions.map((portion, order) => ({...portion, order}))
       .sort((a, b) => mixing.densityGmL[b.code] - mixing.densityGmL[a.code] || a.order - b.order)
-      .map(({code, ml}) => mixBand(code, ml));
+      .forEach(({code, ml}) => {
+        const last = bands[bands.length - 1];
+        if (last && last.codes === code) last.ml += ml;
+        else bands.push({codes: code, ml});
+      });
+    return bands.map(({codes, ml}) => mixBand(codes, ml));
   }
 
-  function mixSettledBands(number) {
-    return mixing.settledBands[number].map((codes) => mixBand(codes,
-      Array.from(codes).reduce((volume, code) => volume + mixing.recipesMl[number][code], 0)));
+  function formsOneLayer(first, second) {
+    return first === second || mixing.oneLayerPairs.includes([first, second].sort().join(""));
+  }
+
+  // The settled bands, bottom to top, for whatever two liquids the student added.
+  function mixSettledBands(tube) {
+    const portions = tube.aliquots;
+    if (portions.length < 2) return mixPouredBands(portions);
+    const [first, second] = portions;
+    if (formsOneLayer(first.code, second.code)) return [mixBand(first.code + second.code, first.ml + second.ml)];
+    return mixPouredBands(portions);
   }
 
   function emptyMixTube(rack, number) {
@@ -356,8 +356,8 @@
   const api = {liquids, wax, ruler, shot, mixing, createWaxSample, createState, dispense, landDrop, elapsedMs,
     isSettled, capGeometry, waxGeometry, edgeReadings, createShotTube, updateShot, pauseShot, resumeShot,
     operateShot, playShotReplay, shotSnapshot, mixStage,
-    pourMixAliquot, stopperMixTube, invertMixTube, standMixTube, updateMixTube, mixElapsedMs, advanceMixTime,
-    mixVolume, mixBand, mixPouredBands, mixSettledBands, emptyMixTube};
+    pourMixAliquot, stopperMixTube, invertMixTube, standMixTube, updateMixTube, mixElapsedMs, mixDisplaySeconds,
+    advanceMixTime, mixVolume, mixBand, mixPouredBands, formsOneLayer, mixSettledBands, emptyMixTube};
   if (typeof module === "object" && module.exports) module.exports = api;
   if (typeof document === "undefined") return;
   const root = document.querySelector('[data-zsa-activity="molar-mass-trap-lab"]');

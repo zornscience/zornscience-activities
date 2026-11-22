@@ -4,7 +4,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const model = require("../../molar-mass-trap-lab/model.js");
 
-test("wax gets one 0.05 mL drop at a time and settles 30 s after the third landing", () => {
+test("wax gets one 0.05 mL drop at a time and shows a 30 s settle in 2.5 s after the third landing", () => {
   const sample = model.createWaxSample();
   assert.equal(sample.drops, 0);
   for (let drop = 0; drop < 3; drop++) {
@@ -18,9 +18,11 @@ test("wax gets one 0.05 mL drop at a time and settles 30 s after the third landi
   }
   const thirdLanding = 800 + model.wax.dropMs;
   assert.equal(model.dispense(sample, thirdLanding), false);
+  assert.equal(model.wax.settleMs, 2500);
+  assert.equal(model.wax.settleDisplayS, 30);
   assert.equal(model.elapsedMs(sample, thirdLanding + 1000), 1000);
-  assert.equal(model.isSettled(sample, thirdLanding + 29999), false);
-  assert.equal(model.isSettled(sample, thirdLanding + 30000), true);
+  assert.equal(model.isSettled(sample, thirdLanding + model.wax.settleMs - 1), false);
+  assert.equal(model.isSettled(sample, thirdLanding + model.wax.settleMs), true);
 });
 
 test("wax footprints and side profiles share the same volume as each sample grows and settles", () => {
@@ -31,13 +33,13 @@ test("wax footprints and side profiles share the same volume as each sample grow
     for (let i = 0; i < 3; i++) {
       model.dispense(sample, i * 500);
       model.landDrop(sample, i * 500 + model.wax.dropMs);
-      for (const elapsed of [0, 15000, 30000]) {
+      for (const elapsed of [0, model.wax.settleMs / 2, model.wax.settleMs]) {
         const {contactRadiusMm, heightMm} = model.waxGeometry(code, sample, 1260 + elapsed);
         const volume = Math.PI * heightMm * (3 * contactRadiusMm ** 2 + heightMm ** 2) / 6;
         assert.ok(Math.abs(volume - 50 * (i + 1)) < 0.00001, "same volume from either view");
       }
     }
-    whole[code] = model.waxGeometry(code, sample, 31260);
+    whole[code] = model.waxGeometry(code, sample, 1260 + model.wax.settleMs);
   }
   for (const bead of ["W", "G"]) {
     for (const spread of ["O", "M"]) {
@@ -65,12 +67,10 @@ test("steep caps conserve volume and keep the measured width above their contact
   assert.ok(Math.abs(4 / 3 * Math.PI * sphere.radiusMm ** 3 - 150) < 0.00001);
 });
 
-test("shot and mixing tubes have independent state and support all five mixing recipes", () => {
+test("shot and mixing tubes have independent state and the rack has five empty tubes", () => {
   const state = model.createState();
-  assert.deepEqual(model.mixing.recipesMl, {
-    1: {W: 1, G: 1}, 2: {W: 1, M: 1}, 3: {W: 1, O: 0.5}, 4: {M: 1, O: 0.5}, 5: {G: 1, M: 1}
-  });
-  state.mixing.tubes[3].aliquots.push({code: "O", ml: 0.5});
+  assert.deepEqual(Object.keys(state.mixing.tubes), ["1", "2", "3", "4", "5"]);
+  state.mixing.tubes[3].aliquots.push({code: "O", ml: 1});
   state.mixing.tubes[5].inversions++;
   state.shot.tubes.M.trial.pausedAt = 180;
   assert.deepEqual(state.mixing.tubes[5].aliquots, []);

@@ -5,38 +5,63 @@ const assert = require("node:assert/strict");
 const model = require("../../molar-mass-trap-lab/model.js");
 const {mixing} = model;
 
-test("mixing validates both aliquots and retains their volumes in the settled bands", () => {
-  const {tubes} = model.createState().mixing;
-  const expected = {
-    1: [{tint: "blue", ml: 2}],
-    2: [{tint: "blue", ml: 1}, {tint: "red", ml: 1}],
-    3: [{tint: "blue", ml: 1}, {tint: "clear", ml: 0.5}],
-    4: [{tint: "red", ml: 1.5}],
-    5: [{tint: "clear", ml: 1}, {tint: "red", ml: 1}]
-  };
-  for (const [number, tube] of Object.entries(tubes)) {
-    let now = 0;
-    assert.equal(model.stopperMixTube(tube, number, now), false);
-    assert.equal(model.invertMixTube(tube, now), false);
-    for (const [code, ml] of Object.entries(mixing.recipesMl[number]).reverse()) {
-      assert.equal(model.mixStage(tube, number, now), "fill-ready");
-      assert.equal(model.pourMixAliquot(tube, number, code, ml, now), true);
-      assert.equal(model.pourMixAliquot(tube, number, code, ml, now), false);
-      assert.equal(model.stopperMixTube(tube, number, now), false);
-      now += mixing.pourMs;
-      model.updateMixTube(tube, now);
-    }
-    assert.equal(model.stopperMixTube(tube, number, now), true);
-    assert.deepEqual(model.mixSettledBands(number), expected[number]);
-    assert.equal(model.mixVolume(tube), expected[number].reduce((sum, {ml}) => sum + ml, 0));
+function fill(tube, codes, now = 0) {
+  for (const code of codes) {
+    assert.equal(model.mixStage(tube, now), "fill-ready");
+    assert.equal(model.pourMixAliquot(tube, code, now), true);
+    assert.equal(model.pourMixAliquot(tube, code, now), false, "one pour at a time");
+    assert.equal(model.stopperMixTube(tube, now), false);
+    now += mixing.pourMs;
+    model.updateMixTube(tube, now);
+  }
+  return now;
+}
+
+test("each tube takes any two 1.0 mL portions and no more", () => {
+  const tube = model.createState().mixing.tubes[1];
+  assert.equal(mixing.aliquotMl, 1);
+  assert.equal(model.stopperMixTube(tube, 0), false);
+  assert.equal(model.invertMixTube(tube, 0), false);
+  assert.equal(model.pourMixAliquot(tube, "X", 0), false, "unknown liquids are refused");
+  const now = fill(tube, ["O", "G"]);
+  assert.deepEqual(tube.aliquots, [{code: "O", ml: 1}, {code: "G", ml: 1}]);
+  assert.equal(model.mixStage(tube, now), "seal-ready");
+  assert.equal(model.pourMixAliquot(tube, "W", now), false, "a third portion is refused");
+  assert.equal(model.stopperMixTube(tube, now), true);
+  assert.equal(model.mixVolume(tube), 2);
+});
+
+test("the settled layers respond to whichever two liquids are mixed", () => {
+  const cases = [
+    [["W", "G"], [{tint: "blue", ml: 2}]],
+    [["G", "W"], [{tint: "blue", ml: 2}]],
+    [["M", "O"], [{tint: "red", ml: 2}]],
+    [["W", "M"], [{tint: "blue", ml: 1}, {tint: "red", ml: 1}]],
+    [["M", "W"], [{tint: "blue", ml: 1}, {tint: "red", ml: 1}]],
+    [["O", "W"], [{tint: "blue", ml: 1}, {tint: "clear", ml: 1}]],
+    [["M", "G"], [{tint: "clear", ml: 1}, {tint: "red", ml: 1}]],
+    // Glycerin and 1-octanol are modeled as two clear layers, glycerin below.
+    [["O", "G"], [{tint: "clear", ml: 1}, {tint: "clear", ml: 1}]],
+    [["W", "W"], [{tint: "blue", ml: 2}]],
+    [["O", "O"], [{tint: "clear", ml: 2}]]
+  ];
+  for (const [codes, expected] of cases) {
+    const tube = model.createState().mixing.tubes[2];
+    fill(tube, codes);
+    assert.deepEqual(model.mixSettledBands(tube), expected, codes.join("+"));
+  }
+  assert.equal(model.formsOneLayer("W", "G"), true);
+  assert.equal(model.formsOneLayer("O", "M"), true);
+  assert.equal(model.formsOneLayer("G", "G"), true);
+  for (const pair of [["W", "M"], ["W", "O"], ["G", "M"], ["G", "O"]]) {
+    assert.equal(model.formsOneLayer(...pair), false, pair.join("+"));
   }
 });
 
 test("the mixing clock starts when the fifth inversion is followed by setting the tube upright", () => {
   const tube = model.createState().mixing.tubes[1];
-  tube.aliquots.push({code: "W", ml: 1}, {code: "G", ml: 1});
-  assert.equal(model.stopperMixTube(tube, 1, 0), true);
-  let now = 0;
+  let now = fill(tube, ["W", "G"]);
+  assert.equal(model.stopperMixTube(tube, now), true);
   for (let count = 0; count < mixing.inversionCount; count++) {
     assert.equal(model.standMixTube(tube, now), false);
     assert.equal(model.invertMixTube(tube, now), true);
@@ -49,32 +74,33 @@ test("the mixing clock starts when the fifth inversion is followed by setting th
     assert.equal(tube.inversions, count + 1);
   }
   assert.equal(model.invertMixTube(tube, now), false);
-  assert.equal(model.mixStage(tube, 1, now), "stand-ready");
+  assert.equal(model.mixStage(tube, now), "stand-ready");
   assert.equal(model.standMixTube(tube, now), true);
   const start = now + mixing.standMs;
   model.updateMixTube(tube, start + 1000);
+  assert.equal(mixing.settleMs, 10000);
+  assert.equal(mixing.settleDisplayS, 60);
   assert.equal(model.mixElapsedMs(tube, start + 1000), 1000);
-  assert.equal(model.mixStage(tube, 1, start + mixing.settleMs - 1), "settling");
-  assert.equal(model.mixStage(tube, 1, start + mixing.settleMs), "settled");
+  assert.equal(model.mixDisplaySeconds(tube, start + 5000), 30, "half the real wait shows half a minute");
+  assert.equal(model.mixStage(tube, start + mixing.settleMs - 1), "settling");
+  assert.equal(model.mixStage(tube, start + mixing.settleMs), "settled");
+  assert.equal(model.mixDisplaySeconds(tube, start + mixing.settleMs), 60);
   assert.equal(model.advanceMixTime(tube, start + 1000), true);
-  assert.equal(model.mixElapsedMs(tube, start + 1000), 60000);
+  assert.equal(model.mixElapsedMs(tube, start + 1000), mixing.settleMs);
   assert.equal(model.advanceMixTime(tube, start + 1000), false);
 });
 
-test("emptying a wrong or completed tube leaves the other preparations intact", () => {
-  const state = model.createState();
-  const {mixing: rack} = state;
-  assert.equal(model.pourMixAliquot(rack.tubes[5], 5, "O", 0.5, 0), true);
-  assert.equal(model.emptyMixTube(rack, 5), false);
+test("emptying a partly filled or completed tube leaves the other preparations intact", () => {
+  const {mixing: rack} = model.createState();
+  assert.equal(model.pourMixAliquot(rack.tubes[5], "O", 0), true);
+  assert.equal(model.emptyMixTube(rack, 5), false, "not while pouring");
   model.updateMixTube(rack.tubes[5], mixing.pourMs);
-  assert.equal(model.mixStage(rack.tubes[5], 5, mixing.pourMs), "incorrect");
-  assert.equal(model.stopperMixTube(rack.tubes[5], 5, mixing.pourMs), false);
-  model.pourMixAliquot(rack.tubes[3], 3, "W", 1, 0);
+  model.pourMixAliquot(rack.tubes[3], "W", 0);
   assert.equal(model.emptyMixTube(rack, 5), true);
-  assert.equal(rack.wasteMl, 0.5);
+  assert.equal(rack.wasteMl, 1);
   assert.equal(rack.tubes[5].disposed, true);
   assert.equal(model.emptyMixTube(rack, 5), false);
-  assert.equal(model.pourMixAliquot(rack.tubes[5], 5, "G", 1, 500), true);
+  assert.equal(model.pourMixAliquot(rack.tubes[5], "G", 500), true);
   assert.equal(rack.tubes[5].disposed, false);
   model.updateMixTube(rack.tubes[3], 600);
   assert.deepEqual(rack.tubes[3].aliquots, [{code: "W", ml: 1}]);
@@ -82,7 +108,6 @@ test("emptying a wrong or completed tube leaves the other preparations intact", 
 
 test("before inversion the denser aliquot sits below the lighter one in either pour order", () => {
   const bottomToTop = (portions) => model.mixPouredBands(portions).map(({tint}) => tint);
-  // Tube 2: water below mineral oil, tube 5: glycerin below mineral oil, tube 3: water below octanol.
   for (const [pair, expected] of [[["W", "M"], ["blue", "red"]], [["G", "M"], ["clear", "red"]], [["W", "O"], ["blue", "clear"]]]) {
     for (const order of [pair, [...pair].reverse()]) {
       assert.deepEqual(bottomToTop(order.map((code) => ({code, ml: 1}))), expected);
