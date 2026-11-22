@@ -127,7 +127,7 @@
         if (size <= 0) return;
         const offset = [-1, -0.34, 0.34, 1][index];
         const angle = [Math.PI, Math.PI / 2, 0, -Math.PI / 2][index];
-        quarter(x + offset * spread, y - (index % 2) * 6, 10 + 12 * Math.sqrt(size), angle);
+        quarter(x + offset * spread, y - (index === 1 ? 6 : 0), 10 + 12 * Math.sqrt(size), angle);
       });
     }
 

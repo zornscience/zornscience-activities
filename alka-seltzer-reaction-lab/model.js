@@ -30,7 +30,7 @@
     const progress = Math.min(elapsed / duration, 1);
     const pieces = pieceLifetimes[form].map((lifetime) => Math.pow(Math.max(0, 1 - progress / lifetime), 0.85));
     const fizz = elapsed < duration
-      ? Math.min(1, 0.3 + elapsed / 800) * (1 - progress * 0.74)
+      ? Math.min(1, 0.42 + elapsed / 800) * (1 - progress * 0.74)
       : 0.26 * Math.max(0, 1 - (elapsed - duration) / settings.fizzTail);
     const tint = Math.min(1, progress * 1.25);
     const rgb = settings.blue.map((channel, index) => Math.round(channel + (settings.green[index] - channel) * tint));

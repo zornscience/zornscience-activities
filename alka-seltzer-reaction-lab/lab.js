@@ -147,7 +147,7 @@
     const time = timeAt(now);
     const dosing = phase === "dosing";
     const filled = phase !== "empty" && phase !== "filling";
-    const level = filled ? 1 : phase === "filling" && !reduced ? time / settings.fillTime : 0;
+    const level = filled ? 1 : phase === "filling" ? reduced ? 1 : time / settings.fillTime : 0;
     const indicator = settings.clear.map((channel, i) => Math.round(channel + (settings.blue[i] - channel) * drops / settings.drops));
     const view = {
       form, wet, level, reduced, dosing, drops,
@@ -178,7 +178,7 @@
     const dosing = phase === "dosing";
     const drops = dosing ? Math.min(settings.drops, Math.floor(time / settings.dropInterval)) : settings.drops;
     const doseVisible = dosing || ["ready", "preparing", "dropping"].includes(phase) || wet;
-    const empty = phase === "empty" || phase === "filling" && motion.matches;
+    const empty = phase === "empty";
     const liquid = observation?.color || (empty ? "Empty" : phase === "filling" ? "Filling with water"
       : doseVisible && drops > 0 ? "Light blue" : "Clear");
     const solid = wet ? (observation.solid ? wetNames[form] : "No solid visible")
@@ -219,6 +219,8 @@
       changes.push(t(cue));
     }
     if (solid !== previous.solid) changes.push(t(solid));
+    // An early stop leaves solid in view. Say so, since the stop cue is the same either way.
+    else if (phaseChanged && phase === "stopped" && observation.solid) changes.push(t(solid));
     if (liquid !== previous.liquid) changes.push(t("Liquid: {color}.", {color: t(liquid)}));
     if (bubbles !== previous.bubbles) changes.push(t("Bubbles: {state}.", {state: t(bubbles)}));
     if (done && !previous.done) changes.push(t("The graph and discussion are on your worksheet."));

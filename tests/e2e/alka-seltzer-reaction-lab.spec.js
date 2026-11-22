@@ -164,6 +164,7 @@ test("early and late stopwatch presses freeze the actual scene and duplicated ev
   expect(Number(early)).toBeGreaterThanOrEqual(2.4);
   expect(Number(early)).toBeLessThan(3);
   await expect(observation(page, "solid")).toHaveText("Tablet visible");
+  await expect(observation(page, "observation-status")).toHaveText("Record your time and final BTB color. Tablet visible");
   await advanceTime(page, 9000);
   expect(await frame(page)).toBe(frozen);
   await expect(stopwatch(page)).toHaveText(early);
@@ -173,6 +174,7 @@ test("early and late stopwatch presses freeze the actual scene and duplicated ev
   await expect(observation(page, "bubbles")).toHaveText("None visible");
   await expect(observation(page, "solid")).toHaveText("No solid visible");
   await page.locator("#stop").click();
+  await expect(observation(page, "observation-status")).toHaveText("Record your time and final BTB color.");
   expect(Number(await stopwatch(page).textContent())).toBeGreaterThan(54);
   await expect(page.locator("#resume-early")).toBeHidden();
 });

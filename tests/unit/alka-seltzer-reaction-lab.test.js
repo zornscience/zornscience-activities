@@ -12,6 +12,8 @@ test("each preparation starts with its full visible sample and loses its last so
     const initial = sample(form, 0);
     assert.deepEqual(initial.pieces, Array(count).fill(1));
     assert.equal(initial.color, "Light blue");
+    // One bubble description at contact, so the live region does not announce twice.
+    assert.equal(initial.bubbles, "Bubbles rising");
     for (let time = 100; time <= end; time += 100) {
       const previous = sample(form, time - 100).pieces;
       assert(sample(form, time).pieces.every((size, index) => size <= previous[index]));
