@@ -4,18 +4,15 @@ const {test, expect} = require("@playwright/test");
 const fs = require("node:fs");
 const LAB = "/molar-mass-trap-lab/";
 const station = (page, key) => page.locator(`[data-station="${key}"]`);
-const waxRow = (page, code) => page.locator(`#liquid-${code}`).locator("..");
-const shotRow = (page, code) => page.locator(`[data-shot-card="${code}"]`);
-const mixRow = (page, number) => page.locator(`[data-mix-entry="${number}"]`);
 const slot = (page, number) => page.locator(`[data-mix-tube="${number}"]`);
-const wax = {W: [10, "tall"], G: [12, "tall"], O: [20, "flat"], M: [22, "flat"]};
+const diameters = {W: 10, G: 12, O: 20, M: 22};
 const shotMs = {W: 270, G: 6400, O: 980, M: 2250};
 const mixes = {
-  1: {pair: [["W", 1], ["G", 1]], layers: "1", dye: "An even blue tint."},
-  2: {pair: [["M", 1], ["W", 1]], layers: "2", dye: "Red above blue."},
-  3: {pair: [["W", 1], ["O", 0.5]], layers: "2", dye: "Azul abajo y una franja transparente arriba."},
-  4: {pair: [["O", 0.5], ["M", 1]], layers: "1", dye: "An even red tint."},
-  5: {pair: [["M", 1], ["G", 1]], layers: "2", dye: "Red above clear liquid."}
+  1: {pair: [["W", 1], ["G", 1]], layers: "One uniform blue-tinted layer."},
+  2: {pair: [["M", 1], ["W", 1]], layers: "A red band above a blue band."},
+  3: {pair: [["W", 1], ["O", 0.5]], layers: "A smaller clear band above a blue band."},
+  4: {pair: [["O", 0.5], ["M", 1]], layers: "One uniform red-tinted layer."},
+  5: {pair: [["M", 1], ["G", 1]], layers: "A red band above a clear band."}
 };
 
 async function openLab(page, query = "") {
@@ -24,8 +21,9 @@ async function openLab(page, query = "") {
   await page.goto(LAB + query);
 }
 
+// Students copy each reading to the lab worksheet, so these helpers check what the bench shows.
 async function measureWax(page, code) {
-  const [diameter, profile] = wax[code];
+  const diameter = diameters[code];
   await page.locator(`[data-bottle="${code}"]`).click();
   for (let drop = 0; drop < 3; drop++) {
     await page.locator("#dispense").click();
@@ -38,11 +36,9 @@ async function measureWax(page, code) {
   for (let i = 0; i < steps; i++) await page.keyboard.press("ArrowRight");
   await page.locator("#read-edges").click();
   await expect(page.locator("#edge-reading")).toHaveText(new RegExp(`0 mm.*${diameter} mm`));
-  const row = waxRow(page, code);
-  await row.getByRole("textbox").fill(String(diameter));
-  await row.getByRole("combobox").selectOption(profile);
 }
 
+// Two trials per liquid: water is first left untimed by hand, then event-timed.
 async function timeShot(page, code) {
   await page.locator(`[data-shot-tube="${code}"]`).click();
   const operate = page.locator("#shot-operate");
@@ -51,7 +47,8 @@ async function timeShot(page, code) {
   await page.clock.fastForward(750);
   await operate.click();
   await page.clock.fastForward(shotMs[code] + 570);
-  await page.locator(code === "W" ? "#shot-record-below" : "#shot-record").click();
+  if (code === "W") await expect(page.locator("#shot-feedback")).toHaveText(/0\.5 s/);
+  else await expect(page.locator("#shot-time")).toHaveText((shotMs[code] / 1000).toFixed(2) + " s");
 
   await operate.click();
   await page.clock.fastForward(720);
@@ -59,7 +56,6 @@ async function timeShot(page, code) {
   await operate.click();
   await page.clock.fastForward(shotMs[code] + 250);
   await expect(page.locator("#shot-time")).toHaveText(code === "W" ? "<0.5 s" : (shotMs[code] / 1000).toFixed(2) + " s");
-  await page.locator("#shot-record").click();
 }
 
 async function prepareMixture(page, number) {
@@ -80,15 +76,13 @@ async function prepareMixture(page, number) {
   await page.clock.fastForward(310);
 }
 
-async function recordMixture(page, number, layers = mixes[number].layers) {
+async function readMixture(page, number) {
   await slot(page, number).click();
   const advance = page.locator("#mix-advance");
   if (await advance.isVisible()) await advance.click();
   await expect(page.locator("#mix-elapsed")).toHaveText("60 / 60 s");
   await page.locator("#mix-read").click();
   await expect(page.locator("#mix-observation")).not.toHaveText("");
-  await mixRow(page, number).getByRole("combobox").selectOption(layers);
-  await mixRow(page, number).getByRole("textbox").fill(mixes[number].dye);
 }
 
 const orders = [
@@ -97,7 +91,7 @@ const orders = [
 ];
 
 for (const order of orders) {
-  test(`classroom station order ${order.join(", ")} retains evidence from each test`, async ({page}) => {
+  test(`classroom station order ${order.join(", ")} keeps each station's result`, async ({page}) => {
     await openLab(page);
     for (const key of order) {
       await station(page, key).click();
@@ -105,20 +99,22 @@ for (const order of orders) {
       else if (key === "shot") await timeShot(page, "W");
       else {
         await prepareMixture(page, 3);
-        await recordMixture(page, 3);
+        await readMixture(page, 3);
       }
     }
-    await expect(waxRow(page, "W").getByRole("textbox")).toHaveValue("10");
+    await station(page, "wax").click();
+    await expect(page.locator("#edge-reading")).toHaveText(/Left edge 0 mm. Right edge 10 mm/);
     await station(page, "mixing").click();
-    await expect(mixRow(page, 3).getByRole("combobox")).toHaveValue("2");
-    await expect(mixRow(page, 3).getByRole("textbox")).toHaveValue(mixes[3].dye);
+    await expect(page.locator("#mix-elapsed")).toHaveText("60 / 60 s");
+    await page.locator("#mix-read").click();
+    await expect(page.locator("#mix-observation")).toHaveText(mixes[3].layers);
     await station(page, "shot").click();
-    await expect(shotRow(page, "W").getByRole("textbox").nth(0)).toHaveValue("<0.5");
-    await expect(shotRow(page, "W").getByRole("textbox").nth(1)).toHaveValue("<0.5");
+    await expect(page.locator("#shot-time")).toHaveText("<0.5 s");
+    await expect(page.locator("#shot-operate")).toHaveText("Use magnet");
   });
 }
 
-test("the entire interleaved classroom walkthrough prints and reopens with browser storage disabled", async ({page}, testInfo) => {
+test("the entire interleaved classroom walkthrough runs in both languages with browser storage disabled", async ({page}) => {
   await page.setViewportSize({width: 360, height: 740});
   await page.addInitScript(() => {
     for (const name of ["localStorage", "sessionStorage", "indexedDB"]) {
@@ -128,11 +124,6 @@ test("the entire interleaved classroom walkthrough prints and reopens with brows
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await openLab(page, "?lang=es");
-  await page.locator("#predictions summary").click();
-  await page.locator("#predict-spread").selectOption("W");
-  await page.locator("#predict-slowest").selectOption("G");
-  await page.locator("#predict-mix-3").selectOption("1");
-  await page.locator("#predictions summary").click();
 
   await station(page, "mixing").click();
   await prepareMixture(page, 3);
@@ -141,121 +132,58 @@ test("the entire interleaved classroom walkthrough prints and reopens with brows
   await page.clock.fastForward(60000);
   await station(page, "mixing").click();
   await expect(page.locator("#mix-elapsed")).toHaveText("60 / 60 s");
-  await recordMixture(page, 3, "1");
+  await readMixture(page, 3);
   await expect(page.locator("#mix-observation")).toHaveText("Una franja transparente más delgada sobre una franja azul.");
-  await expect(mixRow(page, 3).getByRole("status")).toHaveText("Coincide con tu predicción");
 
   await station(page, "shot").click();
   await timeShot(page, "W");
   await page.getByRole("link", {name: "EN English"}).click();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  await expect(page.locator("#shot-time")).toHaveText("<0.5 s");
   for (const code of ["M", "O", "G"]) await timeShot(page, code);
-  await shotRow(page, "G").getByRole("textbox", {name: "Average fall time (s)"}).fill("6.4");
-  await page.locator("#shot-check-averages").click();
-  const means = ["<0.5 s", "6.40 s", "0.98 s", "2.25 s"].map((value) => "Lab's average: " + value);
-  await expect(page.locator("#shot-entries .zsa-mmt-shot-result")).toHaveText(means);
   await station(page, "wax").click();
   for (const code of ["G", "M", "O"]) await measureWax(page, code);
   await station(page, "mixing").click();
   for (const number of [5, 1, 4, 2]) {
     await prepareMixture(page, number);
-    await recordMixture(page, number);
+    await readMixture(page, number);
+    await expect(page.locator("#mix-observation")).toHaveText(mixes[number].layers);
     await page.locator("#mix-empty").click();
   }
   await slot(page, 3).click();
-  await expect(mixRow(page, 3).getByRole("combobox")).toHaveValue("1");
-  await mixRow(page, 3).getByRole("combobox").selectOption("2");
-  await expect(mixRow(page, 3).getByRole("status")).toHaveText("Prediction differed");
+  await page.locator("#mix-read").click();
+  await expect(page.locator("#mix-observation")).toHaveText(mixes[3].layers);
   await page.locator("#mix-empty").click();
   await expect(page.locator("#mix-volume")).toHaveText("0.0 mL total");
-
-  const revisit = "I expected one layer in tube 3. A clear band stayed above the blue water.";
-  const first = "Water formed a tall bead that measured 10 mm across on wax paper.";
-  const second = "Water was too fast to time manually. The glycerin fall took 6.40 s.";
-  const explanation = "Spreading on wax depends on cohesion and adhesion. In the sealed tube, the falling shot compares resistance to flow, with density and drag also affecting its speed.";
-  await page.getByRole("link", {name: "Go to debrief"}).click();
-  await page.locator("#debrief-revisit").fill(revisit);
-  await page.locator("#debrief-test-1").selectOption("wax");
-  await page.locator("#debrief-test-2").selectOption("wax");
-  await page.locator("#debrief-evidence-1").fill(first);
-  await page.locator("#debrief-evidence-2").fill(second);
-  await page.locator("#debrief-explanation").fill(explanation);
-  await page.locator("#check-debrief").click();
-  await expect(page.locator("#debrief-status")).toHaveText(/Choose two different tests/);
-  await page.locator("#debrief-test-2").selectOption("shot");
-  await page.locator("#check-debrief").click();
-  await expect(page.locator("#debrief-status")).toHaveText(/You cited two different tests/);
+  await expect(page.locator("#mix-waste-fill")).toHaveAttribute("visibility", "visible");
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(360);
 
-  await page.evaluate(() => { window.print = () => { document.documentElement.dataset.printRequested = "true"; }; });
-  await page.locator("#print-notebook").click();
-  await expect(page.locator("html")).toHaveAttribute("data-print-requested", "true");
-  await page.emulateMedia({media: "print"});
-  for (const [code, [diameter, profile]] of Object.entries(wax)) {
-    await expect(waxRow(page, code).getByText(String(diameter), {exact: true})).toBeVisible();
-    await expect(waxRow(page, code).getByText(profile === "tall" ? "Tall bead" : "Flat puddle", {exact: true}).last()).toBeVisible();
-    const values = shotRow(page, code).locator("td .zsa-mmt-print-only");
-    const time = (shotMs[code] / 1000).toFixed(2);
-    await expect(values.nth(0)).toHaveText(code === "W" ? "<0.5" : time);
-    await expect(values.nth(1)).toHaveText(code === "W" ? "<0.5" : time);
-  }
-  await expect(page.locator("#shot-entries .zsa-mmt-shot-result")).toHaveText(means);
-  await expect(shotRow(page, "G").getByText("Your average: 6.4", {exact: true})).toBeVisible();
-  for (const [number, {layers, dye}] of Object.entries(mixes)) {
-    await expect(mixRow(page, number).getByText(layers === "1" ? "One layer" : "Two layers", {exact: true}).last()).toBeVisible();
-    await expect(mixRow(page, number).getByText(dye, {exact: true})).toBeVisible();
-  }
-  await expect(page.getByRole("columnheader", {name: "Prediction correct?"})).toBeVisible();
-  await expect(mixRow(page, 3).getByRole("cell", {name: "No", exact: true})).toBeVisible();
-  await expect(page.locator("#print-prediction-entries")).toContainText("W Water");
-  for (const [id, value] of Object.entries({revisit, "evidence-1": first, "evidence-2": second, explanation})) {
-    await expect(page.locator(`#debrief-${id}-print`)).toHaveText(value);
-    await expect(page.locator(`#debrief-${id}-print`)).toBeVisible();
-  }
-  await page.pdf({path: testInfo.outputPath("classroom-notebook.pdf"), format: "Letter",
-    margin: {top: "0.35in", bottom: "0.35in", left: "0.35in", right: "0.35in"}});
-
-  await page.emulateMedia({media: "screen"});
-  await page.locator("#open-notebook-open").click();
-  await page.locator("#notebook-file").setInputFiles({name: "other.json", mimeType: "application/json", buffer: Buffer.from("{}")});
-  await page.locator("#open-notebook-confirm").click();
-  await expect(page.locator("#open-notebook-status")).toHaveText("Choose a notebook file saved by this lab.");
-  await page.keyboard.press("Escape");
-  await expect(page.locator("#debrief-explanation")).toHaveValue(explanation);
-  const [download] = await Promise.all([page.waitForEvent("download"), page.locator("#save-notebook").click()]);
-  // The local date and time keep files apart on a shared laptop.
-  expect(download.suggestedFilename()).toMatch(/^molar-mass-trap-notebook-\d{4}-\d{2}-\d{2}-\d{6}\.json$/);
-  const saved = testInfo.outputPath("classroom-notebook.json");
-  await download.saveAs(saved);
-  await page.reload();
-  await expect(waxRow(page, "W").getByRole("textbox")).toHaveValue("");
-  await page.locator("#open-notebook-open").click();
-  await page.locator("#notebook-file").setInputFiles(saved);
-  await page.locator("#open-notebook-confirm").click();
-  await expect(page.locator("#notebook-file-status")).toHaveText("Notebook entries reopened.");
-  await expect(page.locator("#debrief-explanation")).toHaveValue(explanation);
-  await station(page, "mixing").click();
-  await expect(mixRow(page, 3).getByRole("textbox")).toHaveValue(mixes[3].dye);
-  await expect(mixRow(page, 3).getByRole("status")).toHaveText("Prediction differed");
-  await station(page, "shot").click();
-  await expect(page.locator("#shot-entries .zsa-mmt-shot-result")).toHaveText(means);
-  await expect(shotRow(page, "G").getByRole("textbox").nth(1)).toHaveAccessibleDescription("Instrument-timed");
   await page.locator("#restart-open").click();
-  await page.locator("#restart-confirm").click();
-  await expect(waxRow(page, "W").getByRole("textbox")).toHaveValue("");
-  await expect(page.locator("#debrief-explanation")).toHaveValue("");
+  await page.getByRole("button", {name: "Reset all stations"}).click();
+  await station(page, "wax").click();
+  await expect(page.locator('#wax-boxes ellipse[visibility="visible"]')).toHaveCount(0);
+  await station(page, "shot").click();
+  await expect(page.locator("#shot-time")).toHaveText("0.00 s");
   expect(errors).toEqual([]);
 });
 
-test("Spanish predictions, debrief and notebook dialog fit and pass axe at phone width", async ({page}) => {
+test("the lab keeps no student entries, so a reload starts fresh without a leave-page prompt", async ({page}) => {
+  const prompts = [];
+  page.on("dialog", async (dialog) => {
+    prompts.push(dialog.type());
+    await dialog.dismiss();
+  });
+  await openLab(page);
+  await measureWax(page, "W");
+  await page.reload({timeout: 5000});
+  expect(prompts).toEqual([]);
+  await expect(page.locator("#drop-count")).toHaveText("0 / 3 drops · 0.00 mL");
+  await expect(page.locator("main").getByRole("textbox")).toHaveCount(0);
+});
+
+test("Spanish stations and the restart dialog fit and pass axe at phone width", async ({page}) => {
   await page.setViewportSize({width: 360, height: 740});
   await openLab(page, "?lang=es");
-  await page.locator("#predictions summary").click();
-  await expect(page.getByLabel("¿Qué líquido se extenderá más sobre el papel encerado?")).toBeVisible();
-  await expect(page.getByRole("heading", {name: "Reflexión final"})).toBeVisible();
-  await page.locator("#reasoning-notes summary").click();
-  await expect(page.locator("#reasoning-notes sub")).toHaveText(["3", "2", "n", "3"]);
-  await expect(page.locator("#reasoning-notes")).toContainText("El aceite mineral es una mezcla de hidrocarburos.");
   const axe = fs.readFileSync(require.resolve("axe-core/axe.min.js"), "utf8");
   await page.evaluate(axe);
   async function audit() {
@@ -263,14 +191,17 @@ test("Spanish predictions, debrief and notebook dialog fit and pass axe at phone
       values: ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa", "best-practice"]}})).violations.map((v) => [v.id, v.nodes.map((n) => n.target)]));
     expect(violations).toEqual([]);
   }
-  await audit();
-  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(360);
-  await page.locator("#open-notebook-open").focus();
+  for (const key of ["wax", "shot", "mixing"]) {
+    await station(page, key).click();
+    await audit();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(360);
+  }
+  await page.locator("#restart-open").focus();
   await page.keyboard.press("Enter");
-  await expect(page.getByRole("dialog", {name: "Abrir un cuaderno guardado"})).toBeVisible();
+  await expect(page.getByRole("dialog", {name: "¿Empezar de nuevo?"})).toBeVisible();
   await audit();
   await page.keyboard.press("Escape");
-  await expect(page.locator("#open-notebook-open")).toBeFocused();
+  await expect(page.locator("#restart-open")).toBeFocused();
 });
 
 test("the chemistry directory opens the lab with the matching language and canonical URL", async ({page}) => {
@@ -283,56 +214,4 @@ test("the chemistry directory opens the lab with the matching language and canon
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute("href", "https://activities.zornscience.org" + LAB + query);
     await expect(page.locator('link[hreflang="es"]')).toHaveAttribute("href", "https://activities.zornscience.org" + LAB + "?lang=es");
   }
-});
-
-test("leaving the page asks first only while notebook entries are unsaved", async ({page}) => {
-  const prompts = [];
-  page.on("dialog", async (dialog) => {
-    prompts.push(dialog.type());
-    await dialog.dismiss();
-  });
-  // A dismissed prompt cancels the reload, so allow a short timeout in that case.
-  const reload = () => page.reload({timeout: 2000}).catch(() => {});
-  const diameter = () => waxRow(page, "W").getByRole("textbox");
-
-  await page.goto(LAB);
-  await station(page, "shot").click();
-  await reload();
-  expect(prompts).toEqual([]);
-
-  // Browsers only ask after a real user gesture, so type the entry.
-  await diameter().click();
-  await page.keyboard.type("10");
-  await reload();
-  expect(prompts).toEqual(["beforeunload"]);
-  await expect(diameter()).toHaveValue("10");
-
-  await page.evaluate(() => {
-    const create = URL.createObjectURL;
-    URL.createObjectURL = () => {
-      URL.createObjectURL = create;
-      throw new Error("Download preparation blocked");
-    };
-  });
-  await page.locator("#save-notebook").click();
-  await expect(page.locator("#notebook-file-status")).toHaveText(/The notebook file could not be prepared/);
-  await reload();
-  expect(prompts).toEqual(["beforeunload", "beforeunload"]);
-  await expect(diameter()).toHaveValue("10");
-
-  await Promise.all([page.waitForEvent("download"), page.locator("#save-notebook").click()]);
-  const shot = shotRow(page, "G").getByRole("textbox", {name: "Fall time, trial 1 (s)"});
-  await station(page, "shot").click();
-  await shot.fill("6.4");
-  await shot.fill("");
-  await reload();
-  expect(prompts).toEqual(["beforeunload", "beforeunload"]);
-  await expect(diameter()).toHaveValue("");
-
-  await diameter().click();
-  await page.keyboard.type("12");
-  await page.locator("#restart-open").click();
-  await page.locator("#restart-confirm").click();
-  await reload();
-  expect(prompts).toEqual(["beforeunload", "beforeunload"]);
 });

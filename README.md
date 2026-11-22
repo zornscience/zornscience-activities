@@ -83,7 +83,7 @@ calorimetry-lab/          Calorimetry & Enthalpy Lab, v1.3.3 (heated-metal and n
 reaction-energy-lab/      Reaction Energy Lab, v1.0.4 (energy diagrams, phase changes, reaction enthalpy, bonds, formation and Hess; English and Mexican Spanish)
 free-energy-lab/          Free Energy Lab, v1.0.4 (entropy, Gibbs free energy, temperature, K, kinetic control, dissolving and coupling; English and Mexican Spanish)
 chemical-bonding-lab/      Chemical Bonding Lab, v1.1.4 (four unknown solids tested for appearance, conductivity, melting, solubility and malleability; English and Mexican Spanish)
-molar-mass-trap-lab/       The Molar Mass Trap Lab, v1.0.1 (wax paper, steel shot, five mixtures and an editable notebook; English and Mexican Spanish)
+molar-mass-trap-lab/       The Molar Mass Trap Lab, v1.1.0 (wax paper, steel shot and five mixtures, with data recorded on the lab worksheet; English and Mexican Spanish)
 metals-lab/                Metals, Nonmetals & Metalloids Lab, v1.1.4 (classify three unknown solids from physical and chemical evidence; English and Mexican Spanish)
 iodine-clock-lab/          Iodine Clock Lab, v1.1.4 (concentration and temperature trials with a timed blue endpoint and a 20-second challenge; English and Mexican Spanish)
 fruit-fly-genetics-lab/    Genetics Lab: Crossing Fruit Flies, v1.0.1 (grade 9 Biology, Punnett squares by drag, tap or keyboard, seeded offspring at 8, 40 and 200, F1 to F2, test crosses on mystery parents, check questions, optional dihybrid, tab-separated data copy; Spanish written, toggle off until proofread)

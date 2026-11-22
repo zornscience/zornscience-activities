@@ -30,7 +30,6 @@
     const liquidLabel = (code) => code + " " + t(liquids[code]);
     const drawing = makeTube(holder, true);
     const slots = {};
-    const fields = {};
     let requestedReading = false;
     let lastStage, lastSecond, lastElapsed;
 
@@ -100,71 +99,7 @@
       return item;
     }
 
-    function addNotebookRow(number) {
-      const row = element("tr");
-      row.dataset.mixEntry = number;
-      const rowHeading = element("th");
-      rowHeading.scope = "row";
-      rowHeading.id = "mix-notebook-tube-" + number;
-      const rowNumber = element("span", "", String(number));
-      rowNumber.setAttribute("aria-hidden", "true");
-      const name = element("span", "zsa-sr-only");
-      rowHeading.append(rowNumber, name);
-      const pair = element("td");
-      const pairCodes = element("span", "zsa-mmt-mix-pair-codes", Object.keys(mixing.recipesMl[number]).join(" + "));
-      pairCodes.setAttribute("aria-hidden", "true");
-      const pairNames = element("span", "zsa-sr-only zsa-mmt-mix-pair-names");
-      pair.append(pairCodes, pairNames);
-      const layers = element("select");
-      layers.setAttribute("aria-labelledby", "mix-layer-heading " + rowHeading.id);
-      layers.append(...["", "1", "2"].map(option));
-      const dye = element("textarea");
-      dye.rows = 2;
-      dye.spellcheck = false;
-      dye.setAttribute("aria-labelledby", "mix-dye-heading " + rowHeading.id);
-      const layersPrint = element("span", "zsa-mmt-print-only");
-      const dyePrint = element("span", "zsa-mmt-print-only zsa-mmt-print-dye");
-      const prediction = element("span", "zsa-mmt-prediction-result");
-      prediction.setAttribute("role", "status");
-      const predictionPrint = element("td", "zsa-mmt-prediction-column");
-      const layersCell = element("td");
-      const dyeCell = element("td");
-      layersCell.append(layers, layersPrint, prediction);
-      dyeCell.append(dye, dyePrint);
-      row.append(rowHeading, pair, layersCell, dyeCell, predictionPrint);
-      $("mix-entries").append(row);
-      fields[number] = {name, pairNames, layers, dye, layersPrint, dyePrint, prediction, predictionPrint};
-      layers.addEventListener("change", () => {
-        getState().notebook.mixing[number].layerCount = layers.value ? Number(layers.value) : null;
-        setText(layersPrint, layers.value ? layers.selectedOptions[0].textContent : "");
-        renderPrediction(number);
-      });
-      dye.addEventListener("input", () => {
-        getState().notebook.mixing[number].dyeLocation = dye.value;
-        setText(dyePrint, dye.value);
-      });
-    }
-
-    function renderPrediction(number) {
-      const result = model.predictionResult(getState().notebook, number);
-      const {prediction, predictionPrint} = fields[number];
-      setText(prediction, result === null ? "" : t(result ? "Prediction matched" : "Prediction differed"));
-      setText(predictionPrint, result === null ? "" : t(result ? "Yes" : "No"));
-    }
-
-    function renderNotebook() {
-      for (const number of tubes) {
-        const {name, pairNames, layers, dye, layersPrint, dyePrint} = fields[number];
-        const entry = getState().notebook.mixing[number];
-        setText(name, tubeLabel(number));
-        setText(pairNames, Object.keys(mixing.recipesMl[number]).map(liquidLabel).join(" + "));
-        for (const [index, label] of ["Choose", "One layer", "Two layers"].entries()) setText(layers.options[index], t(label));
-        layers.value = entry.layerCount ?? "";
-        dye.value = entry.dyeLocation;
-        setText(layersPrint, layers.value ? layers.selectedOptions[0].textContent : "");
-        setText(dyePrint, entry.dyeLocation);
-        renderPrediction(number);
-      }
+    function renderLabels() {
       setText(liquid.options[0], t("Choose liquid"));
       for (const item of Array.from(liquid.options).slice(1)) setText(item, liquidLabel(item.value));
       setText(amount.options[0], t("Choose amount"));
@@ -388,10 +323,7 @@
       setText(item, volumeLabel(ml));
       amount.append(item);
     }
-    for (const number of tubes) {
-      addSlot(number);
-      addNotebookRow(number);
-    }
+    for (const number of tubes) addSlot(number);
     for (const input of [liquid, amount]) input.addEventListener("change", refresh);
     for (const control of [action, stand, advance, empty]) {
       control.addEventListener("keydown", (event) => {
@@ -429,7 +361,7 @@
       requestedReading = false;
       refresh();
     });
-    return {paint, renderNotebook, renderPrediction, reset() {
+    return {paint, renderLabels, reset() {
       liquid.value = amount.value = "";
       requestedReading = false;
     }};

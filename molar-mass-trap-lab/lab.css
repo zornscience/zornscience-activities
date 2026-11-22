@@ -72,9 +72,7 @@ body {
 
 .zsa-mmt-workspace {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(330px, 355px);
-  grid-template-rows: max-content 1fr;
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr);
   gap: 16px;
 }
 
@@ -91,8 +89,11 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
   gap: 6px 12px;
+}
+
+.zsa-mmt .zsa-mmt-restart {
+  margin-left: auto;
 }
 
 .zsa-mmt-panel h2 {
@@ -138,8 +139,7 @@ body {
   height: 36px;
 }
 
-.zsa-mmt-bottle-code,
-.zsa-mmt-liquid-letter {
+.zsa-mmt-bottle-code {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -175,8 +175,7 @@ body {
   --mmt-key-ink: #852f2a;
 }
 
-.zsa-mmt-bottle-code,
-.zsa-mmt-liquid-letter {
+.zsa-mmt-bottle-code {
   background: var(--mmt-key-fill, #e9eff3);
   color: var(--mmt-key-ink, #243f53);
 }
@@ -344,229 +343,6 @@ body {
   font-weight: 650;
 }
 
-.zsa-mmt-notebook {
-  background: #fdfbf5;
-}
-
-.zsa-mmt-notebook h3 {
-  margin: 8px 0 3px;
-  font-size: 14px;
-  font-weight: 680;
-}
-
-.zsa-mmt-notebook-help {
-  margin: 0 0 8px;
-  font-size: 13px;
-}
-
-.zsa-mmt-notebook table {
-  width: 100%;
-  border-collapse: collapse;
-  table-layout: fixed;
-  font-size: 13px;
-  line-height: 1.2;
-}
-
-.zsa-mmt-notebook th,
-.zsa-mmt-notebook td {
-  padding: 5px 3px;
-  border-bottom: 1px solid #d8d7ce;
-  text-align: left;
-}
-
-.zsa-mmt-notebook th:first-child {
-  width: 31%;
-}
-
-.zsa-mmt-notebook thead th:last-child {
-  width: 28%;
-}
-
-.zsa-mmt-notebook tbody th {
-  font-weight: 550;
-}
-
-.zsa-mmt-liquid-letter {
-  margin-right: 4px;
-  vertical-align: middle;
-}
-
-.zsa-mmt-notebook input,
-.zsa-mmt-notebook select,
-.zsa-mmt-notebook textarea,
-.zsa-mmt-debrief select,
-.zsa-mmt-debrief textarea {
-  width: 100%;
-  min-width: 0;
-  min-height: 44px;
-  padding: 4px 5px;
-  border: 1px solid #b4c6d1;
-  border-radius: 6px;
-  background: #fff;
-  color: #213e51;
-  font: inherit;
-}
-
-.zsa-mmt-notebook textarea,
-.zsa-mmt-debrief textarea {
-  display: block;
-  resize: vertical;
-}
-
-.zsa-mmt-profiles {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 5px;
-  margin: 8px 0 10px;
-}
-
-.zsa-mmt-profiles figure {
-  display: grid;
-  justify-items: center;
-  align-content: start;
-  gap: 2px;
-  padding: 4px;
-  margin: 0;
-  background: #f2efe4;
-  border-radius: 5px;
-  font-size: 11px;
-  line-height: 1.15;
-  text-align: center;
-}
-
-.zsa-mmt-profiles svg {
-  width: 64px;
-  max-width: 100%;
-  height: auto;
-}
-
-.zsa-mmt-notes-label {
-  display: block;
-  margin-bottom: 4px;
-  font-size: 13px;
-  font-weight: 650;
-}
-
-.zsa-mmt-notebook-footer {
-  display: grid;
-  justify-items: start;
-  gap: 8px;
-  margin-top: 9px;
-}
-
-.zsa-mmt-notebook-footer p {
-  margin: 0;
-  font-size: 12px;
-}
-
-.zsa-mmt-notebook-footer a.zsa-btn {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  color: #173e54;
-}
-
-.zsa-mmt-notebook-actions,
-.zsa-mmt-debrief-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 7px;
-}
-
-.zsa-mmt-predictions {
-  margin-bottom: 8px;
-  border-bottom: 1px solid #d8d7ce;
-  font-size: 13px;
-}
-
-.zsa-mmt-predictions summary {
-  min-height: 44px;
-  padding-block: 11px;
-  color: #173e54;
-  font-weight: 650;
-  cursor: pointer;
-}
-
-.zsa-mmt-predictions label {
-  display: block;
-  margin-block: 6px 3px;
-  font-weight: 600;
-}
-
-.zsa-mmt-prediction-pairs,
-.zsa-mmt-debrief fieldset {
-  min-width: 0;
-  padding: 0;
-  border: 0;
-  margin: 12px 0;
-}
-
-.zsa-mmt-prediction-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(105px, 46%);
-  align-items: center;
-  gap: 8px;
-  margin-top: 4px;
-}
-
-.zsa-mmt-prediction-result {
-  display: block;
-  margin-top: 3px;
-  font-size: 11px;
-  color: #385b6d;
-}
-
-.zsa-mmt-prediction-column,
-.zsa-mmt-prediction-result:empty,
-#notebook-file-status:empty,
-#open-notebook-status:empty {
-  display: none;
-}
-
-.zsa-mmt-debrief h2 {
-  margin: 0 0 8px;
-  font-size: 21px;
-}
-
-.zsa-mmt-evidence {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-
-.zsa-mmt-debrief label,
-.zsa-mmt-debrief legend {
-  display: block;
-  margin-block: 8px 4px;
-  font-weight: 620;
-}
-
-.zsa-mmt-debrief-actions {
-  margin-top: 8px;
-}
-
-.zsa-mmt-debrief-actions p {
-  flex: 1 1 215px;
-  margin: 0;
-  font-size: 13px;
-  color: #173e54;
-}
-
-#notebook-file {
-  display: block;
-  width: 100%;
-  min-height: 44px;
-  margin-block: 4px 12px;
-  font: inherit;
-}
-
-#notebook-file::file-selector-button {
-  min-height: 44px;
-  margin-inline-end: 7px;
-  font: inherit;
-}
-
 .zsa-mmt-model {
   margin-top: 16px;
   font-size: 14px;
@@ -603,10 +379,6 @@ body {
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 8px;
-}
-
-.zsa-mmt-print-only {
-  display: none;
 }
 
 .zsa-mmt-shot-liquid {
@@ -661,8 +433,7 @@ body {
 
 .zsa-mmt-shot-console-heading,
 .zsa-mmt-shot-clock-line,
-.zsa-mmt-shot-modes,
-.zsa-mmt-shot-record {
+.zsa-mmt-shot-modes {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -673,8 +444,7 @@ body {
   justify-content: space-between;
 }
 
-.zsa-mmt-shot-console h3,
-.zsa-mmt-shot-details h4 {
+.zsa-mmt-shot-console h3 {
   margin: 0;
   color: #173951;
   font-size: 15px;
@@ -704,81 +474,11 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-.zsa-mmt-shot-feedback,
-.zsa-mmt-shot-summary,
-.zsa-mmt-shot-result {
+.zsa-mmt-shot-feedback {
   margin: 0;
   color: #244c63;
   font-size: 13px;
   font-weight: 600;
-}
-
-.zsa-mmt-shot-details {
-  display: grid;
-  gap: 7px;
-  margin-top: 8px;
-  padding: 9px;
-  border: 1px solid #d9d7ca;
-  border-radius: 8px;
-  background: #f7f5ec;
-}
-
-.zsa-mmt-shot-trials {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 7px;
-  align-items: end;
-}
-
-.zsa-mmt-shot-field {
-  display: grid;
-  gap: 3px;
-  min-width: 0;
-  font-size: 13px;
-  font-weight: 550;
-}
-
-.zsa-mmt-shot-details .zsa-mmt-quiet {
-  justify-self: start;
-}
-
-.zsa-mmt-notebook .zsa-mmt-shot-table th:first-child {
-  width: 24%;
-}
-
-.zsa-mmt-notebook .zsa-mmt-shot-table thead th:last-child {
-  width: 30%;
-}
-
-.zsa-mmt-shot-table th,
-.zsa-mmt-shot-table td,
-.zsa-mmt-shot-result,
-.zsa-mmt-shot-source {
-  overflow-wrap: anywhere;
-}
-
-.zsa-mmt-shot-result {
-  margin-top: 4px;
-}
-
-.zsa-mmt-shot-result:empty {
-  display: none;
-}
-
-.zsa-mmt-shot-source {
-  color: #385b6d;
-  font-size: 10px;
-}
-
-#shot-check-averages {
-  margin-top: 8px;
-}
-
-#shot-notebook:not([hidden]) + #wax-notebook,
-#mix-notebook:not([hidden]) ~ #wax-notebook {
-  border-top: 1px solid #d8d7ce;
-  margin-top: 14px;
-  padding-top: 7px;
 }
 
 .zsa-mmt-mix-scene {
@@ -937,46 +637,62 @@ body {
   margin: 0;
 }
 
-.zsa-mmt-notebook .zsa-mmt-mix-table th:first-child {
-  width: 12%;
-}
+/* With no notebook column, wide screens put each station's controls beside its scene so the whole bench fits without scrolling. */
+@media (min-width: 1000px) {
+  #wax-bench:not([hidden]),
+  #shot-bench:not([hidden]),
+  #mixing-bench:not([hidden]) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(270px, 300px);
+    grid-auto-rows: min-content;
+    column-gap: 14px;
+    align-items: start;
+  }
 
-.zsa-mmt-notebook .zsa-mmt-mix-table th:nth-child(2) {
-  width: 16%;
-}
-
-.zsa-mmt-notebook .zsa-mmt-mix-table th:nth-child(3) {
-  width: 32%;
-}
-
-.zsa-mmt-notebook .zsa-mmt-mix-table th:nth-child(4) {
-  width: 40%;
-}
-
-.zsa-mmt-notebook .zsa-mmt-mix-table :is(th, select) {
-  font-size: 12px;
-}
-
-.zsa-mmt-mix-pair-codes {
-  white-space: nowrap;
-}
-
-@media (min-width: 891px) {
-  .zsa-mmt-notebook {
+  #wax-bench > *,
+  #shot-bench > *,
+  #mixing-bench > * {
     grid-column: 2;
-    grid-row: 1 / span 2;
   }
-}
 
-@media (max-width: 890px) {
-  .zsa-mmt-workspace {
+  #wax-bench > .zsa-mmt-scene,
+  #shot-bench > .zsa-mmt-scene,
+  #mixing-bench > .zsa-mmt-scene {
+    grid-column: 1;
+    grid-row: 1 / span 12;
+  }
+
+  #wax-bench > :first-child,
+  #shot-bench > :first-child,
+  #mixing-bench > .zsa-mmt-mix-recipe {
+    margin-top: 0;
+  }
+
+  .zsa-mmt-bottles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .zsa-mmt-measure {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .zsa-mmt-measure label {
+    grid-column: 1 / -1;
+  }
+
+  .zsa-mmt-sample-status {
+    flex-basis: 100%;
+  }
+
+  /* Stack each pipette label above its menu so the full choice stays readable. */
+  #mix-pipettes {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: auto;
   }
 
-  .zsa-mmt-notebook {
-    max-width: 600px;
-  }
+  #mix-pipettes label[for="mix-liquid"] { grid-row: 1; }
+  #mix-liquid { grid-row: 2; }
+  #mix-pipettes label[for="mix-amount"] { grid-row: 3; }
+  #mix-amount { grid-row: 4; }
 }
 
 @media (max-width: 540px) {
@@ -1048,151 +764,5 @@ body {
 
   .zsa-mmt-measure label {
     grid-column: 1 / -1;
-  }
-
-  .zsa-mmt-evidence {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media print {
-  body,
-  .zsa-mmt,
-  .zsa-mmt-notebook {
-    background: #fff;
-  }
-
-  .zsa-mmt .zsa-mmt-stations,
-  .zsa-mmt .zsa-mmt-bench,
-  .zsa-mmt .zsa-mmt-model,
-  .zsa-mmt .zsa-about,
-  .zsa-mmt [data-zsa-chrome],
-  .zsa-mmt .zsa-mmt-notebook-help,
-  .zsa-mmt .zsa-mmt-notebook-footer,
-  .zsa-mmt-mix-pair-codes,
-  .zsa-mmt-predictions,
-  .zsa-mmt-prediction-result,
-  .zsa-mmt-debrief-actions,
-  .zsa-mmt-debrief:not([data-has-responses="true"]),
-  .zsa-mmt-debrief :is(select, textarea),
-  .zsa-mmt-notebook :is(input, select, textarea, button) {
-    display: none !important;
-  }
-
-  .zsa-mmt-workspace,
-  .zsa-mmt-print-only,
-  .zsa-mmt #shot-notebook[hidden],
-  .zsa-mmt #mix-notebook[hidden] {
-    display: block;
-  }
-
-  .zsa-mmt-notebook-tests {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .zsa-mmt #wax-notebook {
-    order: -2;
-    border-top: 0;
-    margin-top: 0;
-    padding-top: 0;
-  }
-
-  #shot-notebook {
-    order: -1;
-  }
-
-  .zsa-mmt #shot-extras [data-shot-extra] {
-    display: none;
-  }
-
-  .zsa-mmt #shot-extras [data-has-trials="true"] {
-    display: grid;
-    break-inside: avoid;
-    background: #fff;
-  }
-
-  .zsa-mmt-notebook,
-  .zsa-mmt-debrief {
-    max-width: none;
-    padding: 0;
-    border: 0;
-    box-shadow: none;
-  }
-
-  .zsa-mmt-debrief h2 {
-    break-after: avoid;
-  }
-
-  .zsa-mmt-debrief {
-    margin-top: 12px;
-  }
-
-  .zsa-mmt-evidence {
-    display: block;
-  }
-
-  .zsa-mmt-printed-response {
-    margin: 2px 0 8px;
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
-  }
-
-  .zsa-mmt-printed-response:empty {
-    display: none;
-  }
-
-  .zsa-mmt-notebook th,
-  .zsa-mmt-notebook td {
-    padding-block: 5px;
-    overflow-wrap: anywhere;
-  }
-
-  .zsa-mmt-notebook .zsa-mmt-mix-table th:nth-child(2) {
-    width: 25%;
-  }
-
-  .zsa-mmt-notebook .zsa-mmt-mix-table th:nth-child(3) {
-    width: 18%;
-  }
-
-  .zsa-mmt-notebook .zsa-mmt-mix-table th:nth-child(4) {
-    width: 31%;
-  }
-
-  .zsa-mmt-notebook .zsa-mmt-mix-table .zsa-mmt-prediction-column {
-    display: table-cell;
-    width: 14%;
-  }
-
-  .zsa-mmt-mix-pair-names {
-    position: static;
-    width: auto;
-    height: auto;
-    margin: 0;
-    white-space: normal;
-  }
-
-  .zsa-mmt-notebook h3,
-  .zsa-mmt-notebook thead {
-    break-after: avoid;
-  }
-
-  .zsa-mmt .zsa-footer {
-    margin-top: 18px;
-    padding-block: 6px;
-    break-inside: avoid;
-  }
-
-  .zsa-mmt-notebook tr,
-  .zsa-mmt-profiles {
-    break-inside: avoid;
-  }
-
-  #print-notes,
-  .zsa-mmt-print-dye {
-    margin-top: 3px;
-    white-space: pre-wrap;
-    overflow-wrap: anywhere;
   }
 }

@@ -73,15 +73,10 @@ test("shot and mixing tubes have independent state and support all five mixing r
   state.mixing.tubes[3].aliquots.push({code: "O", ml: 0.5});
   state.mixing.tubes[5].inversions++;
   state.shot.tubes.M.trial.pausedAt = 180;
-  state.notebook.shot.W.trials.push("<0.5", "0.70", "0.80");
-  state.notebook.shot.W.studentMean = "0.75";
-  state.notebook.shot.W.computed = {kind: "bound", upperSeconds: 2 / 3};
-  state.notebook.mixing[3].layerCount = 2;
   assert.deepEqual(state.mixing.tubes[5].aliquots, []);
   assert.equal(state.mixing.tubes[3].inversions, 0);
   assert.equal(state.shot.tubes.O.trial.pausedAt, null);
-  assert.equal(state.notebook.shot.W.trials.length, 3);
-  assert.deepEqual(state.notebook.shot.M, {trials: [], sources: [], studentMean: null, computed: null});
-  assert.equal(state.notebook.mixing[5].layerCount, null);
   assert.equal(model.createState().mixing.tubes[3].aliquots.length, 0);
+  // Students record data on the lab worksheet, so the lab state holds only the three stations.
+  assert.deepEqual(Object.keys(state), ["station", "wax", "shot", "mixing"]);
 });

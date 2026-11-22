@@ -8,7 +8,7 @@
   function createShotStation({model, t, svg, element, setText, setAvailability, clock, getState, refresh}) {
     const {shot, liquids} = model;
     const codes = Object.keys(liquids);
-    const racks = {}, tubeButtons = {}, cards = {};
+    const racks = {}, tubeButtons = {};
     const top = -65, bottom = 77, tilt = 112;
     const scale = (bottom - top) / shot.travelMm;
     const radius = shot.diameterMm * scale / 2;
@@ -21,12 +21,9 @@
     const magnet = $("shot-magnet");
     const activeTube = $("shot-active-tube");
     const artLiquid = $("shot-art-liquid");
-    // A reading the station saved for the student, shown until their next action.
-    let notice = null;
 
     function code() { return getState().shot.liquid; }
     function tube() { return getState().shot.tubes[code()]; }
-    function record(key) { return getState().notebook.shot[key]; }
     function liquidName(key) { return key + " " + t(liquids[key]); }
 
     function makeTube(host) {
@@ -67,7 +64,6 @@
       const button = $(id);
       button.addEventListener("click", () => {
         if (button.getAttribute("aria-disabled") === "true") return;
-        notice = null;
         const focus = perform();
         refresh();
         if (focus instanceof HTMLElement) focus.focus();
@@ -97,222 +93,13 @@
       tubeButtons[key] = {button, name};
     }
 
-    function labeledInput() {
-      const label = element("label", "zsa-mmt-shot-field");
-      const caption = element("span");
-      const input = element("input");
-      input.type = "text";
-      input.autocomplete = "off";
-      const printed = element("span", "zsa-mmt-print-only");
-      label.append(caption, input, printed);
-      return {label, caption, input, printed};
-    }
-
-    function tableLabel(field, column, title) {
-      field.caption.hidden = true;
-      field.input.setAttribute("aria-labelledby", column + " " + title.id);
-    }
-
-    function showSource(field, source) {
-      const instrumentTimed = source === "event";
-      field.source.hidden = !instrumentTimed;
-      setText(field.source, instrumentTimed ? t("Instrument-timed") : "");
-      if (instrumentTimed) field.input.setAttribute("aria-describedby", field.source.id);
-      else field.input.removeAttribute("aria-describedby");
-    }
-
-    function showStudentMean(field, value) {
-      setText(field.printed, value?.trim() ? t("Your average: {value}", {value}) : "");
-    }
-
-    function addTrialField(key) {
-      const card = cards[key];
-      const index = card.fields.length;
-      const field = labeledInput();
-      field.source = element("span", "zsa-mmt-shot-source");
-      field.source.id = "shot-source-" + key + "-" + index;
-      field.source.hidden = true;
-      field.label.append(field.source);
-      if (index < 2) {
-        tableLabel(field, "shot-trial-" + (index + 1) + "-heading", card.title);
-        card.cells[index].append(field.label);
-      } else {
-        card.trials.append(field.label);
-      }
-      field.input.addEventListener("input", () => {
-        const entry = record(key);
-        if (entry.trials[index] !== field.input.value) entry.sources[index] = null;
-        entry.trials[index] = field.input.value;
-        entry.computed = null;
-        setText(field.printed, field.input.value);
-        showSource(field, entry.sources[index]);
-        updateSummary(key);
-      });
-      card.fields.push(field);
-    }
-
-    function addCard(key) {
-      const row = element("tr");
-      row.dataset.shotCard = key;
-      const title = element("th");
-      title.id = "shot-liquid-" + key;
-      title.scope = "row";
-      title.dataset.liquid = key;
-      const name = element("span");
-      title.append(element("span", "zsa-mmt-liquid-letter", key), " ", name);
-      const cells = [element("td"), element("td")];
-      const mean = labeledInput();
-      tableLabel(mean, "shot-average-heading", title);
-      const average = element("td");
-      const result = element("p", "zsa-mmt-shot-result");
-      average.append(mean.label, result);
-      row.append(title, ...cells, average);
-      $("shot-entries").append(row);
-
-      const detail = element("div", "zsa-mmt-shot-details");
-      detail.dataset.shotExtra = key;
-      const detailTitle = element("h4");
-      const trials = element("div", "zsa-mmt-shot-trials");
-      const add = element("button", "zsa-btn zsa-mmt-quiet");
-      add.type = "button";
-      const summary = element("p", "zsa-mmt-shot-summary");
-      summary.setAttribute("role", "status");
-      detail.append(detailTitle, trials, add, summary);
-      $("shot-extras").append(detail);
-      cards[key] = {title, name, cells, detail, detailTitle, trials, fields: [], add, mean, result, summary};
-
-      add.addEventListener("click", () => {
-        if (add.getAttribute("aria-disabled") === "true") return;
-        const entry = record(key);
-        const index = cards[key].fields.length;
-        entry.trials[index] = "";
-        renderCard(key);
-        cards[key].fields[index].input.focus();
-      });
-      mean.input.addEventListener("input", () => {
-        const entry = record(key);
-        entry.studentMean = mean.input.value;
-        entry.computed = null;
-        showStudentMean(mean, mean.input.value);
-        updateSummary(key);
-      });
-    }
-
-    const seconds = (value) => String(Number(value.toFixed(4)));
-
-    function updateSummary(key) {
-      const {add, result, summary, fields} = cards[key];
-      const entry = record(key);
-      const checked = entry.computed;
-      const lastTrial = entry.trials[fields.length - 1];
-      const canAdd = [entry.trials[0], entry.trials[1], lastTrial].every((value) => model.parseShotReading(value));
-      add.setAttribute("aria-disabled", String(!canAdd));
-      if (!checked) {
-        setText(result, "");
-        setText(summary, "");
-        return;
-      }
-      if (checked.kind === "needed") {
-        setText(result, t("Check trials"));
-        setText(summary, t("Enter two times in seconds with a decimal point, or use <0.5 for a fall too fast to time."));
-        return;
-      }
-
-      const [first, second] = checked.trials;
-      const values = {first, second};
-      let message, compact;
-      if (checked.kind === "exact") {
-        const rounded = model.formatShotAverage(checked);
-        compact = rounded + " s";
-        message = t("Trials {first} and {second} give an average of {seconds} s.", {...values, seconds: rounded});
-      } else if (checked.kind === "below") {
-        compact = "<0.5 s";
-        message = t("The average of trials {first} and {second} is less than 0.5 s.", values);
-      } else {
-        const bounds = {lower: seconds(checked.lower), upper: seconds(checked.upper)};
-        compact = t("{lower} to <{upper} s", bounds);
-        message = t("For trials {first} and {second}, the average is at least {lower} s and less than {upper} s.", {...values, ...bounds});
-      }
-      if (first !== 1 || second !== 2) compact += " · " + t("Trials {first}, {second}", values);
-      if (entry.studentMean?.trim() && checked.kind !== "bound") {
-        message += " " + t(model.shotMeanMatches(checked, entry.studentMean) ?
-          "Your average matches." : "Check your average against these two trials.");
-      }
-      // Label the computed value so the notebook and printout never pass it off as the student's own average.
-      setText(result, t("Lab's average: {value}", {value: compact}));
-      setText(summary, message);
-    }
-
-    function renderCard(key) {
-      const card = cards[key];
-      const entry = record(key);
-      const fieldCount = Math.max(2, entry.trials.length);
-      while (card.fields.length > fieldCount) card.fields.pop().label.remove();
-      while (card.fields.length < fieldCount) addTrialField(key);
-      card.detail.dataset.hasTrials = String(fieldCount > 2);
-      setText(card.name, t(liquids[key]));
-      setText(card.detailTitle, liquidName(key));
-      setText(card.add, t("Add trial"));
-      card.mean.input.value = entry.studentMean ?? "";
-      showStudentMean(card.mean, entry.studentMean);
-      card.fields.forEach((field, index) => {
-        setText(field.caption, t("Fall time, trial {number} (s)", {number: index + 1}));
-        field.input.value = entry.trials[index] ?? "";
-        setText(field.printed, entry.trials[index] ?? "");
-        showSource(field, entry.sources[index]);
-      });
-      updateSummary(key);
-    }
-
-    function renderNotebook() {
-      for (const key of codes) renderCard(key);
-    }
-
-    function checkAverages() {
-      const hasEntry = (entry) => entry.trials.some((trial) => trial?.trim()) || entry.studentMean?.trim();
-      const empty = !codes.some((key) => hasEntry(record(key)));
-      for (const key of codes) {
-        const entry = record(key);
-        if (hasEntry(entry) || (empty && key === code())) {
-          entry.computed = model.summarizeShotTrials(entry.trials) ?? {kind: "needed"};
-        }
-        updateSummary(key);
-      }
-    }
-
-    // The event-timed display and saved readings use the worksheet's 0.5 s threshold.
+    // The event-timed display uses the worksheet's 0.5 s threshold.
     function belowEventFloor(trial, elapsedMs) {
       return trial.mode === "event" && trial.startedAt !== null && elapsedMs < shot.manualThresholdS * 1000;
     }
 
     function readingText(trial, elapsedMs) {
       return belowEventFloor(trial, elapsedMs) ? "<0.5" : (elapsedMs / 1000).toFixed(2);
-    }
-
-    function appendReading(value) {
-      const live = tube();
-      if (live.trial.recorded) return;
-      const entry = record(code());
-      let index = 0;
-      while (entry.trials[index]?.trim()) index++;
-      entry.trials[index] = value;
-      entry.sources[index] = live.trial.mode === "event" && value !== "<0.5" ? "event" : null;
-      entry.computed = null;
-      live.trial.recorded = true;
-      renderCard(code());
-      return index + 1;
-    }
-
-    // Keep a finished, unflagged stopwatch reading before the magnet or a reset clears the trial.
-    function saveUnrecordedReading() {
-      const live = tube();
-      const trial = live.trial;
-      if (live.phase !== "at-bottom" || trial.contactedAt === null || trial.recorded || trial.pausedAt !== null) return;
-      if (trial.startedAt === null || trial.stoppedAt === null || model.manualTimingIssue(trial)) return;
-      const elapsedMs = trial.stoppedAt - trial.startedAt;
-      if (elapsedMs < 5) return;
-      const reading = readingText(trial, elapsedMs);
-      notice = {key: code(), reading, number: appendReading(reading)};
     }
 
     function position(sample, progress) {
@@ -351,7 +138,6 @@
         for (const other of codes) {
           setText(tubeButtons[other].name, t(liquids[other]));
           tubeButtons[other].button.setAttribute("aria-pressed", String(other === key));
-          cards[other].detail.hidden = other !== key;
           racks[other].group.dataset.selected = String(other === key);
           if (other === key) continue;
           const inactive = getState().shot.tubes[other];
@@ -395,7 +181,7 @@
           }
           if (trial.contactedAt === null) return t("Tilt the selected tube to bring the shot to the stopper.");
           if (view.running) return t("The shot touched the bottom. Stop timing.");
-          return t("The shot touched the bottom. Record a reading or return it with the magnet.");
+          return t("The shot touched the bottom. Record the time on your lab worksheet, then use the magnet for another trial.");
       }
     }
 
@@ -405,8 +191,6 @@
       const atBottom = sample.phase === "at-bottom";
       const atStopper = sample.phase === "at-stopper";
       const hasFall = atBottom && trial.contactedAt !== null;
-      const readyToRecord = hasFall && !trial.recorded && !paused && !view.running;
-      const shortFall = hasFall && trial.contactedAt - trial.departedAt < shot.manualThresholdS * 1000;
       const canChooseMode = !paused && !view.running && trial.departedAt === null &&
         (atBottom || atStopper);
       setText($("bench-instruction"), instruction(sample, view, justReplayed, key));
@@ -426,9 +210,6 @@
       setAvailability("shot-stopwatch", !paused && trial.mode === "manual" &&
         (view.running || model.canStartStopwatch(sample)));
       setAvailability("shot-clear", !paused && trial.mode === "manual" && trial.startedAt !== null && sample.phase !== "replaying");
-      setAvailability("shot-record", readyToRecord && trial.stoppedAt !== null && view.stopwatchMs >= 5);
-      // In manual mode the student judges whether a fall was too fast to time.
-      setAvailability("shot-record-below", readyToRecord && (trial.mode === "manual" || shortFall));
       $("shot-top-marker").dataset.active = String(atStopper || ["falling", "replaying"].includes(sample.phase));
       $("shot-bottom-marker").dataset.active = String(hasFall);
       const issue = model.manualTimingIssue(trial);
@@ -438,12 +219,10 @@
         start: "The stopwatch missed departure from the stopper. Try another run."
       };
       let feedback = "";
-      if (notice && notice.key === key) {
-        feedback = t("Reading {seconds} s saved as trial {number}.", {seconds: notice.reading, number: notice.number});
-      } else if (trial.recorded) feedback = t("Reading recorded in your notebook.");
-      else if (issue) feedback = t(issues[issue]);
+      if (issue) feedback = t(issues[issue]);
+      // In manual mode the student judges whether a fall was too fast to time.
       else if (hasFall && trial.mode === "manual" && trial.startedAt === null) {
-        feedback = t("A fall too fast to time can be recorded as less than 0.5 s.");
+        feedback = t("Too fast to time? Record less than 0.5 s on your lab worksheet.");
       }
       setText($("shot-feedback"), feedback);
     }
@@ -475,13 +254,8 @@
     codes.forEach((key, index) => {
       addRackTube(key, index);
       addTubeButton(key);
-      addCard(key);
     });
-    $("shot-check-averages").addEventListener("click", checkAverages);
-    action("shot-operate", () => {
-      saveUnrecordedReading();
-      model.operateShot(tube(), code(), clock());
-    });
+    action("shot-operate", () => model.operateShot(tube(), code(), clock()));
     action("shot-stopwatch", () => model.toggleStopwatch(tube(), code(), clock()));
     action("shot-resume", () => {
       const sample = tube();
@@ -494,21 +268,12 @@
     action("shot-clear", () => {
       Object.assign(tube().trial, {startedAt: null, stoppedAt: null});
     });
-    action("shot-reset", () => {
-      saveUnrecordedReading();
-      getState().shot.tubes[code()] = model.createShotTube();
-    });
+    action("shot-reset", () => { getState().shot.tubes[code()] = model.createShotTube(); });
     action("shot-replay", () => model.playShotReplay(tube(), code(), clock()));
     action("shot-mode-manual", () => { tube().trial.mode = "manual"; });
     action("shot-mode-event", () => {
       Object.assign(tube().trial, {mode: "event", startedAt: null, stoppedAt: null});
     });
-    action("shot-record", () => {
-      const now = clock();
-      const view = model.shotSnapshot(tube(), code(), now);
-      appendReading(readingText(tube().trial, view.stopwatchMs));
-    });
-    action("shot-record-below", () => appendReading("<0.5"));
-    return {paint, pause, renderNotebook};
+    return {paint, pause};
   }
 }());
