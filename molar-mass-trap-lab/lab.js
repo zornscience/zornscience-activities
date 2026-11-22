@@ -4,12 +4,13 @@
   const root = document.querySelector('[data-zsa-activity="molar-mass-trap-lab"]');
   const $ = (id) => document.getElementById(id);
   const svgNs = "http://www.w3.org/2000/svg";
-  let i18n, copy, model, createShotStation, createMixingStation;
+  let i18n, copy, model, createShotStation, createMixingStation, createNotebookTools;
   root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: (api) => { i18n = api; }}}));
   root.dispatchEvent(new CustomEvent("zsa:molar-mass-copy", {detail: (data) => { copy = data; }}));
   root.dispatchEvent(new CustomEvent("zsa:molar-mass-model", {detail: (api) => { model = api; }}));
   root.dispatchEvent(new CustomEvent("zsa:molar-mass-shot", {detail: (create) => { createShotStation = create; }}));
   root.dispatchEvent(new CustomEvent("zsa:molar-mass-mixing", {detail: (create) => { createMixingStation = create; }}));
+  root.dispatchEvent(new CustomEvent("zsa:molar-mass-notebook", {detail: (create) => { createNotebookTools = create; }}));
   const t = (key, values) => i18n.text(key, values);
 
   const {liquids, wax, ruler} = model;
@@ -395,11 +396,19 @@
   };
   const shotStation = createShotStation(stationOptions);
   const mixingStation = createMixingStation(stationOptions);
-  i18n.onChange = () => {
-    updateStatic();
+  const notebookTools = createNotebookTools({...stationOptions, renderPrediction: mixingStation.renderPrediction, replaceNotebook(saved) {
+    state.notebook = saved;
+    renderAllNotebook();
+  }});
+  function renderAllNotebook() {
     renderNotebook();
     shotStation.renderNotebook();
     mixingStation.renderNotebook();
+    notebookTools.render();
+  }
+  i18n.onChange = () => {
+    updateStatic();
+    renderAllNotebook();
     renderBench();
     setText($("share-status"), shareMessage ? t(shareMessage) : "");
   };
@@ -488,9 +497,9 @@
   $("restart-confirm").addEventListener("click", () => {
     state = model.createState();
     drag = null;
-    renderNotebook();
-    shotStation.renderNotebook();
     mixingStation.reset();
+    notebookTools.reset();
+    renderAllNotebook();
     renderBench();
     $("restart").close();
   });
@@ -510,8 +519,6 @@
     renderBench();
   });
   reducedMotion.addEventListener("change", renderBench);
-  renderNotebook();
-  shotStation.renderNotebook();
-  mixingStation.renderNotebook();
+  renderAllNotebook();
   renderBench();
 }());

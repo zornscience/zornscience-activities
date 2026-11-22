@@ -3747,7 +3747,7 @@ Still using "amortiguador" as a noun (outside this pass): apchem-unit8 and enzym
 
 ## The Molar Mass Trap Lab
 
-The virtual lab follows Style Kit 1.32 and the published Spanish procedure. The station and instrument labels keep W, G, O and M and the symbols mL, mm and s.
+The virtual lab follows Style Kit 1.33 and the published Spanish procedure. The station and instrument labels keep W, G, O and M and the symbols mL, mm and s.
 
 | English | Mexican Spanish |
 | --- | --- |
@@ -3777,3 +3777,8 @@ The virtual lab follows Style Kit 1.32 and the published Spanish procedure. The 
 | liquid pair / one layer or two? | par de líquidos / ¿Una capa o dos? |
 | streaks in a liquid / boundary between bands | vetas en un líquido / límite entre las franjas |
 | waste beaker | vaso de precipitados para residuos (vaso de residuos on the bench) |
+| prediction / debrief | predicción / reflexión final |
+| cite an observation | citar una observación |
+| saved notebook file | archivo del cuaderno guardado |
+| lab's average / your average | promedio del laboratorio / tu promedio |
+| timing / paused (stopwatch) | en marcha / en pausa |

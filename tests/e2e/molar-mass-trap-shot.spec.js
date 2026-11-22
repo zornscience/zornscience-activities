@@ -54,7 +54,8 @@ test("water and glycerin share event timing at different frame cadences and repl
   const errors = errorsFrom(page);
   await openShot(page);
   await expect(page.locator("#shot-tubes button")).toHaveCount(4);
-  for (const [key, time, flight, stepped] of [["W", "0.27", 270, false], ["G", "6.40", 6400, true]]) {
+  // Event timing shows "<0.5" below the hand-held threshold, as the worksheet asks.
+  for (const [key, time, flight, stepped] of [["W", "<0.5", 270, false], ["G", "6.40", 6400, true]]) {
     await selector(page, key).click();
     await page.locator("#shot-mode-event").click();
     const fill = page.locator("#shot-active-tube .zsa-mmt-shot-liquid");
@@ -78,23 +79,35 @@ test("water and glycerin share event timing at different frame cadences and repl
       await expect(clock(page)).toBeFocused();
       await page.clock.runFor(flight);
     } else {
-      await page.clock.fastForward(flight + 540);
+      // The running water timer describes its state. The censored reading appears at first contact.
+      await page.clock.runFor(460 + 100);
+      await expect(clock(page)).toHaveText("Timing");
+      await page.clock.fastForward(flight + 540 - 560);
     }
     await expect(clock(page)).toHaveText(time + " s");
     await expect(action).toHaveText("Use magnet");
     await page.locator("#shot-record").evaluate((button) => { button.click(); button.click(); });
     const first = card(page, key).getByRole("textbox", {name: "Fall time, trial 1 (s)"});
     await expect(first).toHaveValue(time);
-    await expect(first).toHaveAccessibleDescription("Instrument-timed");
+    // A "<0.5" reading is not marked as instrument-timed, so it matches a hand-timed one.
+    await expect(first).toHaveAccessibleDescription(key === "W" ? "" : "Instrument-timed");
     await expect(card(page, key).getByRole("textbox", {name: "Fall time, trial 2 (s)"})).toHaveValue("");
 
     await page.locator("#shot-replay").click();
     const instruction = page.locator("#bench-instruction");
     await expect(instruction).toHaveText(key === "W" ? /Slow-motion replay/ : /Replay. The shot leaves the stopper/);
     await page.clock.fastForward(Math.max(flight, 1400) + 80);
-    await expect(instruction).toHaveText(key === "W" ? /The original fall took 0\.27 s/ : /First contact came 6\.40 s/);
+    await expect(instruction).toHaveText(key === "W" ? /The original fall took less than 0\.5 s/ : /First contact came 6\.40 s/);
     await expect(clock(page)).toHaveText(time + " s");
-    await expect(card(page, key).getByRole("textbox", {name: "Fall time, trial 2 (s)"})).toHaveValue("");
+    const second = card(page, key).getByRole("textbox", {name: "Fall time, trial 2 (s)"});
+    await expect(second).toHaveValue("");
+    if (key === "W") {
+      await magnet(page);
+      await action.click();
+      await page.clock.fastForward(flight + 210);
+      await magnet(page);
+      await expect(second).toHaveValue("<0.5");
+    }
   }
   expect(errors).toEqual([]);
 });
@@ -339,8 +352,16 @@ test("all four averages stay visible alongside the wax notebook and respect the 
   await glycerin.getByRole("textbox", {name: "Average fall time (s)"}).fill("6.4");
   const check = page.getByRole("button", {name: "Check averages"});
   await check.click();
-  await expect(page.locator("#shot-entries .zsa-mmt-shot-result")).toHaveText(["<0.5 s", "6.42 s", "1.00 s", "2.25 s"]);
+  await expect(page.locator("#shot-entries .zsa-mmt-shot-result")).toHaveText(
+    ["<0.5 s", "6.42 s", "1.00 s", "2.25 s"].map((value) => "Lab's average: " + value)
+  );
   await expect(extra(page, "G")).toContainText("Your average matches.");
+  // In print, the student's own average and the lab's average stay separate, and a blank student average stays blank.
+  await page.emulateMedia({media: "print"});
+  await expect(glycerin.locator("td").last().getByText("Your average: 6.4", {exact: true})).toBeVisible();
+  await expect(glycerin.locator("td").last()).toContainText("Lab's average: 6.42 s");
+  await expect(card(page, "O").locator("td").last()).toHaveText("Lab's average: 1.00 s");
+  await page.emulateMedia({media: "screen"});
   await glycerin.getByRole("textbox", {name: "Fall time, trial 1 (s)"}).fill("6,31");
   await check.click();
   await expect(extra(page, "G")).toContainText("with a decimal point");

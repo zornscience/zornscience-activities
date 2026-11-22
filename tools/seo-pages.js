@@ -204,6 +204,10 @@ module.exports = {
     en: "Investigate three unknown solids with realistic lab equipment. Explore luster, malleability, conductivity, and reactions with hydrochloric acid.",
     es: "Investiga tres sólidos desconocidos con equipo de laboratorio realista. Explora su brillo, maleabilidad, conductividad y reacción con ácido clorhídrico."
   },
+  "molar-mass-trap-lab": {
+    en: "Compare how four liquids spread on wax paper, time a falling steel shot, and mix liquid pairs to explain the Molar Mass Trap with evidence.",
+    es: "Compara cómo se extienden cuatro líquidos en papel encerado, mide la caída de un perdigón y mezcla pares para explicar la trampa de la masa molar."
+  },
   "net-ionic-lab": {
     en: "Mix ten pairs of reagents on a virtual lab bench and observe precipitates, metal displacement and mixtures with no visible reaction.",
     es: "Mezcla diez pares de reactivos en una mesa de laboratorio virtual y observa precipitados, desplazamiento de metales y mezclas sin reacción visible."

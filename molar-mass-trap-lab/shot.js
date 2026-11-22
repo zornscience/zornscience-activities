@@ -121,6 +121,10 @@
       else field.input.removeAttribute("aria-describedby");
     }
 
+    function showStudentMean(field, value) {
+      setText(field.printed, value?.trim() ? t("Your average: {value}", {value}) : "");
+    }
+
     function addTrialField(key) {
       const card = cards[key];
       const index = card.fields.length;
@@ -189,7 +193,7 @@
         const entry = record(key);
         entry.studentMean = mean.input.value;
         entry.computed = null;
-        setText(mean.printed, mean.input.value);
+        showStudentMean(mean, mean.input.value);
         updateSummary(key);
       });
     }
@@ -234,7 +238,8 @@
         message += " " + t(model.shotMeanMatches(checked, entry.studentMean) ?
           "Your average matches." : "Check your average against these two trials.");
       }
-      setText(result, compact);
+      // Label the computed value so the notebook and printout never pass it off as the student's own average.
+      setText(result, t("Lab's average: {value}", {value: compact}));
       setText(summary, message);
     }
 
@@ -249,7 +254,7 @@
       setText(card.detailTitle, liquidName(key));
       setText(card.add, t("Add trial"));
       card.mean.input.value = entry.studentMean ?? "";
-      setText(card.mean.printed, entry.studentMean ?? "");
+      showStudentMean(card.mean, entry.studentMean);
       card.fields.forEach((field, index) => {
         setText(field.caption, t("Fall time, trial {number} (s)", {number: index + 1}));
         field.input.value = entry.trials[index] ?? "";
@@ -275,6 +280,15 @@
       }
     }
 
+    // The event-timed display and saved readings use the worksheet's 0.5 s threshold.
+    function belowEventFloor(trial, elapsedMs) {
+      return trial.mode === "event" && trial.startedAt !== null && elapsedMs < shot.manualThresholdS * 1000;
+    }
+
+    function readingText(trial, elapsedMs) {
+      return belowEventFloor(trial, elapsedMs) ? "<0.5" : (elapsedMs / 1000).toFixed(2);
+    }
+
     function appendReading(value) {
       const live = tube();
       if (live.trial.recorded) return;
@@ -297,7 +311,7 @@
       if (trial.startedAt === null || trial.stoppedAt === null || model.manualTimingIssue(trial)) return;
       const elapsedMs = trial.stoppedAt - trial.startedAt;
       if (elapsedMs < 5) return;
-      const reading = (elapsedMs / 1000).toFixed(2);
+      const reading = readingText(trial, elapsedMs);
       notice = {key: code(), reading, number: appendReading(reading)};
     }
 
@@ -372,6 +386,10 @@
             if (trial.mode !== "event") return t(slowReplay ?
               "Slow-motion replay complete. The markers show when to start and stop timing." :
               "Replay complete. Compare the marked departure and first contact with your stopwatch.");
+            if (shot.travelMs[key] < shot.manualThresholdS * 1000) {
+              return t(slowReplay ? "Slow-motion replay complete. The original fall took less than 0.5 s." :
+                "Replay complete. First contact came less than 0.5 s after departure.");
+            }
             return t(slowReplay ? "Slow-motion replay complete. The original fall took {seconds} s." :
               "Replay complete. First contact came {seconds} s after departure.", {seconds: (shot.travelMs[key] / 1000).toFixed(2)});
           }
@@ -441,7 +459,8 @@
         updateControls(sample, key, view, phase === "replaying" && sample.phase === "at-bottom");
       }
       paintArt(sample, key, view, motion, force, now);
-      setText($("shot-time"), (view.stopwatchMs / 1000).toFixed(2) + " s");
+      const starting = view.running && belowEventFloor(sample.trial, view.stopwatchMs);
+      setText($("shot-time"), starting ? t(paused ? "Paused" : "Timing") : readingText(sample.trial, view.stopwatchMs) + " s");
       return {
         moving: !paused && Number.isFinite(view.remaining),
         next: paused ? Infinity : Math.min(view.remaining, view.running ? 100 : Infinity)
@@ -487,7 +506,7 @@
     action("shot-record", () => {
       const now = clock();
       const view = model.shotSnapshot(tube(), code(), now);
-      appendReading((view.stopwatchMs / 1000).toFixed(2));
+      appendReading(readingText(tube().trial, view.stopwatchMs));
     });
     action("shot-record-below", () => appendReading("<0.5"));
     return {paint, pause, renderNotebook};
