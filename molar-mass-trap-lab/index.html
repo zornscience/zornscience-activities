@@ -5,27 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="zsa-version" content="0.3.0">
+  <meta name="zsa-version" content="0.3.1">
   <title>The Molar Mass Trap Lab | ZornScience</title>
   <link rel="icon" href="../favicon.png" type="image/png">
-  <link rel="stylesheet" href="../shared/zsa-base.css?v=0.3.0">
-  <link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=0.3.0">
-  <link rel="stylesheet" href="../shared/zsa-header.css?v=0.3.0">
-  <link rel="stylesheet" href="lab.css?v=0.3.0">
-  <script src="../shared/zsa-embed.js?v=0.3.0" defer></script>
-  <script src="../shared/zsa-i18n.js?v=0.3.0" defer></script>
-  <script src="model.js?v=0.3.0" defer></script>
-  <script src="data.js?v=0.3.0" defer></script>
-  <script src="shot.js?v=0.3.0" defer></script>
-  <script src="mixing.js?v=0.3.0" defer></script>
-  <script src="lab.js?v=0.3.0" defer></script>
-<link rel="stylesheet" href="../shared/zsa-about.css?v=0.3.0"><script src="../shared/zsa-about.js?v=0.3.0" defer></script></head>
+  <link rel="stylesheet" href="../shared/zsa-base.css?v=0.3.1">
+  <link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=0.3.1">
+  <link rel="stylesheet" href="../shared/zsa-header.css?v=0.3.1">
+  <link rel="stylesheet" href="lab.css?v=0.3.1">
+  <script src="../shared/zsa-embed.js?v=0.3.1" defer></script>
+  <script src="../shared/zsa-i18n.js?v=0.3.1" defer></script>
+  <script src="model.js?v=0.3.1" defer></script>
+  <script src="data.js?v=0.3.1" defer></script>
+  <script src="shot.js?v=0.3.1" defer></script>
+  <script src="mixing.js?v=0.3.1" defer></script>
+  <script src="lab.js?v=0.3.1" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=0.3.1"><script src="../shared/zsa-about.js?v=0.3.1" defer></script></head>
 <body>
 <main class="zsa zsa-mmt" data-zsa-activity="molar-mass-trap-lab">
   <header data-zsa-header class="header">
     <div data-zsa-header-row>
       <div data-zsa-header-identity class="identity">
-        <a data-zsa-header-brand class="brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../ionic-reactions/zornscience-logo.png?v=0.3.0" width="34" height="33" alt=""></a>
+        <a data-zsa-header-brand class="brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../ionic-reactions/zornscience-logo.png?v=0.3.1" width="34" height="33" alt=""></a>
         <h1>The Molar Mass Trap Lab</h1>
       </div>
       <nav data-zsa-header-tools aria-label="Activity tools">
@@ -217,7 +217,7 @@
           </div>
           <svg id="mix-inspection" viewBox="0 0 368 224" role="img" aria-labelledby="mix-inspection-title mix-inspection-desc">
             <title id="mix-inspection-title">Mixing tube close-up</title>
-            <desc id="mix-inspection-desc">A test tube against a light and dark card, a graduated transfer pipette, and a labeled waste beaker. Use Read layers for a description of the settled bands.</desc>
+            <desc id="mix-inspection-desc">A test tube against a light and dark card, a graduated transfer pipette, and a labeled waste beaker. Use Read layers to describe what is in the tube.</desc>
             <defs>
               <clipPath id="mmt-mix-interior"><path d="M-14-60H14V50a14 14 0 0 1-28 0Z"/></clipPath>
               <linearGradient id="mmt-mix-glass"><stop stop-color="#d5eff4" stop-opacity=".56"/><stop offset=".24" stop-color="#c4e5ee" stop-opacity=".08"/><stop offset=".76" stop-color="#c4e5ee" stop-opacity=".12"/><stop offset="1" stop-color="#daf5fa" stop-opacity=".48"/></linearGradient>
@@ -261,14 +261,16 @@
           <select id="mix-liquid"></select>
           <select id="mix-amount"></select>
         </div>
-        <div id="mix-progress" class="zsa-mmt-mix-progress" hidden>
-          <output id="mix-inversions" aria-label="Completed inversions" aria-live="off"></output>
-          <output id="mix-elapsed" class="zsa-mmt-shot-clock" aria-label="Elapsed settling time" aria-live="off" hidden></output>
-        </div>
-        <div class="zsa-mmt-bench-actions">
+        <div class="zsa-mmt-actions">
           <button id="mix-action" type="button" class="zsa-btn zsa-mmt-primary" aria-disabled="true">Dispense aliquot</button>
+          <button id="mix-stand" type="button" class="zsa-btn zsa-mmt-primary" hidden>Set upright</button>
           <button id="mix-read" type="button" class="zsa-btn" hidden>Read layers</button>
           <button id="mix-empty" type="button" class="zsa-btn zsa-mmt-quiet" aria-disabled="true">Empty tube</button>
+        </div>
+        <div id="mix-progress" class="zsa-mmt-mix-progress" hidden>
+          <output id="mix-inversions" aria-label="Completed inversions" aria-live="off"></output>
+          <output id="mix-elapsed" class="zsa-mmt-shot-clock" aria-label="Elapsed settling time" aria-live="off" tabindex="-1" hidden></output>
+          <button id="mix-advance" type="button" class="zsa-btn" hidden>Advance to 60 s</button>
         </div>
         <p id="mix-observation" class="zsa-mmt-mix-observation" role="status" aria-atomic="true"></p>
       </div>
@@ -286,7 +288,8 @@
           <table class="zsa-mmt-mix-table" aria-labelledby="mix-notebook-title">
             <thead><tr>
               <th scope="col">Tube</th>
-              <th id="mix-layer-heading" scope="col">Number of layers</th>
+              <th scope="col">Pair</th>
+              <th id="mix-layer-heading" scope="col">One layer or two?</th>
               <th id="mix-dye-heading" scope="col">Where did the dye go?</th>
             </tr></thead>
             <tbody id="mix-entries"></tbody>

@@ -751,6 +751,13 @@ body {
   stroke: #f2fafb;
 }
 
+.zsa-mmt-mix-refraction {
+  fill: none;
+  stroke: #e6f7f9;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+}
+
 .zsa-mmt-mix-surface path {
   stroke: #d2e4ed;
   stroke-dasharray: 2 2;
@@ -819,15 +826,27 @@ body {
 }
 
 .zsa-mmt-notebook .zsa-mmt-mix-table th:first-child {
-  width: 19%;
+  width: 12%;
 }
 
 .zsa-mmt-notebook .zsa-mmt-mix-table th:nth-child(2) {
+  width: 16%;
+}
+
+.zsa-mmt-notebook .zsa-mmt-mix-table th:nth-child(3) {
   width: 32%;
 }
 
 .zsa-mmt-notebook .zsa-mmt-mix-table th:last-child {
-  width: 49%;
+  width: 40%;
+}
+
+.zsa-mmt-notebook .zsa-mmt-mix-table :is(th, select) {
+  font-size: 12px;
+}
+
+.zsa-mmt-mix-pair-codes {
+  white-space: nowrap;
 }
 
 @media (max-width: 890px) {
@@ -890,6 +909,15 @@ body {
     max-width: 188px;
   }
 
+  .zsa-mmt-mix-rack {
+    padding-block: 5px 6px;
+  }
+
+  .zsa-mmt-mix-slots .zsa-mmt-mix-slot svg {
+    width: 24px;
+    height: 48px;
+  }
+
   .zsa-mmt-sample-status {
     flex-basis: 100%;
   }
@@ -917,6 +945,7 @@ body {
   .zsa-mmt [data-zsa-chrome],
   .zsa-mmt .zsa-mmt-notebook-help,
   .zsa-mmt .zsa-mmt-notebook-footer,
+  .zsa-mmt-mix-pair-codes,
   .zsa-mmt-notebook :is(input, select, textarea, button) {
     display: none !important;
   }
@@ -965,6 +994,26 @@ body {
   .zsa-mmt-notebook td {
     padding-block: 5px;
     overflow-wrap: anywhere;
+  }
+
+  .zsa-mmt-notebook .zsa-mmt-mix-table th:nth-child(2) {
+    width: 27%;
+  }
+
+  .zsa-mmt-notebook .zsa-mmt-mix-table th:nth-child(3) {
+    width: 19%;
+  }
+
+  .zsa-mmt-notebook .zsa-mmt-mix-table th:last-child {
+    width: 42%;
+  }
+
+  .zsa-mmt-mix-pair-names {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    white-space: normal;
   }
 
   .zsa-mmt-notebook h3,

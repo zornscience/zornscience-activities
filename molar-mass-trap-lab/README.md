@@ -1,6 +1,6 @@
 # The Molar Mass Trap Lab
 
-Version: 0.3.0
+Version: 0.3.1
 
 A virtual investigation for Chemistry and Honors Chemistry Unit 4. This development build has the wax-paper investigation, the steel shot race and the five-tube mixing rack.
 
@@ -44,9 +44,11 @@ The comparison uses the same geometry and shot for each liquid. Density and drag
 
 ## Mixing rack
 
-Choose any numbered tube. Select the liquid and volume in the graduated pipette, then dispense each of the two aliquots. Both may be added in either order. Before inversion, the denser liquid always sits below the lighter one, using approximate densities in `model.js` (glycerin 1.26, water 1.00, mineral oil 0.86 and 1-octanol 0.83 g/mL). A wrong liquid or volume can be emptied into the waste beaker and the same tube filled again. After adding the stopper, complete five gentle inversions and set the tube upright. The 60 s clock continues through tube and station changes. **Advance to 60 s** finishes just the selected tube's wait.
+Choose any numbered tube. Select the liquid and volume in the graduated pipette, then dispense each of the two aliquots. Both may be added in either order. Before inversion, the model puts the denser aliquot below the lighter one. The approximate densities in `model.js` are 1.26 g/mL for glycerin, 1.00 for water, 0.86 for mineral oil and 0.83 for 1-octanol. A wrong liquid or volume can be emptied into the waste beaker and the same tube filled again.
 
-Count the liquid bands below the curved air-liquid surface. **Read layers** describes their visible order and tint after the full wait. The notebook retains the student's editable observations when the tube is emptied or refilled. Dye shows where a tint is visible. Two layers at these amounts can still have limited mutual solubility.
+Add the stopper and complete five gentle inversions, then choose **Set upright** to start the 60 s clock. The clock continues through tube and station changes. **Advance to 60 s** is a separate control that finishes just the selected tube's wait.
+
+Count the liquid bands below the curved air-liquid surface. **Read layers** describes the unmixed bands, changes during settling, and the settled result. Test 3 uses the worksheet's pair and layer columns and retains the editable dye observation. The full liquid names appear in print. Notebook entries survive when a tube is emptied or refilled. Dye shows where a tint is visible. Two layers at these amounts can still have limited mutual solubility.
 
 The recipes and bottom-to-top appearances come from the handoff and teacher guide. The drawing uses a common scale for approximate volumes. The 420 ms transfer, 720 ms inversion, and 280 ms placement animations are illustrative.
 

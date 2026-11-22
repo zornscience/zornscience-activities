@@ -12,6 +12,9 @@
     const liquid = $("mix-liquid");
     const amount = $("mix-amount");
     const action = $("mix-action");
+    const stand = $("mix-stand");
+    const advance = $("mix-advance");
+    const settleClock = $("mix-elapsed");
     const read = $("mix-read");
     const empty = $("mix-empty");
     const holder = $("mix-active-tube");
@@ -56,7 +59,8 @@
       }
       const boundary = svg("path", {class: "zsa-mmt-mix-boundary", "data-mix-interface": ""});
       const surface = svg("path", {class: "zsa-mmt-mix-meniscus", "data-mix-meniscus": ""});
-      fills.append(...bands, cloud, streaks, boundary, surface);
+      const refraction = svg("path", {class: "zsa-mmt-mix-refraction"});
+      fills.append(...bands, cloud, streaks, refraction, boundary, surface);
       interior.append(fills);
       const stopper = svg("g", {});
       stopper.append(
@@ -69,7 +73,7 @@
         svg("path", {d: "M-11-54V47q0 9 7 12M12-50V50", fill: "none", stroke: "#e1f4f8", "stroke-opacity": ".55"}),
         svg("ellipse", {cy: -62, rx: 16, ry: 2.5, fill: "none", stroke: "#b0cbd4"}), stopper
       );
-      return {fills, bands, cloud, streaks, boundary, surface, stopper};
+      return {fills, bands, cloud, streaks, boundary, surface, refraction, stopper};
     }
 
     function addSlot(number) {
@@ -99,25 +103,34 @@
     function addNotebookRow(number) {
       const row = element("tr");
       row.dataset.mixEntry = number;
-      const name = element("th");
-      name.scope = "row";
-      name.id = "mix-notebook-tube-" + number;
+      const rowHeading = element("th");
+      rowHeading.scope = "row";
+      rowHeading.id = "mix-notebook-tube-" + number;
+      const rowNumber = element("span", "", String(number));
+      rowNumber.setAttribute("aria-hidden", "true");
+      const name = element("span", "zsa-sr-only");
+      rowHeading.append(rowNumber, name);
+      const pair = element("td");
+      const pairCodes = element("span", "zsa-mmt-mix-pair-codes", Object.keys(mixing.recipesMl[number]).join(" + "));
+      pairCodes.setAttribute("aria-hidden", "true");
+      const pairNames = element("span", "zsa-sr-only zsa-mmt-mix-pair-names");
+      pair.append(pairCodes, pairNames);
       const layers = element("select");
-      layers.setAttribute("aria-labelledby", "mix-layer-heading " + name.id);
+      layers.setAttribute("aria-labelledby", "mix-layer-heading " + rowHeading.id);
       layers.append(...["", "1", "2"].map(option));
       const dye = element("textarea");
       dye.rows = 2;
       dye.spellcheck = false;
-      dye.setAttribute("aria-labelledby", "mix-dye-heading " + name.id);
+      dye.setAttribute("aria-labelledby", "mix-dye-heading " + rowHeading.id);
       const layersPrint = element("span", "zsa-mmt-print-only");
       const dyePrint = element("span", "zsa-mmt-print-only zsa-mmt-print-dye");
       const layersCell = element("td");
       const dyeCell = element("td");
       layersCell.append(layers, layersPrint);
       dyeCell.append(dye, dyePrint);
-      row.append(name, layersCell, dyeCell);
+      row.append(rowHeading, pair, layersCell, dyeCell);
       $("mix-entries").append(row);
-      fields[number] = {name, layers, dye, layersPrint, dyePrint};
+      fields[number] = {name, pairNames, layers, dye, layersPrint, dyePrint};
       layers.addEventListener("change", () => {
         getState().notebook.mixing[number].layerCount = layers.value ? Number(layers.value) : null;
         setText(layersPrint, layers.value ? layers.selectedOptions[0].textContent : "");
@@ -130,9 +143,10 @@
 
     function renderNotebook() {
       for (const number of tubes) {
-        const {name, layers, dye, layersPrint, dyePrint} = fields[number];
+        const {name, pairNames, layers, dye, layersPrint, dyePrint} = fields[number];
         const entry = getState().notebook.mixing[number];
         setText(name, tubeLabel(number));
+        setText(pairNames, Object.keys(mixing.recipesMl[number]).map(liquidLabel).join(" + "));
         for (const [index, label] of ["Choose", "One layer", "Two layers"].entries()) setText(layers.options[index], t(label));
         layers.value = entry.layerCount ?? "";
         dye.value = entry.dyeLocation;
@@ -172,6 +186,7 @@
       const airLine = tubeBottom - total * unitsPerMl;
       const curve = Math.min(4, total * unitsPerMl / 2);
       let bottom = tubeBottom;
+      let clearEdges = "";
       art.bands.forEach((shape, index) => {
         const band = bands[index];
         visible(shape, Boolean(band));
@@ -181,8 +196,12 @@
         setAttr(shape, "fill", `url(#mmt-mix-${band.tint})`);
         setAttr(shape, "data-tint", band.tint);
         setAttr(shape, "fill-opacity", bands.length === 2 ? 1 - streaks : 1);
+        if (band.tint === "clear" && bottom - top > 6) clearEdges += `M-8 ${top + 3}V${bottom - 3}M9 ${top + 3}V${bottom - 3}`;
         bottom = top;
       });
+      visible(art.refraction, Boolean(clearEdges) && streaks < 1);
+      setAttr(art.refraction, "d", clearEdges);
+      setAttr(art.refraction, "opacity", .65 * (1 - streaks));
       visible(art.cloud, bands.length === 2 && streaks > 0);
       visible(art.streaks, streaks > 0);
       if (streaks > 0) {
@@ -244,10 +263,23 @@
       return t(lower.tint === "blue" ? "A red band above a blue band." : "A red band above a clear band.");
     }
 
+    function describeObservation(tube, number, stage, elapsed) {
+      if (stage === "settled") return describeLayers(number);
+      if (stage === "invert-ready" && tube.inversions === 0) {
+        const [lower, upper] = model.mixPouredBands(tube.aliquots);
+        return t("Before inversion, a {upper} band sits above a {lower} band.", {upper: t(upper.tint), lower: t(lower.tint)});
+      }
+      if (stage === "settling" && elapsed >= 30) {
+        return t(settledBands[number].length === 1 ? "The tint is becoming more even as the streaks fade." :
+          "The boundary between the bands is becoming clearer as the streaks fade.");
+      }
+      return t("Streaks are visible in the tube. Read the settled layers after five inversions and 60 s upright.");
+    }
+
     const actions = {
       "fill-ready": "Dispense aliquot", pouring: "Dispense aliquot", "seal-ready": "Add stopper",
-      "invert-ready": "Gently invert", inverting: "Gently invert", "stand-ready": "Set upright", placing: "Set upright",
-      settling: "Advance to 60 s"
+      "invert-ready": "Gently invert", inverting: "Gently invert", "stand-ready": "Gently invert", placing: "Gently invert",
+      settling: "Gently invert"
     };
     const instructions = {
       "fill-ready": "Choose the liquid and pipette volume for the next aliquot.",
@@ -263,29 +295,31 @@
     };
 
     function updateControls(tube, number, stage, elapsed) {
+      const focused = document.activeElement;
       const note = tube.disposed ? "Tube {number} is empty. Its contents are in the waste beaker." : instructions[stage];
       setText($("bench-instruction"), t(note, {number}));
       setText($("mix-volume"), volumeLabel(model.mixVolume(tube)) + " " + t("total"));
       $("mix-pipettes").hidden = stage !== "fill-ready" && stage !== "pouring";
       liquid.disabled = amount.disabled = stage === "pouring";
       $("mix-progress").hidden = !tube.stoppered;
-      $("mix-elapsed").hidden = tube.settlesAt === null;
+      settleClock.hidden = tube.settlesAt === null;
       setText($("mix-inversions"), t("{count} / 5 inversions", {count: tube.inversions}));
-      setText($("mix-elapsed"), `${elapsed} / 60 s`);
-      const actionHadFocus = document.activeElement === action;
+      setText(settleClock, `${elapsed} / 60 s`);
       action.hidden = !actions[stage];
       if (!action.hidden) setText(action, t(actions[stage]));
-      setAvailability("mix-action", !tube.motion && (stage !== "fill-ready" || Boolean(liquid.value && amount.value)));
+      const canDispense = stage === "fill-ready" && Boolean(liquid.value && amount.value);
+      setAvailability("mix-action", canDispense || stage === "seal-ready" || stage === "invert-ready");
+      stand.hidden = !["stand-ready", "placing", "settling"].includes(stage);
+      setAvailability("mix-stand", stage === "stand-ready");
+      advance.hidden = stage !== "settling";
       read.hidden = !tube.stoppered;
       setText(empty, t(stage === "settled" ? "Pour into waste" : "Empty tube"));
       setAvailability("mix-empty", !tube.motion && tube.aliquots.length > 0);
-      if (action.hidden && actionHadFocus) (stage === "settled" ? read : empty).focus();
+      if (stage === "settled" && [action, stand, advance].includes(focused)) read.focus();
+      else if (action.hidden && focused === action) empty.focus();
+      else if (stage === "settling" && lastStage === "placing" && focused === stand) settleClock.focus();
 
-      let observation = "";
-      if (requestedReading) {
-        observation = stage === "settled" ? describeLayers(number) : t("Read the layers after five inversions and a full 60 s upright.");
-      }
-      setText($("mix-observation"), observation);
+      setText($("mix-observation"), requestedReading ? describeObservation(tube, number, stage, elapsed) : "");
     }
 
     function paintRack(bench, now) {
@@ -347,9 +381,11 @@
       addNotebookRow(number);
     }
     for (const input of [liquid, amount]) input.addEventListener("change", refresh);
-    action.addEventListener("keydown", (event) => {
-      if (event.repeat && event.key === "Enter") event.preventDefault();
-    });
+    for (const control of [action, stand, advance, empty]) {
+      control.addEventListener("keydown", (event) => {
+        if (event.repeat && event.key === "Enter") event.preventDefault();
+      });
+    }
     action.addEventListener("click", () => {
       if (action.getAttribute("aria-disabled") === "true") return;
       const tube = selectedTube();
@@ -362,10 +398,14 @@
           break;
         case "seal-ready": model.stopperMixTube(tube, number, now); break;
         case "invert-ready": model.invertMixTube(tube, now); break;
-        case "stand-ready": model.standMixTube(tube, now); break;
-        case "settling": model.advanceMixTime(tube, now); break;
       }
       refresh();
+    });
+    stand.addEventListener("click", () => {
+      if (model.standMixTube(selectedTube(), clock())) refresh();
+    });
+    advance.addEventListener("click", () => {
+      if (!advance.hidden && model.advanceMixTime(selectedTube(), clock())) refresh();
     });
     read.addEventListener("click", () => {
       requestedReading = true;

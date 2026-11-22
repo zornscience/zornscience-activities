@@ -3774,4 +3774,6 @@ The virtual lab follows Style Kit 1.32 and the published Spanish procedure. The 
 | mixing rack / test tube | gradilla de mezclas / tubo de ensayo |
 | invert / let stand | invertir / dejar reposar |
 | liquid layer / dye | capa de líquido / colorante |
+| liquid pair / one layer or two? | par de líquidos / ¿Una capa o dos? |
+| streaks in a liquid / boundary between bands | vetas en un líquido / límite entre las franjas |
 | waste beaker | vaso de precipitados para residuos (vaso de residuos on the bench) |

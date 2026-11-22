@@ -7,6 +7,8 @@ const station = (page, name) => page.locator(`[data-station="${name}"]`);
 const slot = (page, number) => page.locator(`[data-mix-tube="${number}"]`);
 const entry = (page, number) => page.locator(`[data-mix-entry="${number}"]`);
 const action = (page) => page.locator("#mix-action");
+const stand = (page) => page.locator("#mix-stand");
+const advance = (page) => page.locator("#mix-advance");
 
 async function openRack(page) {
   await page.clock.install();
@@ -29,8 +31,8 @@ async function invert(page, count) {
 }
 
 async function placeInRack(page) {
-  await expect(action(page)).toHaveText("Set upright");
-  await action(page).click();
+  await expect(stand(page)).toBeEnabled();
+  await stand(page).click();
   await page.clock.fastForward(300);
 }
 
@@ -47,7 +49,37 @@ test("a denser aliquot settles below the lighter one before inversion, whatever 
     await action(page).click();
     await expect(action(page)).toHaveText("Gently invert");
     expect(await bands()).toEqual(expected);
+    await page.locator("#mix-read").click();
+    await expect(page.locator("#mix-observation")).toHaveText(`Before inversion, a red band sits above a ${expected[0]} band.`);
   }
+});
+
+test("repeated clicks at one position cannot set the tube upright or advance its clock", async ({page}) => {
+  await openRack(page);
+  await dispense(page, "W", 1);
+  await dispense(page, "G", 1);
+  await action(page).click();
+
+  async function clickThrough(button, count) {
+    await button.scrollIntoViewIfNeeded();
+    const {x, y, width, height} = await button.boundingBox();
+    for (let i = 0; i < count; i++) {
+      await page.mouse.click(x + width / 2, y + height / 2);
+      await page.clock.fastForward(100);
+    }
+  }
+
+  await clickThrough(action(page), 50);
+  await expect(page.locator("#mix-inversions")).toHaveText("5 / 5 inversions");
+  await expect(action(page)).toBeDisabled();
+  await expect(stand(page)).toBeEnabled();
+  await expect(page.locator("#mix-elapsed")).toBeHidden();
+
+  await clickThrough(stand(page), 13);
+  await expect(advance(page)).toBeVisible();
+  await expect(page.locator("#mix-elapsed")).not.toHaveText("60 / 60 s");
+  await advance(page).click();
+  await expect(page.locator("#mix-elapsed")).toHaveText("60 / 60 s");
 });
 
 test("all five recipes keep their volumes, colors and layer positions and can be recorded together", async ({page}) => {
@@ -76,8 +108,7 @@ test("all five recipes keep their volumes, colors and layer positions and can be
   const glass = page.locator("#mix-active-tube");
   for (const {number, total, tints, note} of recipes) {
     await slot(page, number).click();
-    await expect(action(page)).toHaveText("Advance to 60 s");
-    await action(page).click();
+    await advance(page).click();
     await expect(page.locator("#mix-elapsed")).toHaveText("60 / 60 s");
     await page.locator("#mix-read").click();
     await expect(page.locator("#mix-observation")).toHaveText(note);
@@ -89,7 +120,8 @@ test("all five recipes keep their volumes, colors and layer positions and can be
     const boundary = glass.locator("[data-mix-interface]");
     await expect(boundary).toHaveAttribute("visibility", tints.length === 2 ? "visible" : "hidden");
     if (tints.length === 2) await expect(boundary).toHaveAttribute("d", "M-14 26H14");
-    await entry(page, number).getByRole("combobox", {name: `Number of layers Tube ${number}`}).selectOption(String(tints.length));
+    await expect(glass.locator(".zsa-mmt-mix-refraction")).toHaveAttribute("visibility", tints.includes("clear") ? "visible" : "hidden");
+    await entry(page, number).getByRole("combobox", {name: `One layer or two? Tube ${number}`}).selectOption(String(tints.length));
     await entry(page, number).getByRole("textbox", {name: `Where did the dye go? Tube ${number}`}).fill(note);
   }
   await station(page, "wax").click();
@@ -117,9 +149,10 @@ test("four inversions and an early read leave the timer gated while other tubes 
   await invert(page, 3);
   await expect(page.locator("#mix-inversions")).toHaveText("4 / 5 inversions");
   await expect(action(page)).toHaveText("Gently invert");
+  await expect(stand(page)).toBeHidden();
   await expect(page.locator("#mix-elapsed")).toBeHidden();
   await page.locator("#mix-read").click();
-  await expect(page.locator("#mix-observation")).toHaveText(/after five inversions and a full 60 s upright/);
+  await expect(page.locator("#mix-observation")).toHaveText(/Streaks are visible in the tube/);
   const evidence = entry(page, 3);
   await evidence.getByRole("combobox").selectOption("1");
   await evidence.getByRole("textbox").fill("I first saw a blue band.");
@@ -131,7 +164,9 @@ test("four inversions and an early read leave the timer gated while other tubes 
   await placeInRack(page);
   await expect(page.locator("#mix-elapsed")).toHaveText("0 / 60 s");
   await page.locator("#mix-read").click();
-  await expect(page.locator("#mix-observation")).toHaveText(/after five inversions and a full 60 s upright/);
+  await expect(page.locator("#mix-observation")).toHaveText(/Streaks are visible in the tube/);
+  await page.clock.fastForward(31000);
+  await expect(page.locator("#mix-observation")).toHaveText(/The boundary between the bands is becoming clearer/);
 
   await slot(page, 5).click();
   await dispense(page, "M", 0.5);
@@ -179,6 +214,13 @@ test("Spanish keyboard controls and reduced motion give equivalent readings at p
   await tabTo(page, page.getByRole("button", {name: "Tubo 3", exact: true}));
   await page.keyboard.press("Enter");
   await expect(page.locator("#mix-recipe")).toHaveText("Tubo 3 · W Agua 1.0 mL + O 1-octanol 0.5 mL");
+  await page.locator("#mix-inspection").evaluate((scene) => scene.scrollIntoView({block: "start"}));
+  const closeUpAndControlsFit = await page.evaluate(() => {
+    const scene = document.getElementById("mix-inspection").getBoundingClientRect();
+    const controls = document.getElementById("mix-action").getBoundingClientRect();
+    return scene.top >= -1 && controls.bottom <= innerHeight;
+  });
+  expect(closeUpAndControlsFit).toBe(true);
   for (const [liquidSteps, volumeSteps] of [[1, 2], [3, 1]]) {
     await tabTo(page, page.getByLabel("Líquido en la pipeta"), liquidSteps === 1 ? "Tab" : "Shift+Tab");
     for (let i = 0; i < liquidSteps; i++) await page.keyboard.press("ArrowDown");
@@ -196,17 +238,24 @@ test("Spanish keyboard controls and reduced motion give equivalent readings at p
     await page.keyboard.press("Enter");
     await page.clock.fastForward(750);
   }
-  await expect(action(page)).toHaveText("Colocar en vertical");
+  await expect(action(page)).toBeDisabled();
+  await page.keyboard.press("Tab");
+  await expect(stand(page)).toBeFocused();
+  await expect(stand(page)).toHaveText("Colocar en vertical");
   await page.keyboard.press("Enter");
   await page.clock.fastForward(300);
-  await expect(action(page)).toHaveText("Avanzar a 60 s");
+  await expect(page.locator("#mix-elapsed")).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(advance(page)).toBeFocused();
+  await expect(advance(page)).toHaveText("Avanzar a 60 s");
   await page.keyboard.press("Enter");
   const read = page.getByRole("button", {name: "Leer las capas"});
   await expect(read).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page.locator("#mix-observation")).toHaveText("Una franja transparente más delgada sobre una franja azul.");
   const row = entry(page, 3);
-  await tabTo(page, row.getByRole("combobox", {name: "Número de capas Tubo 3"}));
+  await expect(row.getByRole("cell", {name: "W Agua + O 1-octanol"})).toBeVisible();
+  await tabTo(page, row.getByRole("combobox", {name: "¿Una capa o dos? Tubo 3"}));
   await page.keyboard.press("ArrowDown");
   await page.keyboard.press("ArrowDown");
   const note = row.getByRole("textbox", {name: "¿Dónde quedó el colorante? Tubo 3"});
@@ -218,6 +267,7 @@ test("Spanish keyboard controls and reduced motion give equivalent readings at p
   await page.getByRole("link", {name: "ES Español"}).click();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(360);
   await page.emulateMedia({media: "print"});
+  await expect(row.getByText("W Agua + O 1-octanol", {exact: true})).toBeVisible();
   await expect(row.getByText("Dos capas", {exact: true}).last()).toBeVisible();
   await expect(row.getByText("Azul abajo", {exact: true})).toBeVisible();
 });
