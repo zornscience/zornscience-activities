@@ -8,7 +8,7 @@ Version: 1.0.0
 | --- | --- |
 | English, 1366 × 768 | [Whole tablet ready](../docs/alka-seltzer-reaction-lab/01-ready-whole-en.png), [reacting](../docs/alka-seltzer-reaction-lab/02-reacting-whole-en.png), [last visible fragment](../docs/alka-seltzer-reaction-lab/07-last-whole-fragment-en.png), [stopped](../docs/alka-seltzer-reaction-lab/03-stopped-whole-en.png) |
 | Mexican Spanish, 360 × 800 | [Four quarters ready](../docs/alka-seltzer-reaction-lab/04-ready-quarters-es-mobile.png), [last powder grain](../docs/alka-seltzer-reaction-lab/05-last-powder-grain-es-mobile.png), [grain gone while the stopwatch is still running](../docs/alka-seltzer-reaction-lab/06-powder-endpoint-es-mobile.png) |
-| Mexican Spanish at 200% Chromium zoom | [Beaker and Stop in the same view](../docs/alka-seltzer-reaction-lab/08-zoom-es.png) |
+| Mexican Spanish at 200% zoom, 683 × 330 | [Beaker and Stop side by side](../docs/alka-seltzer-reaction-lab/08-zoom-es.png) |
 
 ## Acceptance evidence
 
@@ -25,8 +25,8 @@ A separate 1× walkthrough without a test clock captured 45.1, 28.0 and 15.0 s w
 | Check | Result |
 | --- | --- |
 | Fill, dose and rinse | The beaker fills to 50 mL. Seven drops count up in each fresh preparation. Rinsing clears the solution, scene and stopwatch. A repeat can start with any of the three forms after the guided sequence. |
-| Endpoint and stopwatch integrity | An early press freezes the fragment and current time. Resume continues from that instant. Around disappearance, rendered fragment pixels and text change together, the timer keeps running and bubbles remain. A late press retains the longer reading. Duplicate clicks on Drop or Stop leave one trial and one reading. |
-| A11y and layout | Passed keyboard-only timing, reduced motion, one live announcement at the disappearance, dialog focus return and axe-core checks. The beaker and Stop fit at 1366 × 768, 360 × 800 in both languages, inside a 900 × 660 iframe, and at native 200% zoom on a 1366 × 768 content viewport. |
+| Endpoint and stopwatch integrity | An early press freezes the fragment and current time. Resume continues from that instant. Around disappearance, rendered fragment pixels and text change together, the timer keeps running and bubbles remain. A late press retains the longer reading. Duplicate clicks on Drop or Stop leave one trial and one reading. A second Enter within 0.4 s of focus moving to Stop does not stop the timer. |
+| A11y and layout | Passed keyboard-only timing, reduced motion, one live announcement at the disappearance, dialog focus return and axe-core checks. A pause moves focus from the hidden Drop or Stop button to Resume. The beaker and Stop fit at 1366 × 768, 360 × 800 in both languages and inside a 900 × 660 iframe. At 683 × 330, a 1366 × 768 laptop at 200% zoom after the browser bar and taskbar, short wide views keep the stopwatch beside the beaker. The beaker is at least 190 px tall there, and the last fragment and Stop stay in view down to 683 × 310. |
 | Interruptions and load | Instructions and a simulated visibility change freeze the clock and scene. Both require explicit resume. Changing language preserves the trial. At 6× CPU throttling plus a 350 ms main-thread stall, the reading agreed with monotonic elapsed time to within 0.15 s. |
 | Site integration | Biology card, bilingual metadata, sitemap, header, About, license, safe return links, Share URLs and email text passed. The related Carbon Cycle lesson and Biology fallback pages were verified in both languages. |
 

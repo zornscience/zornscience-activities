@@ -259,6 +259,54 @@ test("keyboard operation, reduced motion and text observations preserve the endp
   await expect(primary(page)).toBeFocused();
 });
 
+test("a quick second key press does not stop the timer, and a pause keeps keyboard focus", async ({page}) => {
+  await page.addInitScript(() => {
+    let hidden = false;
+    Object.defineProperty(document, "hidden", {get: () => hidden});
+    window.labVisibility = (state) => {
+      hidden = state;
+      document.dispatchEvent(new Event("visibilitychange"));
+    };
+  });
+  await installTime(page);
+  await page.goto(route);
+  await prepare(page, false);
+  await primary(page).focus();
+  await page.keyboard.press("Enter");
+  await advanceTime(page, 400);
+  await expect(page.locator("#stop")).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(observation(page, "clock-state")).toHaveText("Timing");
+  await advanceTime(page, 3000);
+  await page.evaluate(() => window.labVisibility(true));
+  await expect(page.locator("#resume")).toBeFocused();
+  await page.evaluate(() => window.labVisibility(false));
+  const paused = Number(await stopwatch(page).textContent());
+  await page.keyboard.press("Enter");
+  await advanceTime(page, 50);
+  await expect(page.locator("#stop")).toBeFocused();
+  await page.keyboard.press("Enter");
+  await expect(observation(page, "clock-state")).toHaveText("Timing");
+  await advanceTime(page, 1000);
+  await page.keyboard.press("Enter");
+  await expect(observation(page, "clock-state")).toHaveText("Stopped");
+  expect(Number(await stopwatch(page).textContent())).toBeGreaterThan(paused + 0.9);
+
+  // A pause during the transfer also keeps focus on the primary slot.
+  await page.locator("#repeat").click();
+  await prepare(page, false);
+  await primary(page).focus();
+  await page.keyboard.press("Enter");
+  await advanceTime(page, 100);
+  await page.evaluate(() => window.labVisibility(true));
+  await expect(page.locator("#resume")).toBeFocused();
+  await page.evaluate(() => window.labVisibility(false));
+  await page.keyboard.press("Enter");
+  await advanceTime(page, settings.transferTime);
+  await expect(page.locator("#stop")).toBeFocused();
+  await expect(observation(page, "clock-state")).toHaveText("Timing");
+});
+
 test("bilingual Biology card, About, metadata, safe return links, Share and embed", async ({page}) => {
   await page.goto("/?lang=es");
   await expect(page.locator("#biology").getByRole("link", {name: "La reacción del Alka-Seltzer"})).toHaveAttribute("href", /alka-seltzer-reaction-lab\/\?lang=es$/);
@@ -298,12 +346,15 @@ test("bilingual Biology card, About, metadata, safe return links, Share and embe
 });
 
 test("a11y scan and 200% equivalent reflow keep timing controls in view", async ({page}) => {
-  await page.setViewportSize({width: 683, height: 384});
+  // A 1366 x 768 laptop at 200% zoom, after the browser bar and taskbar.
+  await page.setViewportSize({width: 683, height: 330});
   await installTime(page);
   await page.goto(route + "?lang=es");
   await prepare(page, true);
   await clickAndAdvance(page, primary(page), settings.transferTime + 1000);
   await seeStopAndBeaker(page);
+  // Zooming in must not shrink the beaker below its size in the phone layout.
+  expect((await page.locator("#beaker").boundingBox()).height).toBeGreaterThanOrEqual(190);
   await page.evaluate(axe);
   const audit = await page.evaluate(() => window.axe.run({runOnly: {type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"]}}));
   expect(audit.violations.map(({id, nodes}) => [id, nodes.map(({target}) => target)])).toEqual([]);

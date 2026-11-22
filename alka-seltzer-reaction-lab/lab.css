@@ -131,3 +131,9 @@
   .zsa-as-cue { min-height: 0; margin: 7px 0; }
   .zsa-as-evidence div { padding: 4px 3px; }
 }
+/* Short, wide views include a 1366 × 768 laptop at 200% zoom. Keep the stopwatch
+   beside the beaker so the beaker can grow with the height instead of shrinking to 36vh. */
+@media (max-width: 740px) and (orientation: landscape) {
+  .zsa-as-workspace { grid-template-columns: minmax(0, 1fr) minmax(196px, 236px); }
+  .zsa-as-bench canvas { max-height: max(200px, calc(100vh - 128px)); }
+}

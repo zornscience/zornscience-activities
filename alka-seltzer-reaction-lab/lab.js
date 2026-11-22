@@ -59,6 +59,15 @@
   let frame = 0;
   let previous = {};
   let sceneKey = "";
+  // Focus moves to Stop by itself at contact and on resume. A keyboard press that
+  // arrives this soon afterward is the tail of a double press, not a stop decision.
+  const keyRepeatGuard = 400;
+  let autoFocusAt = -Infinity;
+
+  function focusStop() {
+    $("stop").focus({preventScroll: true});
+    autoFocusAt = performance.now();
+  }
 
   // The shared toggle sets the URL and language in place. Keep the original English
   // labels so the same nodes can be translated again without replacing controls.
@@ -126,10 +135,10 @@
       interrupt(now);
       return;
     }
-    const focusStop = phase === "dropping" && document.activeElement === $("action");
+    const moveFocus = phase === "dropping" && document.activeElement === $("action");
     advance(now);
     render(now);
-    if (focusStop && phase === "running") $("stop").focus({preventScroll: true});
+    if (moveFocus && phase === "running") focusStop();
     requestFrame();
   }
 
@@ -219,6 +228,8 @@
 
   function interrupt(now = performance.now()) {
     if (startedAt === null) return;
+    // The control in the primary slot is hidden while paused. Keep keyboard focus there.
+    const hadFocus = [$("action"), $("stop")].includes(document.activeElement);
     advance(now);
     if (startedAt !== null) {
       elapsed = timeAt(now);
@@ -228,6 +239,7 @@
     cancelAnimationFrame(frame);
     frame = 0;
     render(now);
+    if (hadFocus && interrupted) $("resume").focus({preventScroll: true});
   }
 
   $("action").addEventListener("click", () => {
@@ -241,6 +253,7 @@
 
   $("stop").addEventListener("click", (event) => {
     if (phase !== "running" || interrupted || event.detail > 1) return;
+    if (event.detail === 0 && performance.now() - autoFocusAt < keyRepeatGuard) return;
     elapsed = timeAt(performance.now());
     startedAt = null;
     phase = "stopped";
@@ -257,7 +270,10 @@
     startedAt = performance.now();
     const moveFocus = document.activeElement === event.currentTarget;
     render(startedAt);
-    if (moveFocus) (phase === "running" ? $("stop") : $("action")).focus({preventScroll: true});
+    if (moveFocus) {
+      if (phase === "running") focusStop();
+      else $("action").focus({preventScroll: true});
+    }
     requestFrame();
   }
 
