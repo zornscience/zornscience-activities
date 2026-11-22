@@ -91,10 +91,10 @@ test("basic: all six phases and checked substeps, same-side merging and partial 
   await expect(page.locator("#zsa-rx-stage")).toContainText("Total charge: -8 on both sides");
 });
 
-test("landing link, problem deep link, mobile targets, local assets and embed mode", async ({page, problems}) => {
+test("landing link, problem deep link, mobile targets, local assets and embed mode", async ({page, problems, baseURL}) => {
   void problems;
   const outside = [];
-  page.on("request", request => { if (new URL(request.url()).origin !== "http://127.0.0.1:4173") outside.push(request.url()); });
+  page.on("request", request => { if (new URL(request.url()).origin !== new URL(baseURL).origin) outside.push(request.url()); });
   await page.goto("/"); await page.getByRole("link", {name: "Redox Half-Reaction Balancer Coach", exact: true}).click();
   for (const width of [320, 360, 390, 768, 1366, 1920]) {
     await page.setViewportSize({width, height: 900});
@@ -112,7 +112,7 @@ test("landing link, problem deep link, mobile targets, local assets and embed mo
 });
 
 for (const width of [390, 1366]) {
-  test("header instructions and sharing preserve work at " + width + "px", async ({page, problems}) => {
+  test("header instructions and sharing preserve work at " + width + "px", async ({page, problems, baseURL}) => {
     void problems;
     const requests = [];
     page.on("request", request => requests.push(request.url()));
@@ -149,7 +149,7 @@ for (const width of [390, 1366]) {
     await page.keyboard.press("Escape");
     await expect(page.getByRole("button", {name: "Share activity", exact: true})).toBeFocused();
     expect(await page.locator("#zsa-rx-stage").textContent()).toBe(before);
-    expect(requests.every(url => new URL(url).origin === "http://127.0.0.1:4173")).toBe(true);
+    expect(requests.every(url => new URL(url).origin === new URL(baseURL).origin)).toBe(true);
     await page.goto("/redox-coach/?embed=1");
     await expect(logo).toBeHidden();
     await expect(page.getByRole("button", {name: "Share activity", exact: true})).toBeHidden();
