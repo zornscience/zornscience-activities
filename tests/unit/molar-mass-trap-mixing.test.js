@@ -81,3 +81,16 @@ test("emptying a wrong or completed tube leaves other preparations and all evide
   assert.deepEqual(rack.tubes[3].aliquots, [{code: "W", ml: 1}]);
   assert.deepEqual(notebook.mixing[5], {layerCount: 1, dyeLocation: "A red streak"});
 });
+
+test("before inversion the denser aliquot sits below the lighter one in either pour order", () => {
+  const bottomToTop = (portions) => model.mixPouredBands(portions).map(({tint}) => tint);
+  // Tube 2: water below mineral oil, tube 5: glycerin below mineral oil, tube 3: water below octanol.
+  for (const [pair, expected] of [[["W", "M"], ["blue", "red"]], [["G", "M"], ["clear", "red"]], [["W", "O"], ["blue", "clear"]]]) {
+    for (const order of [pair, [...pair].reverse()]) {
+      assert.deepEqual(bottomToTop(order.map((code) => ({code, ml: 1}))), expected);
+    }
+  }
+  assert.deepEqual(model.mixPouredBands([{code: "M", ml: 1}, {code: "W", ml: 0.25}]),
+    [{tint: "blue", ml: 0.25}, {tint: "red", ml: 1}], "a partly poured denser aliquot already sinks");
+  assert.deepEqual(model.mixPouredBands([{code: "W", ml: 1}]), [{tint: "blue", ml: 1}]);
+});

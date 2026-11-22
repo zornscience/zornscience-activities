@@ -34,6 +34,22 @@ async function placeInRack(page) {
   await page.clock.fastForward(300);
 }
 
+test("a denser aliquot settles below the lighter one before inversion, whatever the pour order", async ({page}) => {
+  await openRack(page);
+  const bands = () => page.locator("#mix-active-tube [data-mix-band]").evaluateAll((shapes) => shapes
+    .filter((shape) => shape.getAttribute("visibility") !== "hidden").map((shape) => shape.dataset.tint));
+  for (const [number, first, second, expected] of [[2, "M", "W", ["blue", "red"]], [5, "M", "G", ["clear", "red"]]]) {
+    await slot(page, number).click();
+    await dispense(page, first, 1);
+    await dispense(page, second, 1);
+    // Bands are listed bottom to top.
+    expect(await bands()).toEqual(expected);
+    await action(page).click();
+    await expect(action(page)).toHaveText("Gently invert");
+    expect(await bands()).toEqual(expected);
+  }
+});
+
 test("all five recipes keep their volumes, colors and layer positions and can be recorded together", async ({page}) => {
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));

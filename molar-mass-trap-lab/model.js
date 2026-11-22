@@ -35,6 +35,8 @@
     invertMs: 720,
     standMs: 280,
     aliquotMl: Object.freeze([0.5, 1]),
+    // Approximate room-temperature densities in g/mL. Before inversion, a denser aliquot sinks below the other.
+    densityGmL: Object.freeze({G: 1.26, W: 1.00, M: 0.86, O: 0.83}),
     recipesMl: Object.freeze({
       1: Object.freeze({W: 1, G: 1}),
       2: Object.freeze({W: 1, M: 1}),
@@ -408,6 +410,13 @@
     return {ml, tint};
   }
 
+  // Unmixed portions, bottom to top. Pour order never puts a denser liquid above a lighter one.
+  function mixPouredBands(portions) {
+    return portions.map((portion, order) => ({...portion, order}))
+      .sort((a, b) => mixing.densityGmL[b.code] - mixing.densityGmL[a.code] || a.order - b.order)
+      .map(({code, ml}) => mixBand(code, ml));
+  }
+
   function mixSettledBands(number) {
     return mixing.settledBands[number].map((codes) => mixBand(codes,
       Array.from(codes).reduce((volume, code) => volume + mixing.recipesMl[number][code], 0)));
@@ -427,7 +436,7 @@
     operateShot, canStartStopwatch, toggleStopwatch, playShotReplay, shotSnapshot, manualTimingIssue,
     parseShotReading, summarizeShotTrials, formatShotAverage, shotMeanMatches, mixStage, pourMixAliquot,
     stopperMixTube, invertMixTube, standMixTube, updateMixTube, mixElapsedMs, advanceMixTime, mixVolume,
-    mixBand, mixSettledBands, emptyMixTube};
+    mixBand, mixPouredBands, mixSettledBands, emptyMixTube};
   if (typeof module === "object" && module.exports) module.exports = api;
   if (typeof document === "undefined") return;
   const root = document.querySelector('[data-zsa-activity="molar-mass-trap-lab"]');

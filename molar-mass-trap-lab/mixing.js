@@ -153,12 +153,12 @@
       if (stage === "inverting" || tube.inversions) {
         return {bands: settledBands[number], streaks: 1 - model.mixElapsedMs(tube, now) / mixing.settleMs};
       }
-      const bands = tube.aliquots.map(({code, ml}) => model.mixBand(code, ml));
+      const portions = [...tube.aliquots];
       if (stage === "pouring" && progress > 0.28) {
         const {code, ml} = tube.motion.portion;
-        bands.push(model.mixBand(code, ml * (progress - 0.28) / 0.72));
+        portions.push({code, ml: ml * (progress - 0.28) / 0.72});
       }
-      return {bands, streaks: 0};
+      return {bands: model.mixPouredBands(portions), streaks: 0};
     }
 
     function bandPath(top, bottom, curve, air) {

@@ -44,7 +44,7 @@ The comparison uses the same geometry and shot for each liquid. Density and drag
 
 ## Mixing rack
 
-Choose any numbered tube. Select the liquid and volume in the graduated pipette, then dispense each of the two aliquots. Both may be added in either order. A wrong liquid or volume can be emptied into the waste beaker and the same tube filled again. After adding the stopper, complete five gentle inversions and set the tube upright. The 60 s clock continues through tube and station changes. **Advance to 60 s** finishes just the selected tube's wait.
+Choose any numbered tube. Select the liquid and volume in the graduated pipette, then dispense each of the two aliquots. Both may be added in either order. Before inversion, the denser liquid always sits below the lighter one, using approximate densities in `model.js` (glycerin 1.26, water 1.00, mineral oil 0.86 and 1-octanol 0.83 g/mL). A wrong liquid or volume can be emptied into the waste beaker and the same tube filled again. After adding the stopper, complete five gentle inversions and set the tube upright. The 60 s clock continues through tube and station changes. **Advance to 60 s** finishes just the selected tube's wait.
 
 Count the liquid bands below the curved air-liquid surface. **Read layers** describes their visible order and tint after the full wait. The notebook retains the student's editable observations when the tube is emptied or refilled. Dye shows where a tint is visible. Two layers at these amounts can still have limited mutual solubility.
 
