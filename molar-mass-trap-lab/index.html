@@ -5,25 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="zsa-version" content="0.1.1">
+  <meta name="zsa-version" content="0.2.2">
   <title>The Molar Mass Trap Lab | ZornScience</title>
   <link rel="icon" href="../favicon.png" type="image/png">
-  <link rel="stylesheet" href="../shared/zsa-base.css?v=0.1.1">
-  <link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=0.1.1">
-  <link rel="stylesheet" href="../shared/zsa-header.css?v=0.1.1">
-  <link rel="stylesheet" href="lab.css?v=0.1.1">
-  <script src="../shared/zsa-embed.js?v=0.1.1" defer></script>
-  <script src="../shared/zsa-i18n.js?v=0.1.1" defer></script>
-  <script src="model.js?v=0.1.1" defer></script>
-  <script src="data.js?v=0.1.1" defer></script>
-  <script src="lab.js?v=0.1.1" defer></script>
-<link rel="stylesheet" href="../shared/zsa-about.css?v=0.1.1"><script src="../shared/zsa-about.js?v=0.1.1" defer></script></head>
+  <link rel="stylesheet" href="../shared/zsa-base.css?v=0.2.2">
+  <link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=0.2.2">
+  <link rel="stylesheet" href="../shared/zsa-header.css?v=0.2.2">
+  <link rel="stylesheet" href="lab.css?v=0.2.2">
+  <script src="../shared/zsa-embed.js?v=0.2.2" defer></script>
+  <script src="../shared/zsa-i18n.js?v=0.2.2" defer></script>
+  <script src="model.js?v=0.2.2" defer></script>
+  <script src="data.js?v=0.2.2" defer></script>
+  <script src="shot.js?v=0.2.2" defer></script>
+  <script src="lab.js?v=0.2.2" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=0.2.2"><script src="../shared/zsa-about.js?v=0.2.2" defer></script></head>
 <body>
 <main class="zsa zsa-mmt" data-zsa-activity="molar-mass-trap-lab">
   <header data-zsa-header class="header">
     <div data-zsa-header-row>
       <div data-zsa-header-identity class="identity">
-        <a data-zsa-header-brand class="brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../ionic-reactions/zornscience-logo.png?v=0.1.1" width="34" height="33" alt=""></a>
+        <a data-zsa-header-brand class="brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../ionic-reactions/zornscience-logo.png?v=0.2.2" width="34" height="33" alt=""></a>
         <h1>The Molar Mass Trap Lab</h1>
       </div>
       <nav data-zsa-header-tools aria-label="Activity tools">
@@ -39,7 +40,7 @@
       <small>Test 1</small><strong>Bead or spread?</strong>
     </button>
     <button type="button" data-station="shot" aria-pressed="false">
-      <small>Test 2</small><strong>Steel shot race</strong><span class="zsa-mmt-preview-tag">Preview</span>
+      <small>Test 2</small><strong>Steel shot race</strong>
     </button>
     <button type="button" data-station="mixing" aria-pressed="false">
       <small>Test 3</small><strong>Mix or layer?</strong><span class="zsa-mmt-preview-tag">Preview</span>
@@ -137,30 +138,75 @@
         </div>
       </div>
 
-      <div id="shot-preview" class="zsa-mmt-preview" hidden>
-        <svg viewBox="0 0 420 232" role="img" aria-labelledby="shot-drawing-title shot-drawing-desc">
-          <title id="shot-drawing-title">Steel shot equipment</title>
-          <desc id="shot-drawing-desc">Four sealed tubes labeled W, G, O and M, each with a steel ball, and a magnet next to the rack.</desc>
-          <defs>
-            <linearGradient id="mmt-glass"><stop stop-color="#d5eff4" stop-opacity=".57"/><stop offset=".22" stop-color="#c4e5ee" stop-opacity=".13"/><stop offset=".78" stop-color="#c4e5ee" stop-opacity=".05"/><stop offset="1" stop-color="#daf5fa" stop-opacity=".65"/></linearGradient>
-            <radialGradient id="mmt-steel" cx=".3" cy=".24" r=".6"><stop stop-color="#fff"/><stop offset=".43" stop-color="#afc5d4"/><stop offset="1" stop-color="#536e82"/></radialGradient>
-            <g id="mmt-sealed-tube">
-              <path d="M-14 39v113a14 14 0 0 0 28 0V39Z" fill="url(#mmt-glass)" stroke="#c2e0e9"/>
-              <path d="M-10 46v101" stroke="#e9f9f9" stroke-opacity=".48"/>
-              <path d="M-15 33h30v12h-30Z" fill="#775c46" stroke="#b99768"/>
-              <circle cx="0" cy="157" r="6" fill="url(#mmt-steel)" stroke="#1b2f3f"/>
+      <div id="shot-bench" hidden>
+        <div id="shot-tubes" class="zsa-mmt-bottles zsa-mmt-shot-tubes" role="group" aria-label="Sealed tubes"></div>
+        <div class="zsa-mmt-scene">
+          <svg id="shot-rack" viewBox="0 0 218 238" role="img" aria-labelledby="shot-rack-title shot-rack-desc">
+            <title id="shot-rack-title">Sealed tube rack</title>
+            <desc id="shot-rack-desc">Four matching tubes, labeled W, G, O and M, with equal fill heights and a small air gap.</desc>
+            <defs>
+              <linearGradient id="mmt-glass"><stop stop-color="#d5eff4" stop-opacity=".58"/><stop offset=".21" stop-color="#c4e5ee" stop-opacity=".09"/><stop offset=".78" stop-color="#c4e5ee" stop-opacity=".12"/><stop offset="1" stop-color="#daf5fa" stop-opacity=".62"/></linearGradient>
+              <radialGradient id="mmt-steel" cx=".29" cy=".24" r=".7"><stop stop-color="#fff"/><stop offset=".42" stop-color="#bcd0dd"/><stop offset="1" stop-color="#485d71"/></radialGradient>
+              <linearGradient id="mmt-cork" x2=".92" y2=".58"><stop stop-color="#59412f"/><stop offset=".27" stop-color="#c29a69"/><stop offset="1" stop-color="#755638"/></linearGradient>
+            </defs>
+            <path d="M10 0h198v238H10Z" fill="#172e3f" stroke="#375166"/>
+            <text x="109" y="25" text-anchor="middle" class="zsa-mmt-scene-label">Sealed tubes</text>
+            <path d="M19 162h180v40H19Z" fill="#173545" stroke="#4f7082"/>
+            <g id="shot-rack-content"></g>
+            <path d="M19 192h180v10H19Z" fill="#3f6272" stroke="#638597"/>
+          </svg>
+          <svg id="shot-inspection" viewBox="0 0 420 238" role="img" aria-labelledby="shot-drawing-title shot-drawing-desc">
+            <title id="shot-drawing-title">Steel shot equipment</title>
+            <desc id="shot-drawing-desc">The selected sealed tube in close-up. The stopper and bottom are marked, and the magnet stays outside the glass.</desc>
+            <defs>
+              <linearGradient id="mmt-shot-magnet" x2="0" y2="1"><stop stop-color="#ec886e"/><stop offset=".55" stop-color="#c1544e"/><stop offset="1" stop-color="#913b47"/></linearGradient>
+            </defs>
+            <rect width="420" height="238" rx="8" fill="url(#mmt-inspection-mat)"/>
+            <path d="M0 200h420v30q0 8-8 8H8q-8 0-8-8Z" fill="#172c3a"/>
+            <path d="M0 200h420" stroke="#537485" stroke-opacity=".58"/>
+            <text x="16" y="25" class="zsa-mmt-scene-label">Close-up</text>
+            <text id="shot-art-liquid" x="16" y="222" class="zsa-mmt-scene-label"></text>
+            <ellipse cx="195" cy="204" rx="42" ry="6" fill="#0b1e2a" opacity=".6"/>
+            <g id="shot-active-tube" transform="translate(195 119)"></g>
+            <g id="shot-markers" class="zsa-mmt-shot-markers">
+              <path d="M214 54h31M214 196h31" fill="none" stroke="#83a2b1" stroke-dasharray="3 3"/>
+              <circle id="shot-top-marker" cx="214" cy="54" r="2.7"/>
+              <circle id="shot-bottom-marker" cx="214" cy="196" r="2.7"/>
+              <text x="251" y="58">Stopper</text>
+              <text x="251" y="199">Bottom</text>
             </g>
-          </defs>
-          <rect width="420" height="232" rx="8" fill="url(#mmt-inspection-mat)"/>
-          <path d="M61 154H307v33H61Z" fill="#143344" stroke="#54788b"/>
-          <g transform="translate(91 0)"><path d="M-13 58q13-4 26 0v93a13 13 0 0 1-26 0Z" fill="#147fac"/><use href="#mmt-sealed-tube"/><text y="208">W</text></g>
-          <g transform="translate(153 0)"><path d="M-13 58q13-4 26 0v93a13 13 0 0 1-26 0Z" fill="#afc3c7" opacity=".35"/><use href="#mmt-sealed-tube"/><text y="208">G</text></g>
-          <g transform="translate(215 0)"><path d="M-13 58q13-4 26 0v93a13 13 0 0 1-26 0Z" fill="#afc3c7" opacity=".35"/><use href="#mmt-sealed-tube"/><text y="208">O</text></g>
-          <g transform="translate(277 0)"><path d="M-13 58q13-4 26 0v93a13 13 0 0 1-26 0Z" fill="#bb4b42"/><use href="#mmt-sealed-tube"/><text y="208">M</text></g>
-          <path d="M61 172h246v14H61z" fill="#3e6275" stroke="#668696"/>
-          <path d="M341 142v16c0 16 26 16 26 0v-16" fill="none" stroke="#d76051" stroke-width="10"/>
-          <path d="M341 141v10m26-10v10" stroke="#c1d2d9" stroke-width="10"/>
-        </svg>
+            <g id="shot-magnet" transform="translate(351 155)">
+              <path d="M-14-11V7a14 14 0 0 0 28 0v-18" fill="none" stroke="#142c39" stroke-width="14"/>
+              <path d="M-14-11V7a14 14 0 0 0 28 0v-18" fill="none" stroke="url(#mmt-shot-magnet)" stroke-width="11"/>
+              <path d="M-14-12v9m28-9v9" stroke="#d3e1e7" stroke-width="11"/>
+            </g>
+          </svg>
+        </div>
+        <div class="zsa-mmt-actions zsa-mmt-shot-equipment">
+          <button id="shot-operate" type="button" class="zsa-btn zsa-mmt-primary">Tilt tube</button>
+          <button id="shot-resume" type="button" class="zsa-btn" hidden>Resume trial</button>
+          <button id="shot-replay" type="button" class="zsa-btn" aria-disabled="true">Replay fall</button>
+          <button id="shot-reset" type="button" class="zsa-btn zsa-mmt-quiet">Reset tube</button>
+        </div>
+        <div class="zsa-mmt-shot-console">
+          <div class="zsa-mmt-shot-console-heading">
+            <h3>Stopwatch</h3>
+            <div class="zsa-mmt-shot-modes" role="group" aria-label="Timing mode">
+              <button id="shot-mode-manual" type="button" class="zsa-btn" aria-pressed="true">Manual</button>
+              <button id="shot-mode-event" type="button" class="zsa-btn" aria-pressed="false">Event-timed</button>
+            </div>
+          </div>
+          <div class="zsa-mmt-shot-clock-line">
+            <output id="shot-time" class="zsa-mmt-shot-clock" aria-label="Stopwatch reading" aria-live="off" tabindex="-1">0.00 s</output>
+            <button id="shot-stopwatch" type="button" class="zsa-btn" aria-disabled="true">Start timing</button>
+            <button id="shot-clear" type="button" class="zsa-btn zsa-mmt-quiet" aria-disabled="true">Reset stopwatch</button>
+          </div>
+          <div class="zsa-mmt-shot-record">
+            <button id="shot-record" type="button" class="zsa-btn" aria-disabled="true">Record reading</button>
+            <button id="shot-record-below" type="button" class="zsa-btn" aria-disabled="true">Record &lt;0.5 s</button>
+          </div>
+          <p id="shot-feedback" class="zsa-mmt-shot-feedback" role="status" aria-atomic="true"></p>
+        </div>
       </div>
       <div id="mixing-preview" class="zsa-mmt-preview" hidden>
         <svg viewBox="0 0 420 232" role="img" aria-labelledby="mixing-drawing-title mixing-drawing-desc">
@@ -193,18 +239,37 @@
         <h2 id="notebook-title">Lab notebook</h2>
         <button id="print-notebook" type="button" class="zsa-btn zsa-mmt-quiet">Print notebook</button>
       </div>
-      <h3>Test 1</h3>
-      <p class="zsa-mmt-notebook-help">Choose a matching side-view sketch and record each diameter.</p>
-      <table>
-        <thead>
-          <tr><th scope="col">Liquid</th><th id="profile-heading" scope="col">Puddle sketch (side view)</th><th id="diameter-heading" scope="col">Puddle diameter (mm)</th></tr>
-        </thead>
-        <tbody id="notebook-entries"></tbody>
-      </table>
-      <div id="profile-key" class="zsa-mmt-profiles" aria-label="Side-view sketches" role="group"></div>
-      <label class="zsa-mmt-notes-label" for="wax-notes">Other observations</label>
-      <textarea id="wax-notes" rows="3" spellcheck="false"></textarea>
-      <p id="print-notes" class="zsa-mmt-print-only"></p>
+      <div class="zsa-mmt-notebook-tests">
+        <section id="shot-notebook" aria-labelledby="shot-notebook-title" hidden>
+          <h3 id="shot-notebook-title">Test 2</h3>
+          <p class="zsa-mmt-notebook-help">Record two trials per liquid. Use &lt;0.5 if the fall is too fast to time manually.</p>
+          <table class="zsa-mmt-shot-table" aria-labelledby="shot-notebook-title">
+            <thead><tr>
+              <th scope="col">Liquid</th>
+              <th id="shot-trial-1-heading" scope="col">Fall time, trial 1 (s)</th>
+              <th id="shot-trial-2-heading" scope="col">Fall time, trial 2 (s)</th>
+              <th id="shot-average-heading" scope="col">Average fall time (s)</th>
+            </tr></thead>
+            <tbody id="shot-entries"></tbody>
+          </table>
+          <button id="shot-check-averages" type="button" class="zsa-btn">Check averages</button>
+          <div id="shot-extras"></div>
+        </section>
+        <section id="wax-notebook" aria-labelledby="wax-notebook-title">
+          <h3 id="wax-notebook-title">Test 1</h3>
+          <p class="zsa-mmt-notebook-help">Choose a matching side-view sketch and record each diameter.</p>
+          <table>
+            <thead>
+              <tr><th scope="col">Liquid</th><th id="profile-heading" scope="col">Puddle sketch (side view)</th><th id="diameter-heading" scope="col">Puddle diameter (mm)</th></tr>
+            </thead>
+            <tbody id="notebook-entries"></tbody>
+          </table>
+          <div id="profile-key" class="zsa-mmt-profiles" aria-label="Side-view sketches" role="group"></div>
+          <label class="zsa-mmt-notes-label" for="wax-notes">Other observations</label>
+          <textarea id="wax-notes" rows="3" spellcheck="false"></textarea>
+          <p id="print-notes" class="zsa-mmt-print-only"></p>
+        </section>
+      </div>
       <div class="zsa-mmt-notebook-footer">
         <p>Entries stay on this page until you reload or close it.</p>
         <button id="restart-open" type="button" class="zsa-btn zsa-mmt-quiet" aria-haspopup="dialog" aria-controls="restart">Start fresh</button>
@@ -215,18 +280,26 @@
   <details class="zsa-mmt-model">
     <summary>About this simulation</summary>
     <p>Each sample uses about 0.15 mL on the same wax paper. The puddle dimensions are simulated. Wetting depends on cohesion within the liquid and adhesion to the wax. A diameter describes spreading on this surface.</p>
+    <p>The shot times are simulated for one set of sealed tubes at room temperature. The same shot and travel distance are used in each tube. Density and drag also affect the fall time.</p>
   </details>
-  <!-- zsa-about --><section class="zsa-about" data-zsa-about="molar-mass-trap-lab" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Compare how four liquids bead or spread on wax paper. Measure each puddle and record its side view to describe how the liquids wet the same surface.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="chem-imf-properties"><a href="https://zornscience.org/science/chemistry/unit-4-covalent-bonding/properties-due-to-imf/">Properties Due to IMF</a><span data-zsa-lesson-course>Chemistry</span></li><li data-zsa-lesson="chem-imf-types"><a href="https://zornscience.org/science/chemistry/unit-4-covalent-bonding/types-of-imf/">Types of IMF</a><span data-zsa-lesson-course>Chemistry</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer">
+  <!-- zsa-about --><section class="zsa-about" data-zsa-about="molar-mass-trap-lab" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Compare how four liquids bead or spread on wax paper. Time a steel shot through each liquid and record both sets of observations in your notebook.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="chem-imf-properties"><a href="https://zornscience.org/science/chemistry/unit-4-covalent-bonding/properties-due-to-imf/">Properties Due to IMF</a><span data-zsa-lesson-course>Chemistry</span></li><li data-zsa-lesson="chem-imf-types"><a href="https://zornscience.org/science/chemistry/unit-4-covalent-bonding/types-of-imf/">Types of IMF</a><span data-zsa-lesson-course>Chemistry</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer">
     <span>ZornScience</span><a href="../" data-zsa-chrome>All activities</a><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
   </footer>
   <dialog id="instructions" class="zsa-header-dialog" aria-labelledby="instructions-title">
     <div class="zsa-header-dialog-heading"><h2 id="instructions-title">Wax-paper investigation</h2><button class="zsa-btn zsa-mmt-close" type="button" data-close="instructions" aria-label="Close instructions" autofocus>×</button></div>
-    <ol>
+    <ol id="wax-instructions">
       <li>Choose W, G, O or M. Add three drops into one spot in its box.</li>
       <li>Wait 30 s or advance time. Look from above and at eye level.</li>
       <li>Move the ruler so its zero mark lines up with the left edge. Read the right edge in mm. Use Read edges to hear or see both readings.</li>
       <li>Record the diameter and side-view shape in your notebook, or sketch the profile on your lab worksheet. Repeat for all four liquids.</li>
     </ol>
+    <ol id="shot-instructions" hidden>
+      <li>Choose a sealed tube. Tilt it to move the shot to the stopper.</li>
+      <li>Turn the tube upright. Time from the instant the shot leaves the stopper to the instant it touches the bottom. Choose event timing to mark both instants automatically.</li>
+      <li>Record two trials and find the average in seconds. If the shot falls too fast to time, record less than 0.5 s.</li>
+      <li>Use the magnet outside the tube to return the shot for another trial.</li>
+    </ol>
+    <p id="mixing-instructions" hidden>The mixing rack is a preview. Choose Test 1 or Test 2 to collect data.</p>
   </dialog>
   <dialog id="share" class="zsa-header-dialog" aria-labelledby="share-title" data-zsa-chrome>
     <div class="zsa-header-dialog-heading"><h2 id="share-title">Share this activity</h2><button class="zsa-btn zsa-mmt-close" type="button" data-close="share" aria-label="Close share options" autofocus>×</button></div>

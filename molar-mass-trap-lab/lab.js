@@ -4,17 +4,18 @@
   const root = document.querySelector('[data-zsa-activity="molar-mass-trap-lab"]');
   const $ = (id) => document.getElementById(id);
   const svgNs = "http://www.w3.org/2000/svg";
-  let i18n, copy, model;
+  let i18n, copy, model, createShotStation;
   root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: (api) => { i18n = api; }}}));
   root.dispatchEvent(new CustomEvent("zsa:molar-mass-copy", {detail: (data) => { copy = data; }}));
   root.dispatchEvent(new CustomEvent("zsa:molar-mass-model", {detail: (api) => { model = api; }}));
+  root.dispatchEvent(new CustomEvent("zsa:molar-mass-shot", {detail: (create) => { createShotStation = create; }}));
   const t = (key, values) => i18n.text(key, values);
 
   const {liquids, wax, ruler} = model;
   const codes = Object.keys(liquids);
   const stations = {
     wax: ["Cohesion on wax paper", "Simulated dimensions"],
-    shot: ["Steel shot race", "Preview", "The sealed tubes and magnet are ready for a future falling-ball test."],
+    shot: ["Steel shot race", "Simulated times"],
     mixing: ["Mix or layer?", "Preview", "The five numbered tubes are for comparing liquids that mix or form layers in a future version."]
   };
   const profiles = {
@@ -282,6 +283,14 @@
     frame = requestAnimationFrame((time) => paintDrop(time, endY));
   }
 
+  function paintShot(force) {
+    const motion = !reducedMotion.matches;
+    const timing = shotStation.paint(clock(), motion, force);
+    if (document.hidden) return;
+    if (timing.moving && motion) frame = requestAnimationFrame(() => paintShot(false));
+    else if (Number.isFinite(timing.next)) wake = setTimeout(() => paintShot(false), Math.max(1, Math.ceil(timing.next)));
+  }
+
   function renderBench() {
     cancelAnimationFrame(frame);
     clearTimeout(wake);
@@ -290,13 +299,24 @@
     for (const sample of samples) model.landDrop(sample, now);
 
     const station = state.station;
+    const shotActive = station === "shot";
+    const mixingActive = station === "mixing";
     const [title, tag, preview] = stations[station];
     for (const button of buttons) button.setAttribute("aria-pressed", String(button.dataset.station === station));
     setText($("station-title"), t(title));
     setText($("station-tag"), t(tag));
     $("wax-bench").hidden = station !== "wax";
-    $("shot-preview").hidden = station !== "shot";
-    $("mixing-preview").hidden = station !== "mixing";
+    $("shot-bench").hidden = !shotActive;
+    $("mixing-preview").hidden = !mixingActive;
+    $("shot-notebook").hidden = !shotActive;
+    $("wax-instructions").hidden = station !== "wax";
+    $("shot-instructions").hidden = !shotActive;
+    $("mixing-instructions").hidden = !mixingActive;
+    setText($("instructions-title"), t(station === "wax" ? "Wax-paper investigation" : title));
+    if (shotActive) {
+      paintShot(true);
+      return;
+    }
     if (preview) {
       setText($("bench-instruction"), t(preview));
       return;
@@ -368,9 +388,13 @@
 
   const updateStatic = staticCopy();
   i18n.configure(copy);
+  const shotStation = createShotStation({
+    model, t, svg, element, setText, setAvailability, clock, getState: () => state, refresh: renderBench
+  });
   i18n.onChange = () => {
     updateStatic();
     renderNotebook();
+    shotStation.renderNotebook();
     renderBench();
     setText($("share-status"), shareMessage ? t(shareMessage) : "");
   };
@@ -386,6 +410,7 @@
   for (const [key, profile] of Object.entries(profiles)) addProfile(key, profile);
 
   for (const button of buttons) button.addEventListener("click", () => {
+    if (state.station === "shot" && button.dataset.station !== "shot") shotStation.pause(clock());
     state.station = button.dataset.station;
     drag = null;
     renderBench();
@@ -459,6 +484,7 @@
     state = model.createState();
     drag = null;
     renderNotebook();
+    shotStation.renderNotebook();
     renderBench();
     $("restart").close();
   });
@@ -473,8 +499,12 @@
     }
     setText($("share-status"), t(shareMessage));
   });
-  document.addEventListener("visibilitychange", renderBench);
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden && state.station === "shot") shotStation.pause(clock());
+    renderBench();
+  });
   reducedMotion.addEventListener("change", renderBench);
   renderNotebook();
+  shotStation.renderNotebook();
   renderBench();
 }());
