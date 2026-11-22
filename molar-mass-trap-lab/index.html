@@ -5,26 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
   <meta name="robots" content="noindex, nofollow">
-  <meta name="zsa-version" content="0.2.0">
+  <meta name="zsa-version" content="0.2.1">
   <title>The Molar Mass Trap Lab | ZornScience</title>
   <link rel="icon" href="../favicon.png" type="image/png">
-  <link rel="stylesheet" href="../shared/zsa-base.css?v=0.2.0">
-  <link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=0.2.0">
-  <link rel="stylesheet" href="../shared/zsa-header.css?v=0.2.0">
-  <link rel="stylesheet" href="lab.css?v=0.2.0">
-  <script src="../shared/zsa-embed.js?v=0.2.0" defer></script>
-  <script src="../shared/zsa-i18n.js?v=0.2.0" defer></script>
-  <script src="model.js?v=0.2.0" defer></script>
-  <script src="data.js?v=0.2.0" defer></script>
-  <script src="shot.js?v=0.2.0" defer></script>
-  <script src="lab.js?v=0.2.0" defer></script>
-<link rel="stylesheet" href="../shared/zsa-about.css?v=0.2.0"><script src="../shared/zsa-about.js?v=0.2.0" defer></script></head>
+  <link rel="stylesheet" href="../shared/zsa-base.css?v=0.2.1">
+  <link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=0.2.1">
+  <link rel="stylesheet" href="../shared/zsa-header.css?v=0.2.1">
+  <link rel="stylesheet" href="lab.css?v=0.2.1">
+  <script src="../shared/zsa-embed.js?v=0.2.1" defer></script>
+  <script src="../shared/zsa-i18n.js?v=0.2.1" defer></script>
+  <script src="model.js?v=0.2.1" defer></script>
+  <script src="data.js?v=0.2.1" defer></script>
+  <script src="shot.js?v=0.2.1" defer></script>
+  <script src="lab.js?v=0.2.1" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=0.2.1"><script src="../shared/zsa-about.js?v=0.2.1" defer></script></head>
 <body>
 <main class="zsa zsa-mmt" data-zsa-activity="molar-mass-trap-lab">
   <header data-zsa-header class="header">
     <div data-zsa-header-row>
       <div data-zsa-header-identity class="identity">
-        <a data-zsa-header-brand class="brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../ionic-reactions/zornscience-logo.png?v=0.2.0" width="34" height="33" alt=""></a>
+        <a data-zsa-header-brand class="brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../ionic-reactions/zornscience-logo.png?v=0.2.1" width="34" height="33" alt=""></a>
         <h1>The Molar Mass Trap Lab</h1>
       </div>
       <nav data-zsa-header-tools aria-label="Activity tools">
@@ -197,7 +197,7 @@
             </div>
           </div>
           <div class="zsa-mmt-shot-clock-line">
-            <output id="shot-time" class="zsa-mmt-shot-clock" aria-label="Stopwatch reading" aria-live="off">0.00 s</output>
+            <output id="shot-time" class="zsa-mmt-shot-clock" aria-label="Stopwatch reading" aria-live="off" tabindex="-1">0.00 s</output>
             <button id="shot-stopwatch" type="button" class="zsa-btn" aria-disabled="true">Start timing</button>
             <button id="shot-clear" type="button" class="zsa-btn zsa-mmt-quiet" aria-disabled="true">Reset stopwatch</button>
           </div>
@@ -239,25 +239,37 @@
         <h2 id="notebook-title">Lab notebook</h2>
         <button id="print-notebook" type="button" class="zsa-btn zsa-mmt-quiet">Print notebook</button>
       </div>
-      <div id="wax-notebook">
-      <h3>Test 1</h3>
-      <p class="zsa-mmt-notebook-help">Choose a matching side-view sketch and record each diameter.</p>
-      <table>
-        <thead>
-          <tr><th scope="col">Liquid</th><th id="profile-heading" scope="col">Puddle sketch (side view)</th><th id="diameter-heading" scope="col">Puddle diameter (mm)</th></tr>
-        </thead>
-        <tbody id="notebook-entries"></tbody>
-      </table>
-      <div id="profile-key" class="zsa-mmt-profiles" aria-label="Side-view sketches" role="group"></div>
-      <label class="zsa-mmt-notes-label" for="wax-notes">Other observations</label>
-      <textarea id="wax-notes" rows="3" spellcheck="false"></textarea>
-      <p id="print-notes" class="zsa-mmt-print-only"></p>
+      <div class="zsa-mmt-notebook-tests">
+        <section id="shot-notebook" aria-labelledby="shot-notebook-title" hidden>
+          <h3 id="shot-notebook-title">Test 2</h3>
+          <p class="zsa-mmt-notebook-help">Record two trials per liquid. Use &lt;0.5 if the fall is too fast to time manually.</p>
+          <table class="zsa-mmt-shot-table" aria-labelledby="shot-notebook-title">
+            <thead><tr>
+              <th scope="col">Liquid</th>
+              <th id="shot-trial-1-heading" scope="col">Fall time, trial 1 (s)</th>
+              <th id="shot-trial-2-heading" scope="col">Fall time, trial 2 (s)</th>
+              <th id="shot-average-heading" scope="col">Average fall time (s)</th>
+            </tr></thead>
+            <tbody id="shot-entries"></tbody>
+          </table>
+          <button id="shot-check-averages" type="button" class="zsa-btn">Check averages</button>
+          <div id="shot-extras"></div>
+        </section>
+        <section id="wax-notebook" aria-labelledby="wax-notebook-title">
+          <h3 id="wax-notebook-title">Test 1</h3>
+          <p class="zsa-mmt-notebook-help">Choose a matching side-view sketch and record each diameter.</p>
+          <table>
+            <thead>
+              <tr><th scope="col">Liquid</th><th id="profile-heading" scope="col">Puddle sketch (side view)</th><th id="diameter-heading" scope="col">Puddle diameter (mm)</th></tr>
+            </thead>
+            <tbody id="notebook-entries"></tbody>
+          </table>
+          <div id="profile-key" class="zsa-mmt-profiles" aria-label="Side-view sketches" role="group"></div>
+          <label class="zsa-mmt-notes-label" for="wax-notes">Other observations</label>
+          <textarea id="wax-notes" rows="3" spellcheck="false"></textarea>
+          <p id="print-notes" class="zsa-mmt-print-only"></p>
+        </section>
       </div>
-      <section id="shot-notebook" aria-labelledby="shot-notebook-title" hidden>
-        <h3 id="shot-notebook-title">Test 2</h3>
-        <p class="zsa-mmt-notebook-help">Record two trials per liquid. Use &lt;0.5 if the fall is too fast to time.</p>
-        <div id="shot-entries"></div>
-      </section>
       <div class="zsa-mmt-notebook-footer">
         <p>Entries stay on this page until you reload or close it.</p>
         <button id="restart-open" type="button" class="zsa-btn zsa-mmt-quiet" aria-haspopup="dialog" aria-controls="restart">Start fresh</button>
@@ -287,6 +299,7 @@
       <li>Record two trials and find the average in seconds. If the shot falls too fast to time, record less than 0.5 s.</li>
       <li>Use the magnet outside the tube to return the shot for another trial.</li>
     </ol>
+    <p id="mixing-instructions" hidden>The mixing rack is a preview. Choose Test 1 or Test 2 to collect data.</p>
   </dialog>
   <dialog id="share" class="zsa-header-dialog" aria-labelledby="share-title" data-zsa-chrome>
     <div class="zsa-header-dialog-heading"><h2 id="share-title">Share this activity</h2><button class="zsa-btn zsa-mmt-close" type="button" data-close="share" aria-label="Close share options" autofocus>×</button></div>

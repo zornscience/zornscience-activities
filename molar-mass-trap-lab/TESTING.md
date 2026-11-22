@@ -1,6 +1,6 @@
 # Molar Mass Trap Lab checks
 
-Version: 0.2.0
+Version: 0.2.1
 
 ## Browser and model checks
 
@@ -11,8 +11,9 @@ Version: 0.2.0
 - `npx playwright test tests/e2e/activity-headers.spec.js --grep molar-mass-trap-lab` checks the shared header and canonical English Share link. The lab spec checks the complete Spanish URL.
 - The shared About and lab accessibility suites discover the page. The settled controls were also audited with axe-core in English at laptop width and in Mexican Spanish at 360 px.
 - Chromium's 200% browser zoom reduced the 1366 px viewport to 683 CSS px without horizontal scrolling. The ruler's zero matched the left edge of the clear octanol puddle and the right edge read 20 mm. A separate 360 px portrait check kept the same alignment.
-- The shot bench fit the same 200% browser zoom. A Spanish 360 px touch run recorded two `<0.5` results and replayed water's 0.27 s event time.
-- The Spanish print check confirmed both tests on one Letter page, including the entered diameter, side-view choice, below-threshold mean and ZornScience license.
+- The shot bench fit the same 200% browser zoom. A Spanish 360 px touch run recorded two `<0.5` results and replayed water in manual mode with departure and contact cues.
+- The four-row shot table showed the wax notebook on the same station and distinguished instrument-timed entries. A 6.31 s and 6.52 s pair displayed 6.42 s and accepted a student response of 6.4 s.
+- The Spanish print check confirmed both tables in worksheet order on one Letter page, including the entered diameter, side-view choice, below-threshold mean and ZornScience license.
 
 ## Low-end emulation
 
@@ -20,9 +21,9 @@ Chromium 154 on Linux, cold cache, 10 Mbps with 40 ms latency and 4× CPU thrott
 
 | Metric | 1366 × 768 CSS px at 1.25 DPR | 1366 × 768 display approximation at 125% (1093 × 614 CSS px) |
 | --- | ---: | ---: |
-| Compressed response bodies, max | 197,224 bytes | 197,224 bytes |
-| Usable bench | 650 to 695 ms | 620 to 690 ms |
-| Tilt button response | 12 to 15 ms | 12 to 14 ms |
+| Compressed response bodies, max | 199,338 bytes | 177,711 bytes |
+| Usable bench | 616 to 688 ms | 580 to 620 ms |
+| Tilt button response | 10 to 12 ms | 11 to 12 ms |
 | Glycerin animation rate | 60 fps | 60 fps |
 | Glycerin event time | 6.40 s | 6.40 s |
 | App animation callbacks in a one-second idle sample | 0 | 0 |
@@ -33,7 +34,7 @@ All measured resources were same-origin. The background-tab case uses Playwright
 
 - [English desktop, four settled drops and a glycerin reading](../.github/screenshots/molar-mass-trap-wax-desktop.png)
 - [Mexican Spanish at 360 px, with the octanol measurement](../.github/screenshots/molar-mass-trap-wax-es-360.png)
-- [English desktop, a glycerin replay and a recorded trial](../.github/screenshots/molar-mass-trap-shot-desktop.png)
-- [Mexican Spanish at 360 px, a water replay and two below-threshold trials](../.github/screenshots/molar-mass-trap-shot-es-360.png)
+- [English desktop, instrument-timed and manual entries, and both notebook tables](../.github/screenshots/molar-mass-trap-shot-desktop.png)
+- [Mexican Spanish at 360 px, manual water replay and two below-threshold trials](../.github/screenshots/molar-mass-trap-shot-es-360.png)
 
 The full classroom walkthrough in the handoff is the release gate for adding the activity to the public catalog.

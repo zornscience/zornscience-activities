@@ -74,7 +74,7 @@
         wax: byKey(codes, () => ({diameter: "", profile: ""})),
         waxNotes: "",
         // Preserve the student's raw entry alongside any checked result.
-        shot: byKey(codes, () => ({trials: [], studentMean: null, computed: null})),
+        shot: byKey(codes, () => ({trials: [], sources: [], studentMean: null, computed: null})),
         mixing: byKey(tubes, () => ({layerCount: null, dyeLocation: ""}))
       }
     };
@@ -283,6 +283,11 @@
     return Number.isFinite(seconds) && seconds > 0 ? {kind: "exact", seconds} : null;
   }
 
+  function readingPrecision(input) {
+    const value = String(input).trim().replace(/\s*s$/i, "");
+    return value.split(".")[1]?.length ?? 0;
+  }
+
   function summarizeShotTrials(entries) {
     const readings = entries.map((entry) => parseShotReading(entry));
     if (!readings[0] || !readings[1]) return null;
@@ -291,17 +296,36 @@
     const pair = indices.map((index) => readings[index]);
     const trials = indices.map((index) => index + 1);
     if (pair.every(({kind}) => kind === "exact")) {
-      return {kind: "exact", seconds: (pair[0].seconds + pair[1].seconds) / 2, trials};
+      const precision = Math.min(...indices.map((index) => readingPrecision(entries[index])));
+      return {kind: "exact", seconds: pair[0].seconds / 2 + pair[1].seconds / 2, precision, trials};
     }
     if (pair.every(({kind}) => kind === "below")) return {kind: "below", upper: shot.manualThresholdS, trials};
     const lower = pair.find(({kind}) => kind === "exact").seconds / 2;
     return {kind: "bound", lower, upper: lower + shot.manualThresholdS / 2, trials};
   }
 
+  function formatShotAverage(average) {
+    // Two readings entered to thousandths have at most four decimal places in their mean.
+    const mean = Number(average.seconds.toFixed(4));
+    return mean.toLocaleString("en-US", {
+      useGrouping: false,
+      minimumFractionDigits: average.precision,
+      maximumFractionDigits: average.precision
+    });
+  }
+
+  function shotMeanMatches(checked, input) {
+    const reading = parseShotReading(input);
+    if (reading?.kind !== checked.kind) return false;
+    if (checked.kind === "below") return true;
+    const tolerance = .5 * 10 ** -readingPrecision(input);
+    return Math.abs(reading.seconds - checked.seconds) <= tolerance + Number.EPSILON * Math.max(1, checked.seconds);
+  }
+
   const api = {liquids, wax, ruler, shot, mixing, createWaxSample, createState, dispense, landDrop, elapsedMs,
     isSettled, capGeometry, waxGeometry, edgeReadings, createShotTube, updateShot, pauseShot, resumeShot,
     operateShot, canStartStopwatch, toggleStopwatch, playShotReplay, shotSnapshot, manualTimingIssue,
-    parseShotReading, summarizeShotTrials};
+    parseShotReading, summarizeShotTrials, formatShotAverage, shotMeanMatches};
   if (typeof module === "object" && module.exports) module.exports = api;
   if (typeof document === "undefined") return;
   const root = document.querySelector('[data-zsa-activity="molar-mass-trap-lab"]');

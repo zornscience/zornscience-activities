@@ -81,7 +81,7 @@ test("shot and mixing tubes have independent state and support all five mixing r
   assert.equal(state.mixing.tubes[3].inversions, 0);
   assert.equal(state.shot.tubes.O.trial.pausedAt, null);
   assert.equal(state.notebook.shot.W.trials.length, 3);
-  assert.deepEqual(state.notebook.shot.M, {trials: [], studentMean: null, computed: null});
+  assert.deepEqual(state.notebook.shot.M, {trials: [], sources: [], studentMean: null, computed: null});
   assert.equal(state.notebook.mixing[5].layerCount, null);
   assert.equal(model.createState().mixing.tubes[3].aliquots.length, 0);
 });

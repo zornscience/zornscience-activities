@@ -579,7 +579,7 @@ body {
 }
 
 .zsa-mmt-shot-console h3,
-.zsa-mmt-shot-card h4 {
+.zsa-mmt-shot-details h4 {
   margin: 0;
   color: #173951;
   font-size: 15px;
@@ -610,14 +610,15 @@ body {
 }
 
 .zsa-mmt-shot-feedback,
-.zsa-mmt-shot-summary {
+.zsa-mmt-shot-summary,
+.zsa-mmt-shot-result {
   margin: 0;
   color: #244c63;
   font-size: 13px;
   font-weight: 600;
 }
 
-.zsa-mmt-shot-card {
+.zsa-mmt-shot-details {
   display: grid;
   gap: 7px;
   margin-top: 8px;
@@ -627,8 +628,7 @@ body {
   background: #f7f5ec;
 }
 
-.zsa-mmt-shot-trials,
-.zsa-mmt-shot-mean {
+.zsa-mmt-shot-trials {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 7px;
@@ -643,8 +643,46 @@ body {
   font-weight: 550;
 }
 
-.zsa-mmt-shot-card .zsa-mmt-quiet {
+.zsa-mmt-shot-details .zsa-mmt-quiet {
   justify-self: start;
+}
+
+.zsa-mmt-notebook .zsa-mmt-shot-table th:first-child {
+  width: 24%;
+}
+
+.zsa-mmt-notebook .zsa-mmt-shot-table thead th:last-child {
+  width: 30%;
+}
+
+.zsa-mmt-shot-table th,
+.zsa-mmt-shot-table td,
+.zsa-mmt-shot-result,
+.zsa-mmt-shot-source {
+  overflow-wrap: anywhere;
+}
+
+.zsa-mmt-shot-result {
+  margin-top: 4px;
+}
+
+.zsa-mmt-shot-result:empty {
+  display: none;
+}
+
+.zsa-mmt-shot-source {
+  color: #385b6d;
+  font-size: 10px;
+}
+
+#shot-check-averages {
+  margin-top: 8px;
+}
+
+#shot-notebook:not([hidden]) + #wax-notebook {
+  border-top: 1px solid #d8d7ce;
+  margin-top: 14px;
+  padding-top: 7px;
 }
 
 @media (max-width: 890px) {
@@ -741,18 +779,27 @@ body {
 
   .zsa-mmt-workspace,
   .zsa-mmt-print-only,
-  .zsa-mmt #wax-notebook[hidden],
   .zsa-mmt #shot-notebook[hidden] {
     display: block;
   }
 
-  .zsa-mmt #shot-entries {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 5px 12px;
+  .zsa-mmt-notebook-tests {
+    display: flex;
+    flex-direction: column;
   }
 
-  .zsa-mmt [data-shot-card] {
+  .zsa-mmt #wax-notebook {
+    order: -1;
+    border-top: 0;
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .zsa-mmt #shot-extras [data-shot-extra] {
+    display: none;
+  }
+
+  .zsa-mmt #shot-extras [data-has-trials="true"] {
     display: grid;
     break-inside: avoid;
     background: #fff;

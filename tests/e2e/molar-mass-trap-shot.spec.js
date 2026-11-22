@@ -16,6 +16,7 @@ function errorsFrom(page) {
 function station(page, key) { return page.locator('[data-station="' + key + '"]'); }
 function selector(page, key) { return page.locator('[data-shot-tube="' + key + '"]'); }
 function card(page, key) { return page.locator('[data-shot-card="' + key + '"]'); }
+function extra(page, key) { return page.locator('[data-shot-extra="' + key + '"]'); }
 function clock(page) { return page.locator("#shot-time"); }
 
 async function openShot(page, query = "") {
@@ -41,10 +42,10 @@ async function magnet(page, releaseLabel = "Release shot") {
   await expect(page.locator("#shot-magnet")).toHaveAttribute("transform", /^translate\(240 /);
 }
 
-async function tabTo(page, target) {
+async function tabTo(page, target, key = "Tab") {
   for (let i = 0; i < 45; i++) {
     if (await target.evaluate((element) => element === document.activeElement)) return;
-    await page.keyboard.press("Tab");
+    await page.keyboard.press(key);
   }
   await expect(target).toBeFocused();
 }
@@ -56,7 +57,11 @@ test("water and glycerin share event timing at different frame cadences and repl
   for (const [key, time, flight, stepped] of [["W", "0.27", 270, false], ["G", "6.40", 6400, true]]) {
     await selector(page, key).click();
     await page.locator("#shot-mode-event").click();
+    const fill = page.locator("#shot-active-tube .zsa-mmt-shot-liquid");
+    const uprightFill = await fill.getAttribute("d");
     await tilt(page);
+    await expect(fill).not.toHaveAttribute("d", uprightFill);
+    await expect(page.locator('#shot-rack-content [data-selected="true"] [visibility="hidden"]')).toHaveCount(1);
     const action = page.locator("#shot-operate");
     await action.evaluate((button) => {
       for (let i = 0; i < 5; i++) button.click();
@@ -67,6 +72,10 @@ test("water and glycerin share event timing at different frame cadences and repl
       await page.clock.runFor(1800);
       await expect(page.locator("#bench-instruction")).toHaveText(/stopwatch is running/);
       expect(Number.parseFloat(await clock(page).innerText())).toBeGreaterThan(0);
+      await station(page, "wax").click();
+      await station(page, "shot").click();
+      await page.locator("#shot-resume").click();
+      await expect(clock(page)).toBeFocused();
       await page.clock.runFor(flight);
     } else {
       await page.clock.fastForward(flight + 540);
@@ -74,15 +83,17 @@ test("water and glycerin share event timing at different frame cadences and repl
     await expect(clock(page)).toHaveText(time + " s");
     await expect(action).toHaveText("Use magnet");
     await page.locator("#shot-record").evaluate((button) => { button.click(); button.click(); });
-    await expect(card(page, key).getByRole("textbox", {name: "Trial 1 (s)"})).toHaveValue(time);
-    await expect(card(page, key).getByRole("textbox", {name: "Trial 2 (s)"})).toHaveValue("");
+    const first = card(page, key).getByRole("textbox", {name: "Fall time, trial 1 (s)"});
+    await expect(first).toHaveValue(time);
+    await expect(first).toHaveAccessibleDescription("Instrument-timed");
+    await expect(card(page, key).getByRole("textbox", {name: "Fall time, trial 2 (s)"})).toHaveValue("");
 
     await page.locator("#shot-replay").click();
     await expect(page.locator("#bench-instruction")).toHaveText(/Replay. The shot leaves the stopper/);
     await page.clock.fastForward(Math.max(flight, 1400) + 80);
     await expect(page.locator("#bench-instruction")).toHaveText(new RegExp("First contact came " + time + " s"));
     await expect(clock(page)).toHaveText(time + " s");
-    await expect(card(page, key).getByRole("textbox", {name: "Trial 2 (s)"})).toHaveValue("");
+    await expect(card(page, key).getByRole("textbox", {name: "Fall time, trial 2 (s)"})).toHaveValue("");
   }
   expect(errors).toEqual([]);
 });
@@ -134,7 +145,7 @@ test("manual clock and shot freeze when the tab is hidden and when another stati
   await magnet(page);
   await expect(clock(page)).toHaveText("0.00 s");
   // A flagged late stop is not saved for the student.
-  await expect(card(page, "G").getByRole("textbox", {name: "Trial 1 (s)"})).toHaveValue("");
+  await expect(card(page, "G").getByRole("textbox", {name: "Fall time, trial 1 (s)"})).toHaveValue("");
   expect(errors).toEqual([]);
 });
 
@@ -143,7 +154,7 @@ test("a manual replay hides the interval, and the magnet or a reset saves an unr
   await openShot(page);
   await selector(page, "G").click();
   const glycerin = card(page, "G");
-  const trial = (number) => glycerin.getByRole("textbox", {name: "Trial " + number + " (s)"});
+  const trial = (number) => glycerin.getByRole("textbox", {name: "Fall time, trial " + number + " (s)"});
   await tilt(page);
   await page.locator("#shot-operate").click();
   await page.clock.runFor(500);
@@ -202,14 +213,14 @@ test("an early manual stop keeps the measured value and a magnet retry creates a
   await page.clock.fastForward(2200);
   await expect(clock(page)).toHaveText(first);
   await page.locator("#shot-record").click();
-  await expect(card(page, "M").getByRole("textbox", {name: "Trial 1 (s)"})).toHaveValue(first.replace(" s", ""));
+  await expect(card(page, "M").getByRole("textbox", {name: "Fall time, trial 1 (s)"})).toHaveValue(first.replace(" s", ""));
   await magnet(page);
   await page.locator("#shot-mode-event").click();
   await page.locator("#shot-operate").click();
   await page.clock.fastForward(2600);
   await expect(clock(page)).toHaveText("2.25 s");
   await page.locator("#shot-record").click();
-  await expect(card(page, "M").getByRole("textbox", {name: "Trial 2 (s)"})).toHaveValue("2.25");
+  await expect(card(page, "M").getByRole("textbox", {name: "Fall time, trial 2 (s)"})).toHaveValue("2.25");
 });
 
 test("two too-fast trials produce a below-threshold mean and an extra measurable trial clears a bound", async ({page}) => {
@@ -223,22 +234,22 @@ test("two too-fast trials produce a below-threshold mean and an extra measurable
   await page.clock.fastForward(540);
   await page.locator("#shot-record-below").click();
   const water = card(page, "W");
-  const first = water.getByRole("textbox", {name: "Trial 1 (s)"});
-  const second = water.getByRole("textbox", {name: "Trial 2 (s)"});
+  const first = water.getByRole("textbox", {name: "Fall time, trial 1 (s)"});
+  const second = water.getByRole("textbox", {name: "Fall time, trial 2 (s)"});
   await expect(first).toHaveValue("<0.5");
   await expect(second).toHaveValue("<0.5");
-  await water.getByRole("button", {name: "Check average"}).click();
-  await expect(water.getByText("The average of trials 1 and 2 is less than 0.5 s.")).toBeVisible();
+  await page.getByRole("button", {name: "Check averages"}).click();
+  await expect(extra(page, "W").getByText("The average of trials 1 and 2 is less than 0.5 s.")).toBeVisible();
   await second.fill("0.28");
-  await water.getByRole("button", {name: "Check average"}).click();
-  await expect(water.getByText(/at least 0.14 s and less than 0.39 s/)).toBeVisible();
-  await water.getByRole("button", {name: "Add trial"}).click();
-  const third = water.getByRole("textbox", {name: "Trial 3 (s)"});
+  await page.getByRole("button", {name: "Check averages"}).click();
+  await expect(extra(page, "W").getByText(/at least 0.14 s and less than 0.39 s/)).toBeVisible();
+  await extra(page, "W").getByRole("button", {name: "Add trial"}).click();
+  const third = extra(page, "W").getByRole("textbox", {name: "Fall time, trial 3 (s)"});
   await expect(third).toBeFocused();
   await third.fill("0.32");
-  await water.getByRole("textbox", {name: "Average (s)"}).fill("0.30");
-  await water.getByRole("button", {name: "Check average"}).click();
-  await expect(water.getByText("Trials 2 and 3 give an average of 0.3 s. Your average matches.")).toBeVisible();
+  await water.getByRole("textbox", {name: "Average fall time (s)"}).fill("0.30");
+  await page.getByRole("button", {name: "Check averages"}).click();
+  await expect(extra(page, "W").getByText("Trials 2 and 3 give an average of 0.30 s. Your average matches.")).toBeVisible();
   await expect(first).toHaveValue("<0.5");
   await page.locator("#shot-reset").click();
   await expect(second).toHaveValue("0.28");
@@ -258,9 +269,9 @@ test("Mexican Spanish keyboard flow, reduced motion and the printable notebook r
   await expect(page.locator("#station-tag")).toHaveText("Tiempos simulados");
   await tabTo(page, selector(page, "O"));
   await page.keyboard.press("Enter");
-  await tabTo(page, page.getByRole("button", {name: "Por eventos"}));
+  await tabTo(page, page.getByRole("button", {name: "Automático"}));
   await page.keyboard.press("Space");
-  await tabTo(page, page.locator("#shot-operate"));
+  await tabTo(page, page.locator("#shot-operate"), "Shift+Tab");
   await page.keyboard.press("Enter");
   await page.clock.runFor(760);
   await expect(page.locator("#shot-operate")).toHaveText("Poner en vertical");
@@ -270,19 +281,51 @@ test("Mexican Spanish keyboard flow, reduced motion and the printable notebook r
   await tabTo(page, page.getByRole("button", {name: "Anotar lectura"}));
   await page.keyboard.press("Enter");
   const octanol = card(page, "O");
-  await expect(octanol.getByRole("textbox", {name: "Ensayo 1 (s)"})).toHaveValue("0.98");
+  await expect(octanol.getByRole("textbox", {name: "Tiempo de caída, ensayo 1 (s)"})).toHaveValue("0.98");
   await page.getByRole("link", {name: "EN English"}).click();
-  await expect(octanol.getByRole("textbox", {name: "Trial 1 (s)"})).toHaveValue("0.98");
+  await expect(octanol.getByRole("textbox", {name: "Fall time, trial 1 (s)"})).toHaveValue("0.98");
   await page.getByRole("link", {name: "ES Español"}).click();
   await station(page, "mixing").click();
   await expect(page.locator("#station-tag")).toHaveText("Vista previa");
+  await page.getByRole("button", {name: "Instrucciones"}).click();
+  await expect(page.getByRole("dialog", {name: "¿Se mezclan o forman capas?"}))
+    .toContainText("La gradilla de mezclas es una vista previa.");
+  await page.keyboard.press("Escape");
   await station(page, "shot").click();
-  await expect(octanol.getByRole("textbox", {name: "Ensayo 1 (s)"})).toHaveValue("0.98");
+  await expect(octanol.getByRole("textbox", {name: "Tiempo de caída, ensayo 1 (s)"})).toHaveValue("0.98");
   await page.emulateMedia({media: "print"});
   await expect(octanol.getByText("0.98", {exact: true})).toBeVisible();
   await expect(page.locator("#liquid-W").locator("..").getByText("10", {exact: true})).toBeVisible();
   await expect(card(page, "M")).toBeVisible();
   expect(errors).toEqual([]);
+});
+
+test("all four averages stay visible alongside the wax notebook and respect the precision of the readings", async ({page}) => {
+  await page.goto(LAB);
+  const diameter = page.locator("#liquid-W").locator("..").getByRole("textbox");
+  await diameter.fill("10");
+  await station(page, "shot").click();
+  await expect(diameter).toBeVisible();
+  await expect(diameter).toHaveValue("10");
+  await expect(page.locator("#shot-notebook").getByRole("columnheader")).toHaveText(
+    ["Liquid", "Fall time, trial 1 (s)", "Fall time, trial 2 (s)", "Average fall time (s)"]
+  );
+  for (const [key, first, second] of [["W", "<0.5", "<0.5"], ["G", "6.31", "6.52"], ["O", "0.88", "1.12"], ["M", "2.20", "2.30"]]) {
+    const row = card(page, key);
+    await expect(row).toBeVisible();
+    await row.getByRole("textbox", {name: "Fall time, trial 1 (s)"}).fill(first);
+    await row.getByRole("textbox", {name: "Fall time, trial 2 (s)"}).fill(second);
+  }
+  await selector(page, "G").click();
+  const glycerin = card(page, "G");
+  await glycerin.getByRole("textbox", {name: "Average fall time (s)"}).fill("6.4");
+  const check = page.getByRole("button", {name: "Check averages"});
+  await check.click();
+  await expect(page.locator("#shot-entries .zsa-mmt-shot-result")).toHaveText(["<0.5 s", "6.42 s", "1.00 s", "2.25 s"]);
+  await expect(extra(page, "G")).toContainText("Your average matches.");
+  await glycerin.getByRole("textbox", {name: "Fall time, trial 1 (s)"}).fill("6,31");
+  await check.click();
+  await expect(extra(page, "G")).toContainText("with a decimal point");
 });
 
 test("the shot bench and trial notebook pass axe at laptop and Spanish phone widths", async ({page}) => {

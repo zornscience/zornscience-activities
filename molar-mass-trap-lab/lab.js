@@ -300,18 +300,19 @@
 
     const station = state.station;
     const shotActive = station === "shot";
+    const mixingActive = station === "mixing";
     const [title, tag, preview] = stations[station];
     for (const button of buttons) button.setAttribute("aria-pressed", String(button.dataset.station === station));
     setText($("station-title"), t(title));
     setText($("station-tag"), t(tag));
     $("wax-bench").hidden = station !== "wax";
     $("shot-bench").hidden = !shotActive;
-    $("mixing-preview").hidden = station !== "mixing";
-    $("wax-notebook").hidden = shotActive;
+    $("mixing-preview").hidden = !mixingActive;
     $("shot-notebook").hidden = !shotActive;
-    $("wax-instructions").hidden = shotActive;
+    $("wax-instructions").hidden = station !== "wax";
     $("shot-instructions").hidden = !shotActive;
-    setText($("instructions-title"), t(shotActive ? "Steel shot race" : "Wax-paper investigation"));
+    $("mixing-instructions").hidden = !mixingActive;
+    setText($("instructions-title"), t(station === "wax" ? "Wax-paper investigation" : title));
     if (shotActive) {
       paintShot(true);
       return;

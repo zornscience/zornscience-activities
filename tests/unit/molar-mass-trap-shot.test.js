@@ -126,6 +126,17 @@ test("trial summaries preserve two censored readings, compute a bound for one an
   assert.equal(bounded.lower, .56);
   assert.ok(Math.abs(bounded.upper - .81) < 1e-8);
   assert.deepEqual(bounded.trials, [1, 2]);
-  assert.deepEqual(model.summarizeShotTrials([...mixed, ".88"]), {kind: "exact", seconds: 1, trials: [2, 3]});
+  assert.deepEqual(model.summarizeShotTrials([...mixed, ".88"]), {kind: "exact", seconds: 1, precision: 2, trials: [2, 3]});
   assert.deepEqual(mixed, ["<0.5", "1.12"]);
+});
+
+test("average display uses the measured precision and accepts student rounding to their last digit", () => {
+  const average = model.summarizeShotTrials(["6.31", "6.52"]);
+  assert.equal(model.formatShotAverage(average), "6.42");
+  assert.equal(model.shotMeanMatches(average, "6.4"), true);
+  assert.equal(model.shotMeanMatches(average, "6.42 s"), true);
+  assert.equal(model.shotMeanMatches(average, "6.40"), false);
+  assert.equal(model.shotMeanMatches(average, "6,42"), false);
+  assert.equal(model.formatShotAverage(model.summarizeShotTrials(["0.6", "0.88"])), "0.7");
+  assert.equal(model.shotMeanMatches(model.summarizeShotTrials(["<0.5", "<0.5"]), "menos de 0.5 s"), true);
 });
