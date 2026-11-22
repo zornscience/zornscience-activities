@@ -77,7 +77,7 @@ test("all four puddles merge in their own boxes, settle independently, and prese
     await expect(page.locator("#measure-tools")).toBeHidden();
     if (code === "M") {
       await page.locator('[data-station="mixing"]').click();
-      await expect(page.locator("#station-tag")).toHaveText("Preview");
+      await expect(page.locator("#station-tag")).toHaveText("Simulated mixtures");
       await page.clock.fastForward(30000);
       await page.locator('[data-station="wax"]').click();
     } else {
@@ -157,7 +157,7 @@ test("the ruler and side view agree for a calibrated bead above 90 degrees", asy
   );
 });
 
-test("keyboard only can align zero for clear glycerin, record the profile, and keep it through both previews", async ({page}) => {
+test("keyboard only can align zero for clear glycerin, record the profile, and keep it through both other stations", async ({page}) => {
   const errors = collectErrors(page);
   await page.clock.install();
   await page.goto(LAB);
@@ -239,7 +239,7 @@ test("pointer ruler stays aligned to the scaled artwork at 360 px and 200% layou
   await verifyAligned();
 });
 
-test("Mexican Spanish covers the live bench, print, dialogs, previews, and shared URLs", async ({page}) => {
+test("Mexican Spanish covers the live stations, print, dialogs, and shared URLs", async ({page}) => {
   const errors = collectErrors(page);
   await page.clock.install();
   await page.setViewportSize({width: 360, height: 720});
@@ -277,8 +277,8 @@ test("Mexican Spanish covers the live bench, print, dialogs, previews, and share
   await expect(page.getByRole("img", {name: "Equipo de la prueba con perdigones"})).toBeVisible();
   await expect(page.locator("#station-tag")).toHaveText("Tiempos simulados");
   await page.locator('[data-station="mixing"]').click();
-  await expect(page.locator("#station-tag")).toHaveText("Vista previa");
-  await expect(page.getByRole("img", {name: "Gradilla de mezclas"})).toBeVisible();
+  await expect(page.locator("#station-tag")).toHaveText("Mezclas simuladas");
+  await expect(page.getByRole("group", {name: "Gradilla de mezclas"})).toBeVisible();
   await page.emulateMedia({media: "print"});
   await expect(row.getByText("20", {exact: true})).toBeVisible();
   await expect(row.getByText("Charco plano", {exact: true}).last()).toBeVisible();

@@ -3769,4 +3769,9 @@ The virtual lab follows Style Kit 1.32 and the published Spanish procedure. The 
 | instrument-timed reading | medición automática |
 | fall time / average fall time | tiempo de caída / promedio del tiempo de caída |
 | lab notebook | cuaderno de laboratorio |
-| station preview | vista previa de la estación |
+| slow-motion replay | repetición en cámara lenta |
+| graduated transfer pipette / aliquot | pipeta de transferencia graduada / alícuota |
+| mixing rack / test tube | gradilla de mezclas / tubo de ensayo |
+| invert / let stand | invertir / dejar reposar |
+| liquid layer / dye | capa de líquido / colorante |
+| waste beaker | vaso de precipitados para residuos (vaso de residuos on the bench) |

@@ -1,12 +1,12 @@
 # The Molar Mass Trap Lab
 
-Version: 0.2.2
+Version: 0.3.0
 
-A virtual investigation for Chemistry and Honors Chemistry Unit 4. This development build has the wax-paper investigation, the steel shot race and a preview of the mixing rack.
+A virtual investigation for Chemistry and Honors Chemistry Unit 4. This development build has the wax-paper investigation, the steel shot race and the five-tube mixing rack.
 
 ## Run the bench
 
-From the repository root, run `npm run serve` and open `http://127.0.0.1:8000/molar-mass-trap-lab/`. Add `?lang=es` for Mexican Spanish. The notebook holds editable measurements, shape choices and notes until the page is reloaded or closed. **Print notebook** sends both tests to the browser's print or PDF dialog. **Reset sample** and **Reset tube** clear the selected apparatus. **Start fresh** clears the bench and notebook after confirmation.
+From the repository root, run `npm run serve` and open `http://127.0.0.1:8000/molar-mass-trap-lab/`. Add `?lang=es` for Mexican Spanish. The notebook holds editable measurements, shape choices and notes until the page is reloaded or closed. **Print notebook** sends all three tests to the browser's print or PDF dialog. Each station can empty or reset the selected apparatus. **Start fresh** clears the bench and notebook after confirmation.
 
 ## Measurement model
 
@@ -41,6 +41,24 @@ The demonstration assumes identical tubes, a 90 mm shot travel, an 8 mm air gap,
 | M, mineral oil | 2.25 |
 
 The comparison uses the same geometry and shot for each liquid. Density and drag also affect the measured fall time.
+
+## Mixing rack
+
+Choose any numbered tube. Select the liquid and volume in the graduated pipette, then dispense each of the two aliquots. Both may be added in either order. A wrong liquid or volume can be emptied into the waste beaker and the same tube filled again. After adding the stopper, complete five gentle inversions and set the tube upright. The 60 s clock continues through tube and station changes. **Advance to 60 s** finishes just the selected tube's wait.
+
+Count the liquid bands below the curved air-liquid surface. **Read layers** describes their visible order and tint after the full wait. The notebook retains the student's editable observations when the tube is emptied or refilled. Dye shows where a tint is visible. Two layers at these amounts can still have limited mutual solubility.
+
+The recipes and bottom-to-top appearances come from the handoff and teacher guide. The drawing uses a common scale for approximate volumes. The 420 ms transfer, 720 ms inversion, and 280 ms placement animations are illustrative.
+
+| Tube | Aliquots (mL) | Total (mL) | Settled bands, bottom to top |
+| --- | --- | ---: | --- |
+| 1 | W 1.0 + G 1.0 | 2.0 | One blue-tinted band |
+| 2 | W 1.0 + M 1.0 | 2.0 | Blue, red |
+| 3 | W 1.0 + O 0.5 | 1.5 | Blue, smaller clear band |
+| 4 | M 1.0 + O 0.5 | 1.5 | One red-tinted band |
+| 5 | G 1.0 + M 1.0 | 2.0 | Clear, red |
+
+## Classroom release
 
 The public catalog listing and SEO entries belong to the release candidate, after the full classroom walkthrough in the handoff. See the physical lab procedure for the source setup. [English procedure](https://zornscience.org/teaching/physical-labs/molar-mass-trap-imf-lab/) · [Spanish procedure](https://zornscience.org/es/teaching/physical-labs/molar-mass-trap-imf-lab/)
 
