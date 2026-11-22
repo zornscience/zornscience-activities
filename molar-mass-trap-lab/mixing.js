@@ -12,9 +12,10 @@
     const action = $("mix-action");
     const actionLabel = $("mix-action-label");
     const actionIcon = $("mix-action-icon");
-    const stand = $("mix-stand");
     const advance = $("mix-advance");
     const settleClock = $("mix-elapsed");
+    const stopwatch = $("mix-stopwatch");
+    const amountNote = $("mix-amount-note");
     const read = $("mix-read");
     const empty = $("mix-empty");
     const holder = $("mix-active-tube");
@@ -28,6 +29,8 @@
     const tubeLabel = (number) => t("Tube {number}", {number});
     const volumeLabel = (ml) => ml.toFixed(1) + " mL";
     const liquidLabel = (code) => code + " " + t(liquids[code]);
+    // A stopwatch reading in minutes and seconds, such as 0:14 or 1:00.
+    const clockText = (seconds) => Math.floor(seconds / 60) + ":" + String(seconds % 60).padStart(2, "0");
     const drawing = makeTube(holder, true);
     const slots = {};
     let requestedReading = false;
@@ -101,7 +104,19 @@
 
     function renderLabels() {
       setText(liquid.options[0], t("Choose liquid"));
-      for (const item of Array.from(liquid.options).slice(1)) setText(item, liquidLabel(item.value));
+      // Each option shows its portion, so the smaller 1-octanol portion is visible before it is chosen.
+      for (const item of Array.from(liquid.options).slice(1)) {
+        setText(item, liquidLabel(item.value) + " · " + volumeLabel(mixing.portionMl[item.value]));
+      }
+      renderAmountNote();
+    }
+
+    // The note under the pipette calls out 1-octanol's half portion, and stands out while 1-octanol is chosen.
+    function renderAmountNote() {
+      const half = liquid.value === "O";
+      amountNote.dataset.emphasis = String(half);
+      setText(amountNote, t(half ? "1-octanol: the pipette adds only 0.5 mL." :
+        "The pipette adds 1.0 mL of each liquid, except 0.5 mL of 1-octanol."));
     }
 
     function motionProgress(tube, now) {
@@ -183,7 +198,7 @@
       const y = paintTube(drawing, tube, layerDrawing(tube, now, progress), angle < -90);
       setAttr($("mix-surface"), "transform", `translate(${centerX + 18} ${centerY + y})`);
       visible($("mix-surface"), tube.upright && tube.aliquots.length > 0 && stage !== "pouring");
-      const portion = stage === "pouring" ? tube.motion.portion : {code: liquid.value, ml: mixing.aliquotMl};
+      const portion = stage === "pouring" ? tube.motion.portion : {code: liquid.value, ml: mixing.portionMl[liquid.value] ?? 0};
       const pouring = stage === "pouring" && animate;
       setAttr($("mix-pipette-art"), "transform", pouring ? `translate(${centerX} 19)` : "translate(258 83) rotate(19)");
       const pipetteFill = $("mix-pipette-fill");
@@ -206,10 +221,12 @@
       blue: "One uniform blue-tinted layer.", red: "One uniform red-tinted layer.", clear: "One uniform clear layer."
     };
 
-    // Describe the bands for whatever the student mixed, bottom to top.
+    // Describe the bands for whatever the student mixed, bottom to top. A 0.5 mL portion makes a smaller band.
     function describeBands([lower, upper]) {
       if (!upper) return t(oneLayer[lower.tint]);
-      return t("A {upper} band above a {lower} band.", {upper: t(upper.tint), lower: t(lower.tint)});
+      const template = upper.ml < lower.ml ? "A smaller {upper} band above a {lower} band." :
+        upper.ml > lower.ml ? "A {upper} band above a smaller {lower} band." : "A {upper} band above a {lower} band.";
+      return t(template, {upper: t(upper.tint), lower: t(lower.tint)});
     }
 
     function describeObservation(tube, stage, elapsed) {
@@ -228,17 +245,15 @@
 
     const actions = {
       "fill-ready": "Dispense liquid", pouring: "Dispense liquid", "seal-ready": "Add stopper",
-      "invert-ready": "Gently invert", inverting: "Gently invert", "stand-ready": "Gently invert", placing: "Gently invert",
-      settling: "Gently invert"
+      "invert-ready": "Gently invert", inverting: "Gently invert", placing: "Gently invert", settling: "Gently invert"
     };
     const instructions = {
-      "fill-ready": "Choose a liquid for the pipette. Each tube holds two 1.0 mL portions.",
+      "fill-ready": "Choose a liquid for the pipette. Each tube takes two portions.",
       pouring: "The pipette is adding the liquid.",
       "seal-ready": "Both portions are in the tube. Add a stopper.",
       "invert-ready": "Gently invert the stoppered tube five times.",
       inverting: "Watch the liquids move as you invert the tube.",
-      "stand-ready": "Five inversions complete. Set the tube upright.",
-      placing: "The tube is returning to the rack.",
+      placing: "Five inversions complete. The tube is going back upright in the rack.",
       settling: "Let the tube stand for 60 s, or advance time.",
       settled: "Count the layers below the curved surface. Record where the dye went."
     };
@@ -256,26 +271,27 @@
       setText($("mix-recipe"), contents(tube, number));
       setText($("mix-volume"), volumeLabel(model.mixVolume(tube)) + " " + t("total"));
       $("mix-pipettes").hidden = stage !== "fill-ready" && stage !== "pouring";
+      renderAmountNote();
       liquid.disabled = stage === "pouring";
       $("mix-progress").hidden = !tube.stoppered;
-      settleClock.hidden = tube.settlesAt === null;
       setText($("mix-inversions"), t("{count} / 5 inversions", {count: tube.inversions}));
-      setText(settleClock, `${elapsed} / ${mixing.settleDisplayS} s`);
+      // The mini stopwatch starts when the tube is back upright and stops at 60 s.
+      stopwatch.dataset.state = tube.settlesAt === null ? "ready" : stage === "settled" ? "stopped" : "running";
+      setText(settleClock, clockText(elapsed));
       action.hidden = !actions[stage];
       if (!action.hidden) setText(actionLabel, t(actions[stage]));
       // SVG elements have no hidden property, so set the attribute the stylesheet hides.
       actionIcon.toggleAttribute("hidden", !["fill-ready", "pouring"].includes(stage));
       const canDispense = stage === "fill-ready" && Boolean(liquid.value);
       setAvailability("mix-action", canDispense || stage === "seal-ready" || stage === "invert-ready");
-      stand.hidden = !["stand-ready", "placing", "settling"].includes(stage);
-      setAvailability("mix-stand", stage === "stand-ready");
       advance.hidden = stage !== "settling";
       read.hidden = !tube.stoppered;
       setText(empty, t(stage === "settled" ? "Pour into waste" : "Empty tube"));
       setAvailability("mix-empty", !tube.motion && tube.aliquots.length > 0);
-      if (stage === "settled" && [action, stand, advance].includes(focused)) read.focus();
+      if (stage === "settled" && [action, advance].includes(focused)) read.focus();
       else if (action.hidden && focused === action) empty.focus();
-      else if (stage === "settling" && lastStage === "placing" && focused === stand) settleClock.focus();
+      // After the last inversion the tube stands up on its own. Keyboard focus moves to the stopwatch.
+      else if (stage === "settling" && lastStage !== "settling" && focused === action) settleClock.focus();
 
       setText($("mix-observation"), requestedReading ? describeObservation(tube, stage, elapsed) : "");
     }
@@ -327,8 +343,11 @@
 
     liquid.append(...["", ...Object.keys(liquids)].map(option));
     for (const number of tubes) addSlot(number);
-    liquid.addEventListener("change", refresh);
-    for (const control of [action, stand, advance, empty]) {
+    liquid.addEventListener("change", () => {
+      renderAmountNote();
+      refresh();
+    });
+    for (const control of [action, advance, empty]) {
       control.addEventListener("keydown", (event) => {
         if (event.repeat && event.key === "Enter") event.preventDefault();
       });
@@ -346,9 +365,6 @@
         case "invert-ready": model.invertMixTube(tube, now); break;
       }
       refresh();
-    });
-    stand.addEventListener("click", () => {
-      if (model.standMixTube(selectedTube(), clock())) refresh();
     });
     advance.addEventListener("click", () => {
       if (!advance.hidden && model.advanceMixTime(selectedTube(), clock())) refresh();

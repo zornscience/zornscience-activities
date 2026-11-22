@@ -301,11 +301,6 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-#settle-clock {
-  margin-left: 8px;
-  color: #24546b;
-  font-weight: 650;
-}
 
 .zsa-mmt-measure {
   display: grid;
@@ -523,20 +518,47 @@ body {
   text-align: center;
 }
 
-.zsa-mmt-shot-clock {
-  display: inline-flex;
+/* A small version of the stopwatch for elapsed settling and stand time. */
+.zsa-mmt .zsa-mmt-mini-stopwatch {
+  display: inline-grid;
+  grid-template-columns: auto auto;
   align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  min-width: 6ch;
-  padding: 4px 10px;
-  border: 1px solid #375668;
+  gap: 8px;
+  margin-top: 7px;
+  padding: 5px 6px 5px 10px;
+  border-radius: 14px;
+}
+
+.zsa-mmt-mini-stopwatch .zsa-mmt-stopwatch-crown {
+  top: -7px;
+  width: 22px;
+  height: 7px;
+}
+
+.zsa-mmt .zsa-mmt-mini-stopwatch .zsa-mmt-stopwatch-label {
+  font-size: 10px;
+  letter-spacing: .06em;
+}
+
+.zsa-mmt-mini-stopwatch .zsa-mmt-stopwatch-screen {
+  min-height: 32px;
+  min-width: 74px;
+  padding: 3px 9px 3px 20px;
   border-radius: 6px;
-  background: #183f4e;
-  color: #eef8f3;
-  font-size: 22px;
-  font-weight: 650;
-  font-variant-numeric: tabular-nums;
+}
+
+.zsa-mmt-mini-stopwatch .zsa-mmt-stopwatch-screen::before {
+  left: 8px;
+  width: 6px;
+  height: 6px;
+}
+
+.zsa-mmt-mini-stopwatch .zsa-mmt-stopwatch-digits {
+  font-size: 20px;
+}
+
+.zsa-mmt-stopwatch[data-state="stopped"] .zsa-mmt-stopwatch-digits {
+  color: #17230f;
 }
 
 .zsa-mmt-mix-scene {
@@ -666,6 +688,16 @@ body {
 .zsa-mmt .zsa-mmt-mix-amount {
   margin: 0;
   color: #3e5b6e;
+}
+
+/* 1-octanol is the one liquid with a 0.5 mL portion. While it is chosen, the note stands out. */
+.zsa-mmt-mix-amount[data-emphasis="true"] {
+  padding: 4px 8px;
+  border-left: 4px solid #b3591a;
+  border-radius: 4px;
+  background: #fdf0e3;
+  color: #6b3208;
+  font-weight: 700;
 }
 
 /* Buttons that carry the eyedropper icon beside their text. The flex layout must not override [hidden]. */
@@ -823,11 +855,33 @@ body {
   fill: #b0352a;
 }
 
+/* Mineral oil: brackets around the repeating CH2 unit, with its repeat count n. */
+.zsa-mmt-lewis-bonds .zsa-mmt-lewis-bracket {
+  stroke-width: 1.8;
+}
+
+.zsa-mmt-lewis-atoms .zsa-mmt-lewis-n {
+  font-size: 14px;
+  font-style: italic;
+}
+
+.zsa-mmt .zsa-mmt-lewis-caption {
+  margin: 2px 0 0;
+  color: #46627a;
+  font-size: 12px;
+  text-align: center;
+}
+
 .zsa-mmt .zsa-mmt-liquid-facts {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
   margin: 0;
+}
+
+/* The molar mass row carries its bar, so the bar reads as the mass. */
+.zsa-mmt .zsa-mmt-mass dd {
+  display: grid;
+  gap: 4px;
 }
 
 .zsa-mmt-liquid-facts dt {
@@ -848,7 +902,8 @@ body {
 
 /* Bar lengths compare molar masses, with mineral oil's roughly 300 g/mol as the full width. */
 .zsa-mmt-mass-bar {
-  height: 8px;
+  display: block;
+  height: 10px;
   border-radius: 4px;
   background: #e3ecf2;
   overflow: hidden;
@@ -861,10 +916,10 @@ body {
   background: #3f7691;
 }
 
-[data-liquid="W"] > .zsa-mmt-mass-bar span { width: 6%; }
-[data-liquid="G"] > .zsa-mmt-mass-bar span { width: 31%; }
-[data-liquid="O"] > .zsa-mmt-mass-bar span { width: 43%; }
-[data-liquid="M"] > .zsa-mmt-mass-bar span { width: 100%; }
+[data-liquid="W"] .zsa-mmt-mass-bar span { width: 6%; }
+[data-liquid="G"] .zsa-mmt-mass-bar span { width: 31%; }
+[data-liquid="O"] .zsa-mmt-mass-bar span { width: 43%; }
+[data-liquid="M"] .zsa-mmt-mass-bar span { width: 100%; }
 
 .zsa-mmt .zsa-mmt-intro-note {
   margin: 10px 0 0;
@@ -872,26 +927,24 @@ body {
   font-size: 13px;
 }
 
-.zsa-mmt-intro-actions {
+/* The Start button sits beside the heading so students see it first. */
+.zsa-mmt-intro-top {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 10px 16px;
-  margin-top: 14px;
-  padding-top: 12px;
-  border-top: 1px solid #dfe8ee;
 }
 
-.zsa-mmt-intro-actions p {
-  flex: 1 1 320px;
-  margin: 0;
-}
-
-.zsa-mmt .zsa-mmt-intro-actions .zsa-btn {
+.zsa-mmt .zsa-mmt-intro-top .zsa-btn {
   min-height: 44px;
-  padding-inline: 18px;
+  padding-inline: 22px;
   font-size: 16px;
+}
+
+.zsa-mmt .zsa-mmt-intro-tests {
+  max-width: 78ch;
+  margin: 0 0 14px;
 }
 
 @media (max-width: 700px) {
