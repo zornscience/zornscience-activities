@@ -78,6 +78,20 @@
     return {aliquots: [], stoppered: false, upright: true, inversions: 0, settlesAt: null, motion: null, disposed: false};
   }
 
+  function createNotebook() {
+    const codes = Object.keys(liquids);
+    const tubes = Object.keys(mixing.recipesMl);
+    return {
+      wax: byKey(codes, () => ({diameter: "", profile: ""})),
+      waxNotes: "",
+      // Preserve the student's raw entry alongside any checked result.
+      shot: byKey(codes, () => ({trials: [], sources: [], studentMean: null, computed: null})),
+      mixing: byKey(tubes, () => ({layerCount: null, dyeLocation: ""})),
+      predictions: {spread: "", slowest: "", mixing: byKey(tubes, () => null)},
+      debrief: {revisit: "", evidence: [{station: "", notes: ""}, {station: "", notes: ""}], explanation: ""}
+    };
+  }
+
   function createState() {
     const codes = Object.keys(liquids);
     const tubes = Object.keys(mixing.recipesMl);
@@ -86,13 +100,7 @@
       wax: {liquid: "W", samples: byKey(codes, createWaxSample)},
       shot: {liquid: "W", tubes: byKey(codes, createShotTube)},
       mixing: {tube: 1, tubes: byKey(tubes, createMixTube), wasteMl: 0},
-      notebook: {
-        wax: byKey(codes, () => ({diameter: "", profile: ""})),
-        waxNotes: "",
-        // Preserve the student's raw entry alongside any checked result.
-        shot: byKey(codes, () => ({trials: [], sources: [], studentMean: null, computed: null})),
-        mixing: byKey(tubes, () => ({layerCount: null, dyeLocation: ""}))
-      }
+      notebook: createNotebook()
     };
   }
 
@@ -338,6 +346,83 @@
     return Math.abs(reading.seconds - checked.seconds) <= tolerance + Number.EPSILON * Math.max(1, checked.seconds);
   }
 
+  const notebookFormat = "molar-mass-trap-notebook";
+  const evidenceStations = ["wax", "shot", "mixing"];
+
+  function predictionResult(notebook, number) {
+    const asked = notebook.predictions.mixing[number];
+    const observed = notebook.mixing[number].layerCount;
+    return asked === null || observed === null ? null : asked === observed;
+  }
+
+  function hasStationEvidence(notebook, station) {
+    if (station === "wax") return Object.values(notebook.wax).some(({diameter, profile}) => diameter.trim() && profile);
+    if (station === "shot") return Object.values(notebook.shot).some(({trials}) => summarizeShotTrials(trials) !== null);
+    if (station === "mixing") return Object.values(notebook.mixing).some(({layerCount, dyeLocation}) => layerCount && dyeLocation.trim());
+    return false;
+  }
+
+  function debriefStatus(notebook) {
+    const {revisit, evidence: [first, second], explanation} = notebook.debrief;
+    if (!revisit.trim()) return "prediction";
+    if (!first.station || !second.station || first.station === second.station || !first.notes.trim() || !second.notes.trim()) return "cite";
+    if (![first, second].every(({station}) => hasStationEvidence(notebook, station))) return "record";
+    return explanation.trim() ? "complete" : "explanation";
+  }
+
+  function encodeNotebook(notebook) {
+    // Keep the original readings. Recompute the checked result when opening the file.
+    const shotEntries = Object.fromEntries(Object.entries(notebook.shot).map(([code, entry]) => [code, {
+      trials: entry.trials, sources: entry.sources, studentMean: entry.studentMean, checked: entry.computed !== null
+    }]));
+    return JSON.stringify({format: notebookFormat, version: 1, notebook: {...notebook, shot: shotEntries}}, null, 2);
+  }
+
+  function decodeNotebook(text) {
+    function string(value) {
+      if (typeof value !== "string") throw new TypeError("Expected notebook text");
+      return value;
+    }
+    function choice(value, valid) {
+      if (!valid.includes(value)) throw new TypeError("Invalid notebook choice");
+      return value;
+    }
+    try {
+      const file = JSON.parse(text);
+      if (file.format !== notebookFormat || file.version !== 1) return null;
+      const from = file.notebook;
+      const notebook = createNotebook();
+      const codes = Object.keys(liquids);
+      notebook.waxNotes = string(from.waxNotes);
+      for (const code of codes) {
+        const {diameter, profile} = from.wax[code];
+        notebook.wax[code] = {diameter: string(diameter), profile: choice(profile, ["", "tall", "flat"])};
+        const entry = from.shot[code];
+        if (!Array.isArray(entry.trials) || !Array.isArray(entry.sources)) return null;
+        const trials = entry.trials.map((trial) => string(trial ?? ""));
+        const sources = trials.map((_, index) => choice(entry.sources[index] ?? null, [null, "event"]));
+        const studentMean = entry.studentMean === null ? null : string(entry.studentMean);
+        const computed = choice(entry.checked, [true, false]) ? summarizeShotTrials(trials) ?? {kind: "needed"} : null;
+        notebook.shot[code] = {trials, sources, studentMean, computed};
+      }
+      for (const tube of Object.keys(notebook.mixing)) {
+        const {layerCount, dyeLocation} = from.mixing[tube];
+        notebook.mixing[tube] = {layerCount: choice(layerCount, [null, 1, 2]), dyeLocation: string(dyeLocation)};
+        notebook.predictions.mixing[tube] = choice(from.predictions.mixing[tube], [null, 1, 2]);
+      }
+      notebook.predictions.spread = choice(from.predictions.spread, ["", ...codes]);
+      notebook.predictions.slowest = choice(from.predictions.slowest, ["", ...codes]);
+      const {revisit, evidence, explanation} = from.debrief;
+      if (!Array.isArray(evidence) || evidence.length !== 2) return null;
+      notebook.debrief = {revisit: string(revisit), evidence: evidence.map(({station, notes}) => ({
+        station: choice(station, ["", ...evidenceStations]), notes: string(notes)
+      })), explanation: string(explanation)};
+      return notebook;
+    } catch {
+      return null;
+    }
+  }
+
   function matchesMixRecipe(tube, number) {
     const recipe = mixing.recipesMl[number];
     const [first, second] = tube.aliquots;
@@ -436,7 +521,7 @@
     operateShot, canStartStopwatch, toggleStopwatch, playShotReplay, shotSnapshot, manualTimingIssue,
     parseShotReading, summarizeShotTrials, formatShotAverage, shotMeanMatches, mixStage, pourMixAliquot,
     stopperMixTube, invertMixTube, standMixTube, updateMixTube, mixElapsedMs, advanceMixTime, mixVolume,
-    mixBand, mixPouredBands, mixSettledBands, emptyMixTube};
+    mixBand, mixPouredBands, mixSettledBands, emptyMixTube, predictionResult, debriefStatus, encodeNotebook, decodeNotebook};
   if (typeof module === "object" && module.exports) module.exports = api;
   if (typeof document === "undefined") return;
   const root = document.querySelector('[data-zsa-activity="molar-mass-trap-lab"]');

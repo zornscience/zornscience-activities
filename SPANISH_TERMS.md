@@ -3777,3 +3777,6 @@ The virtual lab follows Style Kit 1.32 and the published Spanish procedure. The 
 | liquid pair / one layer or two? | par de líquidos / ¿Una capa o dos? |
 | streaks in a liquid / boundary between bands | vetas en un líquido / límite entre las franjas |
 | waste beaker | vaso de precipitados para residuos (vaso de residuos on the bench) |
+| prediction / debrief | predicción / reflexión final |
+| cite an observation | citar una observación |
+| saved notebook file | archivo del cuaderno guardado |

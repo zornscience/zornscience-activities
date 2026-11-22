@@ -73,6 +73,7 @@ body {
 .zsa-mmt-workspace {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(330px, 355px);
+  grid-template-rows: max-content 1fr;
   align-items: start;
   gap: 16px;
 }
@@ -392,7 +393,9 @@ body {
 
 .zsa-mmt-notebook input,
 .zsa-mmt-notebook select,
-.zsa-mmt-notebook textarea {
+.zsa-mmt-notebook textarea,
+.zsa-mmt-debrief select,
+.zsa-mmt-debrief textarea {
   width: 100%;
   min-width: 0;
   min-height: 44px;
@@ -404,7 +407,8 @@ body {
   font: inherit;
 }
 
-.zsa-mmt-notebook textarea {
+.zsa-mmt-notebook textarea,
+.zsa-mmt-debrief textarea {
   display: block;
   resize: vertical;
 }
@@ -444,9 +448,8 @@ body {
 }
 
 .zsa-mmt-notebook-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: grid;
+  justify-items: start;
   gap: 8px;
   margin-top: 9px;
 }
@@ -456,8 +459,112 @@ body {
   font-size: 12px;
 }
 
-.zsa-mmt-notebook-footer button {
-  flex-shrink: 0;
+.zsa-mmt-notebook-footer a.zsa-btn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: #173e54;
+}
+
+.zsa-mmt-notebook-actions,
+.zsa-mmt-debrief-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px;
+}
+
+.zsa-mmt-predictions {
+  margin-bottom: 8px;
+  border-bottom: 1px solid #d8d7ce;
+  font-size: 13px;
+}
+
+.zsa-mmt-predictions summary {
+  min-height: 44px;
+  padding-block: 11px;
+  color: #173e54;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.zsa-mmt-predictions label {
+  display: block;
+  margin-block: 6px 3px;
+  font-weight: 600;
+}
+
+.zsa-mmt-prediction-pairs,
+.zsa-mmt-debrief fieldset {
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  margin: 12px 0;
+}
+
+.zsa-mmt-prediction-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(105px, 46%);
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.zsa-mmt-prediction-result {
+  display: block;
+  margin-top: 3px;
+  font-size: 11px;
+  color: #385b6d;
+}
+
+.zsa-mmt-prediction-column,
+.zsa-mmt-prediction-result:empty,
+#notebook-file-status:empty,
+#open-notebook-status:empty {
+  display: none;
+}
+
+.zsa-mmt-debrief h2 {
+  margin: 0 0 8px;
+  font-size: 21px;
+}
+
+.zsa-mmt-evidence {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.zsa-mmt-debrief label,
+.zsa-mmt-debrief legend {
+  display: block;
+  margin-block: 8px 4px;
+  font-weight: 620;
+}
+
+.zsa-mmt-debrief-actions {
+  margin-top: 8px;
+}
+
+.zsa-mmt-debrief-actions p {
+  flex: 1 1 215px;
+  margin: 0;
+  font-size: 13px;
+  color: #173e54;
+}
+
+#notebook-file {
+  display: block;
+  width: 100%;
+  min-height: 44px;
+  margin-block: 4px 12px;
+  font: inherit;
+}
+
+#notebook-file::file-selector-button {
+  min-height: 44px;
+  margin-inline-end: 7px;
+  font: inherit;
 }
 
 .zsa-mmt-model {
@@ -837,7 +944,7 @@ body {
   width: 32%;
 }
 
-.zsa-mmt-notebook .zsa-mmt-mix-table th:last-child {
+.zsa-mmt-notebook .zsa-mmt-mix-table th:nth-child(4) {
   width: 40%;
 }
 
@@ -849,9 +956,17 @@ body {
   white-space: nowrap;
 }
 
+@media (min-width: 891px) {
+  .zsa-mmt-notebook {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+}
+
 @media (max-width: 890px) {
   .zsa-mmt-workspace {
     grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto;
   }
 
   .zsa-mmt-notebook {
@@ -929,6 +1044,10 @@ body {
   .zsa-mmt-measure label {
     grid-column: 1 / -1;
   }
+
+  .zsa-mmt-evidence {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media print {
@@ -946,6 +1065,11 @@ body {
   .zsa-mmt .zsa-mmt-notebook-help,
   .zsa-mmt .zsa-mmt-notebook-footer,
   .zsa-mmt-mix-pair-codes,
+  .zsa-mmt-predictions,
+  .zsa-mmt-prediction-result,
+  .zsa-mmt-debrief-actions,
+  .zsa-mmt-debrief:not([data-has-responses="true"]),
+  .zsa-mmt-debrief :is(select, textarea),
   .zsa-mmt-notebook :is(input, select, textarea, button) {
     display: none !important;
   }
@@ -983,11 +1107,34 @@ body {
     background: #fff;
   }
 
-  .zsa-mmt-notebook {
+  .zsa-mmt-notebook,
+  .zsa-mmt-debrief {
     max-width: none;
     padding: 0;
     border: 0;
     box-shadow: none;
+  }
+
+  .zsa-mmt-debrief h2 {
+    break-after: avoid;
+  }
+
+  .zsa-mmt-debrief {
+    margin-top: 12px;
+  }
+
+  .zsa-mmt-evidence {
+    display: block;
+  }
+
+  .zsa-mmt-printed-response {
+    margin: 2px 0 8px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+  }
+
+  .zsa-mmt-printed-response:empty {
+    display: none;
   }
 
   .zsa-mmt-notebook th,
@@ -997,15 +1144,20 @@ body {
   }
 
   .zsa-mmt-notebook .zsa-mmt-mix-table th:nth-child(2) {
-    width: 27%;
+    width: 25%;
   }
 
   .zsa-mmt-notebook .zsa-mmt-mix-table th:nth-child(3) {
-    width: 19%;
+    width: 18%;
   }
 
-  .zsa-mmt-notebook .zsa-mmt-mix-table th:last-child {
-    width: 42%;
+  .zsa-mmt-notebook .zsa-mmt-mix-table th:nth-child(4) {
+    width: 31%;
+  }
+
+  .zsa-mmt-notebook .zsa-mmt-mix-table .zsa-mmt-prediction-column {
+    display: table-cell;
+    width: 14%;
   }
 
   .zsa-mmt-mix-pair-names {

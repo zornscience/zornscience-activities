@@ -493,6 +493,18 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/metals-lab/"/>
   </url>
   <url>
+    <loc>https://activities.zornscience.org/molar-mass-trap-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/molar-mass-trap-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/molar-mass-trap-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/molar-mass-trap-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/molar-mass-trap-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/molar-mass-trap-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/molar-mass-trap-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/molar-mass-trap-lab/"/>
+  </url>
+  <url>
     <loc>https://activities.zornscience.org/net-ionic-lab/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/net-ionic-lab/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/net-ionic-lab/?lang=es"/>

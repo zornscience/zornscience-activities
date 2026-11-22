@@ -1,12 +1,14 @@
 # The Molar Mass Trap Lab
 
-Version: 0.3.1
+Version: 1.0.0
 
-A virtual investigation for Chemistry and Honors Chemistry Unit 4. This development build has the wax-paper investigation, the steel shot race and the five-tube mixing rack.
+A virtual investigation for Chemistry and Honors Chemistry Unit 4. The classroom release candidate includes the wax-paper investigation, the steel shot race, the five-tube mixing rack, and an evidence-based debrief.
 
 ## Run the bench
 
-From the repository root, run `npm run serve` and open `http://127.0.0.1:8000/molar-mass-trap-lab/`. Add `?lang=es` for Mexican Spanish. The notebook holds editable measurements, shape choices and notes until the page is reloaded or closed. **Print notebook** sends all three tests to the browser's print or PDF dialog. Each station can empty or reset the selected apparatus. **Start fresh** clears the bench and notebook after confirmation.
+From the repository root, run `npm run serve` and open `http://127.0.0.1:8000/molar-mass-trap-lab/`. Add `?lang=es` for Mexican Spanish. The bench is ready on load. Each station can empty or reset its selected apparatus.
+
+The notebook keeps editable evidence, predictions and debrief responses in the session. **Save notebook file** downloads a local copy, and **Open notebook file** can reopen those entries after a reload. The file contains notebook work. The apparatus starts fresh on a reload. **Print notebook** includes the recorded predictions, all three tests, checked averages, and the written debrief. **Start fresh** clears the session after confirmation.
 
 ## Measurement model
 
@@ -62,6 +64,8 @@ The recipes and bottom-to-top appearances come from the handoff and teacher guid
 
 ## Classroom release
 
-The public catalog listing and SEO entries belong to the release candidate, after the full classroom walkthrough in the handoff. See the physical lab procedure for the source setup. [English procedure](https://zornscience.org/teaching/physical-labs/molar-mass-trap-imf-lab/) · [Spanish procedure](https://zornscience.org/es/teaching/physical-labs/molar-mass-trap-imf-lab/)
+Students can predict spread, fall time or the number of layers before running the tests. The mixing comparison uses their entered prediction and observation. For the debrief, they revisit a prediction, cite notebook evidence from two different tests, and explain how water can form a tall bead while the shot falls through it fastest. The self-check looks for a response and recorded evidence from both tests.
+
+The browser walkthrough covers all six station orders and a complete Spanish-to-English route before the directory listing and search metadata are added. See the physical lab procedure for the source setup. [English procedure](https://zornscience.org/teaching/physical-labs/molar-mass-trap-imf-lab/) · [Spanish procedure](https://zornscience.org/es/teaching/physical-labs/molar-mass-trap-imf-lab/)
 
 ZornScience | CC BY-NC-SA 4.0

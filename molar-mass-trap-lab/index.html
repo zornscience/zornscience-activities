@@ -4,28 +4,33 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-  <meta name="robots" content="noindex, nofollow">
-  <meta name="zsa-version" content="0.3.1">
+  <meta name="zsa-version" content="1.0.0">
   <title>The Molar Mass Trap Lab | ZornScience</title>
+<meta name="description" content="Compare how four liquids spread on wax paper, time a falling steel shot, and mix liquid pairs to explain the Molar Mass Trap with evidence." data-zsa-es="Compara cómo se extienden cuatro líquidos en papel encerado, mide la caída de un perdigón y mezcla pares para explicar la trampa de la masa molar.">
+<link rel="canonical" href="https://activities.zornscience.org/molar-mass-trap-lab/">
+<link rel="alternate" hreflang="en" href="https://activities.zornscience.org/molar-mass-trap-lab/">
+<link rel="alternate" hreflang="es" href="https://activities.zornscience.org/molar-mass-trap-lab/?lang=es">
+<link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/molar-mass-trap-lab/">
   <link rel="icon" href="../favicon.png" type="image/png">
-  <link rel="stylesheet" href="../shared/zsa-base.css?v=0.3.1">
-  <link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=0.3.1">
-  <link rel="stylesheet" href="../shared/zsa-header.css?v=0.3.1">
-  <link rel="stylesheet" href="lab.css?v=0.3.1">
-  <script src="../shared/zsa-embed.js?v=0.3.1" defer></script>
-  <script src="../shared/zsa-i18n.js?v=0.3.1" defer></script>
-  <script src="model.js?v=0.3.1" defer></script>
-  <script src="data.js?v=0.3.1" defer></script>
-  <script src="shot.js?v=0.3.1" defer></script>
-  <script src="mixing.js?v=0.3.1" defer></script>
-  <script src="lab.js?v=0.3.1" defer></script>
-<link rel="stylesheet" href="../shared/zsa-about.css?v=0.3.1"><script src="../shared/zsa-about.js?v=0.3.1" defer></script></head>
+  <link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+  <link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=1.0.0">
+  <link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.0">
+  <link rel="stylesheet" href="lab.css?v=1.0.0">
+  <script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+  <script src="../shared/zsa-i18n.js?v=1.0.0" defer></script>
+  <script src="model.js?v=1.0.0" defer></script>
+  <script src="data.js?v=1.0.0" defer></script>
+  <script src="shot.js?v=1.0.0" defer></script>
+  <script src="mixing.js?v=1.0.0" defer></script>
+  <script src="notebook.js?v=1.0.0" defer></script>
+  <script src="lab.js?v=1.0.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.0.0"><script src="../shared/zsa-about.js?v=1.0.0" defer></script></head>
 <body>
 <main class="zsa zsa-mmt" data-zsa-activity="molar-mass-trap-lab">
   <header data-zsa-header class="header">
     <div data-zsa-header-row>
       <div data-zsa-header-identity class="identity">
-        <a data-zsa-header-brand class="brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../ionic-reactions/zornscience-logo.png?v=0.3.1" width="34" height="33" alt=""></a>
+        <a data-zsa-header-brand class="brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../ionic-reactions/zornscience-logo.png?v=1.0.0" width="34" height="33" alt=""></a>
         <h1>The Molar Mass Trap Lab</h1>
       </div>
       <nav data-zsa-header-tools aria-label="Activity tools">
@@ -281,6 +286,22 @@
         <h2 id="notebook-title">Lab notebook</h2>
         <button id="print-notebook" type="button" class="zsa-btn zsa-mmt-quiet">Print notebook</button>
       </div>
+      <details id="predictions" class="zsa-mmt-predictions">
+        <summary>Predictions</summary>
+        <p class="zsa-mmt-notebook-help">Make a prediction for any test before you run it.</p>
+        <label for="predict-spread">Which liquid will spread farthest on wax paper?</label>
+        <select id="predict-spread"></select>
+        <label for="predict-slowest">Which liquid will slow the steel shot most?</label>
+        <select id="predict-slowest"></select>
+        <fieldset class="zsa-mmt-prediction-pairs">
+          <legend>Predict one layer or two for each pair.</legend>
+          <div id="predict-pairs"></div>
+        </fieldset>
+      </details>
+      <section id="print-predictions" class="zsa-mmt-print-only" aria-labelledby="print-predictions-title" hidden>
+        <h3 id="print-predictions-title">Predictions</h3>
+        <ul id="print-prediction-entries"></ul>
+      </section>
       <div class="zsa-mmt-notebook-tests">
         <section id="mix-notebook" aria-labelledby="mix-notebook-title" hidden>
           <h3 id="mix-notebook-title">Test 3</h3>
@@ -291,6 +312,7 @@
               <th scope="col">Pair</th>
               <th id="mix-layer-heading" scope="col">One layer or two?</th>
               <th id="mix-dye-heading" scope="col">Where did the dye go?</th>
+              <th id="mix-prediction-heading" class="zsa-mmt-prediction-column" scope="col">Prediction correct?</th>
             </tr></thead>
             <tbody id="mix-entries"></tbody>
           </table>
@@ -326,9 +348,61 @@
         </section>
       </div>
       <div class="zsa-mmt-notebook-footer">
-        <p>Entries stay on this page until you reload or close it.</p>
-        <button id="restart-open" type="button" class="zsa-btn zsa-mmt-quiet" aria-haspopup="dialog" aria-controls="restart">Start fresh</button>
+        <a class="zsa-btn zsa-mmt-quiet" href="#debrief-title">Go to debrief</a>
+        <p>Save a notebook file on this device to reopen your entries later.</p>
+        <div class="zsa-mmt-notebook-actions">
+          <button id="save-notebook" type="button" class="zsa-btn zsa-mmt-quiet">Save notebook file</button>
+          <button id="open-notebook-open" type="button" class="zsa-btn zsa-mmt-quiet" aria-haspopup="dialog" aria-controls="open-notebook">Open notebook file</button>
+          <button id="restart-open" type="button" class="zsa-btn zsa-mmt-quiet" aria-haspopup="dialog" aria-controls="restart">Start fresh</button>
+        </div>
+        <p id="notebook-file-status" role="status"></p>
       </div>
+    </section>
+
+    <section id="debrief" class="zsa-mmt-panel zsa-mmt-debrief" aria-labelledby="debrief-title">
+      <h2 id="debrief-title" tabindex="-1">Debrief</h2>
+      <label for="debrief-revisit">Revisit one prediction. What did you expect, and what did you observe?</label>
+      <textarea id="debrief-revisit" rows="3" spellcheck="false"></textarea>
+      <p id="debrief-revisit-print" class="zsa-mmt-print-only zsa-mmt-printed-response"></p>
+
+      <fieldset>
+        <legend>Cite observations from two different tests.</legend>
+        <div class="zsa-mmt-evidence">
+          <div>
+            <label for="debrief-test-1">First test</label>
+            <select id="debrief-test-1"></select>
+            <p id="debrief-test-1-print" class="zsa-mmt-print-only"></p>
+            <label for="debrief-evidence-1">First observation from your notebook</label>
+            <textarea id="debrief-evidence-1" rows="3" spellcheck="false"></textarea>
+            <p id="debrief-evidence-1-print" class="zsa-mmt-print-only zsa-mmt-printed-response"></p>
+          </div>
+          <div>
+            <label for="debrief-test-2">Second test</label>
+            <select id="debrief-test-2"></select>
+            <p id="debrief-test-2-print" class="zsa-mmt-print-only"></p>
+            <label for="debrief-evidence-2">Second observation from your notebook</label>
+            <textarea id="debrief-evidence-2" rows="3" spellcheck="false"></textarea>
+            <p id="debrief-evidence-2-print" class="zsa-mmt-print-only zsa-mmt-printed-response"></p>
+          </div>
+        </div>
+      </fieldset>
+
+      <label for="debrief-explanation">Water made a tall bead, yet the shot fell through water fastest. How can both observations be true?</label>
+      <textarea id="debrief-explanation" rows="5" spellcheck="false"></textarea>
+      <p id="debrief-explanation-print" class="zsa-mmt-print-only zsa-mmt-printed-response"></p>
+      <div class="zsa-mmt-debrief-actions">
+        <button id="check-debrief" type="button" class="zsa-btn">Check my responses</button>
+        <p id="debrief-status" role="status"></p>
+      </div>
+
+      <details id="reasoning-notes" class="zsa-mmt-model">
+        <summary>Ideas to check in your explanation</summary>
+        <p>On wax paper, spreading depends on cohesion within the liquid and adhesion to the wax. We compared equal volumes on the same surface.</p>
+        <p>Shot time compares resistance to flow using the same shot and tube at the same temperature. Density and drag also affect fall time.</p>
+        <p>All four liquids have London dispersion forces. Water, glycerin and 1-octanol can also form hydrogen bonds. Glycerin has three OH groups. 1-octanol has one OH group and an eight-carbon chain.</p>
+        <p>Mineral oil is a mixture of hydrocarbons. CH₃(CH₂)ₙCH₃ represents a straight-chain component. Different chain lengths give different values of n.</p>
+        <p>Two layers can coexist with limited mixing at these amounts. A density difference determines which layer sits above the other. The dyes make those layers easier to see.</p>
+      </details>
     </section>
   </div>
 
@@ -373,6 +447,14 @@
     <div class="zsa-header-dialog-heading"><h2 id="restart-title">Start fresh?</h2><button class="zsa-btn zsa-mmt-close" type="button" data-close="restart" aria-label="Close restart dialog">×</button></div>
     <p id="restart-warning">This clears the bench and your notebook entries.</p>
     <div class="zsa-mmt-dialog-actions"><button class="zsa-btn" type="button" data-close="restart" autofocus>Cancel</button><button id="restart-confirm" class="zsa-btn zsa-mmt-primary" type="button">Clear bench and notebook</button></div>
+  </dialog>
+  <dialog id="open-notebook" class="zsa-header-dialog" aria-labelledby="open-notebook-title" aria-describedby="open-notebook-note">
+    <div class="zsa-header-dialog-heading"><h2 id="open-notebook-title">Open a saved notebook</h2><button class="zsa-btn zsa-mmt-close" type="button" data-close="open-notebook" aria-label="Close notebook dialog" autofocus>×</button></div>
+    <p id="open-notebook-note">Opening a file replaces your current notebook entries. The file contains your observations and responses.</p>
+    <label for="notebook-file">Choose a notebook file</label>
+    <input id="notebook-file" type="file" accept=".json,application/json">
+    <p id="open-notebook-status" role="status"></p>
+    <div class="zsa-mmt-dialog-actions"><button class="zsa-btn" type="button" data-close="open-notebook">Cancel</button><button id="open-notebook-confirm" class="zsa-btn zsa-mmt-primary" type="button" disabled>Open file</button></div>
   </dialog>
 </main>
 </body>

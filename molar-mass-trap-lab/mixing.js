@@ -124,21 +124,32 @@
       dye.setAttribute("aria-labelledby", "mix-dye-heading " + rowHeading.id);
       const layersPrint = element("span", "zsa-mmt-print-only");
       const dyePrint = element("span", "zsa-mmt-print-only zsa-mmt-print-dye");
+      const prediction = element("span", "zsa-mmt-prediction-result");
+      prediction.setAttribute("role", "status");
+      const predictionPrint = element("td", "zsa-mmt-prediction-column");
       const layersCell = element("td");
       const dyeCell = element("td");
-      layersCell.append(layers, layersPrint);
+      layersCell.append(layers, layersPrint, prediction);
       dyeCell.append(dye, dyePrint);
-      row.append(rowHeading, pair, layersCell, dyeCell);
+      row.append(rowHeading, pair, layersCell, dyeCell, predictionPrint);
       $("mix-entries").append(row);
-      fields[number] = {name, pairNames, layers, dye, layersPrint, dyePrint};
+      fields[number] = {name, pairNames, layers, dye, layersPrint, dyePrint, prediction, predictionPrint};
       layers.addEventListener("change", () => {
         getState().notebook.mixing[number].layerCount = layers.value ? Number(layers.value) : null;
         setText(layersPrint, layers.value ? layers.selectedOptions[0].textContent : "");
+        renderPrediction(number);
       });
       dye.addEventListener("input", () => {
         getState().notebook.mixing[number].dyeLocation = dye.value;
         setText(dyePrint, dye.value);
       });
+    }
+
+    function renderPrediction(number) {
+      const result = model.predictionResult(getState().notebook, number);
+      const {prediction, predictionPrint} = fields[number];
+      setText(prediction, result === null ? "" : t(result ? "Prediction matched" : "Prediction differed"));
+      setText(predictionPrint, result === null ? "" : t(result ? "Yes" : "No"));
     }
 
     function renderNotebook() {
@@ -152,6 +163,7 @@
         dye.value = entry.dyeLocation;
         setText(layersPrint, layers.value ? layers.selectedOptions[0].textContent : "");
         setText(dyePrint, entry.dyeLocation);
+        renderPrediction(number);
       }
       setText(liquid.options[0], t("Choose liquid"));
       for (const item of Array.from(liquid.options).slice(1)) setText(item, liquidLabel(item.value));
@@ -417,10 +429,9 @@
       requestedReading = false;
       refresh();
     });
-    return {paint, renderNotebook, reset() {
+    return {paint, renderNotebook, renderPrediction, reset() {
       liquid.value = amount.value = "";
       requestedReading = false;
-      renderNotebook();
     }};
   }
 }());
