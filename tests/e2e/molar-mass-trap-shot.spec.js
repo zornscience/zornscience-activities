@@ -79,10 +79,10 @@ test("water and glycerin share event timing at different frame cadences and repl
       await expect(clock(page)).toBeFocused();
       await page.clock.runFor(flight);
     } else {
-      // Partway through the water fall, the event timer still shows no sub-threshold digits.
-      await page.clock.runFor(460 + 150);
-      await expect(clock(page)).toHaveText("<0.5 s");
-      await page.clock.fastForward(flight + 540 - 610);
+      // The running water timer describes its state. The censored reading appears at first contact.
+      await page.clock.runFor(460 + 100);
+      await expect(clock(page)).toHaveText("Timing");
+      await page.clock.fastForward(flight + 540 - 560);
     }
     await expect(clock(page)).toHaveText(time + " s");
     await expect(action).toHaveText("Use magnet");
@@ -99,7 +99,15 @@ test("water and glycerin share event timing at different frame cadences and repl
     await page.clock.fastForward(Math.max(flight, 1400) + 80);
     await expect(instruction).toHaveText(key === "W" ? /The original fall took less than 0\.5 s/ : /First contact came 6\.40 s/);
     await expect(clock(page)).toHaveText(time + " s");
-    await expect(card(page, key).getByRole("textbox", {name: "Fall time, trial 2 (s)"})).toHaveValue("");
+    const second = card(page, key).getByRole("textbox", {name: "Fall time, trial 2 (s)"});
+    await expect(second).toHaveValue("");
+    if (key === "W") {
+      await magnet(page);
+      await action.click();
+      await page.clock.fastForward(flight + 210);
+      await magnet(page);
+      await expect(second).toHaveValue("<0.5");
+    }
   }
   expect(errors).toEqual([]);
 });
@@ -350,7 +358,7 @@ test("all four averages stay visible alongside the wax notebook and respect the 
   await expect(extra(page, "G")).toContainText("Your average matches.");
   // In print, the student's own average and the lab's average stay separate, and a blank student average stays blank.
   await page.emulateMedia({media: "print"});
-  await expect(glycerin.locator("td").last()).toContainText("6.4");
+  await expect(glycerin.locator("td").last().getByText("Your average: 6.4", {exact: true})).toBeVisible();
   await expect(glycerin.locator("td").last()).toContainText("Lab's average: 6.42 s");
   await expect(card(page, "O").locator("td").last()).toHaveText("Lab's average: 1.00 s");
   await page.emulateMedia({media: "screen"});

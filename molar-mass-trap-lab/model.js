@@ -378,6 +378,19 @@
     return JSON.stringify({format: notebookFormat, version: 1, notebook: {...notebook, shot: shotEntries}}, null, 2);
   }
 
+  function notebookRevision(notebook) {
+    // Empty shot fields can leave placeholders even when a student has erased all their work.
+    const shot = Object.fromEntries(Object.entries(notebook.shot).map(([code, entry]) => {
+      const end = entry.trials.findLastIndex((reading) => reading?.trim()) + 1;
+      const trials = Array.from(entry.trials.slice(0, end), (reading) => reading?.trim() ? reading : "");
+      const sources = trials.map((reading, index) => reading ? entry.sources[index] ?? null : null);
+      const studentMean = entry.studentMean?.trim() ? entry.studentMean : null;
+      const checkedEmpty = entry.computed?.kind === "needed" && !end && !studentMean;
+      return [code, {trials, sources, studentMean, computed: checkedEmpty ? null : entry.computed}];
+    }));
+    return encodeNotebook({...notebook, shot});
+  }
+
   function decodeNotebook(text) {
     function string(value) {
       if (typeof value !== "string") throw new TypeError("Expected notebook text");
@@ -521,7 +534,7 @@
     operateShot, canStartStopwatch, toggleStopwatch, playShotReplay, shotSnapshot, manualTimingIssue,
     parseShotReading, summarizeShotTrials, formatShotAverage, shotMeanMatches, mixStage, pourMixAliquot,
     stopperMixTube, invertMixTube, standMixTube, updateMixTube, mixElapsedMs, advanceMixTime, mixVolume,
-    mixBand, mixPouredBands, mixSettledBands, emptyMixTube, predictionResult, debriefStatus, encodeNotebook, decodeNotebook};
+    mixBand, mixPouredBands, mixSettledBands, emptyMixTube, predictionResult, debriefStatus, encodeNotebook, notebookRevision, decodeNotebook};
   if (typeof module === "object" && module.exports) module.exports = api;
   if (typeof document === "undefined") return;
   const root = document.querySelector('[data-zsa-activity="molar-mass-trap-lab"]');

@@ -42,6 +42,27 @@ test("only a valid notebook can replace live work", () => {
   assert.equal(model.decodeNotebook(JSON.stringify(file)), null);
 });
 
+test("erasing a shot field restores the saved revision without dropping raw readings from a file", () => {
+  const {notebook} = model.createState();
+  const blank = model.notebookRevision(notebook);
+  notebook.shot.W.trials = ["", "  "];
+  notebook.shot.W.sources = [null, null];
+  notebook.shot.W.studentMean = "";
+  notebook.shot.W.computed = {kind: "needed"};
+  assert.equal(model.notebookRevision(notebook), blank);
+  assert.deepEqual(model.decodeNotebook(model.encodeNotebook(notebook)).shot.W.trials, ["", "  "]);
+
+  notebook.shot.G.trials = ["6.40"];
+  const saved = model.notebookRevision(notebook);
+  notebook.shot.G.trials.push("6.38");
+  assert.notEqual(model.notebookRevision(notebook), saved);
+  notebook.shot.G.trials[1] = "";
+  notebook.shot.G.sources[1] = null;
+  assert.equal(model.notebookRevision(notebook), saved);
+  notebook.shot.G.sources[0] = "event";
+  assert.notEqual(model.notebookRevision(notebook), saved);
+});
+
 test("the debrief asks for two recorded tests and checks that the response is filled in", () => {
   const {notebook} = model.createState();
   const {debrief} = notebook;

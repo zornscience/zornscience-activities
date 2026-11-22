@@ -1,6 +1,6 @@
 # Molar Mass Trap Lab checks
 
-Version: 1.0.0
+Version: 1.0.1
 
 ## Browser and model checks
 
@@ -10,8 +10,8 @@ Version: 1.0.0
 - `npx playwright test tests/e2e/molar-mass-trap-shot.spec.js` covers water and glycerin replays, the slow-motion cue and preservation of manual measurements, short and slow falls, repeated clicks, the magnet, readings saved by the magnet or a reset, manual retries, tab visibility and station switching, censored readings, Spanish keyboard controls, reduced motion, print, and axe at laptop and phone widths.
 - `node --test tests/unit/molar-mass-trap-mixing.test.js` checks aliquot validation, independence, settled band volumes and ordering, the four-to-five inversion boundary, the 60 s clock, and cleanup.
 - `npx playwright test tests/e2e/molar-mass-trap-mixing.spec.js` checks the density order before inversion, all five settled mixtures, fill heights, band colors, the air surface and internal boundary, and the clear band's edge highlights. Clicks at one position every 100 ms stop at five inversions or upright placement until a separate control is used. The suite also checks early descriptions, station and tube changes, both ways to finish settling, and refilling without losing notebook entries.
-- `node --test tests/unit/molar-mass-trap-notebook.test.js` checks notebook recovery, recomputation of saved shot summaries, rejection of unrelated files, and the debrief self-check.
-- `npx playwright test tests/e2e/molar-mass-trap-release.spec.js` covers all six station orders, the complete interleaved classroom route, the leave-page prompt for unsaved entries, bilingual directory navigation, and Spanish accessibility with the predictions open and the file dialog active.
+- `node --test tests/unit/molar-mass-trap-notebook.test.js` checks notebook recovery, raw entries and recomputed summaries, revision comparison after erasing a shot field, rejection of unrelated files, and the debrief self-check.
+- `npx playwright test tests/e2e/molar-mass-trap-release.spec.js` covers all six station orders, the complete interleaved classroom route, the leave-page prompt for unsaved entries, bilingual directory navigation, and Spanish accessibility. It checks that a failed download keeps the leave-page warning and that a reverted edit leaves saved work clean.
 - `npx playwright test tests/e2e/activity-headers.spec.js --grep molar-mass-trap-lab` checks the shared header and canonical English Share link. The lab spec checks the complete Spanish URL.
 - The shared About and lab accessibility suites discover the page. The settled controls were also audited with axe-core in English at laptop width and in Mexican Spanish at 360 px.
 - Chromium's 200% browser zoom reduced the 1366 px viewport to 683 CSS px without horizontal scrolling. The ruler's zero matched the left edge of the clear octanol puddle and the right edge read 20 mm. A separate 360 px portrait check kept the same alignment.
@@ -22,9 +22,9 @@ Version: 1.0.0
 
 ## Classroom walkthrough
 
-Before the directory changes, the complete browser route started with Spanish tube 3, measured water on wax paper during settling, and recorded the layers after one simulated minute. The student recorded a manual `<0.5` s water reading and a 0.27 s instrument reading, switched to English, finished the other samples, revised the tube 3 layer count, disposed of all five mixtures and completed the debrief. The test blocks browser storage and uses the Playwright clock to move through the same elapsed-time model as the bench.
+The complete browser route starts with Spanish tube 3, measures water on wax paper during settling, and records the layers after one simulated minute. The student records two `<0.5` water entries using manual and event timing, switches to English, finishes the other samples, enters a glycerin average, revises the tube 3 layer count, disposes of all five mixtures and completes the debrief. The test blocks browser storage and uses the Playwright clock to move through the same elapsed-time model as the bench.
 
-The complete English and Mexican Spanish samples print on two Letter pages. The first contains the predictions, four diameters and profiles, eight shot readings with four mean or bound summaries, and five mixture observations. The second contains the debrief and ZornScience license. The downloaded notebook reopened after reload with its evidence and checked summaries. An unrelated JSON file left the active notebook intact, and Start fresh cleared the session. At Chromium's 200% zoom the bench, notebook and debrief fit within 683 CSS px.
+The complete English and Mexican Spanish samples print on two Letter pages. The first contains the predictions, four diameters and profiles, eight shot readings, labeled student and lab averages, and five mixture observations. The second contains the debrief and ZornScience license. The downloaded notebook reopened after reload with its evidence and checked summaries. An unrelated JSON file left the active notebook intact, and Start fresh cleared the session. At Chromium's 200% zoom the bench, notebook and debrief fit within 683 CSS px. The review follow-up passed 747 unit tests and 44 focused browser checks.
 
 ## Low-end emulation
 
@@ -55,16 +55,16 @@ Each viewport had three cold loads and five inversions of tube 3. Readiness incl
 | Inversion animation rate | 60 fps | 58.6 to 60 fps |
 | App animation callbacks in a one-second idle sample | 0 | 0 |
 
-### Classroom candidate, 1.0.0
+### Classroom candidate, 1.0.1
 
 Each viewport had three cold loads, five inversions of tube 3 and one glycerin event run. Readiness includes opening the mixing station.
 
 | Metric | 1366 × 768 CSS px at 1 DPR | 125% display approximation (1093 × 614 CSS px at 1.25 DPR) |
 | --- | ---: | ---: |
-| Compressed response bodies, max | 217,503 bytes | 217,503 bytes |
-| Usable bench | 816 to 926 ms | 722 to 789 ms |
-| Inversion button response | 6 to 10 ms | 8 to 11 ms |
-| Upright shot button response | 11 ms | 9 ms |
+| Compressed response bodies, max | 218,669 bytes | 218,669 bytes |
+| Usable bench | 770 to 1,042 ms | 741 to 916 ms |
+| Inversion button response | 7 to 11 ms | 7 to 10 ms |
+| Upright shot button response | 9 ms | 12 ms |
 | Inversion animation rate | 60 fps | 60 fps |
 | Glycerin animation rate | 59.9 fps | 60 fps |
 | Glycerin event time | 6.40 s | 6.40 s |
@@ -80,7 +80,7 @@ All measured resources were same-origin. The background-tab case uses Playwright
 - [Mexican Spanish at 360 px, manual water replay and two below-threshold trials](../.github/screenshots/molar-mass-trap-shot-es-360.png)
 - [English desktop, five settled mixtures and editable layer observations](../.github/screenshots/molar-mass-trap-mixing-desktop.png)
 - [Mexican Spanish at 360 px, tube 3 and observations retained from wax paper](../.github/screenshots/molar-mass-trap-mixing-es-360.png)
-- [English release candidate with a complete mixing notebook and debrief](../.github/screenshots/molar-mass-trap-release-desktop.png)
+- [English release candidate with two below-threshold water readings, lab averages and the debrief](../.github/screenshots/molar-mass-trap-release-desktop.png)
 - [Mexican Spanish debrief at 360 px with evidence from two tests](../.github/screenshots/molar-mass-trap-release-es-360.png)
 
 The classroom walkthrough and print check passed before the directory entry and search metadata were added to the release candidate.

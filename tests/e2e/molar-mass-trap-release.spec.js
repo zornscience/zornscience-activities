@@ -150,6 +150,7 @@ test("the entire interleaved classroom walkthrough prints and reopens with brows
   await page.getByRole("link", {name: "EN English"}).click();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   for (const code of ["M", "O", "G"]) await timeShot(page, code);
+  await shotRow(page, "G").getByRole("textbox", {name: "Average fall time (s)"}).fill("6.4");
   await page.locator("#shot-check-averages").click();
   const means = ["<0.5 s", "6.40 s", "0.98 s", "2.25 s"].map((value) => "Lab's average: " + value);
   await expect(page.locator("#shot-entries .zsa-mmt-shot-result")).toHaveText(means);
@@ -199,6 +200,7 @@ test("the entire interleaved classroom walkthrough prints and reopens with brows
     await expect(values.nth(1)).toHaveText(code === "W" ? "<0.5" : time);
   }
   await expect(page.locator("#shot-entries .zsa-mmt-shot-result")).toHaveText(means);
+  await expect(shotRow(page, "G").getByText("Your average: 6.4", {exact: true})).toBeVisible();
   for (const [number, {layers, dye}] of Object.entries(mixes)) {
     await expect(mixRow(page, number).getByText(layers === "1" ? "One layer" : "Two layers", {exact: true}).last()).toBeVisible();
     await expect(mixRow(page, number).getByText(dye, {exact: true})).toBeVisible();
@@ -222,7 +224,7 @@ test("the entire interleaved classroom walkthrough prints and reopens with brows
   await expect(page.locator("#debrief-explanation")).toHaveValue(explanation);
   const [download] = await Promise.all([page.waitForEvent("download"), page.locator("#save-notebook").click()]);
   // The local date and time keep files apart on a shared laptop.
-  expect(download.suggestedFilename()).toMatch(/^molar-mass-trap-notebook-\d{4}-\d{2}-\d{2}-\d{4}\.json$/);
+  expect(download.suggestedFilename()).toMatch(/^molar-mass-trap-notebook-\d{4}-\d{2}-\d{2}-\d{6}\.json$/);
   const saved = testInfo.outputPath("classroom-notebook.json");
   await download.saveAs(saved);
   await page.reload();
@@ -251,6 +253,9 @@ test("Spanish predictions, debrief and notebook dialog fit and pass axe at phone
   await page.locator("#predictions summary").click();
   await expect(page.getByLabel("¿Qué líquido se extenderá más sobre el papel encerado?")).toBeVisible();
   await expect(page.getByRole("heading", {name: "Reflexión final"})).toBeVisible();
+  await page.locator("#reasoning-notes summary").click();
+  await expect(page.locator("#reasoning-notes sub")).toHaveText(["3", "2", "n", "3"]);
+  await expect(page.locator("#reasoning-notes")).toContainText("El aceite mineral es una mezcla de hidrocarburos.");
   const axe = fs.readFileSync(require.resolve("axe-core/axe.min.js"), "utf8");
   await page.evaluate(axe);
   async function audit() {
@@ -302,9 +307,26 @@ test("leaving the page asks first only while notebook entries are unsaved", asyn
   expect(prompts).toEqual(["beforeunload"]);
   await expect(diameter()).toHaveValue("10");
 
-  await Promise.all([page.waitForEvent("download"), page.locator("#save-notebook").click()]);
+  await page.evaluate(() => {
+    const create = URL.createObjectURL;
+    URL.createObjectURL = () => {
+      URL.createObjectURL = create;
+      throw new Error("Download preparation blocked");
+    };
+  });
+  await page.locator("#save-notebook").click();
+  await expect(page.locator("#notebook-file-status")).toHaveText(/The notebook file could not be prepared/);
   await reload();
-  expect(prompts).toEqual(["beforeunload"]);
+  expect(prompts).toEqual(["beforeunload", "beforeunload"]);
+  await expect(diameter()).toHaveValue("10");
+
+  await Promise.all([page.waitForEvent("download"), page.locator("#save-notebook").click()]);
+  const shot = shotRow(page, "G").getByRole("textbox", {name: "Fall time, trial 1 (s)"});
+  await station(page, "shot").click();
+  await shot.fill("6.4");
+  await shot.fill("");
+  await reload();
+  expect(prompts).toEqual(["beforeunload", "beforeunload"]);
   await expect(diameter()).toHaveValue("");
 
   await diameter().click();
@@ -312,5 +334,5 @@ test("leaving the page asks first only while notebook entries are unsaved", asyn
   await page.locator("#restart-open").click();
   await page.locator("#restart-confirm").click();
   await reload();
-  expect(prompts).toEqual(["beforeunload"]);
+  expect(prompts).toEqual(["beforeunload", "beforeunload"]);
 });

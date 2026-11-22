@@ -1,6 +1,6 @@
 # The Molar Mass Trap Lab
 
-Version: 1.0.0
+Version: 1.0.1
 
 A virtual investigation for Chemistry and Honors Chemistry Unit 4. The classroom release candidate includes the wax-paper investigation, the steel shot race, the five-tube mixing rack, and an evidence-based debrief.
 
@@ -8,7 +8,9 @@ A virtual investigation for Chemistry and Honors Chemistry Unit 4. The classroom
 
 From the repository root, run `npm run serve` and open `http://127.0.0.1:8000/molar-mass-trap-lab/`. Add `?lang=es` for Mexican Spanish. The bench is ready on load. Each station can empty or reset its selected apparatus.
 
-The notebook keeps editable evidence, predictions and debrief responses in the session. **Save notebook file** downloads a local copy named with the local date and time (for example `molar-mass-trap-notebook-2026-11-22-0412.json`), so files on a shared laptop stay distinct without a student name, and **Open notebook file** can reopen those entries after a reload. The file contains notebook work. The apparatus starts fresh on a reload. While the notebook has entries that have not been saved to a file, the browser asks before a reload, a closed tab or a link clears them. Saving, reopening a file or **Start fresh** clears that reminder. **Print notebook** includes the recorded predictions, all three tests, checked averages, and the written debrief. **Start fresh** clears the session after confirmation.
+The notebook keeps editable evidence, predictions and debrief responses in the session. **Save notebook file** downloads a local copy named with the local date and time to the second. **Open notebook file** can reopen those entries after a reload. The file contains notebook work. The apparatus starts fresh on a reload.
+
+The lab requests the browser's leave-page prompt when the notebook has unsaved entries. Starting a download, reopening a file or choosing **Start fresh** resets the reminder. **Start fresh** clears the session after confirmation. **Print notebook** includes the recorded predictions, all three tests, student and lab averages, and the written debrief.
 
 ## Measurement model
 
@@ -25,11 +27,11 @@ These are the uncalibrated example dimensions at 0.15 mL. The initial width uses
 
 ## Steel shot race
 
-Select a sealed tube, tilt it, and turn it upright. Start the manual stopwatch when the shot leaves the stopper and stop it on first contact with the bottom. Event timing marks those same instants automatically. The notebook labels saved event readings as instrument-timed and retains their simulated intervals, including values under 0.5 s. A manual reading preserves the time between the student's clicks. The feedback flags an early stop or a start or late stop more than 0.35 s from its event. The external magnet returns the shot to the stopper for another run. The magnet or **Reset tube** saves an unrecorded, unflagged reading to the next empty trial. Students can keep a flagged reading with **Record reading** before they retry.
+Select a sealed tube, tilt it, and turn it upright. Start the manual stopwatch when the shot leaves the stopper and stop it on first contact with the bottom. Event timing marks those same instants automatically. The notebook labels exact event readings as instrument-timed. A manual reading preserves the time between the student's clicks. The feedback flags an early stop or a start or late stop more than 0.35 s from its event. The external magnet returns the shot to the stopper for another run. The magnet or **Reset tube** saves an unrecorded, unflagged reading to the next empty trial. Students can keep a flagged reading with **Record reading** before they retry.
 
-The shot position and stopwatch use one elapsed-time clock. Switching tubes or stations, or hiding the tab, pauses the active trial. Resume explicitly on return. The short water and octanol replays are labeled as slow motion so students can use the event markers without timing the replay. Only an event-timed run reports the original interval. In manual mode, the student decides whether to record `<0.5`. Event timing reads to the same 0.5 s floor as a hand-held stopwatch: a fall under 0.5 s shows and records as `<0.5`, and its replay says the fall took less than 0.5 s. The model keeps the example time for the animation, so water's 0.27 s never appears to students.
+The shot position and stopwatch use one elapsed-time clock. Switching tubes or stations, or hiding the tab, pauses the active trial. Resume explicitly on return. The short water and octanol replays are labeled as slow motion so students can use the event markers. In manual mode, the student decides whether to record `<0.5`. Event mode follows the worksheet's 0.5 s reporting threshold. The display shows **Timing** while the running clock is below 0.5 s. If the fall ends under that threshold, the display, saved result, and event replay report less than 0.5 s. The animation uses the example travel times below.
 
-Record two trials in seconds. For a fall too fast to time manually, record `<0.5`. Two readings below 0.5 s give a mean below 0.5 s. One such reading and one measured time give a lower and upper bound. Students can add another trial and check the average of the first two measured times, with both trial numbers shown. **Check averages** shows all four checked results in the table alongside the editable readings, labeled "Lab's average" so the screen and printout keep them apart from the student's own average. Exact means display to the precision of the less precise trial. The check accepts a student's rounding to the last decimal place they entered. Both the wax-paper and shot entries are available from the shot station and print together.
+Record two trials in seconds. For a fall too fast to time manually, record `<0.5`. Two readings below 0.5 s give a mean below 0.5 s. One such reading and one measured time give a lower and upper bound. Students can add another trial and check the average of the first two measured times, with both trial numbers shown. **Check averages** labels each computed value **Lab's average**. The printout labels a student entry **Your average**. Exact means display to the precision of the less precise trial. The check accepts a student's rounding to the last decimal place they entered. Both the wax-paper and shot entries are available from the shot station and print together.
 
 ### Example calibration
 

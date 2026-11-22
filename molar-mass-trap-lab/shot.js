@@ -121,6 +121,10 @@
       else field.input.removeAttribute("aria-describedby");
     }
 
+    function showStudentMean(field, value) {
+      setText(field.printed, value?.trim() ? t("Your average: {value}", {value}) : "");
+    }
+
     function addTrialField(key) {
       const card = cards[key];
       const index = card.fields.length;
@@ -189,7 +193,7 @@
         const entry = record(key);
         entry.studentMean = mean.input.value;
         entry.computed = null;
-        setText(mean.printed, mean.input.value);
+        showStudentMean(mean, mean.input.value);
         updateSummary(key);
       });
     }
@@ -250,7 +254,7 @@
       setText(card.detailTitle, liquidName(key));
       setText(card.add, t("Add trial"));
       card.mean.input.value = entry.studentMean ?? "";
-      setText(card.mean.printed, entry.studentMean ?? "");
+      showStudentMean(card.mean, entry.studentMean);
       card.fields.forEach((field, index) => {
         setText(field.caption, t("Fall time, trial {number} (s)", {number: index + 1}));
         field.input.value = entry.trials[index] ?? "";
@@ -276,7 +280,7 @@
       }
     }
 
-    // Event timing reads to the same 0.5 s floor as a hand-held stopwatch, so a fast fall gives the worksheet's "<0.5".
+    // The event-timed display and saved readings use the worksheet's 0.5 s threshold.
     function belowEventFloor(trial, elapsedMs) {
       return trial.mode === "event" && trial.startedAt !== null && elapsedMs < shot.manualThresholdS * 1000;
     }
@@ -455,7 +459,8 @@
         updateControls(sample, key, view, phase === "replaying" && sample.phase === "at-bottom");
       }
       paintArt(sample, key, view, motion, force, now);
-      setText($("shot-time"), readingText(sample.trial, view.stopwatchMs) + " s");
+      const starting = view.running && belowEventFloor(sample.trial, view.stopwatchMs);
+      setText($("shot-time"), starting ? t(paused ? "Paused" : "Timing") : readingText(sample.trial, view.stopwatchMs) + " s");
       return {
         moving: !paused && Number.isFinite(view.remaining),
         next: paused ? Infinity : Math.min(view.remaining, view.running ? 100 : Infinity)
