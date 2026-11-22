@@ -93,13 +93,13 @@
       tubeButtons[key] = {button, name};
     }
 
-    // The event-timed display uses the worksheet's 0.5 s threshold.
-    function belowEventFloor(trial, elapsedMs) {
-      return trial.mode === "event" && trial.startedAt !== null && elapsedMs < shot.manualThresholdS * 1000;
+    // The stopwatch reads to the worksheet's 0.5 s threshold, so a faster fall reads "<0.5".
+    function belowThreshold(trial, elapsedMs) {
+      return trial.startedAt !== null && elapsedMs < shot.fastFallThresholdS * 1000;
     }
 
     function readingText(trial, elapsedMs) {
-      return belowEventFloor(trial, elapsedMs) ? "<0.5" : (elapsedMs / 1000).toFixed(2);
+      return belowThreshold(trial, elapsedMs) ? "<0.5" : (elapsedMs / 1000).toFixed(2);
     }
 
     function position(sample, progress) {
@@ -160,19 +160,12 @@
           "The shot is at the stopper. Turn the tube upright." : "The shot is at the stopper. Release it by moving the magnet away.");
         case "uprighting":
         case "releasing": return t("Watch for the shot to leave the stopper.");
-        case "falling":
-          if (trial.mode === "event") return t("The shot left the stopper. The stopwatch is running.");
-          if (trial.startedAt === null) return t("The shot left the stopper. Start timing now.");
-          return t("Watch for the shot to touch the bottom.");
+        case "falling": return t("The shot left the stopper. The stopwatch is running.");
         case "replaying": return t(slowReplay ? "Slow-motion replay. Watch for departure and first contact." :
           "Replay. The shot leaves the stopper. Watch for first contact.");
         case "at-bottom":
           if (justReplayed) {
-            // Only the event-timed instrument reports the interval. A manual replay leaves the measurement to the student.
-            if (trial.mode !== "event") return t(slowReplay ?
-              "Slow-motion replay complete. The markers show when to start and stop timing." :
-              "Replay complete. Compare the marked departure and first contact with your stopwatch.");
-            if (shot.travelMs[key] < shot.manualThresholdS * 1000) {
+            if (shot.travelMs[key] < shot.fastFallThresholdS * 1000) {
               return t(slowReplay ? "Slow-motion replay complete. The original fall took less than 0.5 s." :
                 "Replay complete. First contact came less than 0.5 s after departure.");
             }
@@ -180,7 +173,6 @@
               "Replay complete. First contact came {seconds} s after departure.", {seconds: (shot.travelMs[key] / 1000).toFixed(2)});
           }
           if (trial.contactedAt === null) return t("Tilt the selected tube to bring the shot to the stopper.");
-          if (view.running) return t("The shot touched the bottom. Stop timing.");
           return t("The shot touched the bottom. Record the time on your lab worksheet, then use the magnet for another trial.");
       }
     }
@@ -191,8 +183,6 @@
       const atBottom = sample.phase === "at-bottom";
       const atStopper = sample.phase === "at-stopper";
       const hasFall = atBottom && trial.contactedAt !== null;
-      const canChooseMode = !paused && !view.running && trial.departedAt === null &&
-        (atBottom || atStopper);
       setText($("bench-instruction"), instruction(sample, view, justReplayed, key));
       let operation = trial.departedAt !== null || sample.phase === "magnet-return" ? "Use magnet" : "Tilt tube";
       if (sample.phase === "uprighting" || (atStopper && sample.orientation === "tilted")) operation = "Turn upright";
@@ -202,29 +192,8 @@
       setAvailability("shot-operate", !paused && (atStopper || (atBottom && !view.running)));
       setAvailability("shot-replay", hasFall && !view.running && !paused);
       setAvailability("shot-reset", paused || !atBottom || trial.contactedAt !== null || trial.startedAt !== null);
-      $("shot-mode-manual").setAttribute("aria-pressed", String(trial.mode === "manual"));
-      $("shot-mode-event").setAttribute("aria-pressed", String(trial.mode === "event"));
-      setAvailability("shot-mode-manual", canChooseMode);
-      setAvailability("shot-mode-event", canChooseMode);
-      setText($("shot-stopwatch"), t(view.running ? "Stop timing" : "Start timing"));
-      setAvailability("shot-stopwatch", !paused && trial.mode === "manual" &&
-        (view.running || model.canStartStopwatch(sample)));
-      setAvailability("shot-clear", !paused && trial.mode === "manual" && trial.startedAt !== null && sample.phase !== "replaying");
       $("shot-top-marker").dataset.active = String(atStopper || ["falling", "replaying"].includes(sample.phase));
       $("shot-bottom-marker").dataset.active = String(hasFall);
-      const issue = model.manualTimingIssue(trial);
-      const issues = {
-        "early-stop": "The stopwatch stopped before contact. Try another run.",
-        "late-stop": "The stopwatch stopped after first contact. Try another run.",
-        start: "The stopwatch missed departure from the stopper. Try another run."
-      };
-      let feedback = "";
-      if (issue) feedback = t(issues[issue]);
-      // In manual mode the student judges whether a fall was too fast to time.
-      else if (hasFall && trial.mode === "manual" && trial.startedAt === null) {
-        feedback = t("Too fast to time? Record less than 0.5 s on your lab worksheet.");
-      }
-      setText($("shot-feedback"), feedback);
     }
 
     function paint(now, motion, force) {
@@ -238,8 +207,11 @@
         updateControls(sample, key, view, phase === "replaying" && sample.phase === "at-bottom");
       }
       paintArt(sample, key, view, motion, force, now);
-      const starting = view.running && belowEventFloor(sample.trial, view.stopwatchMs);
+      const starting = view.running && belowThreshold(sample.trial, view.stopwatchMs);
       setText($("shot-time"), starting ? t(paused ? "Paused" : "Timing") : readingText(sample.trial, view.stopwatchMs) + " s");
+      // The face shows whether the stopwatch is ready, running, paused or holding a reading.
+      $("shot-stopwatch").dataset.state = paused ? "paused" : view.running ? "running" :
+        sample.trial.stoppedAt !== null ? "stopped" : "ready";
       return {
         moving: !paused && Number.isFinite(view.remaining),
         next: paused ? Infinity : Math.min(view.remaining, view.running ? 100 : Infinity)
@@ -256,24 +228,12 @@
       addTubeButton(key);
     });
     action("shot-operate", () => model.operateShot(tube(), code(), clock()));
-    action("shot-stopwatch", () => model.toggleStopwatch(tube(), code(), clock()));
     action("shot-resume", () => {
-      const sample = tube();
-      const now = clock();
-      model.resumeShot(sample, now);
-      const manualControl = sample.trial.mode === "manual" &&
-        (model.shotSnapshot(sample, code(), now).running || model.canStartStopwatch(sample));
-      return $(manualControl ? "shot-stopwatch" : "shot-time");
-    });
-    action("shot-clear", () => {
-      Object.assign(tube().trial, {startedAt: null, stoppedAt: null});
+      model.resumeShot(tube(), clock());
+      return $("shot-time");
     });
     action("shot-reset", () => { getState().shot.tubes[code()] = model.createShotTube(); });
     action("shot-replay", () => model.playShotReplay(tube(), code(), clock()));
-    action("shot-mode-manual", () => { tube().trial.mode = "manual"; });
-    action("shot-mode-event", () => {
-      Object.assign(tube().trial, {mode: "event", startedAt: null, stoppedAt: null});
-    });
     return {paint, pause};
   }
 }());

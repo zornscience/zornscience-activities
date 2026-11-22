@@ -5,9 +5,8 @@ const assert = require("node:assert/strict");
 const model = require("../../molar-mass-trap-lab/model.js");
 const {shot} = model;
 
-function release(code, mode = "manual") {
+function release(code) {
   const tube = model.createShotTube();
-  tube.trial.mode = mode;
   model.operateShot(tube, code, 0);
   model.operateShot(tube, code, 1);
   assert.equal(tube.phase, "tilting");
@@ -25,7 +24,7 @@ test("event time is the interval from departure to first contact at fast, slow a
   const samples = {W: 270, O: 980, M: 2250, G: 6400};
   for (const [code, duration] of Object.entries(samples)) {
     for (const cadence of [16, 42, 10000]) {
-      const {tube, departure} = release(code, "event");
+      const {tube, departure} = release(code);
       const contact = departure + duration;
       for (let now = shot.tiltMs; now < contact + cadence; now += cadence) {
         model.updateShot(tube, code, now);
@@ -40,15 +39,14 @@ test("event time is the interval from departure to first contact at fast, slow a
   assert.ok(samples.G > 2 * samples.M && samples.M > samples.O && samples.O > samples.W);
 });
 
-test("manual timing follows the student's clicks and freezes both clock and shot during a pause", () => {
+test("the event-timed stopwatch freezes with the shot during a pause and stops at first contact", () => {
   const {tube, departure} = release("G");
   const duration = shot.travelMs.G;
-  const start = departure + 80;
-  model.toggleStopwatch(tube, "G", start);
-  assert.equal(tube.trial.startedAt, start);
-  assert.equal(model.shotSnapshot(tube, "G", start + 200).stopwatchMs, 200);
+  model.updateShot(tube, "G", departure + 200);
+  assert.equal(tube.trial.startedAt, departure);
+  assert.equal(model.shotSnapshot(tube, "G", departure + 200).stopwatchMs, 200);
 
-  const pause = start + 500;
+  const pause = departure + 500;
   model.pauseShot(tube, "G", pause);
   const frozen = model.shotSnapshot(tube, "G", pause);
   const wallDelay = 9000;
@@ -58,42 +56,39 @@ test("manual timing follows the student's clicks and freezes both clock and shot
 
   model.resumeShot(tube, pause + wallDelay);
   assert.equal(model.shotSnapshot(tube, "G", pause + wallDelay).progress, frozen.progress);
-  const stop = departure + duration + 120;
-  model.toggleStopwatch(tube, "G", stop + wallDelay);
+  const end = departure + duration + wallDelay + 400;
+  model.updateShot(tube, "G", end);
   assert.equal(tube.trial.contactedAt, departure + duration);
-  assert.equal(model.shotSnapshot(tube, "G", stop + wallDelay).stopwatchMs, duration + 40);
-  assert.equal(model.manualTimingIssue(tube.trial), null);
+  assert.equal(tube.trial.stoppedAt, departure + duration);
+  assert.equal(model.shotSnapshot(tube, "G", end).stopwatchMs, duration);
 });
 
-test("early and late manual stops retain the click time and support new runs with the magnet", () => {
-  for (const [delta, expected] of [[-100, "early-stop"], [600, "late-stop"]]) {
-    const {tube, departure} = release("O");
-    const duration = shot.travelMs.O;
-    const contact = departure + duration;
-    model.toggleStopwatch(tube, "O", departure);
-    model.toggleStopwatch(tube, "O", contact + delta);
-    const next = contact + 1000;
-    model.updateShot(tube, "O", next);
-    assert.equal(model.manualTimingIssue(tube.trial), expected);
-    assert.equal(model.shotSnapshot(tube, "O", next).stopwatchMs, duration + delta);
+test("the magnet clears the stopwatch and releases the shot for a new event-timed run", () => {
+  const {tube, departure} = release("O");
+  const contact = departure + shot.travelMs.O;
+  const next = contact + 1000;
+  model.updateShot(tube, "O", next);
+  assert.equal(model.shotSnapshot(tube, "O", next).stopwatchMs, shot.travelMs.O);
 
-    model.operateShot(tube, "O", next);
-    model.operateShot(tube, "O", next + 1);
-    assert.equal(tube.phase, "magnet-return");
-    assert.equal(tube.trial.startedAt, null);
-    assert.equal(tube.trial.contactedAt, null);
-    model.updateShot(tube, "O", next + shot.magnetMs);
-    assert.equal(tube.phase, "at-stopper");
-    assert.equal(tube.orientation, "upright");
-    model.operateShot(tube, "O", next + shot.magnetMs);
-    model.updateShot(tube, "O", next + shot.magnetMs + shot.releaseMs);
-    assert.equal(tube.trial.departedAt, next + shot.magnetMs + shot.releaseMs);
-  }
+  model.operateShot(tube, "O", next);
+  model.operateShot(tube, "O", next + 1);
+  assert.equal(tube.phase, "magnet-return");
+  assert.equal(tube.trial.startedAt, null);
+  assert.equal(tube.trial.contactedAt, null);
+  assert.equal(model.shotSnapshot(tube, "O", next + 1).stopwatchMs, 0);
+  model.updateShot(tube, "O", next + shot.magnetMs);
+  assert.equal(tube.phase, "at-stopper");
+  assert.equal(tube.orientation, "upright");
+  model.operateShot(tube, "O", next + shot.magnetMs);
+  const second = next + shot.magnetMs + shot.releaseMs;
+  model.updateShot(tube, "O", second);
+  assert.equal(tube.trial.departedAt, second);
+  assert.equal(tube.trial.startedAt, second);
 });
 
 test("water and glycerin replays mark both endpoints without changing recorded flight time", () => {
   for (const code of ["W", "G"]) {
-    const {tube, departure} = release(code, "event");
+    const {tube, departure} = release(code);
     const contact = departure + shot.travelMs[code];
     model.updateShot(tube, code, contact);
     const saved = {...tube.trial};

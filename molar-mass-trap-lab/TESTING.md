@@ -2,14 +2,14 @@
 
 Version: 1.1.0
 
-Version 1.1.0 removed the on-screen notebook, predictions, debrief, notebook files and printout. Students record data on the printed lab worksheet. The checks below describe the current build.
+Version 1.1.0 removed the on-screen notebook, predictions, debrief, notebook files and printout. Students record data on the printed lab worksheet. The shot station's stopwatch is a digital, event-timed display with no manual mode. The checks below describe the current build.
 
 ## Browser and model checks
 
 - `node --test tests/unit/molar-mass-trap-lab.test.js tests/unit/static.test.js tests/unit/seo.test.js tests/unit/focus-css.test.js` checks volume, footprint and profile geometry, independent station state with no stored student entries, focus styles, and the bilingual directory and search metadata.
 - `npx playwright test tests/e2e/molar-mass-trap-lab.spec.js` exercises all four samples in a mixed order, rapid input, natural settling while another liquid or station is open, time advance, a bead above 90°, keyboard-only glycerin measurement, pointer drag, zoom and resize, Spanish, Share, reduced motion, disabled storage, Start fresh, and the station layout. At 1366 × 768 and 1280 × 720, each station's controls sit to the right of its scene and everything fits without scrolling. At 900 px the controls stack below the scene.
-- `node --test tests/unit/molar-mass-trap-shot.test.js` compares fast, slow and skipped frames, exact departure and contact instants, manual click times, pauses and replay.
-- `npx playwright test tests/e2e/molar-mass-trap-shot.spec.js` covers water and glycerin replays, the slow-motion cue and preservation of manual measurements, short and slow falls, repeated clicks, the magnet clearing the stopwatch for the next trial, the worksheet prompts, manual retries, tab visibility and station switching, Spanish keyboard controls, reduced motion, and axe at laptop and phone widths.
+- `node --test tests/unit/molar-mass-trap-shot.test.js` compares fast, slow and skipped frames, exact departure and contact instants, the event-timed stopwatch through a pause, the magnet clearing it for a new run, and replay.
+- `npx playwright test tests/e2e/molar-mass-trap-shot.spec.js` covers the digital stopwatch with no timing controls, its ready, running, paused and stopped states, water and glycerin replays, the slow-motion cue, short and slow falls, repeated clicks, matching repeat trials, the magnet clearing the stopwatch for the next trial, the worksheet prompt, tab visibility and station switching, Spanish keyboard controls, reduced motion, and axe at laptop and phone widths.
 - `node --test tests/unit/molar-mass-trap-mixing.test.js` checks aliquot validation, independence, settled band volumes and ordering, the four-to-five inversion boundary, the 60 s clock, and cleanup.
 - `npx playwright test tests/e2e/molar-mass-trap-mixing.spec.js` checks the density order before inversion, all five settled mixtures, fill heights, band colors, the air surface and internal boundary, and the clear band's edge highlights. Clicks at one position every 100 ms stop at five inversions or upright placement until a separate control is used. The suite also checks early descriptions, station and tube changes, both ways to finish settling, refilling, and Spanish labels.
 - `npx playwright test tests/e2e/molar-mass-trap-release.spec.js` covers all six station orders, the complete interleaved classroom route in both languages with storage disabled, a reload with no leave-page prompt, Spanish accessibility with the restart dialog open, and bilingual directory navigation.
@@ -19,7 +19,7 @@ Version 1.1.0 removed the on-screen notebook, predictions, debrief, notebook fil
 
 ## Classroom walkthrough
 
-The complete browser route starts with Spanish tube 3, measures water on wax paper during settling, and reads the layers after one simulated minute. The student leaves one water trial untimed, which prompts them to record less than 0.5 s on the worksheet, and event-times a second. They switch to English, time the other three liquids, measure the other three puddles, prepare, read and dispose of the other four mixtures, empty tube 3, and use Start fresh. The test blocks browser storage and uses the Playwright clock to move through the same elapsed-time model as the bench. Each of the six station orders keeps the wax reading, the settled tube and the last shot reading.
+The complete browser route starts with Spanish tube 3, measures water on wax paper during settling, and reads the layers after one simulated minute. Both water trials read less than 0.5 s on the event-timed stopwatch. They switch to English, time the other three liquids, measure the other three puddles, prepare, read and dispose of the other four mixtures, empty tube 3, and use Start fresh. The test blocks browser storage and uses the Playwright clock to move through the same elapsed-time model as the bench. Each of the six station orders keeps the wax reading, the settled tube and the last shot reading.
 
 ## Low-end emulation
 

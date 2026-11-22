@@ -14,7 +14,8 @@
   });
   const ruler = Object.freeze({minMm: -25, maxMm: 5, startMm: -14, lengthMm: 30, stepMm: 0.5, unitsPerMm: 6});
   const shot = Object.freeze({
-    manualThresholdS: 0.5,
+    // Falls faster than this read "<0.5 s", the worksheet's reporting threshold.
+    fastFallThresholdS: 0.5,
     temperatureC: 22,
     travelMm: 90,
     airGapMm: 8,
@@ -25,8 +26,7 @@
     uprightMs: 460,
     magnetMs: 680,
     releaseMs: 160,
-    minimumReplayMs: 1400,
-    manualWindowMs: 350
+    minimumReplayMs: 1400
   });
   const mixing = Object.freeze({
     inversionCount: 5,
@@ -68,7 +68,7 @@
       phase: "at-bottom",
       phaseAt: null,
       trial: {
-        mode: "manual", departedAt: null, contactedAt: null, startedAt: null, stoppedAt: null,
+        departedAt: null, contactedAt: null, startedAt: null, stoppedAt: null,
         pausedAt: null, pausedMs: 0
       }
     };
@@ -188,12 +188,13 @@
         case "releasing":
           tube.orientation = "upright";
           trial.departedAt = at;
-          if (trial.mode === "event") trial.startedAt = at;
+          // The stopwatch is event-timed: it starts as the shot leaves the stopper.
+          trial.startedAt = at;
           setShotPhase(tube, "falling", at);
           break;
         case "falling":
           trial.contactedAt = at;
-          if (trial.mode === "event") trial.stoppedAt = at;
+          trial.stoppedAt = at;
           setShotPhase(tube, "at-bottom", at);
           break;
         case "replaying":
@@ -236,21 +237,6 @@
     }
   }
 
-  function canStartStopwatch(tube) {
-    const trial = tube.trial;
-    return trial.mode === "manual" && trial.pausedAt === null && trial.startedAt === null &&
-      ["at-stopper", "uprighting", "releasing", "falling"].includes(tube.phase);
-  }
-
-  function toggleStopwatch(tube, code, wallTime) {
-    updateShot(tube, code, wallTime);
-    const trial = tube.trial;
-    if (trial.mode !== "manual" || trial.pausedAt !== null) return;
-    const at = shotTime(tube, wallTime);
-    if (stopwatchRunning(trial)) trial.stoppedAt = at;
-    else if (canStartStopwatch(tube)) trial.startedAt = at;
-  }
-
   function playShotReplay(tube, code, wallTime) {
     updateShot(tube, code, wallTime);
     const trial = tube.trial;
@@ -272,14 +258,6 @@
       running,
       stopwatchMs: trial.startedAt === null ? 0 : (trial.stoppedAt ?? now) - trial.startedAt
     };
-  }
-
-  function manualTimingIssue(trial) {
-    if (trial.mode !== "manual" || trial.stoppedAt === null) return null;
-    if (trial.contactedAt === null || trial.stoppedAt < trial.contactedAt) return "early-stop";
-    if (trial.stoppedAt - trial.contactedAt > shot.manualWindowMs) return "late-stop";
-    if (Math.abs(trial.startedAt - trial.departedAt) > shot.manualWindowMs || trial.startedAt >= trial.contactedAt) return "start";
-    return null;
   }
 
   function matchesMixRecipe(tube, number) {
@@ -377,7 +355,7 @@
 
   const api = {liquids, wax, ruler, shot, mixing, createWaxSample, createState, dispense, landDrop, elapsedMs,
     isSettled, capGeometry, waxGeometry, edgeReadings, createShotTube, updateShot, pauseShot, resumeShot,
-    operateShot, canStartStopwatch, toggleStopwatch, playShotReplay, shotSnapshot, manualTimingIssue, mixStage,
+    operateShot, playShotReplay, shotSnapshot, mixStage,
     pourMixAliquot, stopperMixTube, invertMixTube, standMixTube, updateMixTube, mixElapsedMs, advanceMixTime,
     mixVolume, mixBand, mixPouredBands, mixSettledBands, emptyMixTube};
   if (typeof module === "object" && module.exports) module.exports = api;

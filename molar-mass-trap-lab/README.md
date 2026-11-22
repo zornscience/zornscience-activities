@@ -2,7 +2,7 @@
 
 Version: 1.1.0
 
-A virtual investigation for Chemistry and Honors Chemistry Unit 4. It includes the wax-paper investigation, the steel shot race and the five-tube mixing rack. Students record their data, predictions and debrief on the printed lab worksheet, so the simulation uses the full width of the page.
+A virtual investigation for Chemistry and Honors Chemistry Unit 4. It includes the wax-paper investigation, the steel shot race and the five-tube mixing rack. Students record their data, predictions and debrief on the printed lab worksheet, so the simulation uses the full width of the page. The steel shot stopwatch times each fall automatically.
 
 ## Run the bench
 
@@ -27,11 +27,11 @@ These are the uncalibrated example dimensions at 0.15 mL. The initial width uses
 
 ## Steel shot race
 
-Select a sealed tube, tilt it, and turn it upright. Start the manual stopwatch when the shot leaves the stopper and stop it on first contact with the bottom. Event timing marks those same instants automatically. A manual reading preserves the time between the student's clicks. The feedback flags an early stop or a start or late stop more than 0.35 s from its event. The external magnet returns the shot to the stopper for another run. Students copy each reading to the worksheet before using the magnet, which clears the stopwatch.
+Select a sealed tube, tilt it, and turn it upright. The digital stopwatch is event-timed only: it starts the instant the shot leaves the stopper and stops at first contact with the bottom, so students read the time instead of clicking to start and stop it. A run indicator on the screen shows while it is timing. The external magnet returns the shot to the stopper for another run. Students copy each reading to the worksheet before using the magnet, which clears the stopwatch.
 
-The shot position and stopwatch use one elapsed-time clock. Switching tubes or stations, or hiding the tab, pauses the active trial. Resume explicitly on return. The short water and octanol replays are labeled as slow motion so students can use the event markers. In manual mode, the student decides whether to record `<0.5`. Event mode follows the worksheet's 0.5 s reporting threshold. The display shows **Timing** while the running clock is below 0.5 s. If the fall ends under that threshold, the display and the event replay report less than 0.5 s. The animation uses the example travel times below.
+The shot position and stopwatch use one elapsed-time clock. Switching tubes or stations, or hiding the tab, pauses the active trial. Resume explicitly on return. The short water and octanol replays are labeled as slow motion and report the original fall time. The stopwatch follows the worksheet's 0.5 s reporting threshold. The display shows **Timing** while the running clock is below 0.5 s. If the fall ends under that threshold, the display and the replay report less than 0.5 s. The animation uses the example travel times below.
 
-Students record two trials in seconds on the worksheet and average them there. For a fall too fast to time manually, the feedback reminds them to record less than 0.5 s.
+Students record two trials in seconds on the worksheet and average them there. Repeated trials give the same simulated time, and water reads less than 0.5 s.
 
 ### Example calibration
 

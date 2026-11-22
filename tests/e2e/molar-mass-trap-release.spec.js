@@ -38,24 +38,22 @@ async function measureWax(page, code) {
   await expect(page.locator("#edge-reading")).toHaveText(new RegExp(`0 mm.*${diameter} mm`));
 }
 
-// Two trials per liquid: water is first left untimed by hand, then event-timed.
+// Two trials per liquid. The event-timed stopwatch reads water as "<0.5 s" both times.
 async function timeShot(page, code) {
   await page.locator(`[data-shot-tube="${code}"]`).click();
   const operate = page.locator("#shot-operate");
-  if (code !== "W") await page.locator("#shot-mode-event").click();
+  const reading = code === "W" ? "<0.5 s" : (shotMs[code] / 1000).toFixed(2) + " s";
   await operate.click();
   await page.clock.fastForward(750);
   await operate.click();
   await page.clock.fastForward(shotMs[code] + 570);
-  if (code === "W") await expect(page.locator("#shot-feedback")).toHaveText(/0\.5 s/);
-  else await expect(page.locator("#shot-time")).toHaveText((shotMs[code] / 1000).toFixed(2) + " s");
+  await expect(page.locator("#shot-time")).toHaveText(reading);
 
   await operate.click();
   await page.clock.fastForward(720);
-  if (code === "W") await page.locator("#shot-mode-event").click();
   await operate.click();
   await page.clock.fastForward(shotMs[code] + 250);
-  await expect(page.locator("#shot-time")).toHaveText(code === "W" ? "<0.5 s" : (shotMs[code] / 1000).toFixed(2) + " s");
+  await expect(page.locator("#shot-time")).toHaveText(reading);
 }
 
 async function prepareMixture(page, number) {

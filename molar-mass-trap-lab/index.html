@@ -194,20 +194,13 @@
           <button id="shot-replay" type="button" class="zsa-btn" aria-disabled="true">Replay fall</button>
           <button id="shot-reset" type="button" class="zsa-btn zsa-mmt-quiet">Reset tube</button>
         </div>
-        <div class="zsa-mmt-shot-console">
-          <div class="zsa-mmt-shot-console-heading">
-            <h3>Stopwatch</h3>
-            <div class="zsa-mmt-shot-modes" role="group" aria-label="Timing mode">
-              <button id="shot-mode-manual" type="button" class="zsa-btn" aria-pressed="true">Manual</button>
-              <button id="shot-mode-event" type="button" class="zsa-btn" aria-pressed="false">Event-timed</button>
-            </div>
+        <div id="shot-stopwatch" class="zsa-mmt-stopwatch" data-state="ready">
+          <span class="zsa-mmt-stopwatch-crown" aria-hidden="true"></span>
+          <h3 class="zsa-mmt-stopwatch-label">Stopwatch</h3>
+          <div class="zsa-mmt-stopwatch-screen">
+            <output id="shot-time" class="zsa-mmt-stopwatch-digits" aria-label="Stopwatch reading" aria-live="off" tabindex="-1">0.00 s</output>
           </div>
-          <div class="zsa-mmt-shot-clock-line">
-            <output id="shot-time" class="zsa-mmt-shot-clock" aria-label="Stopwatch reading" aria-live="off" tabindex="-1">0.00 s</output>
-            <button id="shot-stopwatch" type="button" class="zsa-btn" aria-disabled="true">Start timing</button>
-            <button id="shot-clear" type="button" class="zsa-btn zsa-mmt-quiet" aria-disabled="true">Reset stopwatch</button>
-          </div>
-          <p id="shot-feedback" class="zsa-mmt-shot-feedback" role="status" aria-atomic="true"></p>
+          <p class="zsa-mmt-stopwatch-note">Starts when the shot leaves the stopper. Stops when it first touches the bottom.</p>
         </div>
       </div>
       <div id="mixing-bench" hidden>
@@ -297,8 +290,8 @@
     </ol>
     <ol id="shot-instructions" hidden>
       <li>Choose a sealed tube. Tilt it to move the shot to the stopper.</li>
-      <li>Turn the tube upright. Time from the instant the shot leaves the stopper to the instant it touches the bottom. Choose event timing to mark both instants automatically.</li>
-      <li>Record two trials and find the average in seconds. If the shot falls too fast to time, record less than 0.5 s.</li>
+      <li>Turn the tube upright. The stopwatch starts when the shot leaves the stopper and stops when it first touches the bottom.</li>
+      <li>Record two trials on your lab worksheet and find the average in seconds. A fall faster than 0.5 s reads less than 0.5 s.</li>
       <li>Use the magnet outside the tube to return the shot for another trial.</li>
     </ol>
     <ol id="mixing-instructions" hidden>
