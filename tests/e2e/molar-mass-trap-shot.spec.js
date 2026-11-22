@@ -21,6 +21,7 @@ function stopwatch(page) { return page.locator("#shot-stopwatch"); }
 async function openShot(page, query = "") {
   await page.clock.install();
   await page.goto(LAB + query);
+  await page.locator("#intro-start").click();
   await station(page, "shot").click();
 }
 
@@ -32,13 +33,15 @@ async function tilt(page, uprightLabel = "Turn upright") {
   await expect(action).toBeEnabled();
 }
 
-async function magnet(page, releaseLabel = "Release shot") {
+// Tilting the tube again returns the shot to the stopper and clears the stopwatch. There is no magnet.
+async function retilt(page) {
   const action = page.locator("#shot-operate");
+  await expect(action).toHaveText("Tilt tube");
   await expect(action).toBeEnabled();
   await action.click();
-  await page.clock.runFor(720);
-  await expect(action).toHaveText(releaseLabel);
-  await expect(page.locator("#shot-magnet")).toHaveAttribute("transform", /^translate\(240 /);
+  await expect(clock(page)).toHaveText("0.00 s");
+  await page.clock.runFor(760);
+  await expect(action).toHaveText("Turn upright");
 }
 
 async function tabTo(page, target, key = "Tab") {
@@ -58,6 +61,7 @@ test("water and glycerin share event timing at different frame cadences and repl
   await expect(stopwatch(page)).toContainText("Starts when the shot leaves the stopper. Stops when it first touches the bottom.");
   await expect(stopwatch(page).getByRole("button")).toHaveCount(0);
   await expect(stopwatch(page)).toHaveAttribute("data-state", "ready");
+  await expect(page.locator("#shot-magnet")).toHaveCount(0);
   // The stopwatch shows "<0.5" below the worksheet's reporting threshold.
   for (const [key, time, flight, stepped] of [["W", "<0.5", 270, false], ["G", "6.40", 6400, true]]) {
     await selector(page, key).click();
@@ -89,7 +93,7 @@ test("water and glycerin share event timing at different frame cadences and repl
     }
     await expect(clock(page)).toHaveText(time + " s");
     await expect(stopwatch(page)).toHaveAttribute("data-state", "stopped");
-    await expect(action).toHaveText("Use magnet");
+    await expect(action).toHaveText("Tilt tube");
     await expect(page.locator("#bench-instruction")).toHaveText(/Record the time on your lab worksheet/);
 
     await page.locator("#shot-replay").click();
@@ -98,9 +102,8 @@ test("water and glycerin share event timing at different frame cadences and repl
     await page.clock.fastForward(Math.max(flight, 1400) + 80);
     await expect(instruction).toHaveText(key === "W" ? /The original fall took less than 0\.5 s/ : /First contact came 6\.40 s/);
     await expect(clock(page)).toHaveText(time + " s");
-    // The magnet starts the next trial, so the stopwatch clears once the student has copied the reading.
-    await magnet(page);
-    await expect(clock(page)).toHaveText("0.00 s");
+    // Tilting again starts the next trial, so the stopwatch clears once the student has copied the reading.
+    await retilt(page);
     await expect(stopwatch(page)).toHaveAttribute("data-state", "ready");
   }
   expect(errors).toEqual([]);
@@ -148,8 +151,7 @@ test("the stopwatch and shot freeze when the tab is hidden and when another stat
   await page.clock.fastForward(6200);
   // The pause does not change the reading: it is still the full simulated fall time.
   await expect(clock(page)).toHaveText("6.40 s");
-  await magnet(page);
-  await expect(clock(page)).toHaveText("0.00 s");
+  await retilt(page);
   expect(errors).toEqual([]);
 });
 
@@ -162,15 +164,15 @@ test("each trial gives the same event-timed reading and the worksheet prompt fol
   await page.clock.fastForward(460 + 2250 + 100);
   await expect(clock(page)).toHaveText("2.25 s");
   await expect(page.locator("#bench-instruction")).toHaveText(
-    "The shot touched the bottom. Record the time on your lab worksheet, then use the magnet for another trial."
+    "The shot touched the bottom. Record the time on your lab worksheet, then tilt the tube for another trial."
   );
   await page.locator("#shot-replay").click();
   await page.clock.fastForward(2400);
   await expect(page.locator("#bench-instruction")).toHaveText("Replay complete. First contact came 2.25 s after departure.");
   await expect(clock(page)).toHaveText("2.25 s");
-  await magnet(page);
+  await retilt(page);
   await page.locator("#shot-operate").click();
-  await page.clock.fastForward(160 + 2250 + 100);
+  await page.clock.fastForward(460 + 2250 + 100);
   await expect(clock(page)).toHaveText("2.25 s");
   await page.locator("#shot-reset").click();
   await expect(clock(page)).toHaveText("0.00 s");
@@ -178,9 +180,32 @@ test("each trial gives the same event-timed reading and the worksheet prompt fol
   expect(errors).toEqual([]);
 });
 
+test("clicking a tube or its label in the rack selects it like the named buttons", async ({page}) => {
+  const errors = errorsFrom(page);
+  await openShot(page);
+  await expect(selector(page, "W")).toHaveAttribute("aria-pressed", "true");
+  await page.locator('#shot-rack-content g[data-shot-rack-tube="G"]').click();
+  await expect(selector(page, "G")).toHaveAttribute("aria-pressed", "true");
+  await expect(selector(page, "W")).toHaveAttribute("aria-pressed", "false");
+  await expect(page.locator('#shot-rack-content g[data-shot-rack-tube="G"]')).toHaveAttribute("data-selected", "true");
+  await page.locator('#shot-rack-content text[data-shot-rack-tube="M"]').click();
+  await expect(selector(page, "M")).toHaveAttribute("aria-pressed", "true");
+  // A tube in mid-trial keeps its reading when another rack tube is chosen and then chosen again.
+  await tilt(page);
+  await page.locator("#shot-operate").click();
+  await page.clock.fastForward(460 + 2250 + 100);
+  await expect(clock(page)).toHaveText("2.25 s");
+  await page.locator('#shot-rack-content g[data-shot-rack-tube="O"]').click();
+  await expect(clock(page)).toHaveText("0.00 s");
+  await page.locator('#shot-rack-content g[data-shot-rack-tube="M"]').click();
+  await expect(clock(page)).toHaveText("2.25 s");
+  expect(errors).toEqual([]);
+});
+
 test("a slowed water replay reports a fall under 0.5 s in Spanish", async ({page}) => {
   await page.clock.install();
   await page.goto(LAB + "?lang=es");
+  await page.locator("#intro-start").click();
   await station(page, "shot").click();
   const operate = page.locator("#shot-operate");
   await operate.click();
@@ -201,6 +226,8 @@ test("Mexican Spanish keyboard flow and reduced motion keep the reading through 
   await page.emulateMedia({reducedMotion: "reduce"});
   await page.clock.install();
   await page.goto(LAB + "?lang=es");
+  await tabTo(page, page.getByRole("button", {name: "Empezar el laboratorio"}));
+  await page.keyboard.press("Enter");
   await tabTo(page, station(page, "shot"));
   await page.keyboard.press("Enter");
   await expect(page.getByRole("group", {name: "Tubos sellados"})).toBeVisible();
@@ -214,8 +241,9 @@ test("Mexican Spanish keyboard flow and reduced motion keep the reading through 
   await page.keyboard.press("Enter");
   await page.clock.fastForward(1570);
   await expect(clock(page)).toHaveText("0.98 s");
+  await expect(page.locator("#shot-operate")).toHaveText("Inclinar tubo");
   await expect(page.locator("#bench-instruction")).toHaveText(
-    "El perdigón tocó el fondo. Anota el tiempo en tu hoja de trabajo del laboratorio y luego usa el imán para otro ensayo."
+    "El perdigón tocó el fondo. Anota el tiempo en tu hoja de trabajo del laboratorio y luego inclina el tubo para otro ensayo."
   );
   await page.getByRole("link", {name: "EN English"}).click();
   await expect(clock(page)).toHaveText("0.98 s");

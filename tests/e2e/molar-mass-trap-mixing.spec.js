@@ -12,12 +12,13 @@ const advance = (page) => page.locator("#mix-advance");
 async function openRack(page) {
   await page.clock.install();
   await page.goto(LAB);
+  await page.locator("#intro-start").click();
   await station(page, "mixing").click();
 }
 
-async function dispense(page, code, ml) {
+// The pipette always adds 1.0 mL, so students only choose the liquid.
+async function dispense(page, code) {
   await page.locator("#mix-liquid").selectOption(code);
-  await page.locator("#mix-amount").selectOption(String(ml));
   await action(page).click();
   await page.clock.fastForward(440);
 }
@@ -41,8 +42,8 @@ test("a denser aliquot settles below the lighter one before inversion, whatever 
     .filter((shape) => shape.getAttribute("visibility") !== "hidden").map((shape) => shape.dataset.tint));
   for (const [number, first, second, expected] of [[2, "M", "W", ["blue", "red"]], [5, "M", "G", ["clear", "red"]]]) {
     await slot(page, number).click();
-    await dispense(page, first, 1);
-    await dispense(page, second, 1);
+    await dispense(page, first);
+    await dispense(page, second);
     // Bands are listed bottom to top.
     expect(await bands()).toEqual(expected);
     await action(page).click();
@@ -55,8 +56,8 @@ test("a denser aliquot settles below the lighter one before inversion, whatever 
 
 test("repeated clicks at one position cannot set the tube upright or advance its clock", async ({page}) => {
   await openRack(page);
-  await dispense(page, "W", 1);
-  await dispense(page, "G", 1);
+  await dispense(page, "W");
+  await dispense(page, "G");
   await action(page).click();
 
   async function clickThrough(button, count) {
@@ -81,54 +82,94 @@ test("repeated clicks at one position cannot set the tube upright or advance its
   await expect(page.locator("#mix-elapsed")).toHaveText("60 / 60 s");
 });
 
-test("all five recipes keep their volumes, colors and layer positions after settling together", async ({page}) => {
+test("students choose any two liquids and the settled layers respond to what they mixed", async ({page}) => {
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await openRack(page);
   await expect(page.locator("#mix-rack button")).toHaveCount(5);
-  const recipes = [
-    {number: 5, liquids: [["M", 1], ["G", 1]], total: 2, tints: ["clear", "red"], note: "A red band above a clear band."},
-    {number: 2, liquids: [["W", 1], ["M", 1]], total: 2, tints: ["blue", "red"], note: "A red band above a blue band."},
-    {number: 1, liquids: [["G", 1], ["W", 1]], total: 2, tints: ["blue"], note: "One uniform blue-tinted layer."},
-    {number: 4, liquids: [["O", 0.5], ["M", 1]], total: 1.5, tints: ["red"], note: "One uniform red-tinted layer."},
-    {number: 3, liquids: [["W", 1], ["O", 0.5]], total: 1.5, tints: ["blue", "clear"], note: "A smaller clear band above a blue band."}
+  // No recipe is shown and no volume choice is offered.
+  await expect(page.locator("#mix-amount")).toHaveCount(0);
+  await expect(page.locator("#mix-amount-note")).toHaveText("The pipette adds 1.0 mL each time.");
+  await expect(page.locator("#mix-recipe")).toHaveText("Tube 1 · Empty");
+  await expect(page.locator("#mix-action-label")).toHaveText("Dispense liquid");
+  await expect(page.locator("#mix-action-icon")).toBeVisible();
+  const mixtures = [
+    {number: 1, liquids: ["M", "G"], tints: ["clear", "red"], note: "A red band above a clear band."},
+    {number: 2, liquids: ["W", "M"], tints: ["blue", "red"], note: "A red band above a blue band."},
+    {number: 3, liquids: ["G", "W"], tints: ["blue"], note: "One uniform blue-tinted layer."},
+    {number: 4, liquids: ["O", "M"], tints: ["red"], note: "One uniform red-tinted layer."},
+    {number: 5, liquids: ["W", "O"], tints: ["blue", "clear"], note: "A clear band above a blue band."}
   ];
-  for (const {number, liquids, total} of recipes) {
+  const names = {W: "W Water", G: "G Glycerin", O: "O 1-octanol", M: "M Mineral oil"};
+  for (const {number, liquids} of mixtures) {
     await slot(page, number).click();
-    await expect(page.locator("#mix-recipe")).toHaveText(new RegExp(`^Tube ${number} .*${total === 2 ? "1\\.0" : "0\\.5"} mL$`));
-    for (const [code, ml] of liquids) await dispense(page, code, ml);
-    await expect(page.locator("#mix-volume")).toHaveText(total.toFixed(1) + " mL total");
+    for (const code of liquids) await dispense(page, code);
+    await expect(page.locator("#mix-recipe")).toHaveText(`Tube ${number} · ${names[liquids[0]]} 1.0 mL + ${names[liquids[1]]} 1.0 mL`);
+    await expect(page.locator("#mix-volume")).toHaveText("2.0 mL total");
     await expect(action(page)).toHaveText("Add stopper");
+    await expect(page.locator("#mix-action-icon")).toBeHidden();
     await action(page).click();
     await invert(page, 5);
     await placeInRack(page);
   }
 
   const glass = page.locator("#mix-active-tube");
-  for (const {number, total, tints, note} of recipes) {
+  async function check({number, tints, note}) {
     await slot(page, number).click();
-    await advance(page).click();
+    if (await advance(page).isVisible()) await advance(page).click();
     await expect(page.locator("#mix-elapsed")).toHaveText("60 / 60 s");
     await page.locator("#mix-read").click();
     await expect(page.locator("#mix-observation")).toHaveText(note);
     const steadyBands = glass.locator('[data-mix-band][visibility="visible"]');
     await expect(steadyBands).toHaveCount(tints.length);
     for (let i = 0; i < tints.length; i++) await expect(steadyBands.nth(i)).toHaveAttribute("data-tint", tints[i]);
-    const height = total === 2 ? -12 : 7;
-    await expect(glass.locator("[data-mix-meniscus]")).toHaveAttribute("d", `M-14 ${height}Q0 ${height + 4} 14 ${height}`);
+    await expect(glass.locator("[data-mix-meniscus]")).toHaveAttribute("d", "M-14 -12Q0 -8 14 -12");
     const boundary = glass.locator("[data-mix-interface]");
     await expect(boundary).toHaveAttribute("visibility", tints.length === 2 ? "visible" : "hidden");
     if (tints.length === 2) await expect(boundary).toHaveAttribute("d", "M-14 26H14");
     await expect(glass.locator(".zsa-mmt-mix-refraction")).toHaveAttribute("visibility", tints.includes("clear") ? "visible" : "hidden");
   }
+  for (const mixture of mixtures) await check(mixture);
+
+  // Pairs outside the worksheet also respond: two clear layers, and one liquid twice.
+  const extra = [
+    {number: 1, liquids: ["O", "G"], tints: ["clear", "clear"], note: "A clear band above a clear band."},
+    {number: 2, liquids: ["W", "W"], tints: ["blue"], note: "One uniform blue-tinted layer."}
+  ];
+  for (const {number, liquids} of extra) {
+    await slot(page, number).click();
+    await page.getByRole("button", {name: "Pour into waste"}).click();
+    for (const code of liquids) await dispense(page, code);
+    await action(page).click();
+    await invert(page, 5);
+    await placeInRack(page);
+  }
+  for (const mixture of extra) await check(mixture);
   expect(errors).toEqual([]);
+});
+
+test("the 60 s stand runs on its own in 10 s of real time", async ({page}) => {
+  await openRack(page);
+  await dispense(page, "M");
+  await dispense(page, "W");
+  await action(page).click();
+  await invert(page, 5);
+  await placeInRack(page);
+  await expect(page.locator("#mix-elapsed")).toHaveText("0 / 60 s");
+  await page.clock.runFor(5000);
+  await expect(page.locator("#mix-elapsed")).toHaveText(/^(29|30) \/ 60 s$/);
+  await page.clock.runFor(5100);
+  await expect(page.locator("#mix-elapsed")).toHaveText("60 / 60 s");
+  await expect(advance(page)).toBeHidden();
+  await page.locator("#mix-read").click();
+  await expect(page.locator("#mix-observation")).toHaveText("A red band above a blue band.");
 });
 
 test("four inversions and an early read leave the timer gated while other tubes can be corrected", async ({page}) => {
   await openRack(page);
   await slot(page, 3).click();
-  await dispense(page, "O", 0.5);
-  await dispense(page, "W", 1);
+  await dispense(page, "O");
+  await dispense(page, "W");
   await action(page).click();
   // A rapid second input must not count another inversion.
   await action(page).evaluate((button) => { button.click(); button.click(); });
@@ -153,17 +194,17 @@ test("four inversions and an early read leave the timer gated while other tubes 
   await expect(page.locator("#mix-elapsed")).toHaveText("0 / 60 s");
   await page.locator("#mix-read").click();
   await expect(page.locator("#mix-observation")).toHaveText(/Streaks are visible in the tube/);
-  await page.clock.fastForward(31000);
+  await page.clock.fastForward(5100);
   await expect(page.locator("#mix-observation")).toHaveText(/The boundary between the bands is becoming clearer/);
 
+  // A partly filled tube can be emptied and started again.
   await slot(page, 5).click();
-  await dispense(page, "M", 0.5);
-  await expect(page.locator("#bench-instruction")).toHaveText(/differ from this recipe/);
-  await expect(action(page)).toBeHidden();
+  await dispense(page, "M");
+  await expect(page.locator("#mix-recipe")).toHaveText("Tube 5 · M Mineral oil 1.0 mL");
   await page.locator("#mix-empty").click();
   await expect(page.locator("#mix-volume")).toHaveText("0.0 mL total");
   await expect(page.locator("#mix-waste-fill")).toHaveAttribute("visibility", "visible");
-  await dispense(page, "M", 1);
+  await dispense(page, "M");
   await expect(page.locator("#mix-volume")).toHaveText("1.0 mL total");
   await station(page, "shot").click();
   await page.clock.fastForward(60000);
@@ -172,14 +213,14 @@ test("four inversions and an early read leave the timer gated while other tubes 
   await slot(page, 3).click();
   await expect(page.locator("#mix-elapsed")).toHaveText("60 / 60 s");
   await page.locator("#mix-read").click();
-  await expect(page.locator("#mix-observation")).toHaveText("A smaller clear band above a blue band.");
+  await expect(page.locator("#mix-observation")).toHaveText("A clear band above a blue band.");
   await page.getByRole("button", {name: "Pour into waste"}).click();
   await expect(page.locator("#bench-instruction")).toHaveText(/Tube 3 is empty/);
-  await dispense(page, "W", 1);
+  await dispense(page, "W");
   await expect(page.locator("#mix-volume")).toHaveText("1.0 mL total");
   await slot(page, 5).click();
   await expect(page.locator("#mix-volume")).toHaveText("1.0 mL total");
-  await dispense(page, "G", 1);
+  await dispense(page, "G");
   await expect(action(page)).toHaveText("Add stopper");
 });
 
@@ -196,11 +237,13 @@ test("Spanish keyboard controls and reduced motion give equivalent readings at p
   await page.emulateMedia({reducedMotion: "reduce"});
   await page.clock.install();
   await page.goto(LAB + "?lang=es");
+  await tabTo(page, page.getByRole("button", {name: "Empezar el laboratorio"}));
+  await page.keyboard.press("Enter");
   await tabTo(page, station(page, "mixing"));
   await page.keyboard.press("Enter");
   await tabTo(page, page.getByRole("button", {name: "Tubo 3", exact: true}));
   await page.keyboard.press("Enter");
-  await expect(page.locator("#mix-recipe")).toHaveText("Tubo 3 · W Agua 1.0 mL + O 1-octanol 0.5 mL");
+  await expect(page.locator("#mix-recipe")).toHaveText("Tubo 3 · Vacío");
   await page.locator("#mix-inspection").evaluate((scene) => scene.scrollIntoView({block: "start"}));
   const closeUpAndControlsFit = await page.evaluate(() => {
     const scene = document.getElementById("mix-inspection").getBoundingClientRect();
@@ -208,16 +251,16 @@ test("Spanish keyboard controls and reduced motion give equivalent readings at p
     return scene.top >= -1 && controls.bottom <= innerHeight;
   });
   expect(closeUpAndControlsFit).toBe(true);
-  for (const [liquidSteps, volumeSteps] of [[1, 2], [3, 1]]) {
-    await tabTo(page, page.getByLabel("Líquido en la pipeta"), liquidSteps === 1 ? "Tab" : "Shift+Tab");
+  // The pipette select resets after each pour: one step down is water, three steps is 1-octanol.
+  for (const [liquidSteps, key] of [[1, "Tab"], [3, "Shift+Tab"]]) {
+    await tabTo(page, page.getByLabel("Líquido en la pipeta"), key);
     for (let i = 0; i < liquidSteps; i++) await page.keyboard.press("ArrowDown");
-    await tabTo(page, page.getByLabel("Volumen de la pipeta"));
-    for (let i = 0; i < volumeSteps; i++) await page.keyboard.press("ArrowDown");
     await tabTo(page, action(page));
-    await expect(action(page)).toHaveText("Agregar alícuota");
+    await expect(action(page)).toHaveText("Agregar líquido");
     await page.keyboard.press("Enter");
     await page.clock.fastForward(450);
   }
+  await expect(page.locator("#mix-recipe")).toHaveText("Tubo 3 · W Agua 1.0 mL + O 1-octanol 1.0 mL");
   await expect(action(page)).toHaveText("Poner el tapón");
   await page.keyboard.press("Enter");
   for (let i = 0; i < 5; i++) {
@@ -239,7 +282,7 @@ test("Spanish keyboard controls and reduced motion give equivalent readings at p
   const read = page.getByRole("button", {name: "Leer las capas"});
   await expect(read).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(page.locator("#mix-observation")).toHaveText("Una franja transparente más delgada sobre una franja azul.");
+  await expect(page.locator("#mix-observation")).toHaveText("Una franja transparente sobre una franja azul.");
   await page.getByRole("link", {name: "EN English"}).click();
   await expect(page.locator("#mix-elapsed")).toHaveText("60 / 60 s");
   await expect(page.locator("#mix-liquid option").first()).toHaveText("Choose liquid");

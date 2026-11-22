@@ -63,7 +63,7 @@ test("the event-timed stopwatch freezes with the shot during a pause and stops a
   assert.equal(model.shotSnapshot(tube, "G", end).stopwatchMs, duration);
 });
 
-test("the magnet clears the stopwatch and releases the shot for a new event-timed run", () => {
+test("tilting the tube again clears the stopwatch and returns the shot for a new event-timed run", () => {
   const {tube, departure} = release("O");
   const contact = departure + shot.travelMs.O;
   const next = contact + 1000;
@@ -72,18 +72,20 @@ test("the magnet clears the stopwatch and releases the shot for a new event-time
 
   model.operateShot(tube, "O", next);
   model.operateShot(tube, "O", next + 1);
-  assert.equal(tube.phase, "magnet-return");
+  assert.equal(tube.phase, "tilting");
   assert.equal(tube.trial.startedAt, null);
   assert.equal(tube.trial.contactedAt, null);
   assert.equal(model.shotSnapshot(tube, "O", next + 1).stopwatchMs, 0);
-  model.updateShot(tube, "O", next + shot.magnetMs);
+  model.updateShot(tube, "O", next + shot.tiltMs);
   assert.equal(tube.phase, "at-stopper");
-  assert.equal(tube.orientation, "upright");
-  model.operateShot(tube, "O", next + shot.magnetMs);
-  const second = next + shot.magnetMs + shot.releaseMs;
+  assert.equal(tube.orientation, "tilted");
+  model.operateShot(tube, "O", next + shot.tiltMs);
+  assert.equal(tube.phase, "uprighting");
+  const second = next + shot.tiltMs + shot.uprightMs;
   model.updateShot(tube, "O", second);
   assert.equal(tube.trial.departedAt, second);
   assert.equal(tube.trial.startedAt, second);
+  assert.equal(model.shot.magnetMs, undefined, "there is no magnet");
 });
 
 test("water and glycerin replays mark both endpoints without changing recorded flight time", () => {

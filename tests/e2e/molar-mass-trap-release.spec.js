@@ -7,18 +7,20 @@ const station = (page, key) => page.locator(`[data-station="${key}"]`);
 const slot = (page, number) => page.locator(`[data-mix-tube="${number}"]`);
 const diameters = {W: 10, G: 12, O: 20, M: 22};
 const shotMs = {W: 270, G: 6400, O: 980, M: 2250};
+// The worksheet's five pairs. Students choose which tube gets which pair.
 const mixes = {
-  1: {pair: [["W", 1], ["G", 1]], layers: "One uniform blue-tinted layer."},
-  2: {pair: [["M", 1], ["W", 1]], layers: "A red band above a blue band."},
-  3: {pair: [["W", 1], ["O", 0.5]], layers: "A smaller clear band above a blue band."},
-  4: {pair: [["O", 0.5], ["M", 1]], layers: "One uniform red-tinted layer."},
-  5: {pair: [["M", 1], ["G", 1]], layers: "A red band above a clear band."}
+  1: {pair: ["W", "G"], layers: "One uniform blue-tinted layer."},
+  2: {pair: ["M", "W"], layers: "A red band above a blue band."},
+  3: {pair: ["W", "O"], layers: "A clear band above a blue band."},
+  4: {pair: ["O", "M"], layers: "One uniform red-tinted layer."},
+  5: {pair: ["M", "G"], layers: "A red band above a clear band."}
 };
 
 async function openLab(page, query = "") {
   await page.emulateMedia({reducedMotion: "reduce"});
   await page.clock.install();
   await page.goto(LAB + query);
+  await page.locator("#intro-start").click();
 }
 
 // Students copy each reading to the lab worksheet, so these helpers check what the bench shows.
@@ -29,7 +31,8 @@ async function measureWax(page, code) {
     await page.locator("#dispense").click();
     await page.clock.fastForward(280);
   }
-  await page.locator("#advance").click();
+  // The puddle settles on its own: 30 s on the clock in 2.5 s of real time.
+  await page.clock.fastForward(2600);
   const ruler = page.locator("#ruler-position");
   await ruler.focus();
   const steps = (Number(await ruler.inputValue()) + diameter / 2) / -0.5;
@@ -49,19 +52,21 @@ async function timeShot(page, code) {
   await page.clock.fastForward(shotMs[code] + 570);
   await expect(page.locator("#shot-time")).toHaveText(reading);
 
+  // Tilting the tube again clears the stopwatch and returns the shot to the stopper.
+  await expect(operate).toHaveText(/^(Tilt tube|Inclinar tubo)$/);
   await operate.click();
-  await page.clock.fastForward(720);
+  await expect(page.locator("#shot-time")).toHaveText("0.00 s");
+  await page.clock.fastForward(750);
   await operate.click();
-  await page.clock.fastForward(shotMs[code] + 250);
+  await page.clock.fastForward(shotMs[code] + 570);
   await expect(page.locator("#shot-time")).toHaveText(reading);
 }
 
 async function prepareMixture(page, number) {
   await slot(page, number).click();
   const action = page.locator("#mix-action");
-  for (const [code, ml] of mixes[number].pair) {
+  for (const code of mixes[number].pair) {
     await page.locator("#mix-liquid").selectOption(code);
-    await page.locator("#mix-amount").selectOption(String(ml));
     await action.click();
     await page.clock.fastForward(455);
   }
@@ -108,7 +113,7 @@ for (const order of orders) {
     await expect(page.locator("#mix-observation")).toHaveText(mixes[3].layers);
     await station(page, "shot").click();
     await expect(page.locator("#shot-time")).toHaveText("<0.5 s");
-    await expect(page.locator("#shot-operate")).toHaveText("Use magnet");
+    await expect(page.locator("#shot-operate")).toHaveText("Tilt tube");
   });
 }
 
@@ -127,11 +132,11 @@ test("the entire interleaved classroom walkthrough runs in both languages with b
   await prepareMixture(page, 3);
   await station(page, "wax").click();
   await measureWax(page, "W");
-  await page.clock.fastForward(60000);
+  await page.clock.fastForward(10000);
   await station(page, "mixing").click();
   await expect(page.locator("#mix-elapsed")).toHaveText("60 / 60 s");
   await readMixture(page, 3);
-  await expect(page.locator("#mix-observation")).toHaveText("Una franja transparente más delgada sobre una franja azul.");
+  await expect(page.locator("#mix-observation")).toHaveText("Una franja transparente sobre una franja azul.");
 
   await station(page, "shot").click();
   await timeShot(page, "W");
@@ -175,6 +180,7 @@ test("the lab keeps no student entries, so a reload starts fresh without a leave
   await measureWax(page, "W");
   await page.reload({timeout: 5000});
   expect(prompts).toEqual([]);
+  await expect(page.locator("#intro")).toBeVisible();
   await expect(page.locator("#drop-count")).toHaveText("0 / 3 drops · 0.00 mL");
   await expect(page.locator("main").getByRole("textbox")).toHaveCount(0);
 });

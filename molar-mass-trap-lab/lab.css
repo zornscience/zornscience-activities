@@ -405,6 +405,15 @@ body {
   stroke: #7bb1c8;
 }
 
+/* Rack tubes can be clicked to select them. */
+#shot-rack-content [data-shot-rack-tube] {
+  cursor: pointer;
+}
+
+#shot-rack-content [data-shot-rack-tube]:hover .zsa-mmt-shot-rack-outline {
+  stroke: #5d8ea6;
+}
+
 .zsa-mmt-shot-markers {
   fill: #b7d0da;
   font-size: 13px;
@@ -647,11 +656,33 @@ body {
 
 .zsa-mmt-mix-pipettes {
   display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 4px 8px;
   max-width: 440px;
   margin-top: 8px;
   font-size: 13px;
+}
+
+.zsa-mmt .zsa-mmt-mix-amount {
+  margin: 0;
+  color: #3e5b6e;
+}
+
+/* Buttons that carry the eyedropper icon beside their text. */
+.zsa-mmt .zsa-mmt-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.zsa-mmt-btn-icon {
+  flex: none;
+  width: 18px;
+  height: 18px;
+}
+
+.zsa-mmt-btn-icon[hidden] {
+  display: none;
 }
 
 .zsa-mmt-mix-pipettes label {
@@ -684,6 +715,189 @@ body {
 
 .zsa-mmt-mix-observation:empty {
   margin: 0;
+}
+
+/* Intro screen: the four liquids, their Lewis structures and molar masses. */
+.zsa-mmt-intro {
+  padding: 18px;
+  border: 1px solid #cedce7;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 3px 13px #193e5510;
+}
+
+.zsa-mmt-intro h2 {
+  margin: 0;
+  font-size: clamp(20px, 2.4vw, 26px);
+  font-weight: 650;
+  letter-spacing: -.02em;
+}
+
+.zsa-mmt-intro-lead {
+  max-width: 78ch;
+  margin: 8px 0 14px;
+  font-size: 16px;
+}
+
+.zsa-mmt .zsa-mmt-liquids {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.zsa-mmt-liquid-card {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid #d3e0e9;
+  border-radius: 10px;
+  background: #f8fbfd;
+}
+
+.zsa-mmt-liquid-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+}
+
+.zsa-mmt-liquid-head h3 {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 650;
+}
+
+.zsa-mmt-liquid-tint {
+  margin-left: auto;
+  color: #46627a;
+  font-size: 13px;
+}
+
+.zsa-mmt-lewis-frame {
+  display: grid;
+  place-items: center;
+  min-height: 120px;
+  padding: 6px;
+  border-radius: 8px;
+  background: #fff;
+}
+
+/* Every structure keeps the same atom size and only shrinks to fit a narrow card. */
+.zsa-mmt-lewis {
+  max-width: 100%;
+  height: auto;
+  color: #1d3446;
+}
+
+/* The stylesheet's display rules would otherwise override the hidden attribute. */
+.zsa-mmt #intro[hidden],
+.zsa-mmt #stations[hidden],
+.zsa-mmt #workspace[hidden] {
+  display: none;
+}
+
+.zsa-mmt-lewis-atoms {
+  fill: currentColor;
+  font-size: 15px;
+  font-weight: 650;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+.zsa-mmt-lewis-atoms .zsa-mmt-lewis-o {
+  fill: #b0352a;
+}
+
+.zsa-mmt-lewis-bonds {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+}
+
+.zsa-mmt-lewis-pairs {
+  fill: #b0352a;
+}
+
+.zsa-mmt .zsa-mmt-liquid-facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+}
+
+.zsa-mmt-liquid-facts dt {
+  color: #46627a;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.zsa-mmt .zsa-mmt-liquid-facts dd {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.zsa-mmt-liquid-facts sub {
+  line-height: 0;
+}
+
+/* Bar lengths compare molar masses, with mineral oil's roughly 300 g/mol as the full width. */
+.zsa-mmt-mass-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: #e3ecf2;
+  overflow: hidden;
+}
+
+.zsa-mmt-mass-bar span {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: #3f7691;
+}
+
+[data-liquid="W"] > .zsa-mmt-mass-bar span { width: 6%; }
+[data-liquid="G"] > .zsa-mmt-mass-bar span { width: 31%; }
+[data-liquid="O"] > .zsa-mmt-mass-bar span { width: 43%; }
+[data-liquid="M"] > .zsa-mmt-mass-bar span { width: 100%; }
+
+.zsa-mmt .zsa-mmt-intro-note {
+  margin: 10px 0 0;
+  color: #46627a;
+  font-size: 13px;
+}
+
+.zsa-mmt-intro-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid #dfe8ee;
+}
+
+.zsa-mmt-intro-actions p {
+  flex: 1 1 320px;
+  margin: 0;
+}
+
+.zsa-mmt .zsa-mmt-intro-actions .zsa-btn {
+  min-height: 44px;
+  padding-inline: 18px;
+  font-size: 16px;
+}
+
+@media (max-width: 700px) {
+  .zsa-mmt .zsa-mmt-liquids {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 /* With no notebook column, wide screens put each station's controls beside its scene so the whole bench fits without scrolling. */
@@ -733,16 +947,7 @@ body {
     flex-basis: 100%;
   }
 
-  /* Stack each pipette label above its menu so the full choice stays readable. */
-  #mix-pipettes {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  #mix-pipettes label[for="mix-liquid"] { grid-row: 1; }
-  #mix-liquid { grid-row: 2; }
-  #mix-pipettes label[for="mix-amount"] { grid-row: 3; }
-  #mix-amount { grid-row: 4; }
-}
+  /* Stack each pipette label above its menu so the full choice stays readable. */}
 
 @media (max-width: 540px) {
   .zsa-mmt {

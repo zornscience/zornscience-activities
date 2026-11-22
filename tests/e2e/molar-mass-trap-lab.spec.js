@@ -13,6 +13,17 @@ function collectErrors(page) {
   return errors;
 }
 
+// The intro screen comes first. Starting the lab reveals the bench.
+async function start(page, url = LAB) {
+  await page.goto(url);
+  await page.locator("#intro-start").click();
+}
+
+// A third drop starts a 2.5 s settle that the clock shows as 30 s.
+async function settle(page) {
+  await page.clock.runFor(2600);
+}
+
 async function addDrops(page) {
   const drop = page.locator("#dispense");
   for (let i = 0; i < 3; i++) {
@@ -51,7 +62,7 @@ async function inspectGeometry(page) {
 test("all four puddles merge in their own boxes, settle independently, and reset only on request", async ({page}) => {
   const errors = collectErrors(page);
   await page.clock.install();
-  await page.goto(LAB);
+  await start(page);
   const expected = {W: 10, G: 12, O: 20, M: 22};
   const heights = {};
   await expect(page.getByRole("group", {name: "Lab stations"}).getByRole("button")).toHaveCount(3);
@@ -61,7 +72,6 @@ test("all four puddles merge in their own boxes, settle independently, and reset
   for (const code of ["M", "W", "O", "G"]) {
     await page.locator('[data-bottle="' + code + '"]').click();
     await expect(page.locator("#drop-count")).toHaveText("0 / 3 drops · 0.00 mL");
-    await expect(page.locator("#advance")).toBeDisabled();
 
     // Several activations in one frame must still dispense a single drop.
     await page.locator("#dispense").evaluate((button) => {
@@ -79,10 +89,13 @@ test("all four puddles merge in their own boxes, settle independently, and reset
     if (code === "M") {
       await page.locator('[data-station="mixing"]').click();
       await expect(page.locator("#station-tag")).toHaveText("Simulated mixtures");
-      await page.clock.fastForward(30000);
+      await page.clock.fastForward(2600);
       await page.locator('[data-station="wax"]').click();
     } else {
-      await page.locator("#advance").click();
+      await expect(page.locator("#settle-clock")).not.toHaveText(/Settled/);
+      await page.clock.runFor(1250);
+      await expect(page.locator("#settle-clock")).toHaveText(/^Settling 1[45] \/ 30 s$/);
+      await page.clock.runFor(1350);
     }
     await expect(page.locator("#settle-clock")).toHaveText("Settled · 30 s");
     const settled = await inspectGeometry(page);
@@ -110,13 +123,13 @@ test("all four puddles merge in their own boxes, settle independently, and reset
 
 test("the wax overview updates a settling puddle while another liquid is selected", async ({page}) => {
   await page.clock.install();
-  await page.goto(LAB);
+  await start(page);
   await page.locator('[data-bottle="M"]').click();
   await addDrops(page);
   await page.locator('[data-bottle="W"]').click();
   const mineralOil = page.locator('#wax-boxes [data-liquid="M"] ellipse');
   expect(Number(await mineralOil.getAttribute("rx"))).toBeLessThan(11);
-  await page.clock.fastForward(31000);
+  await page.clock.fastForward(2600);
   await expect(mineralOil).toHaveAttribute("rx", "11");
   await expect(page.locator('[data-bottle="W"]')).toHaveAttribute("aria-pressed", "true");
 });
@@ -131,11 +144,11 @@ test("the ruler and side view agree for a calibrated bead above 90 degrees", asy
     });
   });
   await page.clock.install();
-  await page.goto(LAB);
+  await start(page);
   await addDrops(page);
   const initial = await inspectGeometry(page);
   expect(initial.profileHeight).toBeCloseTo(initial.diameter, 4);
-  await page.locator("#advance").click();
+  await settle(page);
   const settled = await inspectGeometry(page);
   expect(settled.diameter).toBeCloseTo(7, 4);
   expect(settled.profileWidth).toBeCloseTo(settled.diameter, 4);
@@ -155,10 +168,9 @@ test("the ruler and side view agree for a calibrated bead above 90 degrees", asy
 test("keyboard only can align zero for clear glycerin and keep the reading through both other stations", async ({page}) => {
   const errors = collectErrors(page);
   await page.clock.install();
-  await page.goto(LAB);
+  await start(page);
   const bottle = page.getByRole("button", {name: "G Glycerin"});
   const drop = page.locator("#dispense");
-  const advance = page.locator("#advance");
   const range = page.getByRole("slider", {name: "Ruler position"});
   const edges = page.getByRole("button", {name: "Read edges"});
   await tabTo(page, bottle);
@@ -168,8 +180,7 @@ test("keyboard only can align zero for clear glycerin and keep the reading throu
     await page.keyboard.press("Space");
     await page.clock.runFor(300);
   }
-  await tabTo(page, advance);
-  await page.keyboard.press("Enter");
+  await settle(page);
   await tabTo(page, edges);
   await page.keyboard.press("Enter");
   await expect(page.locator("#edge-reading")).toHaveText(/Left edge 8 mm. Right edge 20 mm/);
@@ -195,10 +206,10 @@ test("keyboard only can align zero for clear glycerin and keep the reading throu
 test("pointer ruler stays aligned to the scaled artwork at 360 px and 200% layout zoom", async ({page}) => {
   await page.clock.install();
   await page.setViewportSize({width: 1366, height: 768});
-  await page.goto(LAB);
+  await start(page);
   await page.locator('[data-bottle="O"]').click();
   await addDrops(page);
-  await page.locator("#advance").click();
+  await settle(page);
 
   const rulerFace = page.locator("#ruler-hit");
   const box = await rulerFace.boundingBox();
@@ -230,12 +241,12 @@ test("Mexican Spanish covers the live stations, dialogs, and shared URLs", async
   const errors = collectErrors(page);
   await page.clock.install();
   await page.setViewportSize({width: 360, height: 720});
-  await page.goto(LAB + "?lang=es&example=discard");
+  await start(page, LAB + "?lang=es&example=discard");
   await expect(page.locator("html")).toHaveAttribute("lang", "es-MX");
   await expect(page.getByRole("heading", {name: "Laboratorio virtual de la trampa de la masa molar"})).toBeVisible();
   await page.getByRole("button", {name: "O 1-octanol"}).click();
   await addDrops(page);
-  await page.getByRole("button", {name: "Avanzar a 30 s"}).click();
+  await settle(page);
   await page.getByRole("button", {name: "Leer los bordes"}).click();
   await expect(page.locator("#edge-reading")).toHaveText(/Borde izquierdo 4 mm. Borde derecho 24 mm/);
   await expect(page.locator('[data-station="wax"]')).toContainText("¿Gota alta o charco plano?");
@@ -281,7 +292,7 @@ test("reduced motion and blocked storage keep the wax sample during the session"
     }
   });
   await page.clock.install();
-  await page.goto(LAB);
+  await start(page);
   await page.locator("#dispense").click();
   await expect(page.locator("#falling-drop")).toBeHidden();
   await page.clock.runFor(300);
@@ -293,9 +304,9 @@ test("reduced motion and blocked storage keep the wax sample during the session"
 
 test("the settled ruler has no axe violations at laptop and portrait widths", async ({page}) => {
   await page.clock.install();
-  await page.goto(LAB);
+  await start(page);
   await addDrops(page);
-  await page.locator("#advance").click();
+  await settle(page);
   const axe = fs.readFileSync(require.resolve("axe-core/axe.min.js"), "utf8");
   await page.evaluate(axe);
   async function audit() {
@@ -317,9 +328,9 @@ test("wide screens put each station's controls beside its scene with no scrollin
   const scenes = {wax: "#wax-bench .zsa-mmt-scene", shot: "#shot-bench .zsa-mmt-scene", mixing: "#mixing-bench .zsa-mmt-scene"};
   for (const viewport of [{width: 1366, height: 768}, {width: 1280, height: 720}, {width: 900, height: 900}]) {
     await page.setViewportSize(viewport);
-    await page.goto(LAB);
+    await start(page);
     await addDrops(page);
-    await page.locator("#advance").click();
+    await settle(page);
     for (const key of ["wax", "shot", "mixing"]) {
       await page.locator('[data-station="' + key + '"]').click();
       const scene = await page.locator(scenes[key]).boundingBox();
@@ -333,4 +344,58 @@ test("wide screens put each station's controls beside its scene with no scrollin
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(viewport.width);
     }
   }
+});
+
+test("the intro shows each liquid's Lewis structure and molar mass before the bench, in both languages", async ({page}) => {
+  const errors = collectErrors(page);
+  await page.goto(LAB);
+  const intro = page.locator("#intro");
+  await expect(page.getByRole("region", {name: "Meet the four liquids"})).toBeVisible();
+  await expect(page.locator("#stations")).toBeHidden();
+  await expect(page.locator("#workspace")).toBeHidden();
+  await expect(page.locator("#intro-open")).toBeHidden();
+  const cards = intro.locator(".zsa-mmt-liquid-card");
+  await expect(cards).toHaveCount(4);
+  const expected = {W: ["Water", "18 g/mol"], G: ["Glycerin", "92 g/mol"], O: ["1-octanol", "130 g/mol"], M: ["Mineral oil", "Roughly 300 g/mol or more"]};
+  for (const [code, [name, mass]] of Object.entries(expected)) {
+    const card = intro.locator('[data-liquid="' + code + '"]');
+    await expect(card.getByRole("heading", {level: 3})).toHaveText(name);
+    await expect(card.getByRole("img", {name: /^Lewis structure of/})).toBeVisible();
+    await expect(card.locator("dd").nth(1)).toHaveText(mass);
+  }
+  // Bar widths follow molar mass, lightest to heaviest.
+  const widths = [];
+  for (const code of ["W", "G", "O", "M"]) {
+    widths.push(await intro.locator('[data-liquid="' + code + '"] .zsa-mmt-mass-bar span').evaluate((bar) => bar.getBoundingClientRect().width));
+  }
+  expect([...widths].sort((a, b) => a - b)).toEqual(widths);
+  expect(widths[0]).toBeGreaterThan(0);
+
+  const axe = fs.readFileSync(require.resolve("axe-core/axe.min.js"), "utf8");
+  await page.evaluate(axe);
+  const audit = async () => expect(await page.evaluate(async () => {
+    const result = await window.axe.run({runOnly: {type: "tag", values: ["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa", "best-practice"]}});
+    return result.violations.map((v) => [v.id, v.nodes.map((n) => n.target)]);
+  })).toEqual([]);
+  await audit();
+
+  await page.getByRole("button", {name: "Start the lab"}).click();
+  await expect(intro).toBeHidden();
+  await expect(page.locator("#workspace")).toBeVisible();
+  await expect(page.locator('[data-station="wax"]')).toBeFocused();
+  await page.getByRole("button", {name: "Intro"}).click();
+  await expect(intro).toBeVisible();
+  await expect(page.locator("#intro-title")).toBeFocused();
+  await expect(page.locator("#workspace")).toBeHidden();
+
+  await page.setViewportSize({width: 360, height: 720});
+  await page.getByRole("link", {name: "ES Español"}).click();
+  await expect(page.getByRole("region", {name: "Conoce los cuatro líquidos"})).toBeVisible();
+  await expect(intro.locator('[data-liquid="M"] dd').nth(1)).toHaveText("Aproximadamente 300 g/mol o más");
+  await expect(intro.locator('[data-liquid="W"]').getByRole("img", {name: /^Estructura de Lewis del agua/})).toBeVisible();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(360);
+  await audit();
+  await page.getByRole("button", {name: "Empezar el laboratorio"}).click();
+  await expect(page.locator("#workspace")).toBeVisible();
+  expect(errors).toEqual([]);
 });
