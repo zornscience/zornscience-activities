@@ -136,6 +136,7 @@
       "Enter two times in seconds with a decimal point, or use <0.5 for a fall too fast to time.": "Anota dos tiempos en segundos con punto decimal, o usa <0.5 si la caída es demasiado rápida para medirla.",
       "{lower} to <{upper} s": "{lower} a <{upper} s",
       "Trials {first}, {second}": "Ensayos {first}, {second}",
+      "Lab's average: {value}": "Promedio del laboratorio: {value}",
       "Trials {first} and {second} give an average of {seconds} s.": "Los ensayos {first} y {second} dan un promedio de {seconds} s.",
       "The average of trials {first} and {second} is less than 0.5 s.": "El promedio de los ensayos {first} y {second} es menor de 0.5 s.",
       "For trials {first} and {second}, the average is at least {lower} s and less than {upper} s.": "En los ensayos {first} y {second}, el promedio es de al menos {lower} s y menor de {upper} s.",

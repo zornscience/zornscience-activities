@@ -40,6 +40,13 @@
     const blankText = model.encodeNotebook(model.createState().notebook);
     let savedText = blankText;
 
+    // Local date and time tell saved files apart on a shared laptop without putting a name in the file.
+    function notebookFileName(date) {
+      const two = (value) => String(value).padStart(2, "0");
+      const day = `${date.getFullYear()}-${two(date.getMonth() + 1)}-${two(date.getDate())}`;
+      return `molar-mass-trap-notebook-${day}-${two(date.getHours())}${two(date.getMinutes())}.json`;
+    }
+
     function hasUnsavedEntries() {
       const text = model.encodeNotebook(notebook());
       return text !== blankText && text !== savedText;
@@ -146,7 +153,7 @@
       const url = URL.createObjectURL(file);
       const link = element("a");
       link.href = url;
-      link.download = "molar-mass-trap-notebook.json";
+      link.download = notebookFileName(new Date());
       link.click();
       setTimeout(() => URL.revokeObjectURL(url), 1000);
       fileMessage = "Notebook file ready to save.";

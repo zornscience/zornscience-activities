@@ -151,7 +151,7 @@ test("the entire interleaved classroom walkthrough prints and reopens with brows
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   for (const code of ["M", "O", "G"]) await timeShot(page, code);
   await page.locator("#shot-check-averages").click();
-  const means = ["<0.5 s", "6.40 s", "0.98 s", "2.25 s"];
+  const means = ["<0.5 s", "6.40 s", "0.98 s", "2.25 s"].map((value) => "Lab's average: " + value);
   await expect(page.locator("#shot-entries .zsa-mmt-shot-result")).toHaveText(means);
   await station(page, "wax").click();
   for (const code of ["G", "M", "O"]) await measureWax(page, code);
@@ -221,7 +221,8 @@ test("the entire interleaved classroom walkthrough prints and reopens with brows
   await page.keyboard.press("Escape");
   await expect(page.locator("#debrief-explanation")).toHaveValue(explanation);
   const [download] = await Promise.all([page.waitForEvent("download"), page.locator("#save-notebook").click()]);
-  expect(download.suggestedFilename()).toBe("molar-mass-trap-notebook.json");
+  // The local date and time keep files apart on a shared laptop.
+  expect(download.suggestedFilename()).toMatch(/^molar-mass-trap-notebook-\d{4}-\d{2}-\d{2}-\d{4}\.json$/);
   const saved = testInfo.outputPath("classroom-notebook.json");
   await download.saveAs(saved);
   await page.reload();

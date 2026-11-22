@@ -344,8 +344,16 @@ test("all four averages stay visible alongside the wax notebook and respect the 
   await glycerin.getByRole("textbox", {name: "Average fall time (s)"}).fill("6.4");
   const check = page.getByRole("button", {name: "Check averages"});
   await check.click();
-  await expect(page.locator("#shot-entries .zsa-mmt-shot-result")).toHaveText(["<0.5 s", "6.42 s", "1.00 s", "2.25 s"]);
+  await expect(page.locator("#shot-entries .zsa-mmt-shot-result")).toHaveText(
+    ["<0.5 s", "6.42 s", "1.00 s", "2.25 s"].map((value) => "Lab's average: " + value)
+  );
   await expect(extra(page, "G")).toContainText("Your average matches.");
+  // In print, the student's own average and the lab's average stay separate, and a blank student average stays blank.
+  await page.emulateMedia({media: "print"});
+  await expect(glycerin.locator("td").last()).toContainText("6.4");
+  await expect(glycerin.locator("td").last()).toContainText("Lab's average: 6.42 s");
+  await expect(card(page, "O").locator("td").last()).toHaveText("Lab's average: 1.00 s");
+  await page.emulateMedia({media: "screen"});
   await glycerin.getByRole("textbox", {name: "Fall time, trial 1 (s)"}).fill("6,31");
   await check.click();
   await expect(extra(page, "G")).toContainText("with a decimal point");

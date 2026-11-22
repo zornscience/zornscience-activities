@@ -234,7 +234,8 @@
         message += " " + t(model.shotMeanMatches(checked, entry.studentMean) ?
           "Your average matches." : "Check your average against these two trials.");
       }
-      setText(result, compact);
+      // Label the computed value so the notebook and printout never pass it off as the student's own average.
+      setText(result, t("Lab's average: {value}", {value: compact}));
       setText(summary, message);
     }
 
