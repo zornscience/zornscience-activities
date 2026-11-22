@@ -1,0 +1,133 @@
+.zsa-as {
+  --zsa-max-width: 1192px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+.zsa-as-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(268px, 306px);
+  gap: 16px;
+  align-items: start;
+}
+.zsa-as-bench, .zsa-as-instruments {
+  min-width: 0;
+  border: 1px solid #d4e2ee;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.zsa-as-bench {
+  background: #eef4f7;
+  box-shadow: 0 8px 22px #203d5610;
+}
+.zsa-as-bench-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px 12px;
+  min-height: 50px;
+  padding: 10px 18px;
+  border-bottom: 1px solid #d4e2ee;
+  background: #f8fbfd;
+}
+.zsa-as-bench-heading h2 {
+  margin: 0;
+  font-size: clamp(16px, 2.2vw, 23px);
+  font-weight: 650;
+}
+.zsa-as-bench-heading span { font-size: 14px; font-weight: 600; white-space: nowrap; }
+.zsa-as-bench canvas { display: block; width: 100%; height: auto; }
+.zsa-as-instruments {
+  padding: 14px;
+  background: #fff;
+  font-size: 15px;
+  line-height: 1.4;
+  overflow: visible;
+}
+.zsa-as-clock {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 0 8px;
+  padding: 10px 14px;
+  border: 1px solid #29435d;
+  border-radius: 10px;
+  background: #132b44;
+  color: #e6f1ff;
+}
+.zsa-as-clock p { margin: 0; }
+.zsa-as-clock p:first-child { font-size: 13px; font-weight: 600; }
+.zsa-as-clock #clock-state { grid-column: 2; grid-row: 1; font-size: 12px; color: #b9d8ef; }
+.zsa-as-time {
+  grid-column: 1 / -1;
+  font-size: clamp(30px, 4vw, 50px);
+  line-height: 1.15;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -.05em;
+  overflow-wrap: anywhere;
+}
+.zsa-as-unit { font-size: .43em; font-weight: 500; letter-spacing: 0; }
+.zsa-as-primary { margin-top: 10px; }
+.zsa-as-primary .zsa-btn {
+  width: 100%;
+  min-height: 48px;
+  font-size: 15px;
+  line-height: 1.25;
+  font-weight: 650;
+  padding: 9px 10px;
+}
+.zsa-as-primary #stop[aria-disabled="true"] {
+  border-color: #c7d6ee;
+  background: #f3f7fb;
+  color: #475a70;
+}
+.zsa-as-cue { margin: 10px 0; min-height: 2.8em; }
+.zsa-as-evidence { margin: 0; }
+.zsa-as-evidence div {
+  display: grid;
+  grid-template-columns: minmax(74px, .65fr) minmax(0, 1.35fr);
+  gap: 6px;
+  padding: 6px 0;
+  border-top: 1px solid #e2eaf2;
+}
+.zsa-as-evidence dt { color: #47627b; }
+.zsa-as-evidence dd { margin: 0; color: #142f4a; font-weight: 550; }
+.zsa-as-after { display: grid; gap: 7px; margin-top: 10px; }
+.zsa-as-after button { font-size: 14px; padding: 6px 8px; }
+.zsa-as-picker { display: grid; gap: 4px; margin-bottom: 10px; }
+.zsa-as-picker select {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid #8a9db0;
+  border-radius: 8px;
+  background: white;
+  color: var(--zsa-navy);
+}
+.zsa-as-worksheet {
+  margin: 16px 0;
+  padding: 14px 18px;
+  border: 1px solid var(--zsa-border);
+  border-radius: 12px;
+}
+.zsa-as-worksheet h2 { margin: 0; font-size: 19px; font-weight: 650; }
+.zsa-as-worksheet p, .zsa-as-worksheet summary { font-size: 15px; }
+.zsa-as-worksheet p { margin: 6px 0; }
+.zsa-as summary { cursor: pointer; font-weight: 600; }
+.zsa-as summary:focus-visible { outline: var(--zsa-focus-ring); outline-offset: var(--zsa-focus-offset); }
+.zsa-as .zsa-footer { margin-top: 18px; padding-top: 10px; font-size: 13px; gap: 4px 14px; }
+.zsa-as-embed-license { display: none; }
+.zsa-as.zsa--embedded .zsa-as-embed-license { display: inline; }
+@media (max-width: 740px) {
+  .zsa-as { padding: 10px 12px; }
+  .zsa-as [data-zsa-header] { margin-bottom: 10px !important; }
+  .zsa-as-workspace { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .zsa-as-bench-heading { min-height: 36px; padding: 6px 10px; }
+  .zsa-as-bench canvas { max-height: 36vh; object-fit: contain; }
+  .zsa-as-instruments { padding: 8px; }
+  .zsa-as-clock { grid-template-columns: minmax(0, 1fr) auto; align-items: center; padding: 5px 10px; }
+  .zsa-as-clock #clock-state { grid-column: 1; grid-row: 2; }
+  .zsa-as-time { grid-column: 2; grid-row: 1 / 3; }
+  .zsa-as-primary { margin-top: 7px; }
+  .zsa-as-cue { min-height: 0; margin: 7px 0; }
+  .zsa-as-evidence div { padding: 4px 3px; }
+}

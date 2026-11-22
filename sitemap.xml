@@ -49,6 +49,18 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/leaf-disk-lab/"/>
   </url>
   <url>
+    <loc>https://activities.zornscience.org/alka-seltzer-reaction-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/alka-seltzer-reaction-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/alka-seltzer-reaction-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/alka-seltzer-reaction-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/alka-seltzer-reaction-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/alka-seltzer-reaction-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/alka-seltzer-reaction-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/alka-seltzer-reaction-lab/"/>
+  </url>
+  <url>
     <loc>https://activities.zornscience.org/btb-carbon-cycle-lab/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/btb-carbon-cycle-lab/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/btb-carbon-cycle-lab/?lang=es"/>
