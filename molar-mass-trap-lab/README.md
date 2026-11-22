@@ -8,7 +8,7 @@ A virtual investigation for Chemistry and Honors Chemistry Unit 4. The classroom
 
 From the repository root, run `npm run serve` and open `http://127.0.0.1:8000/molar-mass-trap-lab/`. Add `?lang=es` for Mexican Spanish. The bench is ready on load. Each station can empty or reset its selected apparatus.
 
-The notebook keeps editable evidence, predictions and debrief responses in the session. **Save notebook file** downloads a local copy, and **Open notebook file** can reopen those entries after a reload. The file contains notebook work. The apparatus starts fresh on a reload. **Print notebook** includes the recorded predictions, all three tests, checked averages, and the written debrief. **Start fresh** clears the session after confirmation.
+The notebook keeps editable evidence, predictions and debrief responses in the session. **Save notebook file** downloads a local copy, and **Open notebook file** can reopen those entries after a reload. The file contains notebook work. The apparatus starts fresh on a reload. While the notebook has entries that have not been saved to a file, the browser asks before a reload, a closed tab or a link clears them. Saving, reopening a file or **Start fresh** clears that reminder. **Print notebook** includes the recorded predictions, all three tests, checked averages, and the written debrief. **Start fresh** clears the session after confirmation.
 
 ## Measurement model
 

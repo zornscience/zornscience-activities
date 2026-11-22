@@ -36,6 +36,14 @@
     const fileOpen = $("open-notebook-confirm");
     let checked = false;
     let fileMessage = "", openMessage = "", openAttempt = 0;
+    // The notebook as last saved to or opened from a file. A blank notebook needs no warning.
+    const blankText = model.encodeNotebook(model.createState().notebook);
+    let savedText = blankText;
+
+    function hasUnsavedEntries() {
+      const text = model.encodeNotebook(notebook());
+      return text !== blankText && text !== savedText;
+    }
 
     function setOptions(select, options, value) {
       select.replaceChildren(...options.map(([key, label]) => {
@@ -133,7 +141,8 @@
     });
 
     $("save-notebook").addEventListener("click", () => {
-      const file = new Blob([model.encodeNotebook(notebook())], {type: "application/json"});
+      savedText = model.encodeNotebook(notebook());
+      const file = new Blob([savedText], {type: "application/json"});
       const url = URL.createObjectURL(file);
       const link = element("a");
       link.href = url;
@@ -178,11 +187,20 @@
       checked = false;
       fileMessage = "Notebook entries reopened.";
       replaceNotebook(imported);
+      savedText = model.encodeNotebook(notebook());
       dialog.close();
+    });
+
+    // Reloading or closing the page clears the notebook, so ask first when entries have not been saved to a file.
+    window.addEventListener("beforeunload", (event) => {
+      if (!hasUnsavedEntries()) return;
+      event.preventDefault();
+      event.returnValue = "";
     });
 
     return {render, reset() {
       checked = false;
+      savedText = blankText;
       fileMessage = "";
       $("predictions").open = false;
       $("reasoning-notes").open = false;

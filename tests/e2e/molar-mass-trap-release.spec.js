@@ -278,3 +278,38 @@ test("the chemistry directory opens the lab with the matching language and canon
     await expect(page.locator('link[hreflang="es"]')).toHaveAttribute("href", "https://activities.zornscience.org" + LAB + "?lang=es");
   }
 });
+
+test("leaving the page asks first only while notebook entries are unsaved", async ({page}) => {
+  const prompts = [];
+  page.on("dialog", async (dialog) => {
+    prompts.push(dialog.type());
+    await dialog.dismiss();
+  });
+  // A dismissed prompt cancels the reload, so allow a short timeout in that case.
+  const reload = () => page.reload({timeout: 2000}).catch(() => {});
+  const diameter = () => waxRow(page, "W").getByRole("textbox");
+
+  await page.goto(LAB);
+  await station(page, "shot").click();
+  await reload();
+  expect(prompts).toEqual([]);
+
+  // Browsers only ask after a real user gesture, so type the entry.
+  await diameter().click();
+  await page.keyboard.type("10");
+  await reload();
+  expect(prompts).toEqual(["beforeunload"]);
+  await expect(diameter()).toHaveValue("10");
+
+  await Promise.all([page.waitForEvent("download"), page.locator("#save-notebook").click()]);
+  await reload();
+  expect(prompts).toEqual(["beforeunload"]);
+  await expect(diameter()).toHaveValue("");
+
+  await diameter().click();
+  await page.keyboard.type("12");
+  await page.locator("#restart-open").click();
+  await page.locator("#restart-confirm").click();
+  await reload();
+  expect(prompts).toEqual(["beforeunload"]);
+});
