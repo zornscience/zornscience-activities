@@ -48,15 +48,16 @@ async function inspectGeometry(page) {
   });
 }
 
-test("all four puddles merge in their own boxes, settle independently, and preserve editable readings", async ({page}) => {
+test("all four puddles merge in their own boxes, settle independently, and reset only on request", async ({page}) => {
   const errors = collectErrors(page);
   await page.clock.install();
   await page.goto(LAB);
   const expected = {W: 10, G: 12, O: 20, M: 22};
   const heights = {};
   await expect(page.getByRole("group", {name: "Lab stations"}).getByRole("button")).toHaveCount(3);
-  await expect(page.getByRole("columnheader")).toHaveText(["Liquid", "Puddle sketch (side view)", "Puddle diameter (mm)"]);
-  await expect(page.locator("#notebook-entries input")).toHaveCount(4);
+  // Students record data on the lab worksheet, so the page has no notebook, predictions or debrief.
+  await expect(page.locator("main").getByRole("textbox")).toHaveCount(0);
+  await expect(page.getByRole("heading", {name: /notebook|debrief/i})).toHaveCount(0);
   for (const code of ["M", "W", "O", "G"]) {
     await page.locator('[data-bottle="' + code + '"]').click();
     await expect(page.locator("#drop-count")).toHaveText("0 / 3 drops · 0.00 mL");
@@ -90,25 +91,19 @@ test("all four puddles merge in their own boxes, settle independently, and prese
     expect(settled.profileWidth).toBeCloseTo(settled.diameter, 4);
     expect(settled.profileHeight).toBeGreaterThan(0);
     heights[code] = settled.profileHeight;
-    const row = page.locator("#liquid-" + code).locator("..");
-    await row.getByRole("textbox").fill(String(expected[code]));
-    await row.getByRole("combobox").selectOption(code === "M" || code === "O" ? "flat" : "tall");
   }
   expect(Math.min(heights.W, heights.G)).toBeGreaterThan(Math.max(heights.M, heights.O));
   await expect(page.locator('#wax-boxes ellipse[visibility="visible"]')).toHaveCount(4);
   await page.locator("#reset-sample").click();
   await expect(page.locator("#drop-count")).toHaveText("0 / 3 drops · 0.00 mL");
   await expect(page.locator('#wax-boxes ellipse[visibility="visible"]')).toHaveCount(3);
-  const glycerin = page.locator("#liquid-G").locator("..").getByRole("textbox");
-  await expect(glycerin).toHaveValue("12");
-  await glycerin.fill("12.1");
   await page.locator("#restart-open").click();
+  await expect(page.getByRole("dialog", {name: "Start fresh?"})).toContainText("This resets all three stations and starts the lab over.");
   await page.getByRole("button", {name: "Cancel", exact: true}).click();
-  await expect(glycerin).toHaveValue("12.1");
+  await expect(page.locator('#wax-boxes ellipse[visibility="visible"]')).toHaveCount(3);
   await expect(page.locator("#restart-open")).toBeFocused();
   await page.locator("#restart-open").click();
-  await page.locator("#restart-confirm").click();
-  await expect(glycerin).toHaveValue("");
+  await page.getByRole("button", {name: "Reset all stations"}).click();
   await expect(page.locator('#wax-boxes ellipse[visibility="visible"]')).toHaveCount(0);
   expect(errors).toEqual([]);
 });
@@ -157,7 +152,7 @@ test("the ruler and side view agree for a calibrated bead above 90 degrees", asy
   );
 });
 
-test("keyboard only can align zero for clear glycerin, record the profile, and keep it through both other stations", async ({page}) => {
+test("keyboard only can align zero for clear glycerin and keep the reading through both other stations", async ({page}) => {
   const errors = collectErrors(page);
   await page.clock.install();
   await page.goto(LAB);
@@ -166,7 +161,6 @@ test("keyboard only can align zero for clear glycerin, record the profile, and k
   const advance = page.locator("#advance");
   const range = page.getByRole("slider", {name: "Ruler position"});
   const edges = page.getByRole("button", {name: "Read edges"});
-  const row = page.locator("#liquid-G").locator("..");
   await tabTo(page, bottle);
   await page.keyboard.press("Enter");
   await tabTo(page, drop);
@@ -185,12 +179,6 @@ test("keyboard only can align zero for clear glycerin, record the profile, and k
   await tabTo(page, edges);
   await page.keyboard.press("Enter");
   await expect(page.locator("#edge-reading")).toHaveText(/Left edge 0 mm. Right edge 12 mm/);
-  await tabTo(page, row.getByRole("combobox"));
-  await page.keyboard.press("ArrowDown");
-  await page.keyboard.press("Enter");
-  await expect(row.getByRole("combobox")).toHaveValue("tall");
-  await tabTo(page, row.getByRole("textbox"));
-  await page.keyboard.type("12");
 
   for (const station of ["mixing", "shot", "wax"]) {
     const button = page.locator('[data-station="' + station + '"]');
@@ -200,8 +188,7 @@ test("keyboard only can align zero for clear glycerin, record the profile, and k
   }
   await expect(bottle).toHaveAttribute("aria-pressed", "true");
   await expect(page.locator("#edge-reading")).toHaveText(/Left edge 0 mm. Right edge 12 mm/);
-  await expect(row.getByRole("textbox")).toHaveValue("12");
-  await expect(row.getByRole("combobox")).toHaveValue("tall");
+  await expect(range).toHaveAttribute("aria-valuetext", "Zero 6 mm left of center");
   expect(errors).toEqual([]);
 });
 
@@ -239,7 +226,7 @@ test("pointer ruler stays aligned to the scaled artwork at 360 px and 200% layou
   await verifyAligned();
 });
 
-test("Mexican Spanish covers the live stations, print, dialogs, and shared URLs", async ({page}) => {
+test("Mexican Spanish covers the live stations, dialogs, and shared URLs", async ({page}) => {
   const errors = collectErrors(page);
   await page.clock.install();
   await page.setViewportSize({width: 360, height: 720});
@@ -251,16 +238,13 @@ test("Mexican Spanish covers the live stations, print, dialogs, and shared URLs"
   await page.getByRole("button", {name: "Avanzar a 30 s"}).click();
   await page.getByRole("button", {name: "Leer los bordes"}).click();
   await expect(page.locator("#edge-reading")).toHaveText(/Borde izquierdo 4 mm. Borde derecho 24 mm/);
-  const row = page.locator("#liquid-O").locator("..");
-  await expect(page.getByRole("columnheader")).toHaveText(["Líquido", "Dibujo del charco (vista lateral)", "Diámetro del charco (mm)"]);
   await expect(page.locator('[data-station="wax"]')).toContainText("¿Gota alta o charco plano?");
   await expect(page.locator('[data-station="shot"]')).toContainText("Carrera del perdigón de acero");
   await expect(page.locator('[data-station="mixing"]')).toContainText("¿Se mezclan o forman capas?");
-  await row.getByRole("textbox", {name: /Diámetro del charco \(mm\)/}).fill("20");
-  await row.getByRole("combobox", {name: /vista lateral/}).selectOption({label: "Charco plano"});
-  await page.getByLabel("Otras observaciones").fill("El 1-octanol se extendió.");
   await page.getByRole("button", {name: "Instrucciones"}).click();
-  await expect(page.getByRole("dialog", {name: "Investigación con papel encerado"})).toBeVisible();
+  const instructions = page.getByRole("dialog", {name: "Investigación con papel encerado"});
+  await expect(instructions).toBeVisible();
+  await expect(instructions).toContainText("Anota el diámetro y dibuja la vista lateral en tu hoja de trabajo del laboratorio.");
   await page.keyboard.press("Escape");
   await expect(page.getByRole("button", {name: "Instrucciones"})).toBeFocused();
 
@@ -269,30 +253,27 @@ test("Mexican Spanish covers the live stations, print, dialogs, and shared URLs"
   expect(share).toBe("https://activities.zornscience.org" + LAB + "?lang=es");
   await page.keyboard.press("Escape");
   await page.getByRole("link", {name: "EN English"}).click();
-  await expect(row.getByRole("combobox")).toHaveValue("flat");
-  await expect(row.getByRole("combobox").locator("option:checked")).toHaveText("Flat puddle");
-  await expect(page.getByLabel("Other observations")).toHaveValue("El 1-octanol se extendió.");
+  await expect(page.locator("#edge-reading")).toHaveText(/Left edge 4 mm. Right edge 24 mm/);
+  await expect(page.locator("#drop-count")).toHaveText("3 / 3 drops · 0.15 mL");
   await page.getByRole("link", {name: "ES Español"}).click();
+  await page.locator("#restart-open").click();
+  await expect(page.getByRole("dialog", {name: "¿Empezar de nuevo?"})).toContainText("Esto reinicia las tres estaciones y empieza el laboratorio de nuevo.");
+  await page.getByRole("button", {name: "Cancelar", exact: true}).click();
   await page.locator('[data-station="shot"]').click();
   await expect(page.getByRole("img", {name: "Equipo de la prueba con perdigones"})).toBeVisible();
   await expect(page.locator("#station-tag")).toHaveText("Tiempos simulados");
   await page.locator('[data-station="mixing"]').click();
   await expect(page.locator("#station-tag")).toHaveText("Mezclas simuladas");
   await expect(page.getByRole("group", {name: "Gradilla de mezclas"})).toBeVisible();
-  await page.emulateMedia({media: "print"});
-  await expect(row.getByText("20", {exact: true})).toBeVisible();
-  await expect(row.getByText("Charco plano", {exact: true}).last()).toBeVisible();
-  await expect(page.getByText("El 1-octanol se extendió.", {exact: true})).toBeVisible();
-  await page.emulateMedia({media: "screen"});
   // Open the shared query on the local server instead of the live site.
   await page.goto(LAB + new URL(share).search + "&embed=1");
   await expect(page.getByRole("button", {name: "Compartir", exact: true})).toBeHidden();
   await expect(page.getByRole("heading", {name: "Acerca de esta actividad"})).toBeHidden();
-  await expect(row.getByRole("textbox")).toHaveValue("");
+  await expect(page.locator("#drop-count")).toHaveText("0 / 3 gotas · 0.00 mL");
   expect(errors).toEqual([]);
 });
 
-test("reduced motion and blocked storage preserve wax evidence during the session", async ({page}) => {
+test("reduced motion and blocked storage keep the wax sample during the session", async ({page}) => {
   await page.emulateMedia({reducedMotion: "reduce"});
   await page.addInitScript(() => {
     for (const key of ["localStorage", "sessionStorage"]) {
@@ -305,14 +286,12 @@ test("reduced motion and blocked storage preserve wax evidence during the sessio
   await expect(page.locator("#falling-drop")).toBeHidden();
   await page.clock.runFor(300);
   await expect(page.locator("#drop-count")).toHaveText("1 / 3 drops · 0.05 mL");
-  await page.locator("#wax-notes").fill("The drop collected at the center.");
   await page.locator('[data-station="mixing"]').click();
   await page.locator('[data-station="wax"]').click();
-  await expect(page.locator("#wax-notes")).toHaveValue("The drop collected at the center.");
   await expect(page.locator("#drop-count")).toHaveText("1 / 3 drops · 0.05 mL");
 });
 
-test("settled ruler and notebook have no axe violations at laptop and portrait widths", async ({page}) => {
+test("the settled ruler has no axe violations at laptop and portrait widths", async ({page}) => {
   await page.clock.install();
   await page.goto(LAB);
   await addDrops(page);
@@ -330,4 +309,28 @@ test("settled ruler and notebook have no axe violations at laptop and portrait w
   await page.setViewportSize({width: 360, height: 720});
   await page.getByRole("link", {name: "ES Español"}).click();
   await audit();
+});
+
+test("wide screens put each station's controls beside its scene with no scrolling, and narrow screens stack them", async ({page}) => {
+  await page.clock.install();
+  const controls = {wax: "#read-edges", shot: "#shot-stopwatch", mixing: "#mix-action"};
+  const scenes = {wax: "#wax-bench .zsa-mmt-scene", shot: "#shot-bench .zsa-mmt-scene", mixing: "#mixing-bench .zsa-mmt-scene"};
+  for (const viewport of [{width: 1366, height: 768}, {width: 1280, height: 720}, {width: 900, height: 900}]) {
+    await page.setViewportSize(viewport);
+    await page.goto(LAB);
+    await addDrops(page);
+    await page.locator("#advance").click();
+    for (const key of ["wax", "shot", "mixing"]) {
+      await page.locator('[data-station="' + key + '"]').click();
+      const scene = await page.locator(scenes[key]).boundingBox();
+      const control = await page.locator(controls[key]).boundingBox();
+      if (viewport.width >= 1000) {
+        expect(control.x).toBeGreaterThan(scene.x + scene.width);
+        expect(Math.max(scene.y + scene.height, control.y + control.height)).toBeLessThanOrEqual(viewport.height);
+      } else {
+        expect(control.y).toBeGreaterThan(scene.y + scene.height);
+      }
+      expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(viewport.width);
+    }
+  }
 });

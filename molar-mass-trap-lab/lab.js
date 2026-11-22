@@ -4,13 +4,12 @@
   const root = document.querySelector('[data-zsa-activity="molar-mass-trap-lab"]');
   const $ = (id) => document.getElementById(id);
   const svgNs = "http://www.w3.org/2000/svg";
-  let i18n, copy, model, createShotStation, createMixingStation, createNotebookTools;
+  let i18n, copy, model, createShotStation, createMixingStation;
   root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: (api) => { i18n = api; }}}));
   root.dispatchEvent(new CustomEvent("zsa:molar-mass-copy", {detail: (data) => { copy = data; }}));
   root.dispatchEvent(new CustomEvent("zsa:molar-mass-model", {detail: (api) => { model = api; }}));
   root.dispatchEvent(new CustomEvent("zsa:molar-mass-shot", {detail: (create) => { createShotStation = create; }}));
   root.dispatchEvent(new CustomEvent("zsa:molar-mass-mixing", {detail: (create) => { createMixingStation = create; }}));
-  root.dispatchEvent(new CustomEvent("zsa:molar-mass-notebook", {detail: (create) => { createNotebookTools = create; }}));
   const t = (key, values) => i18n.text(key, values);
 
   const {liquids, wax, ruler} = model;
@@ -20,17 +19,11 @@
     shot: ["Steel shot race", "Simulated times"],
     mixing: ["Mix or layer?", "Simulated mixtures"]
   };
-  const profiles = {
-    tall: {label: "Tall bead", radiusMm: 5},
-    flat: {label: "Flat puddle", radiusMm: 11}
-  };
   const centerX = 203;
   const rulerY = 153;
   const sideY = 229;
   const waxBoxes = {};
   const bottleNames = {};
-  const notebookFields = {};
-  const profileCaptions = {};
   const buttons = Array.from(root.querySelectorAll("[data-station]"));
   const slider = $("ruler-position");
   const rulerHit = $("ruler-hit");
@@ -122,62 +115,6 @@
     waxBoxes[code] = {group, puddle};
   }
 
-  function addNotebookRow(code) {
-    const row = element("tr");
-    const heading = element("th");
-    heading.scope = "row";
-    heading.id = "liquid-" + code;
-    heading.dataset.liquid = code;
-    const name = element("span", "", liquids[code]);
-    heading.append(element("span", "zsa-mmt-liquid-letter", code), " ", name);
-
-    const diameter = element("input");
-    diameter.type = "text";
-    diameter.inputMode = "decimal";
-    diameter.autocomplete = "off";
-    diameter.setAttribute("aria-labelledby", "diameter-heading " + heading.id);
-    const diameterPrint = element("span", "zsa-mmt-print-only");
-    const diameterCell = element("td");
-    diameterCell.append(diameter, diameterPrint);
-
-    const profile = element("select");
-    profile.setAttribute("aria-labelledby", "profile-heading " + heading.id);
-    for (const key of ["", ...Object.keys(profiles)]) {
-      const option = element("option");
-      option.value = key;
-      profile.append(option);
-    }
-    const profilePrint = element("span", "zsa-mmt-print-only");
-    const profileCell = element("td");
-    profileCell.append(profile, profilePrint);
-    row.append(heading, profileCell, diameterCell);
-    $("notebook-entries").append(row);
-    notebookFields[code] = {name, diameter, profile, diameterPrint, profilePrint};
-
-    diameter.addEventListener("input", () => {
-      state.notebook.wax[code].diameter = diameter.value;
-      diameterPrint.textContent = diameter.value;
-    });
-    profile.addEventListener("change", () => {
-      state.notebook.wax[code].profile = profile.value;
-      profilePrint.textContent = profile.value ? t(profiles[profile.value].label) : "";
-    });
-  }
-
-  function addProfile(key, profile) {
-    const outline = svg("svg", {viewBox: "0 0 72 18", "aria-hidden": "true", focusable: "false"});
-    const scale = 2.6;
-    const geometry = model.capGeometry(profile.radiusMm, wax.dropMl * wax.dropCount * 1000);
-    outline.append(
-      svg("path", {d: "M3 14h66", stroke: "#647687", "stroke-width": ".8"}),
-      svg("path", {d: capPath(geometry, scale), transform: "translate(36 14)", fill: "#a9cbd7", stroke: "#294e64"})
-    );
-    const figure = element("figure");
-    profileCaptions[key] = element("figcaption", "", profile.label);
-    figure.append(outline, profileCaptions[key]);
-    $("profile-key").append(figure);
-  }
-
   function addRulerMarks() {
     for (let mm = 0; mm <= ruler.lengthMm; mm++) {
       const x = mm * ruler.unitsPerMm;
@@ -215,23 +152,9 @@
     return () => strings.forEach((translate) => translate());
   }
 
-  function renderNotebook() {
-    for (const code of codes) {
-      const entry = state.notebook.wax[code];
-      const field = notebookFields[code];
-      setText(bottleNames[code], t(liquids[code]));
-      setText(field.name, t(liquids[code]));
-      for (const option of field.profile.options) {
-        setText(option, t(option.value ? profiles[option.value].label : "Choose"));
-      }
-      field.diameter.value = entry.diameter;
-      field.profile.value = entry.profile;
-      field.diameterPrint.textContent = entry.diameter;
-      field.profilePrint.textContent = entry.profile ? t(profiles[entry.profile].label) : "";
-    }
-    for (const key of Object.keys(profiles)) setText(profileCaptions[key], t(profiles[key].label));
-    $("wax-notes").value = state.notebook.waxNotes;
-    $("print-notes").textContent = state.notebook.waxNotes;
+  function renderLabels() {
+    for (const code of codes) setText(bottleNames[code], t(liquids[code]));
+    mixingStation.renderLabels();
   }
 
   function renderRuler(sample) {
@@ -310,8 +233,6 @@
     $("wax-bench").hidden = station !== "wax";
     $("shot-bench").hidden = !shotActive;
     $("mixing-bench").hidden = !mixingActive;
-    $("mix-notebook").hidden = !mixingActive;
-    $("shot-notebook").hidden = !shotActive;
     $("wax-instructions").hidden = station !== "wax";
     $("shot-instructions").hidden = !shotActive;
     $("mixing-instructions").hidden = !mixingActive;
@@ -396,19 +317,9 @@
   };
   const shotStation = createShotStation(stationOptions);
   const mixingStation = createMixingStation(stationOptions);
-  const notebookTools = createNotebookTools({...stationOptions, renderPrediction: mixingStation.renderPrediction, replaceNotebook(saved) {
-    state.notebook = saved;
-    renderAllNotebook();
-  }});
-  function renderAllNotebook() {
-    renderNotebook();
-    shotStation.renderNotebook();
-    mixingStation.renderNotebook();
-    notebookTools.render();
-  }
   i18n.onChange = () => {
     updateStatic();
-    renderAllNotebook();
+    renderLabels();
     renderBench();
     setText($("share-status"), shareMessage ? t(shareMessage) : "");
   };
@@ -419,9 +330,7 @@
   codes.forEach((code, index) => {
     addBottle(code);
     addWaxBox(code, index);
-    addNotebookRow(code);
   });
-  for (const [key, profile] of Object.entries(profiles)) addProfile(key, profile);
 
   for (const button of buttons) button.addEventListener("click", () => {
     if (state.station === "shot" && button.dataset.station !== "shot") shotStation.pause(clock());
@@ -476,11 +385,6 @@
     renderRuler(sample);
   });
 
-  $("wax-notes").addEventListener("input", (event) => {
-    state.notebook.waxNotes = event.target.value;
-    $("print-notes").textContent = state.notebook.waxNotes;
-  });
-  $("print-notebook").addEventListener("click", () => window.print());
   for (const id of ["instructions", "share", "restart"]) {
     $(id + "-open").addEventListener("click", () => {
       if (id === "share") {
@@ -498,8 +402,6 @@
     state = model.createState();
     drag = null;
     mixingStation.reset();
-    notebookTools.reset();
-    renderAllNotebook();
     renderBench();
     $("restart").close();
   });
@@ -519,6 +421,6 @@
     renderBench();
   });
   reducedMotion.addEventListener("change", renderBench);
-  renderAllNotebook();
+  renderLabels();
   renderBench();
 }());

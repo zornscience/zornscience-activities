@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-  <meta name="zsa-version" content="1.0.1">
+  <meta name="zsa-version" content="1.1.0">
   <title>The Molar Mass Trap Lab | ZornScience</title>
 <meta name="description" content="Compare how four liquids spread on wax paper, time a falling steel shot, and mix liquid pairs to explain the Molar Mass Trap with evidence." data-zsa-es="Compara cómo se extienden cuatro líquidos en papel encerado, mide la caída de un perdigón y mezcla pares para explicar la trampa de la masa molar.">
 <link rel="canonical" href="https://activities.zornscience.org/molar-mass-trap-lab/">
@@ -12,25 +12,24 @@
 <link rel="alternate" hreflang="es" href="https://activities.zornscience.org/molar-mass-trap-lab/?lang=es">
 <link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/molar-mass-trap-lab/">
   <link rel="icon" href="../favicon.png" type="image/png">
-  <link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.1">
-  <link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=1.0.1">
-  <link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.1">
-  <link rel="stylesheet" href="lab.css?v=1.0.1">
-  <script src="../shared/zsa-embed.js?v=1.0.1" defer></script>
-  <script src="../shared/zsa-i18n.js?v=1.0.1" defer></script>
-  <script src="model.js?v=1.0.1" defer></script>
-  <script src="data.js?v=1.0.1" defer></script>
-  <script src="shot.js?v=1.0.1" defer></script>
-  <script src="mixing.js?v=1.0.1" defer></script>
-  <script src="notebook.js?v=1.0.1" defer></script>
-  <script src="lab.js?v=1.0.1" defer></script>
-<link rel="stylesheet" href="../shared/zsa-about.css?v=1.0.1"><script src="../shared/zsa-about.js?v=1.0.1" defer></script></head>
+  <link rel="stylesheet" href="../shared/zsa-base.css?v=1.1.0">
+  <link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=1.1.0">
+  <link rel="stylesheet" href="../shared/zsa-header.css?v=1.1.0">
+  <link rel="stylesheet" href="lab.css?v=1.1.0">
+  <script src="../shared/zsa-embed.js?v=1.1.0" defer></script>
+  <script src="../shared/zsa-i18n.js?v=1.1.0" defer></script>
+  <script src="model.js?v=1.1.0" defer></script>
+  <script src="data.js?v=1.1.0" defer></script>
+  <script src="shot.js?v=1.1.0" defer></script>
+  <script src="mixing.js?v=1.1.0" defer></script>
+  <script src="lab.js?v=1.1.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.1.0"><script src="../shared/zsa-about.js?v=1.1.0" defer></script></head>
 <body>
 <main class="zsa zsa-mmt" data-zsa-activity="molar-mass-trap-lab">
   <header data-zsa-header class="header">
     <div data-zsa-header-row>
       <div data-zsa-header-identity class="identity">
-        <a data-zsa-header-brand class="brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../ionic-reactions/zornscience-logo.png?v=1.0.1" width="34" height="33" alt=""></a>
+        <a data-zsa-header-brand class="brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../ionic-reactions/zornscience-logo.png?v=1.1.0" width="34" height="33" alt=""></a>
         <h1>The Molar Mass Trap Lab</h1>
       </div>
       <nav data-zsa-header-tools aria-label="Activity tools">
@@ -58,6 +57,7 @@
       <div class="zsa-mmt-title-row">
         <h2 id="station-title">Cohesion on wax paper</h2>
         <span id="station-tag" class="zsa-mmt-tag">Simulated dimensions</span>
+        <button id="restart-open" type="button" class="zsa-btn zsa-mmt-quiet zsa-mmt-restart" aria-haspopup="dialog" aria-controls="restart">Start fresh</button>
       </div>
       <p id="bench-instruction" class="zsa-mmt-instruction" role="status" aria-atomic="true">Add 3 drops of water to one spot in box W.</p>
 
@@ -194,24 +194,13 @@
           <button id="shot-replay" type="button" class="zsa-btn" aria-disabled="true">Replay fall</button>
           <button id="shot-reset" type="button" class="zsa-btn zsa-mmt-quiet">Reset tube</button>
         </div>
-        <div class="zsa-mmt-shot-console">
-          <div class="zsa-mmt-shot-console-heading">
-            <h3>Stopwatch</h3>
-            <div class="zsa-mmt-shot-modes" role="group" aria-label="Timing mode">
-              <button id="shot-mode-manual" type="button" class="zsa-btn" aria-pressed="true">Manual</button>
-              <button id="shot-mode-event" type="button" class="zsa-btn" aria-pressed="false">Event-timed</button>
-            </div>
+        <div id="shot-stopwatch" class="zsa-mmt-stopwatch" data-state="ready">
+          <span class="zsa-mmt-stopwatch-crown" aria-hidden="true"></span>
+          <h3 class="zsa-mmt-stopwatch-label">Stopwatch</h3>
+          <div class="zsa-mmt-stopwatch-screen">
+            <output id="shot-time" class="zsa-mmt-stopwatch-digits" aria-label="Stopwatch reading" aria-live="off" tabindex="-1">0.00 s</output>
           </div>
-          <div class="zsa-mmt-shot-clock-line">
-            <output id="shot-time" class="zsa-mmt-shot-clock" aria-label="Stopwatch reading" aria-live="off" tabindex="-1">0.00 s</output>
-            <button id="shot-stopwatch" type="button" class="zsa-btn" aria-disabled="true">Start timing</button>
-            <button id="shot-clear" type="button" class="zsa-btn zsa-mmt-quiet" aria-disabled="true">Reset stopwatch</button>
-          </div>
-          <div class="zsa-mmt-shot-record">
-            <button id="shot-record" type="button" class="zsa-btn" aria-disabled="true">Record reading</button>
-            <button id="shot-record-below" type="button" class="zsa-btn" aria-disabled="true">Record &lt;0.5 s</button>
-          </div>
-          <p id="shot-feedback" class="zsa-mmt-shot-feedback" role="status" aria-atomic="true"></p>
+          <p class="zsa-mmt-stopwatch-note">Starts when the shot leaves the stopper. Stops when it first touches the bottom.</p>
         </div>
       </div>
       <div id="mixing-bench" hidden>
@@ -280,130 +269,6 @@
         <p id="mix-observation" class="zsa-mmt-mix-observation" role="status" aria-atomic="true"></p>
       </div>
     </section>
-
-    <section class="zsa-mmt-panel zsa-mmt-notebook" aria-labelledby="notebook-title">
-      <div class="zsa-mmt-title-row">
-        <h2 id="notebook-title">Lab notebook</h2>
-        <button id="print-notebook" type="button" class="zsa-btn zsa-mmt-quiet">Print notebook</button>
-      </div>
-      <details id="predictions" class="zsa-mmt-predictions">
-        <summary>Predictions</summary>
-        <p class="zsa-mmt-notebook-help">Make a prediction for any test before you run it.</p>
-        <label for="predict-spread">Which liquid will spread farthest on wax paper?</label>
-        <select id="predict-spread"></select>
-        <label for="predict-slowest">Which liquid will slow the steel shot most?</label>
-        <select id="predict-slowest"></select>
-        <fieldset class="zsa-mmt-prediction-pairs">
-          <legend>Predict one layer or two for each pair.</legend>
-          <div id="predict-pairs"></div>
-        </fieldset>
-      </details>
-      <section id="print-predictions" class="zsa-mmt-print-only" aria-labelledby="print-predictions-title" hidden>
-        <h3 id="print-predictions-title">Predictions</h3>
-        <ul id="print-prediction-entries"></ul>
-      </section>
-      <div class="zsa-mmt-notebook-tests">
-        <section id="mix-notebook" aria-labelledby="mix-notebook-title" hidden>
-          <h3 id="mix-notebook-title">Test 3</h3>
-          <p class="zsa-mmt-notebook-help">After 60 s of settling, record the layers and where you see the dye.</p>
-          <table class="zsa-mmt-mix-table" aria-labelledby="mix-notebook-title">
-            <thead><tr>
-              <th scope="col">Tube</th>
-              <th scope="col">Pair</th>
-              <th id="mix-layer-heading" scope="col">One layer or two?</th>
-              <th id="mix-dye-heading" scope="col">Where did the dye go?</th>
-              <th id="mix-prediction-heading" class="zsa-mmt-prediction-column" scope="col">Prediction correct?</th>
-            </tr></thead>
-            <tbody id="mix-entries"></tbody>
-          </table>
-        </section>
-        <section id="shot-notebook" aria-labelledby="shot-notebook-title" hidden>
-          <h3 id="shot-notebook-title">Test 2</h3>
-          <p class="zsa-mmt-notebook-help">Record two trials per liquid. Use &lt;0.5 if the fall is too fast to time manually.</p>
-          <table class="zsa-mmt-shot-table" aria-labelledby="shot-notebook-title">
-            <thead><tr>
-              <th scope="col">Liquid</th>
-              <th id="shot-trial-1-heading" scope="col">Fall time, trial 1 (s)</th>
-              <th id="shot-trial-2-heading" scope="col">Fall time, trial 2 (s)</th>
-              <th id="shot-average-heading" scope="col">Average fall time (s)</th>
-            </tr></thead>
-            <tbody id="shot-entries"></tbody>
-          </table>
-          <button id="shot-check-averages" type="button" class="zsa-btn">Check averages</button>
-          <div id="shot-extras"></div>
-        </section>
-        <section id="wax-notebook" aria-labelledby="wax-notebook-title">
-          <h3 id="wax-notebook-title">Test 1</h3>
-          <p class="zsa-mmt-notebook-help">Choose a matching side-view sketch and record each diameter.</p>
-          <table>
-            <thead>
-              <tr><th scope="col">Liquid</th><th id="profile-heading" scope="col">Puddle sketch (side view)</th><th id="diameter-heading" scope="col">Puddle diameter (mm)</th></tr>
-            </thead>
-            <tbody id="notebook-entries"></tbody>
-          </table>
-          <div id="profile-key" class="zsa-mmt-profiles" aria-label="Side-view sketches" role="group"></div>
-          <label class="zsa-mmt-notes-label" for="wax-notes">Other observations</label>
-          <textarea id="wax-notes" rows="3" spellcheck="false"></textarea>
-          <p id="print-notes" class="zsa-mmt-print-only"></p>
-        </section>
-      </div>
-      <div class="zsa-mmt-notebook-footer">
-        <a class="zsa-btn zsa-mmt-quiet" href="#debrief-title">Go to debrief</a>
-        <p>Save a notebook file on this device to reopen your entries later.</p>
-        <div class="zsa-mmt-notebook-actions">
-          <button id="save-notebook" type="button" class="zsa-btn zsa-mmt-quiet">Save notebook file</button>
-          <button id="open-notebook-open" type="button" class="zsa-btn zsa-mmt-quiet" aria-haspopup="dialog" aria-controls="open-notebook">Open notebook file</button>
-          <button id="restart-open" type="button" class="zsa-btn zsa-mmt-quiet" aria-haspopup="dialog" aria-controls="restart">Start fresh</button>
-        </div>
-        <p id="notebook-file-status" role="status"></p>
-      </div>
-    </section>
-
-    <section id="debrief" class="zsa-mmt-panel zsa-mmt-debrief" aria-labelledby="debrief-title">
-      <h2 id="debrief-title" tabindex="-1">Debrief</h2>
-      <label for="debrief-revisit">Revisit one prediction. What did you expect, and what did you observe?</label>
-      <textarea id="debrief-revisit" rows="3" spellcheck="false"></textarea>
-      <p id="debrief-revisit-print" class="zsa-mmt-print-only zsa-mmt-printed-response"></p>
-
-      <fieldset>
-        <legend>Cite observations from two different tests.</legend>
-        <div class="zsa-mmt-evidence">
-          <div>
-            <label for="debrief-test-1">First test</label>
-            <select id="debrief-test-1"></select>
-            <p id="debrief-test-1-print" class="zsa-mmt-print-only"></p>
-            <label for="debrief-evidence-1">First observation from your notebook</label>
-            <textarea id="debrief-evidence-1" rows="3" spellcheck="false"></textarea>
-            <p id="debrief-evidence-1-print" class="zsa-mmt-print-only zsa-mmt-printed-response"></p>
-          </div>
-          <div>
-            <label for="debrief-test-2">Second test</label>
-            <select id="debrief-test-2"></select>
-            <p id="debrief-test-2-print" class="zsa-mmt-print-only"></p>
-            <label for="debrief-evidence-2">Second observation from your notebook</label>
-            <textarea id="debrief-evidence-2" rows="3" spellcheck="false"></textarea>
-            <p id="debrief-evidence-2-print" class="zsa-mmt-print-only zsa-mmt-printed-response"></p>
-          </div>
-        </div>
-      </fieldset>
-
-      <label for="debrief-explanation">Water made a tall bead, yet the shot fell through water fastest. How can both observations be true?</label>
-      <textarea id="debrief-explanation" rows="5" spellcheck="false"></textarea>
-      <p id="debrief-explanation-print" class="zsa-mmt-print-only zsa-mmt-printed-response"></p>
-      <div class="zsa-mmt-debrief-actions">
-        <button id="check-debrief" type="button" class="zsa-btn">Check my responses</button>
-        <p id="debrief-status" role="status"></p>
-      </div>
-
-      <details id="reasoning-notes" class="zsa-mmt-model">
-        <summary>Ideas to check in your explanation</summary>
-        <p>On wax paper, spreading depends on cohesion within the liquid and adhesion to the wax. We compared equal volumes on the same surface.</p>
-        <p>Shot time compares resistance to flow using the same shot and tube at the same temperature. Density and drag also affect fall time.</p>
-        <p>All four liquids have London dispersion forces. Water, glycerin and 1-octanol can also form hydrogen bonds. Glycerin has three OH groups. 1-octanol has one OH group and an eight-carbon chain.</p>
-        <p><span>Mineral oil is a mixture of hydrocarbons.</span> CH<sub>3</sub>(CH<sub>2</sub>)<sub><i>n</i></sub>CH<sub>3</sub> <span>represents a straight-chain component. Different chain lengths give different values of n.</span></p>
-        <p>Two layers can coexist with limited mixing at these amounts. A density difference determines which layer sits above the other. The dyes make those layers easier to see.</p>
-      </details>
-    </section>
   </div>
 
   <details class="zsa-mmt-model">
@@ -412,7 +277,7 @@
     <p>The shot times are simulated for one set of sealed tubes at room temperature. The same shot and travel distance are used in each tube. Density and drag also affect the fall time.</p>
     <p>The mixing rack shows approximate layer volumes for these recipes. The dyes help you see where the liquids went. Two visible layers can still contain a small amount of each other.</p>
   </details>
-  <!-- zsa-about --><section class="zsa-about" data-zsa-about="molar-mass-trap-lab" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Compare how four liquids spread on wax paper, time a steel shot through each one, and see which pairs form layers. Record the evidence in your notebook.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="chem-imf-properties"><a href="https://zornscience.org/science/chemistry/unit-4-covalent-bonding/properties-due-to-imf/">Properties Due to IMF</a><span data-zsa-lesson-course>Chemistry</span></li><li data-zsa-lesson="chem-imf-types"><a href="https://zornscience.org/science/chemistry/unit-4-covalent-bonding/types-of-imf/">Types of IMF</a><span data-zsa-lesson-course>Chemistry</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer">
+  <!-- zsa-about --><section class="zsa-about" data-zsa-about="molar-mass-trap-lab" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Compare how four liquids spread on wax paper, time a steel shot through each one, and see which pairs form layers. Record the evidence on your lab worksheet.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="chem-imf-properties"><a href="https://zornscience.org/science/chemistry/unit-4-covalent-bonding/properties-due-to-imf/">Properties Due to IMF</a><span data-zsa-lesson-course>Chemistry</span></li><li data-zsa-lesson="chem-imf-types"><a href="https://zornscience.org/science/chemistry/unit-4-covalent-bonding/types-of-imf/">Types of IMF</a><span data-zsa-lesson-course>Chemistry</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer">
     <span>ZornScience</span><a href="../" data-zsa-chrome>All activities</a><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
   </footer>
   <dialog id="instructions" class="zsa-header-dialog" aria-labelledby="instructions-title">
@@ -421,12 +286,12 @@
       <li>Choose W, G, O or M. Add three drops into one spot in its box.</li>
       <li>Wait 30 s or advance time. Look from above and at eye level.</li>
       <li>Move the ruler so its zero mark lines up with the left edge. Read the right edge in mm. Use Read edges to hear or see both readings.</li>
-      <li>Record the diameter and side-view shape in your notebook, or sketch the profile on your lab worksheet. Repeat for all four liquids.</li>
+      <li>Record the diameter and sketch the side view on your lab worksheet. Repeat for all four liquids.</li>
     </ol>
     <ol id="shot-instructions" hidden>
       <li>Choose a sealed tube. Tilt it to move the shot to the stopper.</li>
-      <li>Turn the tube upright. Time from the instant the shot leaves the stopper to the instant it touches the bottom. Choose event timing to mark both instants automatically.</li>
-      <li>Record two trials and find the average in seconds. If the shot falls too fast to time, record less than 0.5 s.</li>
+      <li>Turn the tube upright. The stopwatch starts when the shot leaves the stopper and stops when it first touches the bottom.</li>
+      <li>Record two trials on your lab worksheet and find the average in seconds. A fall faster than 0.5 s reads less than 0.5 s.</li>
       <li>Use the magnet outside the tube to return the shot for another trial.</li>
     </ol>
     <ol id="mixing-instructions" hidden>
@@ -445,16 +310,8 @@
   </dialog>
   <dialog id="restart" class="zsa-header-dialog" aria-labelledby="restart-title" aria-describedby="restart-warning">
     <div class="zsa-header-dialog-heading"><h2 id="restart-title">Start fresh?</h2><button class="zsa-btn zsa-mmt-close" type="button" data-close="restart" aria-label="Close restart dialog">×</button></div>
-    <p id="restart-warning">This clears the bench and your notebook entries.</p>
-    <div class="zsa-mmt-dialog-actions"><button class="zsa-btn" type="button" data-close="restart" autofocus>Cancel</button><button id="restart-confirm" class="zsa-btn zsa-mmt-primary" type="button">Clear bench and notebook</button></div>
-  </dialog>
-  <dialog id="open-notebook" class="zsa-header-dialog" aria-labelledby="open-notebook-title" aria-describedby="open-notebook-note">
-    <div class="zsa-header-dialog-heading"><h2 id="open-notebook-title">Open a saved notebook</h2><button class="zsa-btn zsa-mmt-close" type="button" data-close="open-notebook" aria-label="Close notebook dialog" autofocus>×</button></div>
-    <p id="open-notebook-note">Opening a file replaces your current notebook entries. The file contains your observations and responses.</p>
-    <label for="notebook-file">Choose a notebook file</label>
-    <input id="notebook-file" type="file" accept=".json,application/json">
-    <p id="open-notebook-status" role="status"></p>
-    <div class="zsa-mmt-dialog-actions"><button class="zsa-btn" type="button" data-close="open-notebook">Cancel</button><button id="open-notebook-confirm" class="zsa-btn zsa-mmt-primary" type="button" disabled>Open file</button></div>
+    <p id="restart-warning">This resets all three stations and starts the lab over.</p>
+    <div class="zsa-mmt-dialog-actions"><button class="zsa-btn" type="button" data-close="restart" autofocus>Cancel</button><button id="restart-confirm" class="zsa-btn zsa-mmt-primary" type="button">Reset all stations</button></div>
   </dialog>
 </main>
 </body>

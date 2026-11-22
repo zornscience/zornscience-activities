@@ -1,30 +1,25 @@
 # Molar Mass Trap Lab checks
 
-Version: 1.0.1
+Version: 1.1.0
+
+Version 1.1.0 removed the on-screen notebook, predictions, debrief, notebook files and printout. Students record data on the printed lab worksheet. The shot station's stopwatch is a digital, event-timed display with no manual mode. The checks below describe the current build.
 
 ## Browser and model checks
 
-- `node --test tests/unit/molar-mass-trap-lab.test.js tests/unit/static.test.js tests/unit/seo.test.js tests/unit/focus-css.test.js` checks volume, footprint and profile geometry, independent station state, focus styles, and the bilingual directory and search metadata.
-- `npx playwright test tests/e2e/molar-mass-trap-lab.spec.js` exercises all four samples in a mixed order, rapid input, natural settling while another liquid or station is open, time advance, a bead above 90°, keyboard-only glycerin measurement, pointer drag, zoom and resize, Spanish, Share, print, reduced motion, disabled storage and resets.
-- `node --test tests/unit/molar-mass-trap-shot.test.js` compares fast, slow and skipped frames, exact departure and contact instants, manual click times, pauses, replay and averages of censored readings.
-- `npx playwright test tests/e2e/molar-mass-trap-shot.spec.js` covers water and glycerin replays, the slow-motion cue and preservation of manual measurements, short and slow falls, repeated clicks, the magnet, readings saved by the magnet or a reset, manual retries, tab visibility and station switching, censored readings, Spanish keyboard controls, reduced motion, print, and axe at laptop and phone widths.
+- `node --test tests/unit/molar-mass-trap-lab.test.js tests/unit/static.test.js tests/unit/seo.test.js tests/unit/focus-css.test.js` checks volume, footprint and profile geometry, independent station state with no stored student entries, focus styles, and the bilingual directory and search metadata.
+- `npx playwright test tests/e2e/molar-mass-trap-lab.spec.js` exercises all four samples in a mixed order, rapid input, natural settling while another liquid or station is open, time advance, a bead above 90°, keyboard-only glycerin measurement, pointer drag, zoom and resize, Spanish, Share, reduced motion, disabled storage, Start fresh, and the station layout. At 1366 × 768 and 1280 × 720, each station's controls sit to the right of its scene and everything fits without scrolling. At 900 px the controls stack below the scene.
+- `node --test tests/unit/molar-mass-trap-shot.test.js` compares fast, slow and skipped frames, exact departure and contact instants, the event-timed stopwatch through a pause, the magnet clearing it for a new run, and replay.
+- `npx playwright test tests/e2e/molar-mass-trap-shot.spec.js` covers the digital stopwatch with no timing controls, its ready, running, paused and stopped states, water and glycerin replays, the slow-motion cue, short and slow falls, repeated clicks, matching repeat trials, the magnet clearing the stopwatch for the next trial, the worksheet prompt, tab visibility and station switching, Spanish keyboard controls, reduced motion, and axe at laptop and phone widths.
 - `node --test tests/unit/molar-mass-trap-mixing.test.js` checks aliquot validation, independence, settled band volumes and ordering, the four-to-five inversion boundary, the 60 s clock, and cleanup.
-- `npx playwright test tests/e2e/molar-mass-trap-mixing.spec.js` checks the density order before inversion, all five settled mixtures, fill heights, band colors, the air surface and internal boundary, and the clear band's edge highlights. Clicks at one position every 100 ms stop at five inversions or upright placement until a separate control is used. The suite also checks early descriptions, station and tube changes, both ways to finish settling, and refilling without losing notebook entries.
-- `node --test tests/unit/molar-mass-trap-notebook.test.js` checks notebook recovery, raw entries and recomputed summaries, revision comparison after erasing a shot field, rejection of unrelated files, and the debrief self-check.
-- `npx playwright test tests/e2e/molar-mass-trap-release.spec.js` covers all six station orders, the complete interleaved classroom route, the leave-page prompt for unsaved entries, bilingual directory navigation, and Spanish accessibility. It checks that a failed download keeps the leave-page warning and that a reverted edit leaves saved work clean.
+- `npx playwright test tests/e2e/molar-mass-trap-mixing.spec.js` checks the density order before inversion, all five settled mixtures, fill heights, band colors, the air surface and internal boundary, and the clear band's edge highlights. Clicks at one position every 100 ms stop at five inversions or upright placement until a separate control is used. The suite also checks early descriptions, station and tube changes, both ways to finish settling, refilling, and Spanish labels.
+- `npx playwright test tests/e2e/molar-mass-trap-release.spec.js` covers all six station orders, the complete interleaved classroom route in both languages with storage disabled, a reload with no leave-page prompt, Spanish accessibility with the restart dialog open, and bilingual directory navigation.
 - `npx playwright test tests/e2e/activity-headers.spec.js --grep molar-mass-trap-lab` checks the shared header and canonical English Share link. The lab spec checks the complete Spanish URL.
-- The shared About and lab accessibility suites discover the page. The settled controls were also audited with axe-core in English at laptop width and in Mexican Spanish at 360 px.
+- The shared About and lab accessibility suites discover the page.
 - Chromium's 200% browser zoom reduced the 1366 px viewport to 683 CSS px without horizontal scrolling. The ruler's zero matched the left edge of the clear octanol puddle and the right edge read 20 mm. A separate 360 px portrait check kept the same alignment.
-- The shot bench fit the same 200% browser zoom. A Spanish 360 px touch run recorded two `<0.5` results and replayed water in manual mode with departure and contact cues.
-- The four-row shot table showed the wax notebook on the same station and distinguished instrument-timed entries. A 6.31 s and 6.52 s pair displayed 6.42 s and accepted a student response of 6.4 s.
-- A Spanish keyboard-only run at 360 px prepared tube 3 with reduced motion. The close-up and dispensing controls fit on screen together, and focus passed from the upright button to the timer and from time advance to Read layers. A separate touch run let tube 3 settle while wax and shot data were collected, then recorded the result and disposed of the mixture. Axe found no violations on the rack at laptop and Spanish phone widths. Chromium's 200% browser zoom check also fit the working rack.
-- The Spanish print check fits all three tables in worksheet order on one Letter page with a diameter, a side-view choice, two below-threshold times and their mean, the five liquid pairs, the tube 3 observations, and the ZornScience license.
 
 ## Classroom walkthrough
 
-The complete browser route starts with Spanish tube 3, measures water on wax paper during settling, and records the layers after one simulated minute. The student records two `<0.5` water entries using manual and event timing, switches to English, finishes the other samples, enters a glycerin average, revises the tube 3 layer count, disposes of all five mixtures and completes the debrief. The test blocks browser storage and uses the Playwright clock to move through the same elapsed-time model as the bench.
-
-The complete English and Mexican Spanish samples print on two Letter pages. The first contains the predictions, four diameters and profiles, eight shot readings, labeled student and lab averages, and five mixture observations. The second contains the debrief and ZornScience license. The downloaded notebook reopened after reload with its evidence and checked summaries. An unrelated JSON file left the active notebook intact, and Start fresh cleared the session. At Chromium's 200% zoom the bench, notebook and debrief fit within 683 CSS px. The review follow-up passed 747 unit tests and 44 focused browser checks.
+The complete browser route starts with Spanish tube 3, measures water on wax paper during settling, and reads the layers after one simulated minute. Both water trials read less than 0.5 s on the event-timed stopwatch. They switch to English, time the other three liquids, measure the other three puddles, prepare, read and dispose of the other four mixtures, empty tube 3, and use Start fresh. The test blocks browser storage and uses the Playwright clock to move through the same elapsed-time model as the bench. Each of the six station orders keeps the wax reading, the settled tube and the last shot reading.
 
 ## Low-end emulation
 
@@ -70,17 +65,17 @@ Each viewport had three cold loads, five inversions of tube 3 and one glycerin e
 | Glycerin event time | 6.40 s | 6.40 s |
 | App animation callbacks in a one-second idle sample | 0 | 0 |
 
-All measured resources were same-origin. The background-tab case uses Playwright's simulated visibility event. District Lenovo testing remains pending.
+All measured resources were same-origin. The background-tab case uses Playwright's simulated visibility event. Version 1.1.0 has not been re-measured under throttling; it removes one script and most of the notebook styles. District Lenovo testing remains pending.
 
 ## Review screenshots
 
+These screenshots predate version 1.1.0 and still show the notebook column.
+
 - [English desktop, four settled drops and a glycerin reading](../.github/screenshots/molar-mass-trap-wax-desktop.png)
 - [Mexican Spanish at 360 px, with the octanol measurement](../.github/screenshots/molar-mass-trap-wax-es-360.png)
-- [English desktop, instrument-timed and manual entries, and both notebook tables](../.github/screenshots/molar-mass-trap-shot-desktop.png)
-- [Mexican Spanish at 360 px, manual water replay and two below-threshold trials](../.github/screenshots/molar-mass-trap-shot-es-360.png)
-- [English desktop, five settled mixtures and editable layer observations](../.github/screenshots/molar-mass-trap-mixing-desktop.png)
-- [Mexican Spanish at 360 px, tube 3 and observations retained from wax paper](../.github/screenshots/molar-mass-trap-mixing-es-360.png)
-- [English release candidate with two below-threshold water readings, lab averages and the debrief](../.github/screenshots/molar-mass-trap-release-desktop.png)
-- [Mexican Spanish debrief at 360 px with evidence from two tests](../.github/screenshots/molar-mass-trap-release-es-360.png)
-
-The classroom walkthrough and print check passed before the directory entry and search metadata were added to the release candidate.
+- [English desktop shot station](../.github/screenshots/molar-mass-trap-shot-desktop.png)
+- [Mexican Spanish shot station at 360 px](../.github/screenshots/molar-mass-trap-shot-es-360.png)
+- [English desktop, five settled mixtures](../.github/screenshots/molar-mass-trap-mixing-desktop.png)
+- [Mexican Spanish mixing rack at 360 px](../.github/screenshots/molar-mass-trap-mixing-es-360.png)
+- [English release candidate](../.github/screenshots/molar-mass-trap-release-desktop.png)
+- [Mexican Spanish release candidate at 360 px](../.github/screenshots/molar-mass-trap-release-es-360.png)

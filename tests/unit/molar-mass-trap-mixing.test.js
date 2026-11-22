@@ -61,15 +61,14 @@ test("the mixing clock starts when the fifth inversion is followed by setting th
   assert.equal(model.advanceMixTime(tube, start + 1000), false);
 });
 
-test("emptying a wrong or completed tube leaves other preparations and all evidence intact", () => {
+test("emptying a wrong or completed tube leaves the other preparations intact", () => {
   const state = model.createState();
-  const {mixing: rack, notebook} = state;
+  const {mixing: rack} = state;
   assert.equal(model.pourMixAliquot(rack.tubes[5], 5, "O", 0.5, 0), true);
   assert.equal(model.emptyMixTube(rack, 5), false);
   model.updateMixTube(rack.tubes[5], mixing.pourMs);
   assert.equal(model.mixStage(rack.tubes[5], 5, mixing.pourMs), "incorrect");
   assert.equal(model.stopperMixTube(rack.tubes[5], 5, mixing.pourMs), false);
-  notebook.mixing[5] = {layerCount: 1, dyeLocation: "A red streak"};
   model.pourMixAliquot(rack.tubes[3], 3, "W", 1, 0);
   assert.equal(model.emptyMixTube(rack, 5), true);
   assert.equal(rack.wasteMl, 0.5);
@@ -79,7 +78,6 @@ test("emptying a wrong or completed tube leaves other preparations and all evide
   assert.equal(rack.tubes[5].disposed, false);
   model.updateMixTube(rack.tubes[3], 600);
   assert.deepEqual(rack.tubes[3].aliquots, [{code: "W", ml: 1}]);
-  assert.deepEqual(notebook.mixing[5], {layerCount: 1, dyeLocation: "A red streak"});
 });
 
 test("before inversion the denser aliquot sits below the lighter one in either pour order", () => {

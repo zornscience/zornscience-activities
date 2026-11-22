@@ -1,16 +1,16 @@
 # The Molar Mass Trap Lab
 
-Version: 1.0.1
+Version: 1.1.0
 
-A virtual investigation for Chemistry and Honors Chemistry Unit 4. The classroom release candidate includes the wax-paper investigation, the steel shot race, the five-tube mixing rack, and an evidence-based debrief.
+A virtual investigation for Chemistry and Honors Chemistry Unit 4. It includes the wax-paper investigation, the steel shot race and the five-tube mixing rack. Students record their data, predictions and debrief on the printed lab worksheet, so the simulation uses the full width of the page. The steel shot stopwatch times each fall automatically.
 
 ## Run the bench
 
 From the repository root, run `npm run serve` and open `http://127.0.0.1:8000/molar-mass-trap-lab/`. Add `?lang=es` for Mexican Spanish. The bench is ready on load. Each station can empty or reset its selected apparatus.
 
-The notebook keeps editable evidence, predictions and debrief responses in the session. **Save notebook file** downloads a local copy named with the local date and time to the second. **Open notebook file** can reopen those entries after a reload. The file contains notebook work. The apparatus starts fresh on a reload.
+On screens at least 1000 px wide, each station shows its scene on the left and its controls on the right, so the whole bench fits on a 1366 × 768 or 1280 × 720 laptop without scrolling. Narrower screens stack the controls below the scene.
 
-The lab requests the browser's leave-page prompt when the notebook has unsaved entries. Starting a download, reopening a file or choosing **Start fresh** resets the reminder. **Start fresh** clears the session after confirmation. **Print notebook** includes the recorded predictions, all three tests, student and lab averages, and the written debrief.
+The lab keeps no student entries. The apparatus starts fresh on a reload. **Start fresh** resets all three stations after confirmation.
 
 ## Measurement model
 
@@ -27,11 +27,11 @@ These are the uncalibrated example dimensions at 0.15 mL. The initial width uses
 
 ## Steel shot race
 
-Select a sealed tube, tilt it, and turn it upright. Start the manual stopwatch when the shot leaves the stopper and stop it on first contact with the bottom. Event timing marks those same instants automatically. The notebook labels exact event readings as instrument-timed. A manual reading preserves the time between the student's clicks. The feedback flags an early stop or a start or late stop more than 0.35 s from its event. The external magnet returns the shot to the stopper for another run. The magnet or **Reset tube** saves an unrecorded, unflagged reading to the next empty trial. Students can keep a flagged reading with **Record reading** before they retry.
+Select a sealed tube, tilt it, and turn it upright. The digital stopwatch is event-timed only: it starts the instant the shot leaves the stopper and stops at first contact with the bottom, so students read the time instead of clicking to start and stop it. A run indicator on the screen shows while it is timing. The external magnet returns the shot to the stopper for another run. Students copy each reading to the worksheet before using the magnet, which clears the stopwatch.
 
-The shot position and stopwatch use one elapsed-time clock. Switching tubes or stations, or hiding the tab, pauses the active trial. Resume explicitly on return. The short water and octanol replays are labeled as slow motion so students can use the event markers. In manual mode, the student decides whether to record `<0.5`. Event mode follows the worksheet's 0.5 s reporting threshold. The display shows **Timing** while the running clock is below 0.5 s. If the fall ends under that threshold, the display, saved result, and event replay report less than 0.5 s. The animation uses the example travel times below.
+The shot position and stopwatch use one elapsed-time clock. Switching tubes or stations, or hiding the tab, pauses the active trial. Resume explicitly on return. The short water and octanol replays are labeled as slow motion and report the original fall time. The stopwatch follows the worksheet's 0.5 s reporting threshold. The display shows **Timing** while the running clock is below 0.5 s. If the fall ends under that threshold, the display and the replay report less than 0.5 s. The animation uses the example travel times below.
 
-Record two trials in seconds. For a fall too fast to time manually, record `<0.5`. Two readings below 0.5 s give a mean below 0.5 s. One such reading and one measured time give a lower and upper bound. Students can add another trial and check the average of the first two measured times, with both trial numbers shown. **Check averages** labels each computed value **Lab's average**. The printout labels a student entry **Your average**. Exact means display to the precision of the less precise trial. The check accepts a student's rounding to the last decimal place they entered. Both the wax-paper and shot entries are available from the shot station and print together.
+Students record two trials in seconds on the worksheet and average them there. Repeated trials give the same simulated time, and water reads less than 0.5 s.
 
 ### Example calibration
 
@@ -52,7 +52,7 @@ Choose any numbered tube. Select the liquid and volume in the graduated pipette,
 
 Add the stopper and complete five gentle inversions, then choose **Set upright** to start the 60 s clock. The clock continues through tube and station changes. **Advance to 60 s** is a separate control that finishes just the selected tube's wait.
 
-Count the liquid bands below the curved air-liquid surface. **Read layers** describes the unmixed bands, changes during settling, and the settled result. Test 3 uses the worksheet's pair and layer columns and retains the editable dye observation. The full liquid names appear in print. Notebook entries survive when a tube is emptied or refilled. Dye shows where a tint is visible. Two layers at these amounts can still have limited mutual solubility.
+Count the liquid bands below the curved air-liquid surface. **Read layers** describes the unmixed bands, changes during settling, and the settled result. Students record the number of layers and where the dye went on the worksheet. Dye shows where a tint is visible. Two layers at these amounts can still have limited mutual solubility.
 
 The recipes and bottom-to-top appearances come from the handoff and teacher guide. The drawing uses a common scale for approximate volumes. The 420 ms transfer, 720 ms inversion, and 280 ms placement animations are illustrative.
 
@@ -64,10 +64,8 @@ The recipes and bottom-to-top appearances come from the handoff and teacher guid
 | 4 | M 1.0 + O 0.5 | 1.5 | One red-tinted band |
 | 5 | G 1.0 + M 1.0 | 2.0 | Clear, red |
 
-## Classroom release
+## Lab worksheet
 
-Students can predict spread, fall time or the number of layers before running the tests. The mixing comparison uses their entered prediction and observation. For the debrief, they revisit a prediction, cite notebook evidence from two different tests, and explain how water can form a tall bead while the shot falls through it fastest. The self-check looks for a response and recorded evidence from both tests.
-
-The browser walkthrough covers all six station orders and a complete Spanish-to-English route before the directory listing and search metadata are added. See the physical lab procedure for the source setup. [English procedure](https://zornscience.org/teaching/physical-labs/molar-mass-trap-imf-lab/) · [Spanish procedure](https://zornscience.org/es/teaching/physical-labs/molar-mass-trap-imf-lab/)
+Version 1.1.0 removed the on-screen notebook, predictions, debrief, notebook files and printout. Students use the printed lab worksheet for predictions, all three data tables and the debrief questions. The browser walkthrough covers all six station orders and a complete Spanish-to-English route. See the physical lab procedure for the source setup and the worksheet. [English procedure](https://zornscience.org/teaching/physical-labs/molar-mass-trap-imf-lab/) · [Spanish procedure](https://zornscience.org/es/teaching/physical-labs/molar-mass-trap-imf-lab/)
 
 ZornScience | CC BY-NC-SA 4.0

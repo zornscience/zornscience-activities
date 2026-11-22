@@ -5,7 +5,6 @@ const fs = require("node:fs");
 const LAB = "/molar-mass-trap-lab/";
 const station = (page, name) => page.locator(`[data-station="${name}"]`);
 const slot = (page, number) => page.locator(`[data-mix-tube="${number}"]`);
-const entry = (page, number) => page.locator(`[data-mix-entry="${number}"]`);
 const action = (page) => page.locator("#mix-action");
 const stand = (page) => page.locator("#mix-stand");
 const advance = (page) => page.locator("#mix-advance");
@@ -82,7 +81,7 @@ test("repeated clicks at one position cannot set the tube upright or advance its
   await expect(page.locator("#mix-elapsed")).toHaveText("60 / 60 s");
 });
 
-test("all five recipes keep their volumes, colors and layer positions and can be recorded together", async ({page}) => {
+test("all five recipes keep their volumes, colors and layer positions after settling together", async ({page}) => {
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
   await openRack(page);
@@ -121,14 +120,6 @@ test("all five recipes keep their volumes, colors and layer positions and can be
     await expect(boundary).toHaveAttribute("visibility", tints.length === 2 ? "visible" : "hidden");
     if (tints.length === 2) await expect(boundary).toHaveAttribute("d", "M-14 26H14");
     await expect(glass.locator(".zsa-mmt-mix-refraction")).toHaveAttribute("visibility", tints.includes("clear") ? "visible" : "hidden");
-    await entry(page, number).getByRole("combobox", {name: `One layer or two? Tube ${number}`}).selectOption(String(tints.length));
-    await entry(page, number).getByRole("textbox", {name: `Where did the dye go? Tube ${number}`}).fill(note);
-  }
-  await station(page, "wax").click();
-  await page.emulateMedia({media: "print"});
-  for (const {number, tints, note} of recipes) {
-    await expect(entry(page, number).getByText(tints.length === 1 ? "One layer" : "Two layers", {exact: true}).last()).toBeVisible();
-    await expect(entry(page, number).getByText(note, {exact: true})).toBeVisible();
   }
   expect(errors).toEqual([]);
 });
@@ -153,9 +144,6 @@ test("four inversions and an early read leave the timer gated while other tubes 
   await expect(page.locator("#mix-elapsed")).toBeHidden();
   await page.locator("#mix-read").click();
   await expect(page.locator("#mix-observation")).toHaveText(/Streaks are visible in the tube/);
-  const evidence = entry(page, 3);
-  await evidence.getByRole("combobox").selectOption("1");
-  await evidence.getByRole("textbox").fill("I first saw a blue band.");
   await action(page).click();
   await station(page, "wax").click();
   await page.clock.fastForward(740);
@@ -186,8 +174,7 @@ test("four inversions and an early read leave the timer gated while other tubes 
   await page.locator("#mix-read").click();
   await expect(page.locator("#mix-observation")).toHaveText("A smaller clear band above a blue band.");
   await page.getByRole("button", {name: "Pour into waste"}).click();
-  await expect(evidence.getByRole("combobox")).toHaveValue("1");
-  await expect(evidence.getByRole("textbox")).toHaveValue("I first saw a blue band.");
+  await expect(page.locator("#bench-instruction")).toHaveText(/Tube 3 is empty/);
   await dispense(page, "W", 1);
   await expect(page.locator("#mix-volume")).toHaveText("1.0 mL total");
   await slot(page, 5).click();
@@ -253,26 +240,15 @@ test("Spanish keyboard controls and reduced motion give equivalent readings at p
   await expect(read).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page.locator("#mix-observation")).toHaveText("Una franja transparente más delgada sobre una franja azul.");
-  const row = entry(page, 3);
-  await expect(row.getByRole("cell", {name: "W Agua + O 1-octanol"})).toBeVisible();
-  await tabTo(page, row.getByRole("combobox", {name: "¿Una capa o dos? Tubo 3"}));
-  await page.keyboard.press("ArrowDown");
-  await page.keyboard.press("ArrowDown");
-  const note = row.getByRole("textbox", {name: "¿Dónde quedó el colorante? Tubo 3"});
-  await tabTo(page, note);
-  await page.keyboard.type("Azul abajo");
   await page.getByRole("link", {name: "EN English"}).click();
-  await expect(row.getByRole("combobox")).toHaveValue("2");
-  await expect(row.getByRole("textbox")).toHaveValue("Azul abajo");
+  await expect(page.locator("#mix-elapsed")).toHaveText("60 / 60 s");
+  await expect(page.locator("#mix-liquid option").first()).toHaveText("Choose liquid");
   await page.getByRole("link", {name: "ES Español"}).click();
+  await expect(page.locator("#mix-liquid option").first()).toHaveText("Elige el líquido");
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(360);
-  await page.emulateMedia({media: "print"});
-  await expect(row.getByText("W Agua + O 1-octanol", {exact: true})).toBeVisible();
-  await expect(row.getByText("Dos capas", {exact: true}).last()).toBeVisible();
-  await expect(row.getByText("Azul abajo", {exact: true})).toBeVisible();
 });
 
-test("the working rack and editable mixing notebook pass axe at desktop and Spanish phone widths", async ({page}) => {
+test("the working rack passes axe at desktop and Spanish phone widths", async ({page}) => {
   await openRack(page);
   await page.evaluate(fs.readFileSync(require.resolve("axe-core/axe.min.js"), "utf8"));
   async function audit() {
