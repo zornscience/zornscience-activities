@@ -1,6 +1,6 @@
 # The Molar Mass Trap Lab
 
-Version: 0.2.1
+Version: 0.2.2
 
 A virtual investigation for Chemistry and Honors Chemistry Unit 4. This development build has the wax-paper investigation, the steel shot race and a preview of the mixing rack.
 
@@ -25,7 +25,7 @@ These are the uncalibrated example dimensions at 0.15 mL. The initial width uses
 
 Select a sealed tube, tilt it, and turn it upright. Start the manual stopwatch when the shot leaves the stopper and stop it on first contact with the bottom. Event timing marks those same instants automatically. The notebook labels saved event readings as instrument-timed and retains their simulated intervals, including values under 0.5 s. A manual reading preserves the time between the student's clicks. The feedback flags an early stop or a start or late stop more than 0.35 s from its event. The external magnet returns the shot to the stopper for another run. The magnet or **Reset tube** saves an unrecorded, unflagged reading to the next empty trial. Students can keep a flagged reading with **Record reading** before they retry.
 
-The shot position and stopwatch use one elapsed-time clock. Switching tubes or stations, or hiding the tab, pauses the active trial. Resume explicitly on return. Replay shows both events using the same simulated fall time. Short replays are slowed so both events can be observed. After a manual run, the replay marks both events but does not state the interval, so the reading stays the student's own. Only an event-timed run reports the interval. In manual mode, the student decides whether to record `<0.5`.
+The shot position and stopwatch use one elapsed-time clock. Switching tubes or stations, or hiding the tab, pauses the active trial. Resume explicitly on return. The short water and octanol replays are labeled as slow motion so students can use the event markers without timing the replay. Only an event-timed run reports the original interval. In manual mode, the student decides whether to record `<0.5`.
 
 Record two trials in seconds. For a fall too fast to time manually, record `<0.5`. Two readings below 0.5 s give a mean below 0.5 s. One such reading and one measured time give a lower and upper bound. Students can add another trial and check the average of the first two measured times, with both trial numbers shown. **Check averages** shows all four checked results in the table alongside the editable readings. Exact means display to the precision of the less precise trial. The check accepts a student's rounding to the last decimal place they entered. Both the wax-paper and shot entries are available from the shot station and print together.
 

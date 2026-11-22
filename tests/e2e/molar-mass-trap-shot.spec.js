@@ -89,9 +89,10 @@ test("water and glycerin share event timing at different frame cadences and repl
     await expect(card(page, key).getByRole("textbox", {name: "Fall time, trial 2 (s)"})).toHaveValue("");
 
     await page.locator("#shot-replay").click();
-    await expect(page.locator("#bench-instruction")).toHaveText(/Replay. The shot leaves the stopper/);
+    const instruction = page.locator("#bench-instruction");
+    await expect(instruction).toHaveText(key === "W" ? /Slow-motion replay/ : /Replay. The shot leaves the stopper/);
     await page.clock.fastForward(Math.max(flight, 1400) + 80);
-    await expect(page.locator("#bench-instruction")).toHaveText(new RegExp("First contact came " + time + " s"));
+    await expect(instruction).toHaveText(key === "W" ? /The original fall took 0\.27 s/ : /First contact came 6\.40 s/);
     await expect(clock(page)).toHaveText(time + " s");
     await expect(card(page, key).getByRole("textbox", {name: "Fall time, trial 2 (s)"})).toHaveValue("");
   }
@@ -195,6 +196,23 @@ test("a manual replay hides the interval, and the magnet or a reset saves an unr
   await expect(page.locator("#shot-feedback")).toHaveText("Reading " + second + " s saved as trial 2.");
   await expect(clock(page)).toHaveText("0.00 s");
   expect(errors).toEqual([]);
+});
+
+test("a slowed manual replay gives event cues and no interval in Spanish", async ({page}) => {
+  await page.clock.install();
+  await page.goto(LAB + "?lang=es");
+  await station(page, "shot").click();
+  const operate = page.locator("#shot-operate");
+  await operate.click();
+  await page.clock.runFor(750);
+  await operate.click();
+  await page.clock.fastForward(850);
+  const instruction = page.locator("#bench-instruction");
+  await page.locator("#shot-replay").click();
+  await expect(instruction).toHaveText(/Repetición en cámara lenta/);
+  await page.clock.fastForward(1500);
+  await expect(instruction).toHaveText(/Terminó la repetición en cámara lenta.*iniciar y detener el cronómetro/);
+  await expect(instruction).not.toHaveText(/\d\.\d+ s/);
 });
 
 test("an early manual stop keeps the measured value and a magnet retry creates a distinct result", async ({page}) => {

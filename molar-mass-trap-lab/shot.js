@@ -351,6 +351,7 @@
 
     function instruction(sample, view, justReplayed, key) {
       const trial = sample.trial;
+      const slowReplay = shot.travelMs[key] < shot.minimumReplayMs;
       if (trial.pausedAt !== null) return t("Trial paused. Resume when you are ready.");
       switch (sample.phase) {
         case "tilting": return t("The shot is moving toward the stopper.");
@@ -363,12 +364,16 @@
           if (trial.mode === "event") return t("The shot left the stopper. The stopwatch is running.");
           if (trial.startedAt === null) return t("The shot left the stopper. Start timing now.");
           return t("Watch for the shot to touch the bottom.");
-        case "replaying": return t("Replay. The shot leaves the stopper. Watch for first contact.");
+        case "replaying": return t(slowReplay ? "Slow-motion replay. Watch for departure and first contact." :
+          "Replay. The shot leaves the stopper. Watch for first contact.");
         case "at-bottom":
           if (justReplayed) {
             // Only the event-timed instrument reports the interval. A manual replay leaves the measurement to the student.
-            if (trial.mode !== "event") return t("Replay complete. Compare the marked departure and first contact with your stopwatch.");
-            return t("Replay complete. First contact came {seconds} s after departure.", {seconds: (shot.travelMs[key] / 1000).toFixed(2)});
+            if (trial.mode !== "event") return t(slowReplay ?
+              "Slow-motion replay complete. The markers show when to start and stop timing." :
+              "Replay complete. Compare the marked departure and first contact with your stopwatch.");
+            return t(slowReplay ? "Slow-motion replay complete. The original fall took {seconds} s." :
+              "Replay complete. First contact came {seconds} s after departure.", {seconds: (shot.travelMs[key] / 1000).toFixed(2)});
           }
           if (trial.contactedAt === null) return t("Tilt the selected tube to bring the shot to the stopper.");
           if (view.running) return t("The shot touched the bottom. Stop timing.");
