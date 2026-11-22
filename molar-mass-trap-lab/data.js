@@ -93,6 +93,8 @@
       "Watch for the shot to touch the bottom.": "Observa cuándo el perdigón toca el fondo.",
       "Replay. The shot leaves the stopper. Watch for first contact.": "Repetición. El perdigón sale del tapón. Observa cuándo toca el fondo.",
       "Replay complete. First contact came {seconds} s after departure.": "Repetición completa. El perdigón tocó el fondo {seconds} s después de salir del tapón.",
+      "Replay complete. Compare the marked departure and first contact with your stopwatch.": "Repetición completa. Compara la salida y el primer contacto marcados con tu cronómetro.",
+      "Reading {seconds} s saved as trial {number}.": "Se guardó la lectura de {seconds} s como ensayo {number}.",
       "Tilt the selected tube to bring the shot to the stopper.": "Inclina el tubo seleccionado para llevar el perdigón al tapón.",
       "The shot touched the bottom. Stop timing.": "El perdigón tocó el fondo. Detén el cronómetro.",
       "The shot touched the bottom. Record a reading or return it with the magnet.": "El perdigón tocó el fondo. Anota una lectura o regrésalo con el imán.",

@@ -133,6 +133,56 @@ test("manual clock and shot freeze when the tab is hidden and when another stati
   await expect(page.locator("#shot-feedback")).toHaveText(/after first contact/);
   await magnet(page);
   await expect(clock(page)).toHaveText("0.00 s");
+  // A flagged late stop is not saved for the student.
+  await expect(card(page, "G").getByRole("textbox", {name: "Trial 1 (s)"})).toHaveValue("");
+  expect(errors).toEqual([]);
+});
+
+test("a manual replay hides the interval, and the magnet or a reset saves an unrecorded reading", async ({page}) => {
+  const errors = errorsFrom(page);
+  await openShot(page);
+  await selector(page, "G").click();
+  const glycerin = card(page, "G");
+  const trial = (number) => glycerin.getByRole("textbox", {name: "Trial " + number + " (s)"});
+  await tilt(page);
+  await page.locator("#shot-operate").click();
+  await page.clock.runFor(500);
+  await page.locator("#shot-stopwatch").click();
+  await page.clock.runFor(6400);
+  await page.locator("#shot-stopwatch").click();
+  const first = (await clock(page).innerText()).replace(" s", "");
+  expect(Number.parseFloat(first)).toBeGreaterThan(6.3);
+  expect(Number.parseFloat(first)).toBeLessThan(6.6);
+  await expect(page.locator("#shot-feedback")).toHaveText("");
+
+  await page.locator("#shot-replay").click();
+  await page.clock.fastForward(6500);
+  await expect(page.locator("#bench-instruction")).toHaveText(/Replay complete. Compare the marked departure/);
+  await expect(page.locator("#bench-instruction")).not.toHaveText(/\d\.\d+ s/);
+  await expect(trial(1)).toHaveValue("");
+
+  await magnet(page);
+  await expect(trial(1)).toHaveValue(first);
+  await expect(page.locator("#shot-feedback")).toHaveText("Reading " + first + " s saved as trial 1.");
+
+  // An untimed manual fall lets the student choose <0.5, whatever the liquid.
+  await page.locator("#shot-operate").click();
+  await page.clock.runFor(6700);
+  await expect(page.locator("#shot-feedback")).toHaveText(/too fast to time/);
+  await expect(page.locator("#shot-record-below")).toBeEnabled();
+
+  await magnet(page);
+  await page.locator("#shot-operate").click();
+  await page.clock.runFor(200);
+  await page.locator("#shot-stopwatch").click();
+  await page.clock.runFor(6450);
+  await page.locator("#shot-stopwatch").click();
+  const second = (await clock(page).innerText()).replace(" s", "");
+  await expect(page.locator("#shot-feedback")).toHaveText("");
+  await page.locator("#shot-reset").click();
+  await expect(trial(2)).toHaveValue(second);
+  await expect(page.locator("#shot-feedback")).toHaveText("Reading " + second + " s saved as trial 2.");
+  await expect(clock(page)).toHaveText("0.00 s");
   expect(errors).toEqual([]);
 });
 

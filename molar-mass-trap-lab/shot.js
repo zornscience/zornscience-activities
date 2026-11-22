@@ -20,6 +20,8 @@
     const magnet = $("shot-magnet");
     const activeTube = $("shot-active-tube");
     const artLiquid = $("shot-art-liquid");
+    // A reading the station saved for the student, shown until their next action.
+    let notice = null;
 
     function code() { return getState().shot.liquid; }
     function tube() { return getState().shot.tubes[code()]; }
@@ -60,6 +62,7 @@
       const button = $(id);
       button.addEventListener("click", () => {
         if (button.getAttribute("aria-disabled") === "true") return;
+        notice = null;
         perform();
         refresh();
       });
@@ -227,6 +230,19 @@
       entry.computed = null;
       live.trial.recorded = true;
       renderCard(code());
+      return index + 1;
+    }
+
+    // Keep a finished, unflagged stopwatch reading before the magnet or a reset clears the trial.
+    function saveUnrecordedReading() {
+      const live = tube();
+      const trial = live.trial;
+      if (live.phase !== "at-bottom" || trial.contactedAt === null || trial.recorded || trial.pausedAt !== null) return;
+      if (trial.startedAt === null || trial.stoppedAt === null || model.manualTimingIssue(trial)) return;
+      const elapsedMs = trial.stoppedAt - trial.startedAt;
+      if (elapsedMs < 5) return;
+      const reading = (elapsedMs / 1000).toFixed(2);
+      notice = {key: code(), reading, number: appendReading(reading)};
     }
 
     function position(sample, progress) {
@@ -289,6 +305,8 @@
         case "replaying": return t("Replay. The shot leaves the stopper. Watch for first contact.");
         case "at-bottom":
           if (justReplayed) {
+            // Only the event-timed instrument reports the interval. A manual replay leaves the measurement to the student.
+            if (trial.mode !== "event") return t("Replay complete. Compare the marked departure and first contact with your stopwatch.");
             return t("Replay complete. First contact came {seconds} s after departure.", {seconds: (shot.travelMs[key] / 1000).toFixed(2)});
           }
           if (trial.contactedAt === null) return t("Tilt the selected tube to bring the shot to the stopper.");
@@ -325,7 +343,8 @@
         (view.running || model.canStartStopwatch(sample)));
       setAvailability("shot-clear", !paused && trial.mode === "manual" && trial.startedAt !== null && sample.phase !== "replaying");
       setAvailability("shot-record", readyToRecord && trial.stoppedAt !== null && view.stopwatchMs >= 5);
-      setAvailability("shot-record-below", readyToRecord && shortFall);
+      // In manual mode the student judges whether a fall was too fast to time.
+      setAvailability("shot-record-below", readyToRecord && (trial.mode === "manual" || shortFall));
       $("shot-top-marker").dataset.active = String(atStopper || ["falling", "replaying"].includes(sample.phase));
       $("shot-bottom-marker").dataset.active = String(hasFall);
       const issue = model.manualTimingIssue(trial);
@@ -335,9 +354,13 @@
         start: "The stopwatch missed departure from the stopper. Try another run."
       };
       let feedback = "";
-      if (trial.recorded) feedback = t("Reading recorded in your notebook.");
+      if (notice && notice.key === key) {
+        feedback = t("Reading {seconds} s saved as trial {number}.", {seconds: notice.reading, number: notice.number});
+      } else if (trial.recorded) feedback = t("Reading recorded in your notebook.");
       else if (issue) feedback = t(issues[issue]);
-      else if (shortFall && !view.running && trial.mode === "manual") feedback = t("A fall too fast to time can be recorded as less than 0.5 s.");
+      else if (hasFall && trial.mode === "manual" && trial.startedAt === null) {
+        feedback = t("A fall too fast to time can be recorded as less than 0.5 s.");
+      }
       setText($("shot-feedback"), feedback);
     }
 
@@ -369,7 +392,10 @@
       addTubeButton(key);
       addCard(key);
     });
-    action("shot-operate", () => model.operateShot(tube(), code(), clock()));
+    action("shot-operate", () => {
+      saveUnrecordedReading();
+      model.operateShot(tube(), code(), clock());
+    });
     action("shot-stopwatch", () => model.toggleStopwatch(tube(), code(), clock()));
     action("shot-resume", () => {
       model.resumeShot(tube(), clock());
@@ -378,7 +404,10 @@
     action("shot-clear", () => {
       Object.assign(tube().trial, {startedAt: null, stoppedAt: null});
     });
-    action("shot-reset", () => { getState().shot.tubes[code()] = model.createShotTube(); });
+    action("shot-reset", () => {
+      saveUnrecordedReading();
+      getState().shot.tubes[code()] = model.createShotTube();
+    });
     action("shot-replay", () => model.playShotReplay(tube(), code(), clock()));
     action("shot-mode-manual", () => { tube().trial.mode = "manual"; });
     action("shot-mode-event", () => {
