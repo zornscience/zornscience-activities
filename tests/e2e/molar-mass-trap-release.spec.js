@@ -11,7 +11,7 @@ const shotMs = {W: 270, G: 6400, O: 980, M: 2250};
 const mixes = {
   1: {pair: ["W", "G"], layers: "One uniform blue-tinted layer."},
   2: {pair: ["M", "W"], layers: "A red band above a blue band."},
-  3: {pair: ["W", "O"], layers: "A clear band above a blue band."},
+  3: {pair: ["W", "O"], layers: "A smaller clear band above a blue band."},
   4: {pair: ["O", "M"], layers: "One uniform red-tinted layer."},
   5: {pair: ["M", "G"], layers: "A red band above a clear band."}
 };
@@ -75,7 +75,7 @@ async function prepareMixture(page, number) {
     await action.click();
     await page.clock.fastForward(755);
   }
-  await page.locator("#mix-stand").click();
+  // The fifth inversion sets the tube upright on its own.
   await page.clock.fastForward(310);
 }
 
@@ -83,7 +83,7 @@ async function readMixture(page, number) {
   await slot(page, number).click();
   const advance = page.locator("#mix-advance");
   if (await advance.isVisible()) await advance.click();
-  await expect(page.locator("#mix-elapsed")).toHaveText("60 / 60 s");
+  await expect(page.locator("#mix-elapsed")).toHaveText("1:00");
   await page.locator("#mix-read").click();
   await expect(page.locator("#mix-observation")).not.toHaveText("");
 }
@@ -108,7 +108,7 @@ for (const order of orders) {
     await station(page, "wax").click();
     await expect(page.locator("#edge-reading")).toHaveText(/Left edge 0 mm. Right edge 10 mm/);
     await station(page, "mixing").click();
-    await expect(page.locator("#mix-elapsed")).toHaveText("60 / 60 s");
+    await expect(page.locator("#mix-elapsed")).toHaveText("1:00");
     await page.locator("#mix-read").click();
     await expect(page.locator("#mix-observation")).toHaveText(mixes[3].layers);
     await station(page, "shot").click();
@@ -134,9 +134,9 @@ test("the entire interleaved classroom walkthrough runs in both languages with b
   await measureWax(page, "W");
   await page.clock.fastForward(10000);
   await station(page, "mixing").click();
-  await expect(page.locator("#mix-elapsed")).toHaveText("60 / 60 s");
+  await expect(page.locator("#mix-elapsed")).toHaveText("1:00");
   await readMixture(page, 3);
-  await expect(page.locator("#mix-observation")).toHaveText("Una franja transparente sobre una franja azul.");
+  await expect(page.locator("#mix-observation")).toHaveText("Una franja transparente más pequeña sobre una franja azul.");
 
   await station(page, "shot").click();
   await timeShot(page, "W");

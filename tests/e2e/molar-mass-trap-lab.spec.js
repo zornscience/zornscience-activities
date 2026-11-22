@@ -72,6 +72,8 @@ test("all four puddles merge in their own boxes, settle independently, and reset
   for (const code of ["M", "W", "O", "G"]) {
     await page.locator('[data-bottle="' + code + '"]').click();
     await expect(page.locator("#drop-count")).toHaveText("0 / 3 drops · 0.00 mL");
+    await expect(page.locator("#settle-clock")).toHaveText("0:00");
+    await expect(page.locator("#settle-stopwatch")).toHaveAttribute("data-state", "ready");
 
     // Several activations in one frame must still dispense a single drop.
     await page.locator("#dispense").evaluate((button) => {
@@ -92,12 +94,14 @@ test("all four puddles merge in their own boxes, settle independently, and reset
       await page.clock.fastForward(2600);
       await page.locator('[data-station="wax"]').click();
     } else {
-      await expect(page.locator("#settle-clock")).not.toHaveText(/Settled/);
+      // The mini stopwatch shows elapsed settling time and stops at 0:30.
+      await expect(page.locator("#settle-stopwatch")).toHaveAttribute("data-state", "running");
       await page.clock.runFor(1250);
-      await expect(page.locator("#settle-clock")).toHaveText(/^Settling 1[45] \/ 30 s$/);
+      await expect(page.locator("#settle-clock")).toHaveText(/^0:1[45]$/);
       await page.clock.runFor(1350);
     }
-    await expect(page.locator("#settle-clock")).toHaveText("Settled · 30 s");
+    await expect(page.locator("#settle-clock")).toHaveText("0:30");
+    await expect(page.locator("#settle-stopwatch")).toHaveAttribute("data-state", "stopped");
     const settled = await inspectGeometry(page);
     expect(settled.diameter).toBeGreaterThan(first.diameter);
     expect(settled.diameter).toBeCloseTo(expected[code], 4);
@@ -354,6 +358,15 @@ test("the intro shows each liquid's Lewis structure and molar mass before the be
   await expect(page.locator("#stations")).toBeHidden();
   await expect(page.locator("#workspace")).toBeHidden();
   await expect(page.locator("#intro-open")).toBeHidden();
+  // On the intro, Instructions explains getting started instead of a station. Start sits above the liquid cards.
+  await page.getByRole("button", {name: "Instructions"}).click();
+  const gettingStarted = page.getByRole("dialog", {name: "Getting started"});
+  await expect(gettingStarted).toContainText("Choose Start the lab to open the three tests.");
+  await expect(page.locator("#wax-instructions")).toBeHidden();
+  await page.keyboard.press("Escape");
+  const startBox = await page.getByRole("button", {name: "Start the lab"}).boundingBox();
+  const firstCard = await intro.locator(".zsa-mmt-liquid-card").first().boundingBox();
+  expect(startBox.y + startBox.height).toBeLessThan(firstCard.y);
   const cards = intro.locator(".zsa-mmt-liquid-card");
   await expect(cards).toHaveCount(4);
   const expected = {W: ["Water", "18 g/mol"], G: ["Glycerin", "92 g/mol"], O: ["1-octanol", "130 g/mol"], M: ["Mineral oil", "Roughly 300 g/mol or more"]};
@@ -361,8 +374,16 @@ test("the intro shows each liquid's Lewis structure and molar mass before the be
     const card = intro.locator('[data-liquid="' + code + '"]');
     await expect(card.getByRole("heading", {level: 3})).toHaveText(name);
     await expect(card.getByRole("img", {name: /^Lewis structure of/})).toBeVisible();
-    await expect(card.locator("dd").nth(1)).toHaveText(mass);
+    // The bar sits in the labeled molar mass row.
+    const massRow = card.locator(".zsa-mmt-mass");
+    await expect(massRow.locator("dt")).toHaveText("Molar mass");
+    await expect(massRow.locator(".zsa-mmt-mass-value")).toHaveText(mass);
+    await expect(massRow.locator(".zsa-mmt-mass-bar")).toHaveCount(1);
   }
+  // Mineral oil shows a whole molecule with a repeating unit, so its larger size is visible.
+  await expect(intro.locator('[data-liquid="M"]').getByRole("img", {name: /repeats n times, about 13 to 38/})).toBeVisible();
+  await expect(intro.locator('[data-liquid="M"] .zsa-mmt-lewis-caption')).toHaveText("The unit in brackets repeats about 13 to 38 times, so the chain has 15 to 40 carbons.");
+  await expect(intro.locator(".zsa-mmt-intro-note")).toHaveText("Each bar shows molar mass on the same scale. Mineral oil molecules are the heaviest, so its bar is full.");
   // Bar widths follow molar mass, lightest to heaviest.
   const widths = [];
   for (const code of ["W", "G", "O", "M"]) {
@@ -383,15 +404,22 @@ test("the intro shows each liquid's Lewis structure and molar mass before the be
   await expect(intro).toBeHidden();
   await expect(page.locator("#workspace")).toBeVisible();
   await expect(page.locator('[data-station="wax"]')).toBeFocused();
+  await page.getByRole("button", {name: "Instructions"}).click();
+  await expect(page.getByRole("dialog", {name: "Wax-paper investigation"})).toBeVisible();
+  await page.keyboard.press("Escape");
   await page.getByRole("button", {name: "Intro"}).click();
   await expect(intro).toBeVisible();
   await expect(page.locator("#intro-title")).toBeFocused();
   await expect(page.locator("#workspace")).toBeHidden();
+  await page.getByRole("button", {name: "Instructions"}).click();
+  await expect(page.getByRole("dialog", {name: "Getting started"})).toBeVisible();
+  await page.keyboard.press("Escape");
 
   await page.setViewportSize({width: 360, height: 720});
   await page.getByRole("link", {name: "ES Español"}).click();
   await expect(page.getByRole("region", {name: "Conoce los cuatro líquidos"})).toBeVisible();
-  await expect(intro.locator('[data-liquid="M"] dd').nth(1)).toHaveText("Aproximadamente 300 g/mol o más");
+  await expect(intro.locator('[data-liquid="M"] .zsa-mmt-mass-value')).toHaveText("Aproximadamente 300 g/mol o más");
+  await expect(intro.locator('[data-liquid="M"] .zsa-mmt-mass dt')).toHaveText("Masa molar");
   await expect(intro.locator('[data-liquid="W"]').getByRole("img", {name: /^Estructura de Lewis del agua/})).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(360);
   await audit();

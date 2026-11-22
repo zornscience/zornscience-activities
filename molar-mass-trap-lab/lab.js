@@ -233,10 +233,7 @@
     $("wax-bench").hidden = station !== "wax";
     $("shot-bench").hidden = !shotActive;
     $("mixing-bench").hidden = !mixingActive;
-    $("wax-instructions").hidden = station !== "wax";
-    $("shot-instructions").hidden = !shotActive;
-    $("mixing-instructions").hidden = !mixingActive;
-    setText($("instructions-title"), t(station === "wax" ? "Wax-paper investigation" : title));
+    renderInstructions();
     if (shotActive) {
       paintStation(shotStation, true);
       return;
@@ -273,10 +270,10 @@
     setText($("drop-count"), t("{count} / 3 drops · {volume} mL", {
       count: sample.drops, volume: (sample.drops * wax.dropMl).toFixed(2)
     }));
-    $("settle-clock").hidden = !settling;
-    // The clock counts the full 30 s while real time runs faster.
-    const shownSeconds = Math.floor(elapsed / wax.settleMs * wax.settleDisplayS);
-    setText($("settle-clock"), t(settled ? "Settled · 30 s" : "Settling {elapsed} / 30 s", {elapsed: shownSeconds}));
+    // The mini stopwatch starts when the third drop lands and stops at 30 s. Real time runs faster than the clock.
+    const shownSeconds = Math.min(wax.settleDisplayS, Math.floor(elapsed / wax.settleMs * wax.settleDisplayS));
+    $("settle-stopwatch").dataset.state = settled ? "stopped" : settling ? "running" : "ready";
+    setText($("settle-clock"), "0:" + String(shownSeconds).padStart(2, "0"));
     $("measure-tools").hidden = !settled;
     renderRuler(sample);
 
@@ -333,12 +330,22 @@
     addWaxBox(code, index);
   });
 
+  // The Instructions dialog follows what is on screen: getting started on the intro, otherwise the open station.
+  function renderInstructions() {
+    const intro = !$("intro").hidden;
+    const station = intro ? "intro" : state.station;
+    for (const key of ["intro", "wax", "shot", "mixing"]) $(key + "-instructions").hidden = station !== key;
+    const titles = {intro: "Getting started", wax: "Wax-paper investigation"};
+    setText($("instructions-title"), t(titles[station] ?? stations[station][0]));
+  }
+
   // The intro screen introduces the liquids. The bench stays hidden until the student starts the lab.
   function showIntro(open) {
     $("intro").hidden = !open;
     $("stations").hidden = open;
     $("workspace").hidden = open;
     $("intro-open").hidden = open;
+    renderInstructions();
   }
   $("intro-start").addEventListener("click", () => {
     showIntro(false);

@@ -38,8 +38,8 @@
     pourMs: 420,
     invertMs: 720,
     standMs: 280,
-    // The pipette always delivers 1.0 mL.
-    aliquotMl: 1,
+    // The pipette's portion for each liquid. The worksheet uses 0.5 mL of 1-octanol and 1.0 mL of the others.
+    portionMl: Object.freeze({W: 1, G: 1, O: 0.5, M: 1}),
     // Approximate room-temperature densities in g/mL. The denser liquid sits below the other.
     densityGmL: Object.freeze({G: 1.26, W: 1.00, M: 0.86, O: 0.83}),
     // Pairs that form one layer, from the teacher guide. Every other pair of different liquids forms two layers.
@@ -249,7 +249,8 @@
   function mixStage(tube, now) {
     if (tube.motion) return tube.motion.kind;
     if (tube.settlesAt !== null) return now >= tube.settlesAt ? "settled" : "settling";
-    if (tube.stoppered) return tube.inversions < mixing.inversionCount ? "invert-ready" : "stand-ready";
+    // The fifth inversion sets the tube upright on its own, so a stoppered tube at rest is ready to invert.
+    if (tube.stoppered) return "invert-ready";
     return tube.aliquots.length === 2 ? "seal-ready" : "fill-ready";
   }
 
@@ -257,7 +258,7 @@
   function pourMixAliquot(tube, code, now) {
     if (!Object.hasOwn(liquids, code) || mixStage(tube, now) !== "fill-ready") return false;
     tube.disposed = false;
-    tube.motion = {kind: "pouring", start: now, end: now + mixing.pourMs, portion: {code, ml: mixing.aliquotMl}};
+    tube.motion = {kind: "pouring", start: now, end: now + mixing.pourMs, portion: {code, ml: mixing.portionMl[code]}};
     return true;
   }
 
@@ -274,19 +275,19 @@
     return true;
   }
 
-  function standMixTube(tube, now) {
-    if (tube.motion || !tube.stoppered || tube.upright || tube.inversions !== mixing.inversionCount) return false;
-    tube.motion = {kind: "placing", start: now, end: now + mixing.standMs};
-    return true;
-  }
-
   function updateMixTube(tube, now) {
     const motion = tube.motion;
     if (!motion || now < motion.end) return;
     tube.motion = null;
     if (motion.kind === "pouring") tube.aliquots.push(motion.portion);
-    else if (motion.kind === "inverting") tube.inversions++;
-    else {
+    else if (motion.kind === "inverting") {
+      tube.inversions++;
+      // After the fifth inversion the tube returns upright to the rack and the stand clock starts.
+      if (tube.inversions === mixing.inversionCount) {
+        tube.motion = {kind: "placing", start: motion.end, end: motion.end + mixing.standMs};
+        updateMixTube(tube, now);
+      }
+    } else {
       tube.upright = true;
       tube.settlesAt = motion.end + mixing.settleMs;
     }
@@ -356,7 +357,7 @@
   const api = {liquids, wax, ruler, shot, mixing, createWaxSample, createState, dispense, landDrop, elapsedMs,
     isSettled, capGeometry, waxGeometry, edgeReadings, createShotTube, updateShot, pauseShot, resumeShot,
     operateShot, playShotReplay, shotSnapshot, mixStage,
-    pourMixAliquot, stopperMixTube, invertMixTube, standMixTube, updateMixTube, mixElapsedMs, mixDisplaySeconds,
+    pourMixAliquot, stopperMixTube, invertMixTube, updateMixTube, mixElapsedMs, mixDisplaySeconds,
     advanceMixTime, mixVolume, mixBand, mixPouredBands, formsOneLayer, mixSettledBands, emptyMixTube};
   if (typeof module === "object" && module.exports) module.exports = api;
   if (typeof document === "undefined") return;
