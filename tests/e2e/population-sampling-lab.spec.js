@@ -191,7 +191,7 @@ test("population sampling: R zero is recorded, next trial is fresh, each series 
   await expect($(page, "work").locator("table").first().locator("tbody tr")).toHaveCount(0);
 });
 
-test("population sampling: no runtime network, no writing fields, reduced motion, seed parity and embed", async ({page, context}) => {
+test("population sampling: no runtime network, no writing fields, reduced motion, seed parity and embed", async ({page, context, baseURL}) => {
   await page.emulateMedia({reducedMotion: "reduce"});
   const requests = []; page.on("request", req => requests.push({url: req.url(), type: req.resourceType()}));
   await open(page);
@@ -199,7 +199,7 @@ test("population sampling: no runtime network, no writing fields, reduced motion
   const record = await $(page, "work").locator("table").first().innerText();
   const second = await context.newPage(); await open(second); await mode(second, "recapture"); await catchTrial(second);
   expect(await $(second, "work").locator("table").first().innerText()).toBe(record); await second.close();
-  expect(requests.every(r => r.url.startsWith("http://127.0.0.1:4173/") && !["fetch", "xhr", "websocket", "eventsource"].includes(r.type))).toBe(true);
+  expect(requests.every(r => r.url.startsWith(new URL(baseURL).origin + "/") && !["fetch", "xhr", "websocket", "eventsource"].includes(r.type))).toBe(true);
   await expect(page.locator('textarea,input[type=text],[contenteditable]')).toHaveCount(0);
   expect(await page.locator("input[type=number]").count()).toBeLessThanOrEqual(1);
   await page.goto("/population-sampling-lab/?embed=1&seed=1");

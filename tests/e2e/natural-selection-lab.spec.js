@@ -170,7 +170,7 @@ test("natural selection: reduced motion and hidden documents preserve determinis
   expect(await page.evaluate(() => document.getAnimations().length)).toBe(0);
 });
 
-test("natural selection: no runtime requests or storage, clean Spanish Share and embed/back links", async ({page}) => {
+test("natural selection: no runtime requests or storage, clean Spanish Share and embed/back links", async ({page, baseURL}) => {
   const requests = [];
   page.on("request", request => requests.push(request.url()));
   await page.addInitScript(() => {
@@ -178,7 +178,7 @@ test("natural selection: no runtime requests or storage, clean Spanish Share and
   });
   await clipboard(page); await open(page, "es");
   await page.waitForLoadState("networkidle");
-  expect(requests.every(url => new URL(url).origin === "http://127.0.0.1:4173")).toBe(true);
+  expect(requests.every(url => new URL(url).origin === new URL(baseURL).origin)).toBe(true);
   const count = requests.length;
   await predict(page); await finish(page); await page.locator(id("copy")).click();
   await page.locator(id("share-toggle")).click();
