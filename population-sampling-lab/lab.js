@@ -365,16 +365,7 @@
       $("instructions-" + name).hidden = !selected;
     }
     announce("");
-    if (key === "ladybug") {
-      i18n.onChange = () => {
-        content.translateStatic();
-        renderModes();
-        ladybug?.render();
-        updateLinks();
-        root.dispatchEvent(new Event("population-sampling-share"));
-      };
-      loadLadybug();
-    }
+    if (key === "ladybug") loadLadybug();
     updateLinks();
     root.dispatchEvent(new Event("population-sampling-share"));
     if (moveFocus) $("tab-" + key).focus({preventScroll: true});
@@ -409,6 +400,14 @@
     }
     selectTab(requestedTab(), true);
   }
+  // Registered at startup so a language switch behaves the same on either tab and from any visit order.
+  i18n.onChange = () => {
+    content.translateStatic();
+    renderModes();
+    ladybug?.render();
+    updateLinks();
+    root.dispatchEvent(new Event("population-sampling-share"));
+  };
   window.addEventListener("popstate", fromHistory);
   window.addEventListener("hashchange", fromHistory);
   renderModes();

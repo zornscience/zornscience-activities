@@ -361,3 +361,20 @@ test("lazy-loaded ladybug scripts use the page's cache-busting version", async (
   const sources = await page.locator('script[src^="ladybug"]').evaluateAll(nodes => nodes.map(node => node.getAttribute("src")));
   expect(sources.sort()).toEqual(["ladybug-art.js", "ladybug-model.js", "ladybug.js"].map(file => file + "?v=" + version));
 });
+
+test("a language switch keeps both labs' progress, whichever tab was visited first", async ({page}) => {
+  await page.goto(path);
+  await ps(page, "tab-ladybug").click();
+  await lab(page, "start-measure").click();
+  await lab(page, "stage-sample").click();
+  await lab(page, "draw").click();
+  await ps(page, "tab-population").click();
+  await page.locator(".zsa-ps-cell").first().click();
+  await expect(ps(page, "progress")).toContainText("1 of 3");
+  await page.evaluate(() => { window.__noReload = true; });
+  await page.locator('.zsa-languages a[lang="es-MX"]').click();
+  await expect(ps(page, "progress")).toContainText("1 de 3");
+  expect(await page.evaluate(() => window.__noReload)).toBe(true);
+  await ps(page, "tab-ladybug").click();
+  await expect(lab(page, "sample-1")).toContainText("A1");
+});
