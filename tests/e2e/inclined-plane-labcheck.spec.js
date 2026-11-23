@@ -94,8 +94,7 @@ test("inclined plane lab check: a setup restores the start, clears Pause and Sho
   // The student has changed everything and left the lab paused: setup puts question 1 back.
   await change(page, "#angle", "45"); await page.locator("#surface").selectOption("plastic"); await change(page, "#mass", "1.5");
   await page.locator("#forces").uncheck(); await page.locator("#components").uncheck(); await page.locator("#slow").check();
-  await page.clock.runFor(500);
-  await expect(page.locator("#state")).toHaveText("KINETIC / SLIDING");
+  await untilSliding(page);
   await page.locator("#pause").click();
   await expect(page.locator("#pause")).toHaveText("Resume"); await expect(page.locator("#pause")).toHaveAttribute("aria-pressed", "true");
   await setUp(page);
@@ -175,8 +174,7 @@ test("inclined plane lab check: question 5 on felt, 33.0° holds and 33.1° slip
   // Slipping starts right away at 33.1°: the first frame already reads KINETIC / SLIDING.
   await change(page, "#angle", "33");
   await page.clock.runFor(100);
-  await change(page, "#angle", "33.1"); await page.clock.runFor(50);
-  await expect(page.locator("#state")).toHaveText("KINETIC / SLIDING");
+  await change(page, "#angle", "33.1"); await untilSliding(page);
 });
 
 test("inclined plane lab check: every wrong choice gives its own feedback, and retries persist through navigation", async ({page, problems}) => {
