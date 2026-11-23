@@ -154,9 +154,12 @@
 .zsa-pj-textarea:focus-visible {outline:var(--zsa-focus-ring);outline-offset:var(--zsa-focus-offset);}
 
 /* Print: the launch line, the scene, the graph, the results, the answers and the whole reflection; no controls. */
+/* Lab check (../shared/zsa-labcheck.css): its own collapsible card between Flight results and Check your thinking. */
+.zsa-pj-checkmount {margin:0 0 16px;min-width:0;}
+.zsa-pj-checkmount .zsa-labcheck {margin:0;}
 @media print {
   .zsa.zsa-pj {max-width:none;padding:0;}
-  .zsa-pj-topline,.zsa-pj-lede,.zsa-pj-print,.zsa-pj-side,.zsa-pj-playback,.zsa-pj-options,.zsa-pj-toggles,.zsa-pj-actions,.zsa-pj .zsa-footer,.zsa-pj-textarea,#zsa-pj-reflection-note {display:none!important;}
+  .zsa-pj-topline,.zsa-pj-lede,.zsa-pj-print,.zsa-pj-side,.zsa-pj-playback,.zsa-pj-options,.zsa-pj-toggles,.zsa-pj-actions,.zsa-pj-checkmount,.zsa-pj .zsa-footer,.zsa-pj-textarea,#zsa-pj-reflection-note {display:none!important;}
   .zsa-pj-print-only {display:block;}
   .zsa-pj-print-reflection {white-space:pre-wrap;border:1px solid #94a3b8;border-radius:6px;padding:8px 10px;min-height:6em;}
   .zsa-pj .zsa-pj-header h1 {font-size:1.6rem;margin:0 0 4px;}

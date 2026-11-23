@@ -3682,6 +3682,27 @@ The shared Lab check labels are the Gas lab pilot's. Readout and control names f
 | stuck carts / the carts stick | carritos pegados / los carritos se pegan | Questions 2, 4 and 5. |
 | plain average | promedio simple | Question 5 feedback. |
 
+## Projectile Motion Vector Lab check (projectile-lab 1.2.0)
+
+The shared Lab check labels are the Gas lab pilot's. Readout and control names follow the lab: Tiempo (the Time slider, "el control deslizante Tiempo"), Altura, y, Rapidez, |v|, Resultados del vuelo, Tiempo en el aire, Distancia horizontal (alcance) (written "el alcance" in sentences), Pausa en el punto más alto and Lanzar. Speed is "rapidez" and velocity is "velocidad", kept separate; vx and vy are feminine in sentences (la velocidad horizontal); the ball is "el proyectil" and the ledge is "la cornisa".
+
+| English | Mexican Spanish | Use |
+| --- | --- | --- |
+| Sideways velocity | Velocidad horizontal | Question 1 title. |
+| Height at the top | Altura en el punto más alto | Question 2 title. |
+| Two angles, one range | Dos ángulos, el mismo alcance | Question 3 title. |
+| Faster launch, same fall | Lanzamiento más rápido, misma caída | Question 4 title. |
+| Predict, then launch | Predice y luego lanza | Question 5 title; as in the Collision Carts check. |
+| the Time slider | el control deslizante Tiempo | Question 1; the slider's own label is Tiempo. |
+| the vx readout | la lectura de vx | Question 1; the readout's own name follows "lectura de". |
+| the Speed readout | la lectura Rapidez, \|v\| | Questions 1 and 5 feedback. |
+| the sideways part / the vertical part | la parte horizontal / la parte vertical | Feedback for questions 1 and 5. |
+| the launch components under the sliders | las componentes del lanzamiento debajo de los controles deslizantes | Question 1 feedback. |
+| stops rising / rises above the ledge | deja de subir / sube por encima de la cornisa | Question 2 explanation. |
+| fall time | tiempo de caída | Question 5. |
+| flies for / stays up for | vuela / se queda en el aire | Question 3 explanation. |
+| Both land {right} m away. | Los dos caen a {right} m de distancia. | Question 3 explanation. |
+
 ## BTB Carbon Cycle Lab (btb-carbon-cycle-lab/data.js)
 
 Sources compared: Mexican secondary and preparatoria Biology and chemistry textbooks, SEP and UNAM Biology materials, Khan Academy Spanish, and university lab glossaries. Most agree on "azul de bromotimol", with "AZB" less common but used in lab guides; the page spells the name out in the title and intro and uses AZB afterward.

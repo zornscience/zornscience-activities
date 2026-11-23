@@ -1,9 +1,9 @@
 # Verification record
-Version: 1.1.3
-Date: 2026-10-18
-Reviewer: Claude (built and tested 1.0.0)
+Version: 1.2.0
+Date: 2026-11-23
+Reviewer: Claude (built and tested 1.0.0; Lab check added and tested in 1.2.0)
 
-PASS means the check was run on version 1.0.0 as committed and passed. Browser checks use Playwright with Chromium.
+PASS means the check was run as committed and passed; the Lab check rows ran on version 1.2.0. Browser checks use Playwright with Chromium.
 
 | Check | Status | Evidence |
 |---|---|---|
@@ -22,6 +22,8 @@ PASS means the check was run on version 1.0.0 as committed and passed. Browser c
 | Questions | PASS | Blank, wrong and right answers with numbered feedback, check marks and announcements. |
 | CSV and printing | PASS | The downloaded file equals the model's CSV; print media shows the launch line with results, a 30-line reflection in full and the scene, and hides the controls; Print lab calls the print dialog. |
 | Layout | PASS | Landed with every arrow and checked answers: no sideways scrolling, every visible button, select, slider and checkbox or radio label at least 44 px, scene text at least 10 px, at 320x568, 360x640, 390x664, 768x1024, 1024x768, 1280x617, 1366x657, 1920x960 and 683x329 (1366x657 at 200% zoom). |
+| Lab check, unit | PASS | `tests/unit/projectile-labcheck.test.js`: the lab's `zsa-pj:request-lab` event and setup; every resolved number (17.32, 17.95, 20.00, 4.70 m/s; 24.70, 9.70, 15.00, 34.40 m; 35.35, 40.82, 70.70, 17.67 m; 2.86, 1.43, 5.71, 2.02 s; 19.80, 9.80, 10.00, 22.18 m/s) and the right choices against stepping the motion; setups on the sliders and on their preset when named; one right choice, unique values and a feedback message per wrong choice; all 32 first-try patterns with Show me counts through `codes.checkText`; id 11 free, 18 ids left; Spanish with matching placeholders; page wiring and unique ids. |
+| Lab check, browser | PASS | `tests/e2e/projectile-labcheck.spec.js` on the fake clock: closed by default, `?check=1`, the card between Flight results and Check your thinking; setup puts each question in its starting state without launching; question 1 (End and arrow keys to 1.50 s: vx 17.32 right, Speed 17.95, vy 4.70 down), 2 (Resume button, Height 24.70, Time 1.41, vy 0.00), 3 (range 35.35 at 30° and 60°, "?" after the angle changes), 4 (2.86 s at 12 and 24 m/s, 34.29 and 68.57 m), 5 (vy 19.80 down by waiting and by the Time slider); every wrong choice, Show me, code and score only after all five, the teacher checker, Start over, keyboard only, axe in English and Spanish at 1366x657 and 390x664 with embed, Spanish run. |
 | axe-core | PASS | Zero violations (WCAG 2.0 to 2.2 A and AA plus best practices) at 1366x657 and 390x664: default, landed with every arrow and checked answers, and print. |
 | Deep links, back link, embed, network, storage | PASS | All parameters; off-slider, unknown and malformed values ignored; the default back link; `?from=` accepted for a zornscience.org page and rejected for 8 other values; `?embed=1` hides the back link and footer; only local files load, each with `?v=1.0.0`; no storage or cookies. |
 | Landing page | PASS | The landing page links to the lab. |

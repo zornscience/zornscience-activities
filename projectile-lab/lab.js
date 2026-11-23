@@ -380,6 +380,23 @@
     });
   });
 
+  // ---------- The lab check ----------
+  // The lab check (labcheck.js) reaches the lab through a "zsa-pj:request-lab" event, never a global. setup() puts the
+  // controls in a question's starting state exactly as a slider input does: the launch settings, the scenario (the
+  // select shows a preset's name when the values match it), Pause at the top set as given and Slow motion off, then
+  // restart() stops any run, sets t = 0, rebuilds the scene and graph and puts the results back to "?". The four Show
+  // on the ball toggles stay as the student has them. It never launches the ball and announces nothing.
+  // format is the readout formatter fmt(v, d).
+  function labSetup(q) {
+    p = {h0: q.h0, angle: q.angle, speed: q.speed};
+    scenario = q.scenario;
+    $("pausetop").checked = !!q.pausetop;
+    $("slow").checked = false;
+    showSettings();
+    restart();
+  }
+  root.addEventListener("zsa-pj:request-lab", function (event) { event.detail.receive({setup: labSetup, format: fmt}); });
+
   // ---------- Check your thinking ----------
   M.QUESTIONS.forEach(function (q, i) {
     var fs = node("fieldset", "zsa-pj-question");
