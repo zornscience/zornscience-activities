@@ -130,7 +130,7 @@ questions: [
 ]
 ```
 
-For the `density` question `{half}` is `m.v / 2`. The answers, read from the live lab in headless Chromium on Nov 21, 2026 (the formulas above give the same values):
+For the `density` question `{half}` is `vMedium / 2` (half the Medium-cord speed, 15.66), not `m.v / 2`: in the Heavy-cord setup `m.v` is already 22.15, so halving it would give 11.07 and miss the "divides by 2 instead of √2" mistake the feedback describes. The answers, read from the live lab in headless Chromium on Nov 21, 2026 (the formulas above give the same values):
 
 | id | setup | `{right}` | distractors |
 | --- | --- | --- | --- |
