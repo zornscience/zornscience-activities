@@ -272,7 +272,14 @@
     root.querySelectorAll("[data-ps-mode]").forEach(node => node.setAttribute("aria-pressed", node.dataset.psMode === mode));
     if (mode === "quadrat") renderQuadrat(); else renderPond();
   }
-  Object.entries(labels).forEach(([key, text]) => button(text, $("tabs"), () => { mode = key; render(); $("mode-title").setAttribute("tabindex", "-1"); $("mode-title").focus(); }, {"data-ps-mode": key, "aria-pressed": key === mode}));
+  function renderModes() {
+    $("tabs").replaceChildren();
+    Object.entries(labels).forEach(([key, text]) => button(text, $("tabs"), () => {
+      mode = key; render();
+      $("mode-title").setAttribute("tabindex", "-1"); $("mode-title").focus();
+    }, {"data-ps-mode": key, "aria-pressed": key === mode}));
+    render();
+  }
   const dialog = root.querySelector("#instructions");
   $("instructions-open").addEventListener("click", () => {
     $("share-panel").hidden = true;
@@ -280,12 +287,128 @@
     dialog.showModal();
   });
   $("instructions-close").addEventListener("click", () => dialog.close());
+
   const from = params.get("from");
-  if (from) {
-    try {
-      const url = new URL(from);
-      if (url.protocol === "https:" && url.hostname === "zornscience.org" && !url.port && !url.username && !url.password) $("back").href = url.href;
-    } catch (error) { /* Keep the default lesson. */ }
-  } else if (i18n.lang === "es") $("back").href = $("back").href.replace("zornscience.org/", "zornscience.org/es/");
-  render();
+  const lesson = $("back").href;
+  function updateLinks() {
+    $("back").href = from || i18n.lang !== "es" ? lesson : lesson.replace("zornscience.org/", "zornscience.org/es/");
+    if (from) {
+      try {
+        const url = new URL(from);
+        if (url.protocol === "https:" && url.hostname === "zornscience.org" && !url.port && !url.username && !url.password) $("back").href = url.href;
+      } catch (error) { /* Keep the default lesson. */ }
+    }
+    const footer = root.querySelector("footer a");
+    footer.href = i18n.url(footer.href);
+    root.querySelectorAll(".zsa-languages a").forEach(link => {
+      link.href = i18n.link(location.href, location.href, link.lang === "es-MX" ? "es" : "en");
+    });
+  }
+
+  const tabNames = ["population", "ladybug"];
+  const tablist = $("tab-population").parentElement;
+  const fragment = "#ladybug-quadrat";
+  function requestedTab() { return location.hash === fragment ? "ladybug" : "population"; }
+  let activeTab, ladybug, loading;
+  const ladybugScripts = new Map();
+  function loadLadybugScript(file) {
+    if (!ladybugScripts.has(file)) {
+      const script = document.createElement("script");
+      script.src = file + "?v=1.4.0";
+      const loaded = new Promise((resolve, reject) => {
+        script.addEventListener("load", resolve, {once: true});
+        script.addEventListener("error", reject, {once: true});
+        document.head.append(script);
+      }).catch(error => {
+        script.remove();
+        ladybugScripts.delete(file);
+        throw error;
+      });
+      ladybugScripts.set(file, loaded);
+    }
+    return ladybugScripts.get(file);
+  }
+  function requestLadybugPart(part) {
+    let api;
+    root.dispatchEvent(new CustomEvent("population-sampling-ladybug-" + part, {detail: {receive: value => { api = value; }}}));
+    return api;
+  }
+  function loadLadybug() {
+    if (loading || ladybug) return;
+    const panel = $("panel-ladybug");
+    panel.replaceChildren();
+    el("p", t("Loading the ladybug lab…"), panel, {role: "status"});
+    const scripts = ["ladybug-model.js", "ladybug-art.js", "ladybug.js"];
+    loading = Promise.all(scripts.map(loadLadybugScript)).then(() => {
+      const apparatus = requestLadybugPart("model");
+      const createArt = requestLadybugPart("art");
+      const createLab = requestLadybugPart("lab");
+      ladybug = createLab(panel, apparatus, createArt(apparatus), t, announce);
+    }).catch(() => {
+      panel.replaceChildren();
+      el("p", t("The ladybug lab couldn’t load."), panel, {role: "status"});
+      button("Try again", panel, loadLadybug);
+    }).finally(() => { loading = null; });
+  }
+  function selectTab(key, fromHistory = false) {
+    if (key === activeTab) return;
+    const oldPanel = activeTab && $("panel-" + activeTab);
+    const moveFocus = fromHistory && (oldPanel?.contains(document.activeElement) || tablist.contains(document.activeElement));
+    activeTab = key;
+    for (const name of tabNames) {
+      const selected = name === key, tab = $("tab-" + name);
+      tab.tabIndex = selected ? 0 : -1;
+      tab.setAttribute("aria-selected", String(selected));
+      $("panel-" + name).hidden = !selected;
+      $("instructions-" + name).hidden = !selected;
+    }
+    announce("");
+    if (key === "ladybug") {
+      i18n.onChange = () => {
+        content.translateStatic();
+        renderModes();
+        ladybug?.render();
+        updateLinks();
+        root.dispatchEvent(new Event("population-sampling-share"));
+      };
+      loadLadybug();
+    }
+    updateLinks();
+    root.dispatchEvent(new Event("population-sampling-share"));
+    if (moveFocus) $("tab-" + key).focus({preventScroll: true});
+  }
+  for (const [index, name] of tabNames.entries()) {
+    const tab = $("tab-" + name);
+    tab.addEventListener("click", () => {
+      if (name !== activeTab) {
+        const url = new URL(location.href);
+        url.hash = name === "ladybug" ? fragment : "";
+        history.pushState(null, "", url);
+        selectTab(name);
+      }
+    });
+    tab.addEventListener("keydown", event => {
+      const next = {ArrowLeft: 1 - index, ArrowRight: 1 - index, Home: 0, End: tabNames.length - 1};
+      if (!Object.hasOwn(next, event.key)) return;
+      event.preventDefault();
+      tab.tabIndex = -1;
+      const target = $("tab-" + tabNames[next[event.key]]);
+      target.tabIndex = 0;
+      target.focus();
+    });
+  }
+  tablist.addEventListener("focusout", event => {
+    if (tablist.contains(event.relatedTarget)) return;
+    for (const name of tabNames) $("tab-" + name).tabIndex = name === activeTab ? 0 : -1;
+  });
+  function fromHistory() {
+    if (i18n.onChange && i18n.language(location.search) !== i18n.lang) {
+      history.replaceState(null, "", i18n.url(location.href));
+    }
+    selectTab(requestedTab(), true);
+  }
+  window.addEventListener("popstate", fromHistory);
+  window.addEventListener("hashchange", fromHistory);
+  renderModes();
+  selectTab(requestedTab());
 }());

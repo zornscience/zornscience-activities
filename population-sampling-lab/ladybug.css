@@ -1,0 +1,50 @@
+.zsa-lb-card { margin-top: 12px; }
+.zsa-lb-card h2, .zsa-lb-card h3 { font-weight: 650; }
+.zsa-lb-card h3 { margin: 0 0 8px; }
+.zsa-lb-card .zsa-lb-prompt { margin: 0 0 14px; }
+.zsa-lb-card p { margin: 12px 0; }
+.zsa-lb-actions, .zsa-lb-key, .zsa-lb-stations { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.zsa-lb-actions .zsa-btn, .zsa-lb-stations .zsa-btn { padding: 8px 13px; font-size: 1rem; }
+.zsa-lb-actions .zsa-btn[aria-pressed="true"], .zsa-lb-stations .zsa-btn[aria-current="step"] {
+  box-shadow: inset 0 -3px var(--zsa-blue);
+  background: var(--zsa-sky);
+}
+.zsa-lb-stations { justify-content: space-between; padding: 4px 0; }
+.zsa-lb-start-options, .zsa-lb-bench { display: grid; gap: 16px; margin: 16px 0; }
+.zsa-lb-start-options { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 820px; }
+.zsa-lb-start-options .zsa-panel { padding: 16px; }
+.zsa-lb-bench { align-items: start; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); }
+.zsa-lb-figure, .zsa-lb-reef { margin: 0; min-width: 0; }
+.zsa-lb-figure {
+  padding: 10px;
+  border: 1px solid var(--zsa-border);
+  border-radius: var(--zsa-radius-lg);
+  background: #f5f8f9;
+}
+.zsa-lb-figure > .zsa-lb-actions { margin: 0 0 8px; }
+.zsa-lb-figure svg { display: block; width: 100%; height: auto; }
+.zsa-lb-figure figcaption { font-weight: 650; color: var(--zsa-navy); margin: 0 0 6px; }
+.zsa-lb-figure [data-ladybug-scene="closeup"] {
+  max-width: 390px;
+  margin: 0 auto 10px;
+  border: 1px solid #a3b5bd;
+  border-radius: var(--zsa-radius-sm);
+}
+.zsa-lb-measure [data-ladybug-scene="measure"] { max-height: 348px; }
+.zsa-lb-measure [data-ladybug-scene="endpoint"] { max-height: 240px; background: #edf1f3; border-radius: 6px; }
+.zsa-lb-reading { margin: 8px 0 0; font-size: 1rem; }
+.zsa-lb-reef { max-width: 750px; }
+.zsa-lb-reef > svg { display: block; width: 100%; height: auto; }
+.zsa-lb-key { gap: 8px 24px; padding: 6px 0 2px; }
+.zsa-lb-key span { display: inline-flex; gap: 8px; align-items: center; }
+.zsa-lb-key svg { width: 30px; height: 30px; }
+.zsa-lb-observations { margin: 8px 0 14px; }
+.zsa-lb-observations summary { cursor: pointer; padding: 9px 4px; color: var(--zsa-navy); font-weight: 550; }
+.zsa-lb-observations ul { padding-inline-start: 24px; }
+.zsa-lb-observations li { padding: 4px; }
+.zsa-lb-census { font-weight: 650; }
+@media (max-width: 680px) {
+  .zsa-lb-bench, .zsa-lb-start-options { grid-template-columns: minmax(0, 1fr); }
+  .zsa-lb-figure { padding: 8px; }
+}
+.zsa-lb-figure > .zsa-lb-actions:last-child { margin: 10px 0 0; }

@@ -3507,7 +3507,8 @@ Mexican Spanish, tú, decimal points unchanged. Previously approved equivalents 
 | --- | --- | --- |
 | Population Sampling Lab | Laboratorio de muestreo de poblaciones | needs review |
 | Population Sampling | Muestreo de poblaciones | needs review, requested provisional lesson title |
-| quadrat | cuadrante | needs review |
+| quadrat | cuadrante | Style Kit section 6 |
+| grid square | cuadro | Style Kit section 6 |
 | mark and recapture | captura y recaptura | needs review |
 | sample | muestra | reused, earlier sample terms |
 | population | población | needs review |
@@ -3515,7 +3516,7 @@ Mexican Spanish, tú, decimal points unchanged. Previously approved equivalents 
 | density | densidad | reused, earlier dimensional-analysis terms |
 | random | al azar | reused, earlier unknown-selection wording |
 | bias | sesgo | needs review |
-| percent error | error porcentual | reused, live lesson wording requested for this lab |
+| percent error | error porcentual | Style Kit section 6 |
 | net | red | needs review |
 | recapture | recaptura | needs review |
 | marks wear off | las marcas se borran | needs review |
@@ -3527,6 +3528,10 @@ Mexican Spanish, tú, decimal points unchanged. Previously approved equivalents 
 | spread of estimates | dispersión de las estimaciones | needs review |
 | Data for your worksheet | Datos para tu hoja de trabajo | needs review |
 | Answer these in your document | Responde estas preguntas en tu documento | needs review |
+| ladybug | catarina | needs review |
+| sea star | estrella de mar | needs review |
+| sand dollar | dólar de arena | needs review |
+| sampling plot | parcela de muestreo | needs review |
 
 ## Mitosis Detective (mitosis-lab 1.0.0)
 

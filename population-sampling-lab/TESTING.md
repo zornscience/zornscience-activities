@@ -1,12 +1,12 @@
 # Population Sampling Lab testing
 
-Version: 1.3.0
+Version: 1.4.0
 
 Run from the repository root:
 
 ```
 node --test tests/unit/population-sampling-lab.test.js
-npx playwright test tests/e2e/population-sampling-lab.spec.js --workers=2
+npx playwright test tests/e2e/population-sampling-lab.spec.js tests/e2e/ladybug-quadrat.spec.js --workers=2
 npx playwright test tests/e2e/labs-a11y.spec.js --grep population-sampling-lab --workers=2
 node tools/build-about.js --check
 node tools/build-seo.js --check
@@ -14,7 +14,9 @@ npm test
 npm run parity
 ```
 
-The model suite covers seed normalization, clock and ambient-randomness independence, cluster geometry, population bounds, unique quadrats, estimation and whole percent errors, zero recaptures, exact distinct draws, a hypergeometric expectation check, and statistical comparisons over fixed seeds. Larger-catch central spread is measured with the interquartile range of finite estimates divided by each pond's true size. Undefined counts are checked separately. A raw range comparison can mislead because a finite estimate from 20 fish cannot exceed 400 while one from 40 fish can reach 1600. We preserve these outliers rather than modify the scientific draws.
+The ladybug browser tests follow the paper workflow with keyboard controls at 1366 × 657 in English and 360 × 780 in Spanish. They check both ruler endpoints for both dimensions, the reef species and scale, three separate close-ups, an empty square, two specimens on opposite sides of a boundary and the census against the plotted specimens. They also check touch at 320 × 720 with rotation, unique draws, tab history, retained observations, localized Share, scoped instructions, and the fresh-run confirmation.
+
+The existing model suite covers seed normalization, clock and ambient-randomness independence, cluster geometry, population bounds, unique quadrats, estimation and whole percent errors, zero recaptures, exact distinct draws, a hypergeometric expectation check, and statistical comparisons over fixed seeds. Larger-catch central spread is measured with the interquartile range of finite estimates divided by each pond's true size. Undefined counts are checked separately. A raw range comparison can mislead because a finite estimate from 20 fish cannot exceed 400 while one from 40 fish can reach 1600. We preserve these outliers rather than modify the scientific draws.
 
 Browser coverage includes all guided paths in English and Mexican Spanish, exact model counts, 3/10/20 cumulative samples, both placement methods, both catch sizes, four problem series, prediction locking, reveal gates, duplicate prevention, numeric steppers, keyboard placement, native dialog focus, reload and language reset, seed zero and repeat loads, no writing fields, no runtime network or storage, reduced motion, embed mode, 360 px fit and 44 px targets, safe lesson links and clean Share URLs. Every exercised dictionary lookup must have a Spanish translation. The shared About module owns its own translated catalog text.
 
