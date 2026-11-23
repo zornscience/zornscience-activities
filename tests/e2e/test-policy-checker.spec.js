@@ -95,8 +95,11 @@ test("search finds schools in every state, and the policy filter narrows the lis
   await page.getByLabel("Search by school name").fill("purdue");
   await expect(heading(page)).toHaveText(/^\d+ schools match “purdue”$/);
   await expect(cards(page).first()).toContainText("Indiana");
+  // The result is announced to screen readers once typing pauses.
+  await expect(page.locator("#zsa-tpc-live")).toHaveText(/^\d+ schools match “purdue”$/);
   await page.getByLabel("Search by school name").fill("zzzz");
   await expect(heading(page)).toContainText("No school matches");
+  await expect(page.locator("#zsa-tpc-live")).toContainText("No school matches “zzzz”");
   await expect(cards(page)).toHaveCount(0);
   await page.getByLabel("Search by school name").fill("");
 
@@ -157,6 +160,8 @@ test("deep links, the back link and the policy legend", async ({page, problems})
   await page.getByText("What the policies mean").click();
   await expect(page.locator("#zsa-tpc-legend dt")).toHaveCount(7);
   await expect(page.locator("#zsa-tpc-legend")).toContainText("The college does not look at ACT or SAT scores for admission, even if you send them.");
+  // Required includes schools that also take the CLT, so the definition names no single test as the only one.
+  await expect(page.locator("#zsa-tpc-legend")).toContainText("Every first-year applicant sends a test score the college accepts, such as the ACT or SAT.");
 });
 
 test("unconfirmed and no-first-year schools say so instead of a policy", async ({page, problems}) => {

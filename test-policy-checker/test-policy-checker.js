@@ -25,7 +25,7 @@
   var LABEL = {required: "Test required", optional: "Test optional", free: "Test free", flexible: "Test flexible",
     varies: "Varies", unknown: "Not confirmed", none: "No first-year admission"};
   var MEANING = {
-    required: "Every first-year applicant sends an ACT or SAT score.",
+    required: "Every first-year applicant sends a test score the college accepts, such as the ACT or SAT.",
     optional: "You choose whether to send a score. If you send one, the college looks at it.",
     free: "The college does not look at ACT or SAT scores for admission, even if you send them.",
     flexible: "A score is one way to qualify. A GPA or class rank can qualify you without one.",
@@ -109,7 +109,15 @@
   search.value = view.q;
   select.addEventListener("change", function () { choose(select.value || null, false); });
   filter.addEventListener("change", function () { view.policy = filter.value; render(true); });
-  search.addEventListener("input", function () { view.q = search.value.trim().slice(0, 80); if (view.q) view.state = null; render(false); });
+  // Typing updates the list at once; the result is announced once typing pauses, not on every key.
+  var announceTimer = null;
+  search.addEventListener("input", function () {
+    view.q = search.value.trim().slice(0, 80);
+    if (view.q) view.state = null;
+    render(false);
+    clearTimeout(announceTimer);
+    announceTimer = setTimeout(function () { if (view.q) live.textContent = $("results-title").textContent; }, 700);
+  });
   root.querySelector("#zsa-tpc-controls").addEventListener("submit", function (e) { e.preventDefault(); });
 
   // ---------- Legend ----------

@@ -49,7 +49,7 @@
     "Varies": "Varía",
     "Not confirmed": "Sin confirmar",
     "No first-year admission": "Sin admisión de primer año",
-    "Every first-year applicant sends an ACT or SAT score.": "Todos los solicitantes de primer año envían un resultado del ACT o el SAT.",
+    "Every first-year applicant sends a test score the college accepts, such as the ACT or SAT.": "Todos los solicitantes de primer año envían un resultado de un examen que la universidad acepta, como el ACT o el SAT.",
     "You choose whether to send a score. If you send one, the college looks at it.": "Tú decides si envías un resultado. Si lo envías, la universidad lo toma en cuenta.",
     "The college does not look at ACT or SAT scores for admission, even if you send them.": "La universidad no toma en cuenta el ACT ni el SAT para la admisión, aunque los envíes.",
     "A score is one way to qualify. A GPA or class rank can qualify you without one.": "Un resultado es una forma de calificar. Tu promedio o tu lugar en la clase pueden darte la admisión sin él.",
