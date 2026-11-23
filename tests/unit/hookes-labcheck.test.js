@@ -8,7 +8,7 @@ var adapter = require("../../hookes-law-lab/labcheck.js");
 var codes = require("../../shared/zsa-codes.js"), data = require("../support/load-data").loadData("hookes-law-lab/data.js").check;
 // The formatters as lab.js defines them, so a change to the readout rounding changes these assertions too.
 var source = fs.readFileSync("hookes-law-lab/lab.js", "utf8");
-var line = /const fixed2=[^\n]*;/.exec(source);
+var line = /const fixed2=[^\n]*;/.exec(source), meterLine = /const meters=[^\n]*;/.exec(source);
 assert.ok(line, "lab.js defines its readout formatters on one line");
 var format = vm.runInNewContext("(function () {" + line[0] + " return {fixed2:fixed2, fixed3:fixed3};}())");
 
@@ -141,4 +141,18 @@ test("every Hooke's lab check sentence has Mexican Spanish with the same placeho
     assert.deepEqual(JSON.parse(JSON.stringify(q.choices.map(function (c) { return [c[0], c[2]]; }))), data.questions[i].choices.map(function (c) { return [c[0], c[2]]; }));
   });
   assert.equal(localized.check.labels.title, "Comprobación del laboratorio");
+});
+
+test("the extension in meters always agrees with the rounded centimeter readout", function () {
+  assert.ok(meterLine, "lab.js defines the meters formatter on one line");
+  var f = vm.runInNewContext("(function () {" + line[0] + meterLine[0] + " return {fixed2:fixed2, meters:meters};}())");
+  assert.equal(f.fixed2(0.3 * 9.81 / 20 * 100), "14.71");
+  assert.equal(f.meters(0.3 * 9.81 / 20), "0.1471");
+  [10, 20, 30].forEach(function (k) {
+    for (var added = 0; added <= 500; added += 10) {
+      var x = (added + 50) / 1000 * 9.81 / k;
+      assert.equal((Number(f.meters(x)) * 100).toFixed(2), f.fixed2(x * 100), "k " + k + ", added " + added);
+    }
+  });
+  assert.equal((source.match(/meters\(m\*9\.81\/k\)/g) || []).length, 3, "every meters readout uses the formatter");
 });

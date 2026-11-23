@@ -87,7 +87,7 @@ test("hookes lab check: setups for questions 1, 2 and 5 restore the start, and t
   for (var i = 0; i < 3; i++) await page.locator("#add").click();
   await expect(page.locator("#mass-read")).toHaveText("300 g");
   await expect(page.locator("#extension")).toHaveText("14.71 cm");
-  await expect(page.locator("#extension-m")).toHaveText("0.1472 m");
+  await expect(page.locator("#extension-m")).toHaveText("0.1471 m");
   await next(page); await next(page); await next(page);
 
   await setUp(page);
