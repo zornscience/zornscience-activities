@@ -29,14 +29,15 @@ What is missing is a way to put the lab in its starting state and keep it still.
 
 ```js
 document.querySelector('.thermo').addEventListener('zsa-eq2:request-lab',ev=>ev.detail.receive({
-  // setup(): the default starting equilibrium (2 mol N2O4, 0.2 mol NO2, 5 L, 298 K), paused.
-  setup(){resetEq();if(playing)$('pause').click();},
+  // setup(): the default starting equilibrium (2 mol N2O4, 0.2 mol NO2, 5 L, 298 K), N2O4 selected, paused.
+  // resetEq() does not touch #species, so select the reactant here; otherwise a student who picked NO2 earlier changes Question 1's answer.
+  setup(){resetEq();$('species').value='a';if(playing)$('pause').click();},
   // Same expressions the readouts use, so a choice always matches the screen.
   format:{conc:v=>v.toFixed(3),q:v=>v.toFixed(3),k:v=>v.toFixed(3),p:v=>v.toFixed(2),rate:v=>(v>0&&v<.00001?v.toExponential(2):v.toFixed(5))}
 }));
 ```
 
-Better still, make `renderEq()` call these formatters so there is one copy. `resetEq()` already sets the sliders back to 298 K and 5 L, and also restores Pause (`playing=true`), which is why `setup()` presses Pause afterward. The Set up the lab button must leave the lab **paused** (button reads Resume). Every question here changes one condition by hand and reads a tile, so a paused lab shows the change at once with no drift.
+Better still, make `renderEq()` call these formatters so there is one copy. `resetEq()` already sets the sliders back to 298 K and 5 L but leaves the Add or remove substance select alone (so `setup()` sets it to N₂O₄, value `a`), and it also restores Pause (`playing=true`), which is why `setup()` presses Pause afterward. The Set up the lab button must leave the lab **paused** (button reads Resume). Every question here changes one condition by hand and reads a tile, so a paused lab shows the change at once with no drift.
 
 ## How the numbers are filled in
 

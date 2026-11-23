@@ -42,7 +42,9 @@ root.addEventListener('zsa-fe:request-lab',e=>e.detail.receive({
     if(s.rxn)pick(sel,s.rxn);
     if(s.mode==='dg'){if(s.dh!==undefined)pick('dh',s.dh);if(s.ds!==undefined)pick('ds',s.ds);}
     if(s.mode==='control'&&s.catalyst&&$('catalyst').getAttribute('aria-pressed')!=='true')$('catalyst').click();
-    // temperature stays at 298 K (the default) in every question
+    // dg mode reads its starting temperature from ?t= and changing the reaction does not reset it, so set 298 K explicitly.
+    // (k mode hard-codes 298 K, and no other mode reads ?t=.)
+    if(s.mode==='dg'){const tf=$('temperature-number');tf.value=298;tf.onchange();}
   },
   format:{f:(n,d)=>f(n,d), given:n=>given(n), gibbs:(dh,ds,t)=>M.gibbsDisplay(dh,ds,t),
           cross:v=>v>=1000&&v<10000?f(v/1000)+" × 10³":f(v)}   // the same expressions the readouts use
