@@ -3682,6 +3682,26 @@ The shared Lab check labels are the Gas lab pilot's. Readout and control names f
 | stuck carts / the carts stick | carritos pegados / los carritos se pegan | Questions 2, 4 and 5. |
 | plain average | promedio simple | Question 5 feedback. |
 
+## Inclined Plane & Friction lab check (inclined-plane 1.2.0)
+
+The shared Lab check labels are the Gas lab pilot's. Names follow the lab: rampa, Ángulo de la rampa, Bloque + masa agregada, Superficie de contacto, Fieltro sobre madera, Cámara lenta, flecha de fricción, fricción estática, fricción cinética, fuerza normal, peso, ángulo crítico, Explora la física. The lab already says rapidez for speed, and the lab check does too.
+
+| English | Mexican Spanish | Use |
+| --- | --- | --- |
+| Tilt the ramp | Inclina la rampa | Question title. |
+| Friction at rest | Fricción en reposo | Question title. |
+| Change the surface | Cambia la superficie | Question title. |
+| Add mass to a sliding block | Agrega masa a un bloque que se desliza | Question title. |
+| Find the friction coefficient | Encuentra el coeficiente de fricción | Question title; coeficiente as in the lab's note. |
+| the downhill part of the weight | la parte del peso cuesta abajo | Feedback and explanations; the lab's "cuesta abajo". |
+| the most static friction can supply | el máximo que puede dar la fricción estática | Questions 2 and 3. |
+| grips (felt grips better) | agarra | Question 3 explanation. |
+| slides, slips (the first slip) | se desliza (el primer deslizamiento) | Questions 3 and 5; slip is deslizarse as in the lab's instructions. |
+| the arrow labeled N | la flecha con la etiqueta N | Question 1 feedback. |
+| pulls back on the block | jala el bloque hacia atrás | Question 4 feedback. |
+| the masses cancel | las masas se cancelan | Questions 4 and 5. |
+| your calculator is set to degrees | tu calculadora esté en grados | Question 5 feedback. |
+
 ## Projectile Motion Vector Lab check (projectile-lab 1.2.0)
 
 The shared Lab check labels are the Gas lab pilot's. Readout and control names follow the lab: Tiempo (the Time slider, "el control deslizante Tiempo"), Altura, y, Rapidez, |v|, Resultados del vuelo, Tiempo en el aire, Distancia horizontal (alcance) (written "el alcance" in sentences), Pausa en el punto más alto and Lanzar. Speed is "rapidez" and velocity is "velocidad", kept separate; vx and vy are feminine in sentences (la velocidad horizontal); the ball is "el proyectil" and the ledge is "la cornisa".

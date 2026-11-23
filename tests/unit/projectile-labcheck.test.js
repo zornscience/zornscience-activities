@@ -1,6 +1,6 @@
 // The Projectile Motion Vector Lab check (projectile-lab/labcheck.js): every number in the brief, resolved with the
 // lab's own model and its readout formatter; the question data, the PRLC registry entry and every first-try pattern;
-// the registry rules (id 11 reserved for ILC, 18 ids left); and Spanish.
+// the registry rules (ILC holds id 11, 18 ids left); and Spanish.
 "use strict";
 var test = require("node:test"), assert = require("node:assert/strict");
 var fs = require("node:fs"), vm = require("node:vm");
@@ -147,7 +147,7 @@ test("the PRLC entry and all 32 first-try patterns with Show me counts round-tri
   }
 });
 
-test("existing codes read the same after PRLC is registered, id 11 stays free for ILC, and 18 ids are left", function () {
+test("existing codes read the same after PRLC is registered, ILC holds id 11, and 18 ids are left", function () {
   assert.equal(codes.encode({activity: "GAS", version: "1.1.2", day: 300, items: 6, totals: {predict: 6, test: 6, explain: 6},
     results: {predict: 4, test: 5, explain: 3}, show: 2, hints: 1}), "GAS-0ME0-442B-093D-C");
   [["ALC-03EV-SG02-2F0H-8A9", 8], ["PLC-02R2-SG02-2F0S-9CD", 9], ["HLC-0378-SG02-2F0S-AGV", 10], ["CLC-02R2-SG02-2F0H-CRZ", 12]].forEach(function (pair) {
@@ -160,11 +160,11 @@ test("existing codes read the same after PRLC is registered, id 11 stays free fo
     assert.ok(a.prefix.indexOf("PRLC") !== 0 && "PRLC".indexOf(a.prefix) !== 0, a.prefix);
   });
   var used = codes.ACTIVITIES.map(function (a) { return a.id; });
-  assert.ok(used.indexOf(11) < 0, "id 11 is reserved for the Inclined Plane lab check");
+  assert.equal(codes.activity("ILC").id, 11, "id 11 belongs to the Inclined Plane lab check");
   assert.equal(codes.ACTIVITIES.filter(function (a) { return a.id === 12; })[0].prefix, "CLC");
   assert.equal(new Set(used).size, used.length, "ids are unique");
   var free = [];
-  for (var id = 1; id <= 31; id++) if (used.indexOf(id) < 0 && id !== 11) free.push(id);
+  for (var id = 1; id <= 31; id++) if (used.indexOf(id) < 0) free.push(id);
   assert.deepEqual(free, [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]);
   assert.equal(free.length, 18);
 });

@@ -13,7 +13,7 @@ Files: `lab.js` answers a `zsa-pj:request-lab` event on the activity root with `
 
 Decisions:
 - **Prefix `PRLC`, not `PLC`.** The rule is the lab's initial plus `LC`, which would be `PLC`, but `PLC` is the Simple Pendulum. The fallback is the first two letters plus `LC`. No registered prefix starts `PRLC` or is the start of it. It is four letters, the longest the registry allows.
-- **Registry id 13.** Ids 1 to 10 and 12 are in use, 11 is reserved for `ILC`, and 13 is the next free id after `CLC`. After this entry 18 ids are left (14 to 31).
+- **Registry id 13.** Ids 1 to 13 are in use (11 is the Inclined Plane `ILC`). After this entry 18 ids are left (14 to 31).
 - **Question 3 distractors use the lab's unrounded range.** The lab's range at 30° is 35.3478 m (it shows 35.35 m), so "twice" and "half" are 70.70 m and 17.67 m (the brief listed 70.71 m and 17.68 m, which come from 35.355 m).
 - **Placement.** The card sits after Flight results, outside the settings column, which does not move. On a phone it follows Flight results in the single column.
 - Choices show sizes only: the readouts add a direction word (right, up, down), the choices do not.
