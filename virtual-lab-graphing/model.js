@@ -21,15 +21,28 @@
     if (n === 0 && /[1-9]/.test(text.split(/[eE]/)[0])) return null;
     return n === 0 || Math.abs(n) >= 1e-100 ? n : null;
   }
+  // Why a cell is not a number: "empty", "range" (a number outside 1e-100 to 1e100) or "format" (anything else,
+  // such as a decimal comma). Used to say what is wrong with the one cell that is wrong.
+  function problem(value) {
+    var text = String(value).trim().replace(/−/g, "-");
+    if (!text) return "empty";
+    if (number(text) !== null) return "";
+    return /^[+-]?(?:\d+\.?\d*|\.\d+)(?:[eE][+-]?\d+)?$/.test(text) ? "range" : "format";
+  }
+  // errors: the row numbers with a problem (as before). cells: the cells at fault, {row, column: "x" or "y"}, so
+  // 1,5 in x with 2 in y marks only the x cell.
   function pairs(rows) {
-    var points = [], errors = [];
+    var points = [], errors = [], cells = [];
     rows.forEach(function (r, i) {
       if (!r[0].trim() && !r[1].trim()) return;
       var x = number(r[0]), y = number(r[1]);
-      if (x === null || y === null) errors.push(i + 1);
-      else points.push({x:x, y:y, row:i + 1});
+      if (x === null || y === null) {
+        errors.push(i + 1);
+        if (x === null) cells.push({row:i + 1, column:"x"});
+        if (y === null) cells.push({row:i + 1, column:"y"});
+      } else points.push({x:x, y:y, row:i + 1});
     });
-    return {points:points, errors:errors};
+    return {points:points, errors:errors, cells:cells};
   }
   // Center and scale both axes before least squares, so large offsets and small ranges stay usable.
   function fit(points) {
@@ -93,9 +106,9 @@
     text = text.replace(/^\uFEFF/, "").replace(/\r\n?/g, "\n");
     if (text.length > 1000000) throw Error(t("Choose a file smaller than 1 MB."));
     var delimiter = text.split("\n")[0].indexOf("\t") >= 0 ? "\t" : ",";
-    var rows = [], row = [], cell = "", quoted = false, closed = false;
+    var rows = [], semicolons = [], row = [], cell = "", quoted = false, closed = false, semicolon = false;
     function finishCell() { row.push(cell.trim()); cell = ""; closed = false; }
-    function finishRow() { finishCell(); if (row.some(function (c) {return c !== "";})) rows.push(row); row = []; }
+    function finishRow() { finishCell(); if (row.some(function (c) {return c !== "";})) { rows.push(row); semicolons.push(semicolon); } row = []; semicolon = false; }
     for (var i = 0; i < text.length; i++) {
       var c = text[i];
       if (quoted) {
@@ -104,6 +117,7 @@
         else cell += c;
       } else if (c === delimiter) finishCell();
       else if (c === "\n") finishRow();
+      else if (c === ";" && !quoted) { semicolon = true; cell += c; }
       else if (c === '"' && !cell.trim() && !closed) {quoted = true; cell = "";}
       else if (closed && c.trim()) throw Error(t("Unexpected text after a quoted CSV value."));
       else cell += c;
@@ -111,19 +125,32 @@
     if (quoted) throw Error(t("A quoted CSV value is missing its closing quote."));
     finishRow();
     if (!rows.length) throw Error(t("Paste or choose a table with two columns of data."));
-    rows.forEach(function (r, i) {if (r.length !== 2) throw Error(t("Line {line}: expected exactly two columns, separated by commas or tabs.", {line: i+1}));});
+    // A comma is the column separator, so a number written with a decimal comma cannot be told from a new column:
+    // the message says so, and a semicolon (some spreadsheets' separator) is named for what it is.
+    rows.forEach(function (r, i) {
+      if (r.length === 2) return;
+      throw Error(t(semicolons[i] ? "Line {line}: separate the two columns with a comma or a tab, not a semicolon." : "Line {line}: expected exactly two columns, separated by commas or tabs. Write decimals with a point, as in 1.5, because a comma starts a new column.", {line: i+1}));
+    });
     var labels = null;
     if (number(rows[0][0]) === null && number(rows[0][1]) === null && rows[0][0] && rows[0][1]) labels = rows.shift();
     if (!rows.length) throw Error(t("Add at least one data pair below the header."));
     if (rows.length > LIMIT) throw Error(t("Please import at most 500 points."));
-    rows.forEach(function (r, i) { if (number(r[0]) === null || number(r[1]) === null) throw Error(t("Line {line}: use numbers with magnitude from 1e-100 to 1e100, or zero.", {line: i+1+(labels?1:0)})); });
+    // The first cell at fault is named, with what is wrong with it.
+    rows.forEach(function (r, i) {
+      [0, 1].forEach(function (j) {
+        var why = problem(r[j]);
+        if (!why) return;
+        var values = {line: i+1+(labels?1:0), column: j ? "y" : "x"};
+        throw Error(t(why === "range" ? "Line {line}: the {column} value is out of range. Use a magnitude from 1e-100 to 1e100, or zero." : "Line {line}: the {column} value is not a number. Enter a number, with a decimal point as in 1.5 (not 1,5).", values));
+      });
+    });
     return {rows:rows, labels:labels};
   }
   function csv(points, labels) {
     function quote(s) {return '"' + String(s).replace(/"/g, '""') + '"';}
     return labels.map(quote).join(",") + "\r\n" + points.map(function (p) {return p.x + "," + p.y;}).join("\r\n") + "\r\n";
   }
-  var api = {limit:LIMIT, number:number, pairs:pairs, fit:fit, format:format, tickFormat:tickFormat, axis:axis, parse:parse, csv:csv, splitLabel:splitLabel};
+  var api = {limit:LIMIT, number:number, problem:problem, pairs:pairs, fit:fit, format:format, tickFormat:tickFormat, axis:axis, parse:parse, csv:csv, splitLabel:splitLabel};
   if (typeof document !== "undefined") {
     var root = document.querySelector('[data-zsa-activity="virtual-lab-graphing"]');
     if (root) root.addEventListener("zsa-vlg:request-model", function (e) {e.detail.receive(api);});

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.2.3">
+<meta name="zsa-version" content="1.2.4">
 <title>Virtual Lab Graphing Tool | ZornScience</title>
 <meta name="description" content="Turn your lab data into a scatter plot with a line of best fit. Label axes, explore slope, and download a graph for your lab write-up." data-zsa-es="Convierte tus datos de laboratorio en una gráfica de dispersión con línea de mejor ajuste. Rotula los ejes, explora la pendiente y descarga tu gráfica.">
 <link rel="canonical" href="https://activities.zornscience.org/virtual-lab-graphing/">
@@ -12,14 +12,14 @@
 <link rel="alternate" hreflang="es" href="https://activities.zornscience.org/virtual-lab-graphing/?lang=es">
 <link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/virtual-lab-graphing/">
 <link rel="icon" href="../favicon.png" type="image/png">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.2.3"><link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=1.2.3">
-<link rel="stylesheet" href="graphing.css?v=1.2.3">
-<script src="../shared/zsa-i18n.js?v=1.2.3" defer></script>
-<script src="data.js?v=1.2.3" defer></script>
-<script src="model.js?v=1.2.3" defer></script>
-<script src="graphing.js?v=1.2.3" defer></script>
-<script src="../shared/zsa-embed.js?v=1.2.3" defer></script>
-<link rel="stylesheet" href="../shared/zsa-header.css?v=1.2.3"><link rel="stylesheet" href="../shared/zsa-about.css?v=1.2.3"><script src="../shared/zsa-about.js?v=1.2.3" defer></script></head>
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.2.4"><link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=1.2.4">
+<link rel="stylesheet" href="graphing.css?v=1.2.4">
+<script src="../shared/zsa-i18n.js?v=1.2.4" defer></script>
+<script src="data.js?v=1.2.4" defer></script>
+<script src="model.js?v=1.2.4" defer></script>
+<script src="graphing.js?v=1.2.4" defer></script>
+<script src="../shared/zsa-embed.js?v=1.2.4" defer></script>
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.2.4"><link rel="stylesheet" href="../shared/zsa-about.css?v=1.2.4"><script src="../shared/zsa-about.js?v=1.2.4" defer></script></head>
 <body>
 <main class="zsa zsa-vlg" data-zsa-activity="virtual-lab-graphing">
 <header data-zsa-header class="zsa-vlg-header">
@@ -46,11 +46,11 @@
 <div class="zsa-vlg-axisfields"><label for="zsa-vlg-xname">x-axis variable<input id="zsa-vlg-xname" maxlength="50" placeholder="Time"></label><label for="zsa-vlg-xunit">Unit<input id="zsa-vlg-xunit" maxlength="20" placeholder="min"></label></div>
 <div class="zsa-vlg-axisfields"><label for="zsa-vlg-yname">y-axis variable<input id="zsa-vlg-yname" maxlength="50" placeholder="Temperature"></label><label for="zsa-vlg-yunit">Unit<input id="zsa-vlg-yunit" maxlength="20" placeholder="°C"></label></div>
 <div class="zsa-vlg-tablehead"><h3>Measurements</h3><span id="zsa-vlg-pointcount">0 points</span></div>
-<p class="zsa-vlg-small" id="zsa-vlg-number-help">Numbers only; scientific notation such as 1.2e-3 works. Up to 500 points.</p>
+<p class="zsa-vlg-small" id="zsa-vlg-number-help">Numbers only; scientific notation such as 1.2e-3 works. Write decimals with a point, as in 1.5 (not 1,5). Up to 500 points.</p>
 <div class="zsa-vlg-tablewrap"><table class="zsa-vlg-datatable"><caption class="zsa-sr-only">Your measurements. Enter one x and y pair per row.</caption><thead><tr><th scope="col">#</th><th scope="col" id="zsa-vlg-xheading">x</th><th scope="col" id="zsa-vlg-yheading">y</th><th scope="col"><span class="zsa-sr-only">Remove row</span></th></tr></thead><tbody id="zsa-vlg-rows"></tbody></table></div>
 <div class="zsa-vlg-actions"><button class="zsa-btn" id="zsa-vlg-add" type="button">+ Add row</button><button class="zsa-vlg-textbtn" id="zsa-vlg-clear" type="button">Clear data</button></div>
 <p id="zsa-vlg-data-error" class="zsa-vlg-error" role="status"></p>
-<details class="zsa-vlg-import"><summary>Paste data or import CSV</summary><p class="zsa-vlg-small" id="zsa-vlg-paste-help">Paste two columns separated by commas or tabs. An optional first row can contain axis labels. Import replaces the table.</p><label for="zsa-vlg-paste">Two-column data</label><textarea id="zsa-vlg-paste" rows="5" aria-describedby="zsa-vlg-paste-help" placeholder="Time (min),Temperature (°C)&#10;0,20&#10;1,35&#10;2,50"></textarea><div class="zsa-vlg-actions"><button class="zsa-btn" id="zsa-vlg-import" type="button">Use pasted data</button><label class="zsa-vlg-filebtn" for="zsa-vlg-file">Choose CSV<input type="file" id="zsa-vlg-file" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values"></label></div><p class="zsa-vlg-error" id="zsa-vlg-import-error" role="alert"></p></details>
+<details class="zsa-vlg-import"><summary>Paste data or import CSV</summary><p class="zsa-vlg-small" id="zsa-vlg-paste-help">Paste two columns separated by commas or tabs. Write decimals with a point, as in 1.5. An optional first row can contain axis labels. Import replaces the table.</p><label for="zsa-vlg-paste">Two-column data</label><textarea id="zsa-vlg-paste" rows="5" aria-describedby="zsa-vlg-paste-help zsa-vlg-import-error" placeholder="Time (min),Temperature (°C)&#10;0,20&#10;1,35&#10;2,50"></textarea><div class="zsa-vlg-actions"><button class="zsa-btn" id="zsa-vlg-import" type="button">Use pasted data</button><label class="zsa-vlg-filebtn" for="zsa-vlg-file">Choose CSV<input type="file" id="zsa-vlg-file" aria-describedby="zsa-vlg-import-error" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values"></label></div><p class="zsa-vlg-error" id="zsa-vlg-import-error" role="alert"></p></details>
 <div class="zsa-vlg-example"><label for="zsa-vlg-example">Try a lesson example</label><div class="zsa-vlg-example-controls"><select id="zsa-vlg-example"><option value="water">Heating water</option><option value="candle">Burning candle</option><option value="gas">Gas production (curved)</option></select><button class="zsa-btn" id="zsa-vlg-load" type="button">Load</button></div></div>
 <p class="zsa-vlg-small zsa-vlg-privacy">Your data stays in this tab. Download CSV to keep a copy before closing or reloading.</p>
 </section>

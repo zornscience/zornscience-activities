@@ -121,11 +121,12 @@ test("K both ways and salt and coupling cases", async ({ page }) => {
 });
 test("keyboard, safe URLs, language reset, dialogs, embed, exports and no outside requests", async ({
   page,
+  baseURL,
 }) => {
   const outside = [],
     errors = [];
   page.on("request", (r) => {
-    if (!r.url().startsWith("http://127.0.0.1:4173/")) outside.push(r.url());
+    if (!r.url().startsWith(new URL(baseURL).origin + "/")) outside.push(r.url());
   });
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto(

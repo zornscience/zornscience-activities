@@ -3507,7 +3507,8 @@ Mexican Spanish, tú, decimal points unchanged. Previously approved equivalents 
 | --- | --- | --- |
 | Population Sampling Lab | Laboratorio de muestreo de poblaciones | needs review |
 | Population Sampling | Muestreo de poblaciones | needs review, requested provisional lesson title |
-| quadrat | cuadrante | needs review |
+| quadrat | cuadrante | Style Kit section 6 |
+| grid square | cuadro | Style Kit section 6 |
 | mark and recapture | captura y recaptura | needs review |
 | sample | muestra | reused, earlier sample terms |
 | population | población | needs review |
@@ -3515,7 +3516,7 @@ Mexican Spanish, tú, decimal points unchanged. Previously approved equivalents 
 | density | densidad | reused, earlier dimensional-analysis terms |
 | random | al azar | reused, earlier unknown-selection wording |
 | bias | sesgo | needs review |
-| percent error | error porcentual | reused, live lesson wording requested for this lab |
+| percent error | error porcentual | Style Kit section 6 |
 | net | red | needs review |
 | recapture | recaptura | needs review |
 | marks wear off | las marcas se borran | needs review |
@@ -3527,6 +3528,10 @@ Mexican Spanish, tú, decimal points unchanged. Previously approved equivalents 
 | spread of estimates | dispersión de las estimaciones | needs review |
 | Data for your worksheet | Datos para tu hoja de trabajo | needs review |
 | Answer these in your document | Responde estas preguntas en tu documento | needs review |
+| ladybug | catarina | needs review |
+| sea star | estrella de mar | needs review |
+| sand dollar | dólar de arena | needs review |
+| sampling plot | parcela de muestreo | needs review |
 
 ## Mitosis Detective (mitosis-lab 1.0.0)
 
@@ -3730,3 +3735,68 @@ provisional, matching the Leaf Disk Lab registration convention.
 Prediction, feedback and worksheet prompts are complete sentence templates in
 data.js. Prompt identifiers 1A to 3C are unchanged in Spanish. No typed answers
 are collected. Selector labels use población inicial and tamaño de la población.
+
+## pH & Buffer Lab and Titration Simulator terminology (accessibility pass, Nov 2026)
+
+Standardized on "solución amortiguadora" (the Style Kit section 6 term for buffer) in the pH & Buffer Lab, the landing card and the SEO description. The noun "amortiguador" alone is no longer used there. "capacidad amortiguadora" and the glossary phrase "región de amortiguador" are unchanged. No new terms and nothing pending approval.
+
+English | Mexican Spanish
+--- | ---
+buffer (the solution) | solución amortiguadora
+buffer capacity | capacidad amortiguadora
+1 reading (singular) | 1 lectura
+pH = pKa of NH₄⁺ (weak base half-equivalence) | pH = pKa de NH₄⁺
+endpoint vs equivalence point | punto final vs punto de equivalencia (kept distinct)
+
+Still using "amortiguador" as a noun (outside this pass): apchem-unit8 and enzyme-lab.
+
+## The Molar Mass Trap Lab
+
+The virtual lab follows Style Kit 1.33 and the published Spanish procedure. The station and instrument labels keep W, G, O and M and the symbols mL, mm and s.
+
+| English | Mexican Spanish |
+| --- | --- |
+| Bead or spread? | ¿Gota alta o charco plano? |
+| Steel shot race | Carrera del perdigón de acero |
+| Mix or layer? | ¿Se mezclan o forman capas? |
+| wax paper / box | papel encerado / casilla |
+| dropper bottle | frasco gotero |
+| bead / puddle | gota / charco |
+| tall bead / flat puddle | gota alta / charco plano |
+| top view / eye-level view | vista desde arriba / vista lateral |
+| millimeter ruler | regla milimetrada |
+| wetting | humectación |
+| steel shot / sealed tube | perdigón de acero / tubo sellado |
+| stopwatch / timing mode | cronómetro / modo de cronometraje |
+| stopper / first contact with the bottom | tapón / primer contacto con el fondo |
+| trial / average | ensayo / promedio |
+| event timing mode | automático |
+| instrument-timed reading | medición automática |
+| fall time / average fall time | tiempo de caída / promedio del tiempo de caída |
+| lab notebook | cuaderno de laboratorio |
+| slow-motion replay | repetición en cámara lenta |
+| graduated transfer pipette / aliquot | pipeta de transferencia graduada / alícuota |
+| mixing rack / test tube | gradilla de mezclas / tubo de ensayo |
+| invert / let stand | invertir / dejar reposar |
+| liquid layer / dye | capa de líquido / colorante |
+| liquid pair / one layer or two? | par de líquidos / ¿Una capa o dos? |
+| streaks in a liquid / boundary between bands | vetas en un líquido / límite entre las franjas |
+| waste beaker | vaso de precipitados para residuos (vaso de residuos on the bench) |
+| prediction / debrief | predicción / reflexión final |
+| cite an observation | citar una observación |
+| saved notebook file | archivo del cuaderno guardado |
+| lab's average / your average | promedio del laboratorio / tu promedio |
+| timing / paused (stopwatch) | en marcha / en pausa |
+
+### The Alka-Seltzer Reaction
+
+| English | Mexican Spanish | Usage |
+| --- | --- | --- |
+| whole tablet | tableta entera | One full tablet in each preparation. |
+| quartered tablet (all 4 pieces) | tableta en cuartos (los 4 trozos) | All four pieces go into the same beaker. |
+| crushed powder | tableta triturada en polvo | The entire powder sample goes into the beaker. |
+| powder specks | granos de polvo | Visible particles near the bottom of the beaker. |
+| citric acid / sodium citrate | ácido cítrico / citrato de sodio | [UNAM tablet chemistry](https://tesiunamdocumentos.dgb.unam.mx/ptd2009/julio/0646024/0646024.pdf) and [Diario Oficial de la Federación](https://dof.gob.mx/nota_detalle_popup.php?codigo=5189422). |
+| bar graph | gráfica de barras | For the graph on the paper worksheet. |
+
+This lab uses the existing terms *ensayo*, *vaso de precipitados*, *cronómetro*, *varilla de vidrio* and *azul de bromotimol* (AZB). The instructions identify AZB as the BTB on the English worksheet.

@@ -1,6 +1,6 @@
 (function () {
   "use strict";
-  // Complete English templates with Mexican Spanish. Language changes reload the page.
+  // Complete English templates with Mexican Spanish.
   const content = {
     "titles": {
       "quadrat": "1. Count the Plants",
@@ -23,7 +23,7 @@
     "Instructions": "Instrucciones",
     "Share": "Compartir",
     "Share this activity": "Compartir esta actividad",
-    "Share a fresh lab. Only the language is included.": "Comparte el laboratorio desde cero. Solo se incluye el idioma.",
+    "Share a fresh lab with this tab and language selected.": "Comparte el laboratorio desde cero con esta pestaña y este idioma seleccionados.",
     "Activity link": "Enlace de la actividad",
     "Copy link": "Copiar enlace",
     "Close share options": "Cerrar opciones para compartir",
@@ -233,8 +233,87 @@
     "Compare your results": "Compara tus resultados",
     "Every graph uses the same scale, so you can compare how spread out the dots are. The tables show exact numbers.": "Todas las gráficas usan la misma escala, así que puedes comparar qué tan dispersos están los puntos. Las tablas muestran los números exactos.",
     "Real total: {truth}": "Total real: {truth}",
-    "Record your results and answer the questions on your worksheet. Nothing is saved or sent. Reloading or changing language clears your work.": "Anota tus resultados y responde las preguntas en tu hoja de trabajo. No se guarda ni se envía nada. Al recargar o cambiar de idioma, se borra tu trabajo.",
-    "Done with this method! Switch how you pick squares to compare, then record your results on your worksheet.": "¡Terminaste con este método! Cambia cómo eliges los cuadros para comparar y luego anota tus resultados en tu hoja de trabajo."
+    "Record your results and answer the questions on your worksheet. Nothing is saved or sent. Reloading the page clears your work.": "Anota tus resultados y responde las preguntas en tu hoja de trabajo. No se guarda ni se envía nada. Al recargar la página, se borra tu trabajo.",
+    "Done with this method! Switch how you pick squares to compare, then record your results on your worksheet.": "¡Terminaste con este método! Cambia cómo eliges los cuadros para comparar y luego anota tus resultados en tu hoja de trabajo.",
+    "Lab activity": "Actividad de laboratorio",
+    "Population Sampling": "Muestreo de poblaciones",
+    "Ladybug Quadrat Lab": "Laboratorio de muestreo de catarinas con cuadrantes",
+    "Loading the ladybug lab…": "Cargando el laboratorio de catarinas…",
+    "The ladybug lab couldn’t load.": "No se pudo cargar el laboratorio de catarinas.",
+    "Try again": "Volver a intentar",
+    "Use the reef diagram for the pre-lab on pages 1 and 2. If you already finished it, start by measuring the container.": "Usa el diagrama del arrecife para las preguntas preliminares de las páginas 1 y 2. Si ya terminaste, empieza por medir el recipiente.",
+    "Read the ruler at both ends of the inside edge. Measure the length and width of the plot and of one quadrat. Use the close-up buttons to inspect the aligned ticks.": "Lee la regla en ambos extremos del borde interior. Mide el largo y el ancho de la parcela y de un cuadrante. Usa los botones de ampliación para ver las marcas alineadas.",
+    "Draw three different squares at random. Count a ladybug in the square that contains its center. You can turn on center markers and return to any sample.": "Saca tres cuadros distintos al azar. Cuenta cada catarina en el cuadro que contiene su centro. Puedes mostrar las marcas del centro y volver a cualquier muestra.",
+    "Use your paper worksheet for all measurements, counts, calculations and answers. Finish your estimate before revealing the actual population.": "Usa tu hoja de trabajo para anotar todas las medidas, los conteos, los cálculos y las respuestas. Termina tu estimación antes de revelar la población real.",
+    "Worksheet setup": "Inicio de la hoja de trabajo",
+    "Keep your paper worksheet beside you for measurements, counts and calculations.": "Ten a la mano tu hoja de trabajo para anotar medidas, conteos y cálculos.",
+    "Reef pre-lab": "Actividad preliminar del arrecife",
+    "Use the reef diagram for questions 1 to 5 on pages 1 and 2.": "Usa el diagrama del arrecife para contestar las preguntas 1 a 5 de las páginas 1 y 2.",
+    "Inspect the reef": "Observar el arrecife",
+    "Ladybug container": "Recipiente con catarinas",
+    "Already finished the pre-lab? Start with the ruler on page 2.": "¿Ya terminaste la actividad preliminar? Empieza con la regla en la página 2.",
+    "Use the scale and count the sea stars for questions 1 to 5 on your worksheet.": "Usa la escala y cuenta las estrellas de mar para contestar las preguntas 1 a 5 de tu hoja de trabajo.",
+    "Sea star": "Estrella de mar",
+    "Sand dollar": "Dólar de arena",
+    "Read the reef diagram": "Leer el diagrama del arrecife",
+    "Three adjacent squares span 6 m. Each square measures 2 m along both sides.": "Tres cuadrados contiguos abarcan 6 m. Cada lado de un cuadrado mide 2 m.",
+    "Quadrat {number}": "Cuadrante {number}",
+    "{number} m": "{number} m",
+    "Five-armed sea star": "Estrella de mar de cinco brazos",
+    "Round sand dollar with a petal pattern": "Dólar de arena redondo con un dibujo de pétalos",
+    "{spot} · {species}": "{spot} · {species}",
+    "Upper left": "Arriba a la izquierda",
+    "Upper middle": "Arriba en el centro",
+    "Upper right": "Arriba a la derecha",
+    "Middle left": "A media altura, a la izquierda",
+    "Center": "Centro",
+    "Middle right": "A media altura, a la derecha",
+    "Lower left": "Abajo a la izquierda",
+    "Lower middle": "Abajo en el centro",
+    "Lower right": "Abajo a la derecha",
+    "Measure": "Medición",
+    "Container measurements": "Medición del recipiente",
+    "Read the ruler at the inside edges. Write the length and width in centimeters on your worksheet.": "Lee la regla en los bordes interiores. Anota el largo y el ancho en centímetros en tu hoja de trabajo.",
+    "Measure container": "Medir el recipiente",
+    "Measure one square": "Medir un cuadro",
+    "Next, measure one square": "Ahora mide un cuadro",
+    "Measurement target": "Objeto que vas a medir",
+    "Ruler direction": "Orientación de la regla",
+    "Length": "Largo",
+    "Width": "Ancho",
+    "Ruler close-up": "Ampliación de la regla",
+    "Ruler endpoint": "Extremo de la regla",
+    "Zero edge": "Borde del cero",
+    "Far edge": "Borde opuesto",
+    "The inside edge aligns with {value} cm.": "El borde interior coincide con la marca de {value} cm.",
+    "Read the tick where the blue guide meets the ruler.": "Lee la marca donde la guía azul toca la regla.",
+    "On paper, use your measurements to find the plot area, one quadrat’s area and the area of all three samples.": "Usa tus medidas para calcular en papel el área de la parcela, la de un cuadrante y la de las tres muestras juntas.",
+    "Go to sampling": "Ir al muestreo",
+    "Sample counts": "Conteo de las muestras",
+    "Ladybugs move, so we’ll use one snapshot to count all three squares at the same moment.": "Las catarinas se mueven. Usaremos una sola imagen para contar las catarinas de los tres cuadros en el mismo instante.",
+    "Draw a random square": "Sacar un cuadro al azar",
+    "Review and analyze": "Revisar y analizar",
+    "Count a ladybug if its center is inside the outlined square, even if its body crosses the line. Record the count and density on paper.": "Cuenta una catarina si su centro está dentro del cuadro marcado, aunque su cuerpo cruce la línea. Anota el conteo y la densidad en papel.",
+    "Review samples": "Revisar muestras",
+    "Sample {number} · {cell}": "Muestra {number} · {cell}",
+    "Sample {number} of 3 · {cell}": "Muestra {number} de 3 · {cell}",
+    "Container grid": "Cuadrícula del recipiente",
+    "Container grid · {cell}": "Cuadrícula del recipiente · {cell}",
+    "{spot} · center {x} cm from the left and {y} cm from the top.": "{spot} · centro a {x} cm del borde izquierdo y a {y} cm del borde superior.",
+    "No ladybug centers are inside this square.": "Ninguna catarina tiene el centro dentro de este cuadro.",
+    "Center markers": "Marcas del centro",
+    "Read specimen locations": "Leer la ubicación de las catarinas",
+    "Paper analysis": "Análisis en papel",
+    "Find the mean of your three densities. Use it to estimate how many ladybugs are in the whole container. Finish that estimate before revealing the actual population.": "Calcula el promedio de tus tres densidades. Úsalo para estimar cuántas catarinas hay en todo el recipiente. Termina esa estimación antes de revelar la población real.",
+    "There are {number} ladybugs in the container.": "Hay {number} catarinas en el recipiente.",
+    "Reveal actual population": "Revelar la población real",
+    "On page 6, use the quadrat column for your estimate, the actual population and percent error. Then answer the quadrat questions about larger areas, suitable organisms and quadrat size.": "En la página 6, usa la columna de cuadrantes para anotar tu estimación, la población real y el error porcentual. Luego contesta las preguntas sobre áreas más grandes, organismos adecuados y tamaño del cuadrante.",
+    "Start a fresh run?": "¿Iniciar una nueva serie?",
+    "This clears your samples and hides the actual population. The container snapshot stays the same.": "Esto borra tus muestras y vuelve a ocultar la población real. La imagen del recipiente se mantiene.",
+    "Keep this run": "Conservar esta serie",
+    "Start fresh run": "Iniciar una nueva serie",
+    "Fresh run": "Nueva serie",
+    "Worksheet stages": "Etapas de la hoja de trabajo"
   };
   if (typeof module !== "undefined") module.exports = {content, es};
   if (typeof document === "undefined") return;
@@ -242,6 +321,20 @@
   if (!root) return;
   let i18n;
   root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail: {receive: api => { i18n = api; }}}));
+  const staticCopy = [];
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  while (walker.nextNode()) {
+    const node = walker.currentNode;
+    const value = node.textContent.trim();
+    if (Object.hasOwn(es, value) && !node.parentElement.closest("[data-zsa-about], noscript")) {
+      staticCopy.push(() => { node.textContent = i18n.text(value); });
+    }
+  }
+  for (const node of root.querySelectorAll("[aria-label]")) {
+    const value = node.getAttribute("aria-label");
+    if (Object.hasOwn(es, value)) staticCopy.push(() => { node.setAttribute("aria-label", i18n.text(value)); });
+  }
+  content.translateStatic = () => staticCopy.forEach(translate => translate());
   if (i18n) i18n.configure({title: "Population Sampling Lab", es});
   root.addEventListener("population-sampling-content", event => event.detail.receive(content));
 }());

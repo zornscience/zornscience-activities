@@ -1,6 +1,6 @@
 # Rearranging Equations Practice
 
-Version: 1.1.0
+Version: 1.1.1
 
 Generated practice for the Quantitative Skills lesson [Rearranging Equations](https://zornscience.org/science/quantitative-skills/equations/rearranging-equations/). Every set is new. Three skills: solving for one variable, the first step, and rearranging, then calculating. A skill gives 8 questions (Solve mixes multiple choice and typed equations); Mixed review gives 12, four of each. English: `/qs-rearranging-equations-practice/`. Mexican Spanish: `/qs-rearranging-equations-practice/?lang=es`.
 

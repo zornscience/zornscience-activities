@@ -134,6 +134,7 @@
   "Equivalence: {v} mL, pH {pH}": "Equivalencia: {v} mL, pH {pH}",
   "Equivalence, pH {pH}": "Equivalencia, pH {pH}",
   "Half-equivalence: pH = pKa = {pH}": "Semiequivalencia: pH = pKa = {pH}",
+  "Half-equivalence: pH = pKa of {ion} = {pH}": "Semiequivalencia: pH = pKa de {ion} = {pH}",
   "Endpoint {v} mL": "Punto final {v} mL",
   "Endpoint": "Punto final",
   "pH versus volume of titrant graph, 0 to {max} mL, pH 0 to 14.": "Gráfica de pH contra volumen de titulante, de 0 a {max} mL, pH de 0 a 14.",
@@ -164,7 +165,7 @@
   "Find the middle of the steepest part of the curve, where the pH changes most for each drop.": "Busca la mitad de la parte más empinada de la curva, donde el pH cambia más con cada gota.",
   "Read the pH at the middle of the steep part. Think about what is in the flask at equivalence.": "Lee el pH a la mitad de la parte empinada. Piensa qué hay en el matraz en el punto de equivalencia.",
   "Halve the equivalence volume and read the pH there. At that point [HA] = [A⁻], so pH = pKa.": "Divide entre dos el volumen de equivalencia y lee el pH ahí. En ese punto [HA] = [A⁻], así que pH = pKa.",
-  "Halve the equivalence volume and read the pH there. At that point [B] = [BH⁺], so pH = pKa.": "Divide entre dos el volumen de equivalencia y lee el pH ahí. En ese punto [B] = [BH⁺], así que pH = pKa.",
+  "Halve the equivalence volume and read the pH there. At that point [B] = [BH⁺], so pH = pKa of the conjugate acid, BH⁺.": "Divide entre dos el volumen de equivalencia y lee el pH ahí. En ese punto [B] = [BH⁺], así que pH = pKa del ácido conjugado, BH⁺.",
   "Moles of titrant at equivalence = {ct} M × the equivalence volume in liters. Divide by the analyte volume in liters ({liters} L).": "Moles de titulante en el punto de equivalencia = {ct} M × el volumen de equivalencia en litros. Divide entre el volumen del analito en litros ({liters} L).",
   "{label}: ✓ Correct, within the precision of the curve.": "{label}: ✓ Correcto, dentro de la precisión de la curva.",
   "{label}: Not yet. {hint}": "{label}: Todavía no. {hint}",
@@ -216,6 +217,7 @@
   "Titration: {setup}. Titrant added: {v} mL, pH {pH}. Endpoint: {end} mL.": "Titulación: {setup}. Titulante agregado: {v} mL, pH {pH}. Punto final: {end} mL.",
   "Titrant added (mL),pH": "Titulante agregado (mL),pH",
   "Titration data downloaded as zornscience-titration-data.csv: {n} readings of volume and pH.": "Datos de la titulación descargados como zornscience-titration-data.csv: {n} lecturas de volumen y pH.",
+  "Titration data downloaded as zornscience-titration-data.csv: {one} reading of volume and pH.": "Datos de la titulación descargados como zornscience-titration-data.csv: {one} lectura de volumen y pH.",
   "Titrate. Graph. Explain. Nothing you enter leaves this tab.": "Titula. Grafica. Explica. Nada de lo que escribes sale de esta pestaña.",
   "← Back to the lesson": "← Volver a la lección"
 }};

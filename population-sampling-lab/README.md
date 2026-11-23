@@ -1,8 +1,20 @@
 # Population Sampling Lab
 
-Version: 1.3.0
+Version: 1.4.0
 
 Standalone Grade 9 Biology activity for the Population Sampling lesson. This is an illustrative teaching model, not real field data. It uses only its own files and the shared site chrome. There are no runtime dependencies on other activity folders, remote resources, accounts, saved answers, completion codes, or runtime requests.
+
+## Ladybug Quadrat Lab
+
+Open the second tab directly with `/population-sampling-lab/#ladybug-quadrat` in English or `/population-sampling-lab/?lang=es#ladybug-quadrat` in Mexican Spanish. Share copies a fresh link to the selected tab in its current language.
+
+Use the reef diagram for the pre-lab on pages 1 and 2 of *Quadrat Sampling and Mark/Recapture Lab*. The container and centimeter ruler support both pairs of measurements on page 2. Page 3 uses three unique random samples. Finish the estimate, actual population, percent error and the quadrat questions on page 6. Students keep all measurements, counts and calculations on the paper worksheet.
+
+The covered container is one snapshot. Every center is assigned to one cell, and the outlined close-up shows neighboring specimens at the boundary. Students can toggle center markers or read the individual locations. The ruler close-up exposes its aligned tick in text for assistive technology. After three draws, students can reveal the census. A confirmed fresh run clears the draws and reveal while keeping the same snapshot.
+
+Both tabs retain their work while switching in the same visit. After opening the ladybug tab, language switches also keep the visit in memory. Reloading clears the visit. Use Left and Right or Home and End to move focus between the top-level tabs, then Enter or Space to open the focused tab.
+
+## Population Sampling
 
 Students sample a clumped meadow, compare small and large pond catches, test two failures of mark and recapture. Each investigation has read-only trial tables. Students record results and answer questions on the teacher's own worksheet; the activity has no worksheet, prompts or copy button. The numeric estimate fields are the only writing controls.
 
@@ -18,7 +30,7 @@ Each catch advances by clicks: catch the first batch, tag and release them (fish
 
 ## Seeds and teacher keys
 
-`?seed=NUMBER` normalizes finite numeric values to unsigned 32-bit integers, including zero. Missing, blank and nonnumeric seeds use one `crypto.getRandomValues` draw per visit. That visit seed supplies all model operations. No seed or settings appear in Share. English is the default. `?lang=es` selects Mexican Spanish; language switches reload and clear all work.
+`?seed=NUMBER` normalizes finite numeric values to unsigned 32-bit integers, including zero. Missing, blank and nonnumeric seeds use one `crypto.getRandomValues` draw per visit. That visit seed supplies all model operations. No seed or settings appear in Share. English is the default. `?lang=es` selects Mexican Spanish. Before the ladybug tab is opened, the Population Sampling language controls start a fresh visit.
 
 See TEACHER_NOTES.md for pure Node signatures, stream assignments, reproducible keys for seeds 1 to 6, comparison caveats and worksheet numbering. Model functions have no mutable shared random state.
 
@@ -36,6 +48,7 @@ Native radios and selects work with the keyboard. Instructions uses a native mod
 
 ## Changelog
 
+- 1.4.0 adds the bilingual Ladybug Quadrat Lab as a worksheet companion.
 - 1.3.0: Removed the Quick Check tab; checks belong on the teacher's worksheet.
 - 1.2.0: Removed the in-page worksheet card and copy button. Meadow grid now looks like grass, with dark green stripes for habitat squares and tan squares once counted.
 - 1.1.0: Plain-language pass for Grade 9: a "big idea" box per part, squares instead of quadrats, tagged instead of marked, "Off by" instead of percent error, prefilled estimates, three-click catch cycle, fixed catch sizes, simpler prompts and checks.

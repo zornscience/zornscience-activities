@@ -45,3 +45,11 @@
 .zsa-ps-cell { width: 100%; }
 .zsa-ps-idea { background: var(--zsa-sky); border-left: 5px solid var(--zsa-blue, #1861b2); border-radius: 8px; padding: 4px 16px; margin: 0 0 16px; }
 .zsa-ps-idea h3 { margin: 12px 0 0; }
+
+.zsa-ps-main-tabs { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 12px 0; }
+.zsa-ps-main-tabs .zsa-btn { padding: 8px 14px; }
+.zsa-ps-main-tabs [aria-selected="true"], .zsa-ps-main-tabs [aria-selected="true"]:hover {
+  color: white;
+  background: var(--zsa-navy);
+  border-color: var(--zsa-navy);
+}

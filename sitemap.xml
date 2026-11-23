@@ -2,15 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://activities.zornscience.org/osmosis-lab/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/osmosis-lab/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/osmosis-lab/?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/osmosis-lab/"/>
-  </url>
-  <url>
-    <loc>https://activities.zornscience.org/osmosis-lab/?lang=es</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/osmosis-lab/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/osmosis-lab/?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/osmosis-lab/"/>
   </url>
   <url>
     <loc>https://activities.zornscience.org/population-sampling-lab/</loc>
@@ -56,6 +47,18 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/leaf-disk-lab/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/leaf-disk-lab/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/leaf-disk-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/alka-seltzer-reaction-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/alka-seltzer-reaction-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/alka-seltzer-reaction-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/alka-seltzer-reaction-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/alka-seltzer-reaction-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/alka-seltzer-reaction-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/alka-seltzer-reaction-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/alka-seltzer-reaction-lab/"/>
   </url>
   <url>
     <loc>https://activities.zornscience.org/btb-carbon-cycle-lab/</loc>
@@ -500,6 +503,18 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/metals-lab/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/metals-lab/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/metals-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/molar-mass-trap-lab/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/molar-mass-trap-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/molar-mass-trap-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/molar-mass-trap-lab/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/molar-mass-trap-lab/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/molar-mass-trap-lab/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/molar-mass-trap-lab/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/molar-mass-trap-lab/"/>
   </url>
   <url>
     <loc>https://activities.zornscience.org/net-ionic-lab/</loc>

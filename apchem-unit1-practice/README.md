@@ -1,6 +1,6 @@
 # AP Chemistry Unit 1 Practice
 
-Version: 1.0.5
+Version: 1.0.6
 
 Version 1.0.5 is a patch bump for the shared practice engine (`shared/zsa-practice.js`), which gained an opt-in typed-equation question type used only by Rearranging Equations Practice. This page does not load the equation reader and its questions, scoring and text are unchanged.
 

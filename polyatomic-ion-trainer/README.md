@@ -1,6 +1,8 @@
 # Polyatomic Ion Trainer
 
-Version: 2.2.2
+Version: 2.2.3
+
+Version 2.2.3 corrects the search description and the landing page card: practice is untimed by default, with an optional 20-second-per-question challenge (there is no five-minute race).
 
 Version 2.2.2 adds search engine tags to the page head: a canonical link to the clean activity address, English and Spanish hreflang links (Spanish is ?lang=es), and a English and Mexican Spanish meta description from `tools/seo-pages.js`. Run `node tools/build-seo.js` after changing them.
 

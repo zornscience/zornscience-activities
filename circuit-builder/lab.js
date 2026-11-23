@@ -36,7 +36,7 @@
     window.setTimeout(function () { live.textContent = text; }, 50);
   }
 
-  var parts = [], res = M.solve([]), preset = "one", tool = "select", selected = null, history = [];
+  var parts = [], res = M.solve([]), preset = "one", tool = "select", selected = null, history = [], moving = null;
   var meter = {mode: "voltage", red: null, black: null, part: null};
   var POINTS = [];
   for (var r0 = 0; r0 < M.ROWS; r0++) for (var c0 = 0; c0 < M.COLS; c0++) POINTS.push(M.point(c0, r0));
@@ -274,9 +274,11 @@
   function update() {
     res = M.solve(parts);
     if (selected && !M.byId(parts, selected)) selected = null;
+    if (moving && (!M.byId(parts, moving) || selected !== moving)) moving = null;
     if (meter.part && !M.byId(parts, meter.part)) meter.part = null;
     drawParts();
     labelSpots();
+    showSpotList();
     showMeter();
     showPart();
     showTable();
@@ -316,7 +318,11 @@
     commit(parts.filter(function (p) { return p !== old; }));
     after(tx("{name} removed from {slot}.", {name: M.name(old), slot: M.slotLabel(slot)}));
   }
+  // One relocation for a drag, the keyboard, a tap and the list: the part keeps its id, value, + end and switch state,
+  // and the move is one step for Undo.
   function moveTo(part, slot) {
+    var from = part.slot;
+    moving = null;
     commit(parts.map(function (p) {
       if (p !== part) return p;
       var q = M.copy([p])[0];
@@ -325,8 +331,68 @@
     }));
     selected = part.id;
     update();
-    after(tx("{name} moved to {slot}.", {name: M.name(part), slot: M.slotLabel(slot)}));
+    after(tx("{name} moved. Before: {from}. Now: {to}.", {name: M.name(part), from: M.slotLabel(from), to: M.slotLabel(slot)}));
   }
+  // Move selected part: pick the new spot on the board (Enter or a tap) or in the list, without dragging.
+  function startMove() {
+    var p = selected && M.byId(parts, selected);
+    if (!p) return;
+    setTool("select");
+    moving = p.id;
+    update();
+    $("spotpick").focus();
+    announce(tx("Moving {name} from {from}. Choose an empty spot on the board or in the list, then press Move here. Escape cancels.", {name: M.name(p), from: M.slotLabel(p.slot)}));
+  }
+  function cancelMove(refocus) {
+    var p = moving && M.byId(parts, moving);
+    if (!p) return;
+    moving = null;
+    update();
+    announce(tx("Move cancelled. {name} stays at {slot}.", {name: M.name(p), slot: M.slotLabel(p.slot)}));
+    if (refocus) $("move").focus();
+  }
+  function finishMove(slot, viaList) {
+    var p = moving && M.byId(parts, moving);
+    if (!p) return;
+    if (M.partAt(parts, slot)) {
+      announce(tx("Spot {slot} is not empty. Choose an empty spot to move {name}.", {slot: M.slotLabel(slot), name: M.name(p)}));
+      return;
+    }
+    setActive(slot);
+    moveTo(p, slot);
+    if (viaList) $("move").focus();
+  }
+  // The list of spots: the way to place and move parts with large targets, at any width.
+  function showSpotList() {
+    var pick = $("spotpick"), keep = pick.value, mp = moving && M.byId(parts, moving), found = false;
+    clear(pick);
+    SLOTS.forEach(function (slot) {
+      var p = M.partAt(parts, slot);
+      if (mp && p) return;
+      pick.appendChild(option(slot, p ? tx("Spot {slot}: {name}", {slot: M.slotLabel(slot), name: M.name(p)}) : tx("Spot {slot}: empty", {slot: M.slotLabel(slot)})));
+      if (slot === keep) found = true;
+    });
+    if (found) pick.value = keep;
+    $("spot-place").hidden = !!mp;
+    $("spot-move").hidden = $("move-cancel").hidden = !mp;
+    $("move").setAttribute("aria-pressed", String(!!mp));
+    $("spotlist-status").textContent = mp ? tx("Moving {name} from {from}. Choose an empty spot on the board or in the list, then press Move here. Escape cancels.", {name: M.name(mp), from: M.slotLabel(mp.slot)}) :
+      isPart(tool) ? tx("Picked part: {part}.", {part: tx(M.NAMES[tool])}) : tx("No part picked. Pick one in Parts to place it.");
+  }
+  $("move").addEventListener("click", function () { if (moving) cancelMove(false); else startMove(); });
+  $("spot-place").addEventListener("click", function () {
+    var slot = $("spotpick").value;
+    if (!isPart(tool)) { announce(tx("Pick a part in Parts first.")); return; }
+    var old = M.partAt(parts, slot);
+    if (old && old.type === "wire" && tool === "wire") { announce(tx("Spot {slot} already has a wire.", {slot: M.slotLabel(slot)})); return; }
+    setActive(slot);
+    placeAt(tool, slot);
+  });
+  $("spot-move").addEventListener("click", function () { if ($("spotpick").value) finishMove($("spotpick").value, true); });
+  $("move-cancel").addEventListener("click", function () { cancelMove(true); });
+  $("spotlist").addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && moving) { cancelMove(true); e.preventDefault(); }
+  });
   function edit(id, change, words) {
     commit(parts.map(function (p) {
       if (p.id !== id) return p;
@@ -389,6 +455,8 @@
   });
   function setTool(id) {
     tool = id;
+    if (moving && id !== "select") { moving = null; update(); }
+    else showSpotList();
     TOOLS.forEach(function (t) { $("tool-" + t.id).setAttribute("aria-pressed", String(t.id === tool)); });
     $("place-red").setAttribute("aria-pressed", String(tool === "probe-red"));
     $("place-black").setAttribute("aria-pressed", String(tool === "probe-black"));
@@ -489,7 +557,11 @@
       drawParts();
       return;
     }
-    if (!gs.moved) select(gs.part ? gs.part.id : null);
+    if (!gs.moved) {
+      // Move selected part is waiting for a spot: a single tap on an empty one is the destination.
+      if (moving && gs.slot && !gs.part) { finishMove(gs.slot, false); return; }
+      select(gs.part ? gs.part.id : null);
+    }
   }
   $("board").addEventListener("pointerup", boardUp);
   $("board").addEventListener("pointercancel", boardUp);
@@ -521,11 +593,12 @@
       var n = neighbor(slot, dirs[e.key][0], dirs[e.key][1]);
       if (n) { setActive(n); spotEls[n].focus(); }
     } else if (e.key === "Enter" || e.key === " ") {
-      if (isPart(tool)) placeAt(tool, slot);
+      if (moving) finishMove(slot, false);
+      else if (isPart(tool)) placeAt(tool, slot);
       else if (tool === "erase") removeAt(slot);
       else { var p = M.partAt(parts, slot); select(p ? p.id : null); if (!p) announce(tx("{slot} is empty. Pick a part first.", {slot: M.slotLabel(slot)})); }
     } else if (e.key === "Delete" || e.key === "Backspace") removeAt(slot);
-    else if (e.key === "Escape") { setTool("select"); select(null); }
+    else if (e.key === "Escape") { if (moving) cancelMove(false); else { setTool("select"); select(null); } }
     else return;
     e.preventDefault();
   });

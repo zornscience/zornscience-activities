@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="zsa-version" content="1.0.0">
+  <title>The Alka-Seltzer Reaction | ZornScience</title>
+<meta name="description" content="Time the disappearance of the last visible solid in three Alka-Seltzer preparations. Observe bubbles and changes in bromothymol blue." data-zsa-es="Mide cuándo desaparece el sólido de una tableta entera de Alka-Seltzer, 4 trozos y una tableta en polvo. Observa las burbujas y el color del AZB.">
+<link rel="canonical" href="https://activities.zornscience.org/alka-seltzer-reaction-lab/">
+<link rel="alternate" hreflang="en" href="https://activities.zornscience.org/alka-seltzer-reaction-lab/">
+<link rel="alternate" hreflang="es" href="https://activities.zornscience.org/alka-seltzer-reaction-lab/?lang=es">
+<link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/alka-seltzer-reaction-lab/">
+  <link rel="icon" href="../favicon.png" type="image/png">
+  <link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+  <link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=1.0.0">
+  <link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.0">
+  <link rel="stylesheet" href="lab.css?v=1.0.0">
+  <script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+  <script src="../shared/zsa-i18n.js?v=1.0.0" defer></script>
+  <script src="data.js?v=1.0.0" defer></script>
+  <script src="model.js?v=1.0.0" defer></script>
+  <script src="bench.js?v=1.0.0" defer></script>
+  <script src="lab.js?v=1.0.0" defer></script>
+  <script src="../shared/zsa-header.js?v=1.0.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.0.0"><script src="../shared/zsa-about.js?v=1.0.0" defer></script></head>
+<body>
+<main class="zsa zsa-as" data-zsa-activity="alka-seltzer-reaction-lab">
+  <header data-zsa-header>
+    <div data-zsa-header-row>
+      <div data-zsa-header-identity>
+        <a data-zsa-header-brand href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png" width="34" height="33" alt=""></a>
+        <h1>The Alka-Seltzer Reaction</h1>
+      </div>
+      <nav data-zsa-header-tools aria-label="Activity tools">
+        <div>
+          <button class="zsa-btn" type="button" data-zsa-dialog-open="zsa-header-instructions" aria-haspopup="dialog" aria-controls="zsa-header-instructions">Instructions</button>
+          <button class="zsa-btn" type="button" data-zsa-chrome data-zsa-dialog-open="zsa-header-share" aria-label="Share activity" aria-haspopup="dialog" aria-controls="zsa-header-share">
+            <svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+  <dialog class="zsa-header-dialog" id="zsa-header-instructions" aria-labelledby="instructions-heading">
+    <div class="zsa-header-dialog-heading">
+      <h2 id="instructions-heading">Instructions</h2>
+      <button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close instructions" autofocus>Close</button>
+    </div>
+    <p>How does breaking up a tablet change the time it takes for the last visible piece to disappear?</p>
+    <ol>
+      <li>Make your prediction on your worksheet. Add 50 mL of water and 7 drops of BTB. Record the starting color.</li>
+      <li>Use one whole tablet for the first trial. For the next trials, split one tablet into 4 pieces or crush one tablet between folded paper with the back of a metal spatula. Use all of the solid each time.</li>
+      <li>Drop the tablet and start the timer. A virtual partner stirs gently at a steady speed. If you work in pairs, one of you can watch the beaker while the other stops the timer.</li>
+      <li>Stop as soon as the last solid disappears. Bubbles may still rise. Record the time and final BTB color. If you stopped early, you can resume.</li>
+      <li>Rinse and refill the beaker with fresh water and BTB before each trial. Use your readings for the graph and discussion on your worksheet.</li>
+    </ol>
+    <details>
+      <summary>Before you begin</summary>
+      <p>The tablet contains sodium bicarbonate and citric acid. BTB is short for bromothymol blue, a liquid that changes color with pH.</p>
+    </details>
+    <p><strong>In a physical lab</strong></p>
+    <p>Wear safety goggles. Clean up spills right away. Tell your teacher if glass breaks.</p>
+  </dialog>
+  <dialog class="zsa-header-dialog" id="zsa-header-share" aria-labelledby="share-heading">
+    <div class="zsa-header-dialog-heading">
+      <h2 id="share-heading">Share this activity</h2>
+      <button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close share options" autofocus>Close</button>
+    </div>
+    <p>This link opens a fresh activity.</p>
+    <label for="share-url">Share link</label>
+    <div class="zsa-header-share-link"><input id="share-url" type="text" readonly spellcheck="false"><button id="share-copy" class="zsa-btn" type="button">Copy link</button></div>
+    <a id="share-email" href="mailto:">Email</a>
+    <p id="share-status" role="status"></p>
+  </dialog>
+  <noscript><p>This lab needs JavaScript.</p><p lang="es-MX">Este laboratorio necesita JavaScript.</p></noscript>
+
+  <section class="zsa-as-workspace" aria-labelledby="tablet-form">
+    <div class="zsa-as-bench">
+      <div class="zsa-as-bench-heading">
+        <h2 id="tablet-form">Whole tablet</h2>
+        <span id="dose" hidden></span>
+      </div>
+      <canvas id="beaker" width="1120" height="710" aria-hidden="true"></canvas>
+    </div>
+    <div class="zsa-as-instruments">
+      <div class="zsa-as-clock">
+        <p>Stopwatch</p>
+        <p class="zsa-as-time"><span id="seconds">0.0</span> <span class="zsa-as-unit" aria-hidden="true">s</span><span class="zsa-sr-only">seconds</span></p>
+        <p id="clock-state">Ready</p>
+      </div>
+      <div class="zsa-as-primary">
+        <button class="zsa-btn zsa-btn--primary" id="action" type="button" aria-describedby="cue">Add 50 mL water</button>
+        <button class="zsa-btn zsa-btn--primary" id="stop" type="button" hidden>Stop timer</button>
+        <button class="zsa-btn zsa-btn--primary" id="resume" type="button" hidden>Resume this trial</button>
+      </div>
+      <p id="cue" class="zsa-as-cue">Make your prediction on your worksheet. Then prepare the beaker.</p>
+      <div class="zsa-as-picker" id="picker" hidden>
+        <label for="form">Tablet form</label>
+        <select id="form">
+          <option value="whole">Whole tablet</option>
+          <option value="quarters">Quartered tablet (all 4 pieces)</option>
+          <option value="powder">Crushed powder</option>
+        </select>
+      </div>
+      <dl class="zsa-as-evidence" aria-label="Beaker observations">
+        <div><dt>Liquid</dt><dd id="liquid">Empty</dd></div>
+        <div><dt>Solid</dt><dd id="solid">Whole tablet on paper</dd></div>
+        <div><dt>Bubbles</dt><dd id="bubbles">None visible</dd></div>
+      </dl>
+      <div id="after-stop" class="zsa-as-after" hidden>
+        <button class="zsa-btn" id="resume-early" type="button" hidden>Resume this trial</button>
+        <button class="zsa-btn" id="rinse" type="button">Rinse beaker</button>
+        <button class="zsa-btn" id="repeat" type="button">Repeat with fresh water</button>
+        <a href="#worksheet" id="worksheet-link" hidden>Back to your worksheet</a>
+      </div>
+    </div>
+  </section>
+  <p class="zsa-sr-only" id="observation-status" role="status" aria-atomic="true"></p>
+  <section class="zsa-as-worksheet" id="worksheet" aria-labelledby="worksheet-title" hidden>
+    <h2 id="worksheet-title">Back to your worksheet</h2>
+    <p>Make a bar graph. Put tablet form on the horizontal axis and time in seconds on the vertical axis. Then answer questions 1 to 6.</p>
+    <details>
+      <summary>After the investigation</summary>
+      <p>Breaking a tablet exposes more surface to the water. You timed how long the solid stayed visible. You can use that time to compare your preparations.</p>
+      <p>When sodium bicarbonate and citric acid react, they form sodium citrate, water and carbon dioxide. The bubbles are escaping carbon dioxide gas. Some of the gas dissolves in the water. BTB shows a change in pH. Both dissolved carbon dioxide and other tablet ingredients can affect pH.</p>
+      <p>When carbon dioxide dissolves in seawater, it can lower the pH. This can leave less carbonate for animals that build shells. For the medicine question, think about why the time a product takes to dissolve matters to its designers.</p>
+    </details>
+  </section>
+  <!-- zsa-about --><section class="zsa-about" data-zsa-about="alka-seltzer-reaction-lab" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Prepare a beaker with water and bromothymol blue. Time the disappearance of visible solid for a whole tablet, all four quarters and crushed powder, and record your observations on your worksheet.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="bio-carbon-cycle"><a href="https://zornscience.org/science/biology/unit-1-matter-and-energy-in-ecosystems/the-carbon-cycle/">The Carbon Cycle</a><span data-zsa-lesson-course>Biology</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer">
+    <span>ZornScience</span><span>Simulated readings</span>
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" data-zsa-chrome>CC BY-NC-SA 4.0</a>
+    <span class="zsa-as-embed-license">CC BY-NC-SA 4.0</span>
+    <a class="zsa-back" id="back" href="https://zornscience.org/science/biology/" data-zsa-chrome>← Back to the lesson</a>
+  </footer>
+</main>
+</body>
+</html>

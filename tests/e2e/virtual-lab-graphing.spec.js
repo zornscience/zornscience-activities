@@ -82,3 +82,51 @@ test("share copies only the fresh activity link and supports clipboard denial",a
  await page.getByRole("button",{name:"Close dialog",exact:true}).click();await expect(page.getByRole("button",{name:"Share",exact:true})).toBeFocused();
  await expect(page.locator(id("pointcount"))).toHaveText("6 points");
 });
+
+for (const spanish of [false, true]) {
+  const T = spanish ?
+    {x:"Valor de x, fila 1", y:"Valor de y, fila 1", other:"Valor de x, fila 2", note:/^Sin graficar: fila 1, valor de x\. Escribe un número, con punto decimal como en 1\.5 \(no 1,5\)\.$/, help:/Escribe los decimales con punto, como en 1\.5 \(no 1,5\)/, paste:"Datos en dos columnas", use:"Usar los datos pegados", summary:"Pegar datos o importar CSV"} :
+    {x:"x value, row 1", y:"y value, row 1", other:"x value, row 2", note:/^Not plotted: row 1, x value\. Enter a number, with a decimal point as in 1\.5 \(not 1,5\)\.$/, help:/Write decimals with a point, as in 1\.5 \(not 1,5\)/, paste:"Two-column data", use:"Use pasted data", summary:"Paste data or import CSV"};
+  test("graphing (" + (spanish ? "es" : "en") + "): a decimal comma marks only the cell at fault and the message shows the accepted format; import errors belong to the paste field and keep the table", async ({page}) => {
+    const errors = [];
+    page.on("pageerror", error => errors.push(error.message));
+    page.on("console", message => { if (message.type() === "error") errors.push(message.text()); });
+    await page.goto("/virtual-lab-graphing/" + (spanish ? "?lang=es" : ""));
+    await expect(page.locator(id("number-help"))).toContainText(T.help);
+    // The audit's case: 1,5 for x and 2 for y in the first row.
+    await page.getByRole("textbox", {name:T.x, exact:true}).fill("1,5");
+    await page.getByRole("textbox", {name:T.y, exact:true}).fill("2");
+    await expect(page.getByRole("textbox", {name:T.x, exact:true})).toHaveAttribute("aria-invalid", "true");
+    await expect(page.getByRole("textbox", {name:T.y, exact:true})).toHaveAttribute("aria-invalid", "false");
+    await expect(page.locator(id("data-error"))).toHaveText(T.note);
+    // Fixing the one cell clears the message.
+    await page.getByRole("textbox", {name:T.x, exact:true}).fill("1.5");
+    await expect(page.getByRole("textbox", {name:T.x, exact:true})).toHaveAttribute("aria-invalid", "false");
+    await expect(page.locator(id("data-error"))).toHaveText("");
+    await expect(page.locator(id("pointcount"))).toHaveText(spanish ? "1 punto" : "1 point");
+    // A failed import: the message is attached to the paste field, which is marked invalid, and the table is untouched.
+    await page.locator(".zsa-vlg-import summary").click();
+    const field = page.getByLabel(T.paste);
+    await expect(field).toHaveAccessibleDescription(/(?:Paste|Pega) two columns|(?:Pega) dos columnas/);
+    await field.fill("0,1\n2;3");
+    await page.getByRole("button", {name:T.use, exact:true}).click();
+    await expect(page.locator(id("import-error"))).toContainText(spanish ? "no con punto y coma" : "not a semicolon");
+    await expect(field).toHaveAttribute("aria-invalid", "true");
+    await expect(field).toHaveAccessibleDescription(new RegExp(spanish ? "Línea 2" : "Line 2"));
+    await expect(page.getByRole("textbox", {name:T.x, exact:true})).toHaveValue("1.5");
+    await expect(page.locator(id("pointcount"))).toHaveText(spanish ? "1 punto" : "1 point");
+    // A good import clears the error and the invalid mark.
+    page.once("dialog", dialog => dialog.accept());
+    await field.fill("0,1\n2,3");
+    await page.getByRole("button", {name:T.use, exact:true}).click();
+    await expect(field).toHaveAttribute("aria-invalid", "false");
+    await expect(page.locator(id("import-error"))).toHaveText("");
+    await expect(page.locator(id("pointcount"))).toHaveText(spanish ? "2 puntos" : "2 points");
+    // axe, after an invalid entry.
+    await page.getByRole("textbox", {name:T.other, exact:true}).fill("1,5");
+    await page.evaluate(fs.readFileSync(require.resolve("axe-core/axe.min.js"), "utf8"));
+    const found = await page.evaluate(() => window.axe.run(document, {runOnly:{type:"tag", values:["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"]}}));
+    expect(found.violations.map(v => v.id + " " + v.nodes.map(n => n.target.join(" ")).join(", "))).toEqual([]);
+    expect(errors).toEqual([]);
+  });
+}

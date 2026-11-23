@@ -172,7 +172,7 @@
         hint = t("Read the pH at the middle of the steep part. Think about what is in the flask at equivalence.");
       } else if (q.id === "pka") {
         ok = Math.abs(n - kp.pHhalf) <= 0.15 || Math.abs(n - kp.pKa) <= 0.15;
-        hint = t(a.type === "acid" ? "Halve the equivalence volume and read the pH there. At that point [HA] = [A⁻], so pH = pKa." : "Halve the equivalence volume and read the pH there. At that point [B] = [BH⁺], so pH = pKa.");
+        hint = t(a.type === "acid" ? "Halve the equivalence volume and read the pH there. At that point [HA] = [A⁻], so pH = pKa." : "Halve the equivalence volume and read the pH there. At that point [B] = [BH⁺], so pH = pKa of the conjugate acid, BH⁺.");
       } else {
         ok = Math.abs(n - t2.ca) <= 0.03 * t2.ca;
         hint = t("Moles of titrant at equivalence = {ct} M × the equivalence volume in liters. Divide by the analyte volume in liters ({liters} L).", {ct: fmt(t2.ct, 3), liters: fmt(t2.va / 1000, 4)});

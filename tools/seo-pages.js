@@ -8,7 +8,9 @@
 module.exports = {
   "osmosis-lab": {
     en: "Soak potato cores in sucrose solutions, weigh them, graph percent change in mass and find the isotonic point in this grade 9 Biology lab.",
-    es: "Remoja cilindros de papa en soluciones de sacarosa, pésalos, grafica el cambio porcentual de masa y encuentra el punto isotónico."
+    // English only until the Spanish in osmosis-lab/data.js is reviewed (SPANISH_READY).
+    es: null,
+    spanishPending: true
   },
   "population-sampling-lab": {
     en: "Estimate hidden plant and fish populations with quadrats and mark and recapture. Compare random samples, sample sizes and bias in this Biology lab.",
@@ -36,6 +38,10 @@ module.exports = {
   "leaf-disk-lab": {
     en: "Explore photosynthesis with floating spinach leaf disks. Compare light, temperature and bicarbonate in a bilingual Biology lab from ZornScience.",
     es: "Explora la fotosíntesis con discos de espinaca que flotan. Compara luz, temperatura y bicarbonato en un laboratorio bilingüe de ZornScience."
+  },
+  "alka-seltzer-reaction-lab": {
+    en: "Time the disappearance of the last visible solid in three Alka-Seltzer preparations. Observe bubbles and changes in bromothymol blue.",
+    es: "Mide cuándo desaparece el sólido de una tableta entera de Alka-Seltzer, 4 trozos y una tableta en polvo. Observa las burbujas y el color del AZB."
   },
   "btb-carbon-cycle-lab": {
     en: "Does spinach add or remove carbon dioxide? Predict, then watch three BTB tubes change over 24 hours in this free Biology virtual lab.",
@@ -202,6 +208,10 @@ module.exports = {
     en: "Investigate three unknown solids with realistic lab equipment. Explore luster, malleability, conductivity, and reactions with hydrochloric acid.",
     es: "Investiga tres sólidos desconocidos con equipo de laboratorio realista. Explora su brillo, maleabilidad, conductividad y reacción con ácido clorhídrico."
   },
+  "molar-mass-trap-lab": {
+    en: "Compare how four liquids spread on wax paper, time a falling steel shot, and mix liquid pairs to explain the Molar Mass Trap with evidence.",
+    es: "Compara cómo se extienden cuatro líquidos en papel encerado, mide la caída de un perdigón y mezcla pares para explicar la trampa de la masa molar."
+  },
   "net-ionic-lab": {
     en: "Mix ten pairs of reagents on a virtual lab bench and observe precipitates, metal displacement and mixtures with no visible reaction.",
     es: "Mezcla diez pares de reactivos en una mesa de laboratorio virtual y observa precipitados, desplazamiento de metales y mezclas sin reacción visible."
@@ -220,15 +230,15 @@ module.exports = {
   },
   "ph-buffer-lab": {
     en: "Explore pH, design buffers from conjugate pairs, and compare buffer capacity with water using a live graph in the ZornScience pH and Buffer Lab.",
-    es: "Explora el pH, prepara amortiguadores con pares conjugados y compara su capacidad con la del agua en una gráfica en vivo, de ZornScience."
+    es: "Explora el pH, prepara soluciones amortiguadoras con pares conjugados y compara su capacidad con la del agua en una gráfica en vivo, de ZornScience."
   },
   "physics-graphing-lab": {
     en: "Predict, observe and explain one-dimensional motion with a moving cart and linked position, velocity and acceleration graphs, from ZornScience.",
     es: "Predice, observa y explica el movimiento en una dimensión con un carrito y gráficas enlazadas de posición, velocidad y aceleración, de ZornScience."
   },
   "polyatomic-ion-trainer": {
-    en: "Learn polyatomic ion names, formulas and charges. Flip flashcards or race a five-minute multiple-choice challenge, then review your misses.",
-    es: "Aprende los nombres, las fórmulas y las cargas de los iones poliatómicos. Usa tarjetas o un reto de cinco minutos y luego repasa tus errores."
+    en: "Learn polyatomic ion names, formulas and charges. Flip flashcards or take an untimed quiz with an optional 20-second challenge, then review your misses.",
+    es: "Aprende nombres, fórmulas y cargas de iones poliatómicos. Usa tarjetas o un cuestionario sin límite de tiempo, con reto opcional de 20 segundos."
   },
   "projectile-lab": {
     en: "Fire a cannon from any height, angle and speed, and watch live velocity and acceleration vectors on the projectile, from ZornScience.",

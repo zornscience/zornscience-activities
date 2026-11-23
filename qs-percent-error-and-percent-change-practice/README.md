@@ -1,6 +1,6 @@
 # Percent Error and Percent Change Practice
 
-Version: 1.0.1
+Version: 1.0.2
 
 Generated practice for the Quantitative Skills lesson [Percent Error and Percent Change](https://zornscience.org/science/quantitative-skills/ratios-and-percents/percent-error-and-percent-change/). Every set has new numbers. Three skills: percent error, percent change, and setups and signs. A skill gives 8 questions; Mixed review gives 12, four of each. English: `/qs-percent-error-and-percent-change-practice/`. Mexican Spanish: `/qs-percent-error-and-percent-change-practice/?lang=es`.
 

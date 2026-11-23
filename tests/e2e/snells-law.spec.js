@@ -82,9 +82,9 @@ test('investigations scaffold measurement, controlled comparisons and the critic
  await page.locator('.mobile-settings').click();await expect(page.locator('#material-settings')).toBeFocused();
 });
 
-test('touch measurement zoom stays readable and resets to the full apparatus',async({browser})=>{
+test('touch measurement zoom stays readable and resets to the full apparatus',async({browser,baseURL})=>{
  const context=await browser.newContext({viewport:{width:390,height:844},hasTouch:true});const page=await context.newPage();
- await page.goto('http://127.0.0.1:4173/snells-law-lab/');
+ await page.goto(new URL('/snells-law-lab/',baseURL).href);
  await page.locator('#zoom').tap();await expect(page.locator('#bench')).toHaveAttribute('viewBox','315 135 330 330');
  await expect(page.locator('#protractor')).toHaveAttribute('transform','translate(480 300)');
  await page.locator('#show-values').uncheck();await expect(page.locator('#critical-note')).toContainText('No critical angle');

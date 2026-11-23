@@ -52,6 +52,15 @@ A chemistry, physics, and biology tutor for students. It guides students with qu
 
 == Changelog ==
 
+= 1.7.2 (accessibility) =
+* Full screen is a named dialog. The page behind it cannot be reached with Tab, and Escape, the Exit button and the browser's Back button all return focus to the Full screen button.
+* Focus rings are dark blue (white on the blue header), at least 3:1 against what is around them.
+* Focus stays in the question box while a reply is pending, and a reply that arrives later never pulls focus away from where the student went. A hidden status line says "Sending your question" and reads errors aloud once, in the page language. The question stays in the box when a request fails, including when the limit is reached.
+* Every message keeps the language it was written in, even after the student switches language or switches while a reply is pending. Chats saved before this update are read and labeled when they load.
+* The conversation has a name in both languages and can be scrolled with the keyboard.
+* The language buttons say "English" and "Español" instead of showing flags.
+* New shortcode option: [zornscience_tutor lang="es"] starts the chat in Spanish on the Spanish tutor page. A student's own language choice still wins.
+
 = 1.7.1 =
 * The note under the chat now says "The ZornScience tutor is an AI program, not a person." (Spanish: "El tutor de ZornScience es un programa de inteligencia artificial (IA), no una persona.") so students are told plainly that they are talking to an AI.
 

@@ -384,3 +384,24 @@ test("landing page links to the Virtual Titration Simulator", async ({page, prob
   await page.getByRole("link", {name: "Virtual Titration Simulator"}).click();
   await expect(page).toHaveTitle("Virtual Titration Simulator | ZornScience");
 });
+
+test("a weak base names the conjugate acid for the half-equivalence pH, in the graph, key points and hint", async ({page, problems}) => {
+  await go(page, "?analyte=ammonia&titrant=hcl");
+  await page.getByRole("button", {name: "Show key points"}).click();
+  await expect(page.locator("#zsa-ti-keypoints")).toContainText("pKa of NH₄⁺");
+  await expect(page.locator("#zsa-ti-graph")).toContainText("pH = pKa of NH₄⁺ = ");
+  await page.getByRole("button", {name: "Check my answers"}).click().catch(function () {});
+  await expect(page.locator("body")).not.toContainText("pH = pKa of the conjugate base");
+  var hint = await page.evaluate(function () { return document.body.innerText; });
+  expect(hint).not.toMatch(/1 readings/);
+  problems.assertClean && problems.assertClean();
+});
+
+test("Spanish keeps the endpoint and the equivalence point as different terms, and a weak base names its conjugate acid", async ({page}) => {
+  await page.goto("/titration-lab/?lang=es&analyte=ammonia&titrant=hcl");
+  await page.getByRole("button", {name: /puntos clave/i}).click();
+  var text = await page.locator("body").innerText();
+  expect(text).toMatch(/Punto de equivalencia/);
+  expect(text).toMatch(/pKa de NH₄⁺/);
+  expect(text).not.toMatch(/\b(el|un|del) amortiguador\b/i);
+});

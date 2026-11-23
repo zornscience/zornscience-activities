@@ -1,6 +1,6 @@
 # Ratios and Proportions Practice
 
-Version: 1.0.1
+Version: 1.0.2
 
 Generated practice for the Quantitative Skills lesson [Ratios and Proportions](https://zornscience.org/science/quantitative-skills/ratios-and-percents/ratios-and-proportions/). Every set has new numbers. Three skills: writing and simplifying ratios, solving proportions, and mole ratios. A skill gives 8 questions; Mixed review gives 12, four of each. English: `/qs-ratios-and-proportions-practice/`. Mexican Spanish: `/qs-ratios-and-proportions-practice/?lang=es`.
 

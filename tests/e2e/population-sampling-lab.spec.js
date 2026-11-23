@@ -159,7 +159,7 @@ test("population sampling: Share copies a clean link and falls back to selected 
   expect(await page.evaluate(() => getSelection().toString())).toBe("https://activities.zornscience.org/population-sampling-lab/");
 });
 
-test("population sampling: reload and language reload clear work, same seed repeats and Share is clean", async ({page}) => {
+test("population sampling: reload clears work, a language switch keeps it, same seed repeats and Share is clean", async ({page}) => {
   await open(page, "en", 0); await $(page, "method").selectOption("random");
   for (let i = 0; i < 3; i++) await $(page, "random").click();
   const first = await $(page, "work").locator("table").first().innerText();
@@ -170,7 +170,7 @@ test("population sampling: reload and language reload clear work, same seed repe
   expect(await $(page, "work").locator("table").first().innerText()).toBe(first);
   await page.getByRole("link", {name: "ES Español", exact: true}).click();
   await expect(page.locator("html")).toHaveAttribute("lang", "es-MX");
-  await expect($(page, "work").locator("table").first().locator("tbody tr")).toHaveCount(0);
+  expect(await $(page, "work").locator("table").first().locator("tbody tr").count()).toBe(3);
   await $(page, "share-open").click();
   await expect($(page, "share-link")).toHaveAttribute("href", "https://activities.zornscience.org/population-sampling-lab/?lang=es");
   await $(page, "share-copy").click(); expect(await page.evaluate(() => window.__samplingCopies)).toEqual(["https://activities.zornscience.org/population-sampling-lab/?lang=es"]);
@@ -191,7 +191,7 @@ test("population sampling: R zero is recorded, next trial is fresh, each series 
   await expect($(page, "work").locator("table").first().locator("tbody tr")).toHaveCount(0);
 });
 
-test("population sampling: no runtime network, no writing fields, reduced motion, seed parity and embed", async ({page, context}) => {
+test("population sampling: no runtime network, no writing fields, reduced motion, seed parity and embed", async ({page, context, baseURL}) => {
   await page.emulateMedia({reducedMotion: "reduce"});
   const requests = []; page.on("request", req => requests.push({url: req.url(), type: req.resourceType()}));
   await open(page);
@@ -199,7 +199,7 @@ test("population sampling: no runtime network, no writing fields, reduced motion
   const record = await $(page, "work").locator("table").first().innerText();
   const second = await context.newPage(); await open(second); await mode(second, "recapture"); await catchTrial(second);
   expect(await $(second, "work").locator("table").first().innerText()).toBe(record); await second.close();
-  expect(requests.every(r => r.url.startsWith("http://127.0.0.1:4173/") && !["fetch", "xhr", "websocket", "eventsource"].includes(r.type))).toBe(true);
+  expect(requests.every(r => r.url.startsWith(new URL(baseURL).origin + "/") && !["fetch", "xhr", "websocket", "eventsource"].includes(r.type))).toBe(true);
   await expect(page.locator('textarea,input[type=text],[contenteditable]')).toHaveCount(0);
   expect(await page.locator("input[type=number]").count()).toBeLessThanOrEqual(1);
   await page.goto("/population-sampling-lab/?embed=1&seed=1");
