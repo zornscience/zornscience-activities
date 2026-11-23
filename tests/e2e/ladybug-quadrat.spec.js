@@ -353,3 +353,11 @@ test("all cells are eligible without replacement and every specimen has one owne
   expect(specimensIn(cells[3])).toEqual([]);
   expect([cellAt(4.82, 3.45).label, cellAt(5.16, 1.5).label]).toEqual(["A1", "A2"]);
 });
+
+test("lazy-loaded ladybug scripts use the page's cache-busting version", async ({page}) => {
+  await page.goto(path + hash);
+  await expect(lab(page, "start-reef")).toBeVisible();
+  const version = await page.locator('meta[name="zsa-version"]').getAttribute("content");
+  const sources = await page.locator('script[src^="ladybug"]').evaluateAll(nodes => nodes.map(node => node.getAttribute("src")));
+  expect(sources.sort()).toEqual(["ladybug-art.js", "ladybug-model.js", "ladybug.js"].map(file => file + "?v=" + version));
+});

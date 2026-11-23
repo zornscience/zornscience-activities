@@ -311,10 +311,12 @@
   function requestedTab() { return location.hash === fragment ? "ladybug" : "population"; }
   let activeTab, ladybug, loading;
   const ladybugScripts = new Map();
+  // Reuse the page's cache-busting version so a release bump covers these scripts too.
+  const version = document.querySelector('meta[name="zsa-version"]')?.content;
   function loadLadybugScript(file) {
     if (!ladybugScripts.has(file)) {
       const script = document.createElement("script");
-      script.src = file + "?v=1.4.0";
+      script.src = version ? file + "?v=" + encodeURIComponent(version) : file;
       const loaded = new Promise((resolve, reject) => {
         script.addEventListener("load", resolve, {once: true});
         script.addEventListener("error", reject, {once: true});
