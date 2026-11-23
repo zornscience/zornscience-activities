@@ -352,10 +352,10 @@
       button("Try again", panel, loadLadybug);
     }).finally(() => { loading = null; });
   }
-  function selectTab(key, fromHistory = false) {
+  function selectTab(key, viaHistory = false) {
     if (key === activeTab) return;
     const oldPanel = activeTab && $("panel-" + activeTab);
-    const moveFocus = fromHistory && (oldPanel?.contains(document.activeElement) || tablist.contains(document.activeElement));
+    const moveFocus = viaHistory && (oldPanel?.contains(document.activeElement) || tablist.contains(document.activeElement));
     activeTab = key;
     for (const name of tabNames) {
       const selected = name === key, tab = $("tab-" + name);
@@ -381,7 +381,8 @@
       }
     });
     tab.addEventListener("keydown", event => {
-      const next = {ArrowLeft: 1 - index, ArrowRight: 1 - index, Home: 0, End: tabNames.length - 1};
+      const count = tabNames.length;
+      const next = {ArrowLeft: (index + count - 1) % count, ArrowRight: (index + 1) % count, Home: 0, End: count - 1};
       if (!Object.hasOwn(next, event.key)) return;
       event.preventDefault();
       tab.tabIndex = -1;
