@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="zsa-version" content="1.0.0">
+<title>Test Policy Checker | ZornScience</title>
+<meta name="description" content="See the ACT and SAT policy of every public four-year university for fall 2027 on a US map, with links to each school's own admissions page." data-zsa-es="Consulta en un mapa la política del ACT y el SAT de cada universidad pública de cuatro años para el otoño de 2027, con enlaces a cada universidad.">
+<link rel="canonical" href="https://activities.zornscience.org/test-policy-checker/">
+<link rel="alternate" hreflang="en" href="https://activities.zornscience.org/test-policy-checker/">
+<link rel="alternate" hreflang="es" href="https://activities.zornscience.org/test-policy-checker/?lang=es">
+<link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/test-policy-checker/">
+<link rel="icon" href="../favicon.png" type="image/png">
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.0">
+<link rel="stylesheet" href="test-policy-checker.css?v=1.0.0">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.0">
+<script src="../shared/zsa-embed.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.0.0" defer></script>
+<script src="data.js?v=1.0.0" defer></script>
+<script src="map.js?v=1.0.0" defer></script>
+<script src="copy.js?v=1.0.0" defer></script>
+<script src="test-policy-checker.js?v=1.0.0" defer></script>
+<script src="../shared/zsa-header.js?v=1.0.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.0.0"><script src="../shared/zsa-about.js?v=1.0.0" defer></script></head>
+<body>
+<main class="zsa zsa-tpc" data-zsa-activity="test-policy-checker">
+<header data-zsa-header>
+<div data-zsa-header-row>
+<div data-zsa-header-identity><a data-zsa-header-brand href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../favicon.png" width="34" height="33" alt=""></a><h1>Test Policy Checker</h1></div>
+<nav data-zsa-header-tools aria-label="Activity tools"><div>
+<button class="zsa-btn" type="button" data-zsa-dialog-open="zsa-header-instructions" aria-haspopup="dialog" aria-controls="zsa-header-instructions">Instructions</button>
+<button class="zsa-btn" type="button" data-zsa-chrome data-zsa-dialog-open="zsa-header-share" aria-label="Share activity" aria-haspopup="dialog" aria-controls="zsa-header-share"><svg class="zsa-header-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 10.5 6.8-4M8.6 13.5l6.8 4"/></svg><span>Share</span></button>
+</div></nav>
+</div>
+</header>
+<dialog class="zsa-header-dialog" id="zsa-header-instructions" aria-labelledby="zsa-header-instructions-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-header-instructions-title">Instructions</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close instructions" autofocus>Close</button></div>
+<ol>
+<li>Choose a state on the map, in the State list, or with the buttons under the map.</li>
+<li>Or type part of a school's name to search every state.</li>
+<li>Use Policy to show one kind of policy. The map then shows how many schools in each state have it.</li>
+<li>Each school shows its policy, the tests it accepts, any exception, and a link to the page we checked.</li>
+<li>On the map, use the arrow keys to move from state to state, and Enter or Space to choose one.</li>
+</ol>
+</dialog>
+<dialog class="zsa-header-dialog" id="zsa-header-share" aria-labelledby="zsa-header-share-title">
+<div class="zsa-header-dialog-heading"><h2 id="zsa-header-share-title">Share this tool</h2><button class="zsa-btn" type="button" data-zsa-dialog-close aria-label="Close share options" autofocus>Close</button></div>
+<p>Share a clean link to the map. Your choices are not included.</p>
+<label for="zsa-header-share-url">Share link</label><div class="zsa-header-share-link"><input id="zsa-header-share-url" type="text" readonly spellcheck="false"><button class="zsa-btn" type="button" data-zsa-share-copy>Copy link</button></div>
+<a data-zsa-share-email href="#">Email</a><p data-zsa-share-status role="status" aria-live="polite"></p>
+</dialog>
+<noscript><p class="zsa-panel">This tool needs JavaScript. Turn it on to see the map and the list.</p></noscript>
+<p class="zsa-tpc-intro">ACT and SAT policies of public four-year universities for students starting college in fall 2027.</p>
+<p class="zsa-panel zsa-tpc-notice"><strong>Policies change every admissions cycle. Confirm on the college's page before you apply.</strong></p>
+<form class="zsa-tpc-controls" id="zsa-tpc-controls" role="search">
+<div class="zsa-tpc-field"><label for="zsa-tpc-state">State</label><select id="zsa-tpc-state"><option value="">Choose a state</option></select></div>
+<div class="zsa-tpc-field zsa-tpc-field--wide"><label for="zsa-tpc-search">Search by school name</label><input id="zsa-tpc-search" type="search" autocomplete="off" spellcheck="false"></div>
+<div class="zsa-tpc-field"><label for="zsa-tpc-policy">Policy</label><select id="zsa-tpc-policy"><option value="all">All policies</option></select></div>
+</form>
+<div class="zsa-tpc-layout">
+<section class="zsa-tpc-map-panel" aria-labelledby="zsa-tpc-map-title">
+<h2 class="zsa-sr-only" id="zsa-tpc-map-title">Map of the United States. Choose a state to see its public universities.</h2>
+<div class="zsa-tpc-map" id="zsa-tpc-map"></div>
+<p class="zsa-tpc-help" id="zsa-tpc-map-help">On the map, use the arrow keys to move from state to state, and Enter or Space to choose one.</p>
+<p class="zsa-tpc-help" id="zsa-tpc-shade-note" hidden>Darker states have more schools with this policy. The number on each state is how many.</p>
+<div class="zsa-tpc-small-wrap" role="group" aria-labelledby="zsa-tpc-small-label"><p class="zsa-tpc-small-label" id="zsa-tpc-small-label">Small states</p><div class="zsa-tpc-small" id="zsa-tpc-small"></div></div>
+<details class="zsa-tpc-legend-wrap"><summary>What the policies mean</summary><dl class="zsa-tpc-legend" id="zsa-tpc-legend"></dl></details>
+</section>
+<section class="zsa-tpc-results" id="zsa-tpc-results" aria-labelledby="zsa-tpc-results-title">
+<h2 id="zsa-tpc-results-title" tabindex="-1">Choose a state on the map or from the list, or search for a school.</h2>
+<p class="zsa-tpc-status" id="zsa-tpc-results-status"></p>
+<div id="zsa-tpc-results-summary"></div>
+<ul class="zsa-tpc-list" id="zsa-tpc-list" hidden></ul>
+</section>
+</div>
+<p class="zsa-sr-only" id="zsa-tpc-live" role="status" aria-live="polite" aria-atomic="true"></p>
+<!-- zsa-about --><section class="zsa-about" data-zsa-about="test-policy-checker" data-zsa-chrome aria-labelledby="zsa-about-heading"><h2 id="zsa-about-heading" data-zsa-about-heading>About this activity</h2><p data-zsa-about-intro>Find the ACT and SAT policy of every public four-year university in the United States for fall 2027. Each school links to the admissions page that was checked.</p><p class="zsa-about-label" id="zsa-about-lessons" data-zsa-about-lessons-heading>Related lessons</p><ul aria-labelledby="zsa-about-lessons"><li data-zsa-lesson="ahs-four-year"><a href="https://zornscience.org/students/after-high-school/four-year-colleges/">Four-Year Colleges</a><span data-zsa-lesson-course>Students</span></li><li data-zsa-lesson="ahs-hub"><a href="https://zornscience.org/students/after-high-school/">After High School</a><span data-zsa-lesson-course>Students</span></li></ul></section><!-- /zsa-about --><footer class="zsa-footer" data-zsa-chrome><span>ZornScience</span><span>No account needed. Nothing you choose or type leaves this page.</span><a href="../">All activities</a><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a><a class="zsa-back" id="zsa-tpc-back" href="https://zornscience.org/students/after-high-school/four-year-colleges/" hidden>← Back to the lesson</a></footer>
+</main>
+</body>
+</html>

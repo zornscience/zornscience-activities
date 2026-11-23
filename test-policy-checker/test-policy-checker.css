@@ -1,0 +1,73 @@
+/* Test Policy Checker. Policy colors are the Okabe-Ito colorblind-safe set, and every policy also has its own text
+   label and mark shape, so color is never the only signal. Map shading for a chosen policy is one blue scale with the
+   count written on each state. */
+.zsa-tpc {max-width:1200px;
+  --tpc-required:#d55e00; --tpc-optional:#0072b2; --tpc-free:#009e73; --tpc-flexible:#e69f00; --tpc-varies:#cc79a7;
+  --tpc-unknown:#6b7280; --tpc-none:#1f2937;}
+.zsa-tpc .zsa-tpc-intro {margin:0 0 12px;}
+.zsa-tpc .zsa-tpc-notice {margin:0 0 20px; color:var(--zsa-navy);}
+.zsa-tpc-controls {display:grid; grid-template-columns:1fr; gap:12px; margin:0 0 20px;}
+.zsa-tpc-field {display:flex; flex-direction:column; gap:4px;}
+.zsa-tpc-field label {font-size:var(--zsa-text-sm); font-weight:600; color:var(--zsa-navy);}
+.zsa-tpc-field select, .zsa-tpc-field input {min-height:var(--zsa-tap); border:1px solid var(--zsa-border-strong); border-radius:var(--zsa-radius); padding:8px 12px; background:white; color:var(--zsa-slate); font-size:16px; width:100%;}
+@media (min-width:700px) {.zsa-tpc-controls {grid-template-columns:1fr 1.6fr 1fr;}}
+
+.zsa-tpc-layout {display:grid; grid-template-columns:1fr; gap:24px; align-items:start;}
+@media (min-width:960px) {
+  .zsa-tpc-layout {grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);}
+  .zsa-tpc-map-panel {position:sticky; top:12px;}
+}
+.zsa-tpc-map {border:1px solid var(--zsa-border); border-radius:var(--zsa-radius-lg); background:#fbfdff; padding:8px;}
+.zsa-tpc-svg {display:block; width:100%; height:auto;}
+.zsa-tpc-state {cursor:pointer; outline:none;}
+.zsa-tpc-state path {fill:#dbe7f6; stroke:#ffffff; stroke-width:1; stroke-linejoin:round;}
+.zsa-tpc-state text {font:600 14px var(--zsa-font); fill:#0b2a5b; text-anchor:middle; dominant-baseline:central; pointer-events:none;}
+.zsa-tpc-state:hover path {fill:#bcd3ef;}
+.zsa-tpc-hit {fill:transparent; stroke:none; pointer-events:all;}
+.zsa-tpc-state[data-shade="0"] path {fill:#f1f5f9;}
+.zsa-tpc-state[data-shade="1"] path {fill:#c6dbef;}
+.zsa-tpc-state[data-shade="2"] path {fill:#6baed6;}
+.zsa-tpc-state[data-shade="3"] path {fill:#2171b5;}
+.zsa-tpc-state[data-shade="4"] path {fill:#08306b;}
+.zsa-tpc-state[data-shade="3"] text, .zsa-tpc-state[data-shade="4"] text {fill:#ffffff;}
+.zsa-tpc-state[aria-pressed="true"] path {fill:#0b2a5b; stroke:#000000; stroke-width:3;}
+.zsa-tpc-state[aria-pressed="true"] text {fill:#ffffff; text-decoration:underline;}
+.zsa-tpc-state:focus-visible path {stroke:#e69f00; stroke-width:5;}
+.zsa-tpc-help {font-size:var(--zsa-text-sm); margin:8px 0 0;}
+.zsa-tpc-small-wrap {margin:12px 0 0;}
+.zsa-tpc-small-label {font-size:var(--zsa-text-sm); font-weight:600; color:var(--zsa-navy); margin:0 0 6px;}
+.zsa-tpc-small {display:flex; flex-wrap:wrap; gap:8px;}
+.zsa-tpc .zsa-tpc-small {padding:0;}
+.zsa-tpc .zsa-btn.zsa-tpc-small {min-width:var(--zsa-tap); min-height:var(--zsa-tap); padding:8px 12px; font-weight:600;}
+.zsa-tpc .zsa-btn.zsa-tpc-small[aria-pressed="true"] {background:var(--zsa-navy); color:white; text-decoration:underline;}
+.zsa-tpc-legend-wrap {margin:16px 0 0; border:1px solid var(--zsa-border); border-radius:var(--zsa-radius); padding:0 12px;}
+.zsa-tpc-legend-wrap summary {min-height:var(--zsa-tap); display:flex; align-items:center; cursor:pointer; font-weight:600; color:var(--zsa-navy);}
+.zsa-tpc-legend {margin:0 0 12px; font-size:var(--zsa-text-sm);}
+.zsa-tpc-legend dt {margin:10px 0 2px;}
+.zsa-tpc-legend dd {margin:0;}
+
+.zsa-tpc-results h2 {font-size:clamp(1.35rem,1.2rem + .6vw,1.75rem); margin:0 0 8px;}
+.zsa-tpc-status {margin:0 0 8px; font-size:var(--zsa-text-sm);}
+.zsa-tpc-status:empty {display:none;}
+.zsa-tpc-summary {display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; font-size:var(--zsa-text-sm); margin:0 0 12px;}
+.zsa-tpc-summary-label {font-weight:600;}
+.zsa-tpc-list {list-style:none; margin:0; padding:0; display:grid; gap:12px;}
+.zsa-tpc-school {border:1px solid var(--zsa-border); border-radius:var(--zsa-radius-lg); padding:14px 16px; background:white;}
+.zsa-tpc-school h3 {font-size:1.15rem; margin:0 0 8px;}
+.zsa-tpc-school p {margin:6px 0 0; font-size:var(--zsa-text-sm); line-height:1.5;}
+.zsa-tpc-tags {display:flex; flex-wrap:wrap; gap:6px;}
+.zsa-tpc-tag {display:inline-flex; align-items:center; border:1px solid var(--zsa-border-strong); border-radius:var(--zsa-radius-pill); padding:2px 10px; font-size:14px;}
+.zsa-tpc-note {color:#475569;}
+.zsa-tpc-source {display:flex; flex-wrap:wrap; align-items:center; gap:4px 12px;}
+.zsa-tpc-source a {display:inline-flex; align-items:center; min-height:var(--zsa-tap);}
+.zsa-tpc-checked {color:#475569;}
+
+.zsa-tpc-badge {display:inline-flex; align-items:center; gap:6px; border:1.5px solid currentColor; border-radius:var(--zsa-radius-pill); padding:2px 10px; font-size:14px; font-weight:600; background:white; color:#1f2937;}
+.zsa-tpc-mark {display:inline-block; width:12px; height:12px; flex:none;}
+.zsa-tpc-badge--required {color:#9a3c00;} .zsa-tpc-badge--required .zsa-tpc-mark {background:var(--tpc-required); clip-path:polygon(50% 0,100% 100%,0 100%);}
+.zsa-tpc-badge--optional {color:#005a8c;} .zsa-tpc-badge--optional .zsa-tpc-mark {background:var(--tpc-optional); border-radius:50%;}
+.zsa-tpc-badge--free {color:#006b4f;} .zsa-tpc-badge--free .zsa-tpc-mark {background:var(--tpc-free);}
+.zsa-tpc-badge--flexible {color:#7a5200;} .zsa-tpc-badge--flexible .zsa-tpc-mark {background:var(--tpc-flexible); clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);}
+.zsa-tpc-badge--varies {color:#8a3b6a;} .zsa-tpc-badge--varies .zsa-tpc-mark {background:var(--tpc-varies); clip-path:polygon(0 0,100% 0,50% 100%);}
+.zsa-tpc-badge--unknown {color:#4b5563; border-style:dashed;} .zsa-tpc-badge--unknown .zsa-tpc-mark {border:2px solid var(--tpc-unknown); border-radius:50%;}
+.zsa-tpc-badge--none {color:var(--tpc-none); border-style:dotted;} .zsa-tpc-badge--none .zsa-tpc-mark {border:2px solid var(--tpc-none);}

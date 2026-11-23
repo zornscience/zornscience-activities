@@ -30,6 +30,7 @@ var ALLOWED = {
   "hookes-law-lab/lab.css | #hanger:focus": "#hanger:focus-visible > rect gets a thick yellow stroke (SVG shapes do not paint outlines in every browser)",
   "periodic-table/periodic-table.css | .zsa-pt-mode input:focus-visible, .zsa-pt-check input:focus-visible": "the label takes the ring through :has(input:focus-visible)",
   "snells-law-lab/lab.css | #laser,#protractor": "#laser:focus-visible and #protractor:focus-visible stroke their shapes white",
+  "test-policy-checker/test-policy-checker.css | .zsa-tpc-state": "each map state (an SVG group) strokes its shape in thick orange on :focus-visible (SVG groups do not paint outlines in every browser)",
   "standing-waves-lab/lab.css | #cursors [role=slider]": "the .focus-ring rectangles inside each cursor (white and dark) show on :focus-visible"
 };
 
