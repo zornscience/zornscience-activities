@@ -67,7 +67,10 @@
       stats:[["stiff", "A stiffer spring"], ["double", "Double the weight"], ["mass", "Mass and period"],
         ["amplitude", "A bigger pull"], ["net", "Net force on the mass"]],
       totals:[["stiff"], ["double"], ["mass"], ["amplitude"], ["net"]], items:[0, 1, 2, 3, 4]},
-    // Id 11 is reserved for the Inclined Plane lab check (ILC), which is not built yet. Never reuse it here.
+    {id:11, prefix:"ILC", slug:"inclined-plane", setting:"Lab check", name:"Inclined Plane & Friction", maxItems:5,
+      stats:[["normal", "Tilt the ramp"], ["static", "Friction at rest"], ["surface", "Change the surface"],
+        ["slide", "Add mass to a sliding block"], ["mu", "Find the friction coefficient"]],
+      totals:[["normal"], ["static"], ["surface"], ["slide"], ["mu"]], items:[0, 1, 2, 3, 4]},
     {id:12, prefix:"CLC", slug:"collision-carts", setting:"Lab check", name:"Collision Carts", maxItems:5,
       stats:[["transfer", "Equal masses, one at rest"], ["stick", "Carts that stick"], ["heavy", "Heavy cart meets light cart"],
         ["headon", "Head-on, equal and opposite"], ["predict", "Predict, then launch"]],
