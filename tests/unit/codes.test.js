@@ -11,7 +11,7 @@ var {loadData} = require("../support/load-data");
 var ROOT = path.join(__dirname, "..", "..");
 var FAR = 8191; // a "today" after every encodable day
 // Payload characters per activity: the code is the prefix, the payload and 2 check characters in groups of 4.
-var LENGTH = {ICT: 12, IFB: 12, GAS: 11, PTR: 11, LVB: 16, LVA: 16, GLC: 13, ALC: 13, PLC: 13, HLC: 13, CLC: 13};
+var LENGTH = {ICT: 12, IFB: 12, GAS: 11, PTR: 11, LVB: 16, LVA: 16, GLC: 13, ALC: 13, PLC: 13, HLC: 13, CLC: 13, PRLC: 13};
 var RETIRED = ["ionic-formula-builder"];
 var SYMBOL = "[0-9A-HJKMNP-TV-Z]";
 function shape(spec) {
@@ -101,7 +101,7 @@ test("the registry matches the activities and their round summaries", function (
   assert.deepEqual(codes.ACTIVITIES.map(function (a) { return [a.id, a.prefix, a.slug]; }), [
     [1, "ICT", "ion-charge-trainer"], [2, "IFB", "ionic-formula-builder"], [3, "GAS", "gas-lab"], [4, "PTR", "periodic-trends"],
     [5, "LVB", "lewis-vsepr"], [6, "LVA", "lewis-vsepr"], [7, "GLC", "gas-lab"], [8, "ALC", "atwood-machine"], [9, "PLC", "pendulum-lab"], [10, "HLC", "hookes-law-lab"],
-    [12, "CLC", "collision-carts"]
+    [12, "CLC", "collision-carts"], [13, "PRLC", "projectile-lab"]
   ]);
 });
 
@@ -143,7 +143,7 @@ test("codes made before the new activities were registered still check as valid"
 test("the example codes in the docs check as valid", function () {
   var docs = ["TEACHERS.md", "shared/README.md", "periodic-trends/README.md", "lewis-vsepr/README.md"], prefixes = new Set();
   docs.forEach(function (doc) {
-    var found = fs.readFileSync(path.join(ROOT, doc), "utf8").match(/`[A-Z]{3}-[0-9A-Z]{1,4}(-[0-9A-Z]{1,4})+`/g) || [];
+    var found = fs.readFileSync(path.join(ROOT, doc), "utf8").match(/`[A-Z]{3,4}-[0-9A-Z]{1,4}(-[0-9A-Z]{1,4})+`/g) || [];
     found.forEach(function (quoted) {
       var code = quoted.slice(1, -1), d = codes.decode(code, FAR);
       if (/^ICT-1A2B/.test(code)) return; // the "read one character at a time" illustration
@@ -151,7 +151,7 @@ test("the example codes in the docs check as valid", function () {
       prefixes.add(d.activity.prefix);
     });
   });
-  assert.deepEqual(Array.from(prefixes).sort(), ["ALC", "CLC", "GAS", "HLC", "ICT", "IFB", "LVA", "LVB", "PLC", "PTR"]);
+  assert.deepEqual(Array.from(prefixes).sort(), ["ALC", "CLC", "GAS", "HLC", "ICT", "IFB", "LVA", "LVB", "PLC", "PRLC", "PTR"]);
 });
 
 // The new activities' codes: the fields a full round gives, read back exactly; the setting of the Lewis builder.

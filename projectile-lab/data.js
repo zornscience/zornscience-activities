@@ -7,7 +7,6 @@
   if (!root) return;
   var i18n;
   root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail:{receive:function (api) { i18n = api; }}}));
-  if (!i18n) return;
   var copy = {title:"Projectile Motion Vector Lab", es:{
   // Header, instructions and share
   "Projectile Motion Vector Lab": "Laboratorio de vectores del movimiento de proyectiles",
@@ -212,7 +211,147 @@
   "Time (s),x (m),y (m),vx (m/s),vy (m/s),Speed (m/s),ax (m/s^2),ay (m/s^2)": "Tiempo (s),x (m),y (m),vx (m/s),vy (m/s),Rapidez (m/s),ax (m/s^2),ay (m/s^2)",
   "Flight data downloaded as zornscience-projectile-data.csv: time, position, velocity components, speed and acceleration every 0.05 s.": "Datos del vuelo descargados como zornscience-projectile-data.csv: tiempo, posición, componentes de la velocidad, rapidez y aceleración cada 0.05 s.",
   "Predict. Observe. Explain. Nothing you enter leaves this tab.": "Predice. Observa. Explica. Nada de lo que escribes sale de esta pestaña.",
-  "← Back to the lesson": "← Volver a la lección"
+  "← Back to the lesson": "← Volver a la lección",
+  // Lab check: the shared labels, as in the Gas Laws and KMT Lab
+  "Lab check": "Comprobación del laboratorio",
+  "Question {current} of {total}": "Pregunta {current} de {total}",
+  "Set up the lab": "Preparar el laboratorio",
+  "The lab is set up. Follow the question and use the lab controls.": "El laboratorio está listo. Sigue la pregunta y usa los controles del laboratorio.",
+  "Check": "Comprobar",
+  "Show me": "Muéstrame",
+  "Previous": "Anterior",
+  "Next": "Siguiente",
+  "Start over": "Empezar de nuevo",
+  "Lab check started over. All answers are cleared.": "La comprobación del laboratorio empezó de nuevo. Se borraron todas las respuestas.",
+  "Correct answer": "Respuesta correcta",
+  "Correct. {explanation}": "Correcto. {explanation}",
+  "{feedback} Try again.": "{feedback} Inténtalo de nuevo.",
+  "Answer shown. {explanation}": "Respuesta mostrada. {explanation}",
+  "{score} of {total} right on the first try.": "{score} de {total} correctas al primer intento.",
+  "Completion code": "Código de finalización",
+  "Paste this code into your Google Classroom assignment.": "Pega este código en tu tarea de Google Classroom.",
+  // Lab check, question 1
+  "Sideways velocity": "Velocidad horizontal",
+  "Drag the Time slider to {t} s. The ball is in the air. What does the vx readout show?": "Arrastra el control deslizante Tiempo a {t} s. El proyectil está en el aire. ¿Qué indica la lectura de vx?",
+  "That is the Speed readout, which adds in the vertical part. Find the row labeled vx and read that one.": "Esa es la lectura Rapidez, |v|, que incluye la parte vertical. Busca la fila marcada vx y lee esa.",
+  "That is the speed the cannon fires at, along the {angle}° line. vx is only the sideways part of it. Check the launch components under the sliders.": "Esa es la rapidez con la que dispara el cañón, a lo largo de la línea de {angle}°. vx es solo la parte horizontal. Revisa las componentes del lanzamiento debajo de los controles deslizantes.",
+  "That is the vy readout, the up and down part of the velocity. Read the vx row instead.": "Esa es la lectura de vy, la parte vertical de la velocidad. Lee la fila de vx.",
+  "Only gravity acts on the ball, and it pulls straight down, so vx never changes. It stays at {v0} × cos {angle}° = {right} m/s the whole flight. The Speed readout is {speed} m/s at {t} s only because vy ({vy} m/s down) adds to it.": "Sobre el proyectil actúa solo la gravedad, que tira verticalmente hacia abajo, así que vx nunca cambia. Se mantiene en {v0} × cos {angle}° = {right} m/s durante todo el vuelo. La lectura Rapidez, |v| es de {speed} m/s en t = {t} s solo porque vy ({vy} m/s hacia abajo) se suma.",
+  // Lab check, question 2
+  "Height at the top": "Altura en el punto más alto",
+  "Press Launch. The ball stops by itself at the top of its path. What does the Height, y readout show?": "Presiona Lanzar. El proyectil se detiene solo en el punto más alto de su trayectoria. ¿Qué indica la lectura Altura, y?",
+  "That is how far the ball rises above the ledge. The Height readout measures from the ground. Check where y = 0 is.": "Eso es lo que sube el proyectil por encima de la cornisa. La lectura Altura mide desde el suelo. Revisa dónde está y = 0.",
+  "That is where the ball starts. At the top it has gone higher than its launch point. Read the Height readout after the ball stops.": "Ahí es donde empieza el proyectil. En el punto más alto ya subió más que su punto de lanzamiento. Lee la lectura Altura, y cuando el proyectil se detenga.",
+  "Read the Height, y readout when the ball stops and compare it with your number. Check each step of your calculation.": "Lee la lectura Altura, y cuando el proyectil se detenga y compárala con tu número. Revisa cada paso de tu cálculo.",
+  "At the top vy = 0. The ball starts with vy = {vy0} m/s and loses 9.8 m/s every second, so it stops rising after {tTop} s. In that time it rises {gain} m above the ledge, so its height is {h0} + {gain} = {right} m. vx is still {vx} m/s there.": "En el punto más alto vy = 0. El proyectil empieza con vy = {vy0} m/s y pierde 9.8 m/s cada segundo, así que deja de subir después de {tTop} s. En ese tiempo sube {gain} m por encima de la cornisa, así que su altura es {h0} + {gain} = {right} m. Ahí vx sigue siendo {vx} m/s.",
+  // Lab check, question 3
+  "Two angles, one range": "Dos ángulos, el mismo alcance",
+  "Press Launch and note the range under Flight results. Then set the launch angle to {angle2}° and launch again. What does the range show now?": "Presiona Lanzar y anota el alcance en Resultados del vuelo. Luego cambia el ángulo de lanzamiento a {angle2}° y lanza de nuevo. ¿Qué indica ahora el alcance?",
+  "That is the range for a 45° launch at this speed, a different launch. Launch at {angle2}° and read the range it shows, then compare it with your {angle}° launch.": "Ese es el alcance de un lanzamiento a 45° con esta rapidez, que es otro lanzamiento. Lanza a {angle2}° y lee el alcance que indica, y luego compáralo con tu lanzamiento a {angle}°.",
+  "A bigger angle does not double the range. Launch at {angle2}° and read the range, then compare it with {angle}°.": "Un ángulo mayor no duplica el alcance. Lanza a {angle2}° y lee el alcance, y luego compáralo con el de {angle}°.",
+  "A steeper launch goes higher, but the ball also stays in the air longer. Launch at {angle2}° and read the range.": "Un lanzamiento más inclinado sube más, pero el proyectil también permanece más tiempo en el aire. Lanza a {angle2}° y lee el alcance.",
+  "{angle}° and {angle2}° add up to 90°, and for a launch from the ground to the ground, angles like these give the same range. At {angle}° the ball has more vx ({vx1} m/s) but flies for {t1} s. At {angle2}° it has less vx ({vx2} m/s) but stays up for {t2} s. Both land {right} m away.": "{angle}° y {angle2}° suman 90°, y en un lanzamiento del suelo al suelo, ángulos como estos dan el mismo alcance. A {angle}° el proyectil tiene más vx ({vx1} m/s), pero vuela {t1} s. A {angle2}° tiene menos vx ({vx2} m/s), pero se queda en el aire {t2} s. Los dos caen a {right} m de distancia.",
+  // Lab check, question 4
+  "Faster launch, same fall": "Lanzamiento más rápido, misma caída",
+  "Press Launch and note the time in the air under Flight results. Then set the launch speed to {speed2} m/s and launch again. What does the time in the air show now?": "Presiona Lanzar y anota el tiempo en el aire en Resultados del vuelo. Luego cambia la rapidez de lanzamiento a {speed2} m/s y lanza de nuevo. ¿Qué indica ahora el tiempo en el aire?",
+  "A faster ball goes farther across, but does it fall any faster? Launch both ways and compare the vy lines on the graph.": "Un proyectil más rápido llega más lejos en horizontal, pero ¿cae más rápido? Lanza de las dos maneras y compara las líneas de vy en la gráfica.",
+  "Read the Time in the air result after the second launch. Does extra speed across change how long the ball takes to fall {h0} m?": "Lee el resultado Tiempo en el aire después del segundo lanzamiento. ¿La rapidez horizontal extra cambia cuánto tarda el proyectil en caer {h0} m?",
+  "Launch again at {speed2} m/s and read the time in the air. Compare it with the first launch, and compare the two vy lines on the graph.": "Lanza de nuevo a {speed2} m/s y lee el tiempo en el aire. Compáralo con el primer lanzamiento y compara las dos líneas de vy en la gráfica.",
+  "Vertical motion does not depend on vx. In both launches the ball starts with vy = 0 and falls {h0} m, so both take {right} s and both land with vy = {vyEnd} m/s down. The faster ball just goes twice as far across, {range2} m instead of {range1} m.": "El movimiento vertical no depende de vx. En los dos lanzamientos el proyectil empieza con vy = 0 y cae {h0} m, así que los dos tardan {right} s y los dos llegan al suelo con vy = {vyEnd} m/s hacia abajo. El proyectil más rápido solo llega al doble de distancia horizontal, {range2} m en lugar de {range1} m.",
+  // Lab check, question 5
+  "Predict, then launch": "Predice y luego lanza",
+  "Before you launch, predict vy at the moment the ball lands. Use y = ½ g t² to find the fall time, then vy = g t, with g = 9.8 m/s². Then launch and read the vy readout after the ball lands. What does it show?": "Antes de lanzar, predice vy en el momento en que el proyectil llega al suelo. Usa y = ½ g t² para hallar el tiempo de caída y luego vy = g t, con g = 9.8 m/s². Después lanza y lee la lectura de vy cuando el proyectil llegue al suelo. ¿Qué indica?",
+  "The ball does not fall for exactly one second. Find the fall time from the height first, then use it to find vy.": "El proyectil no cae durante exactamente un segundo. Primero halla el tiempo de caída a partir de la altura y luego úsalo para hallar vy.",
+  "That is vx, the sideways velocity, which never changes. Read the row labeled vy after the ball lands.": "Esa es vx, la velocidad horizontal, que nunca cambia. Lee la fila marcada vy cuando el proyectil llegue al suelo.",
+  "That is the Speed readout, which includes the sideways part. Read the row labeled vy.": "Esa es la lectura Rapidez, |v|, que incluye la parte horizontal. Lee la fila marcada vy.",
+  "The ball starts with vy = 0 and falls {h0} m, so t = √(2 × {h0} / 9.8) = {t} s. Then vy = 9.8 × {t} = {right} m/s down. The speed is {speed} m/s because vx is still {vx} m/s.": "El proyectil empieza con vy = 0 y cae {h0} m, así que t = √(2 × {h0} / 9.8) = {t} s. Entonces vy = 9.8 × {t} = {right} m/s hacia abajo. La rapidez es de {speed} m/s porque vx sigue siendo {vx} m/s."
 }};
-  i18n.configure(copy);
+  if (i18n) i18n.configure(copy);
+  // Lab check (labcheck.js and ../shared/zsa-labcheck.js). Each choice is [value, label, feedback key]; the right
+  // choice has a null key. Every number in braces is filled in by labcheck.js from the lab's own model (model.js) and
+  // its readout formatter, so no answer is written here. setup is the starting state: h0 (m), angle (degrees) and speed
+  // (m/s), scenario (ledge, cliff or custom, the id the Start with a scenario menu uses) and pausetop (the Pause at the
+  // top box). then is the change the student makes after setup, which the adapter needs to work out the answer:
+  // time (s) on the Time slider, a second launch angle (degrees) or a second launch speed (m/s).
+  var check = {
+    labels: {
+      title: "Lab check",
+      progress: "Question {current} of {total}",
+      setupButton: "Set up the lab",
+      setupDone: "The lab is set up. Follow the question and use the lab controls.",
+      check: "Check",
+      show: "Show me",
+      previous: "Previous",
+      next: "Next",
+      restart: "Start over",
+      restarted: "Lab check started over. All answers are cleared.",
+      correctChoice: "Correct answer",
+      correct: "Correct. {explanation}",
+      retry: "{feedback} Try again.",
+      shown: "Answer shown. {explanation}",
+      score: "{score} of {total} right on the first try.",
+      completion: "Completion code",
+      codeNote: "Paste this code into your Google Classroom assignment."
+    },
+    questions: [
+      {id: "vx", title: "Sideways velocity", setup: {h0: 0, angle: 30, speed: 20, scenario: "custom", pausetop: false}, then: {time: 1.5},
+        question: "Drag the Time slider to {t} s. The ball is in the air. What does the vx readout show?",
+        choices: [["right", "{right} m/s", null], ["speed", "{speed} m/s", "speed"], ["launch", "{launch} m/s", "launch"], ["vy", "{vy} m/s", "vy"]],
+        feedback: {
+          speed: "That is the Speed readout, which adds in the vertical part. Find the row labeled vx and read that one.",
+          launch: "That is the speed the cannon fires at, along the {angle}° line. vx is only the sideways part of it. Check the launch components under the sliders.",
+          vy: "That is the vy readout, the up and down part of the velocity. Read the vx row instead."
+        },
+        explanation: "Only gravity acts on the ball, and it pulls straight down, so vx never changes. It stays at {v0} × cos {angle}° = {right} m/s the whole flight. The Speed readout is {speed} m/s at {t} s only because vy ({vy} m/s down) adds to it."},
+      {id: "top", title: "Height at the top", setup: {h0: 15, angle: 50, speed: 18, scenario: "ledge", pausetop: true},
+        question: "Press Launch. The ball stops by itself at the top of its path. What does the Height, y readout show?",
+        choices: [["right", "{right} m", null], ["gain", "{gain} m", "gain"], ["ledge", "{h0} m", "ledge"], ["noHalf", "{noHalf} m", "noHalf"]],
+        feedback: {
+          gain: "That is how far the ball rises above the ledge. The Height readout measures from the ground. Check where y = 0 is.",
+          ledge: "That is where the ball starts. At the top it has gone higher than its launch point. Read the Height readout after the ball stops.",
+          noHalf: "Read the Height, y readout when the ball stops and compare it with your number. Check each step of your calculation."
+        },
+        explanation: "At the top vy = 0. The ball starts with vy = {vy0} m/s and loses 9.8 m/s every second, so it stops rising after {tTop} s. In that time it rises {gain} m above the ledge, so its height is {h0} + {gain} = {right} m. vx is still {vx} m/s there."},
+      {id: "angles", title: "Two angles, one range", setup: {h0: 0, angle: 30, speed: 20, scenario: "custom", pausetop: false}, then: {angle: 60},
+        question: "Press Launch and note the range under Flight results. Then set the launch angle to {angle2}° and launch again. What does the range show now?",
+        choices: [["right", "{right} m", null], ["max", "{max} m", "max"], ["double", "{double} m", "double"], ["half", "{half} m", "half"]],
+        feedback: {
+          max: "That is the range for a 45° launch at this speed, a different launch. Launch at {angle2}° and read the range it shows, then compare it with your {angle}° launch.",
+          double: "A bigger angle does not double the range. Launch at {angle2}° and read the range, then compare it with {angle}°.",
+          half: "A steeper launch goes higher, but the ball also stays in the air longer. Launch at {angle2}° and read the range."
+        },
+        explanation: "{angle}° and {angle2}° add up to 90°, and for a launch from the ground to the ground, angles like these give the same range. At {angle}° the ball has more vx ({vx1} m/s) but flies for {t1} s. At {angle2}° it has less vx ({vx2} m/s) but stays up for {t2} s. Both land {right} m away."},
+      {id: "fall", title: "Faster launch, same fall", setup: {h0: 40, angle: 0, speed: 12, scenario: "cliff", pausetop: false}, then: {speed: 24},
+        question: "Press Launch and note the time in the air under Flight results. Then set the launch speed to {speed2} m/s and launch again. What does the time in the air show now?",
+        choices: [["right", "{right} s", null], ["half", "{half} s", "half"], ["double", "{double} s", "double"], ["root", "{root} s", "root"]],
+        feedback: {
+          half: "A faster ball goes farther across, but does it fall any faster? Launch both ways and compare the vy lines on the graph.",
+          double: "Read the Time in the air result after the second launch. Does extra speed across change how long the ball takes to fall {h0} m?",
+          root: "Launch again at {speed2} m/s and read the time in the air. Compare it with the first launch, and compare the two vy lines on the graph."
+        },
+        explanation: "Vertical motion does not depend on vx. In both launches the ball starts with vy = 0 and falls {h0} m, so both take {right} s and both land with vy = {vyEnd} m/s down. The faster ball just goes twice as far across, {range2} m instead of {range1} m."},
+      {id: "predict", title: "Predict, then launch", setup: {h0: 20, angle: 0, speed: 10, scenario: "custom", pausetop: false},
+        question: "Before you launch, predict vy at the moment the ball lands. Use y = ½ g t² to find the fall time, then vy = g t, with g = 9.8 m/s². Then launch and read the vy readout after the ball lands. What does it show?",
+        choices: [["right", "{right} m/s", null], ["one", "{one} m/s", "one"], ["vx", "{vx} m/s", "vx"], ["speed", "{speed} m/s", "speed"]],
+        feedback: {
+          one: "The ball does not fall for exactly one second. Find the fall time from the height first, then use it to find vy.",
+          vx: "That is vx, the sideways velocity, which never changes. Read the row labeled vy after the ball lands.",
+          speed: "That is the Speed readout, which includes the sideways part. Read the row labeled vy."
+        },
+        explanation: "The ball starts with vy = 0 and falls {h0} m, so t = √(2 × {h0} / 9.8) = {t} s. Then vy = 9.8 × {t} = {right} m/s down. The speed is {speed} m/s because vx is still {vx} m/s."}
+    ]
+  };
+  // In Spanish only the words change: ids, setups, choice values and feedback keys stay as they are.
+  var text = function (value) { return i18n ? i18n.text(value) : value; };
+  var labels = {};
+  Object.keys(check.labels).forEach(function (k) { labels[k] = text(check.labels[k]); });
+  var localized = {labels: labels, questions: check.questions.map(function (q) {
+    var feedback = {};
+    Object.keys(q.feedback).forEach(function (k) { feedback[k] = text(q.feedback[k]); });
+    var out = {id: q.id, title: text(q.title), setup: q.setup, question: text(q.question),
+      choices: q.choices.map(function (c) { return [c[0], text(c[1]), c[2]]; }), feedback: feedback, explanation: text(q.explanation)};
+    if (q.then) out.then = q.then;
+    return out;
+  })};
+  root.addEventListener("zsa:request-data", function (event) { event.detail.receive({check: localized}); });
 }());
