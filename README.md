@@ -37,6 +37,7 @@ act-science/               Redirect only: ACT Science Practice is now the Scienc
 wordpress/zornscience-act-history/  WordPress plugin for zornscience.org that stores ACT Practice scores under anonymous practice codes (not part of the static site)
 wordpress/zornscience-language/  WordPress plugin for zornscience.org that connects the Spanish pages under /es/ to their English twins: language toggle, Spanish menus and links, hreflang (not part of the static site)
 wordpress/zornscience-tutor/  WordPress plugin for zornscience.org: the tutor at /tutor/ (chemistry, physics, and biology; English and Spanish; photos; voice typing). Source imported from the handoff of the version running on the site (not part of the static site)
+test-policy-checker/       Test Policy Checker, v1.0.0 (US map of the ACT and SAT policies of 541 public four-year universities for fall 2027; data from the Google Sheet "ZornScience Test Policies" built by test-policy-checker/tools/build-data.js; English and Mexican Spanish)
 scientific-calculator/     Scientific Calculator Practice, v1.2.4 (independent scientific calculator with six guided exercises; English and Mexican Spanish)
 virtual-lab-graphing/      Virtual Lab Graphing Tool, v1.2.3 (student data, scatter plots, linear best fit and graph downloads; English and Mexican Spanish)
 gas-laws/                  Gas Laws Sandbox, v1.1.2 (English and Mexican Spanish)

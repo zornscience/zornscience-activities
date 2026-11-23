@@ -224,6 +224,10 @@ module.exports = {
     en: "An interactive periodic table of all 118 elements with heatmaps for atomic radius, electronegativity and ionization energy, from ZornScience.",
     es: "Una tabla periódica interactiva de los 118 elementos con mapas de color del radio atómico, la electronegatividad y la energía de ionización."
   },
+  "test-policy-checker": {
+    en: "See the ACT and SAT policy of every public four-year university for fall 2027 on a US map, with links to each school's own admissions page.",
+    es: "Consulta en un mapa la política del ACT y el SAT de cada universidad pública de cuatro años para el otoño de 2027, con enlaces a cada universidad."
+  },
   "periodic-trends": {
     en: "Practice periodic trends: compare atomic radius, electronegativity and first ionization energy for pairs of elements, from ZornScience.",
     es: "Practica las tendencias periódicas: compara el radio atómico, la electronegatividad y la primera energía de ionización de pares de elementos."

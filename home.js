@@ -82,7 +82,7 @@
   "AP Chemistry Unit 3 Practice": "Práctica de la unidad 3 de Química AP",
   "Catch up on topics 2.1 to 2.7 with 42 original questions, instant explanations, and a mixed review.": "Ponte al corriente con los temas 2.1 a 2.7 mediante 42 preguntas originales, explicaciones inmediatas y un repaso mixto.",
   "Catch up on topics 3.1 to 3.13 with 78 original questions, instant explanations, and a mixed review.": "Ponte al corriente con los temas 3.1 a 3.13 mediante 78 preguntas originales, explicaciones inmediatas y un repaso mixto.",
-  "Review AP Chemistry, build ACT skills, and practice with a scientific calculator.": "Repasa Química AP, desarrolla tus habilidades para el ACT y practica con una calculadora científica.",
+  "Review AP Chemistry, build ACT skills, practice with a scientific calculator, and check college test policies.": "Repasa Química AP, desarrolla tus habilidades para el ACT, practica con una calculadora científica y consulta las políticas de exámenes de las universidades.",
   "Lab tools": "Herramientas de laboratorio",
   "Thermochemistry": "Termoquímica",
   "Reaction Energy Lab": "Laboratorio virtual de energía de reacción",
@@ -233,6 +233,9 @@
   "Calculator skills": "Habilidades con la calculadora",
   "Scientific Calculator Practice": "Práctica con la calculadora científica",
   "Learn a familiar scientific calculator keypad with fractions, powers, roots, trigonometry and six guided exercises. Build calculator confidence before test day.": "Aprende las teclas de una calculadora científica conocida con fracciones, potencias, raíces, trigonometría y seis ejercicios guiados. Gana confianza con la calculadora antes del día del examen.",
+  "College planning": "Planeación universitaria",
+  "Test Policy Checker": "Verificador de políticas de exámenes",
+  "Choose a state on the map to see whether each public four-year university wants an ACT or SAT score for fall 2027, with a link to its admissions page.": "Elige un estado en el mapa para ver si cada universidad pública de cuatro años pide un resultado del ACT o el SAT para el otoño de 2027, con un enlace a su página de admisiones.",
   // Quantitative skills (lesson section names follow the Spanish course page)
   "Quantitative skills": "Habilidades cuantitativas",
   "Practice the math skills every science class uses, with new numbers in every set.": "Practica las habilidades matemáticas que se usan en todas las clases de ciencias, con números nuevos en cada serie.",

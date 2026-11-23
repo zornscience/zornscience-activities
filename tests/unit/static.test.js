@@ -72,9 +72,15 @@ test("pages have one CSP, no inline scripts or styles, and only the expected out
   // User-initiated share links are plain outbound anchors, with no social SDK or page-load requests.
   var shareLinks = new Set(["https://www.facebook.com/sharer/sharer.php?u=", "https://x.com/intent/tweet?text="]);
   var shareFiles = new Set(["ionic-reactions/share.js", "redox-coach/share.js", "polyatomic-ion-trainer/share.js", "periodic-table/data.js"]);
+  // The Test Policy Checker links each school to the official admissions page that was checked (a plain anchor the
+  // student opens; nothing is fetched). Those links are https on the college's own .edu site, or a catalog host the
+  // college uses, listed here.
+  var schoolData = path.join("test-policy-checker", "data.js");
+  var schoolLink = /^https:\/\/([a-z0-9-]+\.)+edu(\/[^\s"'<>]*)?$|^https:\/\/bsu\.smartcatalogiq\.com\//i;
   pages.concat(siteJs).forEach(function (f) {
     (read(f).match(/https?:\/\/[^\s"'<>);]+/g) || []).forEach(function (url) {
       if (shareFiles.has(f) && shareLinks.has(url)) return;
+      if (f === schoolData && schoolLink.test(url)) return;
       assert.match(url, allowed, f + " links to " + url);
     });
   });

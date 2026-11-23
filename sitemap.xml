@@ -553,6 +553,18 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/periodic-table/"/>
   </url>
   <url>
+    <loc>https://activities.zornscience.org/test-policy-checker/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/test-policy-checker/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/test-policy-checker/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/test-policy-checker/"/>
+  </url>
+  <url>
+    <loc>https://activities.zornscience.org/test-policy-checker/?lang=es</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/test-policy-checker/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/test-policy-checker/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/test-policy-checker/"/>
+  </url>
+  <url>
     <loc>https://activities.zornscience.org/periodic-trends/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://activities.zornscience.org/periodic-trends/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://activities.zornscience.org/periodic-trends/?lang=es"/>
