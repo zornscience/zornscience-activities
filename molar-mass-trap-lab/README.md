@@ -1,6 +1,6 @@
 # The Molar Mass Trap Lab
 
-Version: 1.2.0
+Version: 1.2.1
 
 A virtual investigation for Chemistry and Honors Chemistry Unit 4. It opens with an intro screen that shows the four liquids, then has the wax-paper investigation, the steel shot race and the five-tube mixing rack. Students record their data, predictions and debrief on the printed lab worksheet, so the simulation uses the full width of the page. The steel shot stopwatch times each fall automatically.
 
@@ -22,7 +22,7 @@ The lab keeps no student entries. The apparatus starts fresh on a reload. **Star
 
 ## Measurement model
 
-Each box receives three drops of about 0.05 mL in one spot. **Add a drop** shows an eyedropper icon. The third landing starts the settle, which runs on its own. A mini stopwatch shows the elapsed settling time from 0:00 to 0:30, which takes 2.5 s of real time, then the ruler appears. The clock continues during station changes. The top and side views show the same spherical cap and use the same scale as the ruler. A tall cap can bulge wider above the wax than at its contact line. The ruler has 1 mm marks and its zero moves in 0.5 mm increments by drag or with the slider. **Read edges** reads the two edges relative to zero and gives the approximate side-view height.
+Each box receives three drops of about 0.05 mL in one spot. **Add a drop** shows an eyedropper icon. The third landing starts the settle, which runs on its own. A mini stopwatch shows the elapsed settling time from 0:00 to 0:30, which takes 2.5 s of real time, then the ruler appears. The puddle redraws every frame while it settles, so the spreading looks smooth. The clock continues during station changes. The top and side views show the same spherical cap and use the same scale as the ruler. A tall cap can bulge wider above the wax than at its contact line. The ruler has 1 mm marks and its zero moves in 0.5 mm increments by drag or with the slider. **Read edges** reads the two edges relative to zero and gives the approximate side-view height. A fixed upright ruler stands on the wax in the eye-level view, from 0 to 5 mm at the same scale as the drawing, so students can read the height directly. A dashed line carries the top of the puddle across to it. At this scale 1 mm is about 8 px on a laptop, so heights read to about half a millimeter.
 
 These are the uncalibrated example dimensions at 0.15 mL. The initial width uses 93% of the settled width at the same volume, with the diameter of a sphere as the lower limit. Class measurements taken from above can replace the diameter inputs in `model.js`.
 
