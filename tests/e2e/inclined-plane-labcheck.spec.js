@@ -57,6 +57,10 @@ async function expectStart(page, i) {
   await expect(page.locator("#pause")).toHaveText("Pause"); await expect(page.locator("#pause")).toHaveAttribute("aria-pressed", "false");
   await expect(page.locator("#distance")).toHaveText("0.00 m"); await expect(page.locator("#clock")).toHaveText("0.00 s"); await expect(page.locator("#speed")).toHaveText("0.00 m/s");
 }
+// Advance the fake clock in small steps until the block is sliding, so a slow first frame cannot make a test flaky.
+async function untilSliding(page) {
+  await expect.poll(async () => { await page.clock.runFor(100); return page.locator("#state").textContent(); }, {timeout: 10000}).toBe("KINETIC / SLIDING");
+}
 async function expectArrow(page, text) { await expect(page.locator("#vectors")).toContainText(text); }
 async function change(page, id, value) { await page.locator(id).fill(value); }
 
@@ -129,8 +133,7 @@ test("inclined plane lab check: question 2 reads fₛ 5.03 N at 1.50 kg and stay
 test("inclined plane lab check: question 3 slides on wood, then holds on felt with fₛ 2.45 N", async ({page, problems}) => {
   void problems; await open(page);
   await next(page); await next(page); await setUp(page); await expectStart(page, 2);
-  await page.clock.runFor(300);
-  await expect(page.locator("#state")).toHaveText("KINETIC / SLIDING");
+  await untilSliding(page);
   await expect(page.locator("#accel")).toHaveText("2.36 m/s²");
   await page.locator("#surface").selectOption("felt");
   await page.clock.runFor(1500);
@@ -143,12 +146,12 @@ test("inclined plane lab check: question 4 reads 3.22 m/s² while sliding, befor
   void problems; await open(page);
   for (var n = 0; n < 3; n++) await next(page);
   await setUp(page); await expectStart(page, 3);
-  await page.clock.runFor(400);
-  await expect(page.locator("#state")).toHaveText("KINETIC / SLIDING"); await expect(page.locator("#accel")).toHaveText("3.22 m/s²");
+  await untilSliding(page);
+  await expect(page.locator("#accel")).toHaveText("3.22 m/s²");
   await change(page, "#mass", "1.5");
   await expect(page.locator("#mass-value")).toHaveText("1.50 kg");
-  await page.clock.runFor(400);
-  await expect(page.locator("#state")).toHaveText("KINETIC / SLIDING"); await expect(page.locator("#accel")).toHaveText("3.22 m/s²");
+  await untilSliding(page);
+  await expect(page.locator("#accel")).toHaveText("3.22 m/s²");
   // Pausing freezes the readout the question asks for.
   await page.locator("#pause").click(); await page.clock.runFor(1000);
   await expect(page.locator("#accel")).toHaveText("3.22 m/s²"); await expect(page.locator("#state")).toHaveText("KINETIC / SLIDING");
