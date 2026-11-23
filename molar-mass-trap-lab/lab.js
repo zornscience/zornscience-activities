@@ -22,6 +22,7 @@
   const centerX = 203;
   const rulerY = 153;
   const sideY = 229;
+  const heightRulerX = 300;
   const waxBoxes = {};
   const bottleNames = {};
   const buttons = Array.from(root.querySelectorAll("[data-station]"));
@@ -115,6 +116,21 @@
     waxBoxes[code] = {group, puddle};
   }
 
+  // A fixed upright ruler in the eye-level view, at the same scale as the drawing, for reading puddle height.
+  function addHeightRulerMarks() {
+    const marks = $("height-ruler-ticks");
+    for (let mm = 0; mm <= 5; mm++) {
+      const y = -mm * ruler.unitsPerMm;
+      marks.append(svg("path", {d: `M0 ${y}h${mm % 5 === 0 ? 8 : 5}`, stroke: "currentColor", "stroke-width": mm === 0 ? 1.4 : .85}));
+      const label = svg("text", {x: 13, y: y + 3});
+      label.textContent = mm;
+      marks.append(label);
+    }
+    const unit = svg("text", {x: 25, y: -1, class: "zsa-mmt-height-unit"});
+    unit.textContent = "mm";
+    $("height-ruler").append(unit);
+  }
+
   function addRulerMarks() {
     for (let mm = 0; mm <= ruler.lengthMm; mm++) {
       const x = mm * ruler.unitsPerMm;
@@ -189,6 +205,10 @@
     circle(glint, .3 * radius, Math.min(.12 * radius, .55 * height));
     $("puddle-contact").setAttribute("rx", geometry.contactRadiusMm * ruler.unitsPerMm + 2);
     $("puddle-side").setAttribute("d", capPath(geometry, ruler.unitsPerMm));
+    // A dashed guide carries the top of the puddle across to the fixed height ruler.
+    const guide = $("height-guide");
+    guide.setAttribute("visibility", height ? "visible" : "hidden");
+    guide.setAttribute("d", `M${centerX} ${sideY - height}H${heightRulerX}`);
     $("ruler-zero").setAttribute("visibility", settled ? "visible" : "hidden");
     $("ruler").dataset.draggable = String(settled);
   }
@@ -264,7 +284,7 @@
 
     let instruction = "Add 3 drops to one spot in box {code}.";
     if (pending) instruction = "The drop is falling into box {code}.";
-    else if (settled) instruction = "Align zero with the left edge. Read the right edge in mm and record the side view.";
+    else if (settled) instruction = "Align zero with the left edge. Read the right edge in mm. Read the height on the upright ruler and record the side view.";
     else if (settling) instruction = "The puddle is settling for 30 s.";
     setText($("bench-instruction"), t(instruction, {code}));
     setText($("drop-count"), t("{count} / 3 drops · {volume} mL", {
@@ -284,6 +304,11 @@
     if (document.hidden) return;
     if (animate) {
       paintDrop(now, sideY - 5 - geometry.heightMm * ruler.unitsPerMm);
+      return;
+    }
+    // While the selected puddle settles, redraw every frame so the spreading looks smooth. The settle is 2.5 s.
+    if (settling && !settled && !reducedMotion.matches) {
+      frame = requestAnimationFrame(renderBench);
       return;
     }
     // No frame loop while the apparatus is still. Only wake for a drop landing or a settling tick.
@@ -325,6 +350,7 @@
   slider.max = ruler.maxMm;
   slider.step = ruler.stepMm;
   addRulerMarks();
+  addHeightRulerMarks();
   codes.forEach((code, index) => {
     addBottle(code);
     addWaxBox(code, index);

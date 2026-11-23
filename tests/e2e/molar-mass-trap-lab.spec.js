@@ -167,6 +167,18 @@ test("the ruler and side view agree for a calibrated bead above 90 degrees", asy
   await expect(page.locator("#edge-reading")).toHaveText(
     "Left edge 0 mm. Right edge 7 mm. Side-view height about 5.2 mm."
   );
+  // The fixed upright ruler reads the same height: its zero sits on the wax and the dashed guide meets it at the top.
+  const height = await page.evaluate(() => {
+    const ruler = document.getElementById("height-ruler").getScreenCTM();
+    const top = document.getElementById("puddle-side").getBoundingClientRect().top;
+    const guide = document.getElementById("height-guide").getBoundingClientRect();
+    const zero = new DOMPoint(0, 0).matrixTransform(ruler).y;
+    const mm = new DOMPoint(0, -6).matrixTransform(ruler).y;
+    return {fromRuler: (zero - top) / (zero - mm), guideFromRuler: (zero - guide.top) / (zero - mm)};
+  });
+  expect(height.fromRuler).toBeCloseTo(5.1974, 1);
+  expect(height.guideFromRuler).toBeCloseTo(5.1974, 1);
+  await expect(page.locator("#height-ruler-ticks text")).toHaveText(["0", "1", "2", "3", "4", "5"]);
 });
 
 test("keyboard only can align zero for clear glycerin and keep the reading through both other stations", async ({page}) => {
@@ -426,4 +438,36 @@ test("the intro shows each liquid's Lewis structure and molar mass before the be
   await page.getByRole("button", {name: "Empezar el laboratorio"}).click();
   await expect(page.locator("#workspace")).toBeVisible();
   expect(errors).toEqual([]);
+});
+
+test("the wax and mixing settles redraw every frame, not once per displayed second", async ({page}) => {
+  await page.clock.install();
+  await start(page);
+  async function distinctFrames(selector, attribute) {
+    const seen = new Set();
+    for (let i = 0; i < 30; i++) {
+      await page.clock.runFor(16);
+      seen.add(await page.locator(selector).getAttribute(attribute));
+    }
+    return seen.size;
+  }
+  await page.locator('[data-bottle="M"]').click();
+  await addDrops(page);
+  // About 0.5 s of a 2.5 s settle. A once-per-second redraw (every 83 ms) gives about 6 frames.
+  expect(await distinctFrames("#puddle-top", "rx")).toBeGreaterThan(20);
+
+  await page.locator('[data-station="mixing"]').click();
+  for (const code of ["W", "M"]) {
+    await page.locator("#mix-liquid").selectOption(code);
+    await page.locator("#mix-action").click();
+    await page.clock.runFor(450);
+  }
+  await page.locator("#mix-action").click();
+  for (let i = 0; i < 5; i++) {
+    await page.locator("#mix-action").click();
+    await page.clock.runFor(750);
+  }
+  await page.clock.runFor(300);
+  // The streaks fade over 10 s. A once-per-second redraw (every 167 ms) gives about 3 frames here.
+  expect(await distinctFrames('#mix-active-tube [data-mix-band="lower"]', "fill-opacity")).toBeGreaterThan(20);
 });

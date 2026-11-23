@@ -243,6 +243,21 @@ body {
   touch-action: none;
 }
 
+#height-ruler-ticks {
+  color: #28281f;
+  fill: #28281f;
+  font-size: 7px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  text-anchor: middle;
+}
+
+.zsa-mmt-height-unit {
+  fill: #d9e7ee;
+  font-size: 8px;
+  font-weight: 650;
+}
+
 #ruler-ticks {
   fill: #28281f;
   font-size: 9px;
