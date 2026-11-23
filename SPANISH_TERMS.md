@@ -3782,3 +3782,16 @@ The virtual lab follows Style Kit 1.33 and the published Spanish procedure. The 
 | saved notebook file | archivo del cuaderno guardado |
 | lab's average / your average | promedio del laboratorio / tu promedio |
 | timing / paused (stopwatch) | en marcha / en pausa |
+
+### The Alka-Seltzer Reaction
+
+| English | Mexican Spanish | Usage |
+| --- | --- | --- |
+| whole tablet | tableta entera | One full tablet in each preparation. |
+| quartered tablet (all 4 pieces) | tableta en cuartos (los 4 trozos) | All four pieces go into the same beaker. |
+| crushed powder | tableta triturada en polvo | The entire powder sample goes into the beaker. |
+| powder specks | granos de polvo | Visible particles near the bottom of the beaker. |
+| citric acid / sodium citrate | ácido cítrico / citrato de sodio | [UNAM tablet chemistry](https://tesiunamdocumentos.dgb.unam.mx/ptd2009/julio/0646024/0646024.pdf) and [Diario Oficial de la Federación](https://dof.gob.mx/nota_detalle_popup.php?codigo=5189422). |
+| bar graph | gráfica de barras | For the graph on the paper worksheet. |
+
+This lab uses the existing terms *ensayo*, *vaso de precipitados*, *cronómetro*, *varilla de vidrio* and *azul de bromotimol* (AZB). The instructions identify AZB as the BTB on the English worksheet.
