@@ -146,7 +146,7 @@ test("the CLC entry and all 32 first-try patterns with Show me counts round-trip
   }
 });
 
-test("existing codes read the same after CLC is registered, ILC holds id 11, and 19 ids are left", function () {
+test("existing codes read the same after CLC is registered and ILC holds id 11", function () {
   assert.equal(codes.encode({activity: "GAS", version: "1.1.2", day: 300, items: 6, totals: {predict: 6, test: 6, explain: 6},
     results: {predict: 4, test: 5, explain: 3}, show: 2, hints: 1}), "GAS-0ME0-442B-093D-C");
   [["ALC-03EV-SG02-2F0H-8A9", 8], ["PLC-02R2-SG02-2F0S-9CD", 9], ["HLC-0378-SG02-2F0S-AGV", 10]].forEach(function (pair) {
@@ -160,9 +160,7 @@ test("existing codes read the same after CLC is registered, ILC holds id 11, and
   });
   var used = codes.ACTIVITIES.map(function (a) { return a.id; });
   assert.equal(codes.activity("ILC").id, 11, "id 11 belongs to the Inclined Plane lab check");
-  assert.equal(codes.activity("CLC").id, 12);
-  assert.equal(Math.max.apply(null, used), 12);
-  assert.equal(31 - 12, 19);
+  assert.equal(codes.ACTIVITIES.filter(function (a) { return a.id === 12; })[0].prefix, "CLC", "CLC is id 12");
   assert.equal(codes.decode("CLC-02R2-SG02-2F0H-CRZ", 8191).status, "valid");
 });
 

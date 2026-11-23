@@ -136,14 +136,14 @@ test("the ILC entry and all 32 first-try patterns with Show me counts round-trip
   }
 });
 
-test("existing codes read the same after ILC is registered, ILC takes id 11, and 19 ids are left", function () {
+test("existing codes read the same after ILC is registered, ILC takes id 11, and 18 ids are left", function () {
   assert.equal(codes.encode({activity: "GAS", version: "1.1.2", day: 300, items: 6, totals: {predict: 6, test: 6, explain: 6},
     results: {predict: 4, test: 5, explain: 3}, show: 2, hints: 1}), "GAS-0ME0-442B-093D-C");
-  [["ALC-03EV-SG02-2F0H-8A9", 8], ["PLC-02R2-SG02-2F0S-9CD", 9], ["HLC-0378-SG02-2F0S-AGV", 10], ["CLC-02R2-SG02-2F0H-CRZ", 12]].forEach(function (pair) {
+  [["ALC-03EV-SG02-2F0H-8A9", 8], ["PLC-02R2-SG02-2F0S-9CD", 9], ["HLC-0378-SG02-2F0S-AGV", 10], ["CLC-02R2-SG02-2F0H-CRZ", 12], ["PRLC-0378-SG02-2F0H-DRT", 13]].forEach(function (pair) {
     var d = codes.decode(pair[0], 8191);
     assert.equal(d.status, "valid", pair[0]); assert.equal(d.activity.id, pair[1]);
   });
-  // ILC is not the start of any other prefix and no prefix starts with it (ICT, IFB, GAS, PTR, LVB, LVA, GLC, ALC, PLC, HLC, CLC).
+  // ILC is not the start of any other prefix and no prefix starts with it (ICT, IFB, GAS, PTR, LVB, LVA, GLC, ALC, PLC, HLC, CLC, PRLC).
   codes.ACTIVITIES.forEach(function (a) {
     if (a.prefix === "ILC") return;
     assert.ok(a.prefix.indexOf("ILC") !== 0 && "ILC".indexOf(a.prefix) !== 0, a.prefix);
@@ -151,9 +151,9 @@ test("existing codes read the same after ILC is registered, ILC takes id 11, and
   var used = codes.ACTIVITIES.map(function (a) { return a.id; });
   assert.equal(used.length, new Set(used).size, "ids are unique");
   assert.equal(codes.activity("ILC").id, 11);
-  // Ids 1 to 12 are all used now (the Collision Carts check took 12 before this one merged), so 19 are left (13 to 31).
-  assert.deepEqual(used.slice().sort(function (x, y) { return x - y; }), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
-  assert.equal(31 - Math.max.apply(null, used), 19);
+  // Ids 1 to 13 are all used (Collision Carts took 12 and Projectile Motion 13 before this merged), so 18 are left (14 to 31).
+  assert.deepEqual(used.slice().sort(function (x, y) { return x - y; }), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]);
+  assert.equal(31 - Math.max.apply(null, used), 18);
 });
 
 test("every Inclined Plane lab check sentence has Mexican Spanish with the same placeholders", function () {

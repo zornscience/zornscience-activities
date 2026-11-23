@@ -1,5 +1,24 @@
 # Projectile Motion Vector Lab
-Version: 1.1.3
+Version: 1.2.0
+
+## Lab check (1.2.0)
+
+Open **Lab check** in the work column, after Flight results and before "4. Check your thinking", for five questions a student answers while using the lab: Sideways velocity; Height at the top; Two angles, one range; Faster launch, same fall; and Predict, then launch. It is a separate, collapsible card, closed by default, with "Question 2 of 5" progress and no step number on its eyebrow, so the lab's 1 to 5 numbering is unchanged. The lab's own five "Check your thinking" questions stay as they were. Link straight to the Lab check with `?check=1`; it also works with `?lang=es` and `embed=1` (for example `?check=1&lang=es&embed=1`). The question content is built only when the section is opened.
+
+Each question's "Set up the lab" button sets the Launch height, Launch angle and Launch speed sliders, the scenario menu, and the Pause at the top box, clears Slow motion, and restarts the lab exactly as a slider change does (any run stops, the Time slider goes to 0 and the Flight results go back to "?"). It leaves the four Show on the ball toggles as the student has them, never launches the ball and announces nothing. The student presses Launch, drags the Time slider, or moves the sliders the question names. Question 2 is the only one that turns Pause at the top on. A wrong pick shows that choice's own feedback, two misses offer Show me, and Previous, Next and Start over move through the questions. The score is the number right on the first try.
+
+When all five are done, the section shows the score in words ("4 of 5 right on the first try.") and a `PRLC` completion code, for example `PRLC-0378-SG02-2F0H-DRT` (4 of 5, one Show me). It is registry id 13, setting `Lab check`, slug `projectile-lab`, in `../shared/zsa-codes.js`; the teacher checker shows the score and a 0 or 1 for each question. Id 11 is still reserved for the Inclined Plane lab check (`ILC`), which is not built yet.
+
+Files: `lab.js` answers a `zsa-pj:request-lab` event on the activity root with `setup({h0, angle, speed, scenario, pausetop})` and `format`, the lab's own readout formatter `fmt(v, d)` (also `M.fmt`). `data.js` holds the question data and every English sentence with its Mexican Spanish. `labcheck.js` reads the physics from `model.js` (through `zsa-pj:request-model`) and fills every number from it (launch, stateAt, summary, topTime, maxHeight, flightTime and the formatter), so the page source does not mark the right choice, then starts the shared runner (`../shared/zsa-labcheck.js`, with `../shared/zsa-codes.js` and `../shared/zsa-labcheck.css`). `values` and `resolve` are exported for Node, so `tests/unit/projectile-labcheck.test.js` runs without a page. The mount is `#zsa-pj-labcheck` (not `#zsa-pj-check`, which is the lab's own Check my answers button).
+
+Decisions:
+- **Prefix `PRLC`, not `PLC`.** The rule is the lab's initial plus `LC`, which would be `PLC`, but `PLC` is the Simple Pendulum. The fallback is the first two letters plus `LC`. No registered prefix starts `PRLC` or is the start of it. It is four letters, the longest the registry allows.
+- **Registry id 13.** Ids 1 to 13 are in use (11 is the Inclined Plane `ILC`). After this entry 18 ids are left (14 to 31).
+- **Question 3 distractors use the lab's unrounded range.** The lab's range at 30° is 35.3478 m (it shows 35.35 m), so "twice" and "half" are 70.70 m and 17.67 m (the brief listed 70.71 m and 17.68 m, which come from 35.355 m).
+- **Placement.** The card sits after Flight results, outside the settings column, which does not move. On a phone it follows Flight results in the single column.
+- Choices show sizes only: the readouts add a direction word (right, up, down), the choices do not.
+
+Version 1.2.0 adds the Lab check above. The science and the lab's own questions are unchanged.
 
 Version 1.1.3 improves keyboard and screen reader access. Every focusable element, including summaries, text areas and custom controls, now shows the same visible focus ring (`shared/zsa-lab-a11y.css`), a blue ring with a white gap that reads on light and dark panels and in high contrast mode. `tests/e2e/labs-a11y.spec.js` now checks this lab in English and Mexican Spanish with axe-core, the Tab order, a visible focus indicator on every stop, names and states of custom controls, and text alternatives for drawings. The science, scoring and any completion code are unchanged.
 
@@ -12,7 +31,7 @@ A 2D dynamics lab for Physics. A cannon fires a ball from a launch height, angle
 ## Assumptions and decisions
 - Built from a one-paragraph request, not a handoff. Built on the house conventions of the Physics Graphing Lab and the Kinetics and Collision Theory Sandbox: plain JavaScript in strict IIFEs, classic deferred scripts, no globals (the page reaches the model through a `zsa-pj:request-model` event), every element built with `createElement`, `createElementNS` and `textContent`, the shared Content Security Policy, tokens and Inter font, embed mode, and no storage, cookies or outside requests. Nothing in `shared/` changed.
 - Slug `projectile-lab`, class prefix `zsa-pj-`.
-- Not an engine activity, and no completion code: the lab has no round or score.
+- Not an engine activity. The lab itself has no round or score; the Lab check (1.2.0) is the one place a completion code comes from.
 - Built and browser-tested in Chromium by Claude. Real screen readers, Firefox, Safari and school devices remain untested. See TESTING.md.
 
 ## Purpose
@@ -69,16 +88,17 @@ Suggested links (add `&from=` with the lesson's own URL):
 - **Default back link**: the Physics page, because the projectile lesson's address was not known. Set the default in `index.html` and `DEFAULT_BACK` in `tests/e2e/projectile-lab.spec.js` once it is, or give each lesson its own `?from=`.
 - **Default arrows**: velocity and components on, acceleration and snapshots off, so the first launch already shows vx and vy and the acceleration is something to turn on. Change the `checked` attributes in `index.html` (and `shown` in `lab.js`) or use `?show=`.
 - **g = 9.80 m/s²** and no air resistance.
-- **No completion code** for now.
+- **Completion code** only from the Lab check (`PRLC`, 1.2.0).
 
 ## Files
 | File | What it holds |
 |---|---|
-| `index.html` | Page shell: settings, the vector toggles, the scene, playback, readouts, the graph, results, the questions, the reflection and the live region. |
+| `index.html` | Page shell: settings, the vector toggles, the scene, playback, readouts, the graph, results, the Lab check mount, the questions, the reflection and the live region. |
 | `model.js` | The model: the motion, the top and landing, scenarios, snapshot times, fitting the scene, phases, spoken descriptions, the questions and the CSV. No page code. |
-| `lab.js` | The page: settings and sliders, drawing the scene and arrows, the animation loop, the graph, results, the questions, printing, the download and deep links. |
+| `lab.js` | The page: settings and sliders, drawing the scene and arrows, the animation loop, the graph, results, the questions, printing, the download and deep links, and the `zsa-pj:request-lab` event for the Lab check. |
+| `labcheck.js` | The Lab check adapter: fills every number from `model.js` and the readout formatter, then starts the shared runner. |
 | `lab.css` | Layout, colors and print styles, prefixed `zsa-pj-`. |
-| `data.js` | Every English sentence template with its Mexican Spanish translation, for `../shared/zsa-i18n.js`. |
+| `data.js` | Every English sentence template with its Mexican Spanish translation, for `../shared/zsa-i18n.js`, and the Lab check question data. |
 
 ## Keyboard and screen readers
 - Every control is a native button, select, range slider, checkbox, radio button or text area. The sliders speak their values in words ("15 meters", "50 degrees above horizontal", "18.0 meters per second"), and the Time slider adds "top of the path" or "landed".
@@ -93,6 +113,7 @@ Suggested links (add `&from=` with the lesson's own URL):
 - No sideways scrolling from 320 px, and every button, slider, select, checkbox and radio label is at least 44 px.
 
 ## Changelog
+- 1.2.0: Lab check with five questions and a `PRLC` completion code (registry id 13), opened with `?check=1`. New `zsa-pj:request-lab` event, `labcheck.js`, and the shared runner loaded on the page.
 - 1.1.0: Mexican Spanish with `?lang=es` and the shared EN / ES header links. Every sentence is one full template in `data.js`.
 - 1.0.0: first version.
 

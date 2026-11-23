@@ -44,7 +44,7 @@
   "Feed the Yeast: Fermentation and Energy": "Alimenta a la levadura: fermentación y energía",
   "Feed yeast four foods and measure the gas in balloons. Fix an unfair setup, graph where more sugar stops helping, and zoom inside a yeast cell.": "Alimenta a la levadura con cuatro alimentos y mide el gas en globos. Corrige un montaje injusto, grafica dónde más azúcar deja de ayudar y observa el interior de una célula de levadura.",
   "Populations": "Poblaciones",
-  "Estimate hidden plant and fish populations with quadrats and mark and recapture. Compare sample sizes, random placement and sampling bias.": "Estima poblaciones ocultas de plantas y peces con cuadrantes y captura y recaptura. Compara tamaños de muestra, colocación al azar y sesgo de muestreo.",
+  "Estimate hidden plant and fish populations with quadrats and mark and recapture. Compare sample sizes, random placement and sampling bias. A second tab uses ladybug quadrats to estimate a whole container.": "Estima poblaciones ocultas de plantas y peces con cuadrantes y captura y recaptura. Compara tamaños de muestra, colocación al azar y sesgo de muestreo. Una segunda pestaña usa cuadrantes con catarinas para estimar la población de un recipiente.",
   // Header and navigation
   "ZornScience home": "Inicio de ZornScience",
   "Practice Activities": "Actividades de práctica",
