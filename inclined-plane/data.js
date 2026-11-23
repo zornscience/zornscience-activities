@@ -137,7 +137,8 @@
   // Lab check (labcheck.js and ../shared/zsa-labcheck.js). Each choice is [value, label, feedback key]; the right
   // choice has a null key. Every number in braces is filled in by labcheck.js from the lab's formulas and its own
   // readout formatters, so no answer is written here. setup is the starting state: angle, the Ramp angle in degrees;
-  // surface, the Contact surface option value; mass, the Block + added mass in kg; slow, Slow motion.
+  // surface, the Contact surface option value; mass, the Block + added mass in kg; slow, Slow motion; massResumes,
+  // whether moving the mass slider clears a Pause until the next setup (question 4, so the heavier block slides again).
   var check = {
     labels: {
       title: "Lab check",
@@ -188,7 +189,7 @@
           sameSlide: "The surface changes the friction coefficients. Compare the critical angle for felt with the ramp angle. The note under Explore the physics lists it."
         },
         explanation: "Felt grips better than wood. Its μₛ is {mus}, so the block holds until the ramp passes {critical}°. At 30.0° the downhill part of the weight, mg sin θ = {right} N, is less than the most friction felt can supply (μₛN = {maxStatic} N). The block stays at rest and static friction matches {right} N. On wood the critical angle is only {woodCritical}°, so the block slid."},
-      {id: "slide", title: "Add mass to a sliding block", setup: {angle: 35, surface: "wood", mass: 0.5, slow: true},
+      {id: "slide", title: "Add mass to a sliding block", setup: {angle: 35, surface: "wood", mass: 0.5, slow: true, massResumes: true},
         question: "Press Pause or watch in slow motion to read the acceleration while the block slides. Then move the block + added mass to 1.50 kg and read the acceleration while it slides again. What does it read?",
         choices: [["right", "{right} m/s²", null], ["triple", "{triple} m/s²", "triple"], ["third", "{third} m/s²", "third"], ["noFriction", "{noFriction} m/s²", "noFriction"]],
         feedback: {

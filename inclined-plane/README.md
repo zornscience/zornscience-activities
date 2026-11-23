@@ -1,6 +1,6 @@
 # Inclined Plane & Friction
 
-Version: 1.2.0
+Version: 1.2.1
 
 ## Lab check (1.2.0)
 
@@ -13,6 +13,8 @@ When all five are done, the section shows the score in words ("4 of 5 right on t
 Files: `lab.js` answers a `zsa-ip:request-lab` event on the activity root with `setup({angle, surface, mass, slow})`, `surfaces` (the lab's own static and kinetic coefficient table), `g` (9.81) and `format` (the readout formatters `fixed2` for forces and accelerations and `fixed1` for the angle). `data.js` holds the question data and every English sentence with its Mexican Spanish. `labcheck.js` fills every number from the formulas the lab uses (weight = mg, N = mg cos θ, downhill component = mg sin θ, static friction = mg sin θ while at rest, kinetic friction = μₖN, sliding acceleration = g(sin θ − μₖ cos θ)) and those formatters, so the page source marks no right choice and no coefficient is copied. It then calls the shared runner (`../shared/zsa-labcheck.js`, `../shared/zsa-labcheck.css`) with `activity: "ILC"`.
 
 Decisions: the questions that need a sliding block say to read the acceleration while it slides, and the setup turns Slow motion on, so the end stop (which sets the acceleration to 0.00 m/s² and hides the arrows) is unchanged. Question 5 says "first slips" because the slider moves in 0.1° steps: on felt, 33.0° holds and 33.1° slides, and the adapter finds that angle with the lab's own slip test. The prefix is `ILC` (the lab's initial plus LC); it is not the start of any other prefix. The Spanish keeps the lab's words (plano inclinado, fricción estática, fricción cinética, fuerza normal, peso, rapidez).
+
+1.2.1: In the Lab check's question 4, moving the Block + added mass slider now clears a Pause the student left on, so the heavier block slides again and the student can read its acceleration. Only question 4's "Set up the lab" turns this on, and the next question's setup turns it off. Without the check the lab is unchanged: the mass slider leaves Pause as it is.
 
 1.2.0: Optional Lab check (five questions, `?check=1`) with an ILC completion code (registry id 11). The physics, controls and layout are unchanged; `lab.js` only adds the `zsa-ip:request-lab` event the check uses, a `G` constant and the `fixed2` and `fixed1` readout formatters, with the same output as before.
 
