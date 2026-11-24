@@ -189,6 +189,14 @@
   .zsa-lv {--u:.85px;}
   .zsa-lv .zsa-lv-title {font-size:1.25rem;}
   .zsa-lv-caption {font-size:14px;}
+  /* A compact track: the strip stays within a few pixels of its height before the track, so the build step fits. */
+  .zsa-lv .zsa-progress {line-height:1.3;}
+  .zsa-lv .zsa-track {row-gap:0;}
+  .zsa-lv .zsa-track-pips {min-height:8px;gap:2px 8px;}
+  .zsa-lv .zsa-track-items {gap:3px;}
+  .zsa-lv .zsa-track-pip, .zsa-lv .zsa-track-pip.is-current {width:8px;height:8px;border-width:1.5px;}
+  .zsa-lv .zsa-track-pip.is-current {box-shadow:0 0 0 1.5px #bfdbfe;}
+  .zsa-lv .zsa-track-step {width:12px;height:4px;}
   .zsa-lv-svg--stage, .zsa-lv-shape {width:96px;}
   .zsa-lv-shape {height:96px;}
   .zsa-lv-stage {padding:3px;border-radius:10px;}
