@@ -3441,6 +3441,27 @@ The following activity-specific choices are newly recorded here:
 
 The activity title is Laboratorio virtual de entropía y energía libre. Section titles are noun phrases; buttons remain actions. Decimal points, formulas, charges, units and state symbols are preserved. All feedback and complete sentence templates are in `free-energy-lab/data.js`.
 
+### Free Energy Lab bench (1.1.0)
+
+Red fija, favorecida and espontánea were already in use in this lab. Fusión and ebullición name the phase changes; se funde and hierve are the verbs. Verificar keeps this lab's Check label.
+
+| English | Mexican Spanish |
+| --- | --- |
+| Phase chamber: water at 1 atm | Cámara de fases: agua a 1 atm |
+| Chamber temperature (K) | Temperatura de la cámara (K) |
+| Entropy (relative, schematic) | Entropía (relativa, esquemática) |
+| Melts at 273 K and boils at 373 K at 1 atm. | A 1 atm, se funde a 273 K y hierve a 373 K. |
+| molecules vibrate in a fixed lattice | las moléculas vibran en una red fija |
+| molecules slide past their neighbors | las moléculas se deslizan entre sus vecinas |
+| melting / boiling | fusión / ebullición |
+| Favored / Not favored (zone labels) | Favorecida / No favorecida |
+| Spontaneous / Nonspontaneous (zone labels) | Espontánea / No espontánea |
+| Linking ΔG° and K | Relación entre ΔG° y K |
+| Standard free energy | Energía libre estándar |
+| Equilibrium mixture | Mezcla en equilibrio |
+| Squares / Diamonds | Cuadrados / Rombos |
+| Pause motion / Play motion | Pausar movimiento / Reanudar movimiento |
+
 ### Reaction Energy Lab (1.0.1)
 
 | English | Mexican Spanish |

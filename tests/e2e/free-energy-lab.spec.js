@@ -471,3 +471,121 @@ test("reference precision, lesson precision and displayed exports", async ({
     );
   expect(copied).toBe(displayed);
 });
+// Lab bench (1.1.0). These tests set reduced motion with page.emulateMedia; test.use({reducedMotion}) is not a
+// Playwright test option and has no effect.
+test("phase chamber shows solid, liquid and gas with temperature", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/free-energy-lab/");
+  const slider = page.locator("#phase-temperature"),
+    state = page.locator("#phase-state"),
+    chamber = page.locator("#phase-chamber"),
+    meter = page.locator("#phase-entropy");
+  await expect(page.getByRole("slider", { name: "Chamber temperature (K)" })).toHaveValue("298");
+  await expect(state).toHaveText("298 K. Liquid: molecules slide past their neighbors.");
+  await expect(page.locator("#phase-motion")).toBeHidden();
+  const levels = [];
+  for (const [value, words, label] of [
+    ["200", "200 K. Solid: molecules vibrate in a fixed lattice.", "200 K, solid"],
+    ["273", "273 K. 273 K: solid and liquid together while the ice melts.", "273 K, melting"],
+    ["330", "330 K. Liquid: molecules slide past their neighbors.", "330 K, liquid"],
+    ["373", "373 K. 373 K: liquid and gas together while the water boils.", "373 K, boiling"],
+    ["450", "450 K. Gas: molecules spread through the whole chamber.", "450 K, gas"],
+  ]) {
+    await slider.fill(value);
+    await expect(state).toHaveText(words);
+    await expect(slider).toHaveAttribute("aria-valuetext", label);
+    levels.push(await meter.evaluate((m) => m.value));
+  }
+  // Entropy rises with temperature, with a bigger jump for boiling than for melting.
+  for (let i = 1; i < levels.length; i++) expect(levels[i]).toBeGreaterThan(levels[i - 1]);
+  await expect(chamber).toHaveAttribute("aria-label", "Phase chamber at 450 K. Gas: molecules spread through the whole chamber. Entropy is high.");
+  // In the gas, the molecules fill the chamber; in the solid, they sit in rows at the bottom.
+  const spread = async () => chamber.locator("g g").evaluateAll((gs) => {
+    const ys = gs.map((g) => Number(g.getAttribute("transform").match(/translate\([\d.]+ ([\d.]+)\)/)[1]));
+    return Math.max(...ys) - Math.min(...ys);
+  });
+  expect(await spread()).toBeGreaterThan(120);
+  await slider.fill("200");
+  expect(await spread()).toBeLessThan(60);
+  // Changing the process keeps the chamber and its temperature.
+  await page.locator("#entropy-case").selectOption("melting");
+  await expect(slider).toHaveValue("200");
+});
+test("phase chamber molecules move only after the student acts, and motion pauses", async ({ page }) => {
+  const errors = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/free-energy-lab/");
+  const first = page.locator("#phase-chamber g g").first();
+  const before = await first.getAttribute("transform");
+  await page.waitForTimeout(300);
+  expect(await first.getAttribute("transform"), "still at load").toBe(before);
+  await page.locator("#phase-temperature").fill("420");
+  await page.waitForTimeout(300);
+  expect(await first.getAttribute("transform"), "moving after a change").not.toBe(before);
+  const motion = page.locator("#phase-motion");
+  await expect(motion).toHaveText("Pause motion");
+  await motion.click();
+  await expect(motion).toHaveAttribute("aria-pressed", "true");
+  await expect(motion).toHaveText("Play motion");
+  await page.waitForTimeout(100);
+  const paused = await first.getAttribute("transform");
+  await page.waitForTimeout(300);
+  expect(await first.getAttribute("transform"), "still while paused").toBe(paused);
+  expect(errors).toEqual([]);
+});
+test("ΔG versus T chart shades both zones and moves its marker to the temperature", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/free-energy-lab/?mode=dg&rxn=haber");
+  const chart = page.locator("#panel-dg svg.zsa-fe-chart-dark");
+  await expect(chart).toContainText("Not favored: ΔG° > 0");
+  await expect(chart).toContainText("Favored: ΔG° < 0");
+  await expect(chart).toContainText("T = 298 K");
+  const marker = async () => Number(await chart.locator("circle").getAttribute("cx"));
+  const at298 = await marker();
+  await page.locator("#temperature-number").fill("1500");
+  await page.locator("#temperature-number").press("Tab");
+  await expect(chart).toContainText("T = 1500 K");
+  expect(await marker()).toBeGreaterThan(at298 + 200);
+  // The marker sits on the line: above the zero line (in the red zone) at 1500 K for the Haber reaction.
+  const zero = await chart.locator("line[stroke-dasharray='6 4']").getAttribute("y1");
+  expect(Number(await chart.locator("circle").getAttribute("cy"))).toBeLessThan(Number(zero));
+  await page.goto("/free-energy-lab/?mode=dg&rxn=caco3&course=chem");
+  await expect(page.locator("#panel-dg svg.zsa-fe-chart-dark")).toContainText("Nonspontaneous: ΔG > 0");
+  await expect(page.locator("#panel-dg svg.zsa-fe-chart-dark")).toContainText("Spontaneous: ΔG < 0");
+});
+test("ΔG° and K link reveals the equilibrium mixture only after a correct check", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/free-energy-lab/?mode=k&case=n2o4");
+  const energy = page.locator("#k-energy"), mix = page.locator("#k-mixture");
+  await expect(energy).toHaveAttribute("aria-label", "Products sit below reactants: ΔG° = −4.8 kJ/mol.");
+  await expect(mix).toHaveAttribute("aria-label", "The mixture is hidden until you check your answer.");
+  await expect(page.locator("#panel-k")).not.toContainText("35 of 40");
+  await page.locator("#k-answer").fill("6.9");
+  await page.locator("#check-k").click();
+  await expect(page.locator("#k-feedback")).toHaveText("Correct answer.");
+  // K = 6.9, so B is 6.9 / 7.9 of the mixture: 35 of 40.
+  await expect(mix).toHaveAttribute("aria-label", "Equilibrium mixture for A ⇌ B: A: 5 of 40. B: 35 of 40.");
+  await expect(mix.locator("rect[transform='rotate(45)'][opacity='1']")).toHaveCount(35);
+  // K given: the mixture shows and ΔG° waits for the check.
+  await page.goto("/free-energy-lab/?mode=k&case=acetic");
+  await expect(mix).toHaveAttribute("aria-label", "Equilibrium mixture for A ⇌ B: B: fewer than 1 of 40");
+  await expect(energy).toHaveAttribute("aria-label", "ΔG° is hidden until you check your answer.");
+  await expect(page.locator("#panel-k")).not.toContainText("27");
+  await page.locator("#k-answer").fill("27");
+  await page.locator("#check-k").click();
+  await expect(energy).toHaveAttribute("aria-label", /^Products sit above reactants: ΔG° = 27/);
+});
+test("bench text in Mexican Spanish", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/free-energy-lab/?lang=es");
+  await expect(page.locator(".zsa-fe-bench-caption")).toHaveText("Cámara de fases: agua a 1 atm");
+  await expect(page.locator("#phase-state")).toHaveText("298 K. Líquido: las moléculas se deslizan entre sus vecinas.");
+  await expect(page.locator(".zsa-fe-bench")).not.toContainText(/Phase|Liquid|Melts|Entropy|Chamber/);
+  await page.goto("/free-energy-lab/?lang=es&mode=k&case=n2o4");
+  await expect(page.locator(".zsa-fe-bench")).toContainText("Mezcla en equilibrio, A ⇌ B");
+  await expect(page.locator("#k-mixture")).toHaveAttribute("aria-label", "La mezcla está oculta hasta que verifiques tu respuesta.");
+  await expect(page.locator(".zsa-fe-bench")).not.toContainText(/Reactants|Products|Squares|Check your/);
+  await page.goto("/free-energy-lab/?lang=es&mode=dg");
+  await expect(page.locator("#panel-dg svg.zsa-fe-chart-dark")).toContainText("No favorecida: ΔG° > 0");
+});

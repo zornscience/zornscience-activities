@@ -1,6 +1,18 @@
 # Free Energy Lab testing
 
-Version: 1.0.4
+Version: 1.1.0
+
+## Lab bench verification (1.1.0)
+
+Five browser tests in `tests/e2e/free-energy-lab.spec.js` cover the bench:
+
+- The phase chamber's state text, slider value text and text alternative at 200, 273, 330, 373 and 450 K; the entropy meter rises at every step; the molecules fill the chamber as a gas and sit in rows as a solid; the chamber keeps its temperature when the process changes.
+- With motion: nothing moves at load, molecules move after a temperature change, and Pause motion stops them (aria-pressed, Play motion).
+- The ΔG vs T graph labels both zones (AP and Chemistry wording), shows only T at the marker, and the marker moves to 1500 K and sits above the zero line for the Haber reaction.
+- ΔG° and K: for N₂O₄ the mixture stays hidden until K = 6.9 is checked, then shows 35 of 40 particles as B; for acetic acid the mixture shows and ΔG° waits for the check.
+- Mexican Spanish text and text alternatives, with no English left on the bench.
+
+The existing tests still check that no answer appears before its Check, and that the K panel has no circle before the K check and one after. `tests/e2e/labs-a11y.spec.js` passes for this lab in both languages. axe-core was also run by hand on Entropy Explorer, ΔG and Temperature and ΔG° and K at 1280x800 and 390x664 in English and Spanish (Chemistry and AP): no violations, and no sideways scrolling from 320 to 1920 px. Screenshots were checked by hand at 1280x800 and 390x664 in both languages at 200, 273, 298 and 450 K, before and after the K check, and for ΔG given and K given.
 
 ## Automated checks
 
