@@ -3850,6 +3850,23 @@ The shared Lab check labels are the Gas lab pilot's. Readout and control names f
 | inverse sine / inverse tangent | seno inverso / tangente inversa | Question 4 feedback. |
 | surroundings | lo que lo rodea | Question 3. |
 
+## Standing Waves lab check (standing-waves-lab 1.2.0)
+
+The shared Lab check labels are the Gas lab pilot's. Readout and control names follow the lab: la lectura FUNDAMENTAL f₁, la lectura RAPIDEZ DE LA ONDA, Medición de la cuerda, Colocar los cursores en nodos adyacentes, Marcar nodos y antinodos, armónico, masa colgante, cuerda media y cuerda pesada. Loops are "segmentos" and wave speed is "rapidez de la onda". Not yet proofread by a native speaker.
+
+| English | Mexican Spanish | Use |
+| --- | --- | --- |
+| Three loops | Tres segmentos | Question 1 title. |
+| Wavelength from the nodes | Longitud de onda a partir de los nodos | Question 2 title. |
+| The same speed | La misma rapidez | Question 3 title. |
+| More tension | Más tensión | Question 4 title. |
+| A heavier cord | Una cuerda más pesada | Question 5 title. |
+| the generator frequency | la frecuencia del generador | Questions 1 and 3. |
+| neighboring nodes | nodos vecinos | Question 2 (the lab says "nodos adyacentes" for the button and "nodos adyacentes" in its readout). |
+| half a wavelength | media longitud de onda | Question 2. |
+| a factor of √2 | un factor de √2 | Question 4 explanation. |
+| harder to move | cuesta más mover | Question 5 feedback. |
+
 ## BTB Carbon Cycle Lab (btb-carbon-cycle-lab/data.js)
 
 Sources compared: Mexican secondary and preparatoria Biology and chemistry textbooks, SEP and UNAM Biology materials, Khan Academy Spanish, and university lab glossaries. Most agree on "azul de bromotimol", with "AZB" less common but used in lab guides; the page spells the name out in the title and intro and uses AZB afterward.
