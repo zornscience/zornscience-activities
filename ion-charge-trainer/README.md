@@ -1,5 +1,5 @@
 # Predicting Ion Charge Trainer
-Version: 1.5.3
+Version: 1.5.4
 
 Version 1.5.3 redraws the question screen: a larger element card (atomic number, symbol, name) and a Bohr model on a dark stage that follows the steps, a progress track with one pip per element and one bar per step, and short animations on right and missed answers. The steps, questions, feedback, hints, Show me, rounds and completion codes are unchanged (the code still records version 1.5). See "Question screen (1.5.3)" below.
 
@@ -119,7 +119,7 @@ There is no Check button (1.3). Tapping or clicking an answer checks it right aw
 ## Question screen (1.5.3)
 - **Element card.** The tile shows the atomic number, the symbol and the name; the heading, the atomic number line and the progress line keep their ids and words.
 - **Bohr model.** Rings are energy levels (as many as the period), dots are electrons, drawn from the electron configuration. Before step 1 the outer level is a dashed ring with a question mark, so the model does not give the answer away. Step 1 fills in the valence electrons. Step 2 shows electrons leaving a metal (dashed circles stay where they were, and the full level inside becomes the outer level) or joining a nonmetal (open circles fill the outer level to 8). Step 3 adds the ion's brackets and charge. When the element is complete the label reads "Like neon" (the noble gas with the same number of electrons), with or without step 4. Beside the model: the state in words, protons and electrons, and electrons by level. The stage is one picture for screen readers (`role="img"`), named with all of that.
-- **Progress track.** Under the progress line: a pip per element in the round (green when done on the first try, amber after a miss or Show me, square for review items) and a bar per step. The pips repeat the sentence and are hidden from screen readers.
+- **Progress track.** Under the progress line: a pip per element in the round and a bar per step, the same pips as the question-set practice pages: filled blue when done on the first try, striped red after a miss or Show me, ringed for the current element, hollow for review items not yet reached (1.5.4). The pips repeat the sentence and are hidden from screen readers.
 - **Animations.** A right answer makes the stage glow once and plays the change in the model; a miss rings the wrong button, shakes the feedback and nudges the model. With reduced motion none of this moves, and every state is drawn as it is. Buttons never move, so their size and place are exact during an animation.
 - **Phones.** Under 600 px the model replaces the tile beside the name (about 64 px), without its words; the table cells are a little shorter so the step still fits at 360x640 and 390x664.
 
@@ -147,6 +147,8 @@ Button label: Open the Ion Charge Trainer
 - Embed mode hides the whole header, so a framed page has no heading 1 (an axe best-practice finding). The Ionic Formula Builder keeps its h1 visually hidden instead. Not changed in 1.3.1 to keep behavior identical.
 
 ## Changelog
+1.5.4: The progress pips are now the question-set practice engine's pips (the AP Chemistry and Quantitative Skills sets): rounded bars that fill when done, striped red after a miss or Show me, a ringed and gently pulsing current question, hollow review items, in this page's blue. Step bars match them. No other change.
+
 1.5.3: Question screen redesign. Element card with the atomic number, symbol and name; a Bohr model on a dark stage that fills in, loses or gains electrons and shows the ion's charge and noble gas as the steps are answered; a progress track with pips for the elements and bars for the steps; a glow on right answers and a gentle shake on misses, none of it with reduced motion. Shared `shared/zsa-track.js` and `shared/zsa-track.css`. No change to steps, questions, feedback rules, hints, rounds or codes.
 
 1.4.0: Completion codes. The summary of a full mixed round shows a code such as `ICT-K6QY-0C22-7S11-86` in a large monospace box, with Copy code (Clipboard API, falling back to selecting the code) and "Paste this code into your Google Classroom assignment." The live region says "Round complete. Completion code ready." and screen readers read the code one character at a time. No code for single-element practice, Practice my misses or an unfinished round. Nothing else changes for students (`npm run parity`, with the code box set aside). Loads `shared/zsa-codes.js`.

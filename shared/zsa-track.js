@@ -49,57 +49,59 @@
     var box = node("div", "zsa-track");
     var text = node("p", "zsa-progress");
     text.id = options.id;
-    // The pips repeat the sentence for the eye, so screen readers skip them. data-zsa-pip and data-zsa-step give each
-    // one's state to the tests (done, missed, current or todo).
+    // The pips repeat the sentence for the eye, so screen readers skip them. They are the question-set practice engine's
+    // pips (shared/zsa-practice.js): the same shape, states and motion. Each says its state in data-state, which the
+    // stylesheet and the tests read: a question pip is current, correct, missed or empty; a step bar is current, done or
+    // empty. data-zsa-review marks a review item.
     var pips = node("div", "zsa-track-pips");
     pips.setAttribute("aria-hidden", "true"); pips.setAttribute("data-zsa-track", "");
     var items = node("span", "zsa-track-items"), steps = node("span", "zsa-track-steps");
     pips.appendChild(items); pips.appendChild(steps);
     box.appendChild(text); box.appendChild(pips);
-    // status[i]: "clean" or "missed" for each question answered so far in this round.
-    var status = [], originals = 0, now = null, loading = false, finished = false, lastStep = 0;
+    // status[i]: "correct" or "missed" for each question answered so far in this round.
+    var status = [], originals = 0, now = null, loading = false, finished = false;
 
-    function draw(fresh) {
-      items.replaceChildren(); steps.replaceChildren();
-      for (var i = 0; i < now.total; i++) {
-        var state = i < now.number - 1 || (i === now.number - 1 && finished) ? (status[i] === "missed" ? "missed" : "done") : i === now.number - 1 ? "current" : "todo";
-        var pip = node("span", "zsa-track-pip is-" + state + (i >= originals ? " is-review" : "") + (i === now.number - 1 && finished ? " is-fresh" : ""));
-        pip.setAttribute("data-zsa-pip", state);
-        if (i >= originals) pip.setAttribute("data-zsa-review", "");
-        items.appendChild(pip);
-      }
-      for (var s = 1; s <= now.steps; s++) {
-        var st = s < now.step || finished ? "done" : s === now.step ? "current" : "todo";
-        var bar = node("span", "zsa-track-step is-" + st + (fresh === s ? " is-fresh" : ""));
-        bar.setAttribute("data-zsa-step", st);
-        steps.appendChild(bar);
-      }
+    // The pips stay in place and only their data-state changes, so a pip fills with the stylesheet's transition, as in
+    // the practice engine. Pips are added or removed only when the round's length changes.
+    function count(holder, n, cls) {
+      while (holder.children.length > n) holder.removeChild(holder.lastChild);
+      while (holder.children.length < n) holder.appendChild(node("span", cls));
+      return [].slice.call(holder.children);
+    }
+    function draw() {
+      count(items, now.total, "zsa-track-pip").forEach(function (pip, i) {
+        var done = i < now.number - 1 || (i === now.number - 1 && finished);
+        pip.setAttribute("data-state", done ? status[i] : i === now.number - 1 ? "current" : "");
+        if (i >= originals) pip.setAttribute("data-zsa-review", ""); else pip.removeAttribute("data-zsa-review");
+      });
+      count(steps, now.steps, "zsa-track-step").forEach(function (bar, k) {
+        var s = k + 1;
+        bar.setAttribute("data-state", s < now.step || finished ? "done" : s === now.step ? "current" : "");
+      });
     }
     var sink = {};
     Object.defineProperty(sink, "textContent", {
       get: function () { return text.textContent; },
       set: function (value) {
         var p = String(value).split("|"), v = {number: Number(p[0]), total: Number(p[1]), step: Number(p[2]), steps: Number(p[3]), label: p.slice(4).join("|")};
-        var fresh = null;
         if (loading) {
           // A new question: the first of a round starts the track again.
           if (v.number === 1 || !now || v.number < now.number) { status = []; originals = v.total; }
-          status[v.number - 1] = "clean"; finished = false; loading = false; lastStep = v.step;
-        } else if (now && v.step === lastStep + 1) fresh = lastStep;
-        lastStep = v.step;
+          status[v.number - 1] = "correct"; finished = false; loading = false;
+        }
         now = v;
         text.textContent = options.template.replace(/\{(\w+)\}/g, function (m, k) { return String(v[k]); });
-        draw(fresh);
+        draw();
       }
     });
     return {
       node: box, text: text, sink: sink, template: TEMPLATE,
       // renderStrip calls load() for each new question, before the engine writes its progress.
       load: function () { loading = true; },
-      // A wrong answer or Show me on this question: its pip is amber once it is done.
+      // A wrong answer or Show me on this question: its pip is striped red once it is done.
       miss: function () { if (now) status[now.number - 1] = "missed"; },
       // The question is complete (its summary is showing): its pip and every step bar are filled.
-      complete: function () { if (!now) return; finished = true; draw(now.steps); }
+      complete: function () { if (!now) return; finished = true; draw(); }
     };
   }
 
