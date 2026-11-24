@@ -44,6 +44,7 @@
   "Feed the Yeast: Fermentation and Energy": "Alimenta a la levadura: fermentación y energía",
   "Feed yeast four foods and measure the gas in balloons. Fix an unfair setup, graph where more sugar stops helping, and zoom inside a yeast cell.": "Alimenta a la levadura con cuatro alimentos y mide el gas en globos. Corrige un montaje injusto, grafica dónde más azúcar deja de ayudar y observa el interior de una célula de levadura.",
   "Populations": "Poblaciones",
+  "Open the Ladybug Quadrat Lab": "Abrir el laboratorio de muestreo de catarinas con cuadrantes",
   "Estimate hidden plant and fish populations with quadrats and mark and recapture. Compare sample sizes, random placement and sampling bias. A second tab uses ladybug quadrats to estimate a whole container.": "Estima poblaciones ocultas de plantas y peces con cuadrantes y captura y recaptura. Compara tamaños de muestra, colocación al azar y sesgo de muestreo. Una segunda pestaña usa cuadrantes con catarinas para estimar la población de un recipiente.",
   // Header and navigation
   "ZornScience home": "Inicio de ZornScience",
@@ -299,7 +300,11 @@
   links.forEach(function (pair) {
     var a = pair[0], href = pair[1], local = !/^(?:[a-z]+:|\/\/|#)/i.test(href);
     if (!local) return;
-    if (a.closest(".zsa-home-card")) a.setAttribute("href", locales.link(href, i18n.lang));
+    if (a.closest(".zsa-home-card")) {
+      // Add lang=es before any #fragment so a card can link straight to a tab inside an activity.
+      var cut = href.indexOf("#"), path = cut < 0 ? href : href.slice(0, cut);
+      a.setAttribute("href", locales.link(path, i18n.lang) + (cut < 0 ? "" : href.slice(cut)));
+    }
     else a.setAttribute("href", i18n.lang === "es" ? href + (href.indexOf("?") >= 0 ? "&" : "?") + "lang=es" : href);
   });
   root.querySelectorAll(".zsa-home-card").forEach(function (card) {

@@ -108,10 +108,10 @@ faraday-lab/               Faraday’s Law · Magnet Drop, v1.2.3 (realistic tub
 equipotential-lab/         Equipotential & Electric Field Mapping, v1.2.3 (point charges, a voltage probe, equipotential lines and field vectors; English and Mexican Spanish)
 standing-waves-lab/        Standing Waves on a String, v1.1.3 (oscillator harmonics, string tension, strobe and ruler for node spacing; English and Mexican Spanish)
 snells-law-lab/            Snell’s Law & Refraction, v1.1.3 (laser through optical blocks, snapping protractor and total internal reflection; English and Mexican Spanish)
-hookes-law-lab/            Hooke’s Law & Harmonic Motion, v1.3.0 (slotted masses on a spring, ruler extension and a live position graph; optional Lab check with an HLC completion code; English and Mexican Spanish)
+hookes-law-lab/            Hooke’s Law & Harmonic Motion, v1.3.1 (slotted masses on a spring, ruler extension and a live position graph; optional Lab check with an HLC completion code; English and Mexican Spanish)
 pendulum-lab/              The Simple Pendulum, v1.3.0 (mass, length and gravity on Earth, the Moon and Jupiter, with energy exchange; optional Lab check with a PLC completion code; English and Mexican Spanish)
 inclined-plane/            Inclined Plane & Friction, v1.2.1 (raise a ramp until the block slips, static and kinetic friction, live free body diagram; optional Lab check with an ILC completion code; English and Mexican Spanish)
-equilibrium-thermo-lab/   Compatibility chooser linking to the two standalone labs, v1.1.1 (English and Mexican Spanish)
+equilibrium-thermo-lab/   Compatibility chooser with a card for each of the two standalone labs, v1.2.0 (English and Mexican Spanish)
 check/                     completion code checker for teachers, v1.2.1 (linked under "For teachers")
 TEACHERS.md                assigning activities in Google Classroom and checking completion codes
 templates/starter/         starter template for a new activity (not linked from the site)

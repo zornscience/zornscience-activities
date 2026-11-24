@@ -8,7 +8,7 @@ Use the controls or drag the hanger. Keyboard: focus hanger, arrow keys displace
 
 Version 1.2.0. Shared branding and top controls adapted from Metals Lab.
 
-Version: 1.3.0
+Version: 1.3.1
 
 ## Lab check (1.3.0)
 
@@ -22,7 +22,7 @@ Files: `lab.js` answers a `zsa-hl:request-lab` event on the activity root with `
 
 Decisions: question 5's setup gives no release displacement, so it keeps the lab's default of 4.0 cm; the question never releases. Question 3's title, "Mass and period", is also an Investigate menu option, so its Spanish is the menu's existing "Masa y periodo". The answers to questions 3 and 4 are the ideal period; the browser tests release at 1× and read the lab's measured period (from successive peaks) to confirm it shows the same value. Every value matched the brief.
 
-Rounding: the extension in meters is built from the rounded centimeter value, so the two readouts always agree. An extension of 14.715 cm used to show as "14.71 cm" but "0.1472 m" (`toFixed(2)` on a binary value just below 14.715, but `toFixed(4)` on the unrounded meters). It now shows "14.71 cm" and "0.1471 m". The cm readout is unchanged, so question 2 and its answers are unchanged.
+Rounding (1.3.1): the extension in meters is built from the rounded centimeter value, so the two readouts always agree. An extension of 14.715 cm used to show as "14.71 cm" but "0.1472 m" (`toFixed(2)` on a binary value just below 14.715, but `toFixed(4)` on the unrounded meters). It now shows "14.71 cm" and "0.1471 m". The cm readout is unchanged, so question 2 and its answers are unchanged.
 
 
 Version 1.2.3 improves keyboard and screen reader access. Section headings are now level 2 (they jumped from the page's heading 1 to level 3), with the same look. The footer text is darker to reach 4.5:1 contrast. Every focusable element, including summaries, text areas and custom controls, now shows the same visible focus ring (`shared/zsa-lab-a11y.css`), a blue ring with a white gap that reads on light and dark panels and in high contrast mode. `tests/e2e/labs-a11y.spec.js` now checks this lab in English and Mexican Spanish with axe-core, the Tab order, a visible focus indicator on every stop, names and states of custom controls, and text alternatives for drawings. The science, scoring and any completion code are unchanged.
