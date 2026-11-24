@@ -80,7 +80,7 @@ The WordPress plugin tests (`tests/unit/act-history.test.js` and `tests/unit/lan
 
 ## Behavior parity
 
-`npm run parity` exports a base git ref (default `origin/main`) and serves it next to the working tree. It opens both in Chromium with the same seeded `Math.random`, makes the same clicks and key presses, and compares after every action:
+`npm run parity` exports a base git ref (default `origin/main`) and serves it next to the working tree. It opens both in Chromium with the same seeded `Math.random` and reduced motion (so `shared/zsa-base.css` turns animations off and every box is measured at rest), makes the same clicks and key presses, and compares after every action:
 - the activity's DOM (class names compared without the activity code, so `zsa-ict-choice` matches `zsa-choice`)
 - form state, focus, the live region, scroll position and page title
 - every element's box and computed style, including the ✗ mark
