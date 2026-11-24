@@ -113,7 +113,13 @@ var ui = {
   stats: ["Same group or period", "Trend direction", "Which element"],
   labels: {next: "Next question", complete: "Question complete", singleDone: "Trend practice complete", firstTry: "First-try correct on original questions",
     itemLabel: "Question", singleLabel: "Question", currentMark: " (in this question)", finish: "See round summary"},
-  practice: [["mixed", "All three trends"], ["radius", "Atomic radius only"], ["en", "Electronegativity only"], ["ie", "First ionization energy only"]]
+  practice: [["mixed", "All three trends"], ["radius", "Atomic radius only"], ["en", "Electronegativity only"], ["ie", "First ionization energy only"]],
+  // The comparison cards and their picture label (trends.js).
+  visual: {
+    vs: "vs", place: "Group {group} · Period {period}", placeUnknown: "Group ? · Period ?", trend: "{Label} {direction} {where}",
+    winner: "{Winner} has the {higher} {label}", scale: "Circles drawn to scale by atomic radius", said: "Comparison of {nameA} and {nameB}.",
+    card: "{name} ({symbol}), atomic number {z}", cardPlace: "group {group}, period {period}", cardValue: "{label} {value}"
+  }
 };
 
 var mainTable = [1, 2, 3, 4, 5, 6].map(function (p) {

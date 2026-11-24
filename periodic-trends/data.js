@@ -672,7 +672,19 @@
         "ie",
         "First ionization energy only"
       ]
-    ]
+    ],
+    "visual": {
+      "vs": "vs",
+      "place": "Group {group} · Period {period}",
+      "placeUnknown": "Group ? · Period ?",
+      "trend": "{Label} {direction} {where}",
+      "winner": "{Winner} has the {higher} {label}",
+      "scale": "Circles drawn to scale by atomic radius",
+      "said": "Comparison of {nameA} and {nameB}.",
+      "card": "{name} ({symbol}), atomic number {z}",
+      "cardPlace": "group {group}, period {period}",
+      "cardValue": "{label} {value}"
+    }
   }
   };
   var i18n;
@@ -931,7 +943,19 @@
             "ie",
             "Solo primera energía de ionización"
           ]
-        ]
+        ],
+        "visual": {
+          "vs": "vs.",
+          "place": "Grupo {group} · Periodo {period}",
+          "placeUnknown": "Grupo ? · Periodo ?",
+          "trend": "{TheLabel} {direction} {where}",
+          "winner": "El {winner} tiene {aHigher}",
+          "scale": "Círculos dibujados a escala según el radio atómico",
+          "said": "Comparación entre el {nameA} y el {nameB}.",
+          "card": "{name} ({symbol}), número atómico {z}",
+          "cardPlace": "grupo {group}, periodo {period}",
+          "cardValue": "{label} de {value}"
+        }
       };
     }
   }
