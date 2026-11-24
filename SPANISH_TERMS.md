@@ -3480,6 +3480,28 @@ Red fija, favorecida and espontánea were already in use in this lab. Fusión an
 | Lone pairs: N in NH₃ has 1 pair. | Pares libres: N en NH₃ tiene 1 par. |
 
 
+### Reaction Energy Lab bench (1.1.0)
+
+Matraz, parrilla, complejo activado, avance de la reacción, enlaces rotos and enlaces formados were already in the glossary or this lab. Iniciar keeps the lab's Play label.
+
+| English | Mexican Spanish |
+| --- | --- |
+| Reaction pathway | Trayectoria de la reacción |
+| Run reaction | Iniciar reacción |
+| Reaction progress (%) | Avance de la reacción (%) |
+| Climbing the barrier | Subida de la barrera |
+| Downhill: new bonds form. | Bajada: se forman enlaces nuevos. |
+| Bonds breaking and forming | Enlaces que se rompen y se forman |
+| Break bonds / Form bonds | Romper enlaces / Formar enlaces |
+| Separate atoms | Átomos separados |
+| Energy absorbed breaking bonds | Energía absorbida al romper enlaces |
+| Energy released forming bonds | Energía liberada al formar enlaces |
+| Flask and thermometer | Matraz y termómetro |
+| Ice melting / Water boiling | Hielo que se funde / Agua en ebullición |
+| Water freezing / Steam condensing | Agua que se congela / Vapor de agua que se condensa |
+| Hot plate: adding 500 J/s | Parrilla: agrega 500 J/s |
+| Cold plate: removing 500 J/s | Placa de enfriamiento: retira 500 J/s |
+
 ## Gas lab check pilot (gas-lab 1.2.0)
 
 | English | Mexican Spanish | Use |

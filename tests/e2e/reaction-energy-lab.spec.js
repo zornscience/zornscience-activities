@@ -124,3 +124,63 @@ test('switching processes cancels the pending reveal and resets prediction',asyn
   await expect(page.locator('#process-prediction')).toHaveValue('');await expect(page.locator('#start-process')).toBeDisabled();
   await page.waitForTimeout(900);await expect(page.locator('#panel-process .zsa-re-result')).toHaveText('Before the process');await expect(page.locator('#data-table tbody td')).toHaveText(['not yet','not yet']);
 });
+// Lab bench (1.1.0). Reduced motion is set with page.emulateMedia.
+test('the ball rides the energy diagram, over the lower barrier with a catalyst',async({page})=>{
+  await page.emulateMedia({reducedMotion:'reduce'});await page.goto(base+'?r=120&p=180&peak=250');
+  const slider=page.locator('#reaction-progress'),status=page.locator('#reaction-stage'),ball=page.locator('#panel-diagram .zsa-re-ball');
+  await expect(ball).toHaveCount(1);await expect(status).toHaveText('Reactants: bonds intact.');
+  const highest=async()=>{let top=1e9,stages=new Set();for(let v=0;v<=100;v+=2){await slider.fill(String(v));top=Math.min(top,Number(await ball.getAttribute('cy')));stages.add(await status.textContent());}return {top,stages};};
+  const plain=await highest();
+  expect([...plain.stages]).toEqual(['Reactants: bonds intact.','Climbing the barrier: energy goes in as bonds stretch and break.','Activated complex: the highest energy point.','Downhill: new bonds form.','Products formed.']);
+  // The ball sits on the path: at the top it is 13 units above the peak (y = 320 − 250/300 × 250).
+  expect(plain.top).toBeCloseTo(320-250/300*250-13,0);
+  await page.locator('#catalyst').check();const catalyzed=await highest();expect(catalyzed.top).toBeGreaterThan(plain.top+5);
+  await slider.focus();await page.keyboard.press('Home');await expect(status).toHaveText('Reactants: bonds intact.');
+  await page.locator('#run-reaction').click();await expect(slider).toHaveValue('100');await expect(status).toHaveText('Products formed.');await expect(page.locator('#live')).toHaveText('Products formed.');
+  await expect(slider).toHaveAttribute('aria-valuetext','100%. Products formed.');
+});
+test('with motion, Run reaction moves the ball along the path',async({page})=>{
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.emulateMedia({reducedMotion:'no-preference'});await page.goto(base);
+  const ball=page.locator('#panel-diagram .zsa-re-ball'),x0=await ball.getAttribute('cx');
+  await page.locator('#run-reaction').click();await page.waitForTimeout(800);
+  const x1=Number(await ball.getAttribute('cx'));expect(x1).toBeGreaterThan(Number(x0));
+  await expect(page.locator('#reaction-stage')).toHaveText('Products formed.',{timeout:6000});expect(errors).toEqual([]);
+});
+test('bonds break then form, with energy bars and no tallies given away',async({page})=>{
+  await page.emulateMedia({reducedMotion:'reduce'});
+  for(const [id,before,after] of [['hcl',2,2],['ch4',8,8],['nh3',6,6]]){
+    await page.goto(base+'?mode=bonds&rxn='+id);
+    const scene=page.locator('#bond-scene'),lines=scene.locator('line'),status=page.locator('#bond-stage');
+    await expect(status).toHaveText('Reactant bonds are intact.');await expect(lines).toHaveCount(before);
+    await expect(page.locator('#form-bonds')).toBeDisabled();await expect(page.locator('#reset-bonds')).toBeDisabled();
+    await page.locator('#break-bonds').click();await expect(status).toHaveText('Breaking bonds absorbs energy.');await expect(page.locator('#form-bonds')).toBeFocused();
+    expect(await page.locator('#energy-in').evaluate(m=>m.value)).toBeGreaterThan(0);expect(await page.locator('#energy-out').evaluate(m=>m.value)).toBe(0);
+    await page.locator('#form-bonds').click();await expect(status).toHaveText('Forming bonds releases energy.');await expect(lines).toHaveCount(after);
+    // The bars compare the two sums (hcl: 678 in, 862 out), without numbers.
+    const bars=await page.evaluate(()=>[document.getElementById('energy-in').value,document.getElementById('energy-out').value]);
+    if(id==='hcl')expect(bars[0]/bars[1]).toBeCloseTo(678/862,3);
+    await expect(page.locator('.zsa-re-bench')).not.toContainText(/\d/);
+    await expect(page.locator('#data-table tbody td').first()).toHaveText('0');await expect(page.locator('#show-bond-answer')).toBeHidden();
+    await expect(scene).toHaveAttribute('aria-label',/^Bond model for .+\. Forming bonds releases energy\.$/);
+    await page.locator('#reset-bonds').click();await expect(status).toHaveText('Reactant bonds are intact.');await expect(lines).toHaveCount(before);await expect(page.locator('#break-bonds')).toBeFocused();
+  }
+});
+test('the flask and thermometer follow the heating and cooling curve',async({page})=>{
+  await page.emulateMedia({reducedMotion:'reduce'});await page.goto(base+'?mode=heating&mass=15&start=-20&end=120');
+  const flask=page.locator('#heating-flask'),time=page.locator('#heat-progress');
+  await expect(flask).toHaveAttribute('aria-label',/^Flask of water at −20(\.0)? °C\. Ice warming\.$/);await expect(page.locator('#flask-heat')).toHaveText('Hot plate: adding 500 J/s');
+  const seen=new Set();for(let v=0;v<=100;v+=1){await time.fill(String(v));seen.add((await flask.getAttribute('aria-label')).replace(/^.*°C\. /,''));}
+  expect([...seen]).toEqual(['Ice warming.','Ice melting.','Liquid water warming.','Water boiling.','Steam warming.']);
+  // The thermometer reads the same temperature as the particle text.
+  await time.fill('50');const particle=await page.locator('#particle-text').textContent();const reading=(await flask.getAttribute('aria-label')).match(/at (.+?) °C/)[1];expect(particle).toContain(reading+' °C');
+  await page.goto(base+'?mode=heating&mass=15&start=120&end=-20');await expect(page.locator('#flask-heat')).toHaveText('Cold plate: removing 500 J/s');await expect(flask).toHaveAttribute('aria-label',/Steam cooling\.$/);
+  await time.fill('100');await expect(flask).toHaveAttribute('aria-label',/Ice cooling\.$/);
+});
+test('bench text in Mexican Spanish',async({page})=>{
+  await page.emulateMedia({reducedMotion:'reduce'});await page.goto(base+'?lang=es');
+  await expect(page.locator('#run-reaction')).toHaveText('Iniciar reacción');await expect(page.locator('#reaction-stage')).toHaveText('Reactivos: enlaces intactos.');
+  await page.goto(base+'?mode=bonds&rxn=hcl&lang=es');await page.locator('#break-bonds').click();await expect(page.locator('#bond-stage')).toHaveText('Romper enlaces absorbe energía.');
+  await expect(page.locator('.zsa-re-bench')).not.toContainText(/Bonds|Energy|Reactants|Products|Separate/);
+  await page.goto(base+'?mode=heating&lang=es');await expect(page.locator('#flask-heat')).toHaveText('Parrilla: agrega 500 J/s');await expect(page.locator('#heating-flask')).toHaveAttribute('aria-label',/^Matraz con agua a .+ °C\. Hielo que se calienta\.$/);
+});
