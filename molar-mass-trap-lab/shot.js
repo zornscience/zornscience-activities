@@ -6,6 +6,12 @@
   root.addEventListener("zsa:molar-mass-shot", (event) => event.detail(createShotStation));
 
   function createShotStation({model, t, svg, element, setText, setAvailability, clock, getState, refresh}) {
+    // Write an attribute only when it changes, so each frame of a fall touches only what moved.
+    function setAttr(node, name, value) {
+      const text = String(value);
+      if (node.getAttribute(name) !== text) node.setAttribute(name, text);
+    }
+
     const {shot, liquids} = model;
     const codes = Object.keys(liquids);
     const racks = {}, tubeButtons = {};
@@ -123,27 +129,27 @@
       if (sample.phase === "tilting") angle = tilt * p;
       if (sample.phase === "uprighting") angle = tilt * (1 - p);
       const y = top + (bottom - top) * position(sample, p);
-      activeTube.setAttribute("transform", `translate(195 119) rotate(${angle})`);
-      activeArt.ball.setAttribute("cy", y);
+      setAttr(activeTube, "transform", `translate(195 119) rotate(${angle})`);
+      setAttr(activeArt.ball, "cy", y);
       const liquidPath = angle > 90 ? activeArt.inverted : activeArt.upright;
       if (activeArt.liquid.getAttribute("d") !== liquidPath) activeArt.liquid.setAttribute("d", liquidPath);
-      racks[key].drawing.setAttribute("visibility", angle > 1 ? "hidden" : "visible");
-      racks[key].ball.setAttribute("cy", y);
-      $("shot-markers").setAttribute("visibility", angle > 1 ? "hidden" : "visible");
+      setAttr(racks[key].drawing, "visibility", angle > 1 ? "hidden" : "visible");
+      setAttr(racks[key].ball, "cy", y);
+      setAttr($("shot-markers"), "visibility", angle > 1 ? "hidden" : "visible");
 
       if (force) {
         setText(artLiquid, liquidName(key));
         activeArt.liquid.dataset.liquid = key;
         for (const other of codes) {
           setText(tubeButtons[other].name, t(liquids[other]));
-          tubeButtons[other].button.setAttribute("aria-pressed", String(other === key));
-          racks[other].group.dataset.selected = String(other === key);
+          setAttr(tubeButtons[other].button, "aria-pressed", String(other === key));
+          setAttr(racks[other].group, "data-selected", String(other === key));
           if (other === key) continue;
           const inactive = getState().shot.tubes[other];
           const outOfRack = inactive.orientation === "tilted" || inactive.phase === "tilting";
-          racks[other].drawing.setAttribute("visibility", outOfRack ? "hidden" : "visible");
+          setAttr(racks[other].drawing, "visibility", outOfRack ? "hidden" : "visible");
           const snapshot = model.shotSnapshot(inactive, other, now);
-          racks[other].ball.setAttribute("cy", top + (bottom - top) * position(inactive, snapshot.progress));
+          setAttr(racks[other].ball, "cy", top + (bottom - top) * position(inactive, snapshot.progress));
         }
       }
     }
@@ -186,8 +192,8 @@
       setAvailability("shot-operate", !paused && (atStopper || (atBottom && !view.running)));
       setAvailability("shot-replay", hasFall && !view.running && !paused);
       setAvailability("shot-reset", paused || !atBottom || trial.contactedAt !== null || trial.startedAt !== null);
-      $("shot-top-marker").dataset.active = String(atStopper || ["falling", "replaying"].includes(sample.phase));
-      $("shot-bottom-marker").dataset.active = String(hasFall);
+      setAttr($("shot-top-marker"), "data-active", String(atStopper || ["falling", "replaying"].includes(sample.phase)));
+      setAttr($("shot-bottom-marker"), "data-active", String(hasFall));
     }
 
     function paint(now, motion, force) {
@@ -204,8 +210,8 @@
       const starting = view.running && belowThreshold(sample.trial, view.stopwatchMs);
       setText($("shot-time"), starting ? t(paused ? "Paused" : "Timing") : readingText(sample.trial, view.stopwatchMs) + " s");
       // The face shows whether the stopwatch is ready, running, paused or holding a reading.
-      $("shot-stopwatch").dataset.state = paused ? "paused" : view.running ? "running" :
-        sample.trial.stoppedAt !== null ? "stopped" : "ready";
+      setAttr($("shot-stopwatch"), "data-state", paused ? "paused" : view.running ? "running" :
+        sample.trial.stoppedAt !== null ? "stopped" : "ready");
       return {
         moving: !paused && Number.isFinite(view.remaining),
         next: paused ? Infinity : Math.min(view.remaining, view.running ? 100 : Infinity)

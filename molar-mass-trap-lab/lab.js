@@ -21,8 +21,12 @@
   };
   const centerX = 203;
   const rulerY = 153;
-  const sideY = 229;
-  const heightRulerX = 300;
+  const sideY = 249;
+  // The eye-level view is enlarged 2x in both directions, so shapes stay true and heights are easier to read.
+  const sideScale = 2;
+  const sideUnitsPerMm = ruler.unitsPerMm * sideScale;
+  const heightRulerX = 350;
+  const heightRulerMaxMm = 4;
   const waxBoxes = {};
   const bottleNames = {};
   const buttons = Array.from(root.querySelectorAll("[data-station]"));
@@ -48,12 +52,23 @@
     return node;
   }
 
+  // Write an attribute only when it changes. The settle redraws every frame, and rewriting unchanged
+  // values makes Chrome re-check styles and makes page-monitoring extensions process each write.
+  function setAttr(node, name, value) {
+    const text = String(value);
+    if (node.getAttribute(name) !== text) node.setAttribute(name, text);
+  }
+
+  function setHidden(node, hidden) {
+    if (node.hidden !== hidden) node.hidden = hidden;
+  }
+
   function setText(node, text) {
     if (node.textContent !== text) node.textContent = text;
   }
 
   function setAvailability(id, available) {
-    $(id).setAttribute("aria-disabled", String(!available));
+    setAttr($(id), "aria-disabled", String(!available));
   }
 
   function capPath(geometry, scale) {
@@ -116,17 +131,20 @@
     waxBoxes[code] = {group, puddle};
   }
 
-  // A fixed upright ruler in the eye-level view, at the same scale as the drawing, for reading puddle height.
+  // A fixed upright ruler in the enlarged eye-level view, at that view's scale, reads puddle height in real mm.
+  // Whole millimeters are numbered and half millimeters are marked.
   function addHeightRulerMarks() {
     const marks = $("height-ruler-ticks");
-    for (let mm = 0; mm <= 5; mm++) {
-      const y = -mm * ruler.unitsPerMm;
-      marks.append(svg("path", {d: `M0 ${y}h${mm % 5 === 0 ? 8 : 5}`, stroke: "currentColor", "stroke-width": mm === 0 ? 1.4 : .85}));
-      const label = svg("text", {x: 13, y: y + 3});
-      label.textContent = mm;
+    for (let half = 0; half <= heightRulerMaxMm * 2; half++) {
+      const y = -half / 2 * sideUnitsPerMm;
+      const whole = half % 2 === 0;
+      marks.append(svg("path", {d: `M0 ${y}h${whole ? 8 : 4}`, stroke: "currentColor", "stroke-width": half === 0 ? 1.4 : .85}));
+      if (!whole) continue;
+      const label = svg("text", {x: 15, y: y + 3.5});
+      label.textContent = half / 2;
       marks.append(label);
     }
-    const unit = svg("text", {x: 25, y: -1, class: "zsa-mmt-height-unit"});
+    const unit = svg("text", {x: 27, y: -1, class: "zsa-mmt-height-unit"});
     unit.textContent = "mm";
     $("height-ruler").append(unit);
   }
@@ -174,11 +192,11 @@
   }
 
   function renderRuler(sample) {
-    slider.value = sample.zeroMm;
+    if (slider.value !== String(sample.zeroMm)) slider.value = sample.zeroMm;
     const text = sample.zeroMm === 0 ? "Zero at center" :
       sample.zeroMm < 0 ? "Zero {distance} mm left of center" : "Zero {distance} mm right of center";
-    slider.setAttribute("aria-valuetext", t(text, {distance: Math.abs(sample.zeroMm)}));
-    $("ruler").setAttribute("transform", `translate(${centerX + sample.zeroMm * ruler.unitsPerMm} ${rulerY})`);
+    setAttr(slider, "aria-valuetext", t(text, {distance: Math.abs(sample.zeroMm)}));
+    setAttr($("ruler"), "transform", `translate(${centerX + sample.zeroMm * ruler.unitsPerMm} ${rulerY})`);
     const reading = sample.edgeReading;
     setText($("edge-reading"), reading ? t(
       "Left edge {left} mm. Right edge {right} mm. Side-view height about {height} mm.", reading
@@ -186,31 +204,31 @@
   }
 
   function circle(node, radius, height = radius) {
-    node.setAttribute("rx", radius);
-    node.setAttribute("ry", height);
+    setAttr(node, "rx", radius);
+    setAttr(node, "ry", height);
   }
 
   function renderWaxArt(code, geometry, settled) {
     const radius = geometry.radiusMm * ruler.unitsPerMm;
     for (const id of ["footprint", "silhouette"]) {
-      $(id).dataset.liquid = code;
-      $(id).setAttribute("visibility", radius ? "visible" : "hidden");
+      setAttr($(id), "data-liquid", code);
+      setAttr($(id), "visibility", radius ? "visible" : "hidden");
     }
-    $("target-mark").setAttribute("visibility", radius ? "hidden" : "visible");
+    setAttr($("target-mark"), "visibility", radius ? "hidden" : "visible");
     circle($("puddle-top"), radius);
     const glint = $("puddle-glint");
-    glint.setAttribute("cx", -.36 * radius);
-    glint.setAttribute("cy", -.44 * radius);
-    const height = geometry.heightMm * ruler.unitsPerMm;
-    circle(glint, .3 * radius, Math.min(.12 * radius, .55 * height));
-    $("puddle-contact").setAttribute("rx", geometry.contactRadiusMm * ruler.unitsPerMm + 2);
-    $("puddle-side").setAttribute("d", capPath(geometry, ruler.unitsPerMm));
+    setAttr(glint, "cx", -.36 * radius);
+    setAttr(glint, "cy", -.44 * radius);
+    circle(glint, .3 * radius, Math.min(.12 * radius, .55 * geometry.heightMm * ruler.unitsPerMm));
+    const height = geometry.heightMm * sideUnitsPerMm;
+    setAttr($("puddle-contact"), "rx", geometry.contactRadiusMm * sideUnitsPerMm + 2);
+    setAttr($("puddle-side"), "d", capPath(geometry, sideUnitsPerMm));
     // A dashed guide carries the top of the puddle across to the fixed height ruler.
     const guide = $("height-guide");
-    guide.setAttribute("visibility", height ? "visible" : "hidden");
-    guide.setAttribute("d", `M${centerX} ${sideY - height}H${heightRulerX}`);
-    $("ruler-zero").setAttribute("visibility", settled ? "visible" : "hidden");
-    $("ruler").dataset.draggable = String(settled);
+    setAttr(guide, "visibility", height ? "visible" : "hidden");
+    setAttr(guide, "d", `M${centerX} ${sideY - height}H${heightRulerX}`);
+    setAttr($("ruler-zero"), "visibility", settled ? "visible" : "hidden");
+    setAttr($("ruler"), "data-draggable", String(settled));
   }
 
   function selectedSample() {
@@ -224,7 +242,7 @@
       return;
     }
     const progress = Math.max(0, 1 - (sample.dropLandsAt - now) / wax.dropMs);
-    $("falling-drop").setAttribute("cy", 179 + (endY - 179) * progress ** 2);
+    setAttr($("falling-drop"), "cy", 179 + (endY - 179) * progress ** 2);
     frame = requestAnimationFrame((time) => paintDrop(time, endY));
   }
 
@@ -247,12 +265,12 @@
     const shotActive = station === "shot";
     const mixingActive = station === "mixing";
     const [title, tag] = stations[station];
-    for (const button of buttons) button.setAttribute("aria-pressed", String(button.dataset.station === station));
+    for (const button of buttons) setAttr(button, "aria-pressed", String(button.dataset.station === station));
     setText($("station-title"), t(title));
     setText($("station-tag"), t(tag));
-    $("wax-bench").hidden = station !== "wax";
-    $("shot-bench").hidden = !shotActive;
-    $("mixing-bench").hidden = !mixingActive;
+    setHidden($("wax-bench"), station !== "wax");
+    setHidden($("shot-bench"), !shotActive);
+    setHidden($("mixing-bench"), !mixingActive);
     renderInstructions();
     if (shotActive) {
       paintStation(shotStation, true);
@@ -272,11 +290,11 @@
     for (const key of codes) {
       const box = waxBoxes[key];
       const radius = model.waxGeometry(key, state.wax.samples[key], now).radiusMm;
-      box.group.dataset.selected = String(key === code);
+      setAttr(box.group, "data-selected", String(key === code));
       circle(box.puddle, radius);
-      box.puddle.setAttribute("visibility", radius ? "visible" : "hidden");
+      setAttr(box.puddle, "visibility", radius ? "visible" : "hidden");
     }
-    for (const button of $("bottles").children) button.setAttribute("aria-pressed", String(button.dataset.bottle === code));
+    for (const button of $("bottles").children) setAttr(button, "aria-pressed", String(button.dataset.bottle === code));
     const geometry = model.waxGeometry(code, sample, now);
     renderWaxArt(code, geometry, settled);
     setAvailability("dispense", !pending && sample.drops < wax.dropCount);
@@ -292,18 +310,18 @@
     }));
     // The mini stopwatch starts when the third drop lands and stops at 30 s. Real time runs faster than the clock.
     const shownSeconds = Math.min(wax.settleDisplayS, Math.floor(elapsed / wax.settleMs * wax.settleDisplayS));
-    $("settle-stopwatch").dataset.state = settled ? "stopped" : settling ? "running" : "ready";
+    setAttr($("settle-stopwatch"), "data-state", settled ? "stopped" : settling ? "running" : "ready");
     setText($("settle-clock"), "0:" + String(shownSeconds).padStart(2, "0"));
-    $("measure-tools").hidden = !settled;
+    setHidden($("measure-tools"), !settled);
     renderRuler(sample);
 
     const drop = $("falling-drop");
-    drop.dataset.liquid = code;
+    setAttr(drop, "data-liquid", code);
     const animate = pending && !document.hidden && !reducedMotion.matches;
-    drop.setAttribute("visibility", animate ? "visible" : "hidden");
+    setAttr(drop, "visibility", animate ? "visible" : "hidden");
     if (document.hidden) return;
     if (animate) {
-      paintDrop(now, sideY - 5 - geometry.heightMm * ruler.unitsPerMm);
+      paintDrop(now, sideY - 5 - geometry.heightMm * sideUnitsPerMm);
       return;
     }
     // While the selected puddle settles, redraw every frame so the spreading looks smooth. The settle is 2.5 s.
@@ -360,17 +378,17 @@
   function renderInstructions() {
     const intro = !$("intro").hidden;
     const station = intro ? "intro" : state.station;
-    for (const key of ["intro", "wax", "shot", "mixing"]) $(key + "-instructions").hidden = station !== key;
+    for (const key of ["intro", "wax", "shot", "mixing"]) setHidden($(key + "-instructions"), station !== key);
     const titles = {intro: "Getting started", wax: "Wax-paper investigation"};
     setText($("instructions-title"), t(titles[station] ?? stations[station][0]));
   }
 
   // The intro screen introduces the liquids. The bench stays hidden until the student starts the lab.
   function showIntro(open) {
-    $("intro").hidden = !open;
-    $("stations").hidden = open;
-    $("workspace").hidden = open;
-    $("intro-open").hidden = open;
+    setHidden($("intro"), !open);
+    setHidden($("stations"), open);
+    setHidden($("workspace"), open);
+    setHidden($("intro-open"), open);
     renderInstructions();
   }
   $("intro-start").addEventListener("click", () => {

@@ -52,8 +52,9 @@ async function inspectGeometry(page) {
     return {
       zero, left: bounds.left, right: bounds.right,
       diameter: bounds.width / pixelsPerMm,
-      profileWidth: profile.getBoundingClientRect().width / pixelsPerMm,
-      profileHeight: profile.getBoundingClientRect().height / pixelsPerMm,
+      // The eye-level view is enlarged 2x, so its sizes are halved to compare with the top view.
+      profileWidth: profile.getBoundingClientRect().width / pixelsPerMm / 2,
+      profileHeight: profile.getBoundingClientRect().height / pixelsPerMm / 2,
       pixelsPerMm
     };
   });
@@ -173,12 +174,15 @@ test("the ruler and side view agree for a calibrated bead above 90 degrees", asy
     const top = document.getElementById("puddle-side").getBoundingClientRect().top;
     const guide = document.getElementById("height-guide").getBoundingClientRect();
     const zero = new DOMPoint(0, 0).matrixTransform(ruler).y;
-    const mm = new DOMPoint(0, -6).matrixTransform(ruler).y;
+    const mm = new DOMPoint(0, -12).matrixTransform(ruler).y;
     return {fromRuler: (zero - top) / (zero - mm), guideFromRuler: (zero - guide.top) / (zero - mm)};
   });
   expect(height.fromRuler).toBeCloseTo(5.1974, 1);
   expect(height.guideFromRuler).toBeCloseTo(5.1974, 1);
-  await expect(page.locator("#height-ruler-ticks text")).toHaveText(["0", "1", "2", "3", "4", "5"]);
+  // The ruler runs 0 to 4 mm, since the tallest puddle is about 3.3 mm, with half-millimeter marks.
+  await expect(page.locator("#height-ruler-ticks text")).toHaveText(["0", "1", "2", "3", "4"]);
+  await expect(page.locator("#height-ruler-ticks path")).toHaveCount(9);
+  await expect(page.locator("#inspection .zsa-mmt-scene-note")).toHaveText("Enlarged 2×");
 });
 
 test("keyboard only can align zero for clear glycerin and keep the reading through both other stations", async ({page}) => {
@@ -453,8 +457,15 @@ test("the wax and mixing settles redraw every frame, not once per displayed seco
   }
   await page.locator('[data-bottle="M"]').click();
   await addDrops(page);
+  // Each settle frame writes only what changed. Rewriting unchanged values cost about 53 writes per frame.
+  await page.evaluate(() => {
+    window.mmtWrites = 0;
+    new MutationObserver((list) => { window.mmtWrites += list.length; })
+      .observe(document.body, {subtree: true, attributes: true, childList: true, characterData: true});
+  });
   // About 0.5 s of a 2.5 s settle. A once-per-second redraw (every 83 ms) gives about 6 frames.
   expect(await distinctFrames("#puddle-top", "rx")).toBeGreaterThan(20);
+  expect(await page.evaluate(() => window.mmtWrites) / 30).toBeLessThan(20);
 
   await page.locator('[data-station="mixing"]').click();
   for (const code of ["W", "M"]) {
