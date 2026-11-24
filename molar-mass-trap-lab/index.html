@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-  <meta name="zsa-version" content="1.2.2">
+  <meta name="zsa-version" content="1.2.3">
   <title>The Molar Mass Trap Lab | ZornScience</title>
 <meta name="description" content="Compare how four liquids spread on wax paper, time a falling steel shot, and mix liquid pairs to explain the Molar Mass Trap with evidence." data-zsa-es="Compara cómo se extienden cuatro líquidos en papel encerado, mide la caída de un perdigón y mezcla pares para explicar la trampa de la masa molar.">
 <link rel="canonical" href="https://activities.zornscience.org/molar-mass-trap-lab/">
@@ -12,24 +12,24 @@
 <link rel="alternate" hreflang="es" href="https://activities.zornscience.org/molar-mass-trap-lab/?lang=es">
 <link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/molar-mass-trap-lab/">
   <link rel="icon" href="../favicon.png" type="image/png">
-  <link rel="stylesheet" href="../shared/zsa-base.css?v=1.2.2">
-  <link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=1.2.2">
-  <link rel="stylesheet" href="../shared/zsa-header.css?v=1.2.2">
-  <link rel="stylesheet" href="lab.css?v=1.2.2">
-  <script src="../shared/zsa-embed.js?v=1.2.2" defer></script>
-  <script src="../shared/zsa-i18n.js?v=1.2.2" defer></script>
-  <script src="model.js?v=1.2.2" defer></script>
-  <script src="data.js?v=1.2.2" defer></script>
-  <script src="shot.js?v=1.2.2" defer></script>
-  <script src="mixing.js?v=1.2.2" defer></script>
-  <script src="lab.js?v=1.2.2" defer></script>
-<link rel="stylesheet" href="../shared/zsa-about.css?v=1.2.2"><script src="../shared/zsa-about.js?v=1.2.2" defer></script></head>
+  <link rel="stylesheet" href="../shared/zsa-base.css?v=1.2.3">
+  <link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=1.2.3">
+  <link rel="stylesheet" href="../shared/zsa-header.css?v=1.2.3">
+  <link rel="stylesheet" href="lab.css?v=1.2.3">
+  <script src="../shared/zsa-embed.js?v=1.2.3" defer></script>
+  <script src="../shared/zsa-i18n.js?v=1.2.3" defer></script>
+  <script src="model.js?v=1.2.3" defer></script>
+  <script src="data.js?v=1.2.3" defer></script>
+  <script src="shot.js?v=1.2.3" defer></script>
+  <script src="mixing.js?v=1.2.3" defer></script>
+  <script src="lab.js?v=1.2.3" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.2.3"><script src="../shared/zsa-about.js?v=1.2.3" defer></script></head>
 <body>
 <main class="zsa zsa-mmt" data-zsa-activity="molar-mass-trap-lab">
   <header data-zsa-header class="header">
     <div data-zsa-header-row>
       <div data-zsa-header-identity class="identity">
-        <a data-zsa-header-brand class="brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../ionic-reactions/zornscience-logo.png?v=1.2.2" width="34" height="33" alt=""></a>
+        <a data-zsa-header-brand class="brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../ionic-reactions/zornscience-logo.png?v=1.2.3" width="34" height="33" alt=""></a>
         <h1>The Molar Mass Trap Lab</h1>
       </div>
       <nav data-zsa-header-tools aria-label="Activity tools">
@@ -39,6 +39,10 @@
       </nav>
     </div>
   </header>
+  <div id="motion-notice" class="zsa-mmt-motion-notice" hidden>
+    <p id="motion-notice-text">Your device asks for less motion, so the falling drop, the steel shot and the tube turns are not animated.</p>
+    <button id="motion-toggle" type="button" class="zsa-btn" aria-pressed="false">Show full animations</button>
+  </div>
   <noscript><p>This simulation needs JavaScript.</p><p lang="es-MX">Esta simulación necesita JavaScript.</p></noscript>
 
   <section id="intro" class="zsa-mmt-intro" aria-labelledby="intro-title">

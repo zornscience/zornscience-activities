@@ -1,6 +1,6 @@
 # The Molar Mass Trap Lab
 
-Version: 1.2.2
+Version: 1.2.3
 
 A virtual investigation for Chemistry and Honors Chemistry Unit 4. It opens with an intro screen that shows the four liquids, then has the wax-paper investigation, the steel shot race and the five-tube mixing rack. Students record their data, predictions and debrief on the printed lab worksheet, so the simulation uses the full width of the page. The steel shot stopwatch times each fall automatically.
 
@@ -15,6 +15,10 @@ The Lewis structures show the O-H groups and lone pairs, which is the evidence t
 ## Run the bench
 
 From the repository root, run `npm run serve` and open `http://127.0.0.1:8000/molar-mass-trap-lab/`. Add `?lang=es` for Mexican Spanish. The intro screen shows on load, and **Start the lab** opens the bench. Each station can empty or reset its selected apparatus.
+
+### Reduced motion
+
+When the device asks for reduced motion (ChromeOS's accessibility setting does this in Chrome), the lab skips the falling drop, the steel shot's fall and the tube turns by default. Gentle changes stay smooth: the puddle spreading, the streaks fading and the running clocks. The intro then shows a notice with **Show full animations**, which turns every animation on. The choice is added to the address as `motion=full`, so it survives a reload or a language switch, and **Use less motion** turns it back off. A teacher can post the lab link with `?motion=full` to turn full animations on for every student. The lab stores nothing in the browser. The notice appears only on the intro, so the bench keeps its full height. Firefox on a Chromebook does not receive the ChromeOS setting, so it animates fully either way.
 
 On screens at least 1000 px wide, each station shows its scene on the left and its controls on the right, so the whole bench fits on a 1366 × 768 or 1280 × 720 laptop without scrolling. Narrower screens stack the controls below the scene.
 

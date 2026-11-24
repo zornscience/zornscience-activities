@@ -34,6 +34,11 @@
   const rulerHit = $("ruler-hit");
   const inspection = $("inspection");
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+  // A device that asks for less motion gets reduced motion by default. The intro offers full animations.
+  // The choice lives in the address (motion=full), so it survives a reload or a language switch, and a teacher
+  // can share a link that turns full animations on for everyone.
+  let fullMotion = new URLSearchParams(location.search).get("motion") === "full";
+  const limitMotion = () => reducedMotion.matches && !fullMotion;
   const clock = () => performance.now();
   let state = model.createState();
   let frame = null, wake = null, drag = null;
@@ -237,7 +242,7 @@
 
   function paintDrop(now, endY) {
     const sample = selectedSample();
-    if (now >= sample.dropLandsAt || document.hidden || reducedMotion.matches) {
+    if (now >= sample.dropLandsAt || document.hidden || limitMotion()) {
       renderBench();
       return;
     }
@@ -247,10 +252,11 @@
   }
 
   function paintStation(controller, force) {
-    const motion = !reducedMotion.matches;
+    const motion = !limitMotion();
     const timing = controller.paint(clock(), motion, force);
     if (document.hidden) return;
-    if (timing.moving && motion) frame = requestAnimationFrame(() => paintStation(controller, false));
+    // Gentle changes, such as a running clock or fading streaks, stay smooth even with reduced motion.
+    if (timing.moving && (motion || timing.gentle)) frame = requestAnimationFrame(() => paintStation(controller, false));
     else if (Number.isFinite(timing.next)) wake = setTimeout(() => paintStation(controller, false), Math.max(1, Math.ceil(timing.next)));
   }
 
@@ -317,7 +323,7 @@
 
     const drop = $("falling-drop");
     setAttr(drop, "data-liquid", code);
-    const animate = pending && !document.hidden && !reducedMotion.matches;
+    const animate = pending && !document.hidden && !limitMotion();
     setAttr(drop, "visibility", animate ? "visible" : "hidden");
     if (document.hidden) return;
     if (animate) {
@@ -325,7 +331,8 @@
       return;
     }
     // While the selected puddle settles, redraw every frame so the spreading looks smooth. The settle is 2.5 s.
-    if (settling && !settled && !reducedMotion.matches) {
+    // The slow spreading is a gentle change, so it stays smooth with reduced motion too.
+    if (settling && !settled) {
       frame = requestAnimationFrame(renderBench);
       return;
     }
@@ -361,6 +368,7 @@
   i18n.onChange = () => {
     updateStatic();
     renderLabels();
+    renderMotionNotice();
     renderBench();
     setText($("share-status"), shareMessage ? t(shareMessage) : "");
   };
@@ -389,6 +397,7 @@
     setHidden($("stations"), open);
     setHidden($("workspace"), open);
     setHidden($("intro-open"), open);
+    renderMotionNotice();
     renderInstructions();
   }
   $("intro-start").addEventListener("click", () => {
@@ -483,7 +492,28 @@
     if (document.hidden && state.station === "shot") shotStation.pause(clock());
     renderBench();
   });
-  reducedMotion.addEventListener("change", renderBench);
+  function renderMotionNotice() {
+    // The notice sits on the intro, which every visit opens first, so the bench keeps its full height.
+    setHidden($("motion-notice"), !reducedMotion.matches || $("intro").hidden);
+    setText($("motion-notice-text"), t(fullMotion ? "Full animations are on, even though your device asks for less motion." :
+      "Your device asks for less motion, so the falling drop, the steel shot and the tube turns are not animated."));
+    setText($("motion-toggle"), t(fullMotion ? "Use less motion" : "Show full animations"));
+    setAttr($("motion-toggle"), "aria-pressed", String(fullMotion));
+  }
+  $("motion-toggle").addEventListener("click", () => {
+    fullMotion = !fullMotion;
+    const url = new URL(location.href);
+    if (fullMotion) url.searchParams.set("motion", "full");
+    else url.searchParams.delete("motion");
+    history.replaceState(history.state, "", url.href);
+    renderMotionNotice();
+    renderBench();
+  });
+  reducedMotion.addEventListener("change", () => {
+    renderMotionNotice();
+    renderBench();
+  });
+  renderMotionNotice();
   renderLabels();
   renderBench();
 }());

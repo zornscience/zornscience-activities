@@ -31,8 +31,10 @@ async function measureWax(page, code) {
     await page.locator("#dispense").click();
     await page.clock.fastForward(280);
   }
-  // The puddle settles on its own: 30 s on the clock in 2.5 s of real time.
-  await page.clock.fastForward(2600);
+  // The puddle settles on its own: 30 s on the clock in 2.5 s of real time. runFor steps through every frame;
+  // a single fastForward jump could let the settled frame draw before the page's clock caught up under load.
+  await page.clock.runFor(2600);
+  await expect(page.locator("#measure-tools")).toBeVisible();
   const ruler = page.locator("#ruler-position");
   await ruler.focus();
   const steps = (Number(await ruler.inputValue()) + diameter / 2) / -0.5;

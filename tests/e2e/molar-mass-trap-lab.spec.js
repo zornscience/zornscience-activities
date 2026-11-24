@@ -92,7 +92,7 @@ test("all four puddles merge in their own boxes, settle independently, and reset
     if (code === "M") {
       await page.locator('[data-station="mixing"]').click();
       await expect(page.locator("#station-tag")).toHaveText("Simulated mixtures");
-      await page.clock.fastForward(2600);
+      await page.clock.runFor(2600);
       await page.locator('[data-station="wax"]').click();
     } else {
       // The mini stopwatch shows elapsed settling time and stops at 0:30.
@@ -134,7 +134,7 @@ test("the wax overview updates a settling puddle while another liquid is selecte
   await page.locator('[data-bottle="W"]').click();
   const mineralOil = page.locator('#wax-boxes [data-liquid="M"] ellipse');
   expect(Number(await mineralOil.getAttribute("rx"))).toBeLessThan(11);
-  await page.clock.fastForward(2600);
+  await page.clock.runFor(2600);
   await expect(mineralOil).toHaveAttribute("rx", "11");
   await expect(page.locator('[data-bottle="W"]')).toHaveAttribute("aria-pressed", "true");
 });
@@ -320,6 +320,10 @@ test("reduced motion and blocked storage keep the wax sample during the session"
   await page.locator('[data-station="mixing"]').click();
   await page.locator('[data-station="wax"]').click();
   await expect(page.locator("#drop-count")).toHaveText("1 / 3 drops · 0.05 mL");
+  // With storage blocked, full animations can still be turned on for this visit.
+  await page.getByRole("button", {name: "Intro"}).click();
+  await page.getByRole("button", {name: "Show full animations"}).click();
+  await expect(page.getByRole("button", {name: "Use less motion"})).toHaveAttribute("aria-pressed", "true");
 });
 
 test("the settled ruler has no axe violations at laptop and portrait widths", async ({page}) => {
@@ -481,4 +485,62 @@ test("the wax and mixing settles redraw every frame, not once per displayed seco
   await page.clock.runFor(300);
   // The streaks fade over 10 s. A once-per-second redraw (every 167 ms) gives about 3 frames here.
   expect(await distinctFrames('#mix-active-tube [data-mix-band="lower"]', "fill-opacity")).toBeGreaterThan(20);
+});
+
+test("a device that asks for less motion gets a notice, smooth gentle changes and an opt-in for full animations kept in the address", async ({page}) => {
+  const errors = collectErrors(page);
+  await page.emulateMedia({reducedMotion: "reduce"});
+  await page.clock.install();
+  await page.goto(LAB);
+  const notice = page.locator("#motion-notice");
+  const toggle = page.getByRole("button", {name: "Show full animations"});
+  await expect(notice).toContainText("Your device asks for less motion");
+  await expect(toggle).toHaveAttribute("aria-pressed", "false");
+  await page.locator("#intro-start").click();
+  // The notice lives on the intro so the bench keeps its full height on a laptop.
+  await expect(notice).toBeHidden();
+
+  // Reduced motion by default: no falling drop, but the slow settle still redraws every frame.
+  await page.locator('[data-bottle="M"]').click();
+  await page.locator("#dispense").click();
+  await expect(page.locator("#falling-drop")).toHaveAttribute("visibility", "hidden");
+  await page.clock.runFor(300);
+  for (let i = 0; i < 2; i++) {
+    await page.locator("#dispense").click();
+    await page.clock.runFor(300);
+  }
+  const sizes = new Set();
+  for (let i = 0; i < 30; i++) {
+    await page.clock.runFor(16);
+    sizes.add(await page.locator("#puddle-top").getAttribute("rx"));
+  }
+  expect(sizes.size).toBeGreaterThan(20);
+
+  // Opting in from the intro plays the falling drop, and the choice survives a reload on this device.
+  await page.getByRole("button", {name: "Intro"}).click();
+  await toggle.click();
+  const off = page.getByRole("button", {name: "Use less motion"});
+  await expect(off).toHaveAttribute("aria-pressed", "true");
+  await expect(notice).toContainText("Full animations are on");
+  await page.locator("#intro-start").click();
+  await page.locator('[data-bottle="W"]').click();
+  await page.locator("#dispense").click();
+  await page.clock.runFor(50);
+  await expect(page.locator("#falling-drop")).toHaveAttribute("visibility", "visible");
+  // The choice lives in the address, so a reload keeps it and a teacher can share it.
+  expect(new URL(page.url()).searchParams.get("motion")).toBe("full");
+  await page.reload();
+  await expect(page.getByRole("button", {name: "Use less motion"})).toHaveAttribute("aria-pressed", "true");
+  await page.getByRole("link", {name: "ES Español"}).click();
+  await expect(page.getByRole("button", {name: "Usar menos movimiento"})).toBeVisible();
+  await page.getByRole("button", {name: "Usar menos movimiento"}).click();
+  await expect(notice).toContainText("Tu dispositivo pide menos movimiento");
+  expect(new URL(page.url()).searchParams.get("motion")).toBeNull();
+  expect(new URL(page.url()).searchParams.get("lang")).toBe("es");
+  expect(errors).toEqual([]);
+});
+
+test("the motion notice stays hidden when the device does not ask for less motion", async ({page}) => {
+  await page.goto(LAB);
+  await expect(page.locator("#motion-notice")).toBeHidden();
 });

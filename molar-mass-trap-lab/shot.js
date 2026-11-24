@@ -214,6 +214,8 @@
         sample.trial.stoppedAt !== null ? "stopped" : "ready");
       return {
         moving: !paused && Number.isFinite(view.remaining),
+        // The running stopwatch digits stay smooth even when the shot itself is not animated.
+        gentle: !paused && view.running,
         next: paused ? Infinity : Math.min(view.remaining, view.running ? 100 : Infinity)
       };
     }

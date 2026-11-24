@@ -339,7 +339,7 @@
       lastSecond = second;
       lastElapsed = elapsed;
       // The selected tube also redraws every frame while it settles, so the streaks fade smoothly.
-      return {moving: Boolean(tube.motion) || stage === "settling", next};
+      return {moving: Boolean(tube.motion) || stage === "settling", gentle: stage === "settling", next};
     }
 
     liquid.append(...["", ...Object.keys(liquids)].map(option));
