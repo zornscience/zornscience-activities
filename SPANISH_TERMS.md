@@ -3646,6 +3646,15 @@ The shared Lab check labels are the Gas lab pilot's. Readout and control names f
 | {start} s becomes {right} s | {start} s se convierte en {right} s | Explanations. |
 | About {percent}% longer / shorter | Aproximadamente {percent}% más largo / más corto | Question 4 choices. |
 | a weaker pull back toward the bottom | jala la esfera con menos fuerza de regreso hacia la parte más baja | Moon feedback. |
+| inertia | inercia | Question 2 feedback and explanation. |
+| the force of gravity | la fuerza de gravedad | Question 2 explanation. |
+| gravity pulls (on the bob) | la gravedad jala | Question 2 feedback; jalar as elsewhere in the glossary. |
+| release point / release height | punto de liberación / altura de liberación | Question 2 explanation and question 5 feedback. |
+| stores (energy) | almacena | Question 2 feedback and explanation. |
+| weaker (gravity) | más débil | Questions 3 and 4; the Moon is 6.06 veces más débil. |
+| square root (of the length) | raíz cuadrada | Question 1 explanation. |
+| arc (of the swing) | arco | Question 5 feedback. |
+| string (open question) | cuerda | The check says cuerda, but the lab's own text says hilo. Both are in the glossary (string, rope | hilo, cuerda). Pick one at the Spanish proofread. |
 
 ## Hooke's Law lab check (hookes-law-lab 1.3.0)
 
