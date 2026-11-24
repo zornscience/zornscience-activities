@@ -160,3 +160,38 @@
 
 .zsa-re-structures {display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
 .zsa-re-structures pre {margin:0;white-space:pre;max-width:100%;font-size:16px;}
+
+/* Lab bench (1.1.0): the reaction pathway with its ball, the bond model and the flask, in the dark bench look. */
+.zsa-re-bench{background:#183448;border:1px solid #274a60;border-radius:12px;overflow:hidden;margin:0 0 20px;color:#d5e5ee}
+.zsa-re-bench-top,.zsa-re-bench-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 10px;padding:10px 16px}
+.zsa-re-bench-top{background:#213e52;min-height:60px}
+.zsa-re-bench-caption{font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:#c3d8e4;margin-right:auto}
+.zsa-re .zsa-re-bench-button{background:#183448;color:#eef6fb;border-color:#7d9db0;padding:8px 14px;min-height:44px;font-size:15px}
+.zsa-re .zsa-re-bench-button:hover:not(:disabled){background:#2b5068;color:#fff}
+.zsa-re .zsa-re-bench-button:disabled{opacity:1;color:#8fa7b6;border-color:#4a6a7e;background:#183448;cursor:default}
+.zsa-re-bench-stage{display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;padding:12px 16px;background:radial-gradient(ellipse at 40% 45%,#25485f,#163246 72%)}
+.zsa-re-bench-drawing{flex:1 1 100%;min-width:0}
+.zsa-re svg.zsa-re-bench-svg{flex:3 1 300px;min-width:0}
+.zsa-re-bench-controls,.zsa-re-bench-meters{flex:1 1 220px;min-width:0}
+.zsa-re .zsa-re-bench-controls label,.zsa-re .zsa-re-bench-meters span{color:#eef6fb;font-weight:600;margin-top:0}
+.zsa-re .zsa-re-bench input[type=range]{accent-color:#ffd27a;width:100%}
+.zsa-re-bench-meter{display:grid;gap:4px;margin:6px 0 12px;font-size:15px}
+.zsa-re-bench-meter meter{width:100%;height:22px}
+.zsa-re-bench-bottom{background:#122636;border-top:1px solid #395364;font-size:15px;color:#c3d8e4;min-height:48px}
+.zsa-re-bench-status{margin:0;color:#b8f0d2;font-weight:600}
+.zsa-re .zsa-re-bench svg text{fill:#d5e5ee}
+.zsa-re .zsa-re-bench svg line[stroke="#cbd5e1"]{stroke:#3d5e73}
+.zsa-re .zsa-re-bench svg .zsa-re-path{stroke:#7cb8ff}
+.zsa-re .zsa-re-bench svg .zsa-re-path-cat{stroke:#ffa25c}
+.zsa-re .zsa-re-bench svg [stroke="#166534"]{stroke:#5fe39a}
+.zsa-re .zsa-re-bench svg [stroke="#7e22ce"]{stroke:#d2a2ff}
+.zsa-re .zsa-re-bench svg [stroke="#64748b"]{stroke:#8fa7b6}
+.zsa-re .zsa-re-bench svg .zsa-re-bench-small{font-size:14px;fill:#c3d8e4}
+.zsa-re .zsa-re-bench svg .zsa-re-bench-reading{font-size:26px;font-weight:700;fill:#ffe3a3}
+.zsa-re .zsa-re-bench svg .zsa-re-atom-label{font-size:12px;font-weight:700;fill:#0b1f2e}
+@media(max-width:560px){.zsa-re-bench-top,.zsa-re-bench-bottom,.zsa-re-bench-stage{padding:10px}.zsa-re-bench-caption{font-size:12px;flex-basis:100%}}
+@media print{.zsa-re-bench{print-color-adjust:exact;-webkit-print-color-adjust:exact}.zsa-re-bench-button{display:none}}
+.zsa-re svg.zsa-re-flask{flex:1 1 300px;max-width:520px;margin:0 auto}
+.zsa-re svg.zsa-re-bond-svg{flex:1 1 100%}
+.zsa-re-bench-meters{display:flex;flex-wrap:wrap;gap:0 20px}.zsa-re-bench-meter{flex:1 1 200px}
+.zsa-re svg.zsa-re-bond-narrow{max-width:340px;margin:0 auto}

@@ -82,7 +82,7 @@ circuit-builder/           Circuit Builder, v1.1.3 (drag batteries, wires, resis
 beers-law-lab/             Beer's Law Spectrophotometer Lab, v1.1.3 (zero with a blank, measure standards for a calibration curve, then calculate the concentration of a random unknown)
 equilibrium-lab/          Equilibrium Sandbox, v1.3.3 (Le Chatelier stresses, Kc/Qc and live concentration graphs)
 calorimetry-lab/          Calorimetry & Enthalpy Lab, v1.3.3 (heated-metal and neutralization calorimetry)
-reaction-energy-lab/      Reaction Energy Lab, v1.0.4 (energy diagrams, phase changes, reaction enthalpy, bonds, formation and Hess; English and Mexican Spanish)
+reaction-energy-lab/      Reaction Energy Lab, v1.1.0 (a ball that rides the energy diagram, bonds breaking and forming, a flask with a thermometer on the heating curve; energy diagrams, phase changes, reaction enthalpy, bonds, formation and Hess; English and Mexican Spanish)
 free-energy-lab/          Free Energy Lab, v1.1.0 (a phase chamber from solid to gas with temperature, a shaded ΔG versus T chart and a ΔG° to K mixture view; entropy, Gibbs free energy, temperature, K, kinetic control, dissolving and coupling; English and Mexican Spanish)
 chemical-bonding-lab/      Chemical Bonding Lab, v1.1.4 (four unknown solids tested for appearance, conductivity, melting, solubility and malleability; English and Mexican Spanish)
 molar-mass-trap-lab/       The Molar Mass Trap Lab, v1.2.2 (wax paper, steel shot and five mixtures, with data recorded on the lab worksheet; English and Mexican Spanish)
