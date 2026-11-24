@@ -117,3 +117,58 @@ for(const lang of ['en','es']){
   expect(desc2).toMatch(lang==='en'?/2 readings\./:/2 lecturas\./);
  });
 }
+// Lab bench (1.1.0). Reduced motion is set with page.emulateMedia.
+test('explorer beaker: indicator color follows pH and ions follow concentration',async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/ph-buffer-lab/?mode=explore&solute=hcl&concentration=0.10');
+ const beaker=page.locator('#explore-beaker'),liquid=beaker.locator('path').first(),ions=(shape)=>beaker.locator('g g '+shape);
+ await expect(beaker).toHaveAttribute('aria-label','Beaker of Hydrochloric acid at pH 1.00. Universal indicator is red. 28 H₃O⁺ and 0 OH⁻ drawn on a log scale.');
+ await expect(page.locator('#explore-bench-status')).toHaveText('Indicator color: red. pH meter: 1.00.');
+ await expect(beaker).toContainText('1.00');await expect(ions('circle')).toHaveCount(28);await expect(ions('rect')).toHaveCount(0);
+ const red=await liquid.getAttribute('fill');
+ // Ten times more dilute: 4 fewer H₃O⁺ drawn, and the color moves toward orange.
+ await slide(page,'concentration',-2);await expect(ions('circle')).toHaveCount(24);expect(await liquid.getAttribute('fill')).not.toBe(red);
+ await page.locator('#solute').selectOption('naoh');await expect(beaker).toHaveAttribute('aria-label',/at pH 12\.00\. Universal indicator is violet\. 0 H₃O⁺ and 24 OH⁻/);await expect(ions('rect')).toHaveCount(24);
+ // The log scale holds up to 1 M: 32 ions, 4 more than at 0.10 M.
+ await slide(page,'concentration',0);await expect(ions('rect')).toHaveCount(32);
+ await page.locator('#solute').selectOption('nh3');await slide(page,'concentration',-3);await expect(beaker).toHaveAttribute('aria-label',/at pH 10\.\d\d\. Universal indicator is blue\./);
+ // Pure water region: both ions at 1 × 10⁻⁷ M give 4 of each.
+ await page.locator('#solute').selectOption('hcl');await slide(page,'concentration',-7);await expect(page.locator('#explore-ph')).toHaveText('6.79');await expect(beaker).toHaveAttribute('aria-label',/green/);
+ await expect(page.locator('#explore-motion')).toBeHidden();
+});
+test('explorer ions are still at load and move after a change, with Pause motion',async({page})=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.emulateMedia({reducedMotion:'no-preference'});await page.goto('/ph-buffer-lab/');
+ const first=page.locator('#explore-beaker g g').first(),before=await first.getAttribute('transform');await page.waitForTimeout(400);
+ expect(await first.getAttribute('transform'),'still at load').toBe(before);
+ await slide(page,'concentration',-1.5);await page.waitForTimeout(300);const moved=page.locator('#explore-beaker g g').first();
+ expect(await moved.getAttribute('transform')).not.toBe(before);
+ await page.locator('#explore-motion').click();await expect(page.locator('#explore-motion')).toHaveAttribute('aria-pressed','true');await expect(page.locator('#explore-motion')).toHaveText('Play motion');
+ await page.waitForTimeout(100);const paused=await moved.getAttribute('transform');await page.waitForTimeout(300);expect(await moved.getAttribute('transform')).toBe(paused);
+ expect(errors).toEqual([]);
+});
+test('stress beakers take the same drops, and the pH marker and color move drop by drop',async({page})=>{
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.emulateMedia({reducedMotion:'no-preference'});await page.goto('/ph-buffer-lab/?mode=stress&pair=acetate&capacity=0.020');
+ const water=page.locator('#water-beaker'),buffer=page.locator('#buffer-beaker');
+ await expect(page.locator('#water-desc')).toHaveText('Volume 100.0 mL, pH 7.00. Universal indicator is green.');
+ const marker=el=>el.locator('g path').last().getAttribute('d'),x=d=>Number(d.match(/L ([\d.]+) [\d.]+ Z/)[1]);
+ const start=x(await marker(water)),bufferStart=x(await marker(buffer));
+ await page.locator('#acid-large').click();
+ await expect(water).toContainText('+20 drops');await expect(water).toContainText('HCl');await expect(buffer).toContainText('+20 drops');
+ // Mid-animation the water marker is between pH 7.00 and 3.00; at the end it sits at 3.00 and the text agrees.
+ await page.waitForTimeout(500);const mid=x(await marker(water));
+ await expect(page.locator('#water-desc')).toHaveText('Volume 101.0 mL, pH 3.00. Universal indicator is orange.');
+ await page.waitForTimeout(2500);const end=x(await marker(water));expect(end).toBeLessThan(start);expect(mid).toBeLessThanOrEqual(start);expect(mid).toBeGreaterThanOrEqual(end);
+ expect(end).toBeCloseTo(20+3/14*190,0);
+ // The buffer marker moves much less than the water marker.
+ const bufferEnd=x(await marker(buffer));expect(bufferStart-bufferEnd).toBeGreaterThan(0);expect(bufferStart-bufferEnd).toBeLessThan((start-end)/5);
+ await expect(page.locator('#data-body tr')).toHaveCount(2);
+ expect(errors).toEqual([]);
+});
+test('stress beakers with reduced motion and in Mexican Spanish',async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/ph-buffer-lab/?mode=stress&pair=acetate&capacity=0.020&lang=es');
+ await page.locator('#base-small').click();await expect(page.locator('#water-beaker')).toContainText('+2 gotas');await expect(page.locator('#water-beaker')).toContainText('NaOH');
+ await expect(page.locator('#water-desc')).toHaveText(/^Volumen 100\.1 mL, pH \d+\.\d\d\. El indicador universal está (azul|violeta|verde azulado)\.$/);
+ await page.locator('#tab-explore').click();await expect(page.locator('#explore-bench-status')).toHaveText('Color del indicador: rojo. Medidor de pH: 1.00.');
+ await expect(page.locator('.zsa-pb-bench')).not.toContainText(/Beaker|Circles|Indicator|drawn|drops/);
+});

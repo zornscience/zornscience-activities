@@ -3906,6 +3906,20 @@ endpoint vs equivalence point | punto final vs punto de equivalencia (kept disti
 
 Still using "amortiguador" as a noun (outside this pass): apchem-unit8 and enzyme-lab.
 
+## pH & Buffer Lab bench (1.1.0)
+
+Vaso de precipitados and verde azulado were already in the glossary. Colors agree with the indicator as a masculine noun (el indicador está rojo).
+
+| English | Mexican Spanish |
+| --- | --- |
+| Beaker with universal indicator | Vaso de precipitados con indicador universal |
+| universal indicator | indicador universal |
+| pH meter | medidor de pH |
+| yellow green / blue green / violet | verde amarillento / verde azulado / violeta |
+| drawn on a log scale | dibujados en escala logarítmica |
+| +{n} drops | +{n} gotas |
+| Pause motion / Play motion | Pausar movimiento / Reanudar movimiento |
+
 ## The Molar Mass Trap Lab
 
 The virtual lab follows Style Kit 1.33 and the published Spanish procedure. The station and instrument labels keep W, G, O and M and the symbols mL, mm and s.

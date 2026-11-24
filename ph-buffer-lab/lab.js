@@ -4,6 +4,7 @@
   if(!root)return;
   root.dispatchEvent(new CustomEvent("zsa-pb:request-model",{detail:{receive:function(api){M=api;}}}));
   root.dispatchEvent(new CustomEvent("zsa:request-i18n",{detail:{receive:function(api){i18n=api;}}}));
+  var B,bench=null,beakers={},drops=null;root.dispatchEvent(new CustomEvent("zsa-pb:request-bench",{detail:{receive:function(api){B=api;}}}));
   if(!M)return;
   function t(s,v){return i18n?i18n.text(s,v||{}):s;}
   function $(id){return root.querySelector('#'+id);}
@@ -50,7 +51,7 @@
     put('ionized','Ionized: {percent}%',{percent:f(result.ionized)});
     put('particle-legend',base?(weak?'B = NH₃; ion circles = NH₄⁺; squares = OH⁻.':'Ion circles = metal cations; squares = OH⁻. Ba²⁺ has two OH⁻ per cation.'):'HA = intact acid; ion circles = conjugate base; squares = H₃O⁺.');
   }
-  function explore(){var c=concentration('concentration'),id=$('solute').value,s=M.SOLUTES[id],r=M.explore(id,c);$('explore-ph').textContent=f(r.pH);$('explore-poh').textContent=f(r.pOH);$('explore-h').textContent=sci(r.h)+' M';$('explore-oh').textContent=sci(r.oh)+' M';scale('explore-scale',r.pH);particles(s,r);
+  function explore(){var c=concentration('concentration'),id=$('solute').value,s=M.SOLUTES[id],r=M.explore(id,c);bench.update({pH:r.pH,pHText:f(r.pH),h:r.h,oh:r.oh,solute:t(s.name)});$('explore-ph').textContent=f(r.pH);$('explore-poh').textContent=f(r.pOH);$('explore-h').textContent=sci(r.h)+' M';$('explore-oh').textContent=sci(r.oh)+' M';scale('explore-scale',r.pH);particles(s,r);
     put('solute-info',s.k?'{kind}; {constant} = {k} at 25 °C.':'{kind}; complete dissociation.',{kind:t(soluteTypes[s.type]),constant:s.type==='weak-base'?'Kb':'Ka',k:s.k?sci(s.k):''});
     $('method').hidden=!$('method-toggle').checked;var content=$('method-content');content.replaceChildren();
     function line(text,values){content.appendChild(node('p',t(text,values)));}
@@ -75,12 +76,7 @@
     nonbuffer();
   }
   function nonbuffer(){put('nonbuffer-why',$('nonbuffer').value==='naoh'?'NaOH is a strong base and NaCl supplies no weak conjugate acid. There is no weak acid and conjugate base reservoir.':'The acid dissociates completely. Its conjugate base is too weak to consume added H₃O⁺ effectively, so this pair is not a buffer.');}
-  function beaker(id,pH,volume){var el=$(id),title=id==='water-beaker'?'water-desc':'buffer-desc';el.replaceChildren(svg('title',{id:title},t('Volume {v} mL, pH {pH}.',{v:volume.toFixed(1),pH:f(pH)})));
-    el.appendChild(svg('path',{d:'M 35 50 L 195 50 L 195 123 Q 195 129 187 129 L 43 129 Q 35 129 35 123 Z',fill:'#dbeafe'}));
-    el.appendChild(svg('path',{d:'M 30 12 L 35 12 L 35 123 Q 35 130 43 130 L 187 130 Q 195 130 195 123 L 195 12 L 204 9',fill:'none',stroke:'#475569','stroke-width':2}));
-    [40,65,90,115].forEach(function(y){el.appendChild(svg('line',{x1:35,y1:y,x2:47,y2:y,stroke:'#64748b'}));});
-    el.appendChild(svg('text',{x:115,y:95,'text-anchor':'middle'},volume.toFixed(1)+' mL'));
-  }
+  function beaker(id,pH,volume){var key=id==='water-beaker'?'water':'buffer';beakers[id].update({pH:pH,volume:volume,path:drops?drops[key]:null,dropLabel:drops?drops.label:''});}
   function graph(){var el=$('stress-graph'),w=Math.max(240,el.clientWidth||640),h=320,l=42,r=12,top=18,bottom=55,pw=w-l-r,ph=h-top-bottom,max=Math.max(5,Math.ceil(points[points.length-1].volume/5)*5);
     el.setAttribute('viewBox','0 0 '+w+' '+h);var current=points[points.length-1];el.replaceChildren(svg('title',{id:'graph-desc'},points.length===1?t('pH vs. cumulative volume. {one} reading. Latest: {v} mL, water pH {water}, buffer pH {buffer}.',{one:points.length,v:f(current.volume),water:f(current.water.pH),buffer:f(current.buffer.pH)}):t('pH vs. cumulative volume. {n} readings. Latest: {v} mL, water pH {water}, buffer pH {buffer}.',{n:points.length,v:f(current.volume),water:f(current.water.pH),buffer:f(current.buffer.pH)})));
     function x(v){return l+v/max*pw;}function y(p){return top+(14-Math.max(0,Math.min(14,p)))/14*ph;}
@@ -109,7 +105,8 @@
     if((isAcid&&before.excessBase>1e-12)||(!isAcid&&before.excessAcid>1e-12))reaction+=t('Excess strong reagent reacts first: H₃O⁺ + OH⁻ → 2 H₂O.')+' ';
     if(converted>1e-12)reaction+=t('Buffer reaction: {equation}. Converted {n} mol.',{equation:eq,n:sci(converted)});
     if((isAcid&&p.excessAcid>1e-12)||(!isAcid&&p.excessBase>1e-12))reaction+=' '+t('This conjugate pair is depleted in this direction. Further titrant changes pH through excess reagent and any remaining acid equilibria.');
-    $('stress-reaction').textContent=reaction;stress();say(t('Water pH {water}; buffer pH {buffer}.',{water:f(p.water.pH),buffer:f(p.buffer.pH)}));
+    $('stress-reaction').textContent=reaction;var n=Math.round(amount/.05),steps=Math.min(n,25),water=[],buffer=[];for(var k=1;k<=steps;k++){var part=amount*k/steps,q=M.stress($('stress-pair').value,cval('capacity'),isAcid?acidML-amount+part:acidML,isAcid?baseML:baseML-amount+part);water.push(q.water.pH);buffer.push(q.buffer.pH);}
+    drops={water:water,buffer:buffer,label:[t('+{n} drops',{n:n}),isAcid?'HCl':'NaOH']};stress();drops=null;say(t('Water pH {water}; buffer pH {buffer}.',{water:f(p.water.pH),buffer:f(p.buffer.pH)}));
   }
   function blood(){var ratio=Number($('blood-ratio').value),p=M.hh('carbonate',1,ratio),ok=p>=7.35-1e-10&&p<=7.45+1e-10;$('blood-ratio-value').textContent=ratio.toFixed(1);$('blood-ratio').setAttribute('aria-valuetext',String(ratio));put('blood-feedback',ok?'In range: pH {pH}. More conjugate base raises pH; more acid lowers it.':'Outside the range: pH {pH}. Try a larger ratio to raise pH or a smaller ratio to lower it.',{pH:f(p)});$('blood-feedback').className=ok?'zsa-pb-success':'zsa-pb-caution';}
   function design(){var target=Number($('target-ph').value),id=$('challenge-pair').value,ratio=Number($('challenge-ratio').value),p=M.PAIRS[id];if(!Number.isFinite(ratio)||ratio<=0){put('design-feedback','Enter a positive, finite ratio.');return;}
@@ -128,6 +125,7 @@
   $('check-design').addEventListener('click',design);['target-ph','challenge-pair','challenge-ratio'].forEach(function(id){$(id).addEventListener('input',design);});
   $('blood-ratio').addEventListener('input',blood);$('check-indicator').addEventListener('click',indicator);['equivalence-ph','indicator'].forEach(function(id){$(id).addEventListener('change',indicator);});
   function render(){if(mode==='explore')explore();else if(mode==='buffer')builder();else if(mode==='stress')stress();else blood();}
+  var benchHost=node('div');$('explore-scale').before(benchHost);bench=B.explorer(benchHost,{text:t});beakers['water-beaker']=B.stressBeaker($('water-beaker'),{text:t});beakers['buffer-beaker']=B.stressBeaker($('buffer-beaker'),{text:t});
   reset();showMode(mode,false);blood();
   if(window.ResizeObserver)new ResizeObserver(function(){render();}).observe(root);else window.addEventListener('resize',render);
 }());
