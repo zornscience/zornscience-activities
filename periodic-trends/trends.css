@@ -61,12 +61,16 @@
   .zsa-ptr .zsa-choice {font-size:14px;padding:4px 3px;}
   .zsa-ptr .zsa-progress {font-size:13px;line-height:1.4;}
   .zsa-ptr-stage {margin-top:4px;padding:3px 6px;border-radius:10px;}
-  .zsa-ptr-atom-symbol, .zsa-ptr-card-z, .zsa-ptr-stage .zsa-stage-pill, .zsa .zsa-ptr-card-name, .zsa .zsa-ptr-card-place, .zsa-ptr-bar {display:none;}
-  .zsa-ptr-cards {margin-top:0;gap:6px;}
-  .zsa-ptr-card {grid-template-columns:28px auto minmax(0,1fr);grid-template-areas:"atom text meter";gap:0 6px;padding:1px 6px;}
-  .zsa-ptr-atom {width:28px;height:28px;}
+  .zsa-ptr-atom-symbol, .zsa-ptr-card-z, .zsa-ptr-stage .zsa-stage-pill, .zsa .zsa-ptr-card-name, .zsa .zsa-ptr-card-place {display:none;}
+  .zsa-ptr-stage .zsa-ptr-bar {min-width:14px;}
+  .zsa-ptr-cards {grid-template-columns:repeat(2,minmax(0,1fr));margin-top:0;gap:6px;}
+  .zsa-ptr-vs {display:none;}
+  .zsa-ptr-card {display:flex;align-items:center;gap:5px;min-width:0;padding:1px 6px;}
+  .zsa-ptr-atom {flex:none;width:26px;height:26px;}
+  .zsa-ptr-card-text {flex:none;}
   .zsa-ptr-card-symbol {font-size:17px;}
-  .zsa-ptr-meter {justify-content:flex-end;}
+  .zsa-ptr-meter {flex:1 1 auto;}
+  .zsa .zsa-ptr-value {margin-left:auto;font-size:11.5px;}
   .zsa-ptr .zsa-table td {height:21px;}
   .zsa-ptr .zsa-table {border-spacing:2px 1.5px;}
   .zsa-ptr .zsa-layout, .zsa-ptr .zsa-ref {gap:6px;}

@@ -115,9 +115,12 @@
     for (var i = 0; i < n && i < 8; i++) out.push(sites[i % 4] + (i < 4 ? -half : half));
     return out;
   }
+  // One electron at an angle on a ring. data-zsa-e names its kind for the tests: valence, gained, lost, leaving, full.
   function electron(angle, r, cls, delay) {
     var g = svg("g", {transform:"rotate(" + angle.toFixed(2) + " 100 100)"});
-    g.appendChild(svg("circle", {cx:(100 + r).toFixed(2), cy:100, r:7}, "zsa-ict-e " + cls + (delay ? " zsa-ict-d" + Math.min(delay, 8) : "")));
+    var dot = svg("circle", {cx:(100 + r).toFixed(2), cy:100, r:7}, "zsa-ict-e " + cls + (delay ? " zsa-ict-d" + Math.min(delay, 8) : ""));
+    dot.setAttribute("data-zsa-e", cls.split(" ")[0].replace("is-", ""));
+    g.appendChild(dot);
     return g;
   }
   function stateWords(e, stage, done) {

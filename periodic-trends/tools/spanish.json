@@ -93,7 +93,7 @@
       "codeSelected": "El código está seleccionado. Presiona Ctrl+C, o Command+C en una Mac, para copiarlo.",
       "codeNote": "Pega este código en tu tarea de Google Classroom."},
     "practice": [["mixed", "Las tres tendencias"], ["radius", "Solo radio atómico"], ["en", "Solo electronegatividad"], ["ie", "Solo primera energía de ionización"]],
-    "visual": {"vs": "vs.", "place": "Grupo {group} · Periodo {period}", "placeUnknown": "Grupo ? · Periodo ?", "trend": "{TheLabel} {direction} {where}",
+    "visual": {"vs": "frente a", "place": "Grupo {group} · Periodo {period}", "placeUnknown": "Grupo ? · Periodo ?", "trend": "{TheLabel} {direction} {where}",
       "winner": "El {winner} tiene {aHigher}", "scale": "Círculos dibujados a escala según el radio atómico", "said": "Comparación entre el {nameA} y el {nameB}.",
       "card": "{name} ({symbol}), número atómico {z}", "cardPlace": "grupo {group}, periodo {period}", "cardValue": "{label} de {value}"}
   }

@@ -621,7 +621,7 @@
       setAp: "AP: octetos expandidos",
       visual: {
         lewis: "Estructura de Lewis", shape: "Geometría", shapeLine: "{Mg}, {angle}",
-        wedge: "Cuña: hacia ti. Trazo punteado: lejos de ti.",
+        wedge: "Cuña: hacia ti. Guiones: lejos de ti.",
         polarKey: "Flechas pequeñas: dipolos de enlace, hacia el átomo más electronegativo. Flecha grande: dipolo neto.",
         cancelKey: "Los dipolos de enlace se cancelan: no hay dipolo neto.",
         nonpolarKey: "Los enlaces son casi no polares: no hay dipolo neto."

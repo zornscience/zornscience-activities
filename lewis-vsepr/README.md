@@ -1,6 +1,8 @@
 # Lewis Structure and VSEPR Builder
 Version: 1.2.3
 
+Version 1.2.3 redraws the question screen: bonds and lone pairs appear in the editor with a short animation, the strip has a stage with the finished Lewis structure and, after the shape step, a 3D shape preview with its bond angle, to which the polarity step adds bond dipole arrows and the net dipole. A progress track with pips and short animations on right and missed answers complete it. Steps, questions, feedback, hints, rounds, links and completion codes are unchanged (LVB and LVA codes still record version 1.2). See "Question screen (1.2.3)" below.
+
 Version 1.2.2 adds search engine tags to the page head: a canonical link to the clean activity address, English and Spanish hreflang links (Spanish is ?lang=es), and a English and Mexican Spanish meta description from `tools/seo-pages.js`. Run `node tools/build-seo.js` after changing them.
 
 Version 1.2.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
@@ -235,7 +237,16 @@ Button label: Open the Lewis and VSEPR Builder
 - Current Chrome, Edge, Firefox and Safari iOS 16+ are intended targets, but only Chromium was tested.
 - 320x568 and 683x384 (200% zoom) are not fit targets: some steps need a short scroll there. There is no sideways scrolling at any size.
 
+## Question screen (1.2.3)
+- **Building.** In the editor, a bond line grows out from the central atom when it is set and a lone pair pops in when it is added; nothing else moves. The structure, the counters and the status line are as before.
+- **Stage.** After the build step the strip's stage shows the finished Lewis structure, with the same description for screen readers as before (it is hidden during the formal charge step and on the item summary, which show it themselves). After the shape step it adds the shape: balls and sticks, wedges toward you and dashes away, lone pairs as shaded lobes, an arc at the bond angle, and the shape and angle in words ("Bent, about 104.5°"). After the polarity step, bond dipole arrows sit beside each polar bond (electronegativity difference 0.3 or more, none when the item's reason is nearly nonpolar bonds), crossed at the + end and pointing to the more electronegative atom, and a polar molecule gets a large net dipole arrow, the sum of the bond dipoles (for ozone, whose bonds are alike, it points away from the central lone pair). A line under the drawing explains wedges, dashes and arrows. Ions have no polarity step, so they get the shape only.
+- **Progress track.** Pips for the structures of the round and bars for the steps under the progress line, which keeps its id and words.
+- **Animations.** The shape grows out from the central atom, the angle arc draws itself, the arrows pop in; a right answer makes the stage glow; a wrong structure nudges the drawing (not the atom buttons over it). Nothing moves with reduced motion.
+- **Phones.** Under 600 px the stage sits beside the formula as before and shows the shape once there is one; its words stay for screen readers. The item summary's drawing is a little smaller so Next stays on screen.
+
 ## Changelog
+1.2.3: Question screen redesign: animated building, the stage with the Lewis structure and a 3D shape preview with the bond angle and dipole arrows, a progress track, animations on right and missed answers (none with reduced motion). Shared `shared/zsa-track.js` and `shared/zsa-track.css`.
+
 1.2.0: Mexican Spanish with `?lang=es` or the shared EN / ES header links, through `shared/zsa-i18n.js`. English is unchanged.
 1.1.0: Completion codes for a full mixed round, LVB for the octet rule and LVA for the AP setting, read by `check/` with the setting.
 1.0.0: Initial builder with 29 octet-rule items and 8 AP expanded-octet items; steps for valence electrons, central atom, a keyboard-operable structure editor with live counters, the AP formal charge step, electron domains and geometry, molecular geometry and angle, and polarity; targeted feedback, two hint levels, Show me, review repeats, first-try summary, Practice my misses, structure picker, deep links (`?item`, `?set=ap`, `?from`), a periodic table with valence electrons and electronegativity on demand, and optional embed mode.

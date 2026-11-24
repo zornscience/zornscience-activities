@@ -1,6 +1,8 @@
 # Periodic Trends Practice
 Version: 1.2.3
 
+Version 1.2.3 redraws the question screen: the two elements as cards on a dark stage, the relation and the trend drawn on the table as the student answers, a progress track with pips, and short animations on right and missed answers. Questions, steps, feedback, hints, rounds, links and completion codes are unchanged (the code still records version 1.2). See "Question screen (1.2.3)" below.
+
 Version 1.2.2 adds search engine tags to the page head: a canonical link to the clean activity address, English and Spanish hreflang links (Spanish is ?lang=es), and a English and Mexican Spanish meta description from `tools/seo-pages.js`. Run `node tools/build-seo.js` after changing them.
 
 Version 1.2.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
@@ -109,6 +111,13 @@ A full mixed round (9 questions, all three trends) ends with a completion code u
 - The same layout as the other activities: question strip and main-group table on the left, the step on the right from 900 px; strip, table, step on narrower screens. Both elements are marked in the table and read as "(in this question)".
 - Measured fit (the step's buttons, feedback and hint, and the Next button on screen with the table in view, without the student scrolling): 360x640, 390x664, 1280x617 and 1366x657. The question strip is in view whenever a step starts. On a 360x640 phone, when feedback and a hint are both open, the engine scrolls so they stay in view and the question strip moves just above the screen while the table stays visible.
 
+## Question screen (1.2.3)
+- **Cards.** Each element has a card: symbol, atomic number and name. Step 1 adds its group and period (they are the answer to step 1, so they are not shown before). Step 3 fills a bar for the property on one scale per property (atomic radius to 220 pm, electronegativity to 4, first ionization energy to 2400 kJ/mol) with the value, outlines the winner in green and, for atomic radius only, redraws both atoms as circles to scale. Under the cards, a line says what the last step showed: "Both are in period 3.", "Atomic radius decreases from left to right", then "Sodium has the larger atomic radius". The stage is one picture for screen readers (`role="img"`), named with all of it.
+- **On the table.** After step 1 an outline goes around the shared row (same period) or column (same group); after step 2 a wedge lies along it, thin at the low end and wide where the property is larger. The overlay sits over the engine's table, is hidden from screen readers (the explanations say the same) and is redrawn when the table is.
+- **Progress track.** Pips for the questions of the round (green, amber after a miss or Show me, square for review) and bars for the three steps, under the progress line, which keeps its id and words.
+- **Animations.** The outline draws itself, the wedge and bars grow, the atoms swell to size; a right answer makes the stage glow and a miss nudges it. Nothing moves with reduced motion, and every state is drawn as it is.
+- **Phones.** Under 600 px the cards are one row of chips (atom, symbol, value) and their words stay in the picture's label; table cells are a little shorter, so the strip, the step and the table still fit at 360x640 and 390x664.
+
 ## Keyboard controls
 The engine's: each answer group is one Tab stop; arrows, Home and End move without choosing; Enter or Space chooses and checks. Focus stays at the top on first load, moves to each new question's heading, to the next step's first choice, then to "Question complete" and "Round complete". Feedback is announced through a polite live region.
 
@@ -129,6 +138,8 @@ Button label: Open Periodic Trends Practice
 - Only Chromium was tested.
 
 ## Changelog
+1.2.3: Question screen redesign. Comparison cards with group and period after step 1 and property bars (and atoms to scale for atomic radius) after step 3; the shared row or column outlined on the table after step 1 and a trend wedge after step 2; a progress track; animations on right and missed answers, none with reduced motion. New words in `tools/build-data.js` and `tools/spanish.json` (`ui.visual`); `data.js` rebuilt. Shared `shared/zsa-track.js` and `shared/zsa-track.css`.
+
 1.2.0: Mexican Spanish with `?lang=es` or the EN / ES header links. Full Spanish sentence templates, Spanish element names and Spanish completion-code labels.
 
 1.1.0: Completion codes for a full mixed round (prefix PTR). `?from=` for the back link. Near ties (values within 2%) are no longer asked: 8 pairs removed, 418 questions. A round of one trend gives no code.

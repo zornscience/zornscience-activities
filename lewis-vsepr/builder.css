@@ -170,8 +170,8 @@
 .zsa-lv-shape .zsa-lv-arc.is-in {stroke-dasharray:100;animation:zsa-lv-draw .6s ease-out .35s backwards;}
 .zsa-lv-dipoles.is-in {transform-box:view-box;transform-origin:0 0;animation:zsa-lv-out .55s cubic-bezier(.34,1.4,.64,1) backwards;}
 /* The editor: a bond line grows out from the central atom; a new lone pair pops in. */
-.zsa-lv-bond.zsa-lv-new {stroke-dasharray:100;animation:zsa-lv-draw .3s ease-out backwards;}
-.zsa-lv-dot.zsa-lv-new {transform-box:fill-box;transform-origin:center;animation:zsa-lv-pop .35s cubic-bezier(.34,1.56,.64,1) backwards;}
+.zsa-lv-bond[data-zsa-new] {stroke-dasharray:100;animation:zsa-lv-draw .3s ease-out backwards;}
+.zsa-lv-dot[data-zsa-new] {transform-box:fill-box;transform-origin:center;animation:zsa-lv-pop .35s cubic-bezier(.34,1.56,.64,1) backwards;}
 /* A wrong structure: the drawing (not the atom buttons over it) shifts gently. */
 .zsa-lv-grid .zsa-lv-svg.is-nudge {animation:zsa-track-nudge .4s ease-in-out;}
 @keyframes zsa-lv-out {from {transform:scale(.2);} to {transform:scale(1);}}

@@ -195,9 +195,10 @@
     var dist = compact ? 23 : 19, gap = compact ? 6 : 5, r = compact ? 3.8 : 2.8;
     for (var i = 0; i < count && i < free.length; i++) {
       var d = DIRS[free[i]], cx = x + dist * d[0], cy = y + dist * d[1], px = -d[1], py = d[0], k = key + "p" + i;
-      var cls = "zsa-lv-dot" + (fresh(k) ? " zsa-lv-new" : "");
-      g.appendChild(svg("circle", {cx: (cx + gap * px).toFixed(1), cy: (cy + gap * py).toFixed(1), r: r}, cls));
-      g.appendChild(svg("circle", {cx: (cx - gap * px).toFixed(1), cy: (cy - gap * py).toFixed(1), r: r}, cls));
+      var isNew = fresh(k), one = svg("circle", {cx: (cx + gap * px).toFixed(1), cy: (cy + gap * py).toFixed(1), r: r}, "zsa-lv-dot");
+      var two = svg("circle", {cx: (cx - gap * px).toFixed(1), cy: (cy - gap * py).toFixed(1), r: r}, "zsa-lv-dot");
+      if (isNew) { one.setAttribute("data-zsa-new", ""); two.setAttribute("data-zsa-new", ""); }
+      g.appendChild(one); g.appendChild(two);
     }
   }
   function drawBond(g, a, b, order, compact, key, fresh) {
@@ -211,8 +212,8 @@
         x2: (a.x + trim * ux + o * px).toFixed(1), y2: (a.y + trim * uy + o * py).toFixed(1)
       };
       // A new bond line grows out from the central atom (its length is 100 units for the animation).
-      if (isNew) attrs.pathLength = 100;
-      g.appendChild(svg("line", attrs, order ? "zsa-lv-bond" + (isNew ? " zsa-lv-new" : "") : "zsa-lv-bond zsa-lv-bond--unset"));
+      if (isNew) { attrs.pathLength = 100; attrs["data-zsa-new"] = ""; }
+      g.appendChild(svg("line", attrs, order ? "zsa-lv-bond" : "zsa-lv-bond zsa-lv-bond--unset"));
     });
   }
   // The keys each drawing showed last time: only drawings that are redrawn in place (the editor) animate.
@@ -335,7 +336,7 @@
       var x1 = r * Math.cos(a1), y1 = r * Math.sin(a1), x2 = r * Math.cos(a1 + sweep), y2 = r * Math.sin(a1 + sweep);
       back.appendChild(svg("path", {d: "M" + x1.toFixed(1) + " " + y1.toFixed(1) + " A" + r + " " + r + " 0 0 " + (sweep > 0 ? 1 : 0) + " " + x2.toFixed(1) + " " + y2.toFixed(1), pathLength: 100}, "zsa-lv-arc" + cls));
     }
-    var dip = dipoles(item), sum = [0, 0, 0];
+    var dip = dipoles(item), sum = [0, 0, 0], drawnDipoles = 0;
     atoms.sort(function (p, q) { return p.z - q.z; }).forEach(function (a) {
       var layer = a.z < -0.25 ? back : front, ux = a.x / L, uy = a.y / L, len = Math.sqrt(ux * ux + uy * uy) || 1;
       var nx = ux / len, ny = uy / len, start = 15, end = Math.max(start + 4, Math.sqrt(a.x * a.x + a.y * a.y) - 12);
@@ -357,13 +358,16 @@
         // The bond dipole: an arrow beside the bond toward the more electronegative atom, crossed at its + end.
         var off = 11, ox = -ny * off, oy = nx * off, from = d > 0 ? start + 4 : end - 4, to = d > 0 ? end - 4 : start + 4;
         var fx = nx * from + ox, fy = ny * from + oy, tx = nx * to + ox, ty = ny * to + oy;
-        arrows.appendChild(arrow(fx, fy, tx, ty, "zsa-lv-dipole"));
+        arrows.appendChild(arrow(fx, fy, tx, ty, "zsa-lv-dipole")); drawnDipoles++;
       }
     });
     var center = svg("g", {}, "zsa-lv-ball zsa-lv-ball--center");
     center.appendChild(svg("circle", {cx: 0, cy: 0, r: 16}));
     center.appendChild(track.label({x: 0, y: 0.5, "text-anchor": "middle", "dominant-baseline": "central"}, item.center));
     el.appendChild(netLayer); el.appendChild(back); el.appendChild(center); el.appendChild(front); el.appendChild(arrows);
+    // For the tests: how many bond dipole arrows are drawn, and whether a net dipole is.
+    el.setAttribute("data-zsa-dipoles", String(drawnDipoles));
+    el.setAttribute("data-zsa-net", polarity && item.polar ? "yes" : "no");
     if (polarity && item.polar) {
       // The net dipole: the sum of the bond dipoles. Ozone's comes from its formal charges, away from the lone pair.
       var net = sum, nl = Math.sqrt(net[0] * net[0] + net[1] * net[1]);

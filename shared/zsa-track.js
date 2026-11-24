@@ -49,8 +49,10 @@
     var box = node("div", "zsa-track");
     var text = node("p", "zsa-progress");
     text.id = options.id;
+    // The pips repeat the sentence for the eye, so screen readers skip them. data-zsa-pip and data-zsa-step give each
+    // one's state to the tests (done, missed, current or todo).
     var pips = node("div", "zsa-track-pips");
-    pips.setAttribute("aria-hidden", "true");
+    pips.setAttribute("aria-hidden", "true"); pips.setAttribute("data-zsa-track", "");
     var items = node("span", "zsa-track-items"), steps = node("span", "zsa-track-steps");
     pips.appendChild(items); pips.appendChild(steps);
     box.appendChild(text); box.appendChild(pips);
@@ -60,19 +62,17 @@
     function draw(fresh) {
       items.replaceChildren(); steps.replaceChildren();
       for (var i = 0; i < now.total; i++) {
-        var cls = "zsa-track-pip";
-        if (i >= originals) cls += " is-review";
-        if (i < now.number - 1 || (i === now.number - 1 && finished)) cls += status[i] === "missed" ? " is-missed" : " is-done";
-        else if (i === now.number - 1) cls += " is-current";
-        if (i === now.number - 1 && finished) cls += " is-fresh";
-        items.appendChild(node("span", cls));
+        var state = i < now.number - 1 || (i === now.number - 1 && finished) ? (status[i] === "missed" ? "missed" : "done") : i === now.number - 1 ? "current" : "todo";
+        var pip = node("span", "zsa-track-pip is-" + state + (i >= originals ? " is-review" : "") + (i === now.number - 1 && finished ? " is-fresh" : ""));
+        pip.setAttribute("data-zsa-pip", state);
+        if (i >= originals) pip.setAttribute("data-zsa-review", "");
+        items.appendChild(pip);
       }
       for (var s = 1; s <= now.steps; s++) {
-        var c = "zsa-track-step";
-        if (s < now.step || finished) c += " is-done";
-        else if (s === now.step) c += " is-current";
-        if (fresh === s) c += " is-fresh";
-        steps.appendChild(node("span", c));
+        var st = s < now.step || finished ? "done" : s === now.step ? "current" : "todo";
+        var bar = node("span", "zsa-track-step is-" + st + (fresh === s ? " is-fresh" : ""));
+        bar.setAttribute("data-zsa-step", st);
+        steps.appendChild(bar);
       }
     }
     var sink = {};

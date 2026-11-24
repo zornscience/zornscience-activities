@@ -180,9 +180,11 @@
       if (q.relation === "period") pts = up ? [[x0 + 4, cy], [x0 + w - 3, y0 + 3], [x0 + w - 3, y0 + h - 3]] : [[x0 + 3, y0 + 3], [x0 + w - 4, cy], [x0 + 3, y0 + h - 3]];
       else pts = up ? [[cx, y0 + 4], [x0 + w - 3, y0 + h - 3], [x0 + 3, y0 + h - 3]] : [[x0 + 3, y0 + 3], [x0 + w - 3, y0 + 3], [cx, y0 + h - 4]];
       var growFrom = q.relation === "period" ? "is-across" : "is-down";
-      overlay.appendChild(svg("polygon", {points: pts.map(function (p) { return p[0].toFixed(1) + "," + p[1].toFixed(1); }).join(" ")}, "zsa-ptr-wedge " + growFrom + (animate === 2 ? " is-grow" : "")));
+      overlay.appendChild(svg("polygon", {points: pts.map(function (p) { return p[0].toFixed(1) + "," + p[1].toFixed(1); }).join(" "),
+        "data-zsa-wedge": q.relation + " " + data.rule[q.prop][q.relation]}, "zsa-ptr-wedge " + growFrom + (animate === 2 ? " is-grow" : "")));
     }
-    overlay.appendChild(svg("rect", {x: x0.toFixed(1), y: y0.toFixed(1), width: w.toFixed(1), height: h.toFixed(1), rx: 8, pathLength: 100}, "zsa-ptr-band" + (animate === 1 ? " is-draw" : "")));
+    overlay.appendChild(svg("rect", {x: x0.toFixed(1), y: y0.toFixed(1), width: w.toFixed(1), height: h.toFixed(1), rx: 8, pathLength: 100,
+      "data-zsa-band": q.relation}, "zsa-ptr-band" + (animate === 1 ? " is-draw" : "")));
     overlayDrawn = view.shown;
   }
   var pendingAnimate = 0;

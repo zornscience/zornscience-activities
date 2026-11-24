@@ -945,7 +945,7 @@
           ]
         ],
         "visual": {
-          "vs": "vs.",
+          "vs": "frente a",
           "place": "Grupo {group} · Periodo {period}",
           "placeUnknown": "Grupo ? · Periodo ?",
           "trend": "{TheLabel} {direction} {where}",

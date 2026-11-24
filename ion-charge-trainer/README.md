@@ -1,6 +1,8 @@
 # Predicting Ion Charge Trainer
 Version: 1.5.3
 
+Version 1.5.3 redraws the question screen: a larger element card (atomic number, symbol, name) and a Bohr model on a dark stage that follows the steps, a progress track with one pip per element and one bar per step, and short animations on right and missed answers. The steps, questions, feedback, hints, Show me, rounds and completion codes are unchanged (the code still records version 1.5). See "Question screen (1.5.3)" below.
+
 Version 1.5.2 adds search engine tags to the page head: a canonical link to the clean activity address, English and Spanish hreflang links (Spanish is ?lang=es), and a English and Mexican Spanish meta description from `tools/seo-pages.js`. Run `node tools/build-seo.js` after changing them.
 
 Version 1.5.1 adds an "About this activity" section above the footer: a short intro and links to the related zornscience.org lessons, in English and Mexican Spanish, from `shared/zsa-about.js`. It is hidden when the activity is embedded in a lesson.
@@ -114,6 +116,13 @@ There is no Check button (1.3). Tapping or clicking an answer checks it right aw
 - Practice options (new round, choose an element, step 4 setting) are in a collapsed panel under the activity.
 - Measured fit (the step's buttons or the Next button on screen without the student scrolling, table in view): 360x640 and 390x664 phones, 768x1024 tablets, 1280x617 Chromebooks, 1366x657 laptops and larger. Very small phones (320x568) need a short scroll on steps 2 and 4.
 
+## Question screen (1.5.3)
+- **Element card.** The tile shows the atomic number, the symbol and the name; the heading, the atomic number line and the progress line keep their ids and words.
+- **Bohr model.** Rings are energy levels (as many as the period), dots are electrons, drawn from the electron configuration. Before step 1 the outer level is a dashed ring with a question mark, so the model does not give the answer away. Step 1 fills in the valence electrons. Step 2 shows electrons leaving a metal (dashed circles stay where they were, and the full level inside becomes the outer level) or joining a nonmetal (open circles fill the outer level to 8). Step 3 adds the ion's brackets and charge. When the element is complete the label reads "Like neon" (the noble gas with the same number of electrons), with or without step 4. Beside the model: the state in words, protons and electrons, and electrons by level. The stage is one picture for screen readers (`role="img"`), named with all of that.
+- **Progress track.** Under the progress line: a pip per element in the round (green when done on the first try, amber after a miss or Show me, square for review items) and a bar per step. The pips repeat the sentence and are hidden from screen readers.
+- **Animations.** A right answer makes the stage glow once and plays the change in the model; a miss rings the wrong button, shakes the feedback and nudges the model. With reduced motion none of this moves, and every state is drawn as it is. Buttons never move, so their size and place are exact during an animation.
+- **Phones.** Under 600 px the model replaces the tile beside the name (about 64 px), without its words; the table cells are a little shorter so the step still fits at 360x640 and 390x664.
+
 ## Keyboard controls
 - Tab and Shift+Tab move between answer groups and buttons. Each answer group is one Tab stop.
 - Arrow keys, Home and End move between the answers in a group without choosing one, so browsing never submits an answer.
@@ -138,6 +147,8 @@ Button label: Open the Ion Charge Trainer
 - Embed mode hides the whole header, so a framed page has no heading 1 (an axe best-practice finding). The Ionic Formula Builder keeps its h1 visually hidden instead. Not changed in 1.3.1 to keep behavior identical.
 
 ## Changelog
+1.5.3: Question screen redesign. Element card with the atomic number, symbol and name; a Bohr model on a dark stage that fills in, loses or gains electrons and shows the ion's charge and noble gas as the steps are answered; a progress track with pips for the elements and bars for the steps; a glow on right answers and a gentle shake on misses, none of it with reduced motion. Shared `shared/zsa-track.js` and `shared/zsa-track.css`. No change to steps, questions, feedback rules, hints, rounds or codes.
+
 1.4.0: Completion codes. The summary of a full mixed round shows a code such as `ICT-K6QY-0C22-7S11-86` in a large monospace box, with Copy code (Clipboard API, falling back to selecting the code) and "Paste this code into your Google Classroom assignment." The live region says "Round complete. Completion code ready." and screen readers read the code one character at a time. No code for single-element practice, Practice my misses or an unfinished round. Nothing else changes for students (`npm run parity`, with the code box set aside). Loads `shared/zsa-codes.js`.
 
 1.3.1: Rebuilt on the shared activity engine (`shared/zsa-engine.js`, `shared/zsa-activity.css`). No change for students. With the same random sequence, 1.3.0 and 1.3.1 give the same page, focus, announcements, layout and pixels in every compared state (see TESTING.md). Class names for shared parts are now `zsa-…` instead of `zsa-ict-…`. Element ids are unchanged.

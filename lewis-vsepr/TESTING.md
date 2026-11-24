@@ -5,6 +5,15 @@ Reviewer: Claude (built and tested 1.0.0; 1.1.0 changes tested as recorded below
 
 PASS means the check was run on version 1.1.0 as committed and passed, except rows marked (1.0.0), which were run on 1.0.0 and not repeated by hand for 1.1.0 (the automated ones still run in `npm test`). PARTIAL and NOT TESTED are explained in the row. Browser checks used Playwright 1.56 with the preinstalled Chromium over the repository's test server. The tests are in the repository and run in CI with the rest of the suite: `npm test` (counts for this change are in the root TESTING.md and the pull request).
 
+## 1.2.3 results (question screen redesign)
+| Check | Status | Evidence |
+|---|---|---|
+| Stage and shape preview | PASS | `tests/e2e/trainer-visuals.spec.js`, six items (water, carbon dioxide, methane, ammonia, dichloromethane, ammonium): no stage before the build step, the Lewis description after it, no shape until the shape step, then the shape and angle in words ("Bent, about 104.5°"), no dipoles until the polarity step, then the bond dipole arrows (2, 2, 0, 3, 4) and a net dipole only for the polar molecules, with the matching line ("net dipole", "cancel", "nearly nonpolar"); ammonium has the shape only. On the item summary the strip keeps only the shape. |
+| Editor animation | PASS | Only what the student adds is marked new: a lone pair (2 dots), a single bond (1 line), a double bond (2 lines), nothing when electrons are taken away. |
+| Shapes reviewed | PASS | Screenshots of all 14 molecular geometries and lone pair counts in the activity (H2O, NH3, CH4, CO2, SO2, O3, CH2Cl2, SF4, ClF3, XeF4, BrF5, PCl5, SF6, I3−) checked by eye: lone pairs where VSEPR puts them, wedges and dashes, net dipoles toward the negative end. |
+| Spanish and axe | PASS | Ammonia played in Mexican Spanish: "Piramidal trigonal, aproximadamente 107°" and the arrow key in Spanish; axe-core at 1366x657 and 390x664 on the finished structure. |
+| Behavior unchanged | PASS | The existing suites pass unchanged: `lewis-routing.spec.js` (3,991 choice combinations and 1,719 structures, octet and AP), `lewis-flow.spec.js`, `lewis-layout.spec.js` (fit at four sizes: lowest control edge equals the screen height, as before), `lewis-a11y.spec.js` (14 states, keyboard-only round) and `lewis-codes.spec.js`. |
+
 ## Science and logic
 | Check | Status | Evidence |
 |---|---|---|

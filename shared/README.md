@@ -8,6 +8,8 @@ shared/
   zsa-activity.css    activity layout and every engine component (load after zsa-base.css)
   zsa-embed.js        ?embed=1 mode and zsa:resize messages
   zsa-engine.js       the activity engine
+  zsa-track.js        the trainers' progress track and small drawing helpers (Ion Charge Trainer, Periodic Trends, Lewis builder)
+  zsa-track.css       the track, the dark drawing stage and the animations on a right or a missed answer
   zsa-practice-model.js numeric practice checking, units, precision, shuffling and lesson links; exact numbers, reading typed answers and judging for generated sets
   zsa-practice.js     question-set practice sessions, interface, feedback and results
   zsa-formula.js      typed equations for practice questions (q.type "formula"): reads what was typed and compares it as algebra with exact fractions; only on pages that load it
@@ -48,6 +50,15 @@ Every activity page students land on ends with a short "About this activity" sec
 - **Periodic table.** The main-group table is always visible. It marks the current element or elements, highlights hint group columns, and can show ion charges above the columns on a reserved line, so its height never changes.
 - **Completion code.** The summary of a full mixed round shows a completion code with a Copy code button (see [Completion codes](#completion-codes)). Single practice, Practice my misses and an unfinished round give no code.
 - **Layout.** On screens narrower than 900 px, a new step scrolls so the strip is at the top when the step would not fit, and new feedback or a hint scrolls into view. Neither happens in embed mode.
+
+## Trainer visuals (zsa-track.js)
+
+The three engine trainers draw what each step means: the Ion Charge Trainer's Bohr model, the Periodic Trends cards and table overlay, and the Lewis builder's stage and shape preview. They share `zsa-track.js` and `zsa-track.css`, loaded after `zsa-engine.js` and `zsa-activity.css`. The engine itself does not change.
+
+- **Progress track.** `track.progress({id, template})` returns `{node, sink, template, load, miss, complete}`. Pass `track.template` to the engine as `labels.progress` and return `track.sink` from `renderStrip` as `progress`: the engine writes the numbers into the sink, and the track writes the activity's own sentence (`template`, the same words as before) into a `p` with the given id, followed by one pip per item and one bar per step. The sentence keeps its id and text, so tests and screen readers read it as before; the pips are `aria-hidden` and carry `data-zsa-pip` (done, missed, current, todo; `data-zsa-review` on review items) and `data-zsa-step`. Call `load()` in `renderStrip`, `miss()` on a wrong answer or Show me, and `complete()` in `summary`.
+- **Reacting to answers.** An activity wraps its `classify`: a right answer is remembered for the drawing's next stage, a miss calls `track.replay(element, "is-nudge")`. The engine's `marks(entry, stepsDone)` hook, called after every finished step, is where each drawing moves to its next stage. A stage reached without a right answer was shown with Show me: no celebration, and the item's pip turns amber.
+- **Animations are decoration.** Every state is drawn as it is and the animation only plays the change, so `prefers-reduced-motion` (which `zsa-base.css` turns into no animation) loses nothing. Animations never fade text (axe would read its contrast mid-fade) and never move or resize a button (the layout tests measure them right after each tap). Nothing calls `Math.random`, so seeded rounds stay the same.
+- **Helpers.** `svg(tag, attrs, cls)` and `label(attrs, text, cls)` draw with `createElementNS`, `replay(el, cls)` starts a CSS animation again, `later(fn)` runs after the engine's own changes for this answer, and `reduced()` reads the reduced motion setting.
 
 ## Making a new activity
 
@@ -181,7 +192,7 @@ Add an entry to `ACTIVITIES` in `zsa-codes.js` and load `zsa-codes.js` on the ac
 ## House rules
 
 - No build step, no dependencies, no network calls, storage, cookies, analytics or globals. Completion codes keep to this: the code is computed in the page and copied by the student. Each script is a strict IIFE, and data and the engine reach the activity through one-use events on its root.
-- No `innerHTML`, inline scripts or inline styles. Every page uses the same Content-Security-Policy.
+- No `innerHTML`, inline scripts or inline styles. Every page uses the same Content-Security-Policy. Drawings use SVG through `createElementNS`; sizes come from SVG attributes and classes, never from style attributes.
 - Charges are written number first with the Unicode minus sign (2−). No en or em dashes.
 - 44 by 44 px targets, visible focus, and nothing that moves focus on first load.
 - Changes to `shared/` affect every activity. Run the whole test suite and `npm run parity` before merging one, and bump each activity's version so browsers fetch the new files.
