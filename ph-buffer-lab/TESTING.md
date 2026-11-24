@@ -1,6 +1,6 @@
 # pH & Buffer Lab validation
 
-Version: 1.0.5
+Version: 1.1.0
 
 Run from the repository root:
 
@@ -17,6 +17,18 @@ The chemistry tests cover independent charge and mass-action checks, Kw, very di
 Browser coverage includes the four example URL patterns, unsafe return-link rejection, direct and weak methods, HH numerator and range, nonbuffer explanations, setup transfer, stress reactions and reversal, table rows, CSV, clipboard fallback, challenge feedback, English and Spanish, 1366/390/320 px layouts, tab keyboard navigation, local-only requests, offline interaction, embed chrome, shared dialogs, index listing, and axe WCAG A/AA checks in every mode.
 
 Manual device validation remains useful for real Chromebook keyboards, iOS Safari, Firefox, and screen readers. The particle diagram is schematic, and the numerical ionization readout remains authoritative when a fraction is too small to draw.
+
+## Lab bench verification (1.1.0)
+
+Five browser tests in `tests/e2e/ph-buffer-lab.spec.js` cover the bench:
+
+- Explorer: 0.10 M HCl is red with 28 H₃O⁺ and no OH⁻ drawn, 0.010 M HCl draws 24 and changes color, 0.010 M NaOH is violet with 24 OH⁻ and 1 M NaOH draws 32, 0.0010 M NH₃ is blue, and the 1 × 10⁻⁷ M HCl case is green; the text alternative and status name the color and pH.
+- With motion: the ions are still at load, drift after a change, and Pause motion stops them (aria-pressed, Play motion).
+- Stress Test: 1.0 mL of HCl falls as 20 drops into both beakers; mid-animation the water marker is between pH 7.00 and 3.00 and it ends at 3.00 with the orange indicator and matching text; the buffer marker moves less than a fifth as far; the data table gains one row.
+- Every falling drop reaches the liquid (1.0 mL), and 5.0 mL animates all 100 drops, with more than 8 in the air at once.
+- Reduced motion and Mexican Spanish: 2 drops of NaOH, the final state at once, translated text and no English on the bench.
+
+`tests/e2e/labs-a11y.spec.js` passes for this lab in both languages. axe-core was also run by hand on the Explorer and the Stress Test at 1280x800 and 390x664 in English and Spanish: no violations, and no sideways scrolling from 320 to 1920 px. Screenshots were checked by hand at both sizes and in both languages, during and after additions of 0.1, 1.0 and 5.0 mL.
 
 ## Recorded validation
 

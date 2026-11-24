@@ -1,13 +1,20 @@
 # Verification record
-Version: 1.5.3
+Version: 1.5.4
 Date: 2026-10-16
 Reviewer: Claude (integration review of ChatGPT's 1.0.0 package, then the 1.1.0 to 1.3.1 updates)
+
+## 1.5.4 results (pips shared with the practice engine)
+| Check | Status | Evidence |
+|---|---|---|
+| Same pips as the practice pages | PASS | `tests/unit/track-css.test.js`: height, rounding, fill transition, current ring and breathing, missed stripes, track grid, empty and red colors, `data-state` names and the reduced motion rule match `shared/zsa-practice.css` and `.js`; only the accent differs. |
+| States and reduced motion | PASS | `tests/e2e/trainer-visuals.spec.js` reads every pip's `data-state` (current, correct, missed, empty; review hollow) and checks that with reduced motion neither the pips nor their fill move. |
+| Fit unchanged | PASS | Measured before and after on the fit items: no state is taller on phones (the Lewis build step's Hint stays at 611 px at 360x640); the layout, axe, flow, keyboard, rounds and codes suites pass. |
 
 ## 1.5.3 results (question screen redesign)
 | Check | Status | Evidence |
 |---|---|---|
 | Bohr model, all 19 elements | PASS | `tests/e2e/trainer-visuals.spec.js`: each element played step by step. The picture's label and its electrons match an electron-level table written in the test (checked there against the reference: as many levels as the period, Z electrons, the valence count outside): no outer electrons before step 1, the valence electrons after it, after step 2 the lost and leaving electrons and the full level inside (metals) or the gained ones (nonmetals) with protons and electrons, then the charge and the noble gas. |
-| Progress track | PASS | A seeded round: 10 pips and 4 bars, current first; two misses and Show me add the review pip (square, last) and turn the element's pip amber; the next element's pip is green; the sentence is unchanged ("Element 3 of 11 · Step 1 of 4"). |
+| Progress track | PASS | A seeded round: 10 pips and 4 bars, current first; two misses and Show me add the review pip (hollow, last) and mark the element's pip missed (striped); the next element's pip is correct (1.5.4 state names, the practice engine's); the sentence is unchanged ("Element 3 of 11 · Step 1 of 4"). |
 | Reduced motion | PASS | With `prefers-reduced-motion: reduce` every drawing and trail element has no animation and the model reaches the same states; leaving electrons are not drawn, and with motion they end invisible. |
 | Behavior unchanged | PASS | The existing suites pass unchanged: 731 answer combinations (`routing.spec.js`), 200 seeded rounds and the review queue (`rounds.spec.js`), the flow, keyboard, codes and Spanish round tests. |
 | Fit, targets, overflow, axe | PASS | `layout.spec.js` (fit at 360x640, 390x664, 768x1024, 1280x617, 1366x657 and 1920x960 with the table in view; no sideways scrolling from 320 px and at 200% zoom; 44 px targets) and `a11y.spec.js` (9 states at two sizes) pass. Measured slack before and after on Cl: no state got tighter at 360x640 or 390x664; at 1280x617 the table bottom is 31 px above the screen edge. |

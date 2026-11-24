@@ -133,7 +133,8 @@
 .zsa-lv-stage {grid-column:2;grid-row:1 / span 2;padding:6px 8px;}
 .zsa-lv-figs {display:flex;align-items:flex-start;justify-content:center;gap:8px;}
 .zsa-lv-fig {display:grid;justify-items:center;gap:2px;min-width:0;}
-.zsa-lv-fig .zsa-stage-eyebrow {justify-self:start;}
+/* Each label sits centered over its own drawing. */
+.zsa-lv-fig .zsa-stage-eyebrow {justify-self:center;}
 .zsa-lv-stage .zsa-stage-pill {max-width:100%;text-align:center;}
 .zsa-lv-svg--stage {width:112px;height:auto;}
 .zsa-lv-shape {width:112px;height:112px;}
@@ -194,9 +195,8 @@
   .zsa-lv .zsa-track {row-gap:0;}
   .zsa-lv .zsa-track-pips {min-height:8px;gap:2px 8px;}
   .zsa-lv .zsa-track-items {gap:3px;}
-  .zsa-lv .zsa-track-pip, .zsa-lv .zsa-track-pip.is-current {width:8px;height:8px;border-width:1.5px;}
-  .zsa-lv .zsa-track-pip.is-current {box-shadow:0 0 0 1.5px #bfdbfe;}
-  .zsa-lv .zsa-track-step {width:12px;height:4px;}
+  .zsa-lv .zsa-track-pip, .zsa-lv .zsa-track-step {height:6px;}
+  .zsa-lv .zsa-track-steps {grid-auto-columns:12px;}
   .zsa-lv-svg--stage, .zsa-lv-shape {width:96px;}
   .zsa-lv-shape {height:96px;}
   .zsa-lv-stage {padding:3px;border-radius:10px;}

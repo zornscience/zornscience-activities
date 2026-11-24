@@ -134,7 +134,10 @@ async function main() {
   async function scenario(name, slug, opts, script) {
     var cfg = activities[slug], pages = [];
     for (var port of [4301, 4302]) {
-      var context = await browser.newContext({viewport: opts.viewport, deviceScaleFactor: 1, reducedMotion: "no-preference"});
+      // Reduced motion: shared/zsa-base.css turns animations and transitions off, so each element's box is measured
+      // at rest. With motion on, the progress track's pop animation (shared/zsa-track.css) is caught at a different
+      // scale on every run, and getBoundingClientRect includes the transform. Both pages get the same setting.
+      var context = await browser.newContext({viewport: opts.viewport, deviceScaleFactor: 1, reducedMotion: "reduce"});
       var page = await context.newPage();
       await page.addInitScript(seedRandom, opts.seed);
       var errors = [];

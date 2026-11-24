@@ -53,3 +53,26 @@
 .zsa-pb .zsa-pb-caution {color:#92400e;}
 @media(max-width:999px) {.zsa-pb-layout {grid-template-columns:250px minmax(0,1fr);gap:16px;}.zsa-pb-challenges {grid-template-columns:1fr;}.zsa-pb-split {grid-template-columns:1fr;}}
 @media(max-width:699px) {.zsa-pb-layout {grid-template-columns:1fr;}.zsa-pb-tabs {grid-template-columns:1fr 1fr;}.zsa-pb-beakers {gap:8px;}.zsa-pb .zsa-card {padding:14px;}.zsa-pb-readouts dd {font-size:1.1rem;}}
+
+/* Lab bench (1.1.0): the Explorer beaker with universal indicator and the Stress Test beakers, in the dark bench look. */
+.zsa-pb-bench {background:#183448;border:1px solid #274a60;border-radius:12px;overflow:hidden;margin:16px 0;color:#d5e5ee;}
+.zsa-pb-bench-top,.zsa-pb-bench-bottom {display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 12px;padding:10px 16px;}
+.zsa-pb-bench-top {background:#213e52;min-height:60px;}
+.zsa-pb-bench-caption {font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:#c3d8e4;}
+.zsa-pb .zsa-pb-bench-motion {background:#183448;color:#eef6fb;border-color:#7d9db0;padding:8px 14px;min-height:44px;font-size:15px;}
+.zsa-pb .zsa-pb-bench-motion:hover:not(:disabled) {background:#2b5068;color:#fff;}
+.zsa-pb .zsa-pb-bench-motion[hidden] {display:none;}
+.zsa-pb-bench-stage {display:flex;flex-wrap:wrap;align-items:center;gap:8px 20px;padding:12px 16px;background:radial-gradient(ellipse at 40% 45%,#25485f,#163246 72%);}
+.zsa-pb svg.zsa-pb-bench-svg {flex:3 1 280px;min-width:0;max-width:520px;margin:0 auto;}
+.zsa-pb-bench-key {flex:2 1 200px;margin:0;font-size:15px;color:#e3eef4;}
+.zsa-pb-bench-bottom {background:#122636;border-top:1px solid #395364;font-size:15px;min-height:48px;}
+.zsa-pb-bench-status {margin:0;color:#b8f0d2;font-weight:600;}
+.zsa-pb .zsa-pb-bench svg text,.zsa-pb svg.zsa-pb-bench-beaker text {fill:#d5e5ee;}
+.zsa-pb .zsa-pb-bench svg .zsa-pb-bench-small,.zsa-pb svg.zsa-pb-bench-beaker .zsa-pb-bench-small {font-size:13px;fill:#c3d8e4;}
+.zsa-pb .zsa-pb-bench svg .zsa-pb-bench-meter {font-size:24px;font-weight:700;fill:#7dffb0;}
+.zsa-pb .zsa-pb-bench svg .zsa-pb-ion {font-size:13px;font-weight:700;fill:#0b1f2e;}
+.zsa-pb svg.zsa-pb-bench-beaker .zsa-pb-bench-volume {font-size:15px;font-weight:600;fill:#ffffff;paint-order:stroke;stroke:#0b1f2e;stroke-width:3px;}
+.zsa-pb-beakers.zsa-pb-bench-pair {background:radial-gradient(ellipse at 50% 40%,#25485f,#163246 72%);border:1px solid #274a60;border-radius:12px;padding:14px;}
+.zsa-pb-bench-pair h3 {color:#eef6fb;margin:4px 0 8px;}
+.zsa-pb .zsa-pb-bench-pair .zsa-pb-meter {color:#7dffb0;}
+@media print {.zsa-pb-bench,.zsa-pb-bench-pair {print-color-adjust:exact;-webkit-print-color-adjust:exact;}.zsa-pb-bench-motion {display:none;}}

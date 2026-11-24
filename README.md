@@ -20,18 +20,18 @@ shared/
   zsa-activity.css         activity layout and engine components
   zsa-i18n.js              shared English and Mexican Spanish interface and URLs
   zsa-engine.js            the activity engine
-  zsa-track.js, zsa-track.css  the trainers' progress track (pips), drawing stage and animations on right and missed answers
+  zsa-track.js, zsa-track.css  the trainers' progress track (the practice engine's pips), drawing stage and animations on right and missed answers
   zsa-embed.js             ?embed=1 mode and zsa:resize messages
   zsa-formula.js           typed equations for practice questions, read as algebra (used by Rearranging Equations Practice)
   zsa-codes.js             completion codes: activity registry, writing and reading codes
   zsa-about.js, zsa-about.css  "About this activity" on each activity page: a short intro and related lesson links
   fonts/InterVariable.woff2, Inter-OFL.txt
-ion-charge-trainer/        Predicting Ion Charge Trainer, v1.5.3 (element card with a Bohr model that follows each step, and a progress track)
+ion-charge-trainer/        Predicting Ion Charge Trainer, v1.5.4 (element card with a Bohr model that follows each step, and a progress track)
 ionic-formula-builder/     Redirect only: the retired Ionic Formula Builder now sends visitors to ionic-reactions/
 ionic-reactions/           Ionic Reaction Builder, v3.5.2 (four reaction families, ionic product formulas, automatic balance checks and fullscreen practice)
 periodic-table/            Periodic Table reference, v1.3.2 (data built by periodic-table/tools/build-data.js)
-periodic-trends/           Periodic Trends Practice, v1.2.3 (questions built from the periodic table's data; comparison cards and the trend drawn on the table)
-lewis-vsepr/               Lewis Structure and VSEPR Builder, v1.2.3 (animated building, a 3D shape preview with the bond angle and dipole arrows)
+periodic-trends/           Periodic Trends Practice, v1.2.4 (questions built from the periodic table's data; comparison cards and the trend drawn on the table)
+lewis-vsepr/               Lewis Structure and VSEPR Builder, v1.2.4 (animated building, a 3D shape preview with the bond angle and dipole arrows)
 act/                       ACT Practice, v1.11.2 (English, Math, Reading and Science sections and the full ACT; question banks in act/bank-*.js; optional practice codes with PINs, and class sets for teachers)
 act-question-generator/    Standalone ACT question generator, v1.2.2 (400 questions each for English, Math, Science; random order, answer reveal, no scores or accounts)
 act-science/               Redirect only: ACT Science Practice is now the Science section of act/
@@ -72,7 +72,7 @@ qs-vectors-practice/  Vectors Practice, v1.1.0 (generated sets: scalars and vect
 atwood-machine/           The Atwood Machine, v1.2.0 (ideal pulley, adjustable masses and live vectors; optional Lab check with an ALC completion code; English and Mexican Spanish)
 physics-graphing-lab/      Physics Graphing Lab, v1.1.3 (a cart with linked position, velocity and acceleration graphs; English and Mexican Spanish)
 collision-carts/           Collision Carts, v1.2.0 (two carts on a track, elastic and inelastic collisions, live velocity and momentum vectors; optional Lab check with a CLC completion code; English and Mexican Spanish)
-ph-buffer-lab/             pH & Buffer Lab, v1.0.4 (pH exploration, buffer design, capacity experiments and challenges; English and Mexican Spanish)
+ph-buffer-lab/             pH & Buffer Lab, v1.1.0 (a universal indicator beaker with ions on a log scale, drop by drop additions to water and a buffer side by side; pH exploration, buffer design, capacity experiments and challenges; English and Mexican Spanish)
 titration-lab/             Virtual Titration Simulator, v1.1.3 (burette, indicators and a live pH curve for strong and weak acids and bases)
 kinetics-lab/              Kinetics and Collision Theory Sandbox, v1.1.3 (colliding particles, temperature, concentration, activation energy and a catalyst, with a live concentration graph)
 redox-coach/              Redox Half-Reaction Balancer Coach, v1.2.2 (manual phase-by-phase balancing in acidic and basic media; English and Mexican Spanish)
@@ -82,8 +82,8 @@ circuit-builder/           Circuit Builder, v1.1.3 (drag batteries, wires, resis
 beers-law-lab/             Beer's Law Spectrophotometer Lab, v1.1.3 (zero with a blank, measure standards for a calibration curve, then calculate the concentration of a random unknown)
 equilibrium-lab/          Equilibrium Sandbox, v1.3.3 (Le Chatelier stresses, Kc/Qc and live concentration graphs)
 calorimetry-lab/          Calorimetry & Enthalpy Lab, v1.3.3 (heated-metal and neutralization calorimetry)
-reaction-energy-lab/      Reaction Energy Lab, v1.0.4 (energy diagrams, phase changes, reaction enthalpy, bonds, formation and Hess; English and Mexican Spanish)
-free-energy-lab/          Free Energy Lab, v1.0.4 (entropy, Gibbs free energy, temperature, K, kinetic control, dissolving and coupling; English and Mexican Spanish)
+reaction-energy-lab/      Reaction Energy Lab, v1.1.0 (a ball that rides the energy diagram, bonds breaking and forming, a flask with a thermometer on the heating curve; energy diagrams, phase changes, reaction enthalpy, bonds, formation and Hess; English and Mexican Spanish)
+free-energy-lab/          Free Energy Lab, v1.1.0 (a phase chamber from solid to gas with temperature, a shaded ΔG versus T chart and a ΔG° to K mixture view; entropy, Gibbs free energy, temperature, K, kinetic control, dissolving and coupling; English and Mexican Spanish)
 chemical-bonding-lab/      Chemical Bonding Lab, v1.1.4 (four unknown solids tested for appearance, conductivity, melting, solubility and malleability; English and Mexican Spanish)
 molar-mass-trap-lab/       The Molar Mass Trap Lab, v1.2.2 (wax paper, steel shot and five mixtures, with data recorded on the lab worksheet; English and Mexican Spanish)
 metals-lab/                Metals, Nonmetals & Metalloids Lab, v1.1.4 (classify three unknown solids from physical and chemical evidence; English and Mexican Spanish)

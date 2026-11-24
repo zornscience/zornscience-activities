@@ -3453,6 +3453,27 @@ The following activity-specific choices are newly recorded here:
 
 The activity title is Laboratorio virtual de entropía y energía libre. Section titles are noun phrases; buttons remain actions. Decimal points, formulas, charges, units and state symbols are preserved. All feedback and complete sentence templates are in `free-energy-lab/data.js`.
 
+### Free Energy Lab bench (1.1.0)
+
+Red fija, favorecida and espontánea were already in use in this lab. Fusión and ebullición name the phase changes; se funde and hierve are the verbs. Verificar keeps this lab's Check label.
+
+| English | Mexican Spanish |
+| --- | --- |
+| Phase chamber: water at 1 atm | Cámara de fases: agua a 1 atm |
+| Chamber temperature (K) | Temperatura de la cámara (K) |
+| Entropy (relative, schematic) | Entropía (relativa, esquemática) |
+| Melts at 273 K and boils at 373 K at 1 atm. | A 1 atm, se funde a 273 K y hierve a 373 K. |
+| molecules vibrate in a fixed lattice | las moléculas vibran en una red fija |
+| molecules slide past their neighbors | las moléculas se deslizan entre sus vecinas |
+| melting / boiling | fusión / ebullición |
+| Favored / Not favored (zone labels) | Favorecida / No favorecida |
+| Spontaneous / Nonspontaneous (zone labels) | Espontánea / No espontánea |
+| Linking ΔG° and K | Relación entre ΔG° y K |
+| Standard free energy | Energía libre estándar |
+| Equilibrium mixture | Mezcla en equilibrio |
+| Squares / Diamonds | Cuadrados / Rombos |
+| Pause motion / Play motion | Pausar movimiento / Reanudar movimiento |
+
 ### Reaction Energy Lab (1.0.1)
 
 | English | Mexican Spanish |
@@ -3470,6 +3491,28 @@ The activity title is Laboratorio virtual de entropía y energía libre. Section
 | Lone pairs: O has 2 pairs. | Pares libres: O tiene 2 pares. |
 | Lone pairs: N in NH₃ has 1 pair. | Pares libres: N en NH₃ tiene 1 par. |
 
+
+### Reaction Energy Lab bench (1.1.0)
+
+Matraz, parrilla, complejo activado, avance de la reacción, enlaces rotos and enlaces formados were already in the glossary or this lab. Iniciar keeps the lab's Play label.
+
+| English | Mexican Spanish |
+| --- | --- |
+| Reaction pathway | Trayectoria de la reacción |
+| Run reaction | Iniciar reacción |
+| Reaction progress (%) | Avance de la reacción (%) |
+| Climbing the barrier | Subida de la barrera |
+| Downhill: new bonds form. | Bajada: se forman enlaces nuevos. |
+| Bonds breaking and forming | Enlaces que se rompen y se forman |
+| Break bonds / Form bonds | Romper enlaces / Formar enlaces |
+| Separate atoms | Átomos separados |
+| Energy absorbed breaking bonds | Energía absorbida al romper enlaces |
+| Energy released forming bonds | Energía liberada al formar enlaces |
+| Flask and thermometer | Matraz y termómetro |
+| Ice melting / Water boiling | Hielo que se funde / Agua en ebullición |
+| Water freezing / Steam condensing | Agua que se congela / Vapor de agua que se condensa |
+| Hot plate: adding 500 J/s | Parrilla: agrega 500 J/s |
+| Cold plate: removing 500 J/s | Placa de enfriamiento: retira 500 J/s |
 
 ## Gas lab check pilot (gas-lab 1.2.0)
 
@@ -3874,6 +3917,20 @@ pH = pKa of NH₄⁺ (weak base half-equivalence) | pH = pKa de NH₄⁺
 endpoint vs equivalence point | punto final vs punto de equivalencia (kept distinct)
 
 Still using "amortiguador" as a noun (outside this pass): apchem-unit8 and enzyme-lab.
+
+## pH & Buffer Lab bench (1.1.0)
+
+Vaso de precipitados and verde azulado were already in the glossary. Colors agree with the indicator as a masculine noun (el indicador está rojo).
+
+| English | Mexican Spanish |
+| --- | --- |
+| Beaker with universal indicator | Vaso de precipitados con indicador universal |
+| universal indicator | indicador universal |
+| pH meter | medidor de pH |
+| yellow green / blue green / violet | verde amarillento / verde azulado / violeta |
+| drawn on a log scale | dibujados en escala logarítmica |
+| +{n} drops | +{n} gotas |
+| Pause motion / Play motion | Pausar movimiento / Reanudar movimiento |
 
 ## The Molar Mass Trap Lab
 

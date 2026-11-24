@@ -1,9 +1,16 @@
 # Verification record
-Version: 1.2.3
+Version: 1.2.4
 Date: 2026-10-16
 Reviewer: Claude (built and tested 1.0.0; 1.1.0 changes tested as recorded below)
 
 PASS means the check was run on version 1.1.0 as committed and passed. Rows marked (1.0.0) were run by hand on 1.0.0 and not repeated for 1.1.0; every other row is an automated test that ran on 1.1.0 in `npm test`, with the counts updated for the 418 questions. NOT TESTED rows say why. Browser checks use Playwright 1.56 with Chromium over the local test server and run in CI with `npm test`. Expected answers and feedback rules in the tests are worked out from the Periodic Table's data and the lessons' trend rules, not from `trends.js` or the build script.
+
+## 1.2.4 results (pips shared with the practice engine)
+| Check | Status | Evidence |
+|---|---|---|
+| Same pips as the practice pages | PASS | `tests/unit/track-css.test.js`: height, rounding, fill transition, current ring and breathing, missed stripes, track grid, empty and red colors, `data-state` names and the reduced motion rule match `shared/zsa-practice.css` and `.js`; only the accent differs. |
+| States and reduced motion | PASS | `tests/e2e/trainer-visuals.spec.js` reads every pip's `data-state` (current, correct, missed, empty; review hollow) and checks that with reduced motion neither the pips nor their fill move. |
+| Fit unchanged | PASS | Measured before and after on the fit items: no state is taller on phones (the Lewis build step's Hint stays at 611 px at 360x640); the layout, axe, flow, keyboard, rounds and codes suites pass. |
 
 ## 1.2.3 results (question screen redesign)
 | Check | Status | Evidence |
