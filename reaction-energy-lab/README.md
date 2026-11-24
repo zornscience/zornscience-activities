@@ -1,6 +1,8 @@
 # Reaction Energy Lab
 
-Version: 1.0.4
+Version: 1.1.0
+
+Version 1.1.0 adds lab bench drawings in the dark bench look of the other virtual labs. The energy diagram sits on a reaction pathway bench: a ball rides the curve (the catalyst curve when Catalyst is checked), moved by a Reaction progress slider or played by Run reaction, and a status line names each stage (reactants, climbing the barrier, activated complex, downhill, products). Bond Enthalpies has a bond model: Break bonds pulls the reactant atoms apart (bonds fade) and Form bonds builds the product molecules (new bonds appear), while two bars compare the energy absorbed breaking bonds with the energy released forming them. The bars show no numbers, so the bond tallies stay the student's work, and the Data table, Check and Show answer are unchanged. On a narrow card the model runs top to bottom so the atoms keep a readable size. Heating curve has a flask with a thermometer on a hot plate (a cold plate when cooling): it shows ice, melting ice, liquid water, boiling water or steam, and the thermometer reads the temperature of the particle view, following Play, Reset and the time slider. Every drawing has a text alternative, and the stages are announced. With reduced motion, Run reaction and the bond buttons jump to their end and nothing moves. The chemistry, calculations, data tables, Copy data and Download CSV, tabs and the other modes are unchanged.
 
 Version 1.0.4 improves keyboard and screen reader access. The data table was inside two nested scroll regions, which made two Tab stops with the inner focus ring clipped; it is now one labelled, focusable region. Every focusable element, including summaries, text areas and custom controls, now shows the same visible focus ring (`shared/zsa-lab-a11y.css`), a blue ring with a white gap that reads on light and dark panels and in high contrast mode. `tests/e2e/labs-a11y.spec.js` now checks this lab in English and Mexican Spanish with axe-core, the Tab order, a visible focus indicator on every stop, names and states of custom controls, and text alternatives for drawings. The science, scoring and any completion code are unchanged.
 
@@ -20,6 +22,7 @@ AP Chemistry 6.1, 6.2, 6.5, 6.6, 6.7, 6.8 and 6.9. Chemistry: PE Diagrams, Heati
 | chem.js | DOM-independent lesson constants, calculations, misconception checks, formatting and safe lesson URLs |
 | data.js | Complete Mexican Spanish dictionary configured through shared zsa-i18n |
 | lab.js | Controls, SVG diagrams, particles, challenges, tables, keyboard navigation and local exports |
+| bench.js | The reaction pathway ball, the bond model and the flask (`zsa-re:request-bench` event) |
 | lab.css | Activity layout, responsive controls, focus and reduced motion |
 | README.md | Parameters, lesson presets and model notes |
 | TESTING.md | Automated checks and manual verification |

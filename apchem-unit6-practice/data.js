@@ -8,6 +8,10 @@
       "title": {
         "en": "6.1 Endothermic and Exothermic Processes",
         "es": "6.1 Procesos endotérmicos y exotérmicos"
+      },
+      "summary": {
+        "en": "System and surroundings, the sign of q, and the first law.",
+        "es": "Sistema y alrededores, signo de q y primera ley de la termodinámica."
       }
     },
     {
@@ -15,6 +19,10 @@
       "title": {
         "en": "6.2 Energy Diagrams",
         "es": "6.2 Diagramas de energía"
+      },
+      "summary": {
+        "en": "ΔH from energy diagrams, reversed reactions, and what a catalyst leaves unchanged.",
+        "es": "ΔH en diagramas de energía, reacciones inversas y lo que un catalizador no cambia."
       }
     },
     {
@@ -22,6 +30,10 @@
       "title": {
         "en": "6.3 Heat Transfer and Thermal Equilibrium",
         "es": "6.3 Transferencia de calor y equilibrio térmico"
+      },
+      "summary": {
+        "en": "Direction of heat flow and the final temperature at thermal equilibrium.",
+        "es": "Dirección del flujo de calor y temperatura final en el equilibrio térmico."
       }
     },
     {
@@ -29,6 +41,10 @@
       "title": {
         "en": "6.4 Heat Capacity and Calorimetry",
         "es": "6.4 Capacidad calorífica y calorimetría"
+      },
+      "summary": {
+        "en": "Heat capacities, q = mcΔT, and reaction enthalpy from coffee-cup calorimetry.",
+        "es": "Capacidades caloríficas, q = mcΔT y entalpía de reacción con un calorímetro de vaso de espuma."
       }
     },
     {
@@ -36,6 +52,10 @@
       "title": {
         "en": "6.5 Energy of Phase Changes",
         "es": "6.5 Energía de los cambios de fase"
+      },
+      "summary": {
+        "en": "Heating curves and the heat to melt, freeze, boil or condense a sample.",
+        "es": "Curvas de calentamiento y el calor para fundir, congelar, hervir o condensar una muestra."
       }
     },
     {
@@ -43,6 +63,10 @@
       "title": {
         "en": "6.6 Introduction to Enthalpy of Reaction",
         "es": "6.6 Introducción a la entalpía de reacción"
+      },
+      "summary": {
+        "en": "ΔH as heat at constant pressure, scaled and reversed equations, and heat for an amount.",
+        "es": "ΔH como calor a presión constante, ecuaciones multiplicadas o invertidas y calor para una cantidad."
       }
     },
     {
@@ -50,6 +74,10 @@
       "title": {
         "en": "6.7 Bond Enthalpies",
         "es": "6.7 Entalpías de enlace"
+      },
+      "summary": {
+        "en": "Estimating ΔH as bonds broken minus bonds formed.",
+        "es": "Estimación de ΔH como enlaces rotos menos enlaces formados."
       }
     },
     {
@@ -57,6 +85,10 @@
       "title": {
         "en": "6.8 Enthalpy of Formation",
         "es": "6.8 Entalpía de formación"
+      },
+      "summary": {
+        "en": "Standard states, formation equations, and ΔH°rxn from enthalpies of formation.",
+        "es": "Estados estándar, ecuaciones de formación y ΔH°rxn a partir de entalpías de formación."
       }
     },
     {
@@ -64,6 +96,10 @@
       "title": {
         "en": "6.9 Hess's Law",
         "es": "6.9 Ley de Hess"
+      },
+      "summary": {
+        "en": "Adding, reversing and scaling equations to find an unknown ΔH.",
+        "es": "Suma, inversión y multiplicación de ecuaciones para hallar un ΔH desconocido."
       }
     }
   ],

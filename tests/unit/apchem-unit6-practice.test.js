@@ -10,7 +10,8 @@ const raw=q=>q.display.replace(/−/g,"-");
 test("54 original bilingual questions give six per exact supplied CED topic",()=>{
   const en=["Endothermic and Exothermic Processes","Energy Diagrams","Heat Transfer and Thermal Equilibrium","Heat Capacity and Calorimetry","Energy of Phase Changes","Introduction to Enthalpy of Reaction","Bond Enthalpies","Enthalpy of Formation","Hess's Law"];
   const es=["Procesos endotérmicos y exotérmicos","Diagramas de energía","Transferencia de calor y equilibrio térmico","Capacidad calorífica y calorimetría","Energía de los cambios de fase","Introducción a la entalpía de reacción","Entalpías de enlace","Entalpía de formación","Ley de Hess"];
-  assert.deepEqual(bank.topics,en.map((t,i)=>({id:`6.${i+1}`,title:{en:`6.${i+1} ${t}`,es:`6.${i+1} ${es[i]}`}})));
+  assert.ok(bank.topics.every(t=>Object.keys(t).sort().join()==="id,summary,title"),"each topic has exactly id, title and summary");
+  assert.deepEqual(bank.topics.map(t=>({id:t.id,title:t.title})), en.map((t,i)=>({id:`6.${i+1}`,title:{en:`6.${i+1} ${t}`,es:`6.${i+1} ${es[i]}`}})));
   assert.equal(bank.questions.length,54);
   assert.equal(new Set(bank.questions.map(q=>q.id)).size,54);
   for(const lang of ["en","es"]) assert.equal(new Set(bank.questions.map(q=>q.prompt[lang])).size,54);

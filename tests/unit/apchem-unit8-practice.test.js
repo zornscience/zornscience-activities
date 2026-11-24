@@ -9,7 +9,8 @@ const byId = id => bank.questions.find(q => q.id === id);
 test("66 bilingual questions preserve all eleven exact CED titles and separate decimal IDs", () => {
   const en = ["Introduction to Acids and Bases", "pH and pOH of Strong Acids and Bases", "Weak Acid and Base Equilibria", "Acid-Base Reactions and Buffers", "Acid-Base Titrations", "Molecular Structure of Acids and Bases", "pH and pKa", "Properties of Buffers", "Henderson-Hasselbalch Equation", "Buffer Capacity", "pH and Solubility"];
   const es = ["Introducción a los ácidos y las bases", "pH y pOH de ácidos y bases fuertes", "Equilibrios de ácidos y bases débiles", "Reacciones ácido-base y amortiguadores", "Titulaciones ácido-base", "Estructura molecular de ácidos y bases", "pH y pKa", "Propiedades de los amortiguadores", "Ecuación de Henderson-Hasselbalch", "Capacidad amortiguadora", "pH y solubilidad"];
-  assert.deepEqual(bank.topics, en.map((t,i) => ({id:`8.${i+1}`,title:{en:`8.${i+1} ${t}`,es:`8.${i+1} ${es[i]}`}})));
+  assert.ok(bank.topics.every(t=>Object.keys(t).sort().join()==="id,summary,title"),"each topic has exactly id, title and summary");
+  assert.deepEqual(bank.topics.map(t=>({id:t.id,title:t.title})), en.map((t,i) => ({id:`8.${i+1}`,title:{en:`8.${i+1} ${t}`,es:`8.${i+1} ${es[i]}`}})));
   assert.equal(bank.questions.length,66);
   assert.equal(new Set(bank.questions.map(q=>q.id)).size,66);
   for (const lang of ["en","es"]) assert.equal(new Set(bank.questions.map(q=>q.prompt[lang])).size,66);

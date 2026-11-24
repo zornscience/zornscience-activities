@@ -190,6 +190,19 @@
   "Data selected. Copy with Ctrl+C or Command+C.": "Datos seleccionados. Copia con Ctrl+C o Command+C.",
   "Data copied.": "Datos copiados.",
   "CSV downloaded.": "CSV descargado.",
-  "Experiment reset.": "Experimento reiniciado."
+  "Experiment reset.": "Experimento reiniciado.",
+  "Beaker with universal indicator": "Vaso de precipitados con indicador universal",
+  "Pause motion": "Pausar movimiento",
+  "Play motion": "Reanudar movimiento",
+  "orange": "naranja",
+  "yellow green": "verde amarillento",
+  "green": "verde",
+  "blue green": "verde azulado",
+  "violet": "violeta",
+  "Circles: H₃O⁺ ({h} drawn). Squares: OH⁻ ({oh} drawn). The ions are drawn on a log scale: 4 more for every 10 times the concentration.": "Círculos: H₃O⁺ ({h} dibujados). Cuadrados: OH⁻ ({oh} dibujados). Los iones se dibujan en escala logarítmica: 4 más por cada 10 veces la concentración.",
+  "Indicator color: {color}. pH meter: {pH}.": "Color del indicador: {color}. Medidor de pH: {pH}.",
+  "Beaker of {solute} at pH {pH}. Universal indicator is {color}. {h} H₃O⁺ and {oh} OH⁻ drawn on a log scale.": "Vaso de precipitados con {solute} a pH {pH}. El indicador universal está {color}. {h} H₃O⁺ y {oh} OH⁻ dibujados en escala logarítmica.",
+  "Volume {v} mL, pH {pH}. Universal indicator is {color}.": "Volumen {v} mL, pH {pH}. El indicador universal está {color}.",
+  "+{n} drops": "+{n} gotas"
 }});
 }());

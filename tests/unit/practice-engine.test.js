@@ -336,3 +336,27 @@ test("every interface string in zsa-practice.js has Mexican Spanish on all 24 pr
     assert.doesNotMatch(es, /\b(?:the|and|your|questions?|skill|topic|steps|streak|row|misses|numbers|choice|typed|answers?)\b/i, "English left in " + es);
   }
 });
+
+// AP Chemistry Units 5 to 9 carry an authored one-line summary per topic, shown on the start cards in place of the
+// derived question counts (every topic there has the same mix, so the derived line repeated on every card).
+test("AP Units 5 to 9: every topic has a distinct English and Mexican Spanish summary that fits one card line", () => {
+  for (let unit = 5; unit <= 9; unit++) {
+    const bank = require(path.join(__dirname, "../../apchem-unit" + unit + "-practice/data.js"));
+    const seen = {en:new Set(), es:new Set()};
+    for (const topic of bank.topics) {
+      assert.ok(topic.summary, topic.id + " has a summary");
+      assert.deepEqual(Object.keys(topic.summary).sort(), ["en", "es"], topic.id);
+      for (const lang of ["en", "es"]) {
+        const text = topic.summary[lang];
+        assert.ok(text.length >= 30 && text.length <= 100, topic.id + " " + lang + " length " + text.length);
+        assert.match(text, /^(?:[A-ZÁÉÍÓÚÑ¿Δ]|pH )/, topic.id + " " + lang + " starts like a sentence");
+        assert.match(text, /\.$/, topic.id + " " + lang + " ends with a period");
+        assert.doesNotMatch(text, /[–—<>]/, topic.id + " " + lang + " no dashes or markup");
+        assert.ok(!seen[lang].has(text), topic.id + " " + lang + " is not repeated");
+        seen[lang].add(text);
+      }
+      assert.notEqual(topic.summary.en, topic.summary.es, topic.id);
+      assert.doesNotMatch(topic.summary.es, /\b(?:the|and|with|from|of|how|what|which|rate|rates|heat|bonds?|equation)\b/i, topic.id + " Spanish has no English words");
+    }
+  }
+});
