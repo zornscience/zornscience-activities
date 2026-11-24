@@ -76,7 +76,7 @@
     nonbuffer();
   }
   function nonbuffer(){put('nonbuffer-why',$('nonbuffer').value==='naoh'?'NaOH is a strong base and NaCl supplies no weak conjugate acid. There is no weak acid and conjugate base reservoir.':'The acid dissociates completely. Its conjugate base is too weak to consume added H₃O⁺ effectively, so this pair is not a buffer.');}
-  function beaker(id,pH,volume){var key=id==='water-beaker'?'water':'buffer';beakers[id].update({pH:pH,volume:volume,path:drops?drops[key]:null,dropLabel:drops?drops.label:''});}
+  function beaker(id,pH,volume){var key=id==='water-beaker'?'water':'buffer';beakers[id].update({pH:pH,volume:volume,path:drops?drops[key]:null,drops:drops?drops.count:0,dropLabel:drops?drops.label:''});}
   function graph(){var el=$('stress-graph'),w=Math.max(240,el.clientWidth||640),h=320,l=42,r=12,top=18,bottom=55,pw=w-l-r,ph=h-top-bottom,max=Math.max(5,Math.ceil(points[points.length-1].volume/5)*5);
     el.setAttribute('viewBox','0 0 '+w+' '+h);var current=points[points.length-1];el.replaceChildren(svg('title',{id:'graph-desc'},points.length===1?t('pH vs. cumulative volume. {one} reading. Latest: {v} mL, water pH {water}, buffer pH {buffer}.',{one:points.length,v:f(current.volume),water:f(current.water.pH),buffer:f(current.buffer.pH)}):t('pH vs. cumulative volume. {n} readings. Latest: {v} mL, water pH {water}, buffer pH {buffer}.',{n:points.length,v:f(current.volume),water:f(current.water.pH),buffer:f(current.buffer.pH)})));
     function x(v){return l+v/max*pw;}function y(p){return top+(14-Math.max(0,Math.min(14,p)))/14*ph;}
@@ -106,7 +106,7 @@
     if(converted>1e-12)reaction+=t('Buffer reaction: {equation}. Converted {n} mol.',{equation:eq,n:sci(converted)});
     if((isAcid&&p.excessAcid>1e-12)||(!isAcid&&p.excessBase>1e-12))reaction+=' '+t('This conjugate pair is depleted in this direction. Further titrant changes pH through excess reagent and any remaining acid equilibria.');
     $('stress-reaction').textContent=reaction;var n=Math.round(amount/.05),steps=Math.min(n,25),water=[],buffer=[];for(var k=1;k<=steps;k++){var part=amount*k/steps,q=M.stress($('stress-pair').value,cval('capacity'),isAcid?acidML-amount+part:acidML,isAcid?baseML:baseML-amount+part);water.push(q.water.pH);buffer.push(q.buffer.pH);}
-    drops={water:water,buffer:buffer,label:[t('+{n} drops',{n:n}),isAcid?'HCl':'NaOH']};stress();drops=null;say(t('Water pH {water}; buffer pH {buffer}.',{water:f(p.water.pH),buffer:f(p.buffer.pH)}));
+    drops={water:water,buffer:buffer,count:n,label:[t('+{n} drops',{n:n}),isAcid?'HCl':'NaOH']};stress();drops=null;say(t('Water pH {water}; buffer pH {buffer}.',{water:f(p.water.pH),buffer:f(p.buffer.pH)}));
   }
   function blood(){var ratio=Number($('blood-ratio').value),p=M.hh('carbonate',1,ratio),ok=p>=7.35-1e-10&&p<=7.45+1e-10;$('blood-ratio-value').textContent=ratio.toFixed(1);$('blood-ratio').setAttribute('aria-valuetext',String(ratio));put('blood-feedback',ok?'In range: pH {pH}. More conjugate base raises pH; more acid lowers it.':'Outside the range: pH {pH}. Try a larger ratio to raise pH or a smaller ratio to lower it.',{pH:f(p)});$('blood-feedback').className=ok?'zsa-pb-success':'zsa-pb-caution';}
   function design(){var target=Number($('target-ph').value),id=$('challenge-pair').value,ratio=Number($('challenge-ratio').value),p=M.PAIRS[id];if(!Number.isFinite(ratio)||ratio<=0){put('design-feedback','Enter a positive, finite ratio.');return;}

@@ -210,19 +210,21 @@
       reagent.textContent = o.dropLabel ? o.dropLabel[0] : "";
       reagentName.textContent = o.dropLabel ? o.dropLabel[1] : "";
       if (!path.length || reduced() || !shown) { paint(o.pH, o.volume); return; }
-      // Drops fall one after another; the color and the marker follow the pH after each drop.
-      var start = performance.now(), each = Math.max(18, Math.min(260, 1800 / path.length)), fall = 260, startVolume = shown.volume;
+      // Drops fall one after another; the color and the marker follow the pH as they land. Every drop is drawn
+      // from the dropper until it reaches the liquid (several can be in the air at once for the larger additions),
+      // and the pH steps through the model's values at the intermediate volumes.
+      var count = Math.max(path.length, o.drops || 0), start = performance.now(), each = Math.max(12, Math.min(260, 1800 / count)), fall = 260, startVolume = shown.volume, surface = level(startVolume);
       function frame(now) {
         cancel = 0;
-        var elapsed = now - start, landed = Math.min(path.length, Math.floor(elapsed / each)), active = elapsed < path.length * each + fall;
+        var elapsed = now - start, first = Math.max(0, Math.ceil((elapsed - fall) / each)), last = Math.min(count - 1, Math.floor(elapsed / each)), active = elapsed < (count - 1) * each + fall;
         drops.replaceChildren();
-        for (var i = landed; i < path.length && i < landed + 3; i++) {
+        for (var i = first; i <= last; i++) {
           var k = (elapsed - i * each) / fall;
           if (k < 0 || k > 1) continue;
-          drops.appendChild(svg("path", {d: "M 115 " + (58 + k * (level(startVolume) - 60)).toFixed(1) + " q 4 7 0 9 q -4 -2 0 -9 Z", fill: "#e7f1f6"}));
+          drops.appendChild(svg("path", {d: "M 115 " + (58 + k * (surface - 60)).toFixed(1) + " q 4 7 0 9 q -4 -2 0 -9 Z", fill: "#e7f1f6"}));
         }
-        var done = Math.min(path.length, Math.floor(Math.max(0, elapsed - fall) / each) + (elapsed >= fall ? 1 : 0));
-        paint(done ? path[done - 1] : shown.pH, startVolume + (o.volume - startVolume) * done / path.length);
+        var done = elapsed < fall ? 0 : Math.min(count, Math.floor((elapsed - fall) / each) + 1), step = Math.ceil(done * path.length / count);
+        paint(step ? path[step - 1] : shown.pH, startVolume + (o.volume - startVolume) * done / count);
         if (active) cancel = requestAnimationFrame(frame);
         else { drops.replaceChildren(); paint(o.pH, o.volume); }
       }

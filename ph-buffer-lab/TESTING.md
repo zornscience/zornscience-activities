@@ -20,11 +20,12 @@ Manual device validation remains useful for real Chromebook keyboards, iOS Safar
 
 ## Lab bench verification (1.1.0)
 
-Four browser tests in `tests/e2e/ph-buffer-lab.spec.js` cover the bench:
+Five browser tests in `tests/e2e/ph-buffer-lab.spec.js` cover the bench:
 
 - Explorer: 0.10 M HCl is red with 28 H₃O⁺ and no OH⁻ drawn, 0.010 M HCl draws 24 and changes color, 0.010 M NaOH is violet with 24 OH⁻ and 1 M NaOH draws 32, 0.0010 M NH₃ is blue, and the 1 × 10⁻⁷ M HCl case is green; the text alternative and status name the color and pH.
 - With motion: the ions are still at load, drift after a change, and Pause motion stops them (aria-pressed, Play motion).
 - Stress Test: 1.0 mL of HCl falls as 20 drops into both beakers; mid-animation the water marker is between pH 7.00 and 3.00 and it ends at 3.00 with the orange indicator and matching text; the buffer marker moves less than a fifth as far; the data table gains one row.
+- Every falling drop reaches the liquid (1.0 mL), and 5.0 mL animates all 100 drops, with more than 8 in the air at once.
 - Reduced motion and Mexican Spanish: 2 drops of NaOH, the final state at once, translated text and no English on the bench.
 
 `tests/e2e/labs-a11y.spec.js` passes for this lab in both languages. axe-core was also run by hand on the Explorer and the Stress Test at 1280x800 and 390x664 in English and Spanish: no violations, and no sideways scrolling from 320 to 1920 px. Screenshots were checked by hand at both sizes and in both languages, during and after additions of 0.1, 1.0 and 5.0 mL.

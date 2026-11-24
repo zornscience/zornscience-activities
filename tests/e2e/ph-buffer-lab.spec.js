@@ -172,3 +172,15 @@ test('stress beakers with reduced motion and in Mexican Spanish',async({page})=>
  await page.locator('#tab-explore').click();await expect(page.locator('#explore-bench-status')).toHaveText('Color del indicador: rojo. Medidor de pH: 1.00.');
  await expect(page.locator('.zsa-pb-bench')).not.toContainText(/Beaker|Circles|Indicator|drawn|drops/);
 });
+test('every falling drop reaches the liquid, and 5.0 mL animates all 100 drops',async({page})=>{
+ await page.emulateMedia({reducedMotion:'no-preference'});await page.goto('/ph-buffer-lab/?mode=stress&pair=acetate&capacity=0.020');
+ // Watch the drops on every frame: the lowest point any drop reaches, and the most drops in the air at once.
+ const watch=()=>page.evaluate(()=>new Promise(done=>{const g=document.querySelector('#water-beaker');let low=0,most=0,frames=0;
+  (function frame(){const ys=[...g.querySelectorAll('path[fill="#e7f1f6"]')].map(p=>Number(p.getAttribute('d').split(' ')[2]));if(ys.length)low=Math.max(low,...ys);most=Math.max(most,ys.length);
+   if(++frames<240)requestAnimationFrame(frame);else done({low,most});})();}));
+ // The water surface starts at y = 111 (100.0 mL); a drop is drawn from y = 58 until just above it.
+ let p=watch();await page.locator('#acid-large').click();let r=await p;expect(r.low).toBeGreaterThan(100);
+ // 100 drops about 18 ms apart, each falling for 260 ms: more than 8 are in the air at once (25 drops would give at most 4).
+ p=watch();await page.locator('#acid-bulk').click();r=await p;expect(r.low).toBeGreaterThan(95);expect(r.most).toBeGreaterThan(8);
+ await expect(page.locator('#water-desc')).toHaveText(/^Volume 106\.0 mL, pH /);
+});
