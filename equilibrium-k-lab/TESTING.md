@@ -1,6 +1,6 @@
 # Equilibrium Constant Lab testing
 
-Version: 1.0.4
+Version: 1.1.0
 
 ## Automated checks
 
@@ -42,6 +42,19 @@ Reviewed the supplied Style Kit v1.8, sections 1, 4, 5, 6 and 7. Corrected Spani
 - Browser coverage now asserts velocidad de reacción, the noun-phrase Explore K heading, Spanish source URLs, no duplicate /es prefix, preserved lesson queries/fragments, English switching, course-specific fallbacks and continued rejection of lookalike hostnames.
 - `git diff --check`: passed.
 - Shared files and repository configuration are unchanged. Full-suite results above are from the initial delivery; the focused checks cover this follow-up.
+
+## Lab bench verification (1.1.0)
+
+Four browser tests in `tests/e2e/equilibrium-k-lab.spec.js` cover the bench:
+
+- The vessel's counts follow the run: H₂, I₂ and HI start at 20, 20 and 0 particles at 0.01 M each and end at 4, 4 and 31 (0.0444 M and 0.311 M), with 39 particles drawn. The balance starts tipped right at its 16 degree limit (Q = 0) and ends level with "Q = K: at equilibrium." CaCO₃ shows its excess solids and counts only CO₂. A tiny amount of B at K = 10⁻⁴ reads "fewer than 1 particle".
+- In Q vs K the beam stays level until Reveal, then tips left for Q > K. The bench is only in Explore K and Q vs K.
+- With motion: nothing moves before Run, particles move during the run, the final counts equal the last Data table row divided by the particle size, and Pause motion stops the movement (aria-pressed) and Play motion starts it again.
+- Mexican Spanish text and text alternatives, with no English left on the bench.
+
+These tests set reduced motion with `page.emulateMedia`. The `test.use({reducedMotion})` line at the top of the spec is not a Playwright test option, so it has no effect; the older tests do not depend on it and it is left as it was.
+
+`tests/e2e/labs-a11y.spec.js` covers the bench with the rest of the lab: axe-core in English and Spanish at 1366x900 and 390x664, the Pause motion button in the Tab order with a name and a visible focus ring, and text alternatives on both drawings. Screenshots were checked by hand in English and with `?lang=es` at 1280x800 and 390x664, before, during and after a run, with and without reduced motion, for H₂ + I₂, N₂O₄, CaCO₃ and A ⇌ B.
 
 ## Manual review
 

@@ -3325,6 +3325,24 @@ Reviewed against ZornScience Style Kit v1.8, sections 1, 4, 5, 6 and 7. Reaction
 Action labels use Verificar x. The equilibrium table keeps the lesson letters I, C, E and, for Chemistry, R. Formulas, numerical values, x, s, and state symbols remain unchanged.
 
 
+### Equilibrium Constant Lab bench (1.1.0)
+
+Recipiente de reacción and balanza were already in the glossary. Pausar keeps the Style Kit action label for Pause; Reanudar is used for the button that starts the motion again, since Iniciar already means Run in this lab. Velocidad keeps the Style Kit section 6 rule for reaction rates.
+
+| English | Mexican Spanish |
+| --- | --- |
+| Reaction vessel | Recipiente de reacción |
+| sealed reaction vessel | recipiente de reacción sellado |
+| excess solid | sólido en exceso |
+| Q vs K balance | balanza Q contra K |
+| The balance tips toward the side the reaction shifts to. | La balanza se inclina hacia el lado al que se desplaza la reacción. |
+| Pause motion / Play motion | Pausar movimiento / Reanudar movimiento |
+| 1 particle = {unit} | 1 partícula = {unit} |
+| fewer than 1 particle | menos de 1 partícula |
+| Forward and reverse reactions continue at equal rates. | Las reacciones directa e inversa continúan con la misma velocidad. |
+| Ready. Press Run. | Listo. Presiona Iniciar. |
+| Step {s} of 80 | Paso {s} de 80 |
+
 ### Reaction Energy Lab (1.0.0)
 
 Style Kit 1.6, sections 1, 4, 5, 6 and 7. These activity terms include the required lesson vocabulary and the new control and feedback terms. The AP label is diagrama de energía; Chemistry uses diagrama de energía potencial.

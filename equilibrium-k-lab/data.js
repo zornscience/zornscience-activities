@@ -235,6 +235,24 @@
   "x = {x}; K = {k}": "x = {x}; K = {k}",
   "Shortcut: s ≈ {shortcut} M ({assumption}). Exact: {exact} M.": "Aproximación: s ≈ {shortcut} M ({assumption}). Valor exacto: {exact} M.",
   "5% check = {percent}%.": "Verificación del 5% = {percent}%.",
-  "The 5% check compares the largest neglected common-ion change with its starting concentration.": "La verificación del 5% compara el mayor cambio omitido del ion común con su concentración inicial."
+  "The 5% check compares the largest neglected common-ion change with its starting concentration.": "La verificación del 5% compara el mayor cambio omitido del ion común con su concentración inicial.",
+  "Reaction vessel": "Recipiente de reacción",
+  "Sealed reaction vessel": "Recipiente de reacción sellado",
+  "excess solid": "sólido en exceso",
+  "Q vs K balance": "Balanza Q contra K",
+  "Reactants": "Reactivos",
+  "Products": "Productos",
+  "The balance tips toward the side the reaction shifts to.": "La balanza se inclina hacia el lado al que se desplaza la reacción.",
+  "Pause motion": "Pausar movimiento",
+  "Play motion": "Reanudar movimiento",
+  "fewer than 1 particle": "menos de 1 partícula",
+  "1 particle": "1 partícula",
+  "{n} particles": "{n} partículas",
+  "Reaction vessel: {list}. 1 particle = {unit}.": "Recipiente de reacción: {list}. 1 partícula = {unit}.",
+  "1 particle = {unit}": "1 partícula = {unit}",
+  "Equilibrium reached. Forward and reverse reactions continue at equal rates.": "Se alcanzó el equilibrio. Las reacciones directa e inversa continúan con la misma velocidad.",
+  "Step {s} of 80": "Paso {s} de 80",
+  "Ready. Press Run.": "Listo. Presiona Iniciar.",
+  "Q vs K balance: Q = {q}; {constant} = {k}. {verdict}": "Balanza Q contra K: Q = {q}; {constant} = {k}. {verdict}"
 }});
 }());
