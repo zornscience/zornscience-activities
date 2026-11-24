@@ -184,3 +184,17 @@ test('bench text in Mexican Spanish',async({page})=>{
   await expect(page.locator('.zsa-re-bench')).not.toContainText(/Bonds|Energy|Reactants|Products|Separate/);
   await page.goto(base+'?mode=heating&lang=es');await expect(page.locator('#flask-heat')).toHaveText('Parrilla: agrega 500 J/s');await expect(page.locator('#heating-flask')).toHaveAttribute('aria-label',/^Matraz con agua a .+ °C\. Hielo que se calienta\.$/);
 });
+test('with reduced motion the boiling bubbles hold still between updates',async({page})=>{
+  await page.emulateMedia({reducedMotion:'reduce'});await page.goto(base+'?mode=heating&mass=15&start=-20&end=120');
+  const flask=page.locator('#heating-flask'),time=page.locator('#heat-progress');
+  let boiling=null;for(let v=0;v<=100;v++){await time.fill(String(v));if(/Water boiling\.$/.test(await flask.getAttribute('aria-label'))){boiling=v;break;}}
+  expect(boiling).not.toBeNull();
+  const bubbles=()=>flask.locator('circle[fill="none"]').evaluateAll(cs=>cs.map(c=>c.getAttribute('cy')+'/'+c.getAttribute('opacity')).join(' '));
+  const first=await bubbles();await page.waitForTimeout(250);await time.fill(String(boiling));
+  expect(await bubbles()).toBe(first);
+  // Play sends an update every 100 ms; the bubbles still do not move.
+  await page.locator('#play').click();await page.waitForTimeout(450);await page.locator('#play').click();
+  const after=await flask.locator('circle[fill="none"]').evaluateAll(cs=>cs.map(c=>c.getAttribute('cy')));
+  const seed=await flask.locator('circle[fill="none"]').evaluateAll(cs=>cs.length);expect(seed).toBe(9);
+  await page.waitForTimeout(250);expect(await flask.locator('circle[fill="none"]').evaluateAll(cs=>cs.map(c=>c.getAttribute('cy')))).toEqual(after);
+});

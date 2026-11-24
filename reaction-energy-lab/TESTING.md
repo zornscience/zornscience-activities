@@ -5,11 +5,12 @@ Version: 1.1.0
 
 ## Lab bench verification (1.1.0)
 
-Five browser tests in `tests/e2e/reaction-energy-lab.spec.js` cover the bench:
+Six browser tests in `tests/e2e/reaction-energy-lab.spec.js` cover the bench:
 
 - The ball passes through all five stages in order as the progress slider moves, sits 13 units above the peak at the top, rides a lower barrier with the catalyst, and Run reaction ends at 100% with "Products formed." announced. With motion, the ball moves during the run.
 - For H₂ + Cl₂, CH₄ + 2O₂ and N₂ + 3H₂: the bond lines before and after (2, 8 and 6 for each), the button order and focus, the energy bars (678 to 862 for HCl), no digits on the bench, the Data table still at 0 and Show answer still hidden, then Reset.
 - The flask goes through ice warming, ice melting, liquid water warming, water boiling and steam warming as the time slider moves, its thermometer reads the same temperature as the particle text, and cooling uses the cold plate and the cooling stages.
+- With reduced motion, the boiling bubbles stay in the same place across updates, including the 100 ms updates while Play runs.
 - Mexican Spanish text and text alternatives, with no English left on the bench.
 
 The existing test that keeps the ΔH and Ea labels inside the charts still passes with the ball added. `tests/e2e/labs-a11y.spec.js` passes for this lab in both languages. axe-core was also run by hand on Energy diagram, Bond Enthalpies and Heating curve at 1280x800 and 390x664 in English and Spanish: no violations, and no sideways scrolling from 320 to 1920 px. Screenshots were checked by hand at both sizes and in both languages, before, during and after each animation.

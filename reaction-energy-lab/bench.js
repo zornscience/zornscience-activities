@@ -263,7 +263,8 @@
       wisps.forEach((w, i) => w.setAttribute("opacity", i < Math.ceil(steamShown * wisps.length) ? 0.75 : 0));
       const boiling = s.index === 3 && !s.cooling;
       bubbleList.forEach(({b, seed}) => {
-        const k = ((now || 0) / 1400 + seed) % 1;
+        // With reduced motion the bubbles hold still: a fixed time, so the 100 ms Play updates do not move them.
+        const k = ((reduced() ? 0 : now || 0) / 1400 + seed) % 1;
         b.setAttribute("opacity", boiling ? (0.9 * (1 - k)).toFixed(2) : 0);
         b.setAttribute("cy", (250 - k * Math.max(10, 250 - top - 6)).toFixed(1));
       });
