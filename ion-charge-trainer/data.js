@@ -1230,7 +1230,18 @@
     "shownMark": "Shown: ",
     "currentMark": " (this element)",
     "hintMark": " (hint)",
-    "triedMark": " (tried, not correct)"
+    "triedMark": " (tried, not correct)",
+    "visual": {
+      "eyebrow": "Bohr model",
+      "model": "Bohr model of {name} with {levels} energy levels.",
+      "neutral": "Neutral atom",
+      "counts": "{protons} protons, {electrons} electrons",
+      "outerUnknown": "Outer level: ?",
+      "levels": "Electrons by level: {list}",
+      "lostKey": "Dashed circles: electrons lost",
+      "gainedKey": "Open circles: electrons gained",
+      "like": "Like {gas}"
+    }
   },
   "atomicLabel": "Atomic number",
   "tableCaption": "Main-group elements by group (column) and period (row)",
@@ -2597,7 +2608,18 @@
     "codeCopied": "Código copiado.",
     "codeReady": "Código de finalización listo.",
     "codeSelected": "El código está seleccionado. Presiona Ctrl+C, o Command+C en una Mac, para copiarlo.",
-    "codeNote": "Pega este código en tu tarea de Google Classroom."
+    "codeNote": "Pega este código en tu tarea de Google Classroom.",
+    "visual": {
+      "eyebrow": "Modelo de Bohr",
+      "model": "Modelo de Bohr del {name} con {levels} niveles de energía.",
+      "neutral": "Átomo neutro",
+      "counts": "{protons} protones, {electrons} electrones",
+      "outerUnknown": "Nivel externo: ?",
+      "levels": "Electrones por nivel: {list}",
+      "lostKey": "Círculos punteados: electrones perdidos",
+      "gainedKey": "Círculos sin relleno: electrones ganados",
+      "like": "Como {gas}"
+    }
   },
   "atomicLabel": "Número atómico",
   "tableCaption": "Elementos de los grupos principales por grupo (columna) y periodo (fila)",

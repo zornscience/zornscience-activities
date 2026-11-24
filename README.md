@@ -20,17 +20,18 @@ shared/
   zsa-activity.css         activity layout and engine components
   zsa-i18n.js              shared English and Mexican Spanish interface and URLs
   zsa-engine.js            the activity engine
+  zsa-track.js, zsa-track.css  the trainers' progress track (pips), drawing stage and animations on right and missed answers
   zsa-embed.js             ?embed=1 mode and zsa:resize messages
   zsa-formula.js           typed equations for practice questions, read as algebra (used by Rearranging Equations Practice)
   zsa-codes.js             completion codes: activity registry, writing and reading codes
   zsa-about.js, zsa-about.css  "About this activity" on each activity page: a short intro and related lesson links
   fonts/InterVariable.woff2, Inter-OFL.txt
-ion-charge-trainer/        Predicting Ion Charge Trainer, v1.5.2
+ion-charge-trainer/        Predicting Ion Charge Trainer, v1.5.3 (element card with a Bohr model that follows each step, and a progress track)
 ionic-formula-builder/     Redirect only: the retired Ionic Formula Builder now sends visitors to ionic-reactions/
 ionic-reactions/           Ionic Reaction Builder, v3.5.2 (four reaction families, ionic product formulas, automatic balance checks and fullscreen practice)
 periodic-table/            Periodic Table reference, v1.3.2 (data built by periodic-table/tools/build-data.js)
-periodic-trends/           Periodic Trends Practice, v1.2.2 (questions built from the periodic table's data)
-lewis-vsepr/               Lewis Structure and VSEPR Builder, v1.2.2
+periodic-trends/           Periodic Trends Practice, v1.2.3 (questions built from the periodic table's data; comparison cards and the trend drawn on the table)
+lewis-vsepr/               Lewis Structure and VSEPR Builder, v1.2.3 (animated building, a 3D shape preview with the bond angle and dipole arrows)
 act/                       ACT Practice, v1.11.2 (English, Math, Reading and Science sections and the full ACT; question banks in act/bank-*.js; optional practice codes with PINs, and class sets for teachers)
 act-question-generator/    Standalone ACT question generator, v1.2.2 (400 questions each for English, Math, Science; random order, answer reveal, no scores or accounts)
 act-science/               Redirect only: ACT Science Practice is now the Science section of act/

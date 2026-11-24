@@ -5,10 +5,11 @@
   "use strict";
   var root = document.querySelector('[data-zsa-activity="lewis-vsepr"]');
   if (!root) return;
-  var data, zsa;
+  var data, zsa, track;
   root.dispatchEvent(new CustomEvent("zsa:request-data", {detail: {receive: function (value) { data = value; }}}));
   root.dispatchEvent(new CustomEvent("zsa:request-engine", {detail: {receive: function (value) { zsa = value; }}}));
-  if (!data || !zsa) return;
+  root.dispatchEvent(new CustomEvent("zsa:request-track", {detail: {receive: function (value) { track = value; }}}));
+  if (!data || !zsa || !track) return;
   // Completion codes (shared/zsa-codes.js), when the page loads them. This page runs two copies of the engine, one per
   // setting, and each asks for the codes. Each copy gets them with its own registry entry, LVB for the octet rule and
   // LVA for the AP setting, so a code records the setting its round was played with.
@@ -188,40 +189,52 @@
   }
   // Compact drawings (the strip, the formal charge candidates, the summary) are shown smaller, so their symbols and
   // dots are larger for their size and sit a little further out.
-  function drawPairs(g, x, y, count, free, compact) {
+  // Each bond line and lone pair carries a key, so a redraw can tell what the student just added: those parts appear
+  // with a short animation (shared/zsa-track.css turns it off for reduced motion). The structure is the same either way.
+  function drawPairs(g, x, y, count, free, compact, key, fresh) {
     var dist = compact ? 23 : 19, gap = compact ? 6 : 5, r = compact ? 3.8 : 2.8;
     for (var i = 0; i < count && i < free.length; i++) {
-      var d = DIRS[free[i]], cx = x + dist * d[0], cy = y + dist * d[1], px = -d[1], py = d[0];
-      g.appendChild(svg("circle", {cx: (cx + gap * px).toFixed(1), cy: (cy + gap * py).toFixed(1), r: r}, "zsa-lv-dot"));
-      g.appendChild(svg("circle", {cx: (cx - gap * px).toFixed(1), cy: (cy - gap * py).toFixed(1), r: r}, "zsa-lv-dot"));
+      var d = DIRS[free[i]], cx = x + dist * d[0], cy = y + dist * d[1], px = -d[1], py = d[0], k = key + "p" + i;
+      var isNew = fresh(k), one = svg("circle", {cx: (cx + gap * px).toFixed(1), cy: (cy + gap * py).toFixed(1), r: r}, "zsa-lv-dot");
+      var two = svg("circle", {cx: (cx - gap * px).toFixed(1), cy: (cy - gap * py).toFixed(1), r: r}, "zsa-lv-dot");
+      if (isNew) { one.setAttribute("data-zsa-new", ""); two.setAttribute("data-zsa-new", ""); }
+      g.appendChild(one); g.appendChild(two);
     }
   }
-  function drawBond(g, a, b, order, compact) {
+  function drawBond(g, a, b, order, compact, key, fresh) {
     var dx = b.x - a.x, dy = b.y - a.y, len = Math.sqrt(dx * dx + dy * dy), ux = dx / len, uy = dy / len;
     var trim = ((dx && dy) ? 20 : 17) + (compact ? 4 : 0), px = -uy, py = ux, w = compact ? 1.5 : 1;
     var offsets = order === 3 ? [-6 * w, 0, 6 * w] : order === 2 ? [-3.5 * w, 3.5 * w] : [0];
+    var isNew = order && fresh(key + "b" + order);
     offsets.forEach(function (o) {
-      g.appendChild(svg("line", {
-        x1: (a.x + trim * ux + o * px).toFixed(1), y1: (a.y + trim * uy + o * py).toFixed(1),
-        x2: (b.x - trim * ux + o * px).toFixed(1), y2: (b.y - trim * uy + o * py).toFixed(1)
-      }, order ? "zsa-lv-bond" : "zsa-lv-bond zsa-lv-bond--unset"));
+      var attrs = {
+        x1: (b.x - trim * ux + o * px).toFixed(1), y1: (b.y - trim * uy + o * py).toFixed(1),
+        x2: (a.x + trim * ux + o * px).toFixed(1), y2: (a.y + trim * uy + o * py).toFixed(1)
+      };
+      // A new bond line grows out from the central atom (its length is 100 units for the animation).
+      if (isNew) { attrs.pathLength = 100; attrs["data-zsa-new"] = ""; }
+      g.appendChild(svg("line", attrs, order ? "zsa-lv-bond" : "zsa-lv-bond zsa-lv-bond--unset"));
     });
   }
+  // The keys each drawing showed last time: only drawings that are redrawn in place (the editor) animate.
+  var drawn = new WeakMap();
   // Draws a structure into an <svg>: bonds, lone pairs and the element symbols.
   function draw(el, item, st, compact) {
-    var lay = layout(item), c = lay.at("C");
+    var lay = layout(item), c = lay.at("C"), before = drawn.get(el), now = new Set();
+    function fresh(k) { now.add(k); return !!before && !before.has(k) && !track.reduced(); }
     el.replaceChildren();
     el.setAttribute("viewBox", "0 0 " + lay.w + " " + lay.h);
     var g = svg("g");
     var taken = [];
     lay.pos.forEach(function (p, i) {
       var a = lay.at(p);
-      drawBond(g, a, c, st.o[i][0], compact);
+      drawBond(g, a, c, st.o[i][0], compact, "o" + i, fresh);
       taken.push(dirName(a.x - c.x, a.y - c.y));
       var toCenter = dirName(c.x - a.x, c.y - a.y);
-      drawPairs(g, a.x, a.y, st.o[i][1], slots([toCenter], toCenter), compact);
+      drawPairs(g, a.x, a.y, st.o[i][1], slots([toCenter], toCenter), compact, "o" + i, fresh);
     });
-    drawPairs(g, c.x, c.y, st.c, slots(taken), compact);
+    drawPairs(g, c.x, c.y, st.c, slots(taken), compact, "c", fresh);
+    drawn.set(el, now);
     lay.pos.concat(["C"]).forEach(function (p, k) {
       var a = lay.at(p), t = svg("text", {x: a.x, y: a.y + 0.5}, "zsa-lv-sym");
       t.textContent = p === "C" ? item.center : item.outer[k];
@@ -253,6 +266,126 @@
     wrap.appendChild(draw(pic, item, st, true));
     wrap.appendChild(node("p", "zsa-sr-only", describe(item, st)));
     return wrap;
+  }
+
+  // ---------- The shape preview ----------
+  // After the shape step the strip shows the molecule in 3D: bonds as lines, wedges (toward you) and dashes (away),
+  // lone pairs as shaded lobes, and an arc for the bond angle. After the polarity step it adds a bond dipole arrow
+  // beside each polar bond, pointing to the more electronegative atom, and the net dipole of a polar molecule.
+  // Where the lone pairs and bonded atoms go, by domains and lone pairs on the center, already turned to a textbook view:
+  // x right, y up, z toward the viewer (wedges have z above 0.25, dashes below -0.25). The directions are drawn, not
+  // measured: the angle itself is given in words, under the drawing.
+  var UP = [0, 1, 0], DOWN = [0, -1, 0], LEFT = [-1, 0, 0], RIGHT = [1, 0, 0];
+  var TET = {left: [-0.94, -0.33, 0], wedge: [0.62, -0.55, 0.56], dash: [0.3, -0.7, -0.65]};
+  var EQ = {left: [-1, 0, 0], wedge: [0.55, -0.3, 0.78], dash: [0.55, 0.3, -0.78]};
+  var SQ = {front: [-0.45, -0.35, 0.82], back: [0.45, 0.35, -0.82]};
+  var PLACES = {
+    "2,0": {lp: [], atoms: [LEFT, RIGHT]},
+    "3,0": {lp: [], atoms: [UP, [-0.866, -0.5, 0], [0.866, -0.5, 0]]},
+    "3,1": {lp: [UP], atoms: [[-0.866, -0.5, 0], [0.866, -0.5, 0]]},
+    "4,0": {lp: [], atoms: [UP, TET.left, TET.wedge, TET.dash]},
+    "4,1": {lp: [UP], atoms: [TET.left, TET.wedge, TET.dash]},
+    "4,2": {lp: [[-0.5, 0.6, 0.62], [0.5, 0.6, -0.62]], atoms: [[-0.79, -0.61, 0], [0.79, -0.61, 0]]},
+    "5,0": {lp: [], atoms: [UP, DOWN, EQ.left, EQ.wedge, EQ.dash]},
+    "5,1": {lp: [EQ.left], atoms: [UP, DOWN, EQ.wedge, EQ.dash]},
+    "5,2": {lp: [EQ.wedge, EQ.dash], atoms: [UP, DOWN, EQ.left]},
+    "5,3": {lp: [EQ.left, EQ.wedge, EQ.dash], atoms: [UP, DOWN]},
+    "6,0": {lp: [], atoms: [UP, DOWN, LEFT, RIGHT, SQ.front, SQ.back]},
+    "6,1": {lp: [DOWN], atoms: [UP, LEFT, RIGHT, SQ.front, SQ.back]},
+    "6,2": {lp: [UP, DOWN], atoms: [LEFT, RIGHT, SQ.front, SQ.back]}
+  };
+  function domainPlaces(item) { return PLACES[item.domains + "," + lonePairsOnCenter(item)]; }
+  var COLORS = {H: "h", C: "c", N: "n", O: "o", F: "hal", Cl: "hal", Br: "hal", I: "big", S: "s", P: "p", B: "b", Be: "b", Si: "c", Xe: "big"};
+  // Bond dipoles that count: none when the item says the bonds are nearly nonpolar, otherwise any bond whose
+  // electronegativity difference is 0.3 or more.
+  function dipoles(item) {
+    if (item.reasons && item.reasons.indexOf("nonpolarBonds") >= 0) return item.outer.map(function () { return 0; });
+    return item.outer.map(function (s) {
+      var d = elements[s].en - elements[item.center].en;
+      return Math.abs(d) >= 0.3 ? d : 0;
+    });
+  }
+  function drawShape(el, item, polarity, animate) {
+    var places = domainPlaces(item), L = 64, cls = animate ? " is-in" : "";
+    el.replaceChildren();
+    el.setAttribute("viewBox", "-104 -104 208 208");
+    var back = svg("g"), arrows = svg("g", {}, "zsa-lv-dipoles" + (polarity && animate === 2 ? " is-in" : "")), front = svg("g");
+    // The net dipole runs under the atoms, so it never hides a symbol.
+    var netLayer = svg("g", {}, "zsa-lv-dipoles" + (polarity && animate === 2 ? " is-in" : ""));
+    places.lp.forEach(function (v) {
+      var p = v, x = p[0] * L * 0.62, y = -p[1] * L * 0.62, ang = Math.atan2(y, x) * 180 / Math.PI;
+      var lobe = svg("g", {transform: "translate(" + x.toFixed(1) + " " + y.toFixed(1) + ") rotate(" + ang.toFixed(1) + ")"}, "zsa-lv-lobe" + cls);
+      lobe.appendChild(svg("ellipse", {cx: 0, cy: 0, rx: 19, ry: 12}));
+      lobe.appendChild(svg("circle", {cx: 2, cy: -4.5, r: 2.6}, "zsa-lv-lobe-dot"));
+      lobe.appendChild(svg("circle", {cx: 2, cy: 4.5, r: 2.6}, "zsa-lv-lobe-dot"));
+      (p[2] < 0 ? back : front).appendChild(lobe);
+    });
+    var atoms = places.atoms.map(function (v, i) { var p = v; return {i: i, v: v, x: p[0] * L, y: -p[1] * L, z: p[2], symbol: item.outer[i]}; });
+    // The bond angle: an arc between the two bonded atoms closest in angle.
+    var best = null;
+    for (var i = 0; i < atoms.length; i++) for (var j = i + 1; j < atoms.length; j++) {
+      var dot = atoms[i].v[0] * atoms[j].v[0] + atoms[i].v[1] * atoms[j].v[1] + atoms[i].v[2] * atoms[j].v[2];
+      if (!best || dot > best.dot) best = {a: atoms[i], b: atoms[j], dot: dot};
+    }
+    if (best) {
+      var a1 = Math.atan2(best.a.y, best.a.x), a2 = Math.atan2(best.b.y, best.b.x), r = 28, sweep = a2 - a1;
+      while (sweep > Math.PI) sweep -= 2 * Math.PI;
+      while (sweep < -Math.PI) sweep += 2 * Math.PI;
+      // A straight angle: a half circle on one side.
+      if (Math.abs(Math.abs(sweep) - Math.PI) < 0.05) sweep = Math.PI;
+      var x1 = r * Math.cos(a1), y1 = r * Math.sin(a1), x2 = r * Math.cos(a1 + sweep), y2 = r * Math.sin(a1 + sweep);
+      back.appendChild(svg("path", {d: "M" + x1.toFixed(1) + " " + y1.toFixed(1) + " A" + r + " " + r + " 0 0 " + (sweep > 0 ? 1 : 0) + " " + x2.toFixed(1) + " " + y2.toFixed(1), pathLength: 100}, "zsa-lv-arc" + cls));
+    }
+    var dip = dipoles(item), sum = [0, 0, 0], drawnDipoles = 0;
+    atoms.sort(function (p, q) { return p.z - q.z; }).forEach(function (a) {
+      var layer = a.z < -0.25 ? back : front, ux = a.x / L, uy = a.y / L, len = Math.sqrt(ux * ux + uy * uy) || 1;
+      var nx = ux / len, ny = uy / len, start = 15, end = Math.max(start + 4, Math.sqrt(a.x * a.x + a.y * a.y) - 12);
+      var sx = nx * start, sy = ny * start, ex = nx * end, ey = ny * end;
+      if (a.z > 0.25) {
+        // A wedge, wide at the outer atom.
+        var px = -ny * 6, py = nx * 6;
+        layer.appendChild(svg("polygon", {points: [sx, sy, ex + px, ey + py, ex - px, ey - py].map(function (n) { return n.toFixed(1); }).join(" ")}, "zsa-lv-wedge" + cls));
+      } else {
+        layer.appendChild(svg("line", {x1: sx.toFixed(1), y1: sy.toFixed(1), x2: ex.toFixed(1), y2: ey.toFixed(1)}, "zsa-lv-stick" + (a.z < -0.25 ? " is-back" : "") + cls));
+      }
+      var ball = svg("g", {}, "zsa-lv-ball zsa-lv-ball--" + (COLORS[a.symbol] || "c") + cls);
+      ball.appendChild(svg("circle", {cx: a.x.toFixed(1), cy: a.y.toFixed(1), r: a.z < -0.25 ? 12 : 14}));
+      ball.appendChild(track.label({x: a.x.toFixed(1), y: (a.y + 0.5).toFixed(1), "text-anchor": "middle", "dominant-baseline": "central"}, a.symbol));
+      layer.appendChild(ball);
+      var d = dip[a.i];
+      sum[0] += d * a.v[0]; sum[1] += d * a.v[1]; sum[2] += d * a.v[2];
+      if (polarity && d) {
+        // The bond dipole: an arrow beside the bond toward the more electronegative atom, crossed at its + end.
+        var off = 11, ox = -ny * off, oy = nx * off, from = d > 0 ? start + 4 : end - 4, to = d > 0 ? end - 4 : start + 4;
+        var fx = nx * from + ox, fy = ny * from + oy, tx = nx * to + ox, ty = ny * to + oy;
+        arrows.appendChild(arrow(fx, fy, tx, ty, "zsa-lv-dipole")); drawnDipoles++;
+      }
+    });
+    var center = svg("g", {}, "zsa-lv-ball zsa-lv-ball--center");
+    center.appendChild(svg("circle", {cx: 0, cy: 0, r: 16}));
+    center.appendChild(track.label({x: 0, y: 0.5, "text-anchor": "middle", "dominant-baseline": "central"}, item.center));
+    el.appendChild(netLayer); el.appendChild(back); el.appendChild(center); el.appendChild(front); el.appendChild(arrows);
+    // For the tests: how many bond dipole arrows are drawn, and whether a net dipole is.
+    el.setAttribute("data-zsa-dipoles", String(drawnDipoles));
+    el.setAttribute("data-zsa-net", polarity && item.polar ? "yes" : "no");
+    if (polarity && item.polar) {
+      // The net dipole: the sum of the bond dipoles. Ozone's comes from its formal charges, away from the lone pair.
+      var net = sum, nl = Math.sqrt(net[0] * net[0] + net[1] * net[1]);
+      if (nl < 0.05) { var lp = places.lp[0] || [0, 1, 0]; net = [-lp[0], -lp[1]]; nl = Math.sqrt(net[0] * net[0] + net[1] * net[1]); }
+      var ux2 = net[0] / nl, uy2 = -net[1] / nl;
+      netLayer.appendChild(arrow(-ux2 * 42, -uy2 * 42, ux2 * 94, uy2 * 94, "zsa-lv-net"));
+    }
+    return el;
+  }
+  // An arrow from (x1, y1) to (x2, y2) with a crossed tail (the + end of a dipole arrow).
+  function arrow(x1, y1, x2, y2, cls) {
+    var g = svg("g", {}, cls), dx = x2 - x1, dy = y2 - y1, len = Math.sqrt(dx * dx + dy * dy), ux = dx / len, uy = dy / len, px = -uy, py = ux;
+    var head = cls === "zsa-lv-net" ? 11 : 7, wing = cls === "zsa-lv-net" ? 7 : 4.5, cross = cls === "zsa-lv-net" ? 6 : 4;
+    g.appendChild(svg("line", {x1: x1.toFixed(1), y1: y1.toFixed(1), x2: (x2 - ux * head * 0.6).toFixed(1), y2: (y2 - uy * head * 0.6).toFixed(1)}));
+    var cx = x1 + ux * (cross + 3), cy = y1 + uy * (cross + 3);
+    g.appendChild(svg("line", {x1: (cx + px * cross).toFixed(1), y1: (cy + py * cross).toFixed(1), x2: (cx - px * cross).toFixed(1), y2: (cy - py * cross).toFixed(1)}));
+    g.appendChild(svg("polygon", {points: [x2, y2, x2 - ux * head + px * wing, y2 - uy * head + py * wing, x2 - ux * head - px * wing, y2 - uy * head - py * wing].map(function (n) { return n.toFixed(1); }).join(" ")}));
+    return g;
   }
 
   // ---------- The structure editor (build step) ----------
@@ -399,6 +532,56 @@
   // ---------- The activity for one setting ----------
 
   var cur = null; // the item being worked on: its entry, steps and structures
+
+  // ---------- The strip's progress track and stage (shared by both settings) ----------
+  var progressTrack = track.progress({id: "zsa-lv-progress", template: ui.labels.progress || zsa.LABELS.progress});
+  var labels = {};
+  Object.keys(ui.labels).forEach(function (k) { labels[k] = ui.labels[k]; });
+  labels.progress = progressTrack.template;
+  var stage = null, lastRight = -1, words = ui.visual;
+  // The stage holds two figures. The Lewis structure (after the build step; not during the formal charge step, which
+  // shows its own candidates, nor on the item summary, which shows it) keeps the description screen readers had in
+  // the strip before. The shape (after the shape step) has its name and angle as words, and a line explaining the
+  // wedges, dashes and dipole arrows.
+  function stageFor(item) {
+    var box = node("div", "zsa-stage zsa-lv-stage"); box.hidden = true;
+    var figs = node("div", "zsa-lv-figs");
+    var lewis = node("div", "zsa-lv-fig zsa-lv-fig--lewis"), shape = node("div", "zsa-lv-fig zsa-lv-fig--shape");
+    var eyebrow1 = node("p", "zsa-stage-eyebrow", words.lewis); eyebrow1.setAttribute("aria-hidden", "true");
+    var lewisPic = svg("svg", {"aria-hidden": "true", focusable: "false"}, "zsa-lv-svg zsa-lv-svg--compact zsa-lv-svg--stage");
+    var lewisSaid = node("p", "zsa-sr-only");
+    lewis.appendChild(eyebrow1); lewis.appendChild(lewisPic); lewis.appendChild(lewisSaid);
+    var eyebrow2 = node("p", "zsa-stage-eyebrow", words.shape); eyebrow2.setAttribute("aria-hidden", "true");
+    var shapePic = svg("svg", {"aria-hidden": "true", focusable: "false"}, "zsa-lv-shape");
+    var line = node("p", "zsa-stage-pill");
+    shape.appendChild(eyebrow2); shape.appendChild(shapePic); shape.appendChild(line);
+    figs.appendChild(lewis); figs.appendChild(shape);
+    var key = node("p", "zsa-stage-line zsa-lv-key");
+    box.appendChild(figs); box.appendChild(key);
+    return {item: item, node: box, lewis: lewis, lewisPic: lewisPic, lewisSaid: lewisSaid, shape: shape, shapePic: shapePic, line: line, key: key,
+      done: 0, hasShape: false, hasPolarity: false};
+  }
+  function showStage(showLewis, built, hasShape, hasPolarity, grew) {
+    var item = stage.item, box = stage.node;
+    box.hidden = !showLewis && !hasShape;
+    stage.lewis.hidden = !showLewis;
+    stage.shape.hidden = !hasShape;
+    box.classList.toggle("has-shape", hasShape);
+    if (showLewis) { draw(stage.lewisPic, item, built, true); stage.lewisSaid.textContent = describe(item, built); }
+    var animate = grew && !track.reduced() ? (hasPolarity && !stage.hasPolarity ? 2 : hasShape && !stage.hasShape ? 1 : 0) : 0, keys = [];
+    if (hasShape) {
+      drawShape(stage.shapePic, item, hasPolarity, animate);
+      stage.line.textContent = txt(words.shapeLine, {mg: geo(item.mg), angle: ui.angles[item.angle]});
+      if (stage.shapePic.querySelector(".zsa-lv-wedge, .zsa-lv-stick.is-back")) keys.push(words.wedge);
+      if (hasPolarity && item.polar !== null) {
+        var any = dipoles(item).some(function (d) { return d; });
+        keys.push(item.polar ? words.polarKey : any ? words.cancelKey : words.nonpolarKey);
+      }
+    }
+    stage.key.textContent = keys.join(" ");
+    stage.key.hidden = !keys.length;
+    stage.hasShape = hasShape; stage.hasPolarity = hasPolarity;
+  }
 
   function make(ap) {
     var pool = data.items.filter(function (it) { return ap || it.set !== "ap"; });
@@ -677,28 +860,33 @@
 
     // ---------- Strip, table marks, summary ----------
 
-    var stripStructure = null;
     function renderStrip(entry, strip) {
       var item = entry.item, line = node("div", "zsa-lv-strip-line"), heading = node("h2", "zsa-lv-title");
       render(heading, [formulaToken(item)]);
       heading.id = "zsa-lv-heading"; heading.tabIndex = -1; line.appendChild(heading);
       line.appendChild(node("p", "zsa-lv-caption", item.name)); strip.appendChild(line);
-      var progress = node("p", "zsa-progress"); progress.id = "zsa-lv-progress"; strip.appendChild(progress);
-      stripStructure = node("div", "zsa-lv-strip-structure"); stripStructure.hidden = true; strip.appendChild(stripStructure);
-      return {heading: heading, progress: progress};
+      progressTrack.load(); strip.appendChild(progressTrack.node);
+      stage = stageFor(item); strip.appendChild(stage.node);
+      lastRight = -1;
+      return {heading: heading, progress: progressTrack.sink};
     }
-    // Called whenever the engine redraws the table: after the build step (and outside the formal charge step and
-    // the summary) the finished structure is shown in the strip.
+    // Called whenever the engine redraws the table, with the number of steps done. After the build step the stage
+    // shows the finished structure (not during the formal charge step, which shows its own candidates); after the
+    // shape step it adds the shape and bond angle, and after the polarity step the dipole arrows.
     function marks(entry, stepsDone) {
-      var st = state(entry), b = st.kinds.indexOf("build"), next = st.kinds[stepsDone];
-      if (stripStructure) {
-        var showIt = stepsDone > b && next !== undefined && next !== "fc";
-        stripStructure.hidden = !showIt;
-        if (showIt) stripStructure.replaceChildren(display(entry.item, builtStructure(entry), "zsa-lv-display--strip"));
+      var st = state(entry), k = st.kinds, next = k[stepsDone];
+      if (stage && stage.item === entry.item && stepsDone !== stage.done) {
+        var grew = stepsDone > stage.done;
+        if (grew && lastRight !== stepsDone - 1) progressTrack.miss();
+        var shapeAt = k.indexOf("shape"), polarAt = k.indexOf("polarity");
+        showStage(stepsDone > k.indexOf("build") && next !== "fc" && next !== undefined, builtStructure(entry), shapeAt >= 0 && stepsDone > shapeAt, polarAt >= 0 && stepsDone > polarAt, grew);
+        if (grew && lastRight === stepsDone - 1 && !stage.node.hidden) track.replay(stage.node, "is-cheer");
+        stage.done = stepsDone;
       }
       return {marked: distinct(entry.item)};
     }
     function summary(entry) {
+      progressTrack.complete();
       var item = entry.item, sm = ui.summary, out = node("div", "zsa-summary-row zsa-lv-summary");
       out.appendChild(display(item, builtStructure(entry), "zsa-lv-display--summary"));
       var words = node("div", "zsa-lv-summary-text");
@@ -727,12 +915,24 @@
 
     if (codes) root.addEventListener("zsa:request-codes", function (event) { event.detail.receive(codesFor(ap)); }, {once: true});
     return zsa.create(root, {
-      prefix: "zsa-lv", strip: "zsa-lv-strip", labels: ui.labels,
+      prefix: "zsa-lv", strip: "zsa-lv-strip", labels: labels,
       pool: pool, key: function (it) { return it.id; }, round: round,
       table: {groups: data.groups, rows: data.table},
       marks: marks, renderStrip: renderStrip,
       stepCount: function (entry) { return kindsOf(entry).length; },
-      step: step, classify: classify, message: message, hint: hint, trail: trail, explain: explain, summary: summary,
+      step: step, message: message, hint: hint, trail: trail, explain: explain, summary: summary,
+      // The rules decide; the drawings react: a right answer is remembered for the stage, a miss nudges the editor
+      // (in the build step) or the stage.
+      classify: function (entry, s, picks) {
+        var result = classify(entry, s, picks);
+        if (!result) lastRight = s;
+        else {
+          progressTrack.miss();
+          track.replay(root.querySelector("#zsa-lv-work .zsa-lv-grid > svg") || (stage && !stage.node.hidden ? stage.node : null), "is-nudge");
+          track.later(function () { track.replay(root.querySelector("#zsa-lv-work .zsa-feedback--wrong"), "is-again"); });
+        }
+        return result;
+      },
       statKey: function (entry, s) { return kindsOf(entry)[s]; },
       stats: ["total", "center", "build", "fc", "domains", "shape", "polarity"].map(function (k) { return [k, ui.stats[k]]; }),
       reminder: reminder, missesRound: missesRound

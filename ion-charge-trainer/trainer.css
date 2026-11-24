@@ -1,15 +1,52 @@
 /* Ion Charge Trainer: the element strip, its answer grids and the step 4 setting. Shared layout and components
    are in ../shared/zsa-activity.css. */
 
-/* Element strip */
-.zsa-ict-element {display:flex;align-items:center;gap:12px;min-height:60px;}
-.zsa-ict-element-tile {position:relative;width:60px;height:60px;flex-shrink:0;border:2px solid var(--zsa-navy);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--zsa-navy);background:var(--zsa-white);}
-.zsa-ict-atomic {position:absolute;top:2px;left:6px;font-size:12px;line-height:1.2;}
-.zsa-ict-symbol {font-size:26px;line-height:1;font-weight:600;margin-top:6px;}
+/* Element card: the tile (atomic number, symbol, name), the heading, the progress line and the track. */
+.zsa-ict-element {display:grid;gap:10px;}
+.zsa-ict-card {display:flex;align-items:center;gap:14px;min-width:0;}
+.zsa-ict-element-tile {position:relative;width:76px;height:76px;flex-shrink:0;border:2px solid var(--zsa-navy);border-radius:var(--zsa-radius-lg);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--zsa-navy);background:linear-gradient(180deg,var(--zsa-white) 0%,var(--zsa-sky) 100%);box-shadow:0 4px 12px rgba(11,42,91,.12);}
+.zsa-ict-atomic {position:absolute;top:3px;left:8px;font-size:13px;line-height:1.2;font-weight:600;}
+.zsa-ict-symbol {font-size:32px;line-height:1;font-weight:700;margin-top:6px;}
+.zsa-ict-tile-name {max-width:68px;margin-top:3px;overflow:hidden;font-size:11px;line-height:1.2;white-space:nowrap;text-overflow:ellipsis;}
 .zsa-ict-element-text {min-width:0;}
 .zsa-ict-element-line {display:flex;flex-wrap:wrap;align-items:baseline;column-gap:10px;}
 .zsa-ict .zsa-ict-element-title {font-size:1.4rem;line-height:1.2;margin:0;overflow-wrap:anywhere;}
 .zsa-ict-caption {font-size:15px;margin:0;}
+.zsa-ict .zsa-track {margin-top:2px;}
+
+/* The Bohr model on its stage. Rings are energy levels; dots are electrons. */
+.zsa-ict-stage {display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr);align-items:center;gap:6px 14px;padding:6px 14px 6px 6px;}
+.zsa-ict-model {width:100%;height:auto;}
+.zsa-ict-info {display:grid;justify-items:start;gap:5px;min-width:0;}
+.zsa-ict-key:empty {display:none;}
+.zsa-ict-ring {fill:none;stroke:rgba(191,219,254,.4);stroke-width:1.5;}
+.zsa-ict-ring.is-outer {stroke:#93c5fd;stroke-width:2.4;}
+.zsa-ict-ring.is-unknown {stroke:#93c5fd;stroke-width:2.2;stroke-dasharray:5 6;}
+.zsa-ict-ring.is-emptied {stroke:rgba(191,219,254,.35);stroke-width:1.5;stroke-dasharray:3 6;}
+.zsa-ict-ring-flash {fill:none;stroke:#4ade80;stroke-width:7;opacity:0;animation:zsa-ict-flash 1s ease-out .55s backwards;}
+.zsa-ict-nucleus circle {fill:#c2410c;stroke:#fdba74;stroke-width:2.5;}
+.zsa-ict-nucleus-symbol {fill:var(--zsa-white);font-size:15px;font-weight:700;font-family:var(--zsa-font);}
+.zsa-ict-ask {fill:#fde68a;font-size:24px;font-weight:700;font-family:var(--zsa-font);}
+.zsa-ict-e {stroke-width:2;}
+.zsa-ict-e.is-valence {fill:#fbbf24;stroke:#fef3c7;}
+.zsa-ict-e.is-full {fill:#e0f2fe;stroke:var(--zsa-white);}
+.zsa-ict-e.is-gained {fill:#0b2a5b;stroke:#4ade80;stroke-width:3;}
+.zsa-ict-e.is-lost {fill:none;stroke:#fca5a5;stroke-width:2;stroke-dasharray:2.5 2.5;}
+.zsa-ict-e.is-leaving {fill:#fbbf24;stroke:#fef3c7;opacity:0;animation:zsa-ict-leave .9s ease-in backwards;}
+.zsa-ict-e.is-in {transform-box:fill-box;transform-origin:center;animation:zsa-ict-in .45s cubic-bezier(.34,1.56,.64,1) backwards;}
+.zsa-ict-e.is-join {animation:zsa-ict-join .8s ease-out backwards;}
+.zsa-ict-d1 {animation-delay:.08s;} .zsa-ict-d2 {animation-delay:.16s;} .zsa-ict-d3 {animation-delay:.24s;} .zsa-ict-d4 {animation-delay:.32s;}
+.zsa-ict-d5 {animation-delay:.4s;} .zsa-ict-d6 {animation-delay:.48s;} .zsa-ict-d7 {animation-delay:.56s;} .zsa-ict-d8 {animation-delay:.64s;}
+.zsa-ict-bracket {fill:none;stroke:#e2e8f0;stroke-width:3;stroke-linejoin:round;}
+.zsa-ict-charge {fill:#fde68a;font-size:22px;font-weight:700;font-family:var(--zsa-font);}
+.zsa-ict-ion-mark.is-in {transform-box:fill-box;transform-origin:center;animation:zsa-ict-in .5s cubic-bezier(.34,1.56,.64,1) .3s backwards;}
+@keyframes zsa-ict-in {0% {transform:scale(0);} 70% {transform:scale(1.3);} 100% {transform:scale(1);}}
+@keyframes zsa-ict-leave {0% {opacity:1;transform:translateX(0);} 100% {opacity:0;transform:translateX(64px);}}
+@keyframes zsa-ict-join {0% {opacity:0;transform:translateX(64px);} 100% {opacity:1;transform:translateX(0);}}
+@keyframes zsa-ict-flash {0% {opacity:.9;} 100% {opacity:0;}}
+
+/* Tablets: the card and the stage side by side. */
+@media(min-width:600px) and (max-width:899px) {.zsa-ict-element {grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);align-items:center;column-gap:16px;}}
 
 /* Answer grids */
 .zsa-choices--direction {grid-template-columns:repeat(2,minmax(0,1fr));}
@@ -29,10 +66,18 @@
 .zsa-modes .zsa-ict-option-note {margin:0 0 12px 36px;font-size:14px;}
 @media(min-width:600px) {.zsa-picker {display:grid;grid-template-columns:1fr auto;}.zsa-picker label {grid-column:1/-1;}}
 
-/* Phones: no duplicate tile (the table marks the element). */
+/* Phones: the model takes the tile's place beside the name, without its words (its picture label says them). */
 @media(max-width:599px) {
-  .zsa-ict-element {min-height:0;}
-  .zsa-ict-element-tile {display:none;}
+  .zsa-ict-element {grid-template-columns:auto minmax(0,1fr);align-items:center;gap:0 12px;}
+  .zsa-ict-stage {order:-1;display:block;width:68px;padding:2px;border-radius:10px;}
+  .zsa-ict-info, .zsa-ict-element-tile {display:none;}
   .zsa-ict .zsa-ict-element-title {font-size:1.25rem;}
   .zsa-ict-caption {font-size:14px;}
+  .zsa-ict .zsa-progress {font-size:13px;}
+  .zsa-ict .zsa-table td {height:20px;}
+  .zsa-ict .zsa-table {border-spacing:2px 1px;}
+  .zsa-ict .zsa-track {margin-top:0;}
+  .zsa-ict .zsa-layout, .zsa-ict .zsa-ref {gap:6px;}
+  .zsa-ict .zsa-track-pips {min-height:12px;}
+  .zsa-ict .zsa-progress {line-height:1.4;}
 }

@@ -3917,3 +3917,35 @@ This lab uses the existing terms *ensayo*, *vaso de precipitados*, *cronómetro*
 ## Chemistry lab chooser (equilibrium-thermo-lab 1.2.0)
 
 Open lab (button on each lab card) | Abrir laboratorio
+
+## Trainer question screens (ion-charge-trainer 1.5.3, periodic-trends 1.2.3, lewis-vsepr 1.2.3)
+
+The drawings added to the three engine trainers. Existing choices are reused: nivel de energía and nivel externo, átomo neutro, dipolo de enlace, geometría for shape, estructura de Lewis (not diagrama de Lewis, as in the rest of the Lewis builder), frente a for vs, casi no polares, se cancelan. Element and noble gas names follow "Element-name spellings"; "como {gas}" matches the existing step 4 chip ("{ion}, como {gas}").
+
+English | Mexican Spanish
+--- | ---
+Bohr model | Modelo de Bohr
+Bohr model of {name} with {levels} energy levels. | Modelo de Bohr del {name} con {levels} niveles de energía.
+Neutral atom | Átomo neutro
+{protons} protons, {electrons} electrons | {protons} protones, {electrons} electrones
+Outer level: ? | Nivel externo: ?
+Electrons by level: {list} | Electrones por nivel: {list}
+Dashed circles: electrons lost | Círculos punteados: electrones perdidos
+Open circles: electrons gained | Círculos sin relleno: electrones ganados
+Like {gas} | Como {gas}
+vs (between the two element cards) | frente a
+Group {group} · Period {period} | Grupo {group} · Periodo {period}
+{Label} {direction} {where} | {TheLabel} {direction} {where}
+{Winner} has the {higher} {label} | El {winner} tiene {aHigher}
+Circles drawn to scale by atomic radius | Círculos dibujados a escala según el radio atómico
+Comparison of {nameA} and {nameB}. | Comparación entre el {nameA} y el {nameB}.
+{name} ({symbol}), atomic number {z} | {name} ({symbol}), número atómico {z}
+{label} {value} (a value in the picture's label) | {label} de {value}
+Lewis structure (stage label) | Estructura de Lewis
+Shape (stage label) | Geometría
+Wedge: toward you. Dashes: away from you. | Cuña: hacia ti. Guiones: lejos de ti.
+Small arrows: bond dipoles, toward the more electronegative atom. Large arrow: net dipole. | Flechas pequeñas: dipolos de enlace, hacia el átomo más electronegativo. Flecha grande: dipolo neto.
+The bond dipoles cancel: no net dipole. | Los dipolos de enlace se cancelan: no hay dipolo neto.
+The bonds are nearly nonpolar: no net dipole. | Los enlaces son casi no polares: no hay dipolo neto.
+
+Sources that agreed (November 2026): modelo de Bohr and nivel de energía in OpenStax Química 2e (6.2 El modelo de Bohr) and the SEP Nueva Escuela Mexicana unit "¿Cómo representar los átomos?"; dipolo de enlace and dipolo neto in OpenStax Química 2e (7.6 Estructura molecular y polaridad), the Universitat de València polarity questions (uv.es/quimicajmol) and UNAM course notes (Polaridad molecular); cuñas y guiones for wedges and dashes in UNAM course notes (TRPECV y teoría del enlace de valencia) and LibreTexts en español (Fórmulas moleculares y estructuras de Lewis).

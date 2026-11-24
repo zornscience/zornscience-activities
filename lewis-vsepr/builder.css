@@ -37,7 +37,6 @@
 .zsa-lv-svg--compact .zsa-lv-bond {stroke-width:3.4;}
 .zsa-lv-display .zsa-lv-svg {width:calc(224px * var(--s));height:auto;}
 .zsa-lv-display {--s:1;}
-.zsa-lv-display--strip {--s:.8;}
 .zsa-lv-display--cand {--s:.6;}
 .zsa-lv-display--summary {--s:.72;flex-shrink:0;}
 
@@ -125,23 +124,89 @@
 /* Table caption: read by screen readers only (the column and row labels say the same). */
 .zsa-lv-ref .zsa-table caption {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 
-/* The finished structure sits beside the formula, so the step (and on laptops the table) stays on screen. */
+/* The strip: formula and name, the progress track, and the stage. On phones and tablets the stage sits beside the
+   formula, so the step stays on screen; from 900px it runs under them, with the Lewis structure and the shape side
+   by side. Before the build step is done the stage is hidden. */
 .zsa-lv-strip {display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:12px;align-items:start;}
-.zsa-lv-strip-line, .zsa-lv-strip .zsa-progress {grid-column:1;}
-.zsa-lv-strip-structure {grid-column:2;grid-row:1 / span 2;margin:0;}
+.zsa-lv-strip-line, .zsa-lv-strip .zsa-track {grid-column:1;}
 .zsa-lv-strip .zsa-progress {text-wrap:balance;}
-@media(min-width:900px) {.zsa-lv-display--strip {--s:.7;}}
+.zsa-lv-stage {grid-column:2;grid-row:1 / span 2;padding:6px 8px;}
+.zsa-lv-figs {display:flex;align-items:flex-start;justify-content:center;gap:8px;}
+.zsa-lv-fig {display:grid;justify-items:center;gap:2px;min-width:0;}
+.zsa-lv-fig .zsa-stage-eyebrow {justify-self:start;}
+.zsa-lv-stage .zsa-stage-pill {max-width:100%;text-align:center;}
+.zsa-lv-svg--stage {width:112px;height:auto;}
+.zsa-lv-shape {width:112px;height:112px;}
+.zsa-lv-key {margin-top:6px;}
+/* The Lewis structure on the dark stage. */
+.zsa-lv-svg--stage .zsa-lv-bond {stroke:#e2e8f0;}
+.zsa-lv-svg--stage .zsa-lv-dot {fill:#fde68a;}
+.zsa-lv-svg--stage .zsa-lv-sym {fill:var(--zsa-white);}
+/* The shape: balls and sticks, wedges toward you and dashes away, lone pair lobes, the angle arc and dipole arrows. */
+.zsa-lv-stick {stroke:#e2e8f0;stroke-width:4;stroke-linecap:round;}
+.zsa-lv-stick.is-back {stroke-width:3.5;stroke-dasharray:2 3.5;stroke-linecap:butt;}
+.zsa-lv-wedge {fill:#e2e8f0;}
+.zsa-lv-lobe ellipse {fill:rgba(147,197,253,.28);stroke:rgba(191,219,254,.7);stroke-width:1.2;}
+.zsa-lv-lobe-dot {fill:#fde68a;}
+.zsa-lv-arc {fill:none;stroke:#fde68a;stroke-width:2.2;}
+.zsa-lv-ball circle {stroke:rgba(255,255,255,.75);stroke-width:1.5;}
+.zsa-lv-ball text {font-size:13px;font-weight:700;font-family:var(--zsa-font);}
+.zsa-lv-ball--center circle {fill:#475569;} .zsa-lv-ball--center text {fill:var(--zsa-white);}
+.zsa-lv-ball--h circle {fill:#f8fafc;} .zsa-lv-ball--h text {fill:#0b2a5b;}
+.zsa-lv-ball--c circle {fill:#334155;} .zsa-lv-ball--c text {fill:var(--zsa-white);}
+.zsa-lv-ball--n circle {fill:#2563eb;} .zsa-lv-ball--n text {fill:var(--zsa-white);}
+.zsa-lv-ball--o circle {fill:#dc2626;} .zsa-lv-ball--o text {fill:var(--zsa-white);}
+.zsa-lv-ball--hal circle {fill:#15803d;} .zsa-lv-ball--hal text {fill:var(--zsa-white);}
+.zsa-lv-ball--s circle {fill:#facc15;} .zsa-lv-ball--s text {fill:#0b2a5b;}
+.zsa-lv-ball--p circle {fill:#ea580c;} .zsa-lv-ball--p text {fill:var(--zsa-white);}
+.zsa-lv-ball--b circle {fill:#f9a8d4;} .zsa-lv-ball--b text {fill:#0b2a5b;}
+.zsa-lv-ball--big circle {fill:#7c3aed;} .zsa-lv-ball--big text {fill:var(--zsa-white);}
+.zsa-lv-dipole line, .zsa-lv-net line {stroke:#fdba74;stroke-width:2.6;stroke-linecap:round;}
+.zsa-lv-dipole polygon {fill:#fdba74;}
+.zsa-lv-net line {stroke:#4ade80;stroke-width:4;}
+.zsa-lv-net polygon {fill:#4ade80;}
+/* The animations: the shape grows out from the central atom, the arc draws itself, the arrows pop in. */
+.zsa-lv-shape .is-in {transform-box:view-box;transform-origin:0 0;animation:zsa-lv-out .6s cubic-bezier(.34,1.4,.64,1) backwards;}
+.zsa-lv-shape .zsa-lv-arc.is-in {stroke-dasharray:100;animation:zsa-lv-draw .6s ease-out .35s backwards;}
+.zsa-lv-dipoles.is-in {transform-box:view-box;transform-origin:0 0;animation:zsa-lv-out .55s cubic-bezier(.34,1.4,.64,1) backwards;}
+/* The editor: a bond line grows out from the central atom; a new lone pair pops in. */
+.zsa-lv-bond[data-zsa-new] {stroke-dasharray:100;animation:zsa-lv-draw .3s ease-out backwards;}
+.zsa-lv-dot[data-zsa-new] {transform-box:fill-box;transform-origin:center;animation:zsa-lv-pop .35s cubic-bezier(.34,1.56,.64,1) backwards;}
+/* A wrong structure: the drawing (not the atom buttons over it) shifts gently. */
+.zsa-lv-grid .zsa-lv-svg.is-nudge {animation:zsa-track-nudge .4s ease-in-out;}
+@keyframes zsa-lv-out {from {transform:scale(.2);} to {transform:scale(1);}}
+@keyframes zsa-lv-draw {from {stroke-dashoffset:100;} to {stroke-dashoffset:0;}}
+@keyframes zsa-lv-pop {0% {transform:scale(0);} 70% {transform:scale(1.4);} 100% {transform:scale(1);}}
+@media(min-width:900px) {
+  .zsa-lv-stage {grid-column:1 / -1;grid-row:auto;margin-top:8px;padding:8px 12px 10px;}
+  .zsa-lv-figs {justify-content:space-around;}
+  .zsa-lv-svg--stage {width:140px;}
+  .zsa-lv-shape {width:190px;height:190px;}
+}
 
 /* Phones: smaller drawings and denser steps. */
 @media(max-width:599px) {
   .zsa-lv {--u:.85px;}
   .zsa-lv .zsa-lv-title {font-size:1.25rem;}
   .zsa-lv-caption {font-size:14px;}
-  .zsa-lv-display--strip {--s:.5;}
+  /* A compact track: the strip stays within a few pixels of its height before the track, so the build step fits. */
+  .zsa-lv .zsa-progress {line-height:1.3;}
+  .zsa-lv .zsa-track {row-gap:0;}
+  .zsa-lv .zsa-track-pips {min-height:8px;gap:2px 8px;}
+  .zsa-lv .zsa-track-items {gap:3px;}
+  .zsa-lv .zsa-track-pip, .zsa-lv .zsa-track-pip.is-current {width:8px;height:8px;border-width:1.5px;}
+  .zsa-lv .zsa-track-pip.is-current {box-shadow:0 0 0 1.5px #bfdbfe;}
+  .zsa-lv .zsa-track-step {width:12px;height:4px;}
+  .zsa-lv-svg--stage, .zsa-lv-shape {width:96px;}
+  .zsa-lv-shape {height:96px;}
+  .zsa-lv-stage {padding:3px;border-radius:10px;}
+  .zsa-lv-stage .zsa-stage-eyebrow, .zsa-lv-stage.has-shape .zsa-lv-fig--lewis .zsa-lv-svg--stage {display:none;}
+  /* The words stay for screen readers. */
+  .zsa-lv-stage .zsa-stage-pill, .zsa-lv-key {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
   .zsa-lv-display--cand {--s:.4;}
   .zsa-lv-cands {gap:6px;grid-template-columns:repeat(3,minmax(0,1fr));}
   .zsa-lv-cand {padding:2px 2px 4px;}
-  .zsa-lv-display--summary {--s:.6;}
+  .zsa-lv-display--summary {--s:.5;}
   .zsa-lv-build {gap:4px;margin-top:2px;}
   .zsa-lv-grid {padding-bottom:6px;}
   .zsa-lv-grid .zsa-lv-svg {height:calc(100% - 6px);}

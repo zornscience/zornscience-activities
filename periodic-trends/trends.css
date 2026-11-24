@@ -1,13 +1,77 @@
-/* Periodic Trends Practice: the question strip and answer grid sizes. Everything else is in ../shared/zsa-activity.css. */
+/* Periodic Trends Practice: the question strip, the comparison cards, the table overlay and answer grid sizes.
+   Everything else is in ../shared/zsa-activity.css and ../shared/zsa-track.css. */
 /* Inter alternates: l with a tail and I with serifs, so Al, Cl and I cannot be misread. */
 .zsa-ptr {font-feature-settings:"cv05" 1,"cv08" 1;}
 .zsa-ptr-pair {display:flex;flex-wrap:wrap;align-items:baseline;column-gap:12px;min-height:52px;}
 .zsa-ptr .zsa-ptr-title {font-size:1.45rem;line-height:1.2;margin:0;}
 .zsa-ptr-caption {font-size:15px;font-weight:600;color:var(--zsa-navy);margin:0;}
-.zsa-ptr-pair .zsa-progress {flex-basis:100%;}
+.zsa-ptr-pair .zsa-track {flex-basis:100%;}
 .zsa-choices--two {grid-template-columns:repeat(2,minmax(0,1fr));}
 .zsa-choices--three {grid-template-columns:repeat(3,minmax(0,1fr));}
 .zsa-ptr .zsa-choice {font-size:16px;padding:4px 6px;}
 .zsa-ptr-link {display:inline-flex;align-items:center;min-height:44px;font-size:16px;}
 .zsa-summary p {margin:0 0 4px;font-size:16px;}
-@media(max-width:599px) {.zsa-ptr-pair {min-height:0;}.zsa-ptr .zsa-ptr-title {font-size:1.15rem;}.zsa-ptr .zsa-choice {font-size:14px;padding:4px 3px;}}
+
+/* The comparison: two element cards on the stage. Atoms are drawn to scale by atomic radius after step 3. */
+.zsa-ptr-stage {flex-basis:100%;margin-top:8px;padding:8px 12px 10px;}
+.zsa-ptr-cards {display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:stretch;gap:8px;}
+.zsa-ptr-vs {align-self:center;font-size:12px;font-weight:700;letter-spacing:.06em;color:#bfdbfe;}
+.zsa-ptr-card {display:grid;grid-template-columns:42px minmax(0,1fr);grid-template-areas:"atom text" "meter meter";align-items:center;gap:4px 8px;padding:7px 8px;border-radius:10px;background:rgba(255,255,255,.07);border:1px solid rgba(191,219,254,.25);}
+.zsa-ptr-card.is-winner {border-color:#4ade80;background:rgba(74,222,128,.12);}
+.zsa-ptr-atom {grid-area:atom;width:42px;height:42px;}
+.zsa-ptr-card-text {grid-area:text;min-width:0;}
+.zsa .zsa-ptr-card-text p {margin:0;line-height:1.25;}
+.zsa-ptr-card-top {display:flex;align-items:baseline;gap:6px;}
+.zsa-ptr-card-symbol {font-size:22px;font-weight:700;color:var(--zsa-white);}
+.zsa-ptr-card-z {font-size:12px;font-weight:600;color:#bfdbfe;}
+.zsa .zsa-ptr-card-name {font-size:13px;color:#e2e8f0;overflow-wrap:anywhere;}
+.zsa .zsa-ptr-card-place {font-size:11.5px;color:#bfdbfe;}
+.zsa-ptr-meter {grid-area:meter;display:flex;align-items:center;gap:6px;min-width:0;}
+.zsa-ptr-bar {flex:1 1 auto;min-width:0;width:100%;height:8px;}
+.zsa .zsa-ptr-value {margin:0;font-size:12px;font-weight:700;line-height:1.3;color:var(--zsa-white);white-space:nowrap;}
+.zsa-ptr-bar-track {fill:rgba(255,255,255,.16);}
+.zsa-ptr-bar-fill {fill:#93c5fd;}
+.zsa-ptr-bar-fill.is-winner {fill:#4ade80;}
+.zsa-ptr-bar-fill.is-grow {transform-box:fill-box;transform-origin:left center;animation:zsa-ptr-grow-x .8s ease-out .15s backwards;}
+.zsa-ptr-atom-body {fill:rgba(147,197,253,.3);stroke:#93c5fd;stroke-width:2;}
+.zsa-ptr-atom-body.is-unknown {fill:none;stroke-dasharray:4 4;}
+.zsa-ptr-atom-body.is-grow {transform-box:fill-box;transform-origin:center;animation:zsa-ptr-grow .7s cubic-bezier(.34,1.56,.64,1) backwards;}
+.zsa-ptr-atom-core {fill:#fdba74;}
+.zsa-ptr-atom-symbol {fill:var(--zsa-white);font-size:13px;font-weight:700;font-family:var(--zsa-font);}
+.zsa-ptr-stage .zsa-stage-pill {margin-top:8px;}
+.zsa-ptr-stage .zsa-stage-pill.is-empty {visibility:hidden;}
+
+/* The table overlay: the shared row or column (step 1) and the trend wedge, thick where the value is larger (step 2). */
+.zsa-ptr .zsa-table-wrap {position:relative;}
+.zsa-ptr-overlay {position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;overflow:visible;}
+.zsa-ptr-band {fill:none;stroke:var(--zsa-blue);stroke-width:2.5;}
+.zsa-ptr-band.is-draw {stroke-dasharray:100;animation:zsa-ptr-draw .7s ease-out backwards;}
+.zsa-ptr-wedge {fill:rgba(29,78,216,.24);}
+.zsa-ptr-wedge.is-grow.is-across {transform-box:fill-box;transform-origin:left center;animation:zsa-ptr-grow-x .8s ease-out backwards;}
+.zsa-ptr-wedge.is-grow.is-down {transform-box:fill-box;transform-origin:center top;animation:zsa-ptr-grow-y .8s ease-out backwards;}
+@keyframes zsa-ptr-draw {from {stroke-dashoffset:100;} to {stroke-dashoffset:0;}}
+@keyframes zsa-ptr-grow {0% {transform:scale(.3);} 70% {transform:scale(1.12);} 100% {transform:scale(1);}}
+@keyframes zsa-ptr-grow-x {from {transform:scaleX(0);} to {transform:scaleX(1);}}
+@keyframes zsa-ptr-grow-y {from {transform:scaleY(0);} to {transform:scaleY(1);}}
+
+/* Phones: the cards shrink to one row of chips (symbol, atom and value); the words are in the picture's label. */
+@media(max-width:599px) {
+  .zsa-ptr-pair {min-height:0;}
+  .zsa-ptr .zsa-ptr-title {font-size:1.15rem;}
+  .zsa-ptr .zsa-choice {font-size:14px;padding:4px 3px;}
+  .zsa-ptr .zsa-progress {font-size:13px;line-height:1.4;}
+  .zsa-ptr-stage {margin-top:4px;padding:3px 6px;border-radius:10px;}
+  .zsa-ptr-atom-symbol, .zsa-ptr-card-z, .zsa-ptr-stage .zsa-stage-pill, .zsa .zsa-ptr-card-name, .zsa .zsa-ptr-card-place {display:none;}
+  .zsa-ptr-stage .zsa-ptr-bar {min-width:14px;}
+  .zsa-ptr-cards {grid-template-columns:repeat(2,minmax(0,1fr));margin-top:0;gap:6px;}
+  .zsa-ptr-vs {display:none;}
+  .zsa-ptr-card {display:flex;align-items:center;gap:5px;min-width:0;padding:1px 6px;}
+  .zsa-ptr-atom {flex:none;width:26px;height:26px;}
+  .zsa-ptr-card-text {flex:none;}
+  .zsa-ptr-card-symbol {font-size:17px;}
+  .zsa-ptr-meter {flex:1 1 auto;}
+  .zsa .zsa-ptr-value {margin-left:auto;font-size:11.5px;}
+  .zsa-ptr .zsa-table td {height:21px;}
+  .zsa-ptr .zsa-table {border-spacing:2px 1.5px;}
+  .zsa-ptr .zsa-layout, .zsa-ptr .zsa-ref {gap:6px;}
+}

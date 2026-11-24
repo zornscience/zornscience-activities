@@ -1,9 +1,18 @@
 # Verification record
-Version: 1.2.2
+Version: 1.2.3
 Date: 2026-10-16
 Reviewer: Claude (built and tested 1.0.0; 1.1.0 changes tested as recorded below)
 
 PASS means the check was run on version 1.1.0 as committed and passed. Rows marked (1.0.0) were run by hand on 1.0.0 and not repeated for 1.1.0; every other row is an automated test that ran on 1.1.0 in `npm test`, with the counts updated for the 418 questions. NOT TESTED rows say why. Browser checks use Playwright 1.56 with Chromium over the local test server and run in CI with `npm test`. Expected answers and feedback rules in the tests are worked out from the Periodic Table's data and the lessons' trend rules, not from `trends.js` or the build script.
+
+## 1.2.3 results (question screen redesign)
+| Check | Status | Evidence |
+|---|---|---|
+| Cards and overlay | PASS | `tests/e2e/trainer-visuals.spec.js`, four questions (radius Na and Cl, ionization energy Be and Sr, electronegativity Rb and Te, radius Li and K): no group or period before step 1; after it the outline encloses both marked cells and names the relation; after step 2 a wedge whose point is at the low end of the trend; after step 3 both values from the Periodic Table's data, the winner and, for atomic radius only, "Circles drawn to scale by atomic radius". |
+| Spanish and axe | PASS | The picture's label in Mexican Spanish for beryllium and strontium, word for word; axe-core at 1366x657 and 390x664 on step 3 and on the finished question. |
+| Behavior unchanged | PASS | `tests/e2e/periodic-trends.spec.js` passes unchanged: every wrong pick in all 418 questions, 40 seeded rounds, the flow, keyboard, fit at four sizes, axe in 9 states, codes and `?from=`. |
+| Fit | PASS | Measured on the three fit questions: at 1280x617 the table bottom stays 27 px above the screen edge in every state (the stage keeps one height from start to end); on phones no state is tighter than the test allows. |
+| Screenshots reviewed | PASS | 1280x800 and 390x664, English and `?lang=es`, each step of four questions. |
 
 ## Questions and data (`tests/unit/periodic-trends.test.js`)
 | Check | Status | Evidence |

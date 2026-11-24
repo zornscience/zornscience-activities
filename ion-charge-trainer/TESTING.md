@@ -1,7 +1,19 @@
 # Verification record
-Version: 1.5.2
+Version: 1.5.3
 Date: 2026-10-16
 Reviewer: Claude (integration review of ChatGPT's 1.0.0 package, then the 1.1.0 to 1.3.1 updates)
+
+## 1.5.3 results (question screen redesign)
+| Check | Status | Evidence |
+|---|---|---|
+| Bohr model, all 19 elements | PASS | `tests/e2e/trainer-visuals.spec.js`: each element played step by step. The picture's label and its electrons match an electron-level table written in the test (checked there against the reference: as many levels as the period, Z electrons, the valence count outside): no outer electrons before step 1, the valence electrons after it, after step 2 the lost and leaving electrons and the full level inside (metals) or the gained ones (nonmetals) with protons and electrons, then the charge and the noble gas. |
+| Progress track | PASS | A seeded round: 10 pips and 4 bars, current first; two misses and Show me add the review pip (square, last) and turn the element's pip amber; the next element's pip is green; the sentence is unchanged ("Element 3 of 11 · Step 1 of 4"). |
+| Reduced motion | PASS | With `prefers-reduced-motion: reduce` every drawing and trail element has no animation and the model reaches the same states; leaving electrons are not drawn, and with motion they end invisible. |
+| Behavior unchanged | PASS | The existing suites pass unchanged: 731 answer combinations (`routing.spec.js`), 200 seeded rounds and the review queue (`rounds.spec.js`), the flow, keyboard, codes and Spanish round tests. |
+| Fit, targets, overflow, axe | PASS | `layout.spec.js` (fit at 360x640, 390x664, 768x1024, 1280x617, 1366x657 and 1920x960 with the table in view; no sideways scrolling from 320 px and at 200% zoom; 44 px targets) and `a11y.spec.js` (9 states at two sizes) pass. Measured slack before and after on Cl: no state got tighter at 360x640 or 390x664; at 1280x617 the table bottom is 31 px above the screen edge. |
+| Screenshots reviewed | PASS | 1280x800 and 390x664, English and `?lang=es`, nitrogen, chlorine, potassium, sodium and barium through every stage. |
+| Parity | EXPECTED DIFFERENCES | `npm run parity -- --quick` compares pixels, boxes and classes with `main`, so this redesign differs on purpose (the pull request is labeled `behavior-change`). Routing, rounds, focus and announcements are covered by the suites above. |
+| Real screen readers, Firefox, Safari, school devices | NOT TESTED | Same as before. |
 
 ## 1.4.0 results (completion codes)
 | Check | Status | Evidence |

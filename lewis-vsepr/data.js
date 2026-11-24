@@ -334,7 +334,15 @@
       valenceHead: "valence",
       apOn: "AP setting on: expanded octets and formal charge.",
       setDefault: "Octet rule",
-      setAp: "AP: expanded octets"
+      setAp: "AP: expanded octets",
+      // The strip's stage: the finished Lewis structure, then the shape with its bond angle and polarity arrows.
+      visual: {
+        lewis: "Lewis structure", shape: "Shape", shapeLine: "{Mg}, {angle}",
+        wedge: "Wedge: toward you. Dashes: away from you.",
+        polarKey: "Small arrows: bond dipoles, toward the more electronegative atom. Large arrow: net dipole.",
+        cancelKey: "The bond dipoles cancel: no net dipole.",
+        nonpolarKey: "The bonds are nearly nonpolar: no net dipole."
+      }
     }
   };
   // Mexican Spanish (?lang=es, shared/zsa-i18n.js). English stays the default and the fallback. Rule values (geometry
@@ -610,7 +618,14 @@
       valenceHead: "valencia",
       apOn: "Opción AP activada: octetos expandidos y carga formal.",
       setDefault: "Regla del octeto",
-      setAp: "AP: octetos expandidos"
+      setAp: "AP: octetos expandidos",
+      visual: {
+        lewis: "Estructura de Lewis", shape: "Geometría", shapeLine: "{Mg}, {angle}",
+        wedge: "Cuña: hacia ti. Guiones: lejos de ti.",
+        polarKey: "Flechas pequeñas: dipolos de enlace, hacia el átomo más electronegativo. Flecha grande: dipolo neto.",
+        cancelKey: "Los dipolos de enlace se cancelan: no hay dipolo neto.",
+        nonpolarKey: "Los enlaces son casi no polares: no hay dipolo neto."
+      }
     };
     // Each Spanish value replaces the English one at the same place; anything not listed stays English.
     (function merge(into, from) {
