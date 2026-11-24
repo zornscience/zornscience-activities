@@ -1,6 +1,8 @@
 # pH & Buffer Lab
 
-Version: 1.0.5
+Version: 1.1.0
+
+Version 1.1.0 adds lab bench drawings in the dark bench look of the other virtual labs. The pH Explorer has a beaker of universal indicator whose color follows the pH (approximate colors from red through orange, yellow, green and blue to violet), a pH meter with its probe in the beaker, a pH strip with a marker, and H₃O⁺ and OH⁻ ions drawn on a log scale: 4 ions for every factor of 10 in concentration (32 at 1 M, 28 at 0.1 M, 4 at 1 × 10⁻⁷ M, none below 1 × 10⁻⁸ M), so the ions change as the concentration slider moves. The ions drift after a change and stop after 8 seconds; Pause motion stops them at any time, and nothing moves at load. In the Stress Test the water and buffer beakers sit side by side on the bench: each addition falls into both beakers drop by drop from a dropper (0.05 mL per drop, so 2, 20 or 100 drops, every one drawn until it reaches the liquid), the indicator color and a pH strip marker under each beaker move after each drop using the lab's own equilibrium model at the intermediate volumes, and the beaker fills. The readouts, data table and graph update at once as before. With reduced motion the beakers show the final state with no falling drops. Every drawing has a text alternative that names the pH, the volume and the indicator color. The chemistry, calculations, data table, Copy data and Download CSV, tabs and Challenges are unchanged.
 
 Version 1.0.5 improves keyboard and screen reader access. Every focusable element, including summaries, text areas and custom controls, now shows the same visible focus ring (`shared/zsa-lab-a11y.css`), a blue ring with a white gap that reads on light and dark panels and in high contrast mode. `tests/e2e/labs-a11y.spec.js` now checks this lab in English and Mexican Spanish with axe-core, the Tab order, a visible focus indicator on every stop, names and states of custom controls, and text alternatives for drawings. The science, scoring and any completion code are unchanged.
 
@@ -11,6 +13,10 @@ Version 1.0.2 adds an "About this activity" section above the footer: a short in
 A static Chemistry and AP Chemistry activity with four modes: pH Explorer, Buffer Builder, Stress Test, and Challenges. It uses the existing ZornScience header, dialogs, footer, Inter font, shared styles, language module, safe lesson return links, and embed behavior. There is no build step, account, storage, tracking, completion code, or external request. All four modes work offline after the page and its local assets have loaded.
 
 Open `/ph-buffer-lab/` on the existing GitHub Pages site. From the repository root, run `npm run serve` and visit `http://localhost:8000/ph-buffer-lab/` to work locally. No changes to shared files are needed.
+
+## Files
+
+- `bench.js`: the Explorer beaker and the Stress Test beakers (`zsa-pb:request-bench` event). `lab.js` draws everything else and supplies the pH values.
 
 ## URL parameters
 
