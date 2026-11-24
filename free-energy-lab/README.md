@@ -1,6 +1,8 @@
 # Free Energy Lab
 
-Version: 1.0.4
+Version: 1.1.0
+
+Version 1.1.0 adds lab bench drawings in the dark bench look of the other virtual labs. Entropy Explorer has a phase chamber: 27 water molecules at 1 atm with a chamber temperature slider from 150 to 500 K. Below 273 K they vibrate in a fixed lattice (more as the temperature rises), from 273 to 373 K they slide past each other under a liquid surface, and above 373 K they spread through the chamber, faster when hotter. At exactly 273 K and 373 K half the molecules are in each phase. A thermometer marks both temperatures, and a relative, schematic entropy meter rises with temperature, with a bigger jump for boiling than for melting (as for water, about 109 versus 22 J/(mol·K)). The chamber keeps its temperature when the process changes. The ΔG vs T graph is redrawn on the dark bench: the ΔG > 0 zone is shaded red and labeled not favored (Chemistry: nonspontaneous), the ΔG < 0 zone green and labeled favored (spontaneous), and a yellow marker with a drop line glides to the chosen temperature and is labeled with T only, so the answer stays hidden until Check. The graph is as wide as its card, so its text keeps its size on a phone. ΔG° and K has a linking drawing: free energy levels for reactants and products (products lower when ΔG° is negative), the relation K = e^(−ΔG°/RT), and the equilibrium mixture of a simple A ⇌ B reaction with that K (40 particles, squares for A and diamonds for B, so color is not needed). The side the student must calculate shows a question mark until the Check passes; then the mixture converts to its equilibrium counts. The mixture uses no circles, so the log scale marker is still the panel's only circle. Every drawing has a text alternative. Nothing moves until the student changes the temperature, motion stops 10 seconds after the last change, and Pause motion stops it at any time. With reduced motion every drawing is still and shows the same information. The chemistry, calculations, answer gates, Data table, Copy data and Download CSV are unchanged.
 
 Version 1.0.4 improves keyboard and screen reader access. The data table was inside two nested scroll regions, which made two Tab stops with the inner focus ring clipped; it is now one labelled, focusable region. Every focusable element, including summaries, text areas and custom controls, now shows the same visible focus ring (`shared/zsa-lab-a11y.css`), a blue ring with a white gap that reads on light and dark panels and in high contrast mode. `tests/e2e/labs-a11y.spec.js` now checks this lab in English and Mexican Spanish with axe-core, the Tab order, a visible focus indicator on every stop, names and states of custom controls, and text alternatives for drawings. The science, scoring and any completion code are unchanged.
 
@@ -11,6 +13,10 @@ Version 1.0.2 adds an "About this activity" section above the footer: a short in
 A standalone, bilingual activity at `/free-energy-lab/` for AP Chemistry 9.1 to 9.7 and Chemistry, Entropy, Enthalpy & Gibbs Energy. Open through a static server, for example `npm run serve`, then visit `/free-energy-lab/`. No build step or runtime dependencies. No accounts, persistence, tracking, or requests beyond the initial local assets. All calculations run in the tab.
 
 Worked answers and computed Data rows stay hidden until the relevant Check passes. One wrong numeric Check enables Show solution. Control and dissolving classifications reveal their explanations after a selection is checked. The formation exercise and the ΔH/ΔS to ΔG to K chain each require their own Check. Changing problem data hides the previous answer again.
+
+## Files
+
+- `bench.js`: the phase chamber, the ΔG vs T chart and the ΔG° to K link (`zsa-fe:request-bench` event). `lab.js` draws everything else.
 
 ## Modes
 

@@ -12,6 +12,16 @@
       },
     }),
   );
+  var B, activeBench = null;
+  root.dispatchEvent(
+    new CustomEvent("zsa-fe:request-bench", {
+      detail: {
+        receive: function (a) {
+          B = a;
+        },
+      },
+    }),
+  );
   root.dispatchEvent(
     new CustomEvent("zsa:request-i18n", {
       detail: {
@@ -221,6 +231,8 @@
   }
   function layout(mode) {
     $("live").textContent = "";
+    if (activeBench) activeBench.destroy();
+    activeBench = null;
     var host = $("panel-" + mode);
     host.replaceChildren();
     var grid = add(host, "div", undefined, "zsa-fe-layout"),
@@ -498,6 +510,7 @@
       id = this.value;
       render();
     });
+    activeBench = B.phaseChamber(add(b, "div"), { text: t });
     var view = add(b, "div");
     var pred = select(
         a,
@@ -698,58 +711,33 @@
   }
   function dgGraph(h, dh, ds, temp, revealed) {
     title(h, "ΔG vs T graph");
-    var s = svg(
-      h,
-      "Gibbs free energy versus temperature. Shading marks negative Gibbs free energy. See Data table.",
-    );
     var vals = [M.gibbs(dh, ds, 100), M.gibbs(dh, ds, 2000), 0],
-      scale = M.niceScale(Math.max(1, ...vals.map(Math.abs))),
-      top = scale.max,
-      x = function (v) {
-        return 70 + ((v - 100) / 1900) * 510;
-      },
-      y = function (v) {
-        return 145 - (v / top) * 110;
-      };
-    shape(s, "rect", {
-      x: 70,
-      y: 145,
-      width: 510,
-      height: 110,
-      fill: "#dcfce7",
-    });
-    scale.ticks
-      .concat(
+      scale = M.niceScale(Math.max(1, ...vals.map(Math.abs)));
+    B.gibbsChart(h, {
+      text: t,
+      content: content,
+      label: t(
+        "Gibbs free energy versus temperature. Shading marks negative Gibbs free energy. See Data table.",
+      ),
+      key: [dh, ds].join(),
+      top: scale.max,
+      ticks: scale.ticks.concat(
         scale.ticks.slice(1).map(function (v) {
           return -v;
         }),
-      )
-      .forEach(function (v) {
-        line(s, 70, y(v), 580, y(v), "#cbd5e1", v === 0 ? "6 4" : undefined);
-        label(s, 5, y(v) + 4, tick(v));
-      });
-    [500, 1000, 1500, 2000].forEach(function (v) {
-      line(s, x(v), 35, x(v), 255, "#e2e8f0");
-      label(s, x(v) - 12, 277, tick(v));
+      ),
+      tick: tick,
+      g: function (tt) {
+        return M.gibbs(dh, ds, tt);
+      },
+      temp: temp,
+      yTitle: G + " (" + gu + ")",
+      upLabel: t(chem ? "Nonspontaneous: {g} > 0" : "Not favored: {g} > 0", { g: G }),
+      downLabel: t(chem ? "Spontaneous: {g} < 0" : "Favored: {g} < 0", { g: G }),
     });
-    line(s, 70, 35, 70, 255);
-    shape(s, "polyline", {
-      points: x(100) + "," + y(vals[0]) + " " + x(2000) + "," + y(vals[1]),
-      fill: "none",
-      stroke: "#1d4ed8",
-      "stroke-width": 3,
-    });
-    shape(s, "circle", {
-      cx: x(temp),
-      cy: y(M.gibbs(dh, ds, temp)),
-      r: 6,
-      fill: "#7e22ce",
-    });
-    label(s, 70, 20, G + " (" + gu + ")");
-    label(s, 240, 303, t("Temperature (K)"));
     p(
       h,
-      "Blue solid line: Gibbs free energy. Dashed line: zero. Green shading: negative Gibbs free energy.",
+      "Blue line: Gibbs free energy. Dashed line: zero. Green zone: negative Gibbs free energy. Red zone: positive Gibbs free energy. Yellow marker: the chosen temperature.",
     );
     var cross = M.crossover(dh, ds);
     if (revealed) {
@@ -1203,6 +1191,8 @@
     var pair = layout("k"),
       a = pair[0],
       b = pair[1],
+      linkHost = el("div"),
+      link = B.kLink(linkHost, { text: t, content: content }),
       id = chosen(M.KCASES, "haber"),
       temp = 298,
       dg = M.KCASES[id].dg || M.fromK(M.KCASES[id].k, temp),
@@ -1371,6 +1361,22 @@
         su: su,
       });
       title(b, "ΔG° and K");
+      b.appendChild(linkHost);
+      link.update({
+        dg: dg,
+        k: v.k,
+        temp: temp,
+        open: gate.open,
+        direction: direction,
+        dgLabel:
+          G + " = " + (direction === "forward" ? given(dg) : f(dg, 2)) + " " + gu,
+        dgPlain:
+          G +
+          " = " +
+          (direction === "forward" ? given(dg) : f(dg, 2)) +
+          " " +
+          gu.replace("molrxn", "mol"),
+      });
       p(
         b,
         "R = 8.314 J/(mol·K). Keep the exponent unrounded. Rounding it early changes K.",
@@ -1479,6 +1485,7 @@
       }
       data(["Quantity", "Value", "Unit"], rows, displayed);
     }
+    activeBench = link;
     render();
   }
   function equation(net) {
