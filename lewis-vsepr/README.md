@@ -245,7 +245,7 @@ Button label: Open the Lewis and VSEPR Builder
 - **Phones.** Under 600 px the stage sits beside the formula as before and shows the shape once there is one; its words stay for screen readers. The item summary's drawing is a little smaller so Next stays on screen.
 
 ## Changelog
-1.2.4: The progress pips are now the question-set practice engine's pips (the AP Chemistry and Quantitative Skills sets): rounded bars that fill when done, striped red after a miss or Show me, a ringed and gently pulsing current question, hollow review items, in this page's blue. Step bars match them. No other change.
+1.2.4: The progress pips are now the question-set practice engine's pips (the AP Chemistry and Quantitative Skills sets): rounded bars that fill when done, striped red after a miss or Show me, a ringed and gently pulsing current question, hollow review items, in this page's blue. Step bars match them. On laptops, the stage's "Lewis structure" and "Shape" labels are centered over their drawings (the shape's label sat at the left edge of its figure).
 
 1.2.3: Question screen redesign: animated building, the stage with the Lewis structure and a 3D shape preview with the bond angle and dipole arrows, a progress track, animations on right and missed answers (none with reduced motion). Shared `shared/zsa-track.js` and `shared/zsa-track.css`.
 
