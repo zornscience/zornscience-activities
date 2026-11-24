@@ -1,6 +1,6 @@
 # AP Chemistry Unit 8 Practice
 
-Version: 1.1.0
+Version: 1.1.1
 
 Original bilingual ZornScience practice aligned to College Board CED Unit 8, Acids and Bases. Each of eleven topics has six questions: four multiple choice and two numeric entry. Total: 66 questions, 44 multiple choice and 22 numeric, with individual explanations for all 132 distractors in English and Mexican Spanish. These are original aligned questions, not official College Board exam items.
 
@@ -43,6 +43,8 @@ Choose a six-question topic or Mixed review for all 66. Submit once, read feedba
 English: `/apchem-unit8-practice/`. Spanish: `/apchem-unit8-practice/?lang=es`. Mexican Spanish follows the supplied AP glossary, including amortiguador, capacidad amortiguadora, titulación, punto de equivalencia, punto de semiequivalencia, curva de titulación, indicador, punto final, par conjugado ácido-base, ion hidronio, constante de acidez, constante de basicidad, porcentaje de ionización, anfótero and tabla ICE. Additional terms are recorded in `../SPANISH_TERMS.md`.
 
 ## Changelog
+
+1.1.1: Each of this unit's topics has a one-line summary in English and Mexican Spanish (`summary` in `data.js`), written from its six questions. The topic cards show it in place of the derived question counts, which were the same on every card. Questions, answers, scoring and feedback are unchanged.
 
 1.1.0: The shared practice engine is rebuilt to match the bench labs. The start screen is a grid of topic cards (real radio inputs, with the CED topic number, an icon, the number of typed and multiple-choice questions and the question count) plus a Mixed review card, in place of the topic menu. A set shows one progress pip per question (current, right, missed; missed pips are also striped), keeps the spoken "Question 3 of 6" for screen readers, and counts a streak of right answers in memory for that set only. Feedback draws a check or a cross, highlights the correct answer and adds a Show the steps panel that numbers the sentences of the existing explanation; it opens by itself after a miss. The unit's diagrams.css figures are unchanged. The results show a score ring, a bar per topic, the missed questions with their steps, and Practice my misses, Try again and Choose a topic. Question ids, answer checking, scoring and every feedback message and explanation are unchanged. The Instructions line about the end of a set names the new buttons. Motion stops with reduced motion; nothing is shown only by motion.
 

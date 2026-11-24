@@ -5,7 +5,8 @@ const byId=id=>bank.questions.find(q=>q.id===id),raw=q=>q.display.replace(/−/g
 test("66 original bilingual questions preserve eleven exact CED titles and distinct decimal IDs",()=>{
  const en=["Introduction to Entropy","Absolute Entropy and Entropy Change","Gibbs Free Energy and Thermodynamic Favorability","Thermodynamic and Kinetic Control","Free Energy and Equilibrium","Free Energy of Dissolution","Coupled Reactions","Galvanic (Voltaic) and Electrolytic Cells","Cell Potential and Free Energy","Cell Potential Under Nonstandard Conditions","Electrolysis and Faraday's Law"];
  const es=["Introducción a la entropía","Entropía absoluta y cambio de entropía","Energía libre de Gibbs y favorabilidad termodinámica","Control termodinámico y control cinético","Energía libre y equilibrio","Energía libre de disolución","Reacciones acopladas","Celdas galvánicas (voltaicas) y electrolíticas","Potencial de celda y energía libre","Potencial de celda en condiciones no estándar","Electrólisis y ley de Faraday"];
- assert.deepEqual(bank.topics,en.map((t,i)=>({id:`9.${i+1}`,title:{en:`9.${i+1} ${t}`,es:`9.${i+1} ${es[i]}`}})));
+ assert.ok(bank.topics.every(t=>Object.keys(t).sort().join()==="id,summary,title"),"each topic has exactly id, title and summary");
+  assert.deepEqual(bank.topics.map(t=>({id:t.id,title:t.title})), en.map((t,i)=>({id:`9.${i+1}`,title:{en:`9.${i+1} ${t}`,es:`9.${i+1} ${es[i]}`}})));
  assert.equal(bank.questions.length,66);assert.equal(new Set(bank.questions.map(q=>q.id)).size,66);
  for(const lang of ["en","es"])assert.equal(new Set(bank.questions.map(q=>q.prompt[lang])).size,66);
  for(const t of bank.topics){const qs=M.makeSet(bank.questions,t.id,()=>0).map(e=>e.question);assert.equal(qs.length,6);assert.ok(qs.every(q=>q.topic===t.id));assert.equal(qs.filter(q=>q.type==="mc").length,4);assert.equal(qs.filter(q=>q.type==="numeric").length,2);}
