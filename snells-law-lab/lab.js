@@ -116,5 +116,19 @@
   $('bench').addEventListener('pointermove',e=>{if(!dragging)return;const p=coords(e);if(dragging.id==='laser'){const y=mode==='tir'?p.y-300:300-p.y;setAngle(Math.atan2(Math.max(0,480-p.x),Math.max(0,y))/rad);}else{pro={x:Math.max(148,Math.min(812,p.x-dragging.dx)),y:Math.max(148,Math.min(472,p.y-dragging.dy)),snapped:false};if(Math.hypot(pro.x-480,pro.y-300)<60)pro={x:480,y:300,snapped:true};renderPro();}});
   function stop(){dragging=null;} $('bench').addEventListener('pointerup',stop);$('bench').addEventListener('pointercancel',stop);$('bench').addEventListener('lostpointercapture',stop);
   $('reset').addEventListener('click',()=>{zoomed=false;angle=45;on=true;pro={x:770,y:155,snapped:false};$('block').value='glass';$('surrounding').value='air';$('block-index').value='1.5';$('surrounding-index').value='1';$('block-custom').hidden=true;$('surrounding-custom').hidden=true;for(const id of ['show-protractor','show-normal','show-angles','show-values'])$(id).checked=true;for(const key of ['measure','materials','tir'])$('investigate-'+key).setAttribute('aria-pressed','false');$('investigation-prompt').textContent=tr('Choose a starting point, then explore freely. Predict what will happen before changing a control.');setMode('slab');});
+  // The lab check (labcheck.js) reaches the lab through this event, never a global. setup() puts the controls in a
+  // question's starting state, as the Try an investigation buttons do: the block geometry, the Optical block and Surrounding
+  // medium menus (custom index fields hidden), the incidence angle, the laser on, Show measurements on, the Protractor,
+  // Normal and Angles shown and the protractor snapped to the normal, zoomed out. It never touches the investigation
+  // prompt or its buttons. format is the readout formatter (one decimal and a degree sign, as render() writes it) and
+  // noRay is the readout's own text past the critical angle, in the page language.
+  function labSetup(q) {
+    zoomed=false;on=true;angle=Math.max(0,Math.min(80,q.angle));pro={x:480,y:300,snapped:true};
+    $('block').value=q.block;$('surrounding').value=q.surrounding;
+    $('block-custom').hidden=$('surrounding-custom').hidden=true;
+    for(const id of ['show-protractor','show-normal','show-angles','show-values'])$(id).checked=true;
+    setMode(q.mode);
+  }
+  document.querySelector('[data-zsa-activity="snells-law-lab"]').addEventListener('zsa-snell:request-lab',e=>e.detail.receive({setup:labSetup,format:v=>v.toFixed(1)+'°',noRay:tr('No transmitted ray')}));
   render();
 }());

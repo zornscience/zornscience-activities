@@ -3723,6 +3723,24 @@ The shared Lab check labels are the Gas lab pilot's. Readout and control names f
 | flies for / stays up for | vuela / se queda en el aire | Question 3 explanation. |
 | Both land {right} m away. | Los dos caen a {right} m de distancia. | Question 3 explanation. |
 
+## Snell's Law lab check (snells-law-lab 1.2.0)
+
+The shared Lab check labels are the Gas lab pilot's. Readout and control names follow the lab: la lectura Refracción θ₂, la lectura Ángulo crítico, el menú Bloque óptico, el menú Medio que lo rodea, Vidrio, Aire, Agua, Diamante, bloque semicircular. Glass is "vidrio" (not "cristal"), the sine is "seno" (written "sen" in formulas, as in sen θc = n₂ / n₁). Not yet proofread by a native speaker.
+
+| English | Mexican Spanish | Use |
+| --- | --- | --- |
+| Air into glass | Del aire al vidrio | Question 1 title. |
+| Diamond bends the most | El diamante desvía más | Question 2 title. |
+| Matching indices | Índices iguales | Question 3 title. |
+| Critical angle, glass to air | Ángulo crítico, del vidrio al aire | Question 4 title. |
+| Glass in water | Vidrio en agua | Question 5 title. |
+| the Refraction θ₂ readout | la lectura Refracción θ₂ | Questions 1, 2, 3 and 5. |
+| the Critical angle readout | la lectura Ángulo crítico | Question 4. |
+| the dashed normal | la normal punteada | Question 1 feedback. |
+| bends toward / away from the normal | se desvía hacia / lejos de la normal | Explanations. |
+| inverse sine / inverse tangent | seno inverso / tangente inversa | Question 4 feedback. |
+| surroundings | lo que lo rodea | Question 3. |
+
 ## BTB Carbon Cycle Lab (btb-carbon-cycle-lab/data.js)
 
 Sources compared: Mexican secondary and preparatoria Biology and chemistry textbooks, SEP and UNAM Biology materials, Khan Academy Spanish, and university lab glossaries. Most agree on "azul de bromotimol", with "AZB" less common but used in lab guides; the page spells the name out in the title and intro and uses AZB afterward.

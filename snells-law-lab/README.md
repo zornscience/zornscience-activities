@@ -1,5 +1,22 @@
 # Snell’s Law & Refraction
-Version: 1.1.3
+Version: 1.2.0
+
+## Lab check (1.2.0)
+
+Open **Lab check** below the optical bench and its readings, above "The physics behind the bench", for five questions a student answers while using the lab: Air into glass; Diamond bends the most; Matching indices; Critical angle, glass to air; and Glass in water. It is closed by default and outside the controls. Link straight to it with `?check=1`; it also works with `?lang=es` and `embed=1` (for example `?check=1&lang=es&embed=1`). The question content is built only when the section is opened.
+
+Each question's "Set up the lab" button does what the Try an investigation buttons do: it sets the block geometry, the Optical block and Surrounding medium menus (custom index fields hidden) and the angle of incidence, turns the laser on, turns on Show measurements, Protractor, Normal and Angles, snaps the protractor to the normal and zooms out. It never touches the investigation prompt or its buttons. The student then reads the Refraction θ₂ readout (or the Critical angle readout in question 4). A wrong pick shows that choice's own feedback, two misses offer Show me, and Previous, Next and Start over move through the questions. The score is the number right on the first try.
+
+When all five are done, the section shows the score in words ("4 of 5 right on the first try.") and an `SLC` completion code, for example `SLC-0378-SG02-2F0H-ECX` (4 of 5, one Show me). It is registry id 14, setting `Lab check`, slug `snells-law-lab`, in `../shared/zsa-codes.js`; the teacher checker shows the score and a 0 or 1 for each question. Standing Waves cannot use `SLC` and will register `STLC`.
+
+Files: `lab.js` answers a `zsa-snell:request-lab` event on the activity root with `setup({mode, block, surrounding, angle})` (mode is `slab` or `tir`; block and surrounding are the menu option values), `format` (one decimal and a degree sign, as the readouts are written) and `noRay`, the Refraction readout's own text past the critical angle in the page language. `data.js` holds the question data and every English sentence with its Mexican Spanish. `labcheck.js` reads `interfaceRay` and the indices from `physics.js` (through `zsa-snell:physics`) and fills every number from them, so the page source does not mark the right choice, then starts the shared runner (`../shared/zsa-labcheck.js`, with `../shared/zsa-codes.js` and `../shared/zsa-labcheck.css`). `values` and `resolve` are exported for Node, so `tests/unit/snells-labcheck.test.js` runs without a page. The mount is `#zsa-sl-check`.
+
+Decisions:
+- **Prefix `SLC`, registry id 14**, the next free id after Projectile Motion (13).
+- **Question 3's "zero" feedback** says the beam is not along the normal instead of naming the 45.0° the beam keeps, because naming it gives away the answer.
+- The Spanish is in the `es` table but has not been proofread by a native speaker.
+
+Version 1.2.0 adds the Lab check above. The science and the investigations are unchanged.
 
 Version 1.1.3 improves keyboard and screen reader access. Section headings are now level 2 (they jumped from the page's heading 1 to level 3), with the same look. Every focusable element, including summaries, text areas and custom controls, now shows the same visible focus ring (`shared/zsa-lab-a11y.css`), a blue ring with a white gap that reads on light and dark panels and in high contrast mode. `tests/e2e/labs-a11y.spec.js` now checks this lab in English and Mexican Spanish with axe-core, the Tab order, a visible focus indicator on every stop, names and states of custom controls, and text alternatives for drawings. The science, scoring and any completion code are unchanged.
 
@@ -29,4 +46,5 @@ Use `?lang=es` or the shared EN / ES header links. English is the fallback. All 
 
 ## Changelog
 
+- 1.2.0: Lab check with five questions and an `SLC` completion code (registry id 14), opened with `?check=1`. New `zsa-snell:request-lab` event, `labcheck.js`, and the shared runner loaded on the page.
 - 1.1.0: Mexican Spanish with `?lang=es` and the shared EN / ES header links.
