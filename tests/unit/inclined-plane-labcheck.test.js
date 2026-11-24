@@ -31,7 +31,7 @@ test("the lab hands the check its table, g, formatters and a setup that resets e
   ["angle", "surface", "mass"].forEach(function (id) { assert.ok(setup.indexOf("$('" + id + "').value=") >= 0, id); });
   assert.match(setup, /\$\('slow'\)\.checked=!!q\.slow;/);
   assert.match(setup, /\$\('forces'\)\.checked=true;\$\('components'\)\.checked=true;/);
-  assert.match(setup, /paused=false;\$\('pause'\)\.textContent=tr\('Pause'\);\$\('pause'\)\.setAttribute\('aria-pressed','false'\);setup\(\);$/, "clears Pause, then the lab's own setup()");
+  assert.match(setup, /massResumes=!!q\.massResumes;paused=false;\$\('pause'\)\.textContent=tr\('Pause'\);\$\('pause'\)\.setAttribute\('aria-pressed','false'\);setup\(\);$/, "clears Pause, then the lab's own setup()");
   // The readouts and formulas the adapter repeats (lab.js draw() and tick()).
   assert.match(source, /weight=mass\*G,N=weight\*c,down=weight\*sn,f=moving\?muk\*N:down/);
   assert.match(source, /a=moving&&!ended\?G\*\(sn-muk\*c\):0/);
@@ -66,7 +66,7 @@ test("ILC setups: the block is at rest, or sliding, as each question says", func
   var s = Object.fromEntries(data.questions.map(function (q) { return [q.id, q.setup]; }));
   assert.deepEqual(data.questions.map(function (q) { return [q.id, q.setup]; }), [
     ["normal", {angle: 10, surface: "wood", mass: 1, slow: false}], ["static", {angle: 20, surface: "wood", mass: 0.5, slow: false}],
-    ["surface", {angle: 30, surface: "wood", mass: 0.5, slow: false}], ["slide", {angle: 35, surface: "wood", mass: 0.5, slow: true}],
+    ["surface", {angle: 30, surface: "wood", mass: 0.5, slow: false}], ["slide", {angle: 35, surface: "wood", mass: 0.5, slow: true, massResumes: true}],
     ["mu", {angle: 25, surface: "felt", mass: 0.5, slow: false}]]);
   function slips(angle, surface) { var r = angle * Math.PI / 180; return Math.sin(r) > lab.surfaces[surface][0] * Math.cos(r) + 1e-10; }
   assert.equal(slips(10, "wood"), false); assert.equal(slips(20, "wood"), false);   // Q1 at 10 and 20 degrees, Q2: at rest
@@ -75,6 +75,8 @@ test("ILC setups: the block is at rest, or sliding, as each question says", func
   assert.equal(slips(s.mu.angle, "felt"), false);                                     // Q5 starts at rest
   // Slow motion is on only for question 4; every setup stays on the slider's 0.1 degree and 0.25 kg grid, in range.
   assert.deepEqual(data.questions.filter(function (q) { return q.setup.slow; }).map(function (q) { return q.id; }), ["slide"]);
+  // Only question 4 lets the mass slider clear a Pause.
+  assert.deepEqual(data.questions.filter(function (q) { return q.setup.massResumes; }).map(function (q) { return q.id; }), ["slide"]);
   data.questions.forEach(function (q) {
     assert.ok(q.setup.angle >= 0 && q.setup.angle <= 50 && q.setup.mass >= 0.25 && q.setup.mass <= 1.5 && q.setup.mass % 0.25 === 0, q.id);
     assert.ok(lab.surfaces[q.setup.surface], q.id);

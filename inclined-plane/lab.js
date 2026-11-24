@@ -8,7 +8,7 @@ const tr=(text,values)=>i18n?i18n.text(text,values):text.replace(/\{(\w+)\}/g,(m
 const surfaces={wood:[.45,.30],felt:[.65,.48],plastic:[.25,.16]},G=9.81;
 // The readout formatters: forces in N, accelerations in m/s² and speeds in m/s show two decimals, the angle one.
 const fixed2=x=>x.toFixed(2),fixed1=x=>x.toFixed(1);
-let theta=20,mass=.5,s=0,v=0,t=0,moving=false,ended=false,paused=false,last=0;
+let theta=20,mass=.5,s=0,v=0,t=0,moving=false,ended=false,paused=false,massResumes=false,last=0;
 function svg(tag,attrs,text){const n=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([k,x])=>n.setAttribute(k,x));if(text)n.textContent=text;return n;}
 for(let i=0;i<=120;i+=2){const x=-700+i/120*650;$('ruler').append(svg('path',{d:`M${x} 0v${i%10===0?-10:-5}`,stroke:'#54412e','stroke-width':1}));if(i%20===0)$('ruler').append(svg('text',{x,y:12,fill:'#3d3023','font-size':8,'text-anchor':'middle'},String(i)));}
 for(let a=0;a<=50;a+=5){let r=a*Math.PI/180;$('protractor').append(svg('path',{d:`M${870-82*Math.cos(r)} ${470-82*Math.sin(r)}L${870-(a%10===0?72:77)*Math.cos(r)} ${470-(a%10===0?72:77)*Math.sin(r)}`,stroke:'#c4d7df','stroke-width':1}));}
@@ -22,13 +22,17 @@ $('vectors').replaceChildren();if(!$('forces').checked||ended)return;const x=870
 arrow(x,y,N*sn*scale,-N*c*scale,'#74e5e6',`N ${fixed2(N)} N`);arrow(x,y,0,weight*scale,'#ff9aa5',`mg ${fixed2(weight)} N`);arrow(x,y,-f*c*scale,-f*sn*scale,'#ffd081',`${moving?'fₖ':'fₛ'} ${fixed2(f)} N`);
 if($('components').checked){arrow(x,y,down*c*scale,down*sn*scale,'#bac5ff','mg sin θ',true);arrow(x,y,-N*sn*scale,N*c*scale,'#bac5ff','mg cos θ',true);}}
 function tick(now){const dt=Math.min((now-last)/1000,.04)*($('slow').checked?.25:1);last=now;if(!paused&&!ended){const r=theta*Math.PI/180,[mus,muk]=surfaces[$('surface').value];if(!moving&&Math.sin(r)>mus*Math.cos(r)+1e-10)moving=true;if(moving){const a=G*(Math.sin(r)-muk*Math.cos(r));s+=v*dt+.5*a*dt*dt;v+=a*dt;t+=dt;if(s>=1.2){s=1.2;v=0;ended=true;}}}draw();requestAnimationFrame(tick);}
-['angle','mass','surface'].forEach(id=>$(id).addEventListener('input',setup));['forces','components','slow'].forEach(id=>$(id).addEventListener('change',draw));$('reset').addEventListener('click',setup);$('pause').addEventListener('click',()=>{paused=!paused;$('pause').textContent=tr(paused?'Resume':'Pause');$('pause').setAttribute('aria-pressed',String(paused));});// The lab check (labcheck.js) reaches the lab through this one-use event, never a global. setup() puts the controls in a
+function setPaused(p){paused=p;$('pause').textContent=tr(paused?'Resume':'Pause');$('pause').setAttribute('aria-pressed',String(paused));}
+// Only after the lab check's question 4 setup does the mass slider clear a Pause, so the heavier block slides again.
+$('mass').addEventListener('input',()=>{if(massResumes&&paused)setPaused(false);});
+['angle','mass','surface'].forEach(id=>$(id).addEventListener('input',setup));['forces','components','slow'].forEach(id=>$(id).addEventListener('change',draw));$('reset').addEventListener('click',setup);$('pause').addEventListener('click',()=>setPaused(!paused));// The lab check (labcheck.js) reaches the lab through this one-use event, never a global. setup() puts the controls in a
 // question's starting state: the Ramp angle slider (degrees), the Contact surface select, the Block + added mass slider
 // (kg) and Slow motion. It also leaves Show force arrows and Resolve gravity on and clears a Pause the student left on,
 // then calls the lab's own setup(), exactly what a slider input does: the block returns to the top and the readouts,
-// arrows and clock reset. It never makes the change the question asks for. surfaces is the lab's own [static, kinetic]
+// arrows and clock reset. It never makes the change the question asks for. massResumes (question 4 only) lets the mass
+// slider clear a Pause until the next setup. surfaces is the lab's own [static, kinetic]
 // table, g its 9.81 m/s², and format its readout formatters.
-function labSetup(q){$('angle').value=String(q.angle);$('surface').value=q.surface;$('mass').value=String(q.mass);$('slow').checked=!!q.slow;$('forces').checked=true;$('components').checked=true;paused=false;$('pause').textContent=tr('Pause');$('pause').setAttribute('aria-pressed','false');setup();}
+function labSetup(q){$('angle').value=String(q.angle);$('surface').value=q.surface;$('mass').value=String(q.mass);$('slow').checked=!!q.slow;$('forces').checked=true;$('components').checked=true;massResumes=!!q.massResumes;paused=false;$('pause').textContent=tr('Pause');$('pause').setAttribute('aria-pressed','false');setup();}
 if(root)root.addEventListener('zsa-ip:request-lab',e=>e.detail.receive({setup:labSetup,surfaces,g:G,format:{fixed2,fixed1}}));
 document.addEventListener('visibilitychange',()=>{last=performance.now();});setup();requestAnimationFrame(tick);
 }());

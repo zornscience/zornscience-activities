@@ -147,8 +147,12 @@ test("inclined plane lab check: question 4 reads 3.22 m/s² while sliding, befor
   await setUp(page); await expectStart(page, 3);
   await untilSliding(page);
   await expect(page.locator("#accel")).toHaveText("3.22 m/s²");
+  // The student pauses to read it. Moving the mass slider then clears Pause, so the heavier block slides again.
+  await page.locator("#pause").click();
+  await expect(page.locator("#pause")).toHaveText("Resume"); await expect(page.locator("#pause")).toHaveAttribute("aria-pressed", "true");
   await change(page, "#mass", "1.5");
   await expect(page.locator("#mass-value")).toHaveText("1.50 kg");
+  await expect(page.locator("#pause")).toHaveText("Pause"); await expect(page.locator("#pause")).toHaveAttribute("aria-pressed", "false");
   await untilSliding(page);
   await expect(page.locator("#accel")).toHaveText("3.22 m/s²");
   // Pausing freezes the readout the question asks for.
@@ -159,6 +163,24 @@ test("inclined plane lab check: question 4 reads 3.22 m/s² while sliding, befor
   await page.clock.runFor(6000);
   await expect(page.locator("#state")).toHaveText("END STOP"); await expect(page.locator("#accel")).toHaveText("0.00 m/s²");
   await expect(page.locator("#vectors")).toBeEmpty();
+});
+
+test("inclined plane lab check: the mass slider keeps a Pause without question 4's setup, and after another question's setup", async ({page, problems}) => {
+  void problems; await open(page, "");
+  async function pausedAfterMass(value) {
+    await page.locator("#pause").click();
+    await expect(page.locator("#pause")).toHaveText("Resume");
+    await change(page, "#mass", value);
+    await expect(page.locator("#pause")).toHaveText("Resume"); await expect(page.locator("#pause")).toHaveAttribute("aria-pressed", "true");
+    await page.locator("#pause").click();
+  }
+  // The lab on its own: unchanged, the mass slider leaves Pause on.
+  await pausedAfterMass("1");
+  // Question 4's setup, then question 5's: the mass slider leaves Pause on again.
+  await check(page).locator("summary").click();
+  for (var n = 0; n < 3; n++) await next(page);
+  await setUp(page); await next(page); await setUp(page); await expectStart(page, 4);
+  await pausedAfterMass("1.5");
 });
 
 test("inclined plane lab check: question 5 on felt, 33.0° holds and 33.1° slips", async ({page, problems}) => {
