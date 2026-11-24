@@ -37,8 +37,9 @@ async function model(page) {
 async function track(page, id) {
   return page.evaluate((id) => {
     var box = document.getElementById(id).parentNode.querySelector("[data-zsa-track]");
-    return {hidden: box.getAttribute("aria-hidden"), pips: [].map.call(box.querySelectorAll("[data-zsa-pip]"), (p) => p.getAttribute("data-zsa-pip") + (p.hasAttribute("data-zsa-review") ? " review" : "")),
-      steps: [].map.call(box.querySelectorAll("[data-zsa-step]"), (s) => s.getAttribute("data-zsa-step"))};
+    // The track holds the question pips, then the step bars; each says its state in data-state ("" reads as "empty").
+    function states(group) { return [].map.call(group.children, (p) => (p.getAttribute("data-state") || "empty") + (p.hasAttribute("data-zsa-review") ? " review" : "")); }
+    return {hidden: box.getAttribute("aria-hidden"), pips: states(box.children[0]), steps: states(box.children[1])};
   }, id);
 }
 function ionAnswers(e) { return [{valence: e.valence}, {direction: e.direction, count: e.moved}, {charge: e.charge}, {name: e.ion, gas: e.gas}]; }
@@ -81,8 +82,8 @@ test("Ion Charge Trainer: the track has a pip per element and a bar per step, an
   await open("ion-charge-trainer", {seed: 31});
   var t = await track(page, "zsa-ict-progress");
   expect(t.hidden).toBe("true");
-  expect(t.pips).toEqual(["current"].concat(Array(9).fill("todo")));
-  expect(t.steps).toEqual(["current", "todo", "todo", "todo"]);
+  expect(t.pips).toEqual(["current"].concat(Array(9).fill("empty")));
+  expect(t.steps).toEqual(["current", "empty", "empty", "empty"]);
   var st = await page.evaluate(() => window.__zsa.state());
   var e = ref.elements.find((x) => cap(x.name) === st.heading), a = ionAnswers(e);
   // Two wrong answers in step 1, then Show me: the element is missed and a review is added at the end.
@@ -90,9 +91,9 @@ test("Ion Charge Trainer: the track has a pip per element and a bar per step, an
   await choose(page, {valence: wrongs[0]}); await choose(page, {valence: wrongs[1]});
   await page.evaluate(() => window.__zsa.show());
   t = await track(page, "zsa-ict-progress");
-  expect(t.steps).toEqual(["done", "current", "todo", "todo"]);
+  expect(t.steps).toEqual(["done", "current", "empty", "empty"]);
   expect(t.pips.length).toBe(11);
-  expect(t.pips[10]).toBe("todo review");
+  expect(t.pips[10]).toBe("empty review");
   for (var s = 1; s < 4; s++) await choose(page, a[s]);
   t = await track(page, "zsa-ict-progress");
   expect(t.pips[0]).toBe("missed");
@@ -103,7 +104,7 @@ test("Ion Charge Trainer: the track has a pip per element and a bar per step, an
   for (s = 0; s < 4; s++) await choose(page, a[s]);
   await page.evaluate(() => window.__zsa.next());
   t = await track(page, "zsa-ict-progress");
-  expect(t.pips.slice(0, 3)).toEqual(["missed", "done", "current"]);
+  expect(t.pips.slice(0, 3)).toEqual(["missed", "correct", "current"]);
   expect(await page.locator("#zsa-ict-progress").textContent()).toBe("Element 3 of 11 · Step 1 of 4");
 });
 
@@ -117,9 +118,12 @@ test("Ion Charge Trainer: with reduced motion the model reaches the same states 
   var m = await model(page);
   expect(m.count).toEqual({lost: 2, full: 8});
   expect(m.label).toContain("Loses 2. 12 protons, 10 electrons. Electrons by level: 2, 8. Dashed circles: electrons lost.");
-  var motion = await page.evaluate(() => [].map.call(document.querySelectorAll('#zsa-ict-element [data-zsa-e], #zsa-ict-element [role="img"], #zsa-ict-work li'), (el) => getComputedStyle(el).animationName));
+  var motion = await page.evaluate(() => [].map.call(document.querySelectorAll('#zsa-ict-element [data-zsa-e], #zsa-ict-element [role="img"], #zsa-ict-work li, [data-zsa-track] [data-state]'), (el) => getComputedStyle(el).animationName));
   expect(motion.length).toBeGreaterThan(10);
   expect(motion.every((n) => n === "none")).toBe(true);
+  // The pips fill without a transition too, as on the practice pages.
+  var fill = await page.evaluate(() => [].map.call(document.querySelectorAll("[data-zsa-track] [data-state]"), (el) => getComputedStyle(el, "::after").transitionDuration));
+  expect(fill.every((d) => d === "0s")).toBe(true);
 });
 
 test("Ion Charge Trainer: a leaving electron ends invisible, so the picture is right whether or not its animation plays", async ({page, open}) => {
@@ -197,7 +201,7 @@ for (var [qid, relation] of [["radius-Na-Cl", "period"], ["ie-Be-Sr", "group"], 
       expect(label).toContain(winner.name + " has the " + (prop === "radius" ? "larger" : "higher") + " " + LABEL[prop] + ".");
       expect(label.endsWith("Circles drawn to scale by atomic radius.")).toBe(prop === "radius");
       var t = await track(page, "zsa-ptr-progress");
-      expect(t.pips).toEqual(["done"]);
+      expect(t.pips).toEqual(["correct"]);
       expect(t.steps).toEqual(["done", "done", "done"]);
     });
   })(qid, relation);

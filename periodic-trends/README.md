@@ -1,5 +1,5 @@
 # Periodic Trends Practice
-Version: 1.2.3
+Version: 1.2.4
 
 Version 1.2.3 redraws the question screen: the two elements as cards on a dark stage, the relation and the trend drawn on the table as the student answers, a progress track with pips, and short animations on right and missed answers. Questions, steps, feedback, hints, rounds, links and completion codes are unchanged (the code still records version 1.2). See "Question screen (1.2.3)" below.
 
@@ -114,7 +114,7 @@ A full mixed round (9 questions, all three trends) ends with a completion code u
 ## Question screen (1.2.3)
 - **Cards.** Each element has a card: symbol, atomic number and name. Step 1 adds its group and period (they are the answer to step 1, so they are not shown before). Step 3 fills a bar for the property on one scale per property (atomic radius to 220 pm, electronegativity to 4, first ionization energy to 2400 kJ/mol) with the value, outlines the winner in green and, for atomic radius only, redraws both atoms as circles to scale. Under the cards, a line says what the last step showed: "Both are in period 3.", "Atomic radius decreases from left to right", then "Sodium has the larger atomic radius". The stage is one picture for screen readers (`role="img"`), named with all of it.
 - **On the table.** After step 1 an outline goes around the shared row (same period) or column (same group); after step 2 a wedge lies along it, thin at the low end and wide where the property is larger. The overlay sits over the engine's table, is hidden from screen readers (the explanations say the same) and is redrawn when the table is.
-- **Progress track.** Pips for the questions of the round (green, amber after a miss or Show me, square for review) and bars for the three steps, under the progress line, which keeps its id and words.
+- **Progress track.** Pips for the questions of the round (the practice pages' pips since 1.2.4: filled blue, striped red after a miss or Show me, ringed when current, hollow for review) and bars for the three steps, under the progress line, which keeps its id and words.
 - **Animations.** The outline draws itself, the wedge and bars grow, the atoms swell to size; a right answer makes the stage glow and a miss nudges it. Nothing moves with reduced motion, and every state is drawn as it is.
 - **Phones.** Under 600 px the cards are one row of chips (atom, symbol, value) and their words stay in the picture's label; table cells are a little shorter, so the strip, the step and the table still fit at 360x640 and 390x664.
 
@@ -138,6 +138,8 @@ Button label: Open Periodic Trends Practice
 - Only Chromium was tested.
 
 ## Changelog
+1.2.4: The progress pips are now the question-set practice engine's pips (the AP Chemistry and Quantitative Skills sets): rounded bars that fill when done, striped red after a miss or Show me, a ringed and gently pulsing current question, hollow review items, in this page's blue. Step bars match them. No other change.
+
 1.2.3: Question screen redesign. Comparison cards with group and period after step 1 and property bars (and atoms to scale for atomic radius) after step 3; the shared row or column outlined on the table after step 1 and a trend wedge after step 2; a progress track; animations on right and missed answers, none with reduced motion. New words in `tools/build-data.js` and `tools/spanish.json` (`ui.visual`); `data.js` rebuilt. Shared `shared/zsa-track.js` and `shared/zsa-track.css`.
 
 1.2.0: Mexican Spanish with `?lang=es` or the EN / ES header links. Full Spanish sentence templates, Spanish element names and Spanish completion-code labels.

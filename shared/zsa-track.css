@@ -3,21 +3,26 @@
    decoration: the state it leads to is drawn already, and zsa-base.css turns animations off for reduced motion.
    Animations never fade text (axe would read its contrast mid-fade) and never move or resize a button. */
 
-/* Progress track: the sentence, then one pip per question and one bar per step. */
-.zsa-track {display:flex;flex-wrap:wrap;align-items:center;column-gap:12px;row-gap:2px;}
+/* Progress track: the sentence, then one pip per question and one bar per step. These are the question-set practice
+   engine's pips (shared/zsa-practice.css, "Session header"): the same height, rounding, fill, stripes, ring and
+   breathing, and the same data-state names. Only the color comes from the page: --zsa-track-accent is the trainers'
+   blue here and teal on practice pages. A missed pip is striped as well as red, so it differs without color; a review
+   item not yet reached is hollow. tests/unit/track-css.test.js keeps the two stylesheets in step. */
+.zsa-tracked {--zsa-track-accent:var(--zsa-blue); --zsa-track-current:#bfdbfe; --zsa-track-breathe:#dbeafe; --zsa-track-empty:#e1e9f1;
+  --zsa-track-red:#b91c1c;}
+.zsa-track {display:flex;flex-wrap:wrap;align-items:center;column-gap:12px;row-gap:4px;}
 .zsa-track .zsa-progress {margin:0;}
-.zsa-track-pips {display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;min-height:14px;}
-.zsa-track-items {display:flex;flex-wrap:wrap;align-items:center;gap:4px;}
-.zsa-track-pip {display:block;width:10px;height:10px;border-radius:50%;border:2px solid #94a3b8;background:var(--zsa-white);}
-.zsa-track-pip.is-review {border-radius:2px;}
-.zsa-track-pip.is-done {background:var(--zsa-success);border-color:var(--zsa-success);}
-.zsa-track-pip.is-missed {background:#d97706;border-color:#d97706;}
-.zsa-track-pip.is-current {width:12px;height:12px;border-color:var(--zsa-blue);background:#dbeafe;box-shadow:0 0 0 2px #bfdbfe;}
-.zsa-track-steps {display:flex;align-items:center;gap:3px;}
-.zsa-track-step {display:block;width:18px;height:6px;border-radius:var(--zsa-radius-pill);background:#cbd5e1;}
-.zsa-track-step.is-done {background:var(--zsa-blue);}
-.zsa-track-step.is-current {background:#93c5fd;box-shadow:inset 0 0 0 1.5px var(--zsa-blue);}
-.zsa-track-pip.is-fresh, .zsa-track-step.is-fresh {animation:zsa-track-pop .45s cubic-bezier(.34,1.56,.64,1);}
+.zsa-track-pips {flex:1 1 140px;display:flex;align-items:center;gap:4px 12px;min-width:0;min-height:14px;}
+.zsa-track-items {flex:1 1 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(8px,1fr));align-items:center;gap:5px;min-width:0;max-width:260px;}
+.zsa-track-steps {flex:none;display:grid;grid-auto-flow:column;grid-auto-columns:16px;align-items:center;gap:3px;}
+.zsa-track-pip, .zsa-track-step {position:relative;display:block;height:10px;border-radius:999px;background:var(--zsa-track-empty);overflow:hidden;}
+.zsa-track-pip::after, .zsa-track-step::after {content:"";position:absolute;inset:0;border-radius:inherit;transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.2,.7,.2,1);}
+.zsa-track-pip[data-state="current"] {background:var(--zsa-track-current);box-shadow:0 0 0 2px #fff, 0 0 0 4px var(--zsa-track-accent);animation:zsa-track-breathe 1.6s ease-in-out infinite;}
+.zsa-track-pip[data-state="correct"]::after, .zsa-track-step[data-state="done"]::after {transform:scaleX(1);background:var(--zsa-track-accent);}
+.zsa-track-pip[data-state="missed"]::after {transform:scaleX(1);background:repeating-linear-gradient(135deg,var(--zsa-track-red) 0 3px,#e0605f 3px 6px);}
+.zsa-track-pip[data-zsa-review][data-state=""] {background:transparent;box-shadow:inset 0 0 0 1.5px #94a3b8;}
+.zsa-track-step[data-state="current"] {background:var(--zsa-track-current);box-shadow:inset 0 0 0 1.5px var(--zsa-track-accent);}
+@keyframes zsa-track-breathe {50% {background-color:var(--zsa-track-breathe);}}
 
 /* The stage: a dark bench panel for the drawing, as in the virtual labs. */
 .zsa-stage {position:relative;border-radius:var(--zsa-radius-lg);background:linear-gradient(160deg,#16386f 0%,#0b2a5b 55%,#081f45 100%);color:#e2e8f0;box-shadow:inset 0 1px 0 rgba(255,255,255,.08);overflow:hidden;}
@@ -44,3 +49,9 @@
 @keyframes zsa-track-ring {0% {box-shadow:0 0 0 0 rgba(185,28,28,.55);} 100% {box-shadow:0 0 0 9px rgba(185,28,28,0);}}
 @keyframes zsa-track-slide {0% {transform:translateX(-8px);} 100% {transform:translateX(0);}}
 @keyframes zsa-track-glow {0% {box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 0 0 0 rgba(34,197,94,.7);} 100% {box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 0 0 14px rgba(34,197,94,0);}}
+
+/* Reduced motion: zsa-base.css stops animations and transitions on elements; this also stops them on the pips' fill
+   (a ::after), as zsa-practice.css does on practice pages. */
+@media(prefers-reduced-motion:reduce) {
+  .zsa-tracked *::before, .zsa-tracked *::after {animation:none!important;transition:none!important;}
+}
