@@ -1,2 +1,29 @@
 /* The logo and the EN / ES toggle share one row. */
 .zsa > header {display:flex; align-items:center; justify-content:space-between; gap:12px;}
+/* One card per lab, matching the cards on the Practice Activities index (../home.css). The whole card is the title link. */
+.zsa-lc-grid {list-style:none;margin:24px 0 16px;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px;}
+.zsa-lc-card {position:relative;display:flex;flex-direction:column;background:var(--zsa-white);border:1px solid var(--zsa-border);border-top:4px solid #0f766e;border-radius:var(--zsa-radius-lg);padding:16px 20px 18px;transition:box-shadow .15s ease,transform .15s ease,border-color .15s ease;}
+.zsa-lc-card:hover {box-shadow:var(--zsa-shadow-card);transform:translateY(-2px);border-color:var(--zsa-border-strong);border-top-color:#0f766e;}
+.zsa-lc-card:focus-within {outline:var(--zsa-focus-ring);outline-offset:var(--zsa-focus-offset);}
+.zsa-lc-art {display:block;width:100%;height:auto;max-height:140px;background:#ecfdf8;border-radius:var(--zsa-radius);margin-bottom:12px;}
+.zsa-lc-card h2 {font-size:1.25rem;line-height:1.3;margin:4px 0 8px;}
+.zsa-lc-card h2 a {color:var(--zsa-navy);text-decoration:none;}
+.zsa-lc-card h2 a::after {content:"";position:absolute;inset:0;border-radius:var(--zsa-radius-lg);}
+.zsa-lc-card h2 a:focus-visible {outline:none;}
+.zsa-lc-card:hover h2 a {color:var(--zsa-blue);text-decoration:underline;}
+.zsa-lc-card > p {margin:0 0 16px;font-size:var(--zsa-text-sm);line-height:1.55;}
+.zsa-lc-open {align-self:flex-start;display:inline-flex;align-items:center;min-height:var(--zsa-tap);margin-top:auto;padding-top:0;padding-bottom:0;}
+.zsa-lc-card:hover .zsa-lc-open {background:var(--zsa-navy);border-color:var(--zsa-navy);}
+/* Preview drawings: colors come from classes, since the page allows no inline styles. */
+.zsa-lc-box {fill:#ffffff;stroke:#0b2a5b;stroke-width:3;}
+.zsa-lc-mid {stroke:#c7d6ee;stroke-width:2;stroke-dasharray:4 4;}
+.zsa-lc-a circle {fill:#1d4ed8;}
+.zsa-lc-b circle {fill:#c2410c;}
+.zsa-lc-arrow,.zsa-lc-tick {fill:none;stroke:#334155;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+.zsa-lc-glass {fill:#ffffff;fill-opacity:.6;stroke:#0b2a5b;stroke-width:3;stroke-linejoin:round;stroke-linecap:round;}
+.zsa-lc-liquid {fill:#93c5fd;}
+.zsa-lc-tube {fill:#ffffff;stroke:#0b2a5b;stroke-width:3;}
+.zsa-lc-bulb {fill:#b91c1c;stroke:#0b2a5b;stroke-width:3;}
+.zsa-lc-merc {fill:#b91c1c;}
+.zsa-lc-heat {fill:none;stroke:#c2410c;stroke-width:3;stroke-linecap:round;}
+@media(prefers-reduced-motion:reduce) {.zsa-lc-card,.zsa-lc-card:hover {transition:none;transform:none;}}

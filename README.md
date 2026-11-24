@@ -110,7 +110,7 @@ snells-law-lab/            Snell’s Law & Refraction, v1.1.3 (laser through opt
 hookes-law-lab/            Hooke’s Law & Harmonic Motion, v1.3.0 (slotted masses on a spring, ruler extension and a live position graph; optional Lab check with an HLC completion code; English and Mexican Spanish)
 pendulum-lab/              The Simple Pendulum, v1.3.0 (mass, length and gravity on Earth, the Moon and Jupiter, with energy exchange; optional Lab check with a PLC completion code; English and Mexican Spanish)
 inclined-plane/            Inclined Plane & Friction, v1.2.1 (raise a ramp until the block slips, static and kinetic friction, live free body diagram; optional Lab check with an ILC completion code; English and Mexican Spanish)
-equilibrium-thermo-lab/   Compatibility chooser linking to the two standalone labs, v1.1.1 (English and Mexican Spanish)
+equilibrium-thermo-lab/   Compatibility chooser with a card for each of the two standalone labs, v1.2.0 (English and Mexican Spanish)
 check/                     completion code checker for teachers, v1.2.1 (linked under "For teachers")
 TEACHERS.md                assigning activities in Google Classroom and checking completion codes
 templates/starter/         starter template for a new activity (not linked from the site)

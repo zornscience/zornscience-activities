@@ -3841,3 +3841,7 @@ The virtual lab follows Style Kit 1.33 and the published Spanish procedure. The 
 | bar graph | gráfica de barras | For the graph on the paper worksheet. |
 
 This lab uses the existing terms *ensayo*, *vaso de precipitados*, *cronómetro*, *varilla de vidrio* and *azul de bromotimol* (AZB). The instructions identify AZB as the BTB on the English worksheet.
+
+## Chemistry lab chooser (equilibrium-thermo-lab 1.2.0)
+
+Open lab (button on each lab card) | Abrir laboratorio
