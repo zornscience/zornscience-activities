@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-  <meta name="zsa-version" content="1.2.1">
+  <meta name="zsa-version" content="1.2.2">
   <title>The Molar Mass Trap Lab | ZornScience</title>
 <meta name="description" content="Compare how four liquids spread on wax paper, time a falling steel shot, and mix liquid pairs to explain the Molar Mass Trap with evidence." data-zsa-es="Compara cómo se extienden cuatro líquidos en papel encerado, mide la caída de un perdigón y mezcla pares para explicar la trampa de la masa molar.">
 <link rel="canonical" href="https://activities.zornscience.org/molar-mass-trap-lab/">
@@ -12,24 +12,24 @@
 <link rel="alternate" hreflang="es" href="https://activities.zornscience.org/molar-mass-trap-lab/?lang=es">
 <link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/molar-mass-trap-lab/">
   <link rel="icon" href="../favicon.png" type="image/png">
-  <link rel="stylesheet" href="../shared/zsa-base.css?v=1.2.1">
-  <link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=1.2.1">
-  <link rel="stylesheet" href="../shared/zsa-header.css?v=1.2.1">
-  <link rel="stylesheet" href="lab.css?v=1.2.1">
-  <script src="../shared/zsa-embed.js?v=1.2.1" defer></script>
-  <script src="../shared/zsa-i18n.js?v=1.2.1" defer></script>
-  <script src="model.js?v=1.2.1" defer></script>
-  <script src="data.js?v=1.2.1" defer></script>
-  <script src="shot.js?v=1.2.1" defer></script>
-  <script src="mixing.js?v=1.2.1" defer></script>
-  <script src="lab.js?v=1.2.1" defer></script>
-<link rel="stylesheet" href="../shared/zsa-about.css?v=1.2.1"><script src="../shared/zsa-about.js?v=1.2.1" defer></script></head>
+  <link rel="stylesheet" href="../shared/zsa-base.css?v=1.2.2">
+  <link rel="stylesheet" href="../shared/zsa-lab-a11y.css?v=1.2.2">
+  <link rel="stylesheet" href="../shared/zsa-header.css?v=1.2.2">
+  <link rel="stylesheet" href="lab.css?v=1.2.2">
+  <script src="../shared/zsa-embed.js?v=1.2.2" defer></script>
+  <script src="../shared/zsa-i18n.js?v=1.2.2" defer></script>
+  <script src="model.js?v=1.2.2" defer></script>
+  <script src="data.js?v=1.2.2" defer></script>
+  <script src="shot.js?v=1.2.2" defer></script>
+  <script src="mixing.js?v=1.2.2" defer></script>
+  <script src="lab.js?v=1.2.2" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.2.2"><script src="../shared/zsa-about.js?v=1.2.2" defer></script></head>
 <body>
 <main class="zsa zsa-mmt" data-zsa-activity="molar-mass-trap-lab">
   <header data-zsa-header class="header">
     <div data-zsa-header-row>
       <div data-zsa-header-identity class="identity">
-        <a data-zsa-header-brand class="brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../ionic-reactions/zornscience-logo.png?v=1.2.1" width="34" height="33" alt=""></a>
+        <a data-zsa-header-brand class="brand" href="https://zornscience.org/" aria-label="ZornScience home" data-zsa-chrome><img src="../ionic-reactions/zornscience-logo.png?v=1.2.2" width="34" height="33" alt=""></a>
         <h1>The Molar Mass Trap Lab</h1>
       </div>
       <nav data-zsa-header-tools aria-label="Activity tools">
@@ -130,9 +130,9 @@
             <text x="109" y="229" class="zsa-mmt-scene-label" text-anchor="middle">15 cm × 15 cm</text>
           </svg>
 
-          <svg id="inspection" viewBox="0 0 420 238" role="img" aria-labelledby="inspection-title inspection-desc">
+          <svg id="inspection" viewBox="0 0 420 258" role="img" aria-labelledby="inspection-title inspection-desc">
             <title id="inspection-title">Puddle close-up and millimeter ruler</title>
-            <desc id="inspection-desc">Top and eye-level views of the selected box use the same scale. The ruler moves left and right. A fixed upright ruler in the eye-level view measures height.</desc>
+            <desc id="inspection-desc">The top view uses the same scale as the ruler, which moves left and right. The eye-level view is enlarged 2 times, and its fixed upright ruler measures height in millimeters.</desc>
             <defs>
               <linearGradient id="mmt-inspection-mat" x2="1" y2="1">
                 <stop stop-color="#2d4a5c"/><stop offset="1" stop-color="#142c3c"/>
@@ -150,25 +150,26 @@
                 <stop stop-color="#ffbb99"/><stop offset=".38" stop-color="#e66a54"/><stop offset="1" stop-color="#8b2f39"/>
               </radialGradient>
             </defs>
-            <rect width="420" height="238" rx="8" fill="url(#mmt-inspection-mat)"/>
+            <rect width="420" height="258" rx="8" fill="url(#mmt-inspection-mat)"/>
             <path d="M14 150h392M14 197h392" stroke="#7294a7" stroke-opacity=".24"/>
             <path d="M16 58v-6h7m381 6v-6h-7M16 131v6h7m381-6v6h-7" fill="none" stroke="#7b9eaf" stroke-opacity=".62"/>
             <text x="16" y="25" class="zsa-mmt-scene-label">Top view</text>
             <text x="16" y="218" class="zsa-mmt-scene-label">Eye-level view</text>
+            <text x="16" y="234" class="zsa-mmt-scene-note">Enlarged 2×</text>
             <g id="footprint" data-liquid="W" transform="translate(203 81)" visibility="hidden">
               <ellipse id="puddle-top" class="zsa-mmt-fluid"/>
               <ellipse id="puddle-glint" class="zsa-mmt-glint"/>
             </g>
             <path id="target-mark" d="M197 81h12m-6-6v12" stroke="#aac3d0" stroke-opacity=".8" fill="none"/>
             <ellipse id="falling-drop" class="zsa-mmt-fluid" data-liquid="W" cx="203" cy="26" rx="5" ry="7" visibility="hidden"/>
-            <path d="M139 229h128" stroke="#8e9d9a" stroke-width="1.5"/>
-            <g id="silhouette" data-liquid="W" transform="translate(203 229)" visibility="hidden">
+            <path d="M66 249H338" stroke="#8e9d9a" stroke-width="1.5"/>
+            <g id="silhouette" data-liquid="W" transform="translate(203 249)" visibility="hidden">
               <ellipse id="puddle-contact" cy="1" ry="1.8" fill="#101d28"/>
               <path id="puddle-side" class="zsa-mmt-fluid"/>
             </g>
             <path id="height-guide" stroke="#e9d999" stroke-dasharray="3 2" visibility="hidden"/>
-            <g id="height-ruler" transform="translate(300 229)" aria-hidden="true">
-              <rect x="-1" y="-32" width="21" height="34" rx="2" fill="url(#mmt-ruler-metal)" stroke="#f2e4a9"/>
+            <g id="height-ruler" transform="translate(350 249)" aria-hidden="true">
+              <rect x="-1" y="-52" width="23" height="57" rx="2" fill="url(#mmt-ruler-metal)" stroke="#f2e4a9"/>
               <g id="height-ruler-ticks"></g>
             </g>
             <g id="ruler" transform="translate(119 153)" aria-hidden="true">
@@ -218,7 +219,7 @@
           <svg id="shot-inspection" viewBox="0 0 420 238" role="img" aria-labelledby="shot-drawing-title shot-drawing-desc">
             <title id="shot-drawing-title">Steel shot equipment</title>
             <desc id="shot-drawing-desc">The selected sealed tube in close-up. The stopper and bottom are marked.</desc>
-            <rect width="420" height="238" rx="8" fill="url(#mmt-inspection-mat)"/>
+            <rect width="420" height="258" rx="8" fill="url(#mmt-inspection-mat)"/>
             <path d="M0 200h420v30q0 8-8 8H8q-8 0-8-8Z" fill="#172c3a"/>
             <path d="M0 200h420" stroke="#537485" stroke-opacity=".58"/>
             <text x="16" y="25" class="zsa-mmt-scene-label">Close-up</text>
