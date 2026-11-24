@@ -5,3 +5,33 @@ body{margin:0;background:#fff}.zsa-ek{max-width:1200px}.zsa-ek-tabs,.zsa-ek-acti
 .zsa-ek-layout{align-items:start}.zsa-ek-scroll{max-height:420px}
 
 .zsa-ek-legend{display:flex;flex-wrap:wrap;gap:8px 20px;margin:12px 0;font-size:16px}.zsa-ek-legend>span{display:inline-flex;align-items:center;gap:8px}.zsa-ek svg.zsa-ek-swatch{display:inline-block;width:32px;height:12px;flex:none}.zsa-ek-cell-expression,.zsa-ek-cell-value{display:block}.zsa-ek-cell-value{margin-top:6px;color:#475569}.zsa-ek-solve{border-top:1px solid #cbd5e1;margin-top:20px;padding-top:20px}.zsa-ek-shortcut{background:#eef4ff;padding:8px 12px;margin:16px 0;font-size:16px}.zsa-ek sub{font-size:.75em}
+
+/* Lab bench (1.1.0): the reaction vessel and the Q vs K balance, in the dark bench look of the other virtual labs. */
+.zsa-ek-bench{background:#183448;border:1px solid #274a60;border-radius:12px;overflow:hidden;margin:0 0 24px;color:#d5e5ee;box-shadow:inset 0 1px 0 #ffffff12}
+.zsa-ek-bench-top,.zsa-ek-bench-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px 12px;padding:10px 16px}
+.zsa-ek-bench-top{background:#213e52;min-height:60px}
+.zsa-ek-bench-caption{font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:#c3d8e4}
+.zsa-ek .zsa-ek-bench-motion{background:#183448;color:#eef6fb;border-color:#7d9db0;padding:8px 14px;min-height:44px;font-size:15px}
+.zsa-ek .zsa-ek-bench-motion:hover:not(:disabled){background:#2b5068;color:#fff}
+.zsa-ek-bench-stage{display:flex;flex-wrap:wrap;background:radial-gradient(ellipse at 40% 45%,#25485f,#163246 72%)}
+.zsa-ek-bench figure{margin:0;padding:14px 16px;min-width:0}
+.zsa-ek-bench-vessel{flex:4 1 300px}
+.zsa-ek-bench-balance{flex:2 1 230px;border-left:1px solid #2f5269}
+.zsa-ek .zsa-ek-bench svg text{fill:#d5e5ee;font-size:14px}
+.zsa-ek .zsa-ek-bench svg .zsa-ek-bench-title{font-size:15px;font-weight:600;fill:#eef6fb}
+.zsa-ek .zsa-ek-bench svg .zsa-ek-bench-weight{font-size:16px;font-weight:700;fill:#0b1f2e}
+.zsa-ek .zsa-ek-bench svg .zsa-ek-bench-value{font-size:14px;font-weight:600;fill:#eef6fb}
+.zsa-ek .zsa-ek-bench svg .zsa-ek-bench-side{font-size:13px;fill:#c3d8e4}
+.zsa-ek .zsa-ek-bench svg .zsa-ek-bench-mystery{font-size:34px;font-weight:700;fill:#ffd27a}
+.zsa-ek .zsa-ek-bench svg .zsa-ek-bench-solid{font-size:13px;fill:#f0ebe0}
+.zsa-ek-bench-key{list-style:none;display:flex;flex-wrap:wrap;gap:6px 18px;margin:10px 0 0;padding:0;font-size:15px;color:#e3eef4}
+.zsa-ek-bench-key li{display:inline-flex;align-items:center;gap:6px}
+.zsa-ek svg.zsa-ek-bench-mark{width:20px;height:20px;flex:none}
+.zsa-ek-bench-verdict{margin:6px 0 4px;font-size:16px;font-weight:600;color:#fff;min-height:1.5em}
+.zsa-ek-bench-note{margin:0;font-size:14px;color:#c3d8e4}
+.zsa-ek-bench-bottom{background:#122636;border-top:1px solid #395364;font-size:14px;color:#c3d8e4;min-height:44px}
+.zsa-ek-bench-status{color:#b8f0d2;font-weight:600}
+@media(max-width:560px){.zsa-ek-bench-balance{border-left:0;border-top:1px solid #2f5269}.zsa-ek-bench figure{padding:10px}.zsa-ek-bench-caption{font-size:12px}}
+@media(forced-colors:active){.zsa-ek-bench{border:1px solid CanvasText}}
+@media print{.zsa-ek-bench{print-color-adjust:exact;-webkit-print-color-adjust:exact}.zsa-ek-bench-motion{display:none}}
+.zsa-ek .zsa-ek-bench-motion[hidden]{display:none}

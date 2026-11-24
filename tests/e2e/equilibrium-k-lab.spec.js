@@ -67,3 +67,62 @@ test('lesson notation, round ticks and color swatches are rendered without a fal
  await page.locator('#reaction').selectOption('nh3');await expect(page.locator('#panel-explore .zsa-ek-equation').last()).toHaveText('Kc = [NH₃]² / [N₂][H₂]³');await page.locator('#reaction').selectOption('ab');await expect(page.locator('#panel-explore .zsa-ek-equation').last()).toHaveText('Kc = [B] / [A]');
  await page.locator('#reaction').selectOption('caco3');const expression=page.locator('#panel-explore .zsa-ek-equation').last();await expect(expression).toHaveText('Kp = PCO₂');await expect(expression.locator('sub')).toHaveText('CO₂');await expect(expression).not.toContainText('/');
 });
+// Lab bench (1.1.0): the reaction vessel follows the displayed mixture, and the Q vs K balance tips toward the shift.
+test('bench vessel counts follow the run and the balance levels at equilibrium',async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/equilibrium-k-lab/?rxn=hi&c0=0.2&c1=0.2&c2=0');
+ const vessel=page.locator('#bench-vessel'),balance=page.locator('#bench-balance');
+ await expect(vessel).toHaveAttribute('aria-label','Reaction vessel: H₂: 20 particles; I₂: 20 particles; HI: 0 particles. 1 particle = 0.01 M.');
+ await expect(balance).toHaveAttribute('aria-label','Q vs K balance: Q = 0; Kc = 49.0. Q < K: shift right.');
+ await expect(page.locator('.zsa-ek-bench-status')).toHaveText('Ready. Press Run.');
+ expect(await page.locator('#bench-balance g').first().getAttribute('transform')).toMatch(/^rotate\(16\.00 /);
+ await expect(page.locator('#bench-motion')).toBeHidden();
+ await page.locator('#run').click();await expect(page.locator('#data-table tbody tr')).toHaveCount(81,{timeout:20000});
+ // 0.0444 M and 0.311 M at 0.01 M per particle.
+ await expect(vessel).toHaveAttribute('aria-label','Reaction vessel: H₂: 4 particles; I₂: 4 particles; HI: 31 particles. 1 particle = 0.01 M.');
+ await expect(page.locator('#bench-vessel g g')).toHaveCount(39);
+ await expect(page.locator('.zsa-ek-bench-verdict')).toHaveText('Q = K: at equilibrium.');
+ await expect(page.locator('.zsa-ek-bench-status')).toHaveText('Equilibrium reached. Forward and reverse reactions continue at equal rates.');
+ expect(await page.locator('#bench-balance g').first().getAttribute('transform')).toMatch(/^rotate\(0\.00 /);
+ // Solids sit in the vessel as an excess phase and are not counted as particles.
+ await page.locator('#reaction').selectOption('caco3');await expect(vessel).toHaveAttribute('aria-label',/^Reaction vessel: CO₂: 0 particles\. 1 particle = 0\.005 atm\.$/);await expect(page.locator('#bench-vessel')).toContainText('CaCO₃(s) + CaO(s): excess solid');
+ // A tiny amount still says it is there.
+ await page.goto('/equilibrium-k-lab/?rxn=ab&k=0.0001&c0=1&c1=0');await page.locator('#run').click();await expect(page.locator('#data-table tbody tr')).toHaveCount(81,{timeout:20000});await expect(vessel).toHaveAttribute('aria-label',/B: fewer than 1 particle/);
+});
+test('bench balance stays level until the shift is revealed, then tips toward it',async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/equilibrium-k-lab/?mode=qk&rxn=n2o4&k=0.008&c0=0.2&c1=0.04');
+ const beam=page.locator('#bench-balance g').first();
+ await expect(page.locator('.zsa-ek-bench-verdict')).toHaveText('Predict the shift, then reveal it.');expect(await beam.getAttribute('transform')).toMatch(/^rotate\(0\.00 /);
+ await page.getByRole('button',{name:'Halve volume',exact:true}).click();await page.locator('#reveal').click();
+ await expect(page.locator('.zsa-ek-bench-verdict')).toHaveText('Q > K: shift left.');expect(Number((await beam.getAttribute('transform')).match(/rotate\(([-\d.]+)/)[1])).toBeLessThan(-1);
+ await expect(page.locator('#bench-balance')).toHaveAttribute('aria-label','Q vs K balance: Q = 0.0160; Kc = 0.00800. Q > K: shift left.');
+ for(const tab of ['ice','rules','ksp']){await page.locator('#tab-'+tab).click();await expect(page.locator('.zsa-ek-bench')).toHaveCount(0);}
+});
+test.describe('with motion',()=>{
+ test('particles animate with the run, motion can be paused, and the counts match the curves',async({page})=>{
+  const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  await page.emulateMedia({reducedMotion:'no-preference'});await page.goto('/equilibrium-k-lab/?rxn=hi&c0=0.2&c1=0.2&c2=0');
+  const motion=page.locator('#bench-motion');await expect(motion).toHaveText('Pause motion');await expect(motion).toHaveAttribute('aria-pressed','false');
+  const first=await page.locator('#bench-vessel g g').first().getAttribute('transform');await page.waitForTimeout(300);
+  expect(await page.locator('#bench-vessel g g').first().getAttribute('transform'),'still before Run').toBe(first);
+  await page.locator('#run').click();await expect(page.locator('.zsa-ek-bench-status')).toHaveText(/^Step \d+ of 80$/);
+  const moving=await page.locator('#bench-vessel g g').first().getAttribute('transform');await page.waitForTimeout(200);
+  expect(await page.locator('#bench-vessel g g').first().getAttribute('transform'),'moving during the run').not.toBe(moving);
+  await expect(page.locator('#data-table tbody tr')).toHaveCount(81,{timeout:20000});
+  const last=(await page.locator('#data-table tbody tr').last().locator('td').allInnerTexts()).slice(0,3).map(Number);
+  await expect(page.locator('#bench-vessel')).toHaveAttribute('aria-label','Reaction vessel: H₂: '+Math.round(last[0]/.01)+' particles; I₂: '+Math.round(last[1]/.01)+' particles; HI: '+Math.round(last[2]/.01)+' particles. 1 particle = 0.01 M.');
+  await motion.click();await expect(motion).toHaveText('Play motion');await expect(motion).toHaveAttribute('aria-pressed','true');
+  await page.waitForTimeout(100);const paused=await page.locator('#bench-vessel g g').first().getAttribute('transform');await page.waitForTimeout(300);
+  expect(await page.locator('#bench-vessel g g').first().getAttribute('transform'),'still while paused').toBe(paused);
+  await motion.click();await expect(motion).toHaveText('Pause motion');
+  expect(errors).toEqual([]);
+ });
+});
+test('bench text in Mexican Spanish',async({page})=>{
+ await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/equilibrium-k-lab/?rxn=hi&lang=es');
+ await expect(page.locator('.zsa-ek-bench-caption')).toHaveText('Recipiente de reacción sellado');
+ await expect(page.locator('#bench-vessel')).toHaveAttribute('aria-label','Recipiente de reacción: H₂: 20 partículas; I₂: 20 partículas; HI: 0 partículas. 1 partícula = 0.01 M.');
+ await expect(page.locator('#bench-balance')).toHaveAttribute('aria-label','Balanza Q contra K: Q = 0; Kc = 49.0. Q < K: desplazamiento a la derecha.');
+ await expect(page.locator('.zsa-ek-bench')).not.toContainText(/Reactants|Products|particle|Press Run|balance/);
+ await page.locator('#run').click();await expect(page.locator('#data-table tbody tr')).toHaveCount(81,{timeout:20000});
+ await expect(page.locator('.zsa-ek-bench-status')).toHaveText('Se alcanzó el equilibrio. Las reacciones directa e inversa continúan con la misma velocidad.');
+});

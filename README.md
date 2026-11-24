@@ -101,7 +101,7 @@ net-ionic-lab/             Net Ionic Reactions Lab, v1.1.3 (ten reagent pairs: p
 flame-test-lab/            Virtual Flame Test Lab, v1.1.3 (eight known metal salts and an unknown in a Bunsen burner; English and Mexican Spanish)
 gravimetric-lab/           Gravimetric Analysis, v1.1.3 (precipitate, filter, wash and dry calcium carbonate to constant mass; English and Mexican Spanish)
 electrochemistry-lab/      Galvanic & Electrolytic Cell Builder, v1.4.3 (half-cells, salt bridge, voltmeter, electron flow and standard cell potentials; English and Mexican Spanish)
-equilibrium-k-lab/         Equilibrium Constant Lab, v1.0.4 (K expressions, Q versus K, ICE and RICE tables, K rules, Ksp and the common-ion effect; English and Mexican Spanish)
+equilibrium-k-lab/         Equilibrium Constant Lab, v1.1.0 (a reaction vessel whose particles convert as the run plays, a Q versus K balance, K expressions, Q versus K, ICE and RICE tables, K rules, Ksp and the common-ion effect; English and Mexican Spanish)
 solutions-lab/             Solutions Lab, v1.0.5 (make solutions in a volumetric flask, dilute stock solutions and read solubility curves; English and Mexican Spanish)
 faraday-lab/               Faraday’s Law · Magnet Drop, v1.2.3 (realistic tube apparatus, free-fall comparison, eddy currents, induced fields, pause and slow motion; no data recording; English and Mexican Spanish)
 equipotential-lab/         Equipotential & Electric Field Mapping, v1.2.3 (point charges, a voltage probe, equipotential lines and field vectors; English and Mexican Spanish)

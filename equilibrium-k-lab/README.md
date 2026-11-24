@@ -1,6 +1,8 @@
 # Equilibrium Constant Lab
 
-Version: 1.0.4
+Version: 1.1.0
+
+Version 1.1.0 adds a lab bench to Explore K and Q vs K, in the dark bench look of the other virtual labs. A sealed reaction vessel shows the displayed mixture as particles (1, 2 or 5 times a power of ten per particle, chosen so the mixture and its equilibrium endpoint hold at most about 48 particles, and kept for the whole run). Each Run step converts particles from reactant to product colors, or back, so the vessel follows the concentration curves and the Data table step by step. At equilibrium, one particle reacts forward while another reacts back, so the counts hold while the reactions continue. Each species has its own mark as well as its color (plain, center dot, ring, bar). Pure solids sit at the bottom as an excess phase and are never counted. A Q vs K balance holds Q on the left pan and K on the right: the heavier side sinks, so the beam tips toward the direction of shift (Q < K tips right, toward products) by up to 16 degrees on a log scale, and levels at Q = K. In Q vs K, the beam stays level with a question mark until the shift is revealed. The vessel and the balance have text alternatives that give the particle counts, the particle size, Q, K and the direction, and a Pause motion button stops the movement. Nothing moves until the student runs or changes the mixture, and motion stops 8 seconds after the last change. With reduced motion the vessel and balance are drawn still, with the same counts and tilt and no Pause motion button. The chemistry, curves, data table, Copy data and Download CSV, tabs and the other modes are unchanged.
 
 Version 1.0.4 improves keyboard and screen reader access. Every focusable element, including summaries, text areas and custom controls, now shows the same visible focus ring (`shared/zsa-lab-a11y.css`), a blue ring with a white gap that reads on light and dark panels and in high contrast mode. `tests/e2e/labs-a11y.spec.js` now checks this lab in English and Mexican Spanish with axe-core, the Tab order, a visible focus indicator on every stop, names and states of custom controls, and text alternatives for drawings. The science, scoring and any completion code are unchanged.
 
@@ -15,6 +17,7 @@ Open `/equilibrium-k-lab/`. This static activity teaches AP Chemistry Unit 7.1 t
 - `index.html`: shared header, instruction and Share dialogs, footer, CSP and mode panels.
 - `chem.js`: DOM-independent CommonJS model and `zsa-ek:request-model` browser event API.
 - `lab.js`: controls, accessible tables and SVGs, URL settings, data exports.
+- `bench.js`: the reaction vessel and the Q vs K balance for Explore K and Q vs K (`zsa-ek:request-bench` event).
 - `data.js`: complete Mexican Spanish dictionary using shared `zsa-i18n`.
 - `lab.css`: scoped responsive layout and visible focus.
 - `README.md`, `TESTING.md`: usage, model assumptions and verification.
