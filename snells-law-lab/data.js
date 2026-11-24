@@ -6,7 +6,6 @@
   if (!root) return;
   var i18n;
   root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail:{receive:function (api) { i18n = api; }}}));
-  if (!i18n) return;
   var copy = {title:"Snell’s Law & Refraction", es:{
   // Header, instructions and share
   "Snell’s Law & Refraction": "Ley de Snell y refracción",
@@ -151,10 +150,148 @@
   "The rectangular block traces the primary ray through each face, including side exits and internal reflections. A faint ray shows reflection at the first interface. The semicircular block uses radial entry so its curved face does not change the incidence angle at the flat face. Water is an ideal water cell; the same geometry is used for the virtual diamond block.": "El bloque rectangular sigue el rayo principal a través de cada cara, incluidas las salidas laterales y las reflexiones internas. Un rayo tenue muestra la reflexión en la primera interfaz. El bloque semicircular usa entrada radial, así que su cara curva no cambia el ángulo de incidencia en la cara plana. El agua es una celda de agua ideal; la misma forma se usa para el bloque virtual de diamante.",
   "Indices are approximate values for red light: air 1.000, water 1.333, acrylic 1.490, glass 1.500, diamond 2.417. The model uses uniform, lossless, isotropic materials and a fixed 650 nm laser. Beam width, brightness and equipment proportions are illustrative; secondary reflections, dispersion and evanescent fields are omitted. Arrowheads indicate propagation direction. The dashed secondary ray is reflected light; the solid outgoing ray is transmitted light. At the critical angle the surface ray shows the limiting direction, not transmitted power.": "Los índices son valores aproximados para luz roja: aire 1.000, agua 1.333, acrílico 1.490, vidrio 1.500, diamante 2.417. El modelo usa materiales uniformes, sin pérdidas e isótropos, y un láser fijo de 650 nm. El ancho del haz, el brillo y las proporciones del equipo son ilustrativos; se omiten las reflexiones secundarias, la dispersión y los campos evanescentes. Las puntas de flecha indican la dirección de propagación. El rayo secundario punteado es luz reflejada; el rayo saliente continuo es luz transmitida. En el ángulo crítico, el rayo sobre la superficie muestra la dirección límite, no la potencia transmitida.",
   "ZornScience · Explore. Observe. Explain.": "ZornScience · Explora. Observa. Explica.",
-  "Virtual lab · No data entry or saving": "Laboratorio virtual · Sin captura ni guardado de datos"
+  "Virtual lab · No data entry or saving": "Laboratorio virtual · Sin captura ni guardado de datos",
+  // Lab check: the shared labels, as in the Gas Laws and KMT Lab
+  "Lab check": "Comprobación del laboratorio",
+  "Question {current} of {total}": "Pregunta {current} de {total}",
+  "Set up the lab": "Preparar el laboratorio",
+  "The lab is set up. Follow the question and use the lab controls.": "El laboratorio está listo. Sigue la pregunta y usa los controles del laboratorio.",
+  "Check": "Comprobar",
+  "Show me": "Muéstrame",
+  "Previous": "Anterior",
+  "Next": "Siguiente",
+  "Start over": "Empezar de nuevo",
+  "Lab check started over. All answers are cleared.": "La comprobación del laboratorio empezó de nuevo. Se borraron todas las respuestas.",
+  "Correct answer": "Respuesta correcta",
+  "Correct. {explanation}": "Correcto. {explanation}",
+  "{feedback} Try again.": "{feedback} Inténtalo de nuevo.",
+  "Answer shown. {explanation}": "Respuesta mostrada. {explanation}",
+  "{score} of {total} right on the first try.": "{score} de {total} correctas al primer intento.",
+  "Completion code": "Código de finalización",
+  "Paste this code into your Google Classroom assignment.": "Pega este código en tu tarea de Google Classroom.",
+  // Lab check, question 1
+  "Air into glass": "Del aire al vidrio",
+  "Set up the lab. The laser enters the glass block at {angle}. What does the Refraction θ₂ readout show?": "Prepara el laboratorio. El láser entra al bloque de vidrio a {angle}. ¿Qué indica la lectura Refracción θ₂?",
+  "Light does bend when it goes from air into glass, because glass has a higher index. Read the Refraction θ₂ readout.": "La luz sí se desvía al pasar del aire al vidrio, porque el vidrio tiene un índice mayor. Lee la lectura Refracción θ₂.",
+  "That angle is measured from the surface. Snell's law uses the angle from the dashed normal. Check where the zero line of the protractor sits.": "Ese ángulo se mide desde la superficie. La ley de Snell usa el ángulo desde la normal punteada. Revisa dónde queda la línea de cero del transportador.",
+  "Snell's law uses the sines of the angles, not the angles themselves. Dividing {angle} by the index does not work.": "La ley de Snell usa los senos de los ángulos, no los ángulos mismos. Dividir {angle} entre el índice no funciona.",
+  "Light slows down in glass (n = {n2}) and bends toward the normal. {n1} × sin {angle} = {n2} × sin θ₂ gives θ₂ = {refraction}, smaller than the incidence angle.": "La luz se frena en el vidrio (n = {n2}) y se desvía hacia la normal. {n1} × sen {angle} = {n2} × sen θ₂ da θ₂ = {refraction}, menor que el ángulo de incidencia.",
+  // Lab check, question 2
+  "Diamond bends the most": "El diamante desvía más",
+  "Set up the lab with the diamond block. What does the Refraction θ₂ readout show?": "Prepara el laboratorio con el bloque de diamante. ¿Qué indica la lectura Refracción θ₂?",
+  "That is the angle for a glass block at {angle}. Check that the Optical block menu says Diamond.": "Ese es el ángulo para un bloque de vidrio a {angle}. Revisa que el menú Bloque óptico diga Diamante.",
+  "Snell's law uses the sines of the angles, not the angles themselves. Dividing {angle} by the index only comes close by luck.": "La ley de Snell usa los senos de los ángulos, no los ángulos mismos. Dividir {angle} entre el índice solo se acerca por casualidad.",
+  "Diamond has a very high index, so it bends light a lot. Read the Refraction θ₂ readout.": "El diamante tiene un índice muy alto, así que desvía mucho la luz. Lee la lectura Refracción θ₂.",
+  "Diamond has n = {n2}, so light travels slowest in it (v = c / n = {v}) and bends the most. {n1} × sin {angle} = {n2} × sin θ₂ gives θ₂ = {refraction}, compared with {glass} for glass.": "El diamante tiene n = {n2}, así que la luz viaja más despacio en él (v = c / n = {v}) y se desvía más. {n1} × sen {angle} = {n2} × sen θ₂ da θ₂ = {refraction}, frente a {glass} en el vidrio.",
+  // Lab check, question 3
+  "Matching indices": "Índices iguales",
+  "Set up the lab. The glass block sits in glass surroundings. What does the Refraction θ₂ readout show?": "Prepara el laboratorio. El bloque de vidrio está rodeado de vidrio. ¿Qué indica la lectura Refracción θ₂?",
+  "That is the angle for air into glass. Here the block and its surroundings are both glass. Check the Surrounding medium menu.": "Ese es el ángulo del aire al vidrio. Aquí el bloque y lo que lo rodea son los dos de vidrio. Revisa el menú Medio que lo rodea.",
+  "A beam along the normal goes straight through, but this beam is not along the normal. Compare the two indices at the boundary, then read the Refraction θ₂ readout.": "Un haz a lo largo de la normal pasa derecho, pero este haz no va a lo largo de la normal. Compara los dos índices en la frontera y luego lee la lectura Refracción θ₂.",
+  "Do not halve the angle. Snell's law uses sines: n₁ sin θ₁ = n₂ sin θ₂.": "No dividas el ángulo a la mitad. La ley de Snell usa senos: n₁ sen θ₁ = n₂ sen θ₂.",
+  "The block and its surroundings are both glass, so n₁ = n₂ = {n1}, and sin θ₂ = sin θ₁. The beam does not bend: θ₂ = {refraction}. Light changes direction only when its speed changes at a boundary.": "El bloque y lo que lo rodea son los dos de vidrio, así que n₁ = n₂ = {n1} y sen θ₂ = sen θ₁. El haz no se desvía: θ₂ = {refraction}. La luz cambia de dirección solo cuando su rapidez cambia en una frontera.",
+  // Lab check, question 4
+  "Critical angle, glass to air": "Ángulo crítico, del vidrio al aire",
+  "Set up the lab with the semicircular glass block. Which value does the Critical angle readout show?": "Prepara el laboratorio con el bloque semicircular de vidrio. ¿Qué valor indica la lectura Ángulo crítico?",
+  "That is the Refraction θ₂ readout at {angle}. The question asks for the Critical angle readout.": "Esa es la lectura Refracción θ₂ a {angle}. La pregunta pide la lectura Ángulo crítico.",
+  "The critical angle is not 90° minus the angle. Use sin θc = n₂ / n₁.": "El ángulo crítico no es 90° menos el ángulo. Usa sen θc = n₂ / n₁.",
+  "sin θc = n₂ / n₁ = {n2} / {n1}. Take the inverse sine, not the inverse tangent.": "sen θc = n₂ / n₁ = {n2} / {n1}. Usa el seno inverso, no la tangente inversa.",
+  "sin θc = n₂ / n₁ = {n2} / {n1}, so θc = {critical}. At {angle} the beam still leaves the glass, at {refraction}, bending away from the normal. Past {critical} all of the light reflects.": "sen θc = n₂ / n₁ = {n2} / {n1}, así que θc = {critical}. A {angle} el haz todavía sale del vidrio, a {refraction}, desviándose lejos de la normal. Después de {critical} toda la luz se refleja.",
+  // Lab check, question 5
+  "Glass in water": "Vidrio en agua",
+  "Set up the lab. The glass is now surrounded by water, and the laser is at {angle}. What does the Refraction θ₂ readout show?": "Prepara el laboratorio. Ahora el vidrio está rodeado de agua y el láser está a {angle}. ¿Qué indica la lectura Refracción θ₂?",
+  "That is the critical angle for glass to water, read from the other readout. The laser is at {angle}, which is past it.": "Ese es el ángulo crítico del vidrio al agua, leído en la otra lectura. El láser está a {angle}, que ya lo pasó.",
+  "The ray runs along the surface only at exactly the critical angle. Past it, no ray crosses.": "El rayo corre a lo largo de la superficie solo en el ángulo crítico exacto. Después de él, ningún rayo cruza.",
+  "That is the critical angle for glass to air. Water's index is closer to glass, so this critical angle is larger.": "Ese es el ángulo crítico del vidrio al aire. El índice del agua está más cerca del del vidrio, así que este ángulo crítico es mayor.",
+  "From glass (n₁ = {n1}) into water (n₂ = {n2}), sin θc = {n2} / {n1}, so θc = {critical}. The laser at {angle} is past it, so all the light reflects. Glass to air has a smaller critical angle, {airCritical}, because air's index is further from glass.": "Del vidrio (n₁ = {n1}) al agua (n₂ = {n2}), sen θc = {n2} / {n1}, así que θc = {critical}. El láser a {angle} ya lo pasó, así que toda la luz se refleja. Del vidrio al aire el ángulo crítico es menor, {airCritical}, porque el índice del aire está más lejos del del vidrio."
 }};
-  i18n.configure(copy);
-  if (i18n.lang !== "es") return;
+  if (i18n) i18n.configure(copy);
+  // Lab check (labcheck.js and ../shared/zsa-labcheck.js). Each choice is [value, label, feedback key]; the right
+  // choice has a null key. Every number in braces is filled in by labcheck.js from the lab's own physics (physics.js
+  // interfaceRay and its indices), so no answer is written here. setup is the starting state: mode (slab, the
+  // Rectangular block, or tir, the Semicircular block), block and surrounding (the Optical block and Surrounding
+  // medium option values) and angle (the angle of incidence in degrees). The wrong choices are the slips named in the
+  // feedback: the angle from the surface, dividing the angle by the index, the wrong block, or the wrong readout.
+  var check = {
+    labels: {
+      title: "Lab check",
+      progress: "Question {current} of {total}",
+      setupButton: "Set up the lab",
+      setupDone: "The lab is set up. Follow the question and use the lab controls.",
+      check: "Check",
+      show: "Show me",
+      previous: "Previous",
+      next: "Next",
+      restart: "Start over",
+      restarted: "Lab check started over. All answers are cleared.",
+      correctChoice: "Correct answer",
+      correct: "Correct. {explanation}",
+      retry: "{feedback} Try again.",
+      shown: "Answer shown. {explanation}",
+      score: "{score} of {total} right on the first try.",
+      completion: "Completion code",
+      codeNote: "Paste this code into your Google Classroom assignment."
+    },
+    questions: [
+      {id: "bend", title: "Air into glass", setup: {mode: "slab", block: "glass", surrounding: "air", angle: 45},
+        question: "Set up the lab. The laser enters the glass block at {angle}. What does the Refraction θ₂ readout show?",
+        choices: [["right", "{refraction}", null], ["same", "{angle}", "same"], ["surface", "{surface}", "surface"], ["divide", "{divide}", "divide"]],
+        feedback: {
+          same: "Light does bend when it goes from air into glass, because glass has a higher index. Read the Refraction θ₂ readout.",
+          surface: "That angle is measured from the surface. Snell's law uses the angle from the dashed normal. Check where the zero line of the protractor sits.",
+          divide: "Snell's law uses the sines of the angles, not the angles themselves. Dividing {angle} by the index does not work."
+        },
+        explanation: "Light slows down in glass (n = {n2}) and bends toward the normal. {n1} × sin {angle} = {n2} × sin θ₂ gives θ₂ = {refraction}, smaller than the incidence angle."},
+      {id: "diamond", title: "Diamond bends the most", setup: {mode: "slab", block: "diamond", surrounding: "air", angle: 40},
+        question: "Set up the lab with the diamond block. What does the Refraction θ₂ readout show?",
+        choices: [["right", "{refraction}", null], ["glass", "{glass}", "glass"], ["divide", "{divide}", "divide"], ["same", "{angle}", "same"]],
+        feedback: {
+          glass: "That is the angle for a glass block at {angle}. Check that the Optical block menu says Diamond.",
+          divide: "Snell's law uses the sines of the angles, not the angles themselves. Dividing {angle} by the index only comes close by luck.",
+          same: "Diamond has a very high index, so it bends light a lot. Read the Refraction θ₂ readout."
+        },
+        explanation: "Diamond has n = {n2}, so light travels slowest in it (v = c / n = {v}) and bends the most. {n1} × sin {angle} = {n2} × sin θ₂ gives θ₂ = {refraction}, compared with {glass} for glass."},
+      {id: "match", title: "Matching indices", setup: {mode: "slab", block: "glass", surrounding: "glass", angle: 45},
+        question: "Set up the lab. The glass block sits in glass surroundings. What does the Refraction θ₂ readout show?",
+        choices: [["right", "{refraction}", null], ["bends", "{glass}", "bends"], ["zero", "0.0°", "zero"], ["half", "22.5°", "half"]],
+        feedback: {
+          bends: "That is the angle for air into glass. Here the block and its surroundings are both glass. Check the Surrounding medium menu.",
+          zero: "A beam along the normal goes straight through, but this beam is not along the normal. Compare the two indices at the boundary, then read the Refraction θ₂ readout.",
+          half: "Do not halve the angle. Snell's law uses sines: n₁ sin θ₁ = n₂ sin θ₂."
+        },
+        explanation: "The block and its surroundings are both glass, so n₁ = n₂ = {n1}, and sin θ₂ = sin θ₁. The beam does not bend: θ₂ = {refraction}. Light changes direction only when its speed changes at a boundary."},
+      {id: "critical", title: "Critical angle, glass to air", setup: {mode: "tir", block: "glass", surrounding: "air", angle: 30},
+        question: "Set up the lab with the semicircular glass block. Which value does the Critical angle readout show?",
+        choices: [["right", "{critical}", null], ["refraction", "{refraction}", "refraction"], ["complement", "{complement}", "complement"], ["atan", "{atan}", "atan"]],
+        feedback: {
+          refraction: "That is the Refraction θ₂ readout at {angle}. The question asks for the Critical angle readout.",
+          complement: "The critical angle is not 90° minus the angle. Use sin θc = n₂ / n₁.",
+          atan: "sin θc = n₂ / n₁ = {n2} / {n1}. Take the inverse sine, not the inverse tangent."
+        },
+        explanation: "sin θc = n₂ / n₁ = {n2} / {n1}, so θc = {critical}. At {angle} the beam still leaves the glass, at {refraction}, bending away from the normal. Past {critical} all of the light reflects."},
+      {id: "water", title: "Glass in water", setup: {mode: "tir", block: "glass", surrounding: "water", angle: 70},
+        question: "Set up the lab. The glass is now surrounded by water, and the laser is at {angle}. What does the Refraction θ₂ readout show?",
+        choices: [["right", "{refraction}", null], ["critical", "{critical}", "critical"], ["grazing", "90.0°", "grazing"], ["airCritical", "{airCritical}", "airCritical"]],
+        feedback: {
+          critical: "That is the critical angle for glass to water, read from the other readout. The laser is at {angle}, which is past it.",
+          grazing: "The ray runs along the surface only at exactly the critical angle. Past it, no ray crosses.",
+          airCritical: "That is the critical angle for glass to air. Water's index is closer to glass, so this critical angle is larger."
+        },
+        explanation: "From glass (n₁ = {n1}) into water (n₂ = {n2}), sin θc = {n2} / {n1}, so θc = {critical}. The laser at {angle} is past it, so all the light reflects. Glass to air has a smaller critical angle, {airCritical}, because air's index is further from glass."}
+    ]
+  };
+  // In Spanish only the words change: ids, setups, choice values and feedback keys stay as they are.
+  var text = function (value) { return i18n ? i18n.text(value) : value; };
+  var labels = {};
+  Object.keys(check.labels).forEach(function (k) { labels[k] = text(check.labels[k]); });
+  var localized = {labels: labels, questions: check.questions.map(function (q) {
+    var feedback = {};
+    Object.keys(q.feedback).forEach(function (k) { feedback[k] = text(q.feedback[k]); });
+    return {id: q.id, title: text(q.title), setup: q.setup, question: text(q.question),
+      choices: q.choices.map(function (c) { return [c[0], text(c[1]), c[2]]; }), feedback: feedback, explanation: text(q.explanation)};
+  })};
+  root.addEventListener("zsa:request-data", function (event) { event.detail.receive({check: localized}); });
+  if (!i18n || i18n.lang !== "es") return;
   // The instructions paragraph after the list holds five bold control names inside its sentences. Rebuild it from one
   // full template around those names, so Spanish keeps its own word order.
   var note = root.querySelector("#zsa-th-instructions ol + p"), bold = note ? note.querySelectorAll("strong") : [];

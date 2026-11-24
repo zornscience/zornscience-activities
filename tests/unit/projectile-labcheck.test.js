@@ -147,7 +147,7 @@ test("the PRLC entry and all 32 first-try patterns with Show me counts round-tri
   }
 });
 
-test("existing codes read the same after PRLC is registered, ILC holds id 11, and 18 ids are left", function () {
+test("existing codes read the same after PRLC is registered, ILC holds id 11, and ids 1 to 13 are used", function () {
   assert.equal(codes.encode({activity: "GAS", version: "1.1.2", day: 300, items: 6, totals: {predict: 6, test: 6, explain: 6},
     results: {predict: 4, test: 5, explain: 3}, show: 2, hints: 1}), "GAS-0ME0-442B-093D-C");
   [["ALC-03EV-SG02-2F0H-8A9", 8], ["PLC-02R2-SG02-2F0S-9CD", 9], ["HLC-0378-SG02-2F0S-AGV", 10], ["CLC-02R2-SG02-2F0H-CRZ", 12]].forEach(function (pair) {
@@ -163,10 +163,8 @@ test("existing codes read the same after PRLC is registered, ILC holds id 11, an
   assert.equal(codes.activity("ILC").id, 11, "id 11 belongs to the Inclined Plane lab check");
   assert.equal(codes.ACTIVITIES.filter(function (a) { return a.id === 12; })[0].prefix, "CLC");
   assert.equal(new Set(used).size, used.length, "ids are unique");
-  var free = [];
-  for (var id = 1; id <= 31; id++) if (used.indexOf(id) < 0) free.push(id);
-  assert.deepEqual(free, [14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]);
-  assert.equal(free.length, 18);
+  // Ids 1 to 13 are all taken; later labs take the next free ids, so no maximum or count is pinned here.
+  for (var id = 1; id <= 13; id++) assert.ok(used.indexOf(id) >= 0, "id " + id + " is used");
 });
 
 test("every Projectile lab check sentence has Mexican Spanish with the same placeholders", function () {

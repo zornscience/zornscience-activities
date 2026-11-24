@@ -138,7 +138,7 @@ test("the ILC entry and all 32 first-try patterns with Show me counts round-trip
   }
 });
 
-test("existing codes read the same after ILC is registered, ILC takes id 11, and 18 ids are left", function () {
+test("existing codes read the same after ILC is registered, ILC takes id 11, and ids 1 to 13 are used", function () {
   assert.equal(codes.encode({activity: "GAS", version: "1.1.2", day: 300, items: 6, totals: {predict: 6, test: 6, explain: 6},
     results: {predict: 4, test: 5, explain: 3}, show: 2, hints: 1}), "GAS-0ME0-442B-093D-C");
   [["ALC-03EV-SG02-2F0H-8A9", 8], ["PLC-02R2-SG02-2F0S-9CD", 9], ["HLC-0378-SG02-2F0S-AGV", 10], ["CLC-02R2-SG02-2F0H-CRZ", 12], ["PRLC-0378-SG02-2F0H-DRT", 13]].forEach(function (pair) {
@@ -153,9 +153,9 @@ test("existing codes read the same after ILC is registered, ILC takes id 11, and
   var used = codes.ACTIVITIES.map(function (a) { return a.id; });
   assert.equal(used.length, new Set(used).size, "ids are unique");
   assert.equal(codes.activity("ILC").id, 11);
-  // Ids 1 to 13 are all used (Collision Carts took 12 and Projectile Motion 13 before this merged), so 18 are left (14 to 31).
-  assert.deepEqual(used.slice().sort(function (x, y) { return x - y; }), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]);
-  assert.equal(31 - Math.max.apply(null, used), 18);
+  // Ids 1 to 13 are all used (Collision Carts took 12 and Projectile Motion 13), and later labs take the next free ids
+  // (the registry has no maximum pinned here), so the ids up to 13 are all taken.
+  for (var id = 1; id <= 13; id++) assert.ok(used.indexOf(id) >= 0, "id " + id + " is used");
 });
 
 test("every Inclined Plane lab check sentence has Mexican Spanish with the same placeholders", function () {

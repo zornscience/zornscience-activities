@@ -78,7 +78,11 @@
     {id:13, prefix:"PRLC", slug:"projectile-lab", setting:"Lab check", name:"Projectile Motion Vector Lab", maxItems:5,
       stats:[["vx", "Sideways velocity"], ["top", "Height at the top"], ["angles", "Two angles, one range"],
         ["fall", "Faster launch, same fall"], ["predict", "Predict, then launch"]],
-      totals:[["vx"], ["top"], ["angles"], ["fall"], ["predict"]], items:[0, 1, 2, 3, 4]}
+      totals:[["vx"], ["top"], ["angles"], ["fall"], ["predict"]], items:[0, 1, 2, 3, 4]},
+    {id:14, prefix:"SLC", slug:"snells-law-lab", setting:"Lab check", name:"Snell’s Law & Refraction", maxItems:5,
+      stats:[["bend", "Air into glass"], ["diamond", "Diamond bends the most"], ["match", "Matching indices"],
+        ["critical", "Critical angle, glass to air"], ["water", "Glass in water"]],
+      totals:[["bend"], ["diamond"], ["match"], ["critical"], ["water"]], items:[0, 1, 2, 3, 4]}
   ];
   // The fixed fields, least significant first: [name, how many values]. Then one total per totals group (0 to
   // maxItems) and one first-try count per stat (0 to its total). Show me and Hint counts stop at their top value.
