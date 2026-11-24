@@ -113,6 +113,8 @@ body:has(.zsa-practice) {background:#edf2f7;}
 .zsa-practice .zsa-practice-step-list li {counter-increment:zp-step; display:grid; grid-template-columns:28px minmax(0,1fr); gap:10px; align-items:start;}
 .zsa-practice .zsa-practice-step-list li::before {content:counter(zp-step); display:grid; place-items:center; width:28px; height:28px; border:1px solid var(--zp-teal-line); border-radius:50%; background:var(--zp-mint); color:var(--zp-teal-ink); font-size:14px; font-weight:700;}
 .zsa-practice .zsa-practice-step-list li>span {padding-top:1px; min-width:0; overflow-wrap:anywhere;}
+/* A long formula in a step may wrap rather than push the page sideways on a phone. */
+.zsa-practice .zsa-practice-step-list .zsa-math,.zsa-practice .zsa-practice-step-text .zsa-math {white-space:normal; overflow-wrap:anywhere;}
 
 /* Results: score ring, a bar per skill, the actions, then each missed question with its steps. */
 .zsa-practice .zsa-practice-summary {display:flex; flex-wrap:wrap; align-items:center; gap:16px 24px; margin:8px 0 20px;}
@@ -158,6 +160,10 @@ body:has(.zsa-practice) {background:#edf2f7;}
   .zsa-practice .zsa-practice-settings>.zsa-btn,.zsa-practice .zsa-practice-actions>.zsa-btn {width:100%;}
   .zsa-practice .zsa-practice-entry {grid-template-columns:minmax(0,1fr);}
   .zsa-practice .zsa-practice-session {padding:10px 12px;}
+  .zsa-practice .zsa-practice-feedback {padding:14px 12px;}
+  .zsa-practice .zsa-practice-steps>:not(summary) {padding:12px;}
+  .zsa-practice .zsa-practice-step-list li {grid-template-columns:24px minmax(0,1fr); gap:8px;}
+  .zsa-practice .zsa-practice-step-list li::before {width:24px; height:24px; font-size:13px;}
   .zsa-practice .zsa-practice-breakdown li {grid-template-columns:minmax(0,1fr) auto; gap:6px 12px;}
   .zsa-practice .zsa-practice-bar {grid-column:1/-1; grid-row:2;}
   .zsa-practice .zsa-footer {gap:8px;}

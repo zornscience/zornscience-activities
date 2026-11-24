@@ -260,3 +260,18 @@ test("no sideways scrolling from 320 to 1920 px on the cards, a question with fe
     }
   }
 });
+
+test("a long formula in the steps wraps on a 320 px phone instead of scrolling the page (AP 5.2-5)", async ({page: pg, problems}) => {
+  void problems;
+  const a = page("apchem-unit5-practice");
+  await pg.setViewportSize({width:320, height:740});
+  for (const lang of ["en", "es"]) {
+    await pg.goto("/" + a.slug + "/" + (lang === "es" ? "?lang=es" : ""));
+    const {el, answer, choose} = helpers(pg, a);
+    await choose("5.2");
+    const seen = [];
+    for (let i = 0; i < 6; i++) { seen.push((await answer(false)).id); await noOverflow(pg); await el("next").click(); }
+    expect(seen).toContain("5.2-5");
+    await noOverflow(pg);
+  }
+});
