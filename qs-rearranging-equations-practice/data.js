@@ -385,7 +385,7 @@
         "Choose a skill, then start. Mixed review includes all three skills.":"Elige una habilidad y comienza. El repaso mixto incluye las tres habilidades.",
         "Solve for the letter first, then put in the numbers. A unit after the number is optional.":"Primero despeja la letra y luego sustituye los números. La unidad después del número es opcional.",
         "The line under each question says how to round. Significant figures are a reminder here, not part of the score.":"La línea debajo de cada pregunta indica cómo redondear. Aquí las cifras significativas son un recordatorio, no forman parte de la puntuación.",
-        "Submit once per question and read the feedback. Try again gives you a new set.":"Envía una respuesta por pregunta y lee la retroalimentación. Intentar de nuevo te da una serie nueva.",
+        "Submit once per question and read the feedback. New numbers gives you a new set, and Practice my misses repeats the questions you missed.":"Envía una respuesta por pregunta y lee la retroalimentación. Números nuevos te da una serie nueva y Practicar mis errores repite las preguntas que fallaste.",
         "Your equation":"Tu ecuación",
         "Type it like t = d/v. Letters side by side multiply, so vt means v times t. Use * or × to multiply, / or ÷ to divide, and parentheses when you need them.":"Escríbela como t = d/v. Las letras juntas se multiplican, así que vt significa v por t. Usa * o × para multiplicar, / o ÷ para dividir y paréntesis cuando los necesites.",
         "Some Solve questions ask you to type the equation. Put the letter you solve for alone on one side, like t = d/v.":"Algunas preguntas de despeje piden que escribas la ecuación. Deja sola en un lado la letra que despejas, como t = d/v.",

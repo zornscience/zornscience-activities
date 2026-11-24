@@ -1,6 +1,6 @@
 # Rearranging Equations Practice testing
 
-Version: 1.1.1
+Version: 1.2.0
 
 `tests/unit/zsa-formula.test.js` covers the typed-equation reader and judge: spellings, mistakes and notes, the parentheses note, subscripts, every unreadable reason with its message values, case, exact decimals, 4,000 random strings that must never throw, all 20 typed cases (the key in other spellings and every trap), the lesson's keys, and a differential check against the independent reader in `tests/support/equation-equivalence.js` on more than 400 candidates. `tests/e2e/qs-formula.spec.js` plays a typed question in English and Spanish: field, label, hint and help, unreadable answers that stay open and unscored, an equivalent form, a trap's note, keyboard only, axe-core in each state and 320 px.
 
@@ -19,6 +19,8 @@ Version: 1.1.1
 ## Browser
 
 `tests/e2e/qs-practice.spec.js` plays this activity in English and Spanish (listed in `tests/support/qs-activities.js`): full mixed sets with the own answers and with wrong answers, the results and review, keyboard-only play with a visible focus outline, axe-core at 1366 and 320 px in every state, no sideways scrolling, no English left on the Spanish page, the lesson backlink and no outside requests.
+
+Version 1.2.0: `tests/e2e/practice-ui.spec.js` checks the shared engine's start cards (one radio per topic plus Mixed review, arrow keys, names and descriptions), the progress pips and the spoken position, the streak, the Show the steps panel (closed after a right answer, open after a miss, the explanation unchanged), the results ring and bars, Practice my misses, New numbers and Choose a skill, reduced motion, embed mode and Spanish. The other browser tests choose topics through the cards.
 
 ## Not automated
 

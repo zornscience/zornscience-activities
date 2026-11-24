@@ -40,9 +40,10 @@ for (const lang of ["en", "es"]) {
     await page.goto("/next-practice/" + (lang === "es" ? "?lang=es" : ""));
     const el = name => page.locator("#zsa-next-" + name);
     await expect(page.locator("h1")).toHaveText(lang === "es" ? "Práctica nueva" : "New practice");
-    await expect(el("topic").locator('option[value="mixed"]')).toHaveText(lang === "es" ? "Repaso mixto · 2 preguntas" : "Mixed review · 2 questions");
-    await expect(el("topic")).toHaveValue("4.10");
-    await el("topic").selectOption("mixed"); await el("start").click();
+    await expect(el("topic").locator('input[value="mixed"]')).toHaveAccessibleName(lang === "es" ? "Repaso mixto" : "Mixed review");
+    await expect(el("topic").locator('input[value="mixed"]')).toHaveAccessibleDescription(lang === "es" ? "Todos los temas en una serie 2 preguntas" : "Every topic in one set 2 questions");
+    await expect(el("topic").locator("input:checked")).toHaveValue("4.10");
+    await el("topic").locator('input[value="mixed"]').check(); await el("start").click();
     for (let i = 0; i < 2; i++) {
       const id = await el("play").getAttribute("data-question-id");
       const q = bank.questions.find(q => q.id === id);

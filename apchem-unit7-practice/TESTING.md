@@ -1,6 +1,6 @@
 # AP Chemistry Unit 7 Practice testing
 
-Version: 1.0.5
+Version: 1.1.0
 
 ## Independent worked answers
 
@@ -110,3 +110,5 @@ The CI unit/browser job allows 30 minutes for dependency installation and the ex
 Full parity against `origin/main` completed eleven scenarios, 3,723 compared states and 3,296 screenshot pairs. DOM, properties, focus, announcements, scroll, titles, layout and computed styles matched throughout. Three screenshot pairs differed only in the native element-picker text in the unchanged Ion Charge Trainer, each by 300 pixels. The affected scenarios were 768 × 1024 with seeds 1 and 2, and 320 × 568 with seed 1, all at the open-options action. Pixel bounds were confined to the selected Lithium label. Exact reruns of all three scenarios used the same comparison code and assertions from a temporary driver outside the repository: 1,211 states and screenshot pairs, with two native-picker painting differences remaining. This is a remaining visual-parity limitation in local system Chromium; a completely clean full parity run is not claimed. Ion Charge Trainer and all shared files are byte-for-byte unchanged from the base.
 
 ZornScience. CC BY-NC-SA 4.0.
+
+Version 1.1.0: `tests/e2e/practice-ui.spec.js` checks the shared engine's start cards (one radio per topic plus Mixed review, arrow keys, names and descriptions), the progress pips and the spoken position, the streak, the Show the steps panel (closed after a right answer, open after a miss, the explanation unchanged), the results ring and bars, Practice my misses, Try again and Choose a topic, reduced motion, embed mode and Spanish. The other browser tests choose topics through the cards.

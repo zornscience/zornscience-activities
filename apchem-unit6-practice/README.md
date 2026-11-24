@@ -1,6 +1,6 @@
 # AP Chemistry Unit 6 Practice
 
-Version: 1.0.5
+Version: 1.1.0
 
 Version 1.0.2 adds search engine tags to the page head: a canonical link to the clean activity address, English and Spanish hreflang links (Spanish is ?lang=es), and a English and Mexican Spanish meta description from `tools/seo-pages.js`. Run `node tools/build-seo.js` after changing them.
 
@@ -43,6 +43,8 @@ Choose one six-question topic or Mixed review. Submit once per question, read fe
 Uses the exact supplied topic titles and AP glossary terms, including sistema, alrededores, equilibrio térmico, capacidad calorífica específica (calor específico), capacidad calorífica molar, calorímetro de vaso de espuma, entalpía de reacción, entalpía de enlace, entalpía estándar de formación, estado estándar, función de estado and primera ley de la termodinámica. Units, decimal points and state symbols are preserved. Additional wording is recorded in `../SPANISH_TERMS.md`.
 
 ## Changelog
+
+1.1.0: The shared practice engine is rebuilt to match the bench labs. The start screen is a grid of topic cards (real radio inputs, with the CED topic number, an icon, the number of typed and multiple-choice questions and the question count) plus a Mixed review card, in place of the topic menu. A set shows one progress pip per question (current, right, missed; missed pips are also striped), keeps the spoken "Question 3 of 6" for screen readers, and counts a streak of right answers in memory for that set only. Feedback draws a check or a cross, highlights the correct answer and adds a Show the steps panel that numbers the sentences of the existing explanation; it opens by itself after a miss. The unit's diagrams.css figures are unchanged. The results show a score ring, a bar per topic, the missed questions with their steps, and Practice my misses, Try again and Choose a topic. Question ids, answer checking, scoring and every feedback message and explanation are unchanged. The Instructions line about the end of a set names the new buttons. Motion stops with reduced motion; nothing is shown only by motion.
 
 1.0.4: Patch bump for the shared practice engine (`shared/zsa-practice.js`), which gained an opt-in typed-equation question type used only by Rearranging Equations Practice. This page does not load the equation reader and its questions, scoring and text are unchanged.
 

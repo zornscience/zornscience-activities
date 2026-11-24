@@ -1,6 +1,6 @@
 # AP Chemistry Unit 8 Practice testing
 
-Version: 1.0.3
+Version: 1.1.0
 
 ## Independent worked answers
 
@@ -104,3 +104,5 @@ The environment initially lacked PHP and Playwright's expected browser path. Tes
 The initial `npm run parity` against the locally stale `origin/main` reported 43 pre-existing differences: that local ref was e4304ff and still had the older Ion Charge Trainer header, while the starting checkout was 42d46e6. The current change does not touch that activity. `npm run parity -- --base HEAD`, against starting commit 42d46e6, passed with no differences: 11 scenarios, 3,723 compared states and 3,296 screenshot pairs. Before opening the PR, `git fetch origin main` confirmed that the current remote main is also 42d46e6, so the successful comparison uses the current PR base.
 
 ZornScience. CC BY-NC-SA 4.0.
+
+Version 1.1.0: `tests/e2e/practice-ui.spec.js` checks the shared engine's start cards (one radio per topic plus Mixed review, arrow keys, names and descriptions), the progress pips and the spoken position, the streak, the Show the steps panel (closed after a right answer, open after a miss, the explanation unchanged), the results ring and bars, Practice my misses, Try again and Choose a topic, reduced motion, embed mode and Spanish. The other browser tests choose topics through the cards.

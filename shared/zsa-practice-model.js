@@ -355,13 +355,29 @@
     "Correct value; check decimal places.":"Valor correcto; revisa los lugares decimales.",
     "Correct answer: ":"Respuesta correcta: ", "Your set is complete":"Tu serie está completa", "Try again":"Intentar de nuevo", "Choose another topic":"Elegir otro tema",
     "Results by topic":"Resultados por tema", "Review these questions":"Repaso de estas preguntas", "All correct. Try another topic when you are ready.":"Todo correcto. Intenta otro tema cuando quieras.",
-    "{score} of {total} correct ({percent}%).":"{score} de {total} correctas ({percent}%).", "{n} questions":"{n} preguntas"
+    "{score} of {total} correct ({percent}%).":"{score} de {total} correctas ({percent}%).", "{n} questions":"{n} preguntas", "Choose a unit":"Elige una unidad",
+    // Fixed banks (the AP units) carry these in their own tables; the same Spanish here covers any fixed bank that does not.
+    "Enter an exact whole number.":"Escribe un número entero exacto.", "Use {n} significant figures.":"Usa {n} cifras significativas.", "Use 1 decimal place.":"Usa 1 decimal.", "Use {n} decimal places.":"Usa {n} decimales.", "Choose a unit first.":"Primero elige una unidad.", "Your value is within tolerance, but the unit is incorrect.":"Tu valor está dentro de la tolerancia, pero la unidad es incorrecta.", "The unit is incorrect. Use {unit}.":"La unidad es incorrecta. Usa {unit}.", "Use {n} significant figures in your final answer.":"Usa {n} cifras significativas en tu respuesta final.", "Round your final answer to {n} decimal places.":"Redondea tu respuesta final a {n} decimales.",
   };
+  // The words of the skill cards, session header, steps panel and results (engine 1.1). The engine uses these before a
+  // page's own table, so an older page string with the same English (the AP banks' unused "Choose a topic" heading)
+  // cannot rename a button.
+  var engineEs = {
+    "Choose a skill to practice":"Elige una habilidad para practicar", "Choose a topic to practice":"Elige un tema para practicar",
+    "Choose a skill":"Elegir una habilidad", "Choose a topic":"Elegir un tema",
+    "Every skill in one set":"Todas las habilidades en una serie", "Every topic in one set":"Todos los temas en una serie",
+    "1 typed answer":"1 respuesta escrita", "{n} typed answers":"{n} respuestas escritas", "{n} multiple choice":"{n} de opción múltiple",
+    "Typed answers":"Respuestas escritas", "Typed answers with units":"Respuestas escritas con unidades", "Typed equations":"Ecuaciones escritas",
+    "Multiple choice":"Opción múltiple", "Show the steps":"Mostrar los pasos", "{n} correct in a row.":"{n} correctas seguidas.",
+    "{n} in a row":"{n} seguidas", "Best streak: {n} in a row":"Mejor racha: {n} seguidas", "New numbers":"Números nuevos",
+    "Practice my misses":"Practicar mis errores", "Results by skill":"Resultados por habilidad"
+  };
+  Object.keys(engineEs).forEach(function (key) { interfaceEs[key] = engineEs[key]; });
 
   var api = {shuffle:shuffle, makeSet:makeSet, parse:parse, inspect:inspect, lessonLink:lessonLink,
     exact:exact, add:add, sub:sub, mul:mul, div:div, neg:neg, abs:abs, cmp:cmp, sign:sign, toNumber:toNumber, scale:scale,
     magnitude:magnitude, roundAt:roundAt, rounded:rounded, fixed:fixed, write:write, pretty:pretty, spoken:spoken,
-    read:read, unitKey:unitKey, unitSame:unitSame, judge:judge, figures:figures, places:places, interfaceEs:interfaceEs,
+    read:read, unitKey:unitKey, unitSame:unitSame, judge:judge, figures:figures, places:places, interfaceEs:interfaceEs, engineEs:engineEs,
     int:int, pick:pick, generatedBank:generatedBank};
   if (typeof module === "object" && module.exports) module.exports = api;
   if (typeof document === "undefined") return;

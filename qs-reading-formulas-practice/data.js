@@ -349,7 +349,7 @@
         "Choose a skill, then start. Mixed review includes all four skills.":"Elige una habilidad y comienza. El repaso mixto incluye las cuatro habilidades.",
         "For a number, type it with a decimal point. A negative change needs its minus sign. A unit after the number is optional.":"Para un número, escríbelo con punto decimal. Un cambio negativo necesita su signo menos. La unidad después del número es opcional.",
         "The line under each question says how to round. Significant figures are a reminder here, not part of the score.":"La línea debajo de cada pregunta indica cómo redondear. Aquí las cifras significativas son un recordatorio, no forman parte de la puntuación.",
-        "Submit once per question and read the feedback. Try again gives you a new set.":"Envía una respuesta por pregunta y lee la retroalimentación. Intentar de nuevo te da una serie nueva.",
+        "Submit once per question and read the feedback. New numbers gives you a new set, and Practice my misses repeats the questions you missed.":"Envía una respuesta por pregunta y lee la retroalimentación. Números nuevos te da una serie nueva y Practicar mis errores repite las preguntas que fallaste.",
         "Type a number such as 63.0 or −8.0. You may add the unit after it.":"Escribe un número como 63.0 o −8.0. Puedes agregar la unidad después.",
         "Reference":"Consulta", "Reading formulas":"Lectura de fórmulas",
         "Each letter stands for a measured quantity. Read a formula as a sentence: d = vt reads “distance equals velocity times time.”":"Cada letra representa una cantidad medida. Lee una fórmula como una oración: d = vt se lee “la distancia es igual a la velocidad por el tiempo”.",

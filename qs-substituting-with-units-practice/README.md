@@ -1,6 +1,6 @@
 # Substituting with Units Practice
 
-Version: 1.0.2
+Version: 1.1.0
 
 Generated practice for the Quantitative Skills lesson [Substituting with Units](https://zornscience.org/science/quantitative-skills/equations/substituting-with-units/). Every set has new numbers. Four skills: units in a substitution, choosing the setup, answers with units, and converting before substituting. A skill gives 8 questions; Mixed review gives 12, three of each. English: `/qs-substituting-with-units-practice/`. Mexican Spanish: `/qs-substituting-with-units-practice/?lang=es`.
 
@@ -46,6 +46,8 @@ Answers are judged by `M.judge` in `../shared/zsa-practice-model.js` with exact 
 Runs on the shared question-set engine (`../shared/zsa-practice.js`) with the generated-bank options described in `../shared/README.md`. Native controls only. Spanish follows the live lesson "Sustitución con unidades" and the Style Kit: sustituir, unidad, se cancelan, convierte antes de sustituir, predice la unidad, planteamiento, fuerza neta, trabajo, presión, rapidez (promedio), newton, joule, kelvin, energía cinética (EC). New wording is in `../SPANISH_TERMS.md`.
 
 ## Changelog
+
+1.1.0: The shared practice engine is rebuilt to match the bench labs. The start screen is a grid of skill cards (real radio inputs, with an icon, a line about the question kinds and the question count) plus a Mixed review card, in place of the topic menu. A set shows one progress pip per question (current, right, missed; missed pips are also striped), keeps the spoken "Question 3 of 8" for screen readers, and counts a streak of right answers in memory for that set only. Feedback draws a check or a cross, highlights the correct answer and adds a Show the steps panel that numbers the sentences of the existing explanation; it opens by itself after a miss. The results show a score ring, a bar per skill, the missed questions with their steps, and Practice my misses, New numbers and Choose a skill. Question ids, `bank.rebuild(id)`, answer checking, scoring and every feedback message and explanation are unchanged. The Instructions line about the end of a set names the new buttons. Motion stops with reduced motion; nothing is shown only by motion.
 
 1.0.1: Patch bump for the shared practice engine (`shared/zsa-practice.js`), which gained an opt-in typed-equation question type used only by Rearranging Equations Practice. This page does not load the equation reader and its questions, scoring and text are unchanged.
 

@@ -313,7 +313,7 @@
         "Choose a skill, then start. Mixed review includes all three skills.":"Elige una habilidad y comienza. El repaso mixto incluye las tres habilidades.",
         "To write a ratio, choose the answer with the first quantity named first, in simplest form.":"Para escribir una relación, elige la respuesta que pone primero la cantidad que se menciona primero, en su forma más simple.",
         "For a calculation, type the number. A unit after it is optional. The line under the question gives the significant figures to keep, as advice.":"En un cálculo, escribe el número. La unidad después es opcional. La línea debajo de la pregunta indica las cifras significativas que debes conservar, como sugerencia.",
-        "Submit once per question and read the feedback. Try again gives you new numbers.":"Envía una respuesta por pregunta y lee la retroalimentación. Intentar de nuevo te da números nuevos.",
+        "Submit once per question and read the feedback. New numbers gives you a new set, and Practice my misses repeats the questions you missed.":"Envía una respuesta por pregunta y lee la retroalimentación. Números nuevos te da una serie nueva y Practicar mis errores repite las preguntas que fallaste.",
         "Type a number such as 63 or 3.0. You may add the unit after it.":"Escribe un número como 63 o 3.0. Puedes agregar la unidad después.",
         "Reference":"Consulta", "Ratio and proportion rules":"Reglas de relaciones y proporciones",
         "Write a ratio as 3 : 2, 3 to 2, or 3/2. The first quantity named goes first.":"Escribe una relación como 3 : 2, 3 a 2 o 3/2. La cantidad que se menciona primero va primero.",

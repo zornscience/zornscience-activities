@@ -44,7 +44,7 @@ for (const a of ACTIVITIES) {
     else await el(page, "value").fill(right ? q.display : "987654321" + (q.check && q.check.unit === "required" && q.unit ? " " + q.unit : ""));
     await el(page, "check").click();
   }
-  async function start(page, topic) { await el(page, "topic").selectOption(topic); await el(page, "start").click(); }
+  async function start(page, topic) { await el(page, "topic").locator('input[value="' + topic + '"]').check(); await el(page, "start").click(); }
 
   test.describe(a.slug, () => {
     for (const lang of ["en", "es"]) {
@@ -55,7 +55,10 @@ for (const a of ACTIVITIES) {
         await page.goto(path + (lang === "es" ? "?lang=es" : ""));
         await expect(page.locator("html")).toHaveAttribute("lang", lang === "es" ? "es-MX" : "en");
         await expect(page.locator("h1")).toHaveText(a.title[lang]);
-        await expect(el(page, "topic").locator('option[value="mixed"]')).toHaveText((lang === "es" ? "Repaso mixto · " : "Mixed review · ") + bank.mixedSize + (lang === "es" ? " preguntas" : " questions"));
+        // The start screen is a card per skill plus Mixed review: radio inputs named by the card title, described by its line and count.
+        await expect(el(page, "topic").locator('input[value="mixed"]')).toHaveAccessibleName(lang === "es" ? "Repaso mixto" : "Mixed review");
+        await expect(el(page, "topic").locator('input[value="mixed"]')).toHaveAccessibleDescription(new RegExp(" " + bank.mixedSize + (lang === "es" ? " preguntas" : " questions") + "$"));
+        await expect(el(page, "topic").locator('input[type="radio"]')).toHaveCount(bank.topics.length + 1);
         await start(page, "mixed");
         const first = [];
         for (let i = 0; i < bank.mixedSize; i++) {
@@ -91,7 +94,7 @@ for (const a of ACTIVITIES) {
         await expect(el(page, "total")).toContainText(lang === "es" ? `0 de ${bank.mixedSize}` : `0 of ${bank.mixedSize}`);
         await expect(el(page, "review").locator("details")).toHaveCount(bank.mixedSize);
         await el(page, "choose").click();
-        await expect(el(page, "topic")).toBeFocused();
+        await expect(el(page, "topic").locator("input:checked")).toBeFocused();
         await start(page, bank.topics[1].id);
         expect((await current(page)).topic).toBe(bank.topics[1].id);
         await expect(el(page, "position")).toHaveText((lang === "es" ? "Pregunta 1 de " : "Question 1 of ") + bank.perTopic);
@@ -103,10 +106,10 @@ for (const a of ACTIVITIES) {
       await page.addInitScript(seedRandom, 7);
       await page.goto(path);
       const ring = async () => expect(await page.evaluate(() => { const s = getComputedStyle(document.activeElement); return s.outlineStyle !== "none" && parseFloat(s.outlineWidth) >= 2; })).toBe(true);
-      for (let i = 0; i < 20 && await page.evaluate(id => document.activeElement.id !== id, a.prefix + "-topic"); i++) await page.keyboard.press("Tab");
-      await expect(el(page, "topic")).toBeFocused(); await ring();
+      for (let i = 0; i < 20 && await page.evaluate(name => document.activeElement.name !== name, a.prefix + "-topic"); i++) await page.keyboard.press("Tab");
+      await expect(el(page, "topic").locator("input:checked")).toBeFocused(); await ring();
       await page.keyboard.press("ArrowUp");
-      await expect(el(page, "topic")).toHaveValue("mixed");
+      await expect(el(page, "topic").locator('input[value="mixed"]')).toBeChecked(); await expect(el(page, "topic").locator('input[value="mixed"]')).toBeFocused();
       await page.keyboard.press("Tab"); await expect(el(page, "start")).toBeFocused(); await ring();
       await page.keyboard.press("Enter");
       await expect(el(page, "question")).toBeFocused();
@@ -134,7 +137,7 @@ for (const a of ACTIVITIES) {
       await expect(el(page, "results-title")).toBeFocused();
       await page.keyboard.press("Tab"); await expect(el(page, "retry")).toBeFocused(); await ring();
       await page.keyboard.press("Tab"); await expect(el(page, "choose")).toBeFocused();
-      await page.keyboard.press("Enter"); await expect(el(page, "topic")).toBeFocused();
+      await page.keyboard.press("Enter"); await expect(el(page, "topic").locator("input:checked")).toBeFocused();
     });
 
     for (const lang of ["en", "es"]) {
@@ -193,7 +196,7 @@ test("typed answers: scientific notation, units, the comma and power messages, a
   const el = name => page.locator("#zsa-qsf-" + name);
   await page.addInitScript(seedRandom, 3);
   await page.goto("/qs-significant-figures-practice/");
-  await el("topic").selectOption("multiply"); await el("start").click();
+  await el("topic").locator('input[value="multiply"]').check(); await el("start").click();
   const q = bank.rebuild(await el("play").getAttribute("data-question-id"));
   const box = await el("value").boundingBox(), card = await page.locator(".zsa-qsf-question-card").boundingBox();
   expect(box.width).toBeGreaterThan(card.width * 0.8);

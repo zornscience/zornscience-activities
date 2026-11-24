@@ -376,7 +376,7 @@
         "Choose a skill, then start. Mixed review includes all four skills.":"Elige una habilidad y comienza. El repaso mixto incluye las cuatro habilidades.",
         "Type your answer as a number. A unit after it is optional, like 8.6 m/s or 37°.":"Escribe tu respuesta como un número. La unidad después es opcional, como 8.6 m/s o 37°.",
         "Round to 2 significant figures, or angles to the nearest degree, when a question says so. Keep your calculator in degree mode.":"Redondea a 2 cifras significativas, o los ángulos al grado más cercano, cuando la pregunta lo indique. Mantén tu calculadora en modo de grados.",
-        "Submit once per question and read the feedback. Try again gives you new numbers.":"Envía una respuesta por pregunta y lee la retroalimentación. Intentar de nuevo te da números nuevos.",
+        "Submit once per question and read the feedback. New numbers gives you a new set, and Practice my misses repeats the questions you missed.":"Envía una respuesta por pregunta y lee la retroalimentación. Números nuevos te da una serie nueva y Practicar mis errores repite las preguntas que fallaste.",
         "Type a number such as 8.6 or 37. You may add the unit after it.":"Escribe un número como 8.6 o 37. Puedes agregar la unidad después.",
         "Reference":"Consulta", "Vector rules":"Reglas de los vectores",
         "A scalar has a size only, like 15 kg or 15 m/s. A vector has a magnitude and a direction, like 15 N upward. Speed is a scalar, and velocity is a vector.":"Un escalar solo tiene magnitud, como 15 kg o 15 m/s. Un vector tiene magnitud y dirección, como 15 N hacia arriba. La rapidez es un escalar, y la velocidad es un vector.",

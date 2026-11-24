@@ -1,6 +1,6 @@
 # AP Chemistry Unit 3 Practice checks
 
-Version: 1.0.6
+Version: 1.1.0
 
 ## Answer audit, worked before authoring the question bank
 
@@ -116,3 +116,5 @@ Full browser coverage completed across the initial and resumed runs: 641 of 642 
 One unrelated failure remains: the unchanged Lewis AP routing group 2 test exceeded its declared 400-second timeout, returning after 18.5 minutes while recursively enumerating SF6 reference structures. Its test, reference helper and activity files match main. This result is reported rather than changing another activity or its tests.
 
 The full repository parity check also passes: 11 scenarios, 3,723 states and 3,296 screenshot pairs, with zero differences.
+
+Version 1.1.0: `tests/e2e/practice-ui.spec.js` checks the shared engine's start cards (one radio per topic plus Mixed review, arrow keys, names and descriptions), the progress pips and the spoken position, the streak, the Show the steps panel (closed after a right answer, open after a miss, the explanation unchanged), the results ring and bars, Practice my misses, Try again and Choose a topic, reduced motion, embed mode and Spanish. The other browser tests choose topics through the cards.

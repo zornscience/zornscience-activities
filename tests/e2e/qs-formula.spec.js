@@ -22,7 +22,7 @@ async function noOverflow(page) { expect(await page.evaluate(() => document.docu
 async function reachTyped(page, lang, wanted) {
   await page.addInitScript(seedRandom, 4242);
   await page.goto(PATH + (lang === "es" ? "?lang=es" : ""));
-  await el(page, "topic").selectOption("solve");
+  await el(page, "topic").locator('input[value="solve"]').check();
   await el(page, "start").click();
   for (let i = 0; i < 8; i++) {
     const q = await current(page);

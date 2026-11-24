@@ -61,6 +61,33 @@ Use a decimal point, not a comma, like 3.5. | Usa punto decimal, no coma, como e
 Write the power of 10 with ^, like 3.2 x 10^4. | Escribe la potencia de 10 con ^, como en 3.2 x 10^4.
 Type the unit after the number. | Escribe la unidad después del número.
 
+## Question-set practice interface (shared/zsa-practice.js 1.1)
+
+The skill cards, progress track, streak, steps panel and results of all 24 question-set pages (the Quantitative Skills sets and AP Chemistry Units 1 to 9). The words are in `M.engineEs` in `shared/zsa-practice-model.js`; the engine uses them before a page's own table. Buttons keep the site's infinitive style (Elegir otro tema, Intentar de nuevo); prompts to the student use tú (Elige). Practicar mis errores and Mejor racha were already in this file and are reused as they are.
+
+English | Mexican Spanish
+--- | ---
+Choose a skill to practice (legend over the cards) | Elige una habilidad para practicar
+Choose a topic to practice (AP legend) | Elige un tema para practicar
+Choose a skill (button) | Elegir una habilidad
+Choose a topic (AP button) | Elegir un tema
+Every skill in one set (Mixed review card) | Todas las habilidades en una serie
+Every topic in one set (AP Mixed review card) | Todos los temas en una serie
+Multiple choice / {n} multiple choice | Opción múltiple / {n} de opción múltiple
+Typed answers / 1 typed answer / {n} typed answers | Respuestas escritas / 1 respuesta escrita / {n} respuestas escritas
+Typed answers with units | Respuestas escritas con unidades
+Typed equations | Ecuaciones escritas
+Show the steps | Mostrar los pasos
+{n} correct in a row. (feedback) | {n} correctas seguidas.
+{n} in a row (streak chip) | {n} seguidas
+Best streak: {n} in a row | Mejor racha: {n} seguidas
+New numbers (a new generated set) | Números nuevos
+Practice my misses | Practicar mis errores
+Results by skill | Resultados por habilidad
+Choose a unit (unit menu prompt, shared copy) | Elige una unidad
+
+Sources that agreed: opción múltiple is the question type in Google Forms' Spanish help and the wording of Ceneval's EXANI-II guide (Mexico); mostrar los pasos matches Symbolab's "Mostrar pasos" and eMathHelp's "mostrando los pasos", and this file's "Mostrar la solución paso a paso"; racha for consecutive correct answers matches this file's Mejor racha and Duolingo's racha as reported by Xataka México; respuestas escritas follows the Jalisco Recrea Avanza booklets' "preguntas que se contestan por escrito" and this file's Tu respuesta; serie and habilidad were already set for these pages (Avance de la serie, skill (topic) | habilidad).
+
 ## Scientific Notation Practice (1.0.0)
 
 Terms from the live Spanish lesson: notación científica, notación estándar, coeficiente (called "primer número" in feedback, as in the lesson's own explanations), base, exponente positivo / negativo, punto decimal, dígito distinto de cero, "llena los lugares vacíos con ceros". Additional wording:

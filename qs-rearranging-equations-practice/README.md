@@ -1,6 +1,6 @@
 # Rearranging Equations Practice
 
-Version: 1.1.1
+Version: 1.2.0
 
 Generated practice for the Quantitative Skills lesson [Rearranging Equations](https://zornscience.org/science/quantitative-skills/equations/rearranging-equations/). Every set is new. Three skills: solving for one variable, the first step, and rearranging, then calculating. A skill gives 8 questions (Solve mixes multiple choice and typed equations); Mixed review gives 12, four of each. English: `/qs-rearranging-equations-practice/`. Mexican Spanish: `/qs-rearranging-equations-practice/?lang=es`.
 
@@ -66,6 +66,8 @@ Rearrangements are chosen from four written formulas or typed as an equation (So
 Runs on the shared question-set engine (`../shared/zsa-practice.js`) with the generated-bank options described in `../shared/README.md`. Native controls only. Spanish follows the live lesson "Despeje de ecuaciones" and the Style Kit: despejar ("despeja m"), reacomodar, dejar sola la variable, sustituir, operación opuesta, en ambos lados, orden inverso, deshacer, balanza, denominador, el atajo del triángulo, dividir entre. New wording is in `../SPANISH_TERMS.md`.
 
 ## Changelog
+
+1.2.0: The shared practice engine is rebuilt to match the bench labs. The start screen is a grid of skill cards (real radio inputs, with an icon, a line about the question kinds and the question count) plus a Mixed review card, in place of the topic menu. A set shows one progress pip per question (current, right, missed; missed pips are also striped), keeps the spoken "Question 3 of 8" for screen readers, and counts a streak of right answers in memory for that set only. Feedback draws a check or a cross, highlights the correct answer and adds a Show the steps panel that numbers the sentences of the existing explanation; it opens by itself after a miss. The results show a score ring, a bar per skill, the missed questions with their steps, and Practice my misses, New numbers and Choose a skill. Question ids, `bank.rebuild(id)`, answer checking, scoring and every feedback message and explanation are unchanged. The Instructions line about the end of a set names the new buttons. Motion stops with reduced motion; nothing is shown only by motion.
 
 1.1.0: Typed equations. A new generator `ty` asks the same 20 Solve cases as a typed equation, read as algebra with exact fractions by the new `shared/zsa-formula.js` (so `d = tv` is as right as `d = vt`, and `d = v/t` stays wrong), with the lesson's mistakes as feedback, messages for unreadable answers that do not count as an attempt, and English and Mexican Spanish text. The engine (`shared/zsa-practice.js`) shows the typed-equation block only on pages that load the reader; the other practice pages are unchanged.
 

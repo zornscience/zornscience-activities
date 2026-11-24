@@ -1,6 +1,6 @@
 # Trigonometry Basics Practice testing
 
-Version: 1.0.2
+Version: 1.1.0
 
 ## Generators (Node)
 
@@ -19,6 +19,8 @@ During development the same checks also ran on 3,000 problems per generator with
 ## Browser
 
 `tests/e2e/qs-practice.spec.js` (through `tests/support/qs-activities.js`) plays this activity in English and Spanish: a full mixed set with the activity's own answers, feedback and explanations, the results by topic, Try again with new questions, then wrong answers and the review list. It also checks keyboard-only play (Tab, arrow keys, Enter and Space, with a visible focus outline, so the triangle adds no tab stop), axe-core at 1366 and 320 px in the setup, question (with the triangle shown), feedback and results states, no sideways scrolling, no English left on the Spanish page (including the triangle's title and description), the validated lesson backlink, no requests outside the site, and the directory card in both languages.
+
+Version 1.1.0: `tests/e2e/practice-ui.spec.js` checks the shared engine's start cards (one radio per topic plus Mixed review, arrow keys, names and descriptions), the progress pips and the spoken position, the streak, the Show the steps panel (closed after a right answer, open after a miss, the explanation unchanged), the results ring and bars, Practice my misses, New numbers and Choose a skill, reduced motion, embed mode and Spanish. The other browser tests choose topics through the cards.
 
 ## Not automated
 

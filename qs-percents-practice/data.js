@@ -312,7 +312,7 @@
         "Choose a skill, then start. Mixed review includes all four skills.":"Elige una habilidad y comienza. El repaso mixto incluye las cuatro habilidades.",
         "Type your answer. The % sign is optional. When the answer is an amount, type its unit after the number.":"Escribe tu respuesta. El signo % es opcional. Cuando la respuesta es una cantidad, escribe su unidad después del número.",
         "Round as the line under the question says. Significant figures are advice here, not scored.":"Redondea como indica la línea debajo de la pregunta. Aquí las cifras significativas son una sugerencia y no cuentan en la puntuación.",
-        "Submit once per question and read the feedback. Try again gives you new numbers.":"Envía una respuesta por pregunta y lee la retroalimentación. Intentar de nuevo te da números nuevos.",
+        "Submit once per question and read the feedback. New numbers gives you a new set, and Practice my misses repeats the questions you missed.":"Envía una respuesta por pregunta y lee la retroalimentación. Números nuevos te da una serie nueva y Practicar mis errores repite las preguntas que fallaste.",
         "Type a number such as 0.35, 84.0 or 0.38 kg.":"Escribe un número como 0.35, 84.0 o 0.38 kg.",
         "Reference":"Consulta", "Percent rules":"Reglas de los porcentajes",
         "Percent means per hundred: 35% = 35/100 = 0.35.":"Porcentaje significa por cada cien: 35% = 35/100 = 0.35.",

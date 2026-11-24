@@ -1,6 +1,6 @@
 # AP Chemistry Unit 4 Practice checks
 
-Version: 1.0.5
+Version: 1.1.0
 
 ## Answer audit, worked before authoring the question bank
 
@@ -78,3 +78,5 @@ Reviewed desktop and Spanish phone previews of the particle model and expanded r
 Confirmed ZornScience branding, CC BY-NC-SA 4.0, real subscript and superscript notation, (aq) state symbols and no en or em dashes. All shared files, Units 1 to 3 activity files and WordPress files are unchanged from the base. The only existing practice-test edits change the directory count from six to seven. No zornscience.org edits. No engine change was needed and no unresolved chemistry or translation questions remain.
 
 ZornScience. CC BY-NC-SA 4.0.
+
+Version 1.1.0: `tests/e2e/practice-ui.spec.js` checks the shared engine's start cards (one radio per topic plus Mixed review, arrow keys, names and descriptions), the progress pips and the spoken position, the streak, the Show the steps panel (closed after a right answer, open after a miss, the explanation unchanged), the results ring and bars, Practice my misses, Try again and Choose a topic, reduced motion, embed mode and Spanish. The other browser tests choose topics through the cards.

@@ -296,7 +296,7 @@
         "Choose a skill, then start. Mixed review includes all four skills.":"Elige una habilidad y comienza. El repaso mixto incluye las cuatro habilidades.",
         "Type your answer. Write a power of ten as 10^-3 and scientific notation as 4.2 x 10^8 or 4.2e8. A unit after the number is optional.":"Escribe tu respuesta. Escribe una potencia de diez como 10^-3 y la notación científica como 4.2 x 10^8 o 4.2e8. La unidad después del número es opcional.",
         "In the pH questions, precision counts: use the rule from the lesson to decide how many digits to keep.":"En las preguntas de pH, la precisión cuenta: usa la regla de la lección para decidir cuántos dígitos conservar.",
-        "Submit once per question and read the feedback. Try again gives you new numbers.":"Envía una respuesta por pregunta y lee la retroalimentación. Intentar de nuevo te da números nuevos.",
+        "Submit once per question and read the feedback. New numbers gives you a new set, and Practice my misses repeats the questions you missed.":"Envía una respuesta por pregunta y lee la retroalimentación. Números nuevos te da una serie nueva y Practicar mis errores repite las preguntas que fallaste.",
         "Type a number such as 4.20, 10^-3 or 2.0 x 10^-3. You may add the unit after it.":"Escribe un número como 4.20, 10^-3 o 2.0 x 10^-3. Puedes agregar la unidad después.",
         "Reference":"Consulta", "Exponent and log rules":"Reglas de exponentes y logaritmos",
         "Multiplying powers of ten adds the exponents:":"Al multiplicar potencias de diez, se suman los exponentes:",

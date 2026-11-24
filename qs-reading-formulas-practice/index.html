@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.0.2">
+<meta name="zsa-version" content="1.1.0">
 <title>Reading Formulas Practice | ZornScience</title>
 <meta name="description" content="Practice reading science formulas: what each letter means, implied multiplication, constants, subscripts and Δ as final minus initial, with instant feedback." data-zsa-es="Practica la lectura de fórmulas: qué significa cada letra, la multiplicación implícita, las constantes, los subíndices y Δ como final menos inicial.">
 <link rel="canonical" href="https://activities.zornscience.org/qs-reading-formulas-practice/">
@@ -12,16 +12,16 @@
 <link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-reading-formulas-practice/?lang=es">
 <link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-reading-formulas-practice/">
 <link rel="icon" href="../favicon.png" type="image/png">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.2">
-<link rel="stylesheet" href="../shared/zsa-practice.css?v=1.0.2">
-<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.2">
-<script src="../shared/zsa-embed.js?v=1.0.2" defer></script>
-<script src="../shared/zsa-i18n.js?v=1.0.2" defer></script>
-<script src="../shared/zsa-practice-model.js?v=1.0.2" defer></script>
-<script src="data.js?v=1.0.2" defer></script>
-<script src="../shared/zsa-practice.js?v=1.0.2" defer></script>
-<script src="../shared/zsa-header.js?v=1.0.2" defer></script>
-<link rel="stylesheet" href="../shared/zsa-about.css?v=1.0.2"><script src="../shared/zsa-about.js?v=1.0.2" defer></script></head>
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.1.0">
+<link rel="stylesheet" href="../shared/zsa-practice.css?v=1.1.0">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.1.0">
+<script src="../shared/zsa-embed.js?v=1.1.0" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.1.0" defer></script>
+<script src="../shared/zsa-practice-model.js?v=1.1.0" defer></script>
+<script src="data.js?v=1.1.0" defer></script>
+<script src="../shared/zsa-practice.js?v=1.1.0" defer></script>
+<script src="../shared/zsa-header.js?v=1.1.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.1.0"><script src="../shared/zsa-about.js?v=1.1.0" defer></script></head>
 <body>
 <main class="zsa zsa-qrf zsa-practice" data-zsa-activity="qs-reading-formulas-practice" data-zsa-practice="zsa-qrf">
 <header data-zsa-header>
@@ -39,7 +39,7 @@
 <li>Choose a skill, then start. Mixed review includes all four skills.</li>
 <li>For a number, type it with a decimal point. A negative change needs its minus sign. A unit after the number is optional.</li>
 <li>The line under each question says how to round. Significant figures are a reminder here, not part of the score.</li>
-<li>Submit once per question and read the feedback. Try again gives you a new set.</li>
+<li>Submit once per question and read the feedback. New numbers gives you a new set, and Practice my misses repeats the questions you missed.</li>
 </ol>
 </dialog>
 <dialog class="zsa-header-dialog" id="zsa-header-share" aria-labelledby="zsa-header-share-title">
@@ -53,12 +53,12 @@
 <p class="zsa-eyebrow">Quantitative Skills · Equations</p>
 <h2 id="zsa-qrf-setup-title">New numbers every set.</h2>
 <p>Choose one skill for 8 questions, or Mixed review for 12. Every set is new.</p>
-<div class="zsa-qrf-settings zsa-practice-settings"><div><label for="zsa-qrf-topic">Topic</label><select id="zsa-qrf-topic"></select></div><button class="zsa-btn zsa-btn--primary" id="zsa-qrf-start" type="button">Start practice</button></div>
+<fieldset id="zsa-qrf-topic" class="zsa-practice-skills"><legend>Choose a skill to practice</legend></fieldset>
+<div class="zsa-qrf-settings zsa-practice-settings"><button class="zsa-btn zsa-btn--primary" id="zsa-qrf-start" type="button">Start practice</button></div>
 <p class="zsa-qrf-small zsa-practice-small">No timer. Use scratch paper and a calculator. The formulas from the lesson are below.</p>
 </section>
 <section id="zsa-qrf-play" hidden aria-labelledby="zsa-qrf-question">
-<div class="zsa-qrf-status zsa-practice-status"><p id="zsa-qrf-position"></p><p id="zsa-qrf-score"></p></div>
-<progress id="zsa-qrf-progress" value="0" max="8" aria-label="Set progress"></progress>
+<div class="zsa-practice-session"><div class="zsa-qrf-status zsa-practice-status zsa-sr-only"><p id="zsa-qrf-position"></p><p id="zsa-qrf-score"></p></div><div id="zsa-qrf-progress" class="zsa-practice-track" aria-hidden="true"></div><p id="zsa-qrf-count" class="zsa-practice-count" aria-hidden="true"></p><p id="zsa-qrf-streak" class="zsa-practice-streak" hidden></p></div>
 <div class="zsa-card zsa-qrf-question-card">
 <p class="zsa-eyebrow" id="zsa-qrf-topic-name"></p>
 <h2 id="zsa-qrf-question" tabindex="-1"></h2>
@@ -78,9 +78,9 @@
 </section>
 <section id="zsa-qrf-results" class="zsa-card" aria-labelledby="zsa-qrf-results-title" hidden>
 <h2 id="zsa-qrf-results-title" tabindex="-1">Your set is complete</h2>
-<p id="zsa-qrf-total" class="zsa-qrf-total zsa-practice-total"></p>
-<h3>Results by topic</h3><ul id="zsa-qrf-breakdown" class="zsa-practice-breakdown"></ul>
-<div class="zsa-qrf-actions zsa-practice-actions"><button id="zsa-qrf-retry" class="zsa-btn zsa-btn--primary" type="button">Try again</button><button id="zsa-qrf-choose" class="zsa-btn" type="button">Choose another topic</button></div>
+<div class="zsa-practice-summary"><div id="zsa-qrf-ring" class="zsa-practice-ring"></div><div class="zsa-practice-summary-text"><p id="zsa-qrf-total" class="zsa-qrf-total zsa-practice-total"></p><p id="zsa-qrf-best" class="zsa-practice-best" hidden></p></div></div>
+<h3 id="zsa-qrf-breakdown-title">Results by topic</h3><ul id="zsa-qrf-breakdown" class="zsa-practice-breakdown" aria-labelledby="zsa-qrf-breakdown-title"></ul>
+<div class="zsa-qrf-actions zsa-practice-actions"><button id="zsa-qrf-misses" class="zsa-btn zsa-btn--primary" type="button" hidden>Practice my misses</button><button id="zsa-qrf-retry" class="zsa-btn zsa-btn--primary" type="button">Try again</button><button id="zsa-qrf-choose" class="zsa-btn" type="button">Choose another topic</button></div>
 <div id="zsa-qrf-review"></div>
 </section>
 <details class="zsa-panel zsa-qrf-reference zsa-practice-reference" id="zsa-qrf-reference">

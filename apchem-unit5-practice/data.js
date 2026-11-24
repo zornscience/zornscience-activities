@@ -3092,7 +3092,7 @@
       "No timer. Use scratch paper and a calculator. All the atomic masses you need are below.": "Sin límite de tiempo. Usa papel y calculadora. Todas las masas atómicas que necesitas están abajo.",
       "Select one answer, or enter a number and choose its unit. For a count, choose count; for a ratio, choose no units.": "Selecciona una respuesta o escribe un número y elige su unidad. Para un conteo, elige conteo; para una razón, elige sin unidades.",
       "Submit once per question. Read the explanation, then continue. Your score counts correct answers; a significant figure note does not remove a point.": "Envía una respuesta por pregunta. Lee la explicación y continúa. Tu puntaje cuenta las respuestas correctas; una nota sobre cifras significativas no quita un punto.",
-      "At the end, Try again shuffles the questions and answer choices. Choose another topic to build a new set.": "Al terminar, Intentar de nuevo cambia el orden de las preguntas y las opciones. Elige otro tema para crear una serie nueva.",
+      "At the end, Try again shuffles the questions and answer choices, Practice my misses repeats only the questions you missed, and Choose a topic goes back to the topic cards.": "Al terminar, Intentar de nuevo cambia el orden de las preguntas y las opciones, Practicar mis errores repite solo las preguntas que fallaste y Elegir un tema regresa a las tarjetas de temas.",
       "Reference": "Consulta",
       "Atomic masses (g/mol)": "Masas atómicas (g/mol)",
       "Avogadro constant": "Constante de Avogadro",
