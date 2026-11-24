@@ -34,6 +34,8 @@
 .zsa-home-card h3 a:focus-visible {outline:none;}
 .zsa-home-card:hover h3 a {color:var(--zsa-blue);text-decoration:underline;}
 .zsa-home-card > p {margin:0;font-size:var(--zsa-text-sm);line-height:1.55;}
+.zsa-home-card > .zsa-home-sublink {margin-top:8px;}
+.zsa-home-sublink a {position:relative;z-index:1;font-weight:600;}
 .zsa-home-card .zsa-home-topic {font-size:var(--zsa-text-label);font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--zsa-slate);}
 .zsa-home-tags {display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:14px;}
 .zsa-home-tag {font-size:var(--zsa-text-label);font-weight:600;line-height:1;padding:6px 10px;border-radius:var(--zsa-radius-pill);background:var(--zsa-home-tint);color:var(--zsa-navy);border:1px solid var(--zsa-border);}

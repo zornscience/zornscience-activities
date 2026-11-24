@@ -3209,3 +3209,18 @@ for (const lang of ["en", "es"]) {
     expect(errors).toEqual([]);
   });
 }
+
+// The Population Sampling Lab card links straight to its Ladybug Quadrat tab, keeping the fragment after lang=es.
+for (const lang of ["en", "es"]) {
+  test("landing page (" + lang + "): the Population Sampling card links directly to the ladybug tab", async ({page}) => {
+    await page.goto(lang === "es" ? "/?lang=es" : "/");
+    const link = page.locator(".zsa-home-sublink a");
+    await expect(link).toHaveCount(1);
+    await expect(link).toHaveText(lang === "es" ? "Abrir el laboratorio de muestreo de catarinas con cuadrantes" : "Open the Ladybug Quadrat Lab");
+    await expect(link).toHaveAttribute("href", lang === "es" ? "population-sampling-lab/?lang=es#ladybug-quadrat" : "population-sampling-lab/#ladybug-quadrat");
+    // The card's stretched title link sits above the page, so the extra link has to be clickable on its own.
+    await link.click();
+    await expect(page).toHaveURL(lang === "es" ? /population-sampling-lab\/\?lang=es#ladybug-quadrat$/ : /population-sampling-lab\/#ladybug-quadrat$/);
+    await expect(page.locator("#zsa-ps-tab-ladybug")).toHaveAttribute("aria-selected", "true");
+  });
+}
