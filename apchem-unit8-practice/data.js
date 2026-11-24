@@ -8,6 +8,10 @@
       "title": {
         "en": "8.1 Introduction to Acids and Bases",
         "es": "8.1 Introducción a los ácidos y las bases"
+      },
+      "summary": {
+        "en": "Brønsted-Lowry acids and bases, conjugate pairs and Kw.",
+        "es": "Ácidos y bases de Brønsted-Lowry, pares conjugados y Kw."
       }
     },
     {
@@ -15,6 +19,10 @@
       "title": {
         "en": "8.2 pH and pOH of Strong Acids and Bases",
         "es": "8.2 pH y pOH de ácidos y bases fuertes"
+      },
+      "summary": {
+        "en": "pH and pOH of strong acids and bases, dilution, and significant figures in logs.",
+        "es": "pH y pOH de ácidos y bases fuertes, dilución y cifras significativas en logaritmos."
       }
     },
     {
@@ -22,6 +30,10 @@
       "title": {
         "en": "8.3 Weak Acid and Base Equilibria",
         "es": "8.3 Equilibrios de ácidos y bases débiles"
+      },
+      "summary": {
+        "en": "Ka and Kb expressions, ICE tables, percent ionization and weak acid and base pH.",
+        "es": "Expresiones de Ka y Kb, tablas ICE, porcentaje de ionización y pH de ácidos y bases débiles."
       }
     },
     {
@@ -29,6 +41,10 @@
       "title": {
         "en": "8.4 Acid-Base Reactions and Buffers",
         "es": "8.4 Reacciones ácido-base y amortiguadores"
+      },
+      "summary": {
+        "en": "What remains after an acid-base reaction, and when a mixture is a buffer.",
+        "es": "Lo que queda después de una reacción ácido-base y cuándo una mezcla es un amortiguador."
       }
     },
     {
@@ -36,6 +52,10 @@
       "title": {
         "en": "8.5 Acid-Base Titrations",
         "es": "8.5 Titulaciones ácido-base"
+      },
+      "summary": {
+        "en": "Equivalence points, pH at half-equivalence, indicators and titrant volume.",
+        "es": "Puntos de equivalencia, pH en la semiequivalencia, indicadores y volumen de titulante."
       }
     },
     {
@@ -43,6 +63,10 @@
       "title": {
         "en": "8.6 Molecular Structure of Acids and Bases",
         "es": "8.6 Estructura molecular de ácidos y bases"
+      },
+      "summary": {
+        "en": "Acid strength from bonds, polarity and resonance, with pKa and Kb from Ka.",
+        "es": "Fuerza ácida según el enlace, la polaridad y la resonancia, con pKa y Kb a partir de Ka."
       }
     },
     {
@@ -50,6 +74,10 @@
       "title": {
         "en": "8.7 pH and pKa",
         "es": "8.7 pH y pKa"
+      },
+      "summary": {
+        "en": "Which form dominates at a given pH, comparing pKa values, and the [A−]/[HA] ratio.",
+        "es": "Qué forma predomina a cierto pH, comparación de valores de pKa y la razón [A−]/[HA]."
       }
     },
     {
@@ -57,6 +85,10 @@
       "title": {
         "en": "8.8 Properties of Buffers",
         "es": "8.8 Propiedades de los amortiguadores"
+      },
+      "summary": {
+        "en": "How a buffer takes up added acid or base, dilution, and pH after an addition.",
+        "es": "Cómo un amortiguador neutraliza ácido o base añadidos, la dilución y el pH tras una adición."
       }
     },
     {
@@ -64,6 +96,10 @@
       "title": {
         "en": "8.9 Henderson-Hasselbalch Equation",
         "es": "8.9 Ecuación de Henderson-Hasselbalch"
+      },
+      "summary": {
+        "en": "The Henderson-Hasselbalch equation, when it applies, and designing a buffer.",
+        "es": "La ecuación de Henderson-Hasselbalch, cuándo se aplica y diseño de un amortiguador."
       }
     },
     {
@@ -71,6 +107,10 @@
       "title": {
         "en": "8.10 Buffer Capacity",
         "es": "8.10 Capacidad amortiguadora"
+      },
+      "summary": {
+        "en": "How concentration and ratio set buffer capacity, and pH after an addition.",
+        "es": "Cómo la concentración y la razón fijan la capacidad amortiguadora y el pH tras una adición."
       }
     },
     {
@@ -78,6 +118,10 @@
       "title": {
         "en": "8.11 pH and Solubility",
         "es": "8.11 pH y solubilidad"
+      },
+      "summary": {
+        "en": "Why pH changes the solubility of salts with basic anions, and solubility at a set pH.",
+        "es": "Por qué el pH cambia la solubilidad de sales con aniones básicos y solubilidad a pH fijo."
       }
     }
   ],

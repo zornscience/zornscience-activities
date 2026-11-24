@@ -8,6 +8,10 @@
       "title": {
         "en": "9.1 Introduction to Entropy",
         "es": "9.1 Introducción a la entropía"
+      },
+      "summary": {
+        "en": "The sign of ΔS for phase changes, reactions, heating and expansion.",
+        "es": "Signo de ΔS en cambios de fase, reacciones, calentamiento y expansión."
       }
     },
     {
@@ -15,6 +19,10 @@
       "title": {
         "en": "9.2 Absolute Entropy and Entropy Change",
         "es": "9.2 Entropía absoluta y cambio de entropía"
+      },
+      "summary": {
+        "en": "Absolute entropy, the third law, and ΔS°rxn from S° values.",
+        "es": "Entropía absoluta, tercera ley y ΔS°rxn a partir de valores de S°."
       }
     },
     {
@@ -22,6 +30,10 @@
       "title": {
         "en": "9.3 Gibbs Free Energy and Thermodynamic Favorability",
         "es": "9.3 Energía libre de Gibbs y favorabilidad termodinámica"
+      },
+      "summary": {
+        "en": "ΔG° from ΔH° and ΔS°, sign combinations, and the temperature where ΔG° changes sign.",
+        "es": "ΔG° a partir de ΔH° y ΔS°, combinaciones de signos y temperatura donde ΔG° cambia de signo."
       }
     },
     {
@@ -29,6 +41,10 @@
       "title": {
         "en": "9.4 Thermodynamic and Kinetic Control",
         "es": "9.4 Control termodinámico y control cinético"
+      },
+      "summary": {
+        "en": "Favorable but slow reactions, catalysts, and kinetic versus thermodynamic control.",
+        "es": "Reacciones favorables pero lentas, catalizadores y control cinético frente a termodinámico."
       }
     },
     {
@@ -36,6 +52,10 @@
       "title": {
         "en": "9.5 Free Energy and Equilibrium",
         "es": "9.5 Energía libre y equilibrio"
+      },
+      "summary": {
+        "en": "How ΔG°, K and Q are linked, and calculating one from another.",
+        "es": "Cómo se relacionan ΔG°, K y Q, y cálculo de uno a partir de otro."
       }
     },
     {
@@ -43,6 +63,10 @@
       "title": {
         "en": "9.6 Free Energy of Dissolution",
         "es": "9.6 Energía libre de disolución"
+      },
+      "summary": {
+        "en": "Enthalpy and entropy when salts dissolve, and ΔG° of dissolution.",
+        "es": "Entalpía y entropía al disolver sales, y ΔG° de disolución."
       }
     },
     {
@@ -50,6 +74,10 @@
       "title": {
         "en": "9.7 Coupled Reactions",
         "es": "9.7 Reacciones acopladas"
+      },
+      "summary": {
+        "en": "Net ΔG° of coupled steps, and what really drives an unfavorable process.",
+        "es": "ΔG° neto de pasos acoplados y lo que realmente impulsa un proceso desfavorable."
       }
     },
     {
@@ -57,6 +85,10 @@
       "title": {
         "en": "9.8 Galvanic (Voltaic) and Electrolytic Cells",
         "es": "9.8 Celdas galvánicas (voltaicas) y electrolíticas"
+      },
+      "summary": {
+        "en": "Anode and cathode, electron and ion flow, and standard cell potential.",
+        "es": "Ánodo y cátodo, flujo de electrones e iones, y potencial estándar de celda."
       }
     },
     {
@@ -64,6 +96,10 @@
       "title": {
         "en": "9.9 Cell Potential and Free Energy",
         "es": "9.9 Potencial de celda y energía libre"
+      },
+      "summary": {
+        "en": "E°cell from reduction potentials, and how it sets the sign of ΔG°.",
+        "es": "E°celda a partir de potenciales de reducción y cómo determina el signo de ΔG°."
       }
     },
     {
@@ -71,6 +107,10 @@
       "title": {
         "en": "9.10 Cell Potential Under Nonstandard Conditions",
         "es": "9.10 Potencial de celda en condiciones no estándar"
+      },
+      "summary": {
+        "en": "The Nernst equation: how Q changes E, and E at equilibrium.",
+        "es": "La ecuación de Nernst: cómo Q cambia E, y E en el equilibrio."
       }
     },
     {
@@ -78,6 +118,10 @@
       "title": {
         "en": "9.11 Electrolysis and Faraday's Law",
         "es": "9.11 Electrólisis y ley de Faraday"
+      },
+      "summary": {
+        "en": "Current, charge and moles of electrons to find the mass plated or the time needed.",
+        "es": "Corriente, carga y moles de electrones para hallar la masa depositada o el tiempo necesario."
       }
     }
   ],

@@ -8,6 +8,10 @@
       "title": {
         "en": "7.1 Introduction to Equilibrium",
         "es": "7.1 Introducción al equilibrio"
+      },
+      "summary": {
+        "en": "Dynamic equilibrium: equal forward and reverse rates, constant concentrations.",
+        "es": "Equilibrio dinámico: velocidades directa e inversa iguales y concentraciones constantes."
       }
     },
     {
@@ -15,6 +19,10 @@
       "title": {
         "en": "7.2 Direction of Reversible Reactions",
         "es": "7.2 Dirección de las reacciones reversibles"
+      },
+      "summary": {
+        "en": "Which way a reaction runs first, and calculating Q.",
+        "es": "Hacia dónde avanza primero una reacción y cálculo de Q."
       }
     },
     {
@@ -22,6 +30,10 @@
       "title": {
         "en": "7.3 Reaction Quotient and Equilibrium Constant",
         "es": "7.3 Cociente de reacción y constante de equilibrio"
+      },
+      "summary": {
+        "en": "Writing Kc and Kp expressions and converting between them.",
+        "es": "Expresiones de Kc y Kp y conversión entre ellas."
       }
     },
     {
@@ -29,6 +41,10 @@
       "title": {
         "en": "7.4 Calculating the Equilibrium Constant",
         "es": "7.4 Cálculo de la constante de equilibrio"
+      },
+      "summary": {
+        "en": "Kc from equilibrium concentrations, moles and ICE tables.",
+        "es": "Kc a partir de concentraciones, moles y tablas ICE en el equilibrio."
       }
     },
     {
@@ -36,6 +52,10 @@
       "title": {
         "en": "7.5 Magnitude of the Equilibrium Constant",
         "es": "7.5 Magnitud de la constante de equilibrio"
+      },
+      "summary": {
+        "en": "What a large or small K means, and equilibrium amounts from K.",
+        "es": "Qué significa una K grande o pequeña y cantidades en el equilibrio a partir de K."
       }
     },
     {
@@ -43,6 +63,10 @@
       "title": {
         "en": "7.6 Properties of the Equilibrium Constant",
         "es": "7.6 Propiedades de la constante de equilibrio"
+      },
+      "summary": {
+        "en": "K for reversed, scaled and added equations.",
+        "es": "K de ecuaciones invertidas, multiplicadas y sumadas."
       }
     },
     {
@@ -50,6 +74,10 @@
       "title": {
         "en": "7.7 Calculating Equilibrium Concentrations",
         "es": "7.7 Cálculo de concentraciones en el equilibrio"
+      },
+      "summary": {
+        "en": "ICE tables, the 5% check and physically sensible roots.",
+        "es": "Tablas ICE, la regla del 5% y raíces con sentido físico."
       }
     },
     {
@@ -57,6 +85,10 @@
       "title": {
         "en": "7.8 Representations of Equilibrium",
         "es": "7.8 Representaciones del equilibrio"
+      },
+      "summary": {
+        "en": "Particle diagrams of equilibrium and the shifts they predict.",
+        "es": "Diagramas de partículas del equilibrio y los desplazamientos que predicen."
       }
     },
     {
@@ -64,6 +96,10 @@
       "title": {
         "en": "7.9 Introduction to Le Châtelier's Principle",
         "es": "7.9 Introducción al principio de Le Châtelier"
+      },
+      "summary": {
+        "en": "Le Châtelier's principle for concentration, pressure and temperature changes.",
+        "es": "Principio de Le Châtelier ante cambios de concentración, presión y temperatura."
       }
     },
     {
@@ -71,6 +107,10 @@
       "title": {
         "en": "7.10 Reaction Quotient and Le Châtelier's Principle",
         "es": "7.10 Cociente de reacción y principio de Le Châtelier"
+      },
+      "summary": {
+        "en": "Comparing Q with K after a disturbance to predict the shift.",
+        "es": "Comparación de Q con K después de una perturbación para predecir el desplazamiento."
       }
     },
     {
@@ -78,6 +118,10 @@
       "title": {
         "en": "7.11 Introduction to Solubility Equilibria",
         "es": "7.11 Introducción a los equilibrios de solubilidad"
+      },
+      "summary": {
+        "en": "Ksp expressions, molar solubility, and whether a precipitate forms.",
+        "es": "Expresiones de Ksp, solubilidad molar y si se forma un precipitado."
       }
     },
     {
@@ -85,6 +129,10 @@
       "title": {
         "en": "7.12 Common-Ion Effect",
         "es": "7.12 Efecto del ion común"
+      },
+      "summary": {
+        "en": "How a common ion lowers solubility, and solubility in salt solutions.",
+        "es": "Cómo un ion común reduce la solubilidad y solubilidad en soluciones salinas."
       }
     }
   ],

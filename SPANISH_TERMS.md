@@ -88,6 +88,18 @@ Choose a unit (unit menu prompt, shared copy) | Elige una unidad
 
 Sources that agreed: opción múltiple is the question type in Google Forms' Spanish help and the wording of Ceneval's EXANI-II guide (Mexico); mostrar los pasos matches Symbolab's "Mostrar pasos" and eMathHelp's "mostrando los pasos", and this file's "Mostrar la solución paso a paso"; racha for consecutive correct answers matches this file's Mejor racha and Duolingo's racha as reported by Xataka México; respuestas escritas follows the Jalisco Recrea Avanza booklets' "preguntas que se contestan por escrito" and this file's Tu respuesta; serie and habilidad were already set for these pages (Avance de la serie, skill (topic) | habilidad).
 
+## AP Units 5 to 9 topic summaries (1.1.1)
+
+One line per topic on the topic cards, in `summary` in each unit's `data.js`. They reuse each unit's glossary above (velocidad, intermediario, paso determinante de la velocidad, alrededores, calorímetro de vaso de espuma, tabla ICE, regla del 5%, perturbación, desplazamiento, amortiguador, semiequivalencia, titulante, E°celda, ecuación de Nernst). Wording new to these pages:
+
+English | Mexican Spanish
+--- | ---
+salt solutions | soluciones salinas
+basic anions | aniones básicos
+physically sensible roots | raíces con sentido físico (as "raíz física" in Unit 7)
+the temperature where ΔG° changes sign | temperatura donde ΔG° cambia de signo
+freeze (heating curve) | congelar (as "congelación" in Unit 6)
+
 ## Scientific Notation Practice (1.0.0)
 
 Terms from the live Spanish lesson: notación científica, notación estándar, coeficiente (called "primer número" in feedback, as in the lesson's own explanations), base, exponente positivo / negativo, punto decimal, dígito distinto de cero, "llena los lugares vacíos con ceros". Additional wording:

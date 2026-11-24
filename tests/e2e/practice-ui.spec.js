@@ -93,7 +93,9 @@ test.describe("start cards on every practice page", () => {
           // The card's name is the topic title (AP titles keep their CED number), and its description ends with the count.
           await expect(radio).toHaveAccessibleName(strip(topic.title[lang]));
           const count = a.generated ? a.bank.perTopic : a.bank.questions.filter(q => q.topic === topic.id).length;
-          await expect(radio).toHaveAccessibleDescription(new RegExp("\\S.* " + words[lang].questions(count) + "$"));
+          // An authored summary (AP Units 5 to 9) replaces the derived line; otherwise any line, then the count.
+          if (topic.summary) await expect(radio).toHaveAccessibleDescription(topic.summary[lang] + " " + words[lang].questions(count));
+          else await expect(radio).toHaveAccessibleDescription(new RegExp("\\S.* " + words[lang].questions(count) + "$"));
         }
         // The first topic is chosen at first; arrow keys move the choice like any radio group.
         await expect(radios.nth(1)).toBeChecked();

@@ -1,6 +1,6 @@
 # AP Chemistry Unit 9 Practice
 
-Version: 1.1.0
+Version: 1.1.1
 
 Original bilingual ZornScience practice aligned to College Board CED Unit 9, Thermodynamics and Electrochemistry. Each of eleven topics has six questions: four multiple choice and two numeric entry. There are 66 questions, 44 multiple choice and 22 numeric, with individual English and Mexican Spanish explanations for all 132 distractors. These are original aligned questions, not official College Board exam items.
 
@@ -45,6 +45,8 @@ Choose a six-question topic or Mixed review for all 66. Submit once, read feedba
 English: `/apchem-unit9-practice/`. Spanish: `/apchem-unit9-practice/?lang=es`. Mexican Spanish follows the supplied AP glossary, including entropía absoluta, energía libre de Gibbs, favorabilidad termodinámica, termodinámicamente favorable, control cinético, reacciones acopladas, celda galvánica (voltaica), celda electrolítica, ánodo, cátodo, puente salino, semirreacción, potencial estándar de reducción, potencial de celda, constante de Faraday, electrólisis and ley de Faraday. Additional wording is recorded in `../SPANISH_TERMS.md`. Decimal points, formulas and state symbols are preserved. Unit names follow the Style Kit, including ampere and coulomb.
 
 ## Changelog
+
+1.1.1: Each of this unit's topics has a one-line summary in English and Mexican Spanish (`summary` in `data.js`), written from its six questions. The topic cards show it in place of the derived question counts, which were the same on every card. Questions, answers, scoring and feedback are unchanged.
 
 1.1.0: The shared practice engine is rebuilt to match the bench labs. The start screen is a grid of topic cards (real radio inputs, with the CED topic number, an icon, the number of typed and multiple-choice questions and the question count) plus a Mixed review card, in place of the topic menu. A set shows one progress pip per question (current, right, missed; missed pips are also striped), keeps the spoken "Question 3 of 6" for screen readers, and counts a streak of right answers in memory for that set only. Feedback draws a check or a cross, highlights the correct answer and adds a Show the steps panel that numbers the sentences of the existing explanation; it opens by itself after a miss. The unit's diagrams.css figures are unchanged. The results show a score ring, a bar per topic, the missed questions with their steps, and Practice my misses, Try again and Choose a topic. Question ids, answer checking, scoring and every feedback message and explanation are unchanged. The Instructions line about the end of a set names the new buttons. Motion stops with reduced motion; nothing is shown only by motion.
 

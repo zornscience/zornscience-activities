@@ -8,6 +8,10 @@
       "title": {
         "en": "5.1 Reaction Rates",
         "es": "5.1 Velocidades de reacción"
+      },
+      "summary": {
+        "en": "Average and instantaneous rates, and the rate of each species from the coefficients.",
+        "es": "Velocidades promedio e instantáneas, y la velocidad de cada especie según los coeficientes."
       }
     },
     {
@@ -15,6 +19,10 @@
       "title": {
         "en": "5.2 Introduction to Rate Law",
         "es": "5.2 Introducción a la ley de velocidad"
+      },
+      "summary": {
+        "en": "Orders from initial rates, overall order, the units of k and calculating k.",
+        "es": "Órdenes a partir de velocidades iniciales, orden global, unidades de k y cálculo de k."
       }
     },
     {
@@ -22,6 +30,10 @@
       "title": {
         "en": "5.3 Concentration Changes Over Time",
         "es": "5.3 Cambios de concentración con el tiempo"
+      },
+      "summary": {
+        "en": "Linear plots for each order, half-life, and concentration after a given time.",
+        "es": "Gráficas lineales según el orden, vida media y concentración después de cierto tiempo."
       }
     },
     {
@@ -29,6 +41,10 @@
       "title": {
         "en": "5.4 Elementary Reactions",
         "es": "5.4 Reacciones elementales"
+      },
+      "summary": {
+        "en": "Molecularity and rate laws written straight from elementary steps.",
+        "es": "Molecularidad y leyes de velocidad escritas directamente de reacciones elementales."
       }
     },
     {
@@ -36,6 +52,10 @@
       "title": {
         "en": "5.5 Collision Model",
         "es": "5.5 Modelo de colisiones"
+      },
+      "summary": {
+        "en": "Collision energy and orientation, temperature, concentration and the Arrhenius equation.",
+        "es": "Energía y orientación de las colisiones, temperatura, concentración y ecuación de Arrhenius."
       }
     },
     {
@@ -43,6 +63,10 @@
       "title": {
         "en": "5.6 Reaction Energy Profile",
         "es": "5.6 Perfil de energía de una reacción"
+      },
+      "summary": {
+        "en": "The transition state, ΔH, and forward and reverse activation energies on a profile.",
+        "es": "Estado de transición, ΔH y energías de activación directa e inversa en un perfil."
       }
     },
     {
@@ -50,6 +74,10 @@
       "title": {
         "en": "5.7 Introduction to Reaction Mechanisms",
         "es": "5.7 Introducción a los mecanismos de reacción"
+      },
+      "summary": {
+        "en": "The overall reaction, intermediates and catalysts in proposed mechanisms.",
+        "es": "Reacción global, intermediarios y catalizadores en mecanismos propuestos."
       }
     },
     {
@@ -57,6 +85,10 @@
       "title": {
         "en": "5.8 Reaction Mechanism and Rate Law",
         "es": "5.8 Mecanismo de reacción y ley de velocidad"
+      },
+      "summary": {
+        "en": "Rate laws from a slow first step, and testing a mechanism against data.",
+        "es": "Leyes de velocidad a partir de un primer paso lento y comparación del mecanismo con los datos."
       }
     },
     {
@@ -64,6 +96,10 @@
       "title": {
         "en": "5.9 Pre-Equilibrium Approximation",
         "es": "5.9 Aproximación de preequilibrio"
+      },
+      "summary": {
+        "en": "Rate laws when a fast equilibrium comes before the slow step.",
+        "es": "Leyes de velocidad cuando un equilibrio rápido precede al paso lento."
       }
     },
     {
@@ -71,6 +107,10 @@
       "title": {
         "en": "5.10 Multistep Reaction Energy Profile",
         "es": "5.10 Perfil de energía de una reacción de varios pasos"
+      },
+      "summary": {
+        "en": "Steps, the intermediate, the rate-determining step and ΔH on a two-step profile.",
+        "es": "Pasos, intermediario, paso determinante de la velocidad y ΔH en un perfil de dos pasos."
       }
     },
     {
@@ -78,6 +118,10 @@
       "title": {
         "en": "5.11 Catalysis",
         "es": "5.11 Catálisis"
+      },
+      "summary": {
+        "en": "How a catalyst lowers the activation energy without changing ΔH or equilibrium.",
+        "es": "Cómo un catalizador baja la energía de activación sin cambiar ΔH ni el equilibrio."
       }
     }
   ],
