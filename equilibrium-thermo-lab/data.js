@@ -17,6 +17,7 @@
   "Explore Le Chatelier’s principle with concentration, volume and temperature changes.": "Explora el principio de Le Châtelier con cambios de concentración, volumen y temperatura.",
   "Calorimetry & Enthalpy Lab": "Laboratorio de calorimetría y entalpía",
   "Investigate heated metals and acid-base neutralization with live temperature traces.": "Investiga metales calientes y la neutralización ácido-base con curvas de temperatura en tiempo real.",
+  "Open lab": "Abrir laboratorio",
   "← All activities": "← Todas las actividades"
 }};
   // configure() rewrites links to absolute URLs; the lab links and the back link keep their relative form, with ?lang=es in Spanish.
