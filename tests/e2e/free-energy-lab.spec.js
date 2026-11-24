@@ -589,3 +589,23 @@ test("bench text in Mexican Spanish", async ({ page }) => {
   await page.goto("/free-energy-lab/?lang=es&mode=dg");
   await expect(page.locator("#panel-dg svg.zsa-fe-chart-dark")).toContainText("No favorecida: ΔG° > 0");
 });
+test("ΔG° and K link handles a K that overflows", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/free-energy-lab/?mode=k&case=haber");
+  // −2000 kJ at 298 K gives K = e^807, which is Infinity in JavaScript.
+  await page.locator("#k-given").fill("-2000");
+  await page.locator("#k-given").press("Tab");
+  await page.locator("#k-answer").fill("5");
+  await page.locator("#check-k").click();
+  await page.locator("#show-k").click();
+  await expect(page.locator("#k-mixture")).toHaveAttribute("aria-label", "Equilibrium mixture for A ⇌ B: A: fewer than 1 of 40");
+  await expect(page.locator("#panel-k")).not.toContainText("NaN");
+  await expect(page.locator("#k-mixture rect[transform='rotate(45)'][opacity='1']")).toHaveCount(40);
+  // And the other way: +2000 kJ gives K = 0.
+  await page.locator("#k-given").fill("2000");
+  await page.locator("#k-given").press("Tab");
+  await page.locator("#k-answer").fill("5");
+  await page.locator("#check-k").click();
+  await page.locator("#show-k").click();
+  await expect(page.locator("#k-mixture")).toHaveAttribute("aria-label", "Equilibrium mixture for A ⇌ B: B: fewer than 1 of 40");
+});

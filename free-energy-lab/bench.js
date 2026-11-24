@@ -317,7 +317,10 @@
       hideLeft.setAttribute("opacity", dgVisible ? 0 : 1);
       hideRight.setAttribute("opacity", kVisible ? 0 : 1);
       tempText.textContent = "T = " + o.temp + " K";
-      var count = Math.round(N * o.k / (1 + o.k)), words = count === 0 && o.k > 0 ? t("B: fewer than 1 of 40") : count === N && o.k < Infinity && o.k / (1 + o.k) < 1 ? t("A: fewer than 1 of 40") : t("A: {a} of 40. B: {b} of 40.", {a: N - count, b: count});
+      // K can overflow to Infinity (or underflow to 0) for an extreme ΔG°; the product fraction stays between 0 and 1.
+      // A real K is never exactly infinite or zero, so a full or empty box still says the other species is present.
+      var fraction = o.k === Infinity ? 1 : o.k > 0 ? o.k / (1 + o.k) : 0, count = Math.round(N * fraction),
+        words = count === 0 ? t("B: fewer than 1 of 40") : count === N ? t("A: fewer than 1 of 40") : t("A: {a} of 40. B: {b} of 40.", {a: N - count, b: count});
       mixText.textContent = kVisible ? words : t("Check your answer to see the mixture.");
       s.setAttribute("aria-label", dgVisible ? t("Products sit {d} reactants: {g}.", {d: t(o.dg < 0 ? "below" : o.dg > 0 ? "above" : "level with"), g: o.dgPlain}) : t("ΔG° is hidden until you check your answer."));
       mix.setAttribute("aria-label", kVisible ? t("Equilibrium mixture for A ⇌ B: {w}", {w: words}) : t("The mixture is hidden until you check your answer."));
