@@ -6,7 +6,6 @@
   if (!root) return;
   var i18n;
   root.dispatchEvent(new CustomEvent("zsa:request-i18n", {detail:{receive:function (api) { i18n = api; }}}));
-  if (!i18n) return;
   var copy = {title:"Standing Waves on a String", es:{
   // Header, instructions and share
   "Standing Waves on a String": "Ondas estacionarias en una cuerda",
@@ -143,11 +142,149 @@
   "More mass increases tension (T = mg), so waves travel faster. At fixed length and harmonic number, the required frequency rises as √T. Doubling mass multiplies it by √2, not 2. Amplitude changes how far the string moves; it does not change the resonance frequency in this model.": "Más masa aumenta la tensión (T = mg), así que las ondas viajan más rápido. Con la longitud y el número de armónico fijos, la frecuencia necesaria aumenta como √T. Duplicar la masa la multiplica por √2, no por 2. La amplitud cambia cuánto se mueve la cuerda; en este modelo no cambia la frecuencia de resonancia.",
   // Model note
   "About this model": "Acerca de este modelo",
-  "A lightly damped, small-amplitude string with ideal fixed ends and constant tension T = mg. The small driver is approximated as a node. Near resonance (within 0.5%), an ideal single harmonic makes nodes exactly stationary. Away from resonance, a modal sum (at least 16 modes, extended to cover the driving frequency; damping ratio 0.018) models the steady forced response; transients, pulley friction and string stretch are omitted. Away from resonance, several modes contribute and interior nodes are not stationary. Node markers appear only near resonance with the oscillator on and a nonzero drive. Changing length rescales the apparatus view; use ruler values rather than screen distances. The string’s vertical displacement is magnified; horizontal distances and ruler readings use the selected vibrating length. The strobe samples one phase per driving cycle without visible flashes. Normal playback is 1/40 speed and may alias at very low screen refresh rates.": "Una cuerda con poco amortiguamiento y amplitud pequeña, con extremos fijos ideales y tensión constante T = mg. El pequeño vibrador se aproxima como un nodo. Cerca de la resonancia (dentro del 0.5%), un solo armónico ideal hace que los nodos estén exactamente inmóviles. Lejos de la resonancia, una suma de modos (al menos 16 modos, ampliada para cubrir la frecuencia de excitación; coeficiente de amortiguamiento 0.018) modela la respuesta forzada estable; se omiten los transitorios, la fricción de la polea y el estiramiento de la cuerda. Lejos de la resonancia, varios modos contribuyen y los nodos interiores no están inmóviles. Los marcadores de nodos aparecen solo cerca de la resonancia, con el oscilador encendido y una excitación mayor que cero. Cambiar la longitud cambia la escala del aparato en pantalla; usa los valores de la regla y no las distancias en pantalla. El desplazamiento vertical de la cuerda está ampliado; las distancias horizontales y las lecturas de la regla usan la longitud de vibración elegida. La luz estroboscópica toma una fase por cada ciclo de excitación sin destellos visibles. La reproducción normal va a 1/40 del tiempo real y puede mostrar efectos de muestreo (aliasing) con frecuencias de actualización de pantalla muy bajas."
+  "A lightly damped, small-amplitude string with ideal fixed ends and constant tension T = mg. The small driver is approximated as a node. Near resonance (within 0.5%), an ideal single harmonic makes nodes exactly stationary. Away from resonance, a modal sum (at least 16 modes, extended to cover the driving frequency; damping ratio 0.018) models the steady forced response; transients, pulley friction and string stretch are omitted. Away from resonance, several modes contribute and interior nodes are not stationary. Node markers appear only near resonance with the oscillator on and a nonzero drive. Changing length rescales the apparatus view; use ruler values rather than screen distances. The string’s vertical displacement is magnified; horizontal distances and ruler readings use the selected vibrating length. The strobe samples one phase per driving cycle without visible flashes. Normal playback is 1/40 speed and may alias at very low screen refresh rates.": "Una cuerda con poco amortiguamiento y amplitud pequeña, con extremos fijos ideales y tensión constante T = mg. El pequeño vibrador se aproxima como un nodo. Cerca de la resonancia (dentro del 0.5%), un solo armónico ideal hace que los nodos estén exactamente inmóviles. Lejos de la resonancia, una suma de modos (al menos 16 modos, ampliada para cubrir la frecuencia de excitación; coeficiente de amortiguamiento 0.018) modela la respuesta forzada estable; se omiten los transitorios, la fricción de la polea y el estiramiento de la cuerda. Lejos de la resonancia, varios modos contribuyen y los nodos interiores no están inmóviles. Los marcadores de nodos aparecen solo cerca de la resonancia, con el oscilador encendido y una excitación mayor que cero. Cambiar la longitud cambia la escala del aparato en pantalla; usa los valores de la regla y no las distancias en pantalla. El desplazamiento vertical de la cuerda está ampliado; las distancias horizontales y las lecturas de la regla usan la longitud de vibración elegida. La luz estroboscópica toma una fase por cada ciclo de excitación sin destellos visibles. La reproducción normal va a 1/40 del tiempo real y puede mostrar efectos de muestreo (aliasing) con frecuencias de actualización de pantalla muy bajas.",
+  // Lab check: the shared labels, as in the Gas Laws and KMT Lab
+  "Lab check": "Comprobación del laboratorio",
+  "Question {current} of {total}": "Pregunta {current} de {total}",
+  "Set up the lab": "Preparar el laboratorio",
+  "The lab is set up. Follow the question and use the lab controls.": "El laboratorio está listo. Sigue la pregunta y usa los controles del laboratorio.",
+  "Check": "Comprobar",
+  "Show me": "Muéstrame",
+  "Previous": "Anterior",
+  "Next": "Siguiente",
+  "Start over": "Empezar de nuevo",
+  "Lab check started over. All answers are cleared.": "La comprobación del laboratorio empezó de nuevo. Se borraron todas las respuestas.",
+  "Correct answer": "Respuesta correcta",
+  "Correct. {explanation}": "Correcto. {explanation}",
+  "{feedback} Try again.": "{feedback} Inténtalo de nuevo.",
+  "Answer shown. {explanation}": "Respuesta mostrada. {explanation}",
+  "{score} of {total} right on the first try.": "{score} de {total} correctas al primer intento.",
+  "Completion code": "Código de finalización",
+  "Paste this code into your Google Classroom assignment.": "Pega este código en tu tarea de Google Classroom.",
+  // Lab check, question 1
+  "Three loops": "Tres segmentos",
+  "Set up the lab. Read the Fundamental f₁ readout. Which generator frequency makes the string vibrate in 3 loops (harmonic 3)?": "Prepara el laboratorio. Lee la lectura FUNDAMENTAL f₁. ¿Qué frecuencia del generador hace vibrar la cuerda en 3 segmentos (armónico 3)?",
+  "Harmonics are multiples of f₁, not f₁ plus a number. Harmonic n is at n × f₁.": "Los armónicos son múltiplos de f₁, no f₁ más un número. El armónico n está en n × f₁.",
+  "That frequency makes 4 loops. Harmonic 3 has 3 loops.": "Esa frecuencia forma 4 segmentos. El armónico 3 tiene 3 segmentos.",
+  "Higher harmonics have higher frequencies than f₁, not lower. Multiply f₁ by n.": "Los armónicos más altos tienen frecuencias mayores que f₁, no menores. Multiplica f₁ por n.",
+  "Harmonic n has frequency fₙ = n × f₁. With f₁ = {f1} Hz, harmonic 3 is 3 × {f1} = {h3} Hz. Press the 3 harmonic button to check: the generator shows {h3} Hz and the readout says n = 3.": "El armónico n tiene frecuencia fₙ = n × f₁. Con f₁ = {f1} Hz, el armónico 3 es 3 × {f1} = {h3} Hz. Presiona el botón del armónico 3 para comprobar: el generador marca {h3} Hz y la lectura dice n = 3.",
+  // Lab check, question 2
+  "Wavelength from the nodes": "Longitud de onda a partir de los nodos",
+  "Set up the lab at harmonic 3. Press Place cursors on adjacent nodes. What wavelength does the Measure the string readout give?": "Prepara el laboratorio en el armónico 3. Presiona Colocar los cursores en nodos adyacentes. ¿Qué longitud de onda indica la lectura de Medición de la cuerda?",
+  "That is Δx, the distance between neighboring nodes. It is only half a wavelength, so λ = 2Δx.": "Esa es Δx, la distancia entre nodos vecinos. Es solo media longitud de onda, así que λ = 2Δx.",
+  "That is the length of the string. At harmonic 3, 1.5 wavelengths fit on it, so one wavelength is shorter.": "Esa es la longitud de la cuerda. En el armónico 3 caben 1.5 longitudes de onda, así que una longitud de onda es menor.",
+  "That is the wavelength of harmonic 1, λ = 2L. Harmonic 3 packs in three times as many loops.": "Esa es la longitud de onda del armónico 1, λ = 2L. El armónico 3 tiene el triple de segmentos.",
+  "Neighboring nodes are Δx = {dx} m apart, half a wavelength. So λ = 2Δx = {lambda} m. Check: harmonic 3 fits 3 loops on a {L} m string, so λ = 2L / 3 = {lambda} m.": "Los nodos vecinos están a Δx = {dx} m uno del otro, media longitud de onda. Así que λ = 2Δx = {lambda} m. Comprobación: en el armónico 3 caben 3 segmentos en una cuerda de {L} m, así que λ = 2L / 3 = {lambda} m.",
+  // Lab check, question 3
+  "The same speed": "La misma rapidez",
+  "Set up the lab at harmonic 4. Read the Wave speed. Then press the 2 harmonic button and read it again. What does the Wave speed readout show?": "Prepara el laboratorio en el armónico 4. Lee la rapidez de la onda. Luego presiona el botón del armónico 2 y léela de nuevo. ¿Qué indica la lectura RAPIDEZ DE LA ONDA?",
+  "Wave speed depends on the string, not on how many loops it has. Tune to another harmonic and watch the readout.": "La rapidez de la onda depende de la cuerda, no de cuántos segmentos tiene. Sintoniza otro armónico y observa la lectura.",
+  "That number is the generator frequency, in hertz. Wave speed is in m/s: read the Wave speed readout.": "Ese número es la frecuencia del generador, en hertz. La rapidez de la onda está en m/s: lee la lectura RAPIDEZ DE LA ONDA.",
+  "Wave speed depends only on the tension and the string, so it is {v} m/s at harmonic 2 and at harmonic 4. Higher harmonics have a higher frequency and a shorter wavelength: v = fλ = {freq} Hz × {lambda4} m = {v} m/s, and at harmonic 2, {f2} Hz × {lambda2} m = {v} m/s.": "La rapidez de la onda depende solo de la tensión y de la cuerda, así que es de {v} m/s en el armónico 2 y en el armónico 4. Los armónicos más altos tienen mayor frecuencia y menor longitud de onda: v = fλ = {freq} Hz × {lambda4} m = {v} m/s, y en el armónico 2, {f2} Hz × {lambda2} m = {v} m/s.",
+  // Lab check, question 4
+  "More tension": "Más tensión",
+  "Set up the lab. The hanging mass is now 400 g, double the usual 200 g, which gave f₁ = {f1Base} Hz. What does the Fundamental f₁ readout show?": "Prepara el laboratorio. La masa colgante ahora es de 400 g, el doble de los 200 g de siempre, que daban f₁ = {f1Base} Hz. ¿Qué indica la lectura FUNDAMENTAL f₁?",
+  "Doubling the mass doubles the tension, but wave speed goes as the square root of tension. f₁ does not double.": "Duplicar la masa duplica la tensión, pero la rapidez de la onda va con la raíz cuadrada de la tensión. f₁ no se duplica.",
+  "More mass means more tension, so waves travel faster and f₁ changes. Read the Fundamental readout.": "Más masa significa más tensión, así que las ondas viajan más rápido y f₁ cambia. Lee la lectura FUNDAMENTAL.",
+  "More tension makes waves faster, so f₁ rises. It does not fall.": "Más tensión hace las ondas más rápidas, así que f₁ aumenta. No disminuye.",
+  "Doubling the mass doubles the tension (T = mg = {T} N). Wave speed goes as √T, so f₁ rises by a factor of √2, about 1.41: {f1Base} × √2 = {f1} Hz, not twice as much.": "Duplicar la masa duplica la tensión (T = mg = {T} N). La rapidez de la onda va con √T, así que f₁ aumenta por un factor de √2, cerca de 1.41: {f1Base} × √2 = {f1} Hz, no el doble.",
+  // Lab check, question 5
+  "A heavier cord": "Una cuerda más pesada",
+  "Set up the lab with the Heavy cord (4.0 g/m) at the same tension and length. What does the Wave speed readout show?": "Prepara el laboratorio con la cuerda pesada (4.0 g/m) con la misma tensión y longitud. ¿Qué indica la lectura RAPIDEZ DE LA ONDA?",
+  "A heavier string changes the speed. Compare the readout with {vMedium} m/s for the Medium cord.": "Una cuerda más pesada cambia la rapidez. Compara la lectura con {vMedium} m/s de la cuerda media.",
+  "A heavier string is harder to move, so waves travel slower, not faster.": "Una cuerda más pesada cuesta más mover, así que las ondas viajan más lento, no más rápido.",
+  "Wave speed goes as 1 / √μ. Doubling μ divides the speed by √2, about 1.41, not by 2.": "La rapidez de la onda va con 1 / √μ. Duplicar μ divide la rapidez entre √2, cerca de 1.41, no entre 2.",
+  "v = √(T/μ). Doubling the density at the same tension divides the speed by √2: {vMedium} / √2 = {v} m/s. The same string would also have a lower f₁ and lower harmonics.": "v = √(T/μ). Duplicar la densidad con la misma tensión divide la rapidez entre √2: {vMedium} / √2 = {v} m/s. La misma cuerda también tendría una f₁ menor y armónicos menores."
 }};
-  i18n.configure(copy);
+  if (i18n) i18n.configure(copy);
+  // Lab check (labcheck.js and ../shared/zsa-labcheck.js). Each choice is [value, label, feedback key]; the right
+  // choice has a null key. Every number in braces is filled in by labcheck.js from the lab's own model (lab.js
+  // compute()) and its number formatting, so no answer is written here. setup is the starting state: frequency (Hz),
+  // mass (hanging mass, g), length (vibrating length, m), density (string density, kg/m) and nodes (true turns on
+  // Label nodes & antinodes). base is the lab's own Reset setup, the usual 200 g, 1.20 m Medium cord that the questions
+  // compare with ({f1Base}, {vMedium}).
+  var check = {
+    labels: {
+      title: "Lab check",
+      progress: "Question {current} of {total}",
+      setupButton: "Set up the lab",
+      setupDone: "The lab is set up. Follow the question and use the lab controls.",
+      check: "Check",
+      show: "Show me",
+      previous: "Previous",
+      next: "Next",
+      restart: "Start over",
+      restarted: "Lab check started over. All answers are cleared.",
+      correctChoice: "Correct answer",
+      correct: "Correct. {explanation}",
+      retry: "{feedback} Try again.",
+      shown: "Answer shown. {explanation}",
+      score: "{score} of {total} right on the first try.",
+      completion: "Completion code",
+      codeNote: "Paste this code into your Google Classroom assignment."
+    },
+    base: {frequency: 26.1, mass: 200, length: 1.2, density: 0.002},
+    questions: [
+      {id: "harmonic3", title: "Three loops", setup: {frequency: 26.1, mass: 200, length: 1.2, density: 0.002},
+        question: "Set up the lab. Read the Fundamental f₁ readout. Which generator frequency makes the string vibrate in 3 loops (harmonic 3)?",
+        choices: [["right", "{h3} Hz", null], ["add", "{add} Hz", "add"], ["h4", "{h4} Hz", "h4"], ["div", "{div} Hz", "div"]],
+        feedback: {
+          add: "Harmonics are multiples of f₁, not f₁ plus a number. Harmonic n is at n × f₁.",
+          h4: "That frequency makes 4 loops. Harmonic 3 has 3 loops.",
+          div: "Higher harmonics have higher frequencies than f₁, not lower. Multiply f₁ by n."
+        },
+        explanation: "Harmonic n has frequency fₙ = n × f₁. With f₁ = {f1} Hz, harmonic 3 is 3 × {f1} = {h3} Hz. Press the 3 harmonic button to check: the generator shows {h3} Hz and the readout says n = 3."},
+      {id: "wavelength", title: "Wavelength from the nodes", setup: {frequency: 39.15, mass: 200, length: 1.2, density: 0.002, nodes: true},
+        question: "Set up the lab at harmonic 3. Press Place cursors on adjacent nodes. What wavelength does the Measure the string readout give?",
+        choices: [["right", "{lambda} m", null], ["dx", "{dx} m", "dx"], ["whole", "{L} m", "whole"], ["twoL", "{twoL} m", "twoL"]],
+        feedback: {
+          dx: "That is Δx, the distance between neighboring nodes. It is only half a wavelength, so λ = 2Δx.",
+          whole: "That is the length of the string. At harmonic 3, 1.5 wavelengths fit on it, so one wavelength is shorter.",
+          twoL: "That is the wavelength of harmonic 1, λ = 2L. Harmonic 3 packs in three times as many loops."
+        },
+        explanation: "Neighboring nodes are Δx = {dx} m apart, half a wavelength. So λ = 2Δx = {lambda} m. Check: harmonic 3 fits 3 loops on a {L} m string, so λ = 2L / 3 = {lambda} m."},
+      {id: "speed", title: "The same speed", setup: {frequency: 52.2, mass: 200, length: 1.2, density: 0.002},
+        question: "Set up the lab at harmonic 4. Read the Wave speed. Then press the 2 harmonic button and read it again. What does the Wave speed readout show?",
+        choices: [["right", "{v} m/s", null], ["double", "{double} m/s", "double"], ["half", "{half} m/s", "half"], ["hz", "{freq} m/s", "hz"]],
+        feedback: {
+          double: "Wave speed depends on the string, not on how many loops it has. Tune to another harmonic and watch the readout.",
+          half: "Wave speed depends on the string, not on how many loops it has. Tune to another harmonic and watch the readout.",
+          hz: "That number is the generator frequency, in hertz. Wave speed is in m/s: read the Wave speed readout."
+        },
+        explanation: "Wave speed depends only on the tension and the string, so it is {v} m/s at harmonic 2 and at harmonic 4. Higher harmonics have a higher frequency and a shorter wavelength: v = fλ = {freq} Hz × {lambda4} m = {v} m/s, and at harmonic 2, {f2} Hz × {lambda2} m = {v} m/s."},
+      {id: "tension", title: "More tension", setup: {frequency: 26.1, mass: 400, length: 1.2, density: 0.002},
+        question: "Set up the lab. The hanging mass is now 400 g, double the usual 200 g, which gave f₁ = {f1Base} Hz. What does the Fundamental f₁ readout show?",
+        choices: [["right", "{f1} Hz", null], ["double", "{double} Hz", "double"], ["same", "{f1Base} Hz", "same"], ["half", "{half} Hz", "half"]],
+        feedback: {
+          double: "Doubling the mass doubles the tension, but wave speed goes as the square root of tension. f₁ does not double.",
+          same: "More mass means more tension, so waves travel faster and f₁ changes. Read the Fundamental readout.",
+          half: "More tension makes waves faster, so f₁ rises. It does not fall."
+        },
+        explanation: "Doubling the mass doubles the tension (T = mg = {T} N). Wave speed goes as √T, so f₁ rises by a factor of √2, about 1.41: {f1Base} × √2 = {f1} Hz, not twice as much."},
+      {id: "density", title: "A heavier cord", setup: {frequency: 26.1, mass: 200, length: 1.2, density: 0.004},
+        question: "Set up the lab with the Heavy cord (4.0 g/m) at the same tension and length. What does the Wave speed readout show?",
+        choices: [["right", "{v} m/s", null], ["same", "{vMedium} m/s", "same"], ["faster", "{vFaster} m/s", "faster"], ["half", "{half} m/s", "half"]],
+        feedback: {
+          same: "A heavier string changes the speed. Compare the readout with {vMedium} m/s for the Medium cord.",
+          faster: "A heavier string is harder to move, so waves travel slower, not faster.",
+          half: "Wave speed goes as 1 / √μ. Doubling μ divides the speed by √2, about 1.41, not by 2."
+        },
+        explanation: "v = √(T/μ). Doubling the density at the same tension divides the speed by √2: {vMedium} / √2 = {v} m/s. The same string would also have a lower f₁ and lower harmonics."}
+    ]
+  };
+  // In Spanish only the words change: ids, setups, choice values and feedback keys stay as they are.
+  var text = function (value) { return i18n ? i18n.text(value) : value; };
+  var labels = {};
+  Object.keys(check.labels).forEach(function (k) { labels[k] = text(check.labels[k]); });
+  var localized = {labels: labels, base: check.base, questions: check.questions.map(function (q) {
+    var feedback = {};
+    Object.keys(q.feedback).forEach(function (k) { feedback[k] = text(q.feedback[k]); });
+    return {id: q.id, title: text(q.title), setup: q.setup, question: text(q.question),
+      choices: q.choices.map(function (c) { return [c[0], text(c[1]), c[2]]; }), feedback: feedback, explanation: text(q.explanation)};
+  })};
+  root.addEventListener("zsa:request-data", function (event) { event.detail.receive({check: localized}); });
   // Two instruction steps hold bold text inside one sentence. Spanish rebuilds each from one full template around it.
-  if (i18n.lang !== "es") return;
+  if (!i18n || i18n.lang !== "es") return;
   function rebuild(n, template, key) {
     var step = root.querySelector("#zsa-th-instructions li:nth-child(" + n + ")"), strong = step && step.querySelector("strong");
     if (!strong) return;

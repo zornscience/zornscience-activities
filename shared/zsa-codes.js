@@ -82,7 +82,12 @@
     {id:14, prefix:"SLC", slug:"snells-law-lab", setting:"Lab check", name:"Snell’s Law & Refraction", maxItems:5,
       stats:[["bend", "Air into glass"], ["diamond", "Diamond bends the most"], ["match", "Matching indices"],
         ["critical", "Critical angle, glass to air"], ["water", "Glass in water"]],
-      totals:[["bend"], ["diamond"], ["match"], ["critical"], ["water"]], items:[0, 1, 2, 3, 4]}
+      totals:[["bend"], ["diamond"], ["match"], ["critical"], ["water"]], items:[0, 1, 2, 3, 4]},
+    // The Standing Waves prefix is STLC because SLC is the Snell's Law lab check.
+    {id:15, prefix:"STLC", slug:"standing-waves-lab", setting:"Lab check", name:"Standing Waves on a String", maxItems:5,
+      stats:[["harmonic3", "Three loops"], ["wavelength", "Wavelength from the nodes"], ["speed", "The same speed"],
+        ["tension", "More tension"], ["density", "A heavier cord"]],
+      totals:[["harmonic3"], ["wavelength"], ["speed"], ["tension"], ["density"]], items:[0, 1, 2, 3, 4]}
   ];
   // The fixed fields, least significant first: [name, how many values]. Then one total per totals group (0 to
   // maxItems) and one first-try count per stat (0 to its total). Show me and Hint counts stop at their top value.

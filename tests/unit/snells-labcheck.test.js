@@ -126,28 +126,26 @@ test("the SLC entry and all 32 first-try patterns with Show me counts round-trip
   }
 });
 
-test("existing codes read the same after SLC is registered, ids 11 to 13 keep their labs, and 17 ids are left", function () {
+test("existing codes read the same after SLC is registered, ids 11 to 13 keep their labs, and STLC stays free for Standing Waves", function () {
   assert.equal(codes.encode({activity: "GAS", version: "1.1.2", day: 300, items: 6, totals: {predict: 6, test: 6, explain: 6},
     results: {predict: 4, test: 5, explain: 3}, show: 2, hints: 1}), "GAS-0ME0-442B-093D-C");
   [["ALC-03EV-SG02-2F0H-8A9", 8], ["PLC-02R2-SG02-2F0S-9CD", 9], ["HLC-0378-SG02-2F0S-AGV", 10], ["CLC-02R2-SG02-2F0H-CRZ", 12], ["PRLC-0378-SG02-2F0H-DRT", 13]].forEach(function (pair) {
     var d = codes.decode(pair[0], 8191);
     assert.equal(d.status, "valid", pair[0]); assert.equal(d.activity.id, pair[1]);
   });
-  // No other prefix starts SLC or is the start of it. Standing Waves cannot use SLC, so it will register STLC.
+  // No other prefix starts SLC or is the start of it. Standing Waves cannot use SLC, so it registers STLC (a different
+  // prefix: SLC is not the start of it).
   codes.ACTIVITIES.forEach(function (a) {
     if (a.prefix === "SLC") return;
     assert.ok(a.prefix.indexOf("SLC") !== 0 && "SLC".indexOf(a.prefix) !== 0, a.prefix);
-    assert.ok(a.prefix !== "STLC" && a.prefix.indexOf("STLC") !== 0 && "STLC".indexOf(a.prefix) !== 0, "STLC stays free for Standing Waves: " + a.prefix);
   });
   var used = codes.ACTIVITIES.map(function (a) { return a.id; });
   assert.equal(codes.activity("ILC").id, 11); assert.equal(codes.activity("CLC").id, 12); assert.equal(codes.activity("PRLC").id, 13);
   assert.equal(new Set(used).size, used.length, "ids are unique");
   assert.equal(codes.decode(codes.encode({activity: "SLC", version: "1.2.0", day: 316, items: 5, totals: {bend: 1, diamond: 1, match: 1, critical: 1, water: 1},
     results: {bend: 1, diamond: 1, match: 0, critical: 1, water: 1}, show: 1, hints: 0}), 8191).activity.id, 14);
-  var free = [];
-  for (var id = 1; id <= 31; id++) if (used.indexOf(id) < 0) free.push(id);
-  assert.equal(free.length, 17, "ids 15 to 31 are left");
-  assert.equal(free[0], 15);
+  // Ids 1 to 14 are all taken; later labs take the next free ids, so no maximum or count is pinned here.
+  for (var id = 1; id <= 14; id++) assert.ok(used.indexOf(id) >= 0, "id " + id + " is used");
 });
 
 test("every Snell's Law lab check sentence has Mexican Spanish with the same placeholders", function () {

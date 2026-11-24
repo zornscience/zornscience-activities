@@ -12,7 +12,8 @@ let samples=[],task="harmonics";
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 locked=reduced;
 function svg(tag,attrs,parent,text){const e=document.createElementNS(ns,tag);Object.entries(attrs).forEach(([k,v])=>e.setAttribute(k,v));if(text!==undefined)e.textContent=text;parent.appendChild(e);return e;}
-function model(){const L=+$('length').value,T=+$('mass').value/1000*9.81,mu=+$('density').value,v=Math.sqrt(T/mu),f1=v/(2*L),f=+$('frequency').value,n=Math.max(1,Math.round(f/f1)),detune=Math.abs(f-n*f1)/(n*f1);return{L,T,v,f1,f,n,detune,resonant:detune<0.005};}
+function compute(L,mass,mu,f){const T=mass/1000*9.81,v=Math.sqrt(T/mu),f1=v/(2*L),n=Math.max(1,Math.round(f/f1)),detune=Math.abs(f-n*f1)/(n*f1);return{L,T,v,f1,f,n,detune,resonant:detune<0.005};}
+function model(){return compute(+$('length').value,+$('mass').value,+$('density').value,+$('frequency').value);}
 function response(m,x,phase){if(m.resonant)return Math.sin(m.n*Math.PI*x)*Math.sin(phase-Math.PI/2)/m.n;let y=0;for(let n=1;n<=Math.max(16,Math.ceil(m.f/m.f1)+4);n++){const r=m.f/(n*m.f1),d=1-r*r,b=2*0.018*r;const gain=0.036/(n*Math.sqrt(d*d+b*b));y+=gain*Math.sin(n*Math.PI*x)*Math.sin(phase-Math.atan2(b,d));}return y;}
 // Spatial quadrature samples only change when the setup changes. Animation reuses them.
 function prepareWave(){const m=model();samples=[];for(let i=0;i<=400;i++){const x=i/400;samples.push([response(m,x,0),response(m,x,Math.PI/2)]);}}
@@ -71,5 +72,13 @@ const narrow=matchMedia('(max-width: 760px)'),setupControls=document.querySelect
 function placeControls(){if(narrow.matches){$('mobile-controls').appendChild(setupControls);$('apparatus').setAttribute('viewBox','280 65 660 300');}else{workspace.insertBefore(setupControls,workspace.firstChild);$('apparatus').setAttribute('viewBox','0 0 1000 490');}}
 narrow.addEventListener('change',placeControls);placeControls();
 function frame(now){if(last&&!document.hidden&&running&&!locked)time+=Math.min((now-last)/1000,.05)/40;last=now;if(running&&!locked)draw();requestAnimationFrame(frame);}$('frequency').value=26.1;update();requestAnimationFrame(frame);
+// The lab check (labcheck.js) reaches the lab through this event, never a global. model(s) is the lab's own model for a
+// setup {frequency, mass, length, density} without touching the controls, so the check can work out every question's
+// numbers up front. setup(s) puts the controls in a question's starting state: frequency (Hz), hanging mass (g),
+// vibrating length (m) and string density (kg/m), drive amplitude 65%, the oscillator on, and Label nodes & antinodes on
+// when s.nodes is true. It leaves strobe lock, the cursors and the investigation as they are. format is the readouts'
+// number formatting: two decimals for Hz, m/s and N, three for metres.
+function labSetup(s){$('frequency').value=s.frequency;$('mass').value=s.mass;$('length').value=s.length;$('density').value=s.density;$('amplitude').value=65;if(s.nodes)$('nodes').checked=true;running=true;update();}
+if(root)root.addEventListener('zsa-sw:request-lab',e=>e.detail.receive({model:s=>compute(s.length,s.mass,s.density,s.frequency),setup:labSetup,format:(v,d)=>v.toFixed(d===undefined?2:d)}));
 })();
 
