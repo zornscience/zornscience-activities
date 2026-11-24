@@ -245,7 +245,7 @@
         "Choose a skill, then start. Mixed review includes all three skills.":"Elige una habilidad y comienza. El repaso mixto incluye las tres habilidades.",
         "Type your answer. The % sign is optional. For a percent change, type a negative sign for a decrease; a plus sign for an increase is optional.":"Escribe tu respuesta. El signo % es opcional. En un cambio porcentual, escribe un signo negativo para una disminución; el signo más para un aumento es opcional.",
         "The line under each question says how many significant figures to keep. They are advice here, not scored.":"La línea debajo de cada pregunta indica cuántas cifras significativas debes conservar. Aquí son una sugerencia y no cuentan en la puntuación.",
-        "Submit once per question and read the feedback. Try again gives you new numbers.":"Envía una respuesta por pregunta y lee la retroalimentación. Intentar de nuevo te da números nuevos.",
+        "Submit once per question and read the feedback. New numbers gives you a new set, and Practice my misses repeats the questions you missed.":"Envía una respuesta por pregunta y lee la retroalimentación. Números nuevos te da una serie nueva y Practicar mis errores repite las preguntas que fallaste.",
         "Type a number such as 4.1, +35 or -25.0.":"Escribe un número como 4.1, +35 o -25.0.",
         "Reference":"Consulta", "Percent error and percent change":"Porcentaje de error y cambio porcentual",
         "Percent error = |measured − accepted| ÷ accepted × 100.":"Porcentaje de error = |valor medido − valor aceptado| ÷ valor aceptado × 100.",

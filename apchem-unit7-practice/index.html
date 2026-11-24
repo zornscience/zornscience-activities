@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.0.5">
+<meta name="zsa-version" content="1.1.0">
 <title>AP Chemistry Unit 7 Practice | ZornScience</title>
 <meta name="description" content="Catch up on AP Chemistry Unit 7 with 72 original questions, instant explanations, and English or Spanish practice from ZornScience." data-zsa-es="Ponte al corriente con la unidad 7 de Química AP: 72 preguntas originales con explicaciones inmediatas, en español o inglés, de ZornScience.">
 <link rel="canonical" href="https://activities.zornscience.org/apchem-unit7-practice/">
@@ -12,17 +12,17 @@
 <link rel="alternate" hreflang="es" href="https://activities.zornscience.org/apchem-unit7-practice/?lang=es">
 <link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/apchem-unit7-practice/">
 <link rel="icon" href="../favicon.png" type="image/png">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.5">
-<link rel="stylesheet" href="../shared/zsa-practice.css?v=1.0.5">
-<link rel="stylesheet" href="diagrams.css?v=1.0.5">
-<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.5">
-<script src="../shared/zsa-embed.js?v=1.0.5" defer></script>
-<script src="../shared/zsa-i18n.js?v=1.0.5" defer></script>
-<script src="data.js?v=1.0.5" defer></script>
-<script src="../shared/zsa-practice-model.js?v=1.0.5" defer></script>
-<script src="../shared/zsa-practice.js?v=1.0.5" defer></script>
-<script src="../shared/zsa-header.js?v=1.0.5" defer></script>
-<link rel="stylesheet" href="../shared/zsa-about.css?v=1.0.5"><script src="../shared/zsa-about.js?v=1.0.5" defer></script></head>
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.1.0">
+<link rel="stylesheet" href="../shared/zsa-practice.css?v=1.1.0">
+<link rel="stylesheet" href="diagrams.css?v=1.1.0">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.1.0">
+<script src="../shared/zsa-embed.js?v=1.1.0" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.1.0" defer></script>
+<script src="data.js?v=1.1.0" defer></script>
+<script src="../shared/zsa-practice-model.js?v=1.1.0" defer></script>
+<script src="../shared/zsa-practice.js?v=1.1.0" defer></script>
+<script src="../shared/zsa-header.js?v=1.1.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.1.0"><script src="../shared/zsa-about.js?v=1.1.0" defer></script></head>
 <body>
 <main class="zsa zsa-u7 zsa-practice" data-zsa-activity="apchem-unit7-practice" data-zsa-practice="zsa-u7">
 <header data-zsa-header>
@@ -41,7 +41,7 @@
 <li>Choose a topic, then start. Mixed review includes all twelve topics.</li>
 <li>Select one answer, or enter a number and choose its unit. For K or Q, choose no units. For particles, choose count.</li>
 <li>Submit once per question. Read the explanation, then continue. Your score counts correct answers; a significant figure note does not remove a point.</li>
-<li>At the end, Try again shuffles the questions and answer choices. Choose another topic to build a new set.</li>
+<li>At the end, Try again shuffles the questions and answer choices, Practice my misses repeats only the questions you missed, and Choose a topic goes back to the topic cards.</li>
 </ol>
 </dialog>
 <dialog class="zsa-header-dialog" id="zsa-header-share" aria-labelledby="zsa-header-share-title">
@@ -57,14 +57,12 @@
 <p class="zsa-eyebrow">AP Chemistry · Unit 7</p>
 <h2 id="zsa-u7-setup-title">Catch up at your own pace.</h2>
 <p>Choose one topic for six questions, or Mixed review for all 72. Read the feedback after each answer.</p>
-<div class="zsa-u7-settings zsa-practice-settings"><div><label for="zsa-u7-topic">Topic</label><select id="zsa-u7-topic"></select></div><button class="zsa-btn zsa-btn--primary" id="zsa-u7-start" type="button">Start practice</button></div>
+<fieldset id="zsa-u7-topic" class="zsa-practice-skills"><legend>Choose a topic to practice</legend></fieldset>
+<div class="zsa-u7-settings zsa-practice-settings"><button class="zsa-btn zsa-btn--primary" id="zsa-u7-start" type="button">Start practice</button></div>
 <p class="zsa-u7-small zsa-practice-small">No timer. Use scratch paper and a calculator. The equilibrium reference is below.</p>
 </section>
 <section id="zsa-u7-play" hidden aria-labelledby="zsa-u7-question">
-<div class="zsa-u7-status zsa-practice-status"><p id="zsa-u7-position"></p>
-<p id="zsa-u7-score"></p>
-</div>
-<progress id="zsa-u7-progress" value="0" max="6" aria-label="Set progress"></progress>
+<div class="zsa-practice-session"><div class="zsa-u7-status zsa-practice-status zsa-sr-only"><p id="zsa-u7-position"></p><p id="zsa-u7-score"></p></div><div id="zsa-u7-progress" class="zsa-practice-track" aria-hidden="true"></div><p id="zsa-u7-count" class="zsa-practice-count" aria-hidden="true"></p><p id="zsa-u7-streak" class="zsa-practice-streak" hidden></p></div>
 <div class="zsa-card zsa-u7-question-card">
 <p class="zsa-eyebrow" id="zsa-u7-topic-name"></p>
 <h2 id="zsa-u7-question" tabindex="-1"></h2>
@@ -130,9 +128,9 @@
 </section>
 <section id="zsa-u7-results" class="zsa-card" aria-labelledby="zsa-u7-results-title" hidden>
 <h2 id="zsa-u7-results-title" tabindex="-1">Your set is complete</h2>
-<p id="zsa-u7-total" class="zsa-u7-total zsa-practice-total"></p>
-<h3>Results by topic</h3><ul id="zsa-u7-breakdown" class="zsa-practice-breakdown"></ul>
-<div class="zsa-u7-actions zsa-practice-actions"><button id="zsa-u7-retry" class="zsa-btn zsa-btn--primary" type="button">Try again</button><button id="zsa-u7-choose" class="zsa-btn" type="button">Choose another topic</button></div>
+<div class="zsa-practice-summary"><div id="zsa-u7-ring" class="zsa-practice-ring"></div><div class="zsa-practice-summary-text"><p id="zsa-u7-total" class="zsa-u7-total zsa-practice-total"></p><p id="zsa-u7-best" class="zsa-practice-best" hidden></p></div></div>
+<h3 id="zsa-u7-breakdown-title">Results by topic</h3><ul id="zsa-u7-breakdown" class="zsa-practice-breakdown" aria-labelledby="zsa-u7-breakdown-title"></ul>
+<div class="zsa-u7-actions zsa-practice-actions"><button id="zsa-u7-misses" class="zsa-btn zsa-btn--primary" type="button" hidden>Practice my misses</button><button id="zsa-u7-retry" class="zsa-btn zsa-btn--primary" type="button">Try again</button><button id="zsa-u7-choose" class="zsa-btn" type="button">Choose another topic</button></div>
 <div id="zsa-u7-review"></div>
 </section>
 <details class="zsa-panel zsa-u7-reference zsa-practice-reference" id="zsa-u7-reference">

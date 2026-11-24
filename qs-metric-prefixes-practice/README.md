@@ -1,6 +1,6 @@
 # Metric Prefixes Practice
 
-Version: 1.0.2
+Version: 1.1.0
 
 Generated practice for the Quantitative Skills lesson [Metric Prefixes](https://zornscience.org/science/quantitative-skills/units/metric-prefixes/). Every set has new numbers. Three skills: prefix meanings, the prefix ladder, and converting. A skill gives 8 questions; Mixed review gives 12, four of each. English: `/qs-metric-prefixes-practice/`. Mexican Spanish: `/qs-metric-prefixes-practice/?lang=es`.
 
@@ -43,6 +43,8 @@ Moving the decimal point is the skill, so significant figures are advice: the ri
 Runs on the shared question-set engine (`../shared/zsa-practice.js`) with the generated-bank options described in `../shared/README.md`. Native controls only, so Tab, arrow keys, Enter and Space work as usual. Spanish follows the live lesson and the Style Kit: prefijo métrico, unidad base, potencia de diez, escalera de prefijos, peldaño, mueve el punto decimal, lugares; mili (not milli), kilómetros, micrómetros, nanómetros. New wording is in `../SPANISH_TERMS.md`.
 
 ## Changelog
+
+1.1.0: The shared practice engine is rebuilt to match the bench labs. The start screen is a grid of skill cards (real radio inputs, with an icon, a line about the question kinds and the question count) plus a Mixed review card, in place of the topic menu. A set shows one progress pip per question (current, right, missed; missed pips are also striped), keeps the spoken "Question 3 of 8" for screen readers, and counts a streak of right answers in memory for that set only. Feedback draws a check or a cross, highlights the correct answer and adds a Show the steps panel that numbers the sentences of the existing explanation; it opens by itself after a miss. The results show a score ring, a bar per skill, the missed questions with their steps, and Practice my misses, New numbers and Choose a skill. Question ids, `bank.rebuild(id)`, answer checking, scoring and every feedback message and explanation are unchanged. The Instructions line about the end of a set names the new buttons. Motion stops with reduced motion; nothing is shown only by motion.
 
 1.0.1: Patch bump for the shared practice engine (`shared/zsa-practice.js`), which gained an opt-in typed-equation question type used only by Rearranging Equations Practice. This page does not load the equation reader and its questions, scoring and text are unchanged.
 

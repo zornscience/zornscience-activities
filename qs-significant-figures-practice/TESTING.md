@@ -1,6 +1,6 @@
 # Significant Figures Practice testing
 
-Version: 1.0.2
+Version: 1.1.0
 
 ## Generators (Node)
 
@@ -18,6 +18,8 @@ The shared reader and judge have their own tests in `tests/unit/practice-engine.
 ## Browser
 
 `tests/e2e/qs-practice.spec.js` plays this activity in English and Spanish: a full mixed set with the activity's own answers, feedback and explanations, the results by topic, Try again with new questions, then wrong answers and the review list. It also checks keyboard-only play (Tab, arrow keys, Enter and Space, with a visible focus outline), axe-core at 1366 and 320 px in the setup, question, feedback and results states, no sideways scrolling, no English left on the Spanish page, typed forms end to end (scientific notation, units, the comma and power messages), the validated lesson backlink, and no requests outside the site.
+
+Version 1.1.0: `tests/e2e/practice-ui.spec.js` checks the shared engine's start cards (one radio per topic plus Mixed review, arrow keys, names and descriptions), the progress pips and the spoken position, the streak, the Show the steps panel (closed after a right answer, open after a miss, the explanation unchanged), the results ring and bars, Practice my misses, New numbers and Choose a skill, reduced motion, embed mode and Spanish. The other browser tests choose topics through the cards.
 
 ## Not automated
 

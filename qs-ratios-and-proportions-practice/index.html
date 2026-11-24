@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.0.2">
+<meta name="zsa-version" content="1.1.0">
 <title>Ratios and Proportions Practice | ZornScience</title>
 <meta name="description" content="Practice ratios and proportions with new numbers every set: write and simplify ratios, solve proportions and use mole ratios, with instant feedback." data-zsa-es="Practica relaciones y proporciones con números nuevos en cada serie: escribe y simplifica relaciones, resuelve proporciones y usa relaciones molares.">
 <link rel="canonical" href="https://activities.zornscience.org/qs-ratios-and-proportions-practice/">
@@ -12,16 +12,16 @@
 <link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-ratios-and-proportions-practice/?lang=es">
 <link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-ratios-and-proportions-practice/">
 <link rel="icon" href="../favicon.png" type="image/png">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.0.2">
-<link rel="stylesheet" href="../shared/zsa-practice.css?v=1.0.2">
-<link rel="stylesheet" href="../shared/zsa-header.css?v=1.0.2">
-<script src="../shared/zsa-embed.js?v=1.0.2" defer></script>
-<script src="../shared/zsa-i18n.js?v=1.0.2" defer></script>
-<script src="../shared/zsa-practice-model.js?v=1.0.2" defer></script>
-<script src="data.js?v=1.0.2" defer></script>
-<script src="../shared/zsa-practice.js?v=1.0.2" defer></script>
-<script src="../shared/zsa-header.js?v=1.0.2" defer></script>
-<link rel="stylesheet" href="../shared/zsa-about.css?v=1.0.2"><script src="../shared/zsa-about.js?v=1.0.2" defer></script></head>
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.1.0">
+<link rel="stylesheet" href="../shared/zsa-practice.css?v=1.1.0">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.1.0">
+<script src="../shared/zsa-embed.js?v=1.1.0" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.1.0" defer></script>
+<script src="../shared/zsa-practice-model.js?v=1.1.0" defer></script>
+<script src="data.js?v=1.1.0" defer></script>
+<script src="../shared/zsa-practice.js?v=1.1.0" defer></script>
+<script src="../shared/zsa-header.js?v=1.1.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.1.0"><script src="../shared/zsa-about.js?v=1.1.0" defer></script></head>
 <body>
 <main class="zsa zsa-qrp zsa-practice" data-zsa-activity="qs-ratios-and-proportions-practice" data-zsa-practice="zsa-qrp">
 <header data-zsa-header>
@@ -39,7 +39,7 @@
 <li>Choose a skill, then start. Mixed review includes all three skills.</li>
 <li>To write a ratio, choose the answer with the first quantity named first, in simplest form.</li>
 <li>For a calculation, type the number. A unit after it is optional. The line under the question gives the significant figures to keep, as advice.</li>
-<li>Submit once per question and read the feedback. Try again gives you new numbers.</li>
+<li>Submit once per question and read the feedback. New numbers gives you a new set, and Practice my misses repeats the questions you missed.</li>
 </ol>
 </dialog>
 <dialog class="zsa-header-dialog" id="zsa-header-share" aria-labelledby="zsa-header-share-title">
@@ -53,12 +53,12 @@
 <p class="zsa-eyebrow">Quantitative Skills · Ratios and Percents</p>
 <h2 id="zsa-qrp-setup-title">New numbers every set.</h2>
 <p>Choose one skill for 8 questions, or Mixed review for 12. Every set has new numbers.</p>
-<div class="zsa-qrp-settings zsa-practice-settings"><div><label for="zsa-qrp-topic">Topic</label><select id="zsa-qrp-topic"></select></div><button class="zsa-btn zsa-btn--primary" id="zsa-qrp-start" type="button">Start practice</button></div>
+<fieldset id="zsa-qrp-topic" class="zsa-practice-skills"><legend>Choose a skill to practice</legend></fieldset>
+<div class="zsa-qrp-settings zsa-practice-settings"><button class="zsa-btn zsa-btn--primary" id="zsa-qrp-start" type="button">Start practice</button></div>
 <p class="zsa-qrp-small zsa-practice-small">No timer. Use scratch paper and a calculator. The rules from the lesson are below.</p>
 </section>
 <section id="zsa-qrp-play" hidden aria-labelledby="zsa-qrp-question">
-<div class="zsa-qrp-status zsa-practice-status"><p id="zsa-qrp-position"></p><p id="zsa-qrp-score"></p></div>
-<progress id="zsa-qrp-progress" value="0" max="8" aria-label="Set progress"></progress>
+<div class="zsa-practice-session"><div class="zsa-qrp-status zsa-practice-status zsa-sr-only"><p id="zsa-qrp-position"></p><p id="zsa-qrp-score"></p></div><div id="zsa-qrp-progress" class="zsa-practice-track" aria-hidden="true"></div><p id="zsa-qrp-count" class="zsa-practice-count" aria-hidden="true"></p><p id="zsa-qrp-streak" class="zsa-practice-streak" hidden></p></div>
 <div class="zsa-card zsa-qrp-question-card">
 <p class="zsa-eyebrow" id="zsa-qrp-topic-name"></p>
 <h2 id="zsa-qrp-question" tabindex="-1"></h2>
@@ -78,9 +78,9 @@
 </section>
 <section id="zsa-qrp-results" class="zsa-card" aria-labelledby="zsa-qrp-results-title" hidden>
 <h2 id="zsa-qrp-results-title" tabindex="-1">Your set is complete</h2>
-<p id="zsa-qrp-total" class="zsa-qrp-total zsa-practice-total"></p>
-<h3>Results by topic</h3><ul id="zsa-qrp-breakdown" class="zsa-practice-breakdown"></ul>
-<div class="zsa-qrp-actions zsa-practice-actions"><button id="zsa-qrp-retry" class="zsa-btn zsa-btn--primary" type="button">Try again</button><button id="zsa-qrp-choose" class="zsa-btn" type="button">Choose another topic</button></div>
+<div class="zsa-practice-summary"><div id="zsa-qrp-ring" class="zsa-practice-ring"></div><div class="zsa-practice-summary-text"><p id="zsa-qrp-total" class="zsa-qrp-total zsa-practice-total"></p><p id="zsa-qrp-best" class="zsa-practice-best" hidden></p></div></div>
+<h3 id="zsa-qrp-breakdown-title">Results by topic</h3><ul id="zsa-qrp-breakdown" class="zsa-practice-breakdown" aria-labelledby="zsa-qrp-breakdown-title"></ul>
+<div class="zsa-qrp-actions zsa-practice-actions"><button id="zsa-qrp-misses" class="zsa-btn zsa-btn--primary" type="button" hidden>Practice my misses</button><button id="zsa-qrp-retry" class="zsa-btn zsa-btn--primary" type="button">Try again</button><button id="zsa-qrp-choose" class="zsa-btn" type="button">Choose another topic</button></div>
 <div id="zsa-qrp-review"></div>
 </section>
 <details class="zsa-panel zsa-qrp-reference zsa-practice-reference" id="zsa-qrp-reference">

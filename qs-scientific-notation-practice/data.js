@@ -153,7 +153,7 @@
         "Choose a skill, then start. Mixed review includes all three skills.":"Elige una habilidad y comienza. El repaso mixto incluye las tres habilidades.",
         "Type scientific notation as 4.5 x 10^4 (or 4.5e4), and standard notation as 45,000 or 45000. A unit after the number is optional.":"Escribe la notación científica como 4.5 x 10^4 (o 4.5e4) y la notación estándar como 45,000 o 45000. La unidad después del número es opcional.",
         "When a question asks for scientific notation, the first number must be at least 1 and less than 10.":"Cuando una pregunta pide notación científica, el primer número debe ser al menos 1 y menor que 10.",
-        "Submit once per question and read the feedback. Try again gives you new numbers.":"Envía una respuesta por pregunta y lee la retroalimentación. Intentar de nuevo te da números nuevos.",
+        "Submit once per question and read the feedback. New numbers gives you a new set, and Practice my misses repeats the questions you missed.":"Envía una respuesta por pregunta y lee la retroalimentación. Números nuevos te da una serie nueva y Practicar mis errores repite las preguntas que fallaste.",
         "Your answer":"Tu respuesta",
         "Type 4.5 x 10^-3 for scientific notation, or 0.0045 for standard notation.":"Escribe 4.5 x 10^-3 para notación científica o 0.0045 para notación estándar.",
         "Reference":"Consulta", "Scientific notation rules":"Reglas de la notación científica",

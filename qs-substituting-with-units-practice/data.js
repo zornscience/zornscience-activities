@@ -395,7 +395,7 @@
         "Choose a skill, then start. Mixed review includes all four skills.":"Elige una habilidad y comienza. El repaso mixto incluye las cuatro habilidades.",
         "Type the number, a space, and the unit, such as 1.46 N or 8.00 m/s. The unit is part of the answer here.":"Escribe el número, un espacio y la unidad, como 1.46 N o 8.00 m/s. Aquí la unidad es parte de la respuesta.",
         "Named units and their base units both count: N or kg·m/s², J or N·m. Significant figures are a reminder, not part of the score.":"Cuentan tanto las unidades con nombre como sus unidades base: N o kg·m/s², J o N·m. Las cifras significativas son un recordatorio, no forman parte de la puntuación.",
-        "Submit once per question and read the feedback. Try again gives you new numbers.":"Envía una respuesta por pregunta y lee la retroalimentación. Intentar de nuevo te da números nuevos.",
+        "Submit once per question and read the feedback. New numbers gives you a new set, and Practice my misses repeats the questions you missed.":"Envía una respuesta por pregunta y lee la retroalimentación. Números nuevos te da una serie nueva y Practicar mis errores repite las preguntas que fallaste.",
         "Type a number and its unit, such as 1.46 N or 8.00 m/s. Write m/s² as m/s^2 if you like.":"Escribe un número y su unidad, como 1.46 N o 8.00 m/s. Si quieres, escribe m/s² como m/s^2.",
         "Reference":"Consulta", "Substituting with units":"Sustitución con unidades",
         "Substitute each value with its unit. Units multiply, divide and cancel like letters: (12 m/s)(4.0 s) = 48 m.":"Sustituye cada valor con su unidad. Las unidades se multiplican, se dividen y se cancelan como letras: (12 m/s)(4.0 s) = 48 m.",

@@ -306,7 +306,7 @@
     "Choose a topic, then start. Mixed review includes all seven topics.":"Elige un tema y comienza. El repaso mixto incluye los siete temas.",
     "Select one answer, or enter a number and choose its unit. For a count, choose count; for a ratio, choose no units.":"Selecciona una respuesta o escribe un número y elige su unidad. Para un conteo, elige cantidad; para una relación, elige sin unidades.",
     "Submit once per question. Read the explanation, then continue. Your score counts correct answers; a significant figure note does not remove a point.":"Envía una respuesta por pregunta. Lee la explicación y continúa. Tu puntaje cuenta las respuestas correctas; una nota sobre cifras significativas no quita un punto.",
-    "At the end, Try again shuffles the questions and answer choices. Choose another topic to build a new set.":"Al terminar, Intentar de nuevo cambia el orden de las preguntas y las opciones. Elige otro tema para crear una serie nueva.",
+    "At the end, Try again shuffles the questions and answer choices, Practice my misses repeats only the questions you missed, and Choose a topic goes back to the topic cards.":"Al terminar, Intentar de nuevo cambia el orden de las preguntas y las opciones, Practicar mis errores repite solo las preguntas que fallaste y Elegir un tema regresa a las tarjetas de temas.",
     "Reference":"Consulta",
     "Scientific notation: you may type 1.51e23 in the number field.":"Notación científica: puedes escribir 1.51e23 en el campo numérico.",
     "Your answers stay in this tab. No account needed.":"Tus respuestas se quedan en esta pestaña. No necesitas una cuenta.",

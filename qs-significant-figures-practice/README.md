@@ -1,6 +1,6 @@
 # Significant Figures Practice
 
-Version: 1.0.2
+Version: 1.1.0
 
 Generated practice for the Quantitative Skills lesson [Significant Figures](https://zornscience.org/science/quantitative-skills/numbers/significant-figures/). Every set has new numbers. Four skills: counting significant figures, rounding, multiplying and dividing, and adding and subtracting. A skill gives 8 questions; Mixed review gives 12, three of each. English: `/qs-significant-figures-practice/`. Mexican Spanish: `/qs-significant-figures-practice/?lang=es`.
 
@@ -49,9 +49,11 @@ Counting answers are whole numbers, and "3 sig figs" or "3 cifras significativas
 
 ## Interface and Spanish
 
-Runs on the shared question-set engine (`../shared/zsa-practice.js`) with the generated-bank options described in `../shared/README.md`. Native controls only: the topic menu, radio buttons, one text field and buttons, so Tab, arrow keys, Enter and Space work as usual; question and results headings take focus, feedback is announced, and the language links and dialogs follow the shared header. Spanish follows the Style Kit: cifras significativas (never abbreviated), redondear, punto decimal, lugares decimales, ceros al inicio, ceros al final, notación científica. New wording is in `../SPANISH_TERMS.md`.
+Runs on the shared question-set engine (`../shared/zsa-practice.js`) with the generated-bank options described in `../shared/README.md`. Native controls only: the skill cards (radio buttons), answer radio buttons, one text field and buttons, so Tab, arrow keys, Enter and Space work as usual; question and results headings take focus, feedback is announced, and the language links and dialogs follow the shared header. Spanish follows the Style Kit: cifras significativas (never abbreviated), redondear, punto decimal, lugares decimales, ceros al inicio, ceros al final, notación científica. New wording is in `../SPANISH_TERMS.md`.
 
 ## Changelog
+
+1.1.0: The shared practice engine is rebuilt to match the bench labs. The start screen is a grid of skill cards (real radio inputs, with an icon, a line about the question kinds and the question count) plus a Mixed review card, in place of the topic menu. A set shows one progress pip per question (current, right, missed; missed pips are also striped), keeps the spoken "Question 3 of 8" for screen readers, and counts a streak of right answers in memory for that set only. Feedback draws a check or a cross, highlights the correct answer and adds a Show the steps panel that numbers the sentences of the existing explanation; it opens by itself after a miss. The results show a score ring, a bar per skill, the missed questions with their steps, and Practice my misses, New numbers and Choose a skill. Question ids, `bank.rebuild(id)`, answer checking, scoring and every feedback message and explanation are unchanged. The Instructions line about the end of a set names the new buttons. Motion stops with reduced motion; nothing is shown only by motion.
 
 1.0.1: Patch bump for the shared practice engine (`shared/zsa-practice.js`), which gained an opt-in typed-equation question type used only by Rearranging Equations Practice. This page does not load the equation reader and its questions, scoring and text are unchanged.
 

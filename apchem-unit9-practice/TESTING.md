@@ -1,6 +1,6 @@
 # AP Chemistry Unit 9 Practice testing
 
-Version: 1.0.3
+Version: 1.1.0
 
 ## Independent worked answers
 
@@ -104,3 +104,5 @@ This environment uses the workspace-local PHP CLI with PDO SQLite, ctype and ico
 A separate diagnostic served the same archived origin/main at both ports and replayed the affected 768 × 1024 seed-1 scenario using the existing comparisons. All 414 states and screenshot pairs matched. This control does not explain the main-versus-working-tree text-rendering difference; its root cause remains unconfirmed in this Chromium environment. The three screenshot differences are reported as a remaining verification caveat, not a passing parity result. No scientific-content uncertainty remains beyond the explicitly stated rounded reference data and constant-ΔH°/ΔS° model assumptions.
 
 ZornScience. CC BY-NC-SA 4.0.
+
+Version 1.1.0: `tests/e2e/practice-ui.spec.js` checks the shared engine's start cards (one radio per topic plus Mixed review, arrow keys, names and descriptions), the progress pips and the spoken position, the streak, the Show the steps panel (closed after a right answer, open after a miss, the explanation unchanged), the results ring and bars, Practice my misses, Try again and Choose a topic, reduced motion, embed mode and Spanish. The other browser tests choose topics through the cards.

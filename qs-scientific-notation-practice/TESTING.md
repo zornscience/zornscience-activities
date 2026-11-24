@@ -1,6 +1,6 @@
 # Scientific Notation Practice testing
 
-Version: 1.0.2
+Version: 1.1.0
 
 ## Generators (Node)
 
@@ -15,6 +15,8 @@ Version: 1.0.2
 ## Browser
 
 `tests/e2e/qs-practice.spec.js` covers this activity as it does every Quantitative Skills page: full mixed sets in English and Spanish with their own answers, Try again, review, keyboard only with a visible focus ring, axe-core at 1366 and 320 px in every state, no English left in Spanish, the lesson backlink and no outside requests.
+
+Version 1.1.0: `tests/e2e/practice-ui.spec.js` checks the shared engine's start cards (one radio per topic plus Mixed review, arrow keys, names and descriptions), the progress pips and the spoken position, the streak, the Show the steps panel (closed after a right answer, open after a miss, the explanation unchanged), the results ring and bars, Practice my misses, New numbers and Choose a skill, reduced motion, embed mode and Spanish. The other browser tests choose topics through the cards.
 
 ## Not automated
 

@@ -266,7 +266,7 @@
         "Type your answer. A unit after the number is optional. Write very large or very small numbers in scientific notation, like 5.32 x 10^-7 or 5.32e-7.":"Escribe tu respuesta. La unidad después del número es opcional. Escribe los números muy grandes o muy pequeños en notación científica, como 5.32 x 10^-7 o 5.32e-7.",
         "Case matters: capital M is mega and lowercase m is milli. If you cannot type μ, type u (75 um for 75 μm).":"Las mayúsculas importan: la M mayúscula es mega y la m minúscula es mili. Si no puedes escribir μ, escribe u (75 um para 75 μm).",
         "Keep the measurement's significant figures. A different number of significant figures still counts, with a note.":"Conserva las cifras significativas de la medición. Un número distinto de cifras significativas también cuenta, con una nota.",
-        "Submit once per question and read the feedback. Try again gives you new numbers.":"Envía una respuesta por pregunta y lee la retroalimentación. Intentar de nuevo te da números nuevos.",
+        "Submit once per question and read the feedback. New numbers gives you a new set, and Practice my misses repeats the questions you missed.":"Envía una respuesta por pregunta y lee la retroalimentación. Números nuevos te da una serie nueva y Practicar mis errores repite las preguntas que fallaste.",
         "Type a number such as 0.0250 or 5.32 x 10^-7. You may add the unit after it.":"Escribe un número como 0.0250 o 5.32 x 10^-7. Puedes agregar la unidad después.",
         "Unit":"Unidad", "Reference":"Consulta", "The prefix ladder":"La escalera de prefijos",
         "Rungs from top to bottom":"Peldaños de arriba hacia abajo",

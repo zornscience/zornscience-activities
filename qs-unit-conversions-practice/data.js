@@ -247,7 +247,7 @@
         "Choose a skill, then start. Mixed review includes all three skills.":"Elige una habilidad y comienza. El repaso mixto incluye las tres habilidades.",
         "Type your answer. A unit after the number is optional.":"Escribe tu respuesta. La unidad después del número es opcional.",
         "Exact factors never limit significant figures. In Exact factors and significant figures, an answer with the wrong number of significant figures is marked incorrect; in the other skills it gets a note.":"Los factores exactos nunca limitan las cifras significativas. En Factores exactos y cifras significativas, una respuesta con un número incorrecto de cifras significativas se marca como incorrecta; en las otras habilidades recibe una nota.",
-        "Submit once per question and read the feedback. Try again gives you new numbers.":"Envía una respuesta por pregunta y lee la retroalimentación. Intentar de nuevo te da números nuevos.",
+        "Submit once per question and read the feedback. New numbers gives you a new set, and Practice my misses repeats the questions you missed.":"Envía una respuesta por pregunta y lee la retroalimentación. Números nuevos te da una serie nueva y Practicar mis errores repite las preguntas que fallaste.",
         "Type a number such as 15.2. You may add the unit after it.":"Escribe un número como 15.2. Puedes agregar la unidad después.",
         "Unit":"Unidad", "Reference":"Consulta", "Using conversion factors":"Uso de los factores de conversión",
         "A conversion factor is an equality written as a fraction. It equals 1, so the amount does not change.":"Un factor de conversión es una igualdad escrita como fracción. Es igual a 1, así que la cantidad no cambia.",

@@ -482,7 +482,7 @@
         "Choose a skill, then start. Mixed review includes all four skills.":"Elige una habilidad y comienza. El repaso mixto incluye las cuatro habilidades.",
         "Data tables are written as (x, y) pairs. To identify a relationship, double x and see what happens to y.":"Las tablas de datos se escriben como pares (x, y). Para identificar una relación, duplica x y observa qué le pasa a y.",
         "Type numbers with a decimal point. A unit after the number is optional, but a wrong unit is marked incorrect.":"Escribe los números con punto decimal. La unidad después del número es opcional, pero una unidad incorrecta se marca como incorrecta.",
-        "Submit once per question and read the feedback. Try again gives you new numbers.":"Envía una respuesta por pregunta y lee la retroalimentación. Intentar de nuevo te da números nuevos.",
+        "Submit once per question and read the feedback. New numbers gives you a new set, and Practice my misses repeats the questions you missed.":"Envía una respuesta por pregunta y lee la retroalimentación. Números nuevos te da una serie nueva y Practicar mis errores repite las preguntas que fallaste.",
         "Type a number such as 2.5 or 0.0050. You may add the unit after it.":"Escribe un número como 2.5 o 0.0050. Puedes agregar la unidad después.",
         "Reference":"Consulta", "Tests for relationships":"Pruebas para identificar relaciones",
         "Direct: a straight line through the origin. Double x and y doubles; triple x and y triples.":"Directa: una recta que pasa por el origen. Si x se duplica, la variable y se duplica; si x se triplica, la variable y se triplica.",

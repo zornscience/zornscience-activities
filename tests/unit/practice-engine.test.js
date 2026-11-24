@@ -298,3 +298,41 @@ test("pretty prints true minus signs, grouped digits and powers of ten", () => {
   assert.equal(M.lessonLink("https://evil.example/", "es", "https://zornscience.org/science/quantitative-skills/numbers/significant-figures/"),
     "https://zornscience.org/es/science/quantitative-skills/numbers/significant-figures/");
 });
+
+// The question-set interface (engine 1.1): every string literal the engine passes to t() reads in Mexican Spanish on
+// every practice page, resolved the way the engine does (its own words first, then the page's table, then the shared
+// table), and the engine's own words keep the site's text rules.
+test("every interface string in zsa-practice.js has Mexican Spanish on all 24 practice pages", () => {
+  const ROOT = path.join(__dirname, "../..");
+  const source = fs.readFileSync(path.join(ROOT, "shared/zsa-practice.js"), "utf8");
+  const literals = new Set();
+  for (let at = source.indexOf("t("); at >= 0; at = source.indexOf("t(", at + 2)) {
+    if (/[\w.$]/.test(source[at - 1])) continue;
+    let depth = 0, end = at + 1;
+    for (; end < source.length; end++) {
+      if (source[end] === "(") depth++;
+      else if (source[end] === ")" && --depth === 0) break;
+    }
+    const call = source.slice(at + 2, end);
+    // Text is a quoted string with a space, a capital letter or a placeholder; single lowercase words are ids and keys.
+    for (const m of call.matchAll(/"((?:[^"\\]|\\.)*)"/g)) if (/[ A-Z{]/.test(m[1])) literals.add(m[1]);
+  }
+  for (const key of Object.keys(M.engineEs)) assert.ok(literals.has(key), "engineEs key not used by the engine: " + key);
+  assert.ok(literals.size > 40, "found " + literals.size + " interface strings");
+  const pages = fs.readdirSync(ROOT).filter(d => /^(qs-.+-practice|apchem-unit\d-practice)$/.test(d));
+  assert.equal(pages.length, 24);
+  for (const slug of pages) {
+    let bank = require(path.join(ROOT, slug, "data.js"));
+    if (typeof bank === "function") bank = bank(M);
+    const es = bank.copy.es;
+    for (const text of literals) {
+      const spanish = Object.hasOwn(M.engineEs, text) ? M.engineEs[text] : Object.hasOwn(es, text) ? es[text] : M.interfaceEs[text];
+      assert.ok(spanish && spanish !== text, slug + " has no Spanish for " + JSON.stringify(text));
+      assert.deepEqual((spanish.match(/\{\w+\}/g) || []).sort(), (text.match(/\{\w+\}/g) || []).sort(), "placeholders in " + text);
+    }
+  }
+  for (const [en, es] of Object.entries(M.engineEs)) {
+    assert.doesNotMatch(en + es, /[–—]/, "no en or em dashes");
+    assert.doesNotMatch(es, /\b(?:the|and|your|questions?|skill|topic|steps|streak|row|misses|numbers|choice|typed|answers?)\b/i, "English left in " + es);
+  }
+});

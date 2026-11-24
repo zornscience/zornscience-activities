@@ -275,7 +275,7 @@
         "Choose a skill, then start. Mixed review includes all four skills.":"Elige una habilidad y comienza. El repaso mixto incluye las cuatro habilidades.",
         "Type your answer. A unit after the number is optional; type m^3 or m3 for m³.":"Escribe tu respuesta. La unidad después del número es opcional; escribe m^3 o m3 para m³.",
         "Keep the measurement's significant figures, and use scientific notation when zeros at the end would be unclear, like 3.60 x 10^3. A different number of significant figures still counts, with a note.":"Conserva las cifras significativas de la medición y usa notación científica cuando los ceros al final no serían claros, como 3.60 x 10^3. Un número distinto de cifras significativas también cuenta, con una nota.",
-        "Submit once per question and read the feedback. Try again gives you new numbers.":"Envía una respuesta por pregunta y lee la retroalimentación. Intentar de nuevo te da números nuevos.",
+        "Submit once per question and read the feedback. New numbers gives you a new set, and Practice my misses repeats the questions you missed.":"Envía una respuesta por pregunta y lee la retroalimentación. Números nuevos te da una serie nueva y Practicar mis errores repite las preguntas que fallaste.",
         "Type a number such as 25.0 or 6.93 x 10^5. You may add the unit after it.":"Escribe un número como 25.0 o 6.93 x 10^5. Puedes agregar la unidad después.",
         "Unit":"Unidad", "Reference":"Consulta", "Dimensional analysis":"Análisis dimensional",
         "Map the path first: write the starting unit and the goal, with one factor per step.":"Primero traza el camino: escribe la unidad inicial y la meta, con un factor por paso.",

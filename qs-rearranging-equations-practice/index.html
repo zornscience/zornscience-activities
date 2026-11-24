@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="zsa-version" content="1.1.1">
+<meta name="zsa-version" content="1.2.0">
 <title>Rearranging Equations Practice | ZornScience</title>
 <meta name="description" content="Practice solving formulas for one variable: opposite operations on both sides, steps undone in reverse order, then substitute and calculate." data-zsa-es="Practica el despeje de fórmulas: operaciones opuestas en ambos lados, pasos deshechos en orden inverso, y luego sustituye y calcula con retroalimentación.">
 <link rel="canonical" href="https://activities.zornscience.org/qs-rearranging-equations-practice/">
@@ -12,17 +12,17 @@
 <link rel="alternate" hreflang="es" href="https://activities.zornscience.org/qs-rearranging-equations-practice/?lang=es">
 <link rel="alternate" hreflang="x-default" href="https://activities.zornscience.org/qs-rearranging-equations-practice/">
 <link rel="icon" href="../favicon.png" type="image/png">
-<link rel="stylesheet" href="../shared/zsa-base.css?v=1.1.1">
-<link rel="stylesheet" href="../shared/zsa-practice.css?v=1.1.1">
-<link rel="stylesheet" href="../shared/zsa-header.css?v=1.1.1">
-<script src="../shared/zsa-embed.js?v=1.1.1" defer></script>
-<script src="../shared/zsa-i18n.js?v=1.1.1" defer></script>
-<script src="../shared/zsa-practice-model.js?v=1.1.1" defer></script>
-<script src="data.js?v=1.1.1" defer></script>
-<script src="../shared/zsa-formula.js?v=1.1.1" defer></script>
-<script src="../shared/zsa-practice.js?v=1.1.1" defer></script>
-<script src="../shared/zsa-header.js?v=1.1.1" defer></script>
-<link rel="stylesheet" href="../shared/zsa-about.css?v=1.1.1"><script src="../shared/zsa-about.js?v=1.1.1" defer></script></head>
+<link rel="stylesheet" href="../shared/zsa-base.css?v=1.2.0">
+<link rel="stylesheet" href="../shared/zsa-practice.css?v=1.2.0">
+<link rel="stylesheet" href="../shared/zsa-header.css?v=1.2.0">
+<script src="../shared/zsa-embed.js?v=1.2.0" defer></script>
+<script src="../shared/zsa-i18n.js?v=1.2.0" defer></script>
+<script src="../shared/zsa-practice-model.js?v=1.2.0" defer></script>
+<script src="data.js?v=1.2.0" defer></script>
+<script src="../shared/zsa-formula.js?v=1.2.0" defer></script>
+<script src="../shared/zsa-practice.js?v=1.2.0" defer></script>
+<script src="../shared/zsa-header.js?v=1.2.0" defer></script>
+<link rel="stylesheet" href="../shared/zsa-about.css?v=1.2.0"><script src="../shared/zsa-about.js?v=1.2.0" defer></script></head>
 <body>
 <main class="zsa zsa-qre zsa-practice" data-zsa-activity="qs-rearranging-equations-practice" data-zsa-practice="zsa-qre">
 <header data-zsa-header>
@@ -41,7 +41,7 @@
 <li>Solve for the letter first, then put in the numbers. A unit after the number is optional.</li>
 <li>Some Solve questions ask you to type the equation. Put the letter you solve for alone on one side, like t = d/v.</li>
 <li>The line under each question says how to round. Significant figures are a reminder here, not part of the score.</li>
-<li>Submit once per question and read the feedback. Try again gives you a new set.</li>
+<li>Submit once per question and read the feedback. New numbers gives you a new set, and Practice my misses repeats the questions you missed.</li>
 </ol>
 </dialog>
 <dialog class="zsa-header-dialog" id="zsa-header-share" aria-labelledby="zsa-header-share-title">
@@ -55,12 +55,12 @@
 <p class="zsa-eyebrow">Quantitative Skills · Equations</p>
 <h2 id="zsa-qre-setup-title">New numbers every set.</h2>
 <p>Choose one skill for 8 questions, or Mixed review for 12. Every set is new.</p>
-<div class="zsa-qre-settings zsa-practice-settings"><div><label for="zsa-qre-topic">Topic</label><select id="zsa-qre-topic"></select></div><button class="zsa-btn zsa-btn--primary" id="zsa-qre-start" type="button">Start practice</button></div>
+<fieldset id="zsa-qre-topic" class="zsa-practice-skills"><legend>Choose a skill to practice</legend></fieldset>
+<div class="zsa-qre-settings zsa-practice-settings"><button class="zsa-btn zsa-btn--primary" id="zsa-qre-start" type="button">Start practice</button></div>
 <p class="zsa-qre-small zsa-practice-small">No timer. Use scratch paper and a calculator. The steps from the lesson are below.</p>
 </section>
 <section id="zsa-qre-play" hidden aria-labelledby="zsa-qre-question">
-<div class="zsa-qre-status zsa-practice-status"><p id="zsa-qre-position"></p><p id="zsa-qre-score"></p></div>
-<progress id="zsa-qre-progress" value="0" max="8" aria-label="Set progress"></progress>
+<div class="zsa-practice-session"><div class="zsa-qre-status zsa-practice-status zsa-sr-only"><p id="zsa-qre-position"></p><p id="zsa-qre-score"></p></div><div id="zsa-qre-progress" class="zsa-practice-track" aria-hidden="true"></div><p id="zsa-qre-count" class="zsa-practice-count" aria-hidden="true"></p><p id="zsa-qre-streak" class="zsa-practice-streak" hidden></p></div>
 <div class="zsa-card zsa-qre-question-card">
 <p class="zsa-eyebrow" id="zsa-qre-topic-name"></p>
 <h2 id="zsa-qre-question" tabindex="-1"></h2>
@@ -85,9 +85,9 @@
 </section>
 <section id="zsa-qre-results" class="zsa-card" aria-labelledby="zsa-qre-results-title" hidden>
 <h2 id="zsa-qre-results-title" tabindex="-1">Your set is complete</h2>
-<p id="zsa-qre-total" class="zsa-qre-total zsa-practice-total"></p>
-<h3>Results by topic</h3><ul id="zsa-qre-breakdown" class="zsa-practice-breakdown"></ul>
-<div class="zsa-qre-actions zsa-practice-actions"><button id="zsa-qre-retry" class="zsa-btn zsa-btn--primary" type="button">Try again</button><button id="zsa-qre-choose" class="zsa-btn" type="button">Choose another topic</button></div>
+<div class="zsa-practice-summary"><div id="zsa-qre-ring" class="zsa-practice-ring"></div><div class="zsa-practice-summary-text"><p id="zsa-qre-total" class="zsa-qre-total zsa-practice-total"></p><p id="zsa-qre-best" class="zsa-practice-best" hidden></p></div></div>
+<h3 id="zsa-qre-breakdown-title">Results by topic</h3><ul id="zsa-qre-breakdown" class="zsa-practice-breakdown" aria-labelledby="zsa-qre-breakdown-title"></ul>
+<div class="zsa-qre-actions zsa-practice-actions"><button id="zsa-qre-misses" class="zsa-btn zsa-btn--primary" type="button" hidden>Practice my misses</button><button id="zsa-qre-retry" class="zsa-btn zsa-btn--primary" type="button">Try again</button><button id="zsa-qre-choose" class="zsa-btn" type="button">Choose another topic</button></div>
 <div id="zsa-qre-review"></div>
 </section>
 <details class="zsa-panel zsa-qre-reference zsa-practice-reference" id="zsa-qre-reference">

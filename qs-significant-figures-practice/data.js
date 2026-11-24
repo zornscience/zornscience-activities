@@ -262,7 +262,7 @@
         "Choose a skill, then start. Mixed review includes all four skills.":"Elige una habilidad y comienza. El repaso mixto incluye las cuatro habilidades.",
         "Type your answer. A unit after the number is optional, and you can write scientific notation as 4.50 x 10^3 or 4.50e3.":"Escribe tu respuesta. La unidad después del número es opcional, y puedes escribir la notación científica como 4.50 x 10^3 o 4.50e3.",
         "Significant figures count here: a value with the wrong number of significant figures is marked incorrect.":"Aquí las cifras significativas cuentan: un valor con un número incorrecto de cifras significativas se marca como incorrecto.",
-        "Submit once per question and read the feedback. Try again gives you new numbers.":"Envía una respuesta por pregunta y lee la retroalimentación. Intentar de nuevo te da números nuevos.",
+        "Submit once per question and read the feedback. New numbers gives you a new set, and Practice my misses repeats the questions you missed.":"Envía una respuesta por pregunta y lee la retroalimentación. Números nuevos te da una serie nueva y Practicar mis errores repite las preguntas que fallaste.",
         "Your answer":"Tu respuesta",
         "Type a number such as 0.0250 or 2.50 x 10^-2. You may add the unit after it.":"Escribe un número como 0.0250 o 2.50 x 10^-2. Puedes agregar la unidad después.",
         "Reference":"Consulta", "Significant figure rules":"Reglas de las cifras significativas",

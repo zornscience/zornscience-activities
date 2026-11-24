@@ -19,7 +19,7 @@ async function answer(page, q, correct = true) {
   await el(page, "check").click();
 }
 async function start(page, topic) {
-  await el(page, "topic").selectOption(topic);
+  await el(page, "topic").locator('input[value="' + topic + '"]').check();
   await el(page, "start").click();
 }
 async function audit(page) {
@@ -83,7 +83,7 @@ for (const lang of ["en", "es"]) {
     await el(page, "review").locator("summary").first().click();
     await expect(el(page, "review").locator("details").first().locator("p").last()).toBeVisible();
     await el(page, "choose").click();
-    await expect(el(page, "topic")).toBeFocused();
+    await expect(el(page, "topic").locator("input:checked")).toBeFocused();
     await start(page, "6.9");
     expect((await question(page)).topic).toBe("6.9");
     await expect(el(page, "position")).toHaveText(lang === "es" ? "Pregunta 1 de 6" : "Question 1 of 6");
